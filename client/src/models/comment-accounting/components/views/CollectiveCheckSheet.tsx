@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Space, Typography } from "antd";
+import { Skeleton, Space, Typography } from "antd";
 import {
   FileExcelOutlined,
   CloseOutlined,
@@ -16,7 +16,7 @@ const { Text } = Typography;
 
 const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
   return (
-    <>
+    <Skeleton active loading={false}>
       <Space direction="vertical" size="small" className="p-1 m-1 border">
         <Space className="d-flex justify-content-between mt-3 mb-3">
           <Text strong>{setCurrentDate()}</Text>
@@ -52,11 +52,10 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
           </Space>
         </Space>
         <Header />
-        <Space>
-          <CommentTable data={data} />
-        </Space>
+
+        <CommentTable data={data} />
       </Space>
-    </>
+    </Skeleton>
   );
 };
 
