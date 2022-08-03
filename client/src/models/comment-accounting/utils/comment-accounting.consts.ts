@@ -1,6 +1,6 @@
 import {
-  DesignDocumentCommentView,
   CommentAccountingNSIView,
+  DesignDocumentCommentRequestData,
 } from "../../../../../common/types/comments-accounting";
 
 export const statusRequestData: CommentAccountingNSIView[] = [
@@ -285,44 +285,109 @@ export const criticalityRequestData: CommentAccountingNSIView[] = [
   },
 ];
 
-export const commentAccountingRequestData: DesignDocumentCommentView[] = [
-  {
-    projectCode: "project code",
-    projectTitle: "project title",
-    unitPosition: "unit position",
-    unitTitle: "unit title",
-    unitQuestionareTitle: "unit questionare",
-    subUnitPosition: "sub-unit position",
-    subUnitTitle: "sub-unit title",
-    subUnitQuestionareTitle: "sub-unit questionare",
+export const commentAccountingRequestData: DesignDocumentCommentRequestData = {
+  projectCode: "project code",
+  projectTitle: "project title",
+  unitPosition: "unit position",
+  unitTitle: "unit title",
+  unitQuestionareTitle: "",
+  subUnitPosition: "sub-unit position",
+  subUnitTitle: "sub-unit title",
+  subUnitQuestionareTitle: "sub-unit questionare",
+  view: [
+    {
+      number: 1,
+      documentSection: "satge/section",
+      documentCode: "document code",
+      documentTitle: "document title",
+      documentPage: 15,
+      comment: "comment",
+      normative: "normative title",
+      criticalityId: 2,
+      expertSubdivision: "expert subdivision",
+      expertContacts: "expert contacts",
+      solutions: [
+        {
+          statusId: "1",
+          answer: "answer from designer",
+          designContacts: "design contacts",
+          solutionId: "2",
+          solution: "solution",
+          expertContacts: "expert contacts",
+        },
+        {
+          statusId: "statusId",
+          answer: "answer from designer",
+          designContacts: "design contacts",
+          solutionId: "solutionId",
+          solution: "solution",
+          expertContacts: "expert contacts",
+        },
+      ],
+    },
+    {
+      number: 2,
+      documentSection: "satge/section",
+      documentCode: "document code",
+      documentTitle: "document title",
+      documentPage: 15,
+      comment: "comment",
+      normative: "normative title",
+      criticalityId: 2,
+      expertSubdivision: "expert subdivision",
+      expertContacts: "expert contacts",
+      solutions: [
+        {
+          statusId: "1",
+          answer: "answer from designer",
+          designContacts: "design contacts",
+          solutionId: "2",
+          solution: "solution",
+          expertContacts: "expert contacts",
+        },
+        {
+          statusId: "statusId",
+          answer: "answer from designer",
+          designContacts: "design contacts",
+          solutionId: "solutionId",
+          solution: "solution",
+          expertContacts: "expert contacts",
+        },
+      ],
+    },
+    {
+      number: 3,
+      documentSection: "satge/section",
+      documentCode: "document code",
+      documentTitle: "document title",
+      documentPage: 15,
+      comment: "comment",
+      normative: "normative title",
+      criticalityId: 2,
+      expertSubdivision: "expert subdivision",
+      expertContacts: "expert contacts",
+      solutions: [],
+    },
+  ],
+};
 
-    number: 1,
-    documentSection: "satge/section",
-    documentCode: "document code",
-    documentTitle: "document title",
-    documentPage: 15,
-    comment: "comment",
-    normative: "normative title",
-    criticalityId: 2,
-    expertSubdivision: "expert subdivision",
-    expertContacts: "expert contacts",
-    solutions: [
-      {
-        statusId: "1",
-        answer: "answer from designer",
-        designContacts: "design contacts",
-        solutionId: "2",
-        solution: "solution",
-        expertContacts: "expert contacts",
-      },
-      {
-        statusId: "statusId",
-        answer: "answer from designer",
-        designContacts: "design contacts",
-        solutionId: "solutionId",
-        solution: "solution",
-        expertContacts: "expert contacts",
-      },
-    ],
+export const directionRequestData: CommentAccountingNSIView[] = [
+  {
+    id: 1,
+    title: "Общее",
+    code: "",
+    description: "Общее рассмотрение документации",
+  },
+  {
+    id: 2,
+    title: "Промышленная автоматизации",
+    code: "ПА",
+    description: "Промышленная автоматизации",
+  },
+  {
+    id: 3,
+    title: "Метрология",
+    code: "МО",
+    description: "Метрологическое обеспечение единства измерений",
   },
 ];

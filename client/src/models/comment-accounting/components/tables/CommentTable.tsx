@@ -14,7 +14,7 @@ import {
   EllipsisOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { DesignDocumentCommentView } from "../../../../../../common/types/comments-accounting";
 import { CommentAccounting } from "../../comment-accounting.model";
 import {
@@ -22,8 +22,11 @@ import {
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import SolutionTable from "./SolutionTable";
-import { CommentTableProps } from "./types";
+import { SolutionTable, ModalContainer, CommentForm } from "../../";
+
+interface CommentTableProps {
+  data: DesignDocumentCommentView[];
+}
 
 const { Text } = Typography;
 const { Item } = List;
@@ -31,6 +34,9 @@ const { Panel } = Collapse;
 const { Row, Cell } = Table.Summary;
 
 const CommentTable: FC<CommentTableProps> = ({ data }) => {
+  const [formVisible, setFormVisible] = useState(false);
+  const [actionType, setActionType] = useState("POST");
+
   const commentModel = new CommentAccounting();
 
   const menu = (
@@ -40,7 +46,10 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           label: (
             <Text
               type="success"
-              // onClick={() => setDetailVisible(true)}
+              onClick={() => {
+                setActionType("POST");
+                setFormVisible(true);
+              }}
             >
               Добавить
             </Text>
@@ -48,21 +57,17 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
 
           key: "1",
           icon: (
-            <PlusOutlined
-              title="Добавить решение"
-              className="text-success"
-              //  onClick={() => {
-              //    setActionType(FormActions.UPDATE);
-              //    setAddCommentsVisible(true);
-              //  }}
-            />
+            <PlusOutlined title="Добавить решение" className="text-success" />
           ),
         },
         {
           label: (
             <Text
               type="secondary"
-              // onClick={() => setDetailVisible(true)}
+              onClick={() => {
+                setActionType("UPDATE");
+                setFormVisible(true);
+              }}
             >
               Редактировать
             </Text>
@@ -73,10 +78,6 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
             <EditOutlined
               title="Редактировать запись"
               className="text-secondary"
-              //  onClick={() => {
-              //    setActionType(FormActions.UPDATE);
-              //    setAddCommentsVisible(true);
-              //  }}
             />
           ),
         },
@@ -233,109 +234,126 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
     },
   ];
   return (
-    <Table
-      rowKey={(row) => row.number}
-      size="small"
-      loading={false}
-      bordered
-      pagination={data.length < 10 && false}
-      columns={columns}
-      dataSource={data}
-      expandable={{ expandedRowRender }}
-      summary={(data) => (
-        <Row>
-          <Cell index={0} colSpan={11} align="right">
-            <Text strong>Количество:</Text>
-          </Cell>
-          <Cell index={1} align="center">
-            <Text strong>{data.length}</Text>
-          </Cell>
-        </Row>
+    <>
+      <Table
+        rowKey={(row) => row.number}
+        size="small"
+        loading={false}
+        bordered
+        pagination={data.length < 10 && false}
+        columns={columns}
+        dataSource={data}
+        expandable={{ expandedRowRender }}
+        summary={(data) => (
+          <Row>
+            <Cell index={0} colSpan={11} align="right">
+              <Text strong>Количество:</Text>
+            </Cell>
+            <Cell index={1} align="center">
+              <Text strong>{data.length}</Text>
+            </Cell>
+          </Row>
+        )}
+        footer={() => (
+          <Collapse defaultActiveKey={["1"]}>
+            <Panel header="Легенда" key="1">
+              <Space
+                direction="horizontal"
+                align="start"
+                className="d-flex justify-content-between"
+              >
+                <List
+                  header={
+                    <Text strong>
+                      * Классификатор кодов замечаний, несоответствий и
+                      рекомендаций
+                    </Text>
+                  }
+                  bordered
+                  size="small"
+                  style={{ width: "1000px" }}
+                  dataSource={criticalityRequestData.slice(1, 11)}
+                  renderItem={(item) => (
+                    <Item key={item.id}>
+                      <Item.Meta
+                        avatar={<Text type="secondary">{item.id}</Text>}
+                        title={
+                          <Text type="secondary" key={item.id.toString()}>
+                            {item.title}
+                          </Text>
+                        }
+                        description={item.description}
+                      />
+                    </Item>
+                  )}
+                />
+                <List
+                  header={
+                    <Text strong>
+                      ** В столбце «Ответ проектировщика» - «Статус»
+                      указывается:
+                    </Text>
+                  }
+                  bordered
+                  size="small"
+                  dataSource={statusRequestData}
+                  renderItem={(item) => (
+                    <Item key={item.id}>
+                      <Item.Meta
+                        avatar={<Text type="secondary">{item.id}</Text>}
+                        title={
+                          <Text type="secondary" key={item.id.toString()}>
+                            {item.title}
+                          </Text>
+                        }
+                        description={item.description}
+                      />
+                    </Item>
+                  )}
+                />
+                <List
+                  header={
+                    <Text strong>
+                      *** В столбце «Ответ эксперта» - «Статус» указывается:
+                    </Text>
+                  }
+                  bordered
+                  size="small"
+                  dataSource={solutionRequestData}
+                  renderItem={(item) => (
+                    <Item key={item.id}>
+                      <Item.Meta
+                        avatar={<Text type="secondary">{item.id}</Text>}
+                        title={
+                          <Text type="secondary" key={item.id.toString()}>
+                            {item.title}
+                          </Text>
+                        }
+                        description={item.description}
+                      />
+                    </Item>
+                  )}
+                />
+              </Space>
+            </Panel>
+          </Collapse>
+        )}
+      />
+      {formVisible && (
+        <ModalContainer
+          show={formVisible}
+          action={actionType}
+          onCancel={() => setFormVisible(false)}
+          child={
+            <CommentForm
+              target="project"
+              currentId="1"
+              onCancel={() => setFormVisible(false)}
+            />
+          }
+        />
       )}
-      footer={() => (
-        <Collapse defaultActiveKey={["1"]}>
-          <Panel header="Легенда" key="1">
-            <Space
-              direction="horizontal"
-              align="start"
-              className="d-flex justify-content-between"
-            >
-              <List
-                header={
-                  <Text strong>
-                    * Классификатор кодов замечаний, несоответствий и
-                    рекомендаций
-                  </Text>
-                }
-                bordered
-                size="small"
-                style={{ width: "1000px" }}
-                dataSource={criticalityRequestData.slice(1, 11)}
-                renderItem={(item) => (
-                  <Item key={item.id}>
-                    <Item.Meta
-                      avatar={<Text type="secondary">{item.id}</Text>}
-                      title={
-                        <Text type="secondary" key={item.id.toString()}>
-                          {item.title}
-                        </Text>
-                      }
-                      description={item.description}
-                    />
-                  </Item>
-                )}
-              />
-              <List
-                header={
-                  <Text strong>
-                    ** В столбце «Ответ проектировщика» - «Статус» указывается:
-                  </Text>
-                }
-                bordered
-                size="small"
-                dataSource={statusRequestData}
-                renderItem={(item) => (
-                  <Item key={item.id}>
-                    <Item.Meta
-                      avatar={<Text type="secondary">{item.id}</Text>}
-                      title={
-                        <Text type="secondary" key={item.id.toString()}>
-                          {item.title}
-                        </Text>
-                      }
-                      description={item.description}
-                    />
-                  </Item>
-                )}
-              />
-              <List
-                header={
-                  <Text strong>
-                    *** В столбце «Ответ эксперта» - «Статус» указывается:
-                  </Text>
-                }
-                bordered
-                size="small"
-                dataSource={solutionRequestData}
-                renderItem={(item) => (
-                  <Item key={item.id}>
-                    <Item.Meta
-                      avatar={<Text type="secondary">{item.id}</Text>}
-                      title={
-                        <Text type="secondary" key={item.id.toString()}>
-                          {item.title}
-                        </Text>
-                      }
-                      description={item.description}
-                    />
-                  </Item>
-                )}
-              />
-            </Space>
-          </Panel>
-        </Collapse>
-      )}
-    />
+    </>
   );
 };
 

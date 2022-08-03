@@ -1,5 +1,8 @@
-import CollectiveCheckSheet from "./models/comment-accounting/components/views/CollectiveCheckSheet";
+// import { Typography } from "antd";
+import { CollectiveCheckSheet } from "./models/comment-accounting";
 import { commentAccountingRequestData } from "./models/comment-accounting/utils/comment-accounting.consts";
+
+// const { Text } = Typography;
 
 function App() {
   return (

@@ -2,8 +2,14 @@ import { FC } from "react";
 import { Table, TableColumnsType, Typography } from "antd";
 
 import { CommentAccounting } from "../../comment-accounting.model";
-import { DesignDocumentCommentSolutionView } from "../../../../../../common/types/comments-accounting";
-import { SolutionTableProps } from "./types";
+import {
+  DesignDocumentCommentSolutionView,
+  DesignDocumentCommentView,
+} from "../../../../../../common/types/comments-accounting";
+
+interface SolutionTableProps {
+  record: DesignDocumentCommentView;
+}
 
 const { Text } = Typography;
 

@@ -6,7 +6,7 @@ export interface CommentAccountingNSIView {
 }
 
 export interface DesignDocumentCommentSolutionCreationAttrs {
-  date: Date;
+  key: string;
   commentId: number | string;
   userId: number | string;
   statusId: number | string;
@@ -25,28 +25,19 @@ export interface DesignDocumentCommentSolutionView {
 }
 
 export interface DesignDocumentCommentCreationAttrs {
-  projectDocumentId: number | string;
-  unitDocumentId: number | string;
-  subUnitDocumentId: number | string;
-  supplierDocumentId: number | string;
-  directionId: number | string;
-  normativeId: number | string;
-  userId: number | string;
-  criticalityId: number | string;
+  projectDocumentId: number | string | null;
+  unitDocumentId: number | string | null;
+  subUnitDocumentId: number | string | null;
+  supplierDocumentId: number | string | null;
+  directionId: number | string | null;
+  normativeId: number | string | null;
+  userId: number | string | null;
+  criticalityId: number | string | null;
   comment: string;
   solutions: DesignDocumentCommentSolutionCreationAttrs[] | null;
 }
 
 export interface DesignDocumentCommentView {
-  projectCode: string;
-  projectTitle: string;
-  unitPosition: string | null;
-  unitTitle: string | null;
-  unitQuestionareTitle: string | null; // Наименование ОЛ, ТТ, ТТТ
-  subUnitPosition: string | null;
-  subUnitTitle: string | null;
-  subUnitQuestionareTitle: string | null; // Наименование ОЛ, ТТ, ТТТ
-
   number: number | string;
   documentSection: string; // марка/раздел документации
   documentCode: string;
@@ -61,7 +52,13 @@ export interface DesignDocumentCommentView {
 }
 
 export interface DesignDocumentCommentRequestData {
-  id: number | string;
-  date: Date;
-  view: DesignDocumentCommentView;
+  projectCode: string;
+  projectTitle: string;
+  unitPosition: string | null;
+  unitTitle: string | null;
+  unitQuestionareTitle: string | null; // Наименование ОЛ, ТТ, ТТТ
+  subUnitPosition: string | null;
+  subUnitTitle: string | null;
+  subUnitQuestionareTitle: string | null; // Наименование ОЛ, ТТ, ТТТ
+  view: DesignDocumentCommentView[];
 }

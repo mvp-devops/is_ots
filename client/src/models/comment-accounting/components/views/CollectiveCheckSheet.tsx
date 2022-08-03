@@ -6,11 +6,13 @@ import {
   CloseOutlined,
   PrinterOutlined,
 } from "@ant-design/icons";
-
+import { Header, CommentTable } from "../../";
 import { setCurrentDate } from "../../../../utils/main.utils";
-import CommentTable from "../tables/CommentTable";
-import Header from "./Header";
-import { CollectiveCheckSheetProps } from "./types";
+import { DesignDocumentCommentRequestData } from "../../../../../../common/types/comments-accounting";
+
+interface CollectiveCheckSheetProps {
+  data: DesignDocumentCommentRequestData;
+}
 
 const { Text } = Typography;
 
@@ -35,10 +37,6 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
               style={{ cursor: "pointer" }}
               title="Выгрузить"
               className="text-success"
-              //  onClick={() => {
-              //    setActionType(FormActions.UPDATE);
-              //    setAddCommentsVisible(true);
-              //  }}
             />
             <CloseOutlined
               style={{ cursor: "pointer" }}
@@ -51,9 +49,9 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
             />
           </Space>
         </Space>
-        <Header />
+        <Header data={data} />
 
-        <CommentTable data={data} />
+        <CommentTable data={data.view} />
       </Space>
     </Skeleton>
   );
