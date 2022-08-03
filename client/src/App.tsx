@@ -1,7 +1,12 @@
-import React from "react";
+import CollectiveCheckSheet from "./models/comment-accounting/components/views/CollectiveCheckSheet";
+import { commentAccountingRequestData } from "./models/comment-accounting/utils/comment-accounting.consts";
 
 function App() {
-  return <div className="App">Start</div>;
+  return (
+    <div className="App">
+      <CollectiveCheckSheet data={commentAccountingRequestData} />
+    </div>
+  );
 }
 
 export default App;

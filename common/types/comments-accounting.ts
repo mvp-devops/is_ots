@@ -1,3 +1,10 @@
+export interface CommentAccountingNSIView {
+  id: number | string;
+  title: string;
+  code: number | string;
+  description: string;
+}
+
 export interface DesignDocumentCommentSolutionCreationAttrs {
   date: Date;
   commentId: number | string;
@@ -15,7 +22,6 @@ export interface DesignDocumentCommentSolutionView {
   solutionId: number | string;
   solution: string;
   expertContacts: string;
-  date: Date;
 }
 
 export interface DesignDocumentCommentCreationAttrs {
@@ -43,6 +49,7 @@ export interface DesignDocumentCommentView {
 
   number: number | string;
   documentSection: string; // марка/раздел документации
+  documentCode: string;
   documentTitle: string;
   documentPage: number | string;
   comment: string;
