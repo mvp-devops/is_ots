@@ -11,7 +11,7 @@ import { CloseOutlined } from "@ant-design/icons";
 
 const { Item } = Form;
 
-interface SolutionFormProps {
+export interface SolutionFormProps {
   items: DesignDocumentCommentSolutionCreationAttrs[];
   setItems: Function;
   item: DesignDocumentCommentSolutionCreationAttrs;

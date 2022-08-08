@@ -5,17 +5,17 @@ import {
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentSolutionCreationAttrs,
 } from "../../../../../../common/types/comments-accounting";
-import { CommentAccounting } from "../../comment-accounting.model";
+import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   criticalityRequestData,
   directionRequestData,
 } from "../../utils/comment-accounting.consts";
 import { addItem } from "./form.actions";
-import { SolutionForm } from "../../";
+import SolutionForm from "./SolutionForm";
 
 const { Item } = Form;
 
-interface CommentFormProps {
+export interface CommentFormProps {
   target: string;
   currentId: string;
   onCancel: () => void;

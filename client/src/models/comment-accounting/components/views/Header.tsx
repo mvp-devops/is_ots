@@ -23,8 +23,9 @@ const Header: FC<HeaderProps> = ({ data }) => {
     <Space direction="vertical" size="small">
       <Space direction="horizontal" className="d-flex justify-content-left">
         <Text strong>Проект:</Text>
-        <Text type="secondary">Шифр.</Text>
-        <Text type="secondary">Наименование</Text>
+        <Text type="secondary">
+          {projectCode}. {projectTitle}
+        </Text>
       </Space>
       {unitTitle && (
         <Space direction="vertical" className="mb-3">
@@ -34,8 +35,9 @@ const Header: FC<HeaderProps> = ({ data }) => {
               className="d-flex justify-content-left"
             >
               <Text strong>Объект:</Text>
-              <Text type="secondary">Шифр.</Text>
-              <Text type="secondary">Наименование</Text>
+              <Text type="secondary">
+                {unitPosition}. {unitTitle}
+              </Text>
             </Space>
             {unitQuestionareTitle && (
               <Space
@@ -43,7 +45,7 @@ const Header: FC<HeaderProps> = ({ data }) => {
                 className="d-flex justify-content-left"
               >
                 <Text strong>Технические требования:</Text>
-                <Text type="secondary">ОЛ, ТТ, ТЗ:</Text>
+                <Text type="secondary"> {unitQuestionareTitle}</Text>
               </Space>
             )}
           </Space>
@@ -54,8 +56,9 @@ const Header: FC<HeaderProps> = ({ data }) => {
                 className="d-flex justify-content-left"
               >
                 <Text strong>Подобъект:</Text>
-                <Text type="secondary">Шифр.</Text>
-                <Text type="secondary">Наименование</Text>
+                <Text type="secondary">
+                  {subUnitPosition}. {subUnitTitle}
+                </Text>
               </Space>
               {subUnitQuestionareTitle && (
                 <Space
@@ -63,7 +66,7 @@ const Header: FC<HeaderProps> = ({ data }) => {
                   className="d-flex justify-content-left"
                 >
                   <Text strong>Технические требования:</Text>
-                  <Text type="secondary">ОЛ, ТТ, ТЗ:</Text>
+                  <Text type="secondary"> {subUnitQuestionareTitle}</Text>
                 </Space>
               )}
             </Space>

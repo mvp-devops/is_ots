@@ -1,7 +1,7 @@
 import {
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentView,
-} from "../../../../common/types/comments-accounting";
+} from "../../../../../common/types/comments-accounting";
 
 import { ColumnFilterItem } from "antd/lib/table/interface";
 

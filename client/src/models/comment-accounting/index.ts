@@ -1,19 +1,14 @@
-import CommentForm from "./components/forms/CommentForm";
-import SolutionForm from "./components/forms/SolutionForm";
-import CommentTable from "./components/tables/CommentTable";
-import SolutionTable from "./components/tables/SolutionTable";
+import { CommentFormProps } from "./components/forms/CommentForm";
+import { SolutionFormProps } from "./components/forms/SolutionForm";
 import CollectiveCheckSheet from "./components/views/CollectiveCheckSheet";
-import Header from "./components/views/Header";
-import ModalContainer from "./components/views/ModalContainer";
-import { createOneItem } from "./api/comment-accounting.api";
+import { CommentTableProps } from "./components/tables/CommentTable";
+import { SolutionTableProps } from "./components/tables/SolutionTable";
 
-export {
-  CommentForm,
-  SolutionForm,
-  CommentTable,
-  SolutionTable,
-  CollectiveCheckSheet,
-  Header,
-  ModalContainer,
-  createOneItem,
+export type {
+  CommentFormProps,
+  CommentTableProps,
+  SolutionFormProps,
+  SolutionTableProps,
 };
+
+export default CollectiveCheckSheet;

@@ -1,13 +1,14 @@
 import { FC } from "react";
 import { Table, TableColumnsType, Typography } from "antd";
 
-import { CommentAccounting } from "../../comment-accounting.model";
+import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
 } from "../../../../../../common/types/comments-accounting";
+// import "./table.css";
 
-interface SolutionTableProps {
+export interface SolutionTableProps {
   record: DesignDocumentCommentView;
 }
 
@@ -20,12 +21,14 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
     {
       title: "Ответ проектировщика",
       width: 950,
+      className: "bg-primary text-white",
       children: [
         {
           title: "Статус",
           dataIndex: "statusId",
           key: "statusId",
           width: 50,
+
           align: "center",
           filterSearch:
             commentModel.setSolutionFilters("status", record).length > 5
@@ -147,14 +150,17 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
   }
 
   return (
-    <Table
-      bordered
-      className="d-flex"
-      columns={columns}
-      dataSource={data}
-      pagination={false}
-      rowKey={() => Math.random()}
-    />
+    <div className="mt-3 mb-3">
+      <Table
+        bordered
+        className="d-flex"
+        columns={columns}
+        dataSource={data}
+        rowClassName={(record) => "bg-white"}
+        pagination={false}
+        rowKey={() => Math.random()}
+      />
+    </div>
   );
 };
 

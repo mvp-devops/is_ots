@@ -1,7 +1,7 @@
 import {
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentSolutionCreationAttrs,
-} from "./../../../../../common/types/comments-accounting";
+} from "../../../../../common/types/comments-accounting";
 import { ApiProperty } from "@nestjs/swagger";
 
 export class CreateDesignDocumentCommentDto

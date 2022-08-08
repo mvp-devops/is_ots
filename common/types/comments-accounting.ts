@@ -62,3 +62,16 @@ export interface DesignDocumentCommentRequestData {
   subUnitQuestionareTitle: string | null; // Наименование ОЛ, ТТ, ТТТ
   view: DesignDocumentCommentView[];
 }
+
+export interface CapitalConstructionUnitSupervisionCommentCreationAttrs {
+  projectDocumentId: number | string | null;
+  unitDocumentId: number | string | null;
+  subUnitDocumentId: number | string | null;
+  supplierDocumentId: number | string | null;
+  directionId: number | string | null;
+  normativeId: number | string | null;
+  userId: number | string | null;
+  criticalityId: number | string | null;
+  comment: string;
+  solutions: DesignDocumentCommentSolutionCreationAttrs[] | null;
+}

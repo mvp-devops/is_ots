@@ -20,7 +20,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
     <Modal
       title={
         <Space className="d-flex justify-content-center">
-          <Text strong>
+          <Text strong className="text-white">
             {action === "POST"
               ? "Добавление нового замечания"
               : "Редактирование замечания"}

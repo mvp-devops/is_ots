@@ -6,9 +6,11 @@ import {
   CloseOutlined,
   PrinterOutlined,
 } from "@ant-design/icons";
-import { Header, CommentTable } from "../../";
 import { setCurrentDate } from "../../../../utils/main.utils";
 import { DesignDocumentCommentRequestData } from "../../../../../../common/types/comments-accounting";
+import Header from "./Header";
+import CommentTable from "../tables/CommentTable";
+import { useNavigate } from "react-router-dom";
 
 interface CollectiveCheckSheetProps {
   data: DesignDocumentCommentRequestData;
@@ -17,9 +19,13 @@ interface CollectiveCheckSheetProps {
 const { Text } = Typography;
 
 const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
+
   return (
     <Skeleton active loading={false}>
-      <Space direction="vertical" size="small" className="p-1 m-1 border">
+      <Space direction="vertical" size="small" className="p-3 m-1 border">
         <Space className="d-flex justify-content-between mt-3 mb-3">
           <Text strong>{setCurrentDate()}</Text>
           <Text strong>ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ</Text>
@@ -42,10 +48,7 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
               style={{ cursor: "pointer" }}
               title="Закрыть"
               className="text-secondary"
-              //  onClick={() => {
-              //    setActionType(FormActions.UPDATE);
-              //    setAddCommentsVisible(true);
-              //  }}
+              onClick={goBack}
             />
           </Space>
         </Space>

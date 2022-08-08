@@ -13,18 +13,23 @@ import {
   DeleteOutlined,
   EllipsisOutlined,
   PlusOutlined,
+  FilePdfOutlined,
+  FileUnknownOutlined,
 } from "@ant-design/icons";
 import { FC, ReactNode, useState } from "react";
 import { DesignDocumentCommentView } from "../../../../../../common/types/comments-accounting";
-import { CommentAccounting } from "../../comment-accounting.model";
+import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   criticalityRequestData,
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import { SolutionTable, ModalContainer, CommentForm } from "../../";
+import ModalContainer from "../views/ModalContainer";
+import CommentForm from "../forms/CommentForm";
+import SolutionTable from "./SolutionTable";
+import { Link, useNavigate } from "react-router-dom";
 
-interface CommentTableProps {
+export interface CommentTableProps {
   data: DesignDocumentCommentView[];
 }
 
@@ -38,62 +43,67 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const [actionType, setActionType] = useState("POST");
 
   const commentModel = new CommentAccounting();
+  const navigate = useNavigate();
+
+  const goBack = () => navigate(-1);
+  const openDocument = (baseUrl: string, documentPath: string) =>
+    navigate(`${baseUrl}/${documentPath}`, { replace: true });
 
   const menu = (
     <Menu
       items={[
         {
           label: (
-            <Text
-              type="success"
+            <Space
+              className="text-secondary"
               onClick={() => {
                 setActionType("POST");
                 setFormVisible(true);
               }}
             >
+              <PlusOutlined
+                style={{ marginBottom: "6px", padding: 0 }}
+                className="text-success"
+              />
               Добавить
-            </Text>
+            </Space>
           ),
 
           key: "1",
-          icon: (
-            <PlusOutlined title="Добавить решение" className="text-success" />
-          ),
         },
         {
           label: (
-            <Text
-              type="secondary"
+            <Space
+              className="text-secondary"
               onClick={() => {
                 setActionType("UPDATE");
                 setFormVisible(true);
               }}
             >
+              <EditOutlined
+                style={{ marginBottom: "6px", padding: 0 }}
+                className="text-secondary"
+              />
               Редактировать
-            </Text>
+            </Space>
           ),
 
           key: "2",
-          icon: (
-            <EditOutlined
-              title="Редактировать запись"
-              className="text-secondary"
-            />
-          ),
         },
         {
           label: (
-            <Text
-              type="danger"
+            <Space
               // onClick={() => setDetailVisible(true)}
+              className="text-secondary"
             >
+              <DeleteOutlined
+                className="text-danger"
+                style={{ marginBottom: "6px", padding: 0 }}
+              />
               Удалить
-            </Text>
+            </Space>
           ),
           key: "3",
-          icon: (
-            <DeleteOutlined title="Удалить запись" className="text-danger" />
-          ),
         },
       ]}
     />
@@ -102,6 +112,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const expandedRowRender = (record: DesignDocumentCommentView): ReactNode => (
     <SolutionTable record={record} />
   );
+
+  const fileType = "PDF";
 
   const columns: TableColumnsType<DesignDocumentCommentView> = [
     {
@@ -141,6 +153,29 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "documentTitle",
       width: 250,
       align: "center",
+      render: (_, record) => {
+        return (
+          <Text
+            onClick={() => openDocument("baseUrl", "documentPath")}
+            style={{ cursor: "pointer" }}
+            title="Показать документ"
+          >
+            {fileType && fileType.toUpperCase() === "PDF" ? (
+              <FilePdfOutlined
+                style={{ marginBottom: "8px", marginRight: "4px" }}
+                className="text-danger"
+              />
+            ) : (
+              <FileUnknownOutlined
+                style={{ marginBottom: "8px" }}
+                className="text-secondary"
+              />
+            )}
+
+            <Text>{record.documentTitle}</Text>
+          </Text>
+        );
+      },
     },
     {
       title: "Страница/Лист документа",
@@ -228,7 +263,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "actions",
       render: (_blank, record) => (
         <Dropdown trigger={["click"]} overlay={menu}>
-          <EllipsisOutlined />
+          <EllipsisOutlined className="text-secondary" />
         </Dropdown>
       ),
     },
@@ -271,7 +306,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   }
                   bordered
                   size="small"
-                  style={{ width: "1000px" }}
+                  // style={{ width: "1000px" }}
                   dataSource={criticalityRequestData.slice(1, 11)}
                   renderItem={(item) => (
                     <Item key={item.id}>
