@@ -104,147 +104,147 @@ export const setUrl = (target: string, id?: string): string => {
 //   return item;
 // };
 
-export const getCurrentEssence = async (
-  target: string,
-  currentId: string
-): Promise<CurrentItemType> => {
-  const url = setUrl("api/current-item");
-  const { data } = await axios.get<CurrentItemType>(url, {
-    params: { target, currentId },
-  });
+// export const getCurrentEssence = async (
+//   target: string,
+//   currentId: string
+// ): Promise<CurrentItemType> => {
+//   const url = setUrl("api/current-item");
+//   const { data } = await axios.get<CurrentItemType>(url, {
+//     params: { target, currentId },
+//   });
 
-  return data;
-};
+//   return data;
+// };
 
-export const getMenuItems = async (
-  role: string,
-  id?: string
-): Promise<PositionTreeItem[]> => {
-  const url = setUrl("api");
+// export const getMenuItems = async (
+//   role: string,
+//   id?: string
+// ): Promise<PositionTreeItem[]> => {
+//   const url = setUrl("api");
 
-  let items: PositionTreeItem[] = [];
+//   let items: PositionTreeItem[] = [];
 
-  try {
-    const { data } = await axios.get<PositionTreeItem[]>(url);
+//   try {
+//     const { data } = await axios.get<PositionTreeItem[]>(url);
 
-    items =
-      role === Roles.ADMINISTRATOR || role === Roles.EXPERT
-        ? data
-        : data.filter((item) => item.id === id);
-  } catch (error) {
-    alert(error);
-  }
+//     items =
+//       role === Roles.ADMINISTRATOR || role === Roles.EXPERT
+//         ? data
+//         : data.filter((item) => item.id === id);
+//   } catch (error) {
+//     alert(error);
+//   }
 
-  return items;
-};
+//   return items;
+// };
 
-export const getListItems = async (
-  target: string,
-  parrentId?: string
-): Promise<Items> => {
-  const url = setUrl(target);
+// export const getListItems = async (
+//   target: string,
+//   parrentId?: string
+// ): Promise<Items> => {
+//   const url = setUrl(target);
 
-  try {
-    if (!parrentId) {
-      const { data } = await axios.get<Items>(url);
-      return data;
-    }
+//   try {
+//     if (!parrentId) {
+//       const { data } = await axios.get<Items>(url);
+//       return data;
+//     }
 
-    switch (target) {
-      case "field": {
-        const { data } = await axios.get<Items>(url, {
-          params: { subsidiaryId: parrentId },
-        });
-        return data;
-      }
+//     switch (target) {
+//       case "field": {
+//         const { data } = await axios.get<Items>(url, {
+//           params: { subsidiaryId: parrentId },
+//         });
+//         return data;
+//       }
 
-      case "project": {
-        const { data } = await axios.get<Items>(url, {
-          params: { fieldId: parrentId },
-        });
-        return data;
-      }
+//       case "project": {
+//         const { data } = await axios.get<Items>(url, {
+//           params: { fieldId: parrentId },
+//         });
+//         return data;
+//       }
 
-      default:
-        break;
-    }
-  } catch (error) {
-    alert(error);
-  }
+//       default:
+//         break;
+//     }
+//   } catch (error) {
+//     alert(error);
+//   }
 
-  return null;
-};
+//   return null;
+// };
 
-export const getStatistic = async (
-  target: string,
-  id: string
-): Promise<StatisticRender> => {
-  const url = setUrl("api/statistic");
-  const { data } = await axios.get<StatisticRender>(url, {
-    params: { target, id },
-  });
+// export const getStatistic = async (
+//   target: string,
+//   id: string
+// ): Promise<StatisticRender> => {
+//   const url = setUrl("api/statistic");
+//   const { data } = await axios.get<StatisticRender>(url, {
+//     params: { target, id },
+//   });
 
-  return data;
-};
+//   return data;
+// };
 
-export const getAllEssences = async (
-  target: string,
-  parrentId?: string
-): Promise<Items> => {
-  const url = setUrl(target);
+// export const getAllEssences = async (
+//   target: string,
+//   parrentId?: string
+// ): Promise<Items> => {
+//   const url = setUrl(target);
 
-  try {
-    if (!parrentId) {
-      const { data } = await axios.get<Items>(url);
-      return data;
-    }
+//   try {
+//     if (!parrentId) {
+//       const { data } = await axios.get<Items>(url);
+//       return data;
+//     }
 
-    switch (target) {
-      case "field": {
-        const { data } = await axios.get<Items>(url, {
-          params: { subsidiaryId: parrentId },
-        });
-        return data;
-      }
+//     switch (target) {
+//       case "field": {
+//         const { data } = await axios.get<Items>(url, {
+//           params: { subsidiaryId: parrentId },
+//         });
+//         return data;
+//       }
 
-      case "project": {
-        const { data } = await axios.get<Items>(url, {
-          params: { fieldId: parrentId },
-        });
-        return data;
-      }
-      case "unit": {
-        const { data } = await axios.get<Items>(url, {
-          params: { projectId: parrentId },
-        });
-        return data;
-      }
+//       case "project": {
+//         const { data } = await axios.get<Items>(url, {
+//           params: { fieldId: parrentId },
+//         });
+//         return data;
+//       }
+//       case "unit": {
+//         const { data } = await axios.get<Items>(url, {
+//           params: { projectId: parrentId },
+//         });
+//         return data;
+//       }
 
-      default:
-        break;
-    }
-  } catch (error) {
-    alert(error);
-  }
+//       default:
+//         break;
+//     }
+//   } catch (error) {
+//     alert(error);
+//   }
 
-  return null;
-};
+//   return null;
+// };
 
-export const getCheckList = async (
-  target: string,
-  currentId: string,
-  settings: CheckListSettings
-): Promise<ProjectCheckListView | null> => {
-  const url = setUrl("api/check-list");
-  console.log(url);
-  try {
-    const { data } = await axios.post<ProjectCheckListView>(url, settings, {
-      params: { target, currentId },
-    });
-    return data;
-  } catch (error) {
-    alert(error);
-  }
+// export const getCheckList = async (
+//   target: string,
+//   currentId: string,
+//   settings: CheckListSettings
+// ): Promise<ProjectCheckListView | null> => {
+//   const url = setUrl("api/check-list");
+//   console.log(url);
+//   try {
+//     const { data } = await axios.post<ProjectCheckListView>(url, settings, {
+//       params: { target, currentId },
+//     });
+//     return data;
+//   } catch (error) {
+//     alert(error);
+//   }
 
-  return null;
-};
+//   return null;
+// };

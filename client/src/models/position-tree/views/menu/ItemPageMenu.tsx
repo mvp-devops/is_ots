@@ -11,6 +11,7 @@ import {
   FileAddOutlined,
   ContainerOutlined,
   SearchOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
@@ -25,6 +26,8 @@ export interface ItemPageMenuProps {
   role: string;
   target: string;
   childTarget: string;
+  showSLOE: boolean;
+  setShowSLOE: () => void;
 }
 
 export enum Roles {
@@ -65,7 +68,13 @@ const setMenuItems = (
   return menuItems;
 };
 
-const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, target, childTarget }) => {
+const ItemPageMenu: FC<ItemPageMenuProps> = ({
+  role,
+  target,
+  childTarget,
+  showSLOE,
+  setShowSLOE,
+}) => {
   const items: MenuItem[] = [
     {
       label: (
@@ -140,6 +149,18 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, target, childTarget }) => {
             </Space>
           ),
           key: "2-2",
+        },
+        {
+          label: (
+            <Space onClick={setShowSLOE}>
+              <AppstoreOutlined
+                className="text-dark"
+                style={{ marginBottom: "16px", padding: 0 }}
+              />
+              Перечень оборудования
+            </Space>
+          ),
+          key: "2-3",
         },
       ],
     },
