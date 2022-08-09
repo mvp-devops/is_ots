@@ -110,7 +110,7 @@ export class SubUnitEntity extends Model<SubUnitEntity, SubUnitCreationAttrs> {
   description: string;
 
   @BelongsTo(() => UnitEntity)
-  parrent: UnitEntity;
+  unit: UnitEntity;
 
   @BelongsTo(() => CounterpartyEntity)
   supplier: CounterpartyEntity;

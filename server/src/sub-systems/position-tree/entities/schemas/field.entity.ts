@@ -62,8 +62,8 @@ export class FieldEntity extends Model<FieldEntity, FieldCreationAttrs> {
   description: string;
 
   @BelongsTo(() => SubsidiaryEntity)
-  parrent: SubsidiaryEntity;
+  subsidiary: SubsidiaryEntity;
 
   @HasMany(() => ProjectEntity)
-  children: ProjectEntity[];
+  projects: ProjectEntity[];
 }

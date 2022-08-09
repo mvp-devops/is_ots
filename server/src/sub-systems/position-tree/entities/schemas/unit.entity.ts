@@ -111,7 +111,7 @@ export class UnitEntity extends Model<UnitEntity, UnitCreationAttrs> {
   description: string;
 
   @BelongsTo(() => ProjectEntity)
-  parrent: ProjectEntity;
+  project: ProjectEntity;
 
   @BelongsTo(() => CounterpartyEntity)
   supplier: CounterpartyEntity;
@@ -120,7 +120,7 @@ export class UnitEntity extends Model<UnitEntity, UnitCreationAttrs> {
   equipment: EquipmentEntity;
 
   @HasMany(() => SubUnitEntity)
-  children: SubUnitEntity[];
+  subUnits: SubUnitEntity[];
 
   // @HasMany(() => DesignDocumentEntity)
   // documents: DesignDocumentEntity[];

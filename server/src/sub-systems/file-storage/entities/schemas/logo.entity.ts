@@ -71,16 +71,6 @@ export class LogoEntity extends Model<LogoEntity, LogoCreationAttrs> {
   filePath: string;
 
   @ApiProperty({
-    example: "Имя файла",
-    description: "Имя файла",
-  })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  fileName: string;
-
-  @ApiProperty({
     example: "Тип файла",
     description: "Тип файла",
   })
@@ -98,7 +88,7 @@ export class LogoEntity extends Model<LogoEntity, LogoCreationAttrs> {
     type: DataType.STRING,
     allowNull: false,
   })
-  file: string;
+  fileName: string;
 
   @BelongsTo(() => SubsidiaryEntity)
   subsidiary: SubsidiaryEntity;

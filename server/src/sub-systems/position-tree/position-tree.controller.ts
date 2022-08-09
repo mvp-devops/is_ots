@@ -7,21 +7,26 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
 import { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
+import { FileInterceptor } from "@nestjs/platform-express";
 
 @Controller("position-tree")
 export class PositionTreeController {
   constructor(private readonly service: PositionTreeService) {}
 
   @Post("/add")
+  @UseInterceptors(FileInterceptor("file"))
   create(
     @Body() dto: CreatePositionTreeDto,
-    @Query() query: { target: string }
+    @Query() query: { target: string },
+    @UploadedFile() file?: any
   ) {
     const { target } = query;
-    return this.service.create(target, dto);
+    return this.service.createOne(target, dto, file);
   }
 
   @Get("/find")
@@ -30,8 +35,9 @@ export class PositionTreeController {
   }
 
   @Get("/find:id")
-  findOne(@Param("id") id: string) {
-    return this.service.findOne(id);
+  findOne(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.findOne(id, target);
   }
 
   @Patch("/edit:id")

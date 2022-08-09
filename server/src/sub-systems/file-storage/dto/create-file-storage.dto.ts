@@ -35,12 +35,6 @@ export class CreateLogoDto implements LogoCreationAttrs {
   readonly filePath: string;
 
   @ApiProperty({
-    example: "Имя файла",
-    description: "Имя файла",
-  })
-  readonly fileName: string;
-
-  @ApiProperty({
     example: "Тип файла",
     description: "Тип файла",
   })
@@ -50,5 +44,5 @@ export class CreateLogoDto implements LogoCreationAttrs {
     example: "00dd3128-3332-4ff1-b108-75d739291a0d.png",
     description: "Путь к файлу",
   })
-  readonly file: string;
+  readonly fileName: string;
 }

@@ -83,13 +83,13 @@ export class ProjectEntity extends Model<ProjectEntity, ProjectCreationAttrs> {
   description: string;
 
   @BelongsTo(() => FieldEntity)
-  parrent: FieldEntity;
+  field: FieldEntity;
 
   @BelongsTo(() => DesignEntity)
   design: DesignEntity;
 
   @HasMany(() => UnitEntity)
-  children: UnitEntity[];
+  units: UnitEntity[];
 
   // @HasMany(() => DesignDocumentEntity)
   // documents: DesignDocumentEntity[];
