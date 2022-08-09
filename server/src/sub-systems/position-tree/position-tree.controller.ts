@@ -41,17 +41,20 @@ export class PositionTreeController {
   }
 
   @Patch("/edit:id")
+  @UseInterceptors(FileInterceptor("file"))
   update(
     @Param("id") id: string,
     @Query() query: { target: string },
-    @Body() dto: UpdatePositionTreeDto
+    @Body() dto: UpdatePositionTreeDto,
+    @UploadedFile() file?: any
   ) {
     const { target } = query;
-    return this.service.update(id, target, dto);
+    return this.service.update(id, target, dto, file);
   }
 
   @Delete("remove/:id")
-  remove(@Param("id") id: string) {
-    return this.service.remove(id);
+  remove(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.remove(id, target);
   }
 }

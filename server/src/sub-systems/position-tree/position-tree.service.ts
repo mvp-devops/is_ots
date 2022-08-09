@@ -12,12 +12,12 @@ import {
   UnitEntity,
 } from "./entities";
 
-export interface PositionTreeItem
-  extends FieldEntity,
-    ProjectEntity,
-    SubsidiaryEntity,
-    SubUnitEntity,
-    UnitEntity {}
+// export interface PositionTreeItem
+//   extends FieldEntity,
+//     ProjectEntity,
+//     SubsidiaryEntity,
+//     SubUnitEntity,
+//     UnitEntity {}
 
 @Injectable()
 export class PositionTreeService {
@@ -212,6 +212,12 @@ export class PositionTreeService {
     return item;
   }
 
+  async createMany(target: string, dto: any[], files?: any[]) {
+    for (let i = 0; i < dto.length; i++) {
+      await this.createOne(target, dto[i]);
+    }
+  }
+
   async findOne(id: string, target: string) {
     const item = await this.subsidiaryRepository.findOne({
       where: { id },
@@ -272,11 +278,27 @@ export class PositionTreeService {
     return `This action returns all commentAccounting`;
   }
 
-  update(id: string, target: string, dto: UpdatePositionTreeDto) {
+  async update(
+    id: string,
+    target: string,
+    dto: UpdatePositionTreeDto,
+    file?: any
+  ) {
     return `This action updates a #${id} commentAccounting`;
   }
 
-  remove(id: string) {
-    return `This action removes a #${id} commentAccounting`;
+  async remove(id: string, target: string) {
+    const item = await this.findOne(id, target);
+    // const { title, logo } = item.render[0];
+    // const folderName: string = this.getFolderName(id, title);
+
+    // if (logo) {
+    //   this.fileService.removeDirectoryOrFile(logo);
+    // }
+
+    // await this.logoRepository.destroy({ where: { subsidiaryId: id } });
+
+    // await this.repository.destroy({ where: { id } });
+    // this.fileService.removeDirectoryOrFile(folderName);
   }
 }
