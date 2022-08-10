@@ -18,7 +18,6 @@ import {
 } from "@ant-design/icons";
 import { FC, ReactNode, useState } from "react";
 import { DesignDocumentCommentView } from "../../../../../../common/types/comments-accounting";
-import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   criticalityRequestData,
   solutionRequestData,
@@ -28,6 +27,7 @@ import ModalContainer from "../views/ModalContainer";
 import CommentForm from "../forms/CommentForm";
 import SolutionTable from "./SolutionTable";
 import { Link, useNavigate } from "react-router-dom";
+import { setCommentFilters } from "./table.settings";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -42,7 +42,6 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const [formVisible, setFormVisible] = useState(false);
   const [actionType, setActionType] = useState("POST");
 
-  const commentModel = new CommentAccounting();
   const navigate = useNavigate();
 
   const goBack = () => navigate(-1);
@@ -128,10 +127,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "documentSection",
       key: "documentSection",
       filterSearch:
-        commentModel.setCommentFilters("document-section", data).length > 5
-          ? true
-          : false,
-      filters: commentModel.setCommentFilters("document-section", data),
+        setCommentFilters("document-section", data).length > 5 ? true : false,
+      filters: setCommentFilters("document-section", data),
       onFilter: (value: any, record) =>
         record.documentSection
           ? record.documentSection.toUpperCase().includes(value.toUpperCase())
@@ -196,10 +193,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "normative",
       key: "normative",
       filterSearch:
-        commentModel.setCommentFilters("normative", data).length > 5
-          ? true
-          : false,
-      filters: commentModel.setCommentFilters("normative", data),
+        setCommentFilters("normative", data).length > 5 ? true : false,
+      filters: setCommentFilters("normative", data),
       onFilter: (value: any, record) =>
         record.normative
           ? record.normative.toUpperCase().includes(value.toUpperCase())
@@ -213,10 +208,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "criticalityId",
       key: "criticalityId",
       filterSearch:
-        commentModel.setCommentFilters("criticality", data).length > 5
-          ? true
-          : false,
-      filters: commentModel.setCommentFilters("criticality", data),
+        setCommentFilters("criticality", data).length > 5 ? true : false,
+      filters: setCommentFilters("criticality", data),
       onFilter: (value: any, record) =>
         record.criticalityId
           ? record.criticalityId
@@ -233,10 +226,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "expertSubdivision",
       key: "expertSubdivision",
       filterSearch:
-        commentModel.setCommentFilters("expert-subdivision", data).length > 5
-          ? true
-          : false,
-      filters: commentModel.setCommentFilters("expert-subdivision", data),
+        setCommentFilters("expert-subdivision", data).length > 5 ? true : false,
+      filters: setCommentFilters("expert-subdivision", data),
       onFilter: (value: any, record) =>
         record.expertSubdivision
           ? record.expertSubdivision.toUpperCase().includes(value.toUpperCase())
@@ -248,10 +239,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "expertContacts",
       key: "expertContacts",
       filterSearch:
-        commentModel.setCommentFilters("expert-contacts", data).length > 5
-          ? true
-          : false,
-      filters: commentModel.setCommentFilters("expert-contacts", data),
+        setCommentFilters("expert-contacts", data).length > 5 ? true : false,
+      filters: setCommentFilters("expert-contacts", data),
       onFilter: (value: any, record) =>
         record.expertContacts
           ? record.expertContacts.toUpperCase().includes(value.toUpperCase())

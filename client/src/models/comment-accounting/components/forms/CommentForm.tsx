@@ -5,12 +5,12 @@ import {
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentSolutionCreationAttrs,
 } from "../../../../../../common/types/comments-accounting";
-import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   criticalityRequestData,
   directionRequestData,
 } from "../../utils/comment-accounting.consts";
 import { addItem } from "./form.actions";
+import { initCommentFormData } from "./form.settings";
 import SolutionForm from "./SolutionForm";
 
 const { Item } = Form;
@@ -28,9 +28,8 @@ const CommentForm: FC<CommentFormProps> = ({
   data,
   onCancel,
 }) => {
-  const commentModel = new CommentAccounting();
   const [requestData, setRequestData] = useState(
-    commentModel.initCommentFormData(target, currentId, data ? data : null)
+    initCommentFormData(target, currentId, data ? data : null)
   );
   const [solutions, setSolutions] = useState<
     DesignDocumentCommentSolutionCreationAttrs[]

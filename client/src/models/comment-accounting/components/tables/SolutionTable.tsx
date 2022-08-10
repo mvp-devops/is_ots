@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Table, TableColumnsType, Typography } from "antd";
 
-import { CommentAccounting } from "../../models/comment-accounting.model";
 import {
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
 } from "../../../../../../common/types/comments-accounting";
+import { setSolutionFilters } from "./table.settings";
 // import "./table.css";
 
 export interface SolutionTableProps {
@@ -15,8 +15,6 @@ export interface SolutionTableProps {
 const { Text } = Typography;
 
 const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
-  const commentModel = new CommentAccounting();
-
   const columns: TableColumnsType<DesignDocumentCommentSolutionView> = [
     {
       title: "Ответ проектировщика",
@@ -31,10 +29,8 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
 
           align: "center",
           filterSearch:
-            commentModel.setSolutionFilters("status", record).length > 5
-              ? true
-              : false,
-          filters: commentModel.setSolutionFilters("status", record),
+            setSolutionFilters("status", record).length > 5 ? true : false,
+          filters: setSolutionFilters("status", record),
           onFilter: (value: any, record) =>
             record.statusId
               ? record.statusId
@@ -84,10 +80,8 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           width: 50,
           align: "center",
           filterSearch:
-            commentModel.setSolutionFilters("solution", record).length > 5
-              ? true
-              : false,
-          filters: commentModel.setSolutionFilters("solution", record),
+            setSolutionFilters("solution", record).length > 5 ? true : false,
+          filters: setSolutionFilters("solution", record),
           onFilter: (value: any, record) =>
             record.solutionId
               ? record.solutionId
