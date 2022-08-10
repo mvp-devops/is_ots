@@ -11,7 +11,7 @@ import {
   DeleteOutlined,
   EllipsisOutlined,
 } from "@ant-design/icons";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { impulseLineSum, setImpulseLineLogFilters } from "./table.setting";
 import { ImpulseLineLogView } from "../../../../../../common/types/equipment-accounting";
 
@@ -20,9 +20,55 @@ const { Text } = Typography;
 
 interface TableProps {
   data: ImpulseLineLogView[];
+  searchValue: string;
+  unitId: string;
+  subUnitId: string;
 }
 
-const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
+const ImpulseLineLogTable: FC<TableProps> = ({
+  data,
+  searchValue,
+  unitId,
+  subUnitId,
+}) => {
+  const [dataSource, setDataSource] = useState<ImpulseLineLogView[]>([]);
+
+  useEffect(() => setDataSource(data), [data]);
+
+  useEffect(
+    () =>
+      setDataSource(
+        data.filter(
+          (item) =>
+            item?.unit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.subUnit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.tag?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.numberOfTrace?.includes(searchValue.toUpperCase()) ||
+            item?.impulseLineType
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.fromPlace
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.toPlace?.toUpperCase()?.includes(searchValue.toUpperCase())
+        )
+      ),
+    [searchValue]
+  );
+
+  useEffect(() => {
+    unitId
+      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      : setDataSource(data);
+  }, [data, unitId]);
+
+  useEffect(() => {
+    subUnitId
+      ? setDataSource(
+          dataSource.filter((item) => item?.subUnitId === subUnitId)
+        )
+      : setDataSource(data);
+  }, [data, subUnitId]);
   const menu = (
     <Menu
       items={[
@@ -84,8 +130,10 @@ const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
           align: "center",
           width: 250,
           filterSearch:
-            setImpulseLineLogFilters("unit", data).length > 5 ? true : false,
-          filters: setImpulseLineLogFilters("unit", data),
+            setImpulseLineLogFilters("unit", dataSource).length > 5
+              ? true
+              : false,
+          filters: setImpulseLineLogFilters("unit", dataSource),
           onFilter: (value: any, record) =>
             record.unit
               ? record.unit.toUpperCase().includes(value.toUpperCase())
@@ -99,10 +147,10 @@ const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
           align: "center",
           width: 250,
           filterSearch:
-            setImpulseLineLogFilters("sub-unit", data).length > 5
+            setImpulseLineLogFilters("sub-unit", dataSource).length > 5
               ? true
               : false,
-          filters: setImpulseLineLogFilters("sub-unit", data),
+          filters: setImpulseLineLogFilters("sub-unit", dataSource),
           onFilter: (value: any, record) =>
             record.subUnit
               ? record.subUnit.toUpperCase().includes(value.toUpperCase())
@@ -116,8 +164,10 @@ const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
           align: "center",
           width: 200,
           filterSearch:
-            setImpulseLineLogFilters("tag", data).length > 5 ? true : false,
-          filters: setImpulseLineLogFilters("tag", data),
+            setImpulseLineLogFilters("tag", dataSource).length > 5
+              ? true
+              : false,
+          filters: setImpulseLineLogFilters("tag", dataSource),
           onFilter: (value: any, record) =>
             record.tag.toUpperCase().includes(value.toUpperCase()),
           render: (value) => <Text type="secondary">{value}</Text>,
@@ -137,12 +187,12 @@ const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
       dataIndex: "impulseLineType",
       key: "impulseLineType",
       align: "center",
-      // width: 120,
+      width: 200,
       filterSearch:
-        setImpulseLineLogFilters("impulse-line-type", data).length > 5
+        setImpulseLineLogFilters("impulse-line-type", dataSource).length > 5
           ? true
           : false,
-      filters: setImpulseLineLogFilters("impulse-line-type", data),
+      filters: setImpulseLineLogFilters("impulse-line-type", dataSource),
       onFilter: (value: any, record) =>
         record.impulseLineType.toUpperCase().includes(value.toUpperCase()),
       render: (value) => <Text type="secondary">{value}</Text>,
@@ -207,7 +257,7 @@ const ImpulseLineLogTable: FC<TableProps> = ({ data }) => {
       bordered
       pagination={data.length < 5 && false}
       scroll={{ y: 500, x: "100%" }}
-      dataSource={data}
+      dataSource={dataSource}
       columns={columns}
       rowKey={(record) => Math.random()}
       summary={(data) => (

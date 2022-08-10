@@ -12,12 +12,13 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import {
   cableSum,
   formatDate,
   setDateToVerification,
   setMetrologyFilters,
+  verificateDates,
 } from "./table.setting";
 import { MetrologyView } from "../../../../../../common/types/equipment-accounting";
 const { Row, Cell } = Table.Summary;
@@ -25,9 +26,73 @@ const { Text } = Typography;
 
 interface TableProps {
   data: MetrologyView[];
+  searchValue: string;
+  unitId: string;
+  subUnitId: string;
 }
 
-const MetrologyTable: FC<TableProps> = ({ data }) => {
+const MetrologyTable: FC<TableProps> = ({
+  data,
+  searchValue,
+  unitId,
+  subUnitId,
+}) => {
+  const [dataSource, setDataSource] = useState<MetrologyView[]>([]);
+
+  useEffect(() => setDataSource(data), [data]);
+
+  useEffect(
+    () =>
+      setDataSource(
+        data.filter(
+          (item) =>
+            item?.unit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.subUnit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.tag?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.sgroei?.includes(searchValue.toUpperCase()) ||
+            item?.measurementArea
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.meansurementType
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.meansureGroup
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.grsi?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.documentType
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.documentNumber
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.counterparty
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.fromDate
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.toDate?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.status?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.mpi?.toUpperCase()?.includes(searchValue.toUpperCase())
+        )
+      ),
+    [searchValue]
+  );
+
+  useEffect(() => {
+    unitId
+      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      : setDataSource(data);
+  }, [data, unitId]);
+
+  useEffect(() => {
+    subUnitId
+      ? setDataSource(
+          dataSource.filter((item) => item?.subUnitId === subUnitId)
+        )
+      : setDataSource(data);
+  }, [data, subUnitId]);
   const menu = (
     <Menu
       items={[
@@ -180,9 +245,10 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
           dataIndex: "unit",
           key: "unit",
           align: "center",
+          width: 150,
           filterSearch:
-            setMetrologyFilters("unit", data).length > 5 ? true : false,
-          filters: setMetrologyFilters("unit", data),
+            setMetrologyFilters("unit", dataSource).length > 5 ? true : false,
+          filters: setMetrologyFilters("unit", dataSource),
           onFilter: (value: any, record) =>
             record.unit
               ? record.unit.toUpperCase().includes(value.toUpperCase())
@@ -193,9 +259,12 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
           title: "Установка",
           dataIndex: "subUnit",
           key: "subUnit",
+          width: 150,
           filterSearch:
-            setMetrologyFilters("sub-unit", data).length > 5 ? true : false,
-          filters: setMetrologyFilters("sub-unit", data),
+            setMetrologyFilters("sub-unit", dataSource).length > 5
+              ? true
+              : false,
+          filters: setMetrologyFilters("sub-unit", dataSource),
           onFilter: (value: any, record) =>
             record.subUnit
               ? record.subUnit.toUpperCase().includes(value.toUpperCase())
@@ -207,8 +276,8 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
           dataIndex: "tag",
           key: "tag",
           filterSearch:
-            setMetrologyFilters("tag", data).length > 5 ? true : false,
-          filters: setMetrologyFilters("tag", data),
+            setMetrologyFilters("tag", dataSource).length > 5 ? true : false,
+          filters: setMetrologyFilters("tag", dataSource),
           onFilter: (value: any, record) =>
             record.tag.toUpperCase().includes(value.toUpperCase()),
           render: (value) => <Text type="secondary">{value}</Text>,
@@ -234,8 +303,10 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
       dataIndex: "measurementArea",
       key: "measurementArea",
       align: "center",
-      filterSearch: setMetrologyFilters("area", data).length > 5 ? true : false,
-      filters: setMetrologyFilters("area", data),
+      width: 120,
+      filterSearch:
+        setMetrologyFilters("area", dataSource).length > 5 ? true : false,
+      filters: setMetrologyFilters("area", dataSource),
       onFilter: (value: any, record) =>
         record.measurementArea
           ? record.measurementArea.toUpperCase().includes(value.toUpperCase())
@@ -247,8 +318,10 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
       dataIndex: "meansurementType",
       key: "meansurementType",
       align: "center",
-      filterSearch: setMetrologyFilters("type", data).length > 5 ? true : false,
-      filters: setMetrologyFilters("type", data),
+      width: 120,
+      filterSearch:
+        setMetrologyFilters("type", dataSource).length > 5 ? true : false,
+      filters: setMetrologyFilters("type", dataSource),
       onFilter: (value: any, record) =>
         record.meansurementType
           ? record.meansurementType.toUpperCase().includes(value.toUpperCase())
@@ -261,8 +334,8 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
       key: "meansureGroup",
       align: "center",
       filterSearch:
-        setMetrologyFilters("group", data).length > 5 ? true : false,
-      filters: setMetrologyFilters("group", data),
+        setMetrologyFilters("group", dataSource).length > 5 ? true : false,
+      filters: setMetrologyFilters("group", dataSource),
       onFilter: (value: any, record) =>
         record.meansureGroup
           ? record.meansureGroup.toUpperCase().includes(value.toUpperCase())
@@ -274,8 +347,9 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
       dataIndex: "grsi",
       key: "grsi",
       align: "center",
-      filterSearch: setMetrologyFilters("grsi", data).length > 5 ? true : false,
-      filters: setMetrologyFilters("grsi", data),
+      filterSearch:
+        setMetrologyFilters("grsi", dataSource).length > 5 ? true : false,
+      filters: setMetrologyFilters("grsi", dataSource),
       onFilter: (value: any, record) =>
         record.grsi
           ? record.grsi.toUpperCase().includes(value.toUpperCase())
@@ -353,7 +427,7 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
               dataIndex: "fromDate",
               key: "fromDate",
               align: "center",
-              width: 150,
+              width: 120,
               render: (value, record) => (
                 <Text type="secondary">{formatDate(record.fromDate)}</Text>
               ),
@@ -363,12 +437,13 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
               // dataIndex: "toDate",
               // key: "toDate",
               align: "center",
-              width: 150,
+              width: 120,
               filterSearch:
-                setMetrologyFilters("date-to-verification", data).length > 5
+                setMetrologyFilters("date-to-verification", dataSource).length >
+                5
                   ? true
                   : false,
-              filters: setMetrologyFilters("date-to-verification", data),
+              filters: setMetrologyFilters("date-to-verification", dataSource),
               onFilter: (value: any, record) =>
                 record.toDate
                   ? record.toDate
@@ -376,7 +451,19 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
                       .includes(formatDate(value.toUpperCase()))
                   : false,
               render: (value, record) => (
-                <Text type="secondary">
+                <Text
+                  type={
+                    verificateDates(
+                      setDateToVerification(record.fromDate, record.mpi)
+                    ) === "d"
+                      ? "danger"
+                      : verificateDates(
+                          setDateToVerification(record.fromDate, record.mpi)
+                        ) === "s"
+                      ? "success"
+                      : "warning"
+                  }
+                >
                   {setDateToVerification(record.fromDate, record.mpi)}
                 </Text>
               ),
@@ -419,7 +506,7 @@ const MetrologyTable: FC<TableProps> = ({ data }) => {
       bordered
       scroll={{ y: 500, x: "100%" }}
       pagination={data.length < 5 && false}
-      dataSource={data}
+      dataSource={dataSource}
       columns={columns}
       rowKey={(record) => Math.random()}
     />

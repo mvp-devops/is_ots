@@ -12,7 +12,7 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { cableSum, setCableLogFilters } from "./table.setting";
 import { CableLogView } from "../../../../../../common/types/equipment-accounting";
 const { Row, Cell } = Table.Summary;
@@ -20,9 +20,66 @@ const { Text } = Typography;
 
 interface CableLogTableProps {
   data: CableLogView[];
+  searchValue: string;
+  unitId: string;
+
+  subUnitId: string;
 }
 
-const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
+const CableLogTable: FC<CableLogTableProps> = ({
+  data,
+  searchValue,
+  unitId,
+  subUnitId,
+}) => {
+  const [dataSource, setDataSource] = useState<CableLogView[]>([]);
+
+  // useEffect(() => {
+  //   setDataSource(data);
+  // }, [data]);
+
+  useEffect(() => {
+    unitId
+      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      : setDataSource(data);
+  }, [data, unitId]);
+
+  useEffect(() => {
+    subUnitId
+      ? setDataSource(
+          dataSource.filter((item) => item?.subUnitId === subUnitId)
+        )
+      : setDataSource(data);
+  }, [data, subUnitId]);
+
+  useEffect(
+    () =>
+      setDataSource(
+        data.filter(
+          (item) =>
+            item?.unit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.subUnit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.tag?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item.numberOfTrace
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.cableMark?.includes(searchValue.toUpperCase()) ||
+            item?.cableSection
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.fromUnit
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.fromPlace
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.toUnit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.toPlace?.toUpperCase()?.includes(searchValue.toUpperCase())
+        )
+      ),
+    [searchValue]
+  );
+
   const menu = (
     <Menu
       items={[
@@ -103,8 +160,8 @@ const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
           align: "center",
           // width: 150,
           filterSearch:
-            setCableLogFilters("unit", data).length > 5 ? true : false,
-          filters: setCableLogFilters("unit", data),
+            setCableLogFilters("unit", dataSource).length > 5 ? true : false,
+          filters: setCableLogFilters("unit", dataSource),
           onFilter: (value: any, record) =>
             record.unit
               ? record.unit.toUpperCase().includes(value.toUpperCase())
@@ -118,8 +175,10 @@ const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
 
           width: 150,
           filterSearch:
-            setCableLogFilters("sub-unit", data).length > 5 ? true : false,
-          filters: setCableLogFilters("sub-unit", data),
+            setCableLogFilters("sub-unit", dataSource).length > 5
+              ? true
+              : false,
+          filters: setCableLogFilters("sub-unit", dataSource),
           onFilter: (value: any, record) =>
             record.subUnit
               ? record.subUnit.toUpperCase().includes(value.toUpperCase())
@@ -133,8 +192,8 @@ const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
 
           width: 100,
           filterSearch:
-            setCableLogFilters("tag", data).length > 5 ? true : false,
-          filters: setCableLogFilters("tag", data),
+            setCableLogFilters("tag", dataSource).length > 5 ? true : false,
+          filters: setCableLogFilters("tag", dataSource),
           onFilter: (value: any, record) =>
             record.tag.toUpperCase().includes(value.toUpperCase()),
           render: (value) => <Text type="secondary">{value}</Text>,
@@ -156,8 +215,8 @@ const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
       align: "center",
       // width: 200,
       filterSearch:
-        setCableLogFilters("cable-mark", data).length > 5 ? true : false,
-      filters: setCableLogFilters("cable-mark", data),
+        setCableLogFilters("cable-mark", dataSource).length > 5 ? true : false,
+      filters: setCableLogFilters("cable-mark", dataSource),
       onFilter: (value: any, record) =>
         record.cableMark.toUpperCase().includes(value.toUpperCase()),
       render: (value) => <Text type="secondary">{value}</Text>,
@@ -244,7 +303,7 @@ const CableLogTable: FC<CableLogTableProps> = ({ data }) => {
       bordered
       pagination={data.length < 5 && false}
       scroll={{ y: 500, x: "100%" }}
-      dataSource={data}
+      dataSource={dataSource}
       columns={columns}
       rowKey={(record) => Math.random()}
       summary={(data) => (

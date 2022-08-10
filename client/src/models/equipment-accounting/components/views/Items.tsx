@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Layout, Tabs, Typography } from "antd";
+import { Tabs, Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import CableLogTable from "../tables/CableLogTable";
 import {
@@ -18,11 +18,27 @@ import {
   MonitoringTable,
   SignalTable,
 } from "../tables";
+import { SummaryListOfEquipmentView } from "../../../../../../common/types/equipment-accounting";
+import {
+  getAllCableLog,
+  getAllGeneralInformation,
+  getAllImpulseLineLog,
+  getAllMetrology,
+  getAllMonitoring,
+  getAllSignal,
+} from "../tables/table.setting";
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
 
-const Items = () => {
+interface ItemsProps {
+  data: SummaryListOfEquipmentView[];
+  searchValue: string;
+  unitId: string;
+  subUnitId: string;
+}
+
+const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
   return (
     <Tabs
       onChange={(activeKey) => console.log(activeKey)}
@@ -35,11 +51,22 @@ const Items = () => {
       }
     >
       <TabPane
-        tab={<Text type="secondary">Общая информация</Text>}
+        tab={
+          <Text type="secondary" style={{ padding: 5 }}>
+            Общая информация
+          </Text>
+        }
         key="general-information"
         className="p-1 text-secondary"
       >
-        {<GeneralInformationTable data={generalInformation} />}
+        {
+          <GeneralInformationTable
+            data={getAllGeneralInformation(data)}
+            searchValue={searchValue}
+            unitId={unitId}
+            subUnitId={subUnitId}
+          />
+        }
       </TabPane>
 
       <TabPane
@@ -47,7 +74,14 @@ const Items = () => {
         key="metrology"
         className="text-secondary"
       >
-        {<MetrologyTable data={metrology} />}
+        {
+          <MetrologyTable
+            data={getAllMetrology(data)}
+            searchValue={searchValue}
+            unitId={unitId}
+            subUnitId={subUnitId}
+          />
+        }
       </TabPane>
 
       <TabPane
@@ -55,14 +89,28 @@ const Items = () => {
         key="signals"
         className="p-1 text-secondary"
       >
-        {<SignalTable data={signal} />}
+        {
+          <SignalTable
+            data={getAllSignal(data)}
+            searchValue={searchValue}
+            unitId={unitId}
+            subUnitId={subUnitId}
+          />
+        }
       </TabPane>
       <TabPane
         tab={<Text type="secondary">Журнал импульсных линий</Text>}
         key="impulse-line-log"
         className="p-1 text-secondary"
       >
-        {<ImpulseLineLogTable data={impulseLineLog} />}
+        {
+          <ImpulseLineLogTable
+            data={getAllImpulseLineLog(data)}
+            searchValue={searchValue}
+            unitId={unitId}
+            subUnitId={subUnitId}
+          />
+        }
       </TabPane>
 
       <TabPane
@@ -70,7 +118,12 @@ const Items = () => {
         key="cable-log"
         className="p-1 text-secondary"
       >
-        <CableLogTable data={cableLog} />
+        <CableLogTable
+          data={getAllCableLog(data)}
+          searchValue={searchValue}
+          unitId={unitId}
+          subUnitId={subUnitId}
+        />
       </TabPane>
 
       <TabPane
@@ -78,7 +131,14 @@ const Items = () => {
         key="monitoring"
         className="p-1 text-secondary"
       >
-        {<MonitoringTable data={monitoring} />}
+        {
+          <MonitoringTable
+            data={getAllMonitoring(data)}
+            searchValue={searchValue}
+            unitId={unitId}
+            subUnitId={subUnitId}
+          />
+        }
       </TabPane>
       <TabPane
         tab={<Text type="secondary">Технологические карты</Text>}

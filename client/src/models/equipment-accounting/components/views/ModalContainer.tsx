@@ -25,7 +25,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
           </Text>
         </Space>
       }
-      style={{ maxHeight: "920px", width: "1900px" }}
+      style={{ maxHeight: "920px", width: "1900px", border: "1px solid" }}
       bodyStyle={{ minHeight: "800px", maxWidth: "1800px" }}
       width={1980}
       closable

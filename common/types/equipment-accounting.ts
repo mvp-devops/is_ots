@@ -1,6 +1,38 @@
+export interface SummaryListOfEquipmentView {
+  project: string;
+  projectId: string;
+  unit: string;
+  unitId: string;
+  subUnit: string;
+  subUnitId: string;
+  installationLocation: string;
+  questionare: string;
+  equipmentType: string;
+  systemType: string[];
+  tag: string;
+  controlledParameter: string;
+  country: string;
+  vendor: string;
+  facilityTitle: string;
+  facilityModification: string;
+  factoryNumber: string;
+  year: string;
+  month: string;
+  period: string;
+  specification: string;
+  description: string;
+  cableLog?: CableLogView[];
+  impulseLineLog?: ImpulseLineLogView[];
+  metrology?: MetrologyView;
+  signals?: SignalView[];
+  monitoring?: MonitoringView;
+}
+
 export interface CableLogView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   tag: string;
   wiringDiagramTitle: string;
   numberOfTrace: string;
@@ -17,7 +49,9 @@ export interface CableLogView {
 
 export interface ImpulseLineLogView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   tag: string;
   numberOfTrace: string;
   impulseLineType: string;
@@ -30,7 +64,9 @@ export interface ImpulseLineLogView {
 
 export interface SignalView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   tag: string;
   signalType: string;
   signalProtocol: string;
@@ -44,7 +80,9 @@ export interface SignalView {
 
 export interface MetrologyView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   tag: string;
   sgroei: string;
   measurementArea: string;
@@ -70,7 +108,9 @@ export interface MetrologyView {
 
 export interface MonitoringView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   tag: string;
   mountDate: string;
   mountDocument: string;
@@ -87,7 +127,9 @@ export interface MonitoringView {
 
 export interface GeneralInformationView {
   unit: string;
+  unitId: string;
   subUnit: string;
+  subUnitId: string;
   installationLocation: string;
   questionare: string;
   equipmentType: string;

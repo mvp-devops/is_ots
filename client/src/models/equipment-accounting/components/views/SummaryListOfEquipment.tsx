@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 
 import {
   Divider,
@@ -15,12 +15,17 @@ import {
 import Header from "./Header";
 import Navbar from "./Navbar";
 import Items from "./Items";
+import { summaryListOfEquipmentRequestData } from "../../utils/equipment-accounting.consts";
 
 interface SummaryListOfEquipmentProps {
   data: any[] | null;
 }
 
 const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
+  const [searchValue, setSearchValue] = useState("");
+  const [unitId, setUnitId] = useState("");
+  const [subUnitId, setSubUnitId] = useState("");
+
   return (
     <Skeleton active loading={false}>
       <Space
@@ -30,9 +35,21 @@ const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
       >
         <Header />
         <Divider style={{ padding: 0, margin: 0 }} />
-        <Navbar />
+        <Navbar
+          searchValue={searchValue}
+          setSearchValue={setSearchValue}
+          unitId={unitId}
+          setUnitId={setUnitId}
+          subUnitId={subUnitId}
+          setSubUnitId={setSubUnitId}
+        />
         <Divider style={{ padding: 0, margin: 0 }} />
-        <Items />
+        <Items
+          data={summaryListOfEquipmentRequestData}
+          searchValue={searchValue}
+          unitId={unitId}
+          subUnitId={subUnitId}
+        />
       </Space>
     </Skeleton>
   );

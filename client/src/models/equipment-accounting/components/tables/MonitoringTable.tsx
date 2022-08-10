@@ -13,7 +13,7 @@ import {
   SearchOutlined,
   ExclamationOutlined,
 } from "@ant-design/icons";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { formatDate, setMonitoringFilters } from "./table.setting";
 import { MonitoringView } from "../../../../../../common/types/equipment-accounting";
 const { Row, Cell } = Table.Summary;
@@ -21,9 +21,59 @@ const { Text } = Typography;
 
 interface MonitoringTableProps {
   data: MonitoringView[];
+  searchValue: string;
+  unitId: string;
+  subUnitId: string;
 }
 
-const MonitoringTable: FC<MonitoringTableProps> = ({ data }) => {
+const MonitoringTable: FC<MonitoringTableProps> = ({
+  data,
+  searchValue,
+  unitId,
+  subUnitId,
+}) => {
+  const [dataSource, setDataSource] = useState<MonitoringView[]>([]);
+
+  useEffect(() => setDataSource(data), [data]);
+
+  useEffect(
+    () =>
+      setDataSource(
+        data.filter(
+          (item) =>
+            item?.unit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.subUnit?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.tag?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.mountDate?.includes(searchValue.toUpperCase()) ||
+            item?.connectDate
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.testDate
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.awpDate?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
+            item?.commisionDate
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase())
+        )
+      ),
+    [searchValue]
+  );
+
+  useEffect(() => {
+    unitId
+      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      : setDataSource(data);
+  }, [data, unitId]);
+
+  useEffect(() => {
+    subUnitId
+      ? setDataSource(
+          dataSource.filter((item) => item?.subUnitId === subUnitId)
+        )
+      : setDataSource(data);
+  }, [data, subUnitId]);
+
   const menu = (
     <Menu
       items={[
@@ -215,8 +265,8 @@ const MonitoringTable: FC<MonitoringTableProps> = ({ data }) => {
           align: "center",
           width: 200,
           filterSearch:
-            setMonitoringFilters("unit", data).length > 5 ? true : false,
-          filters: setMonitoringFilters("unit", data),
+            setMonitoringFilters("unit", dataSource).length > 5 ? true : false,
+          filters: setMonitoringFilters("unit", dataSource),
           onFilter: (value: any, record) =>
             record.unit
               ? record.unit.toUpperCase().includes(value.toUpperCase())
@@ -230,8 +280,10 @@ const MonitoringTable: FC<MonitoringTableProps> = ({ data }) => {
 
           width: 200,
           filterSearch:
-            setMonitoringFilters("sub-unit", data).length > 5 ? true : false,
-          filters: setMonitoringFilters("sub-unit", data),
+            setMonitoringFilters("sub-unit", dataSource).length > 5
+              ? true
+              : false,
+          filters: setMonitoringFilters("sub-unit", dataSource),
           onFilter: (value: any, record) =>
             record.subUnit
               ? record.subUnit.toUpperCase().includes(value.toUpperCase())
@@ -245,8 +297,8 @@ const MonitoringTable: FC<MonitoringTableProps> = ({ data }) => {
 
           width: 200,
           filterSearch:
-            setMonitoringFilters("tag", data).length > 5 ? true : false,
-          filters: setMonitoringFilters("tag", data),
+            setMonitoringFilters("tag", dataSource).length > 5 ? true : false,
+          filters: setMonitoringFilters("tag", dataSource),
           onFilter: (value: any, record) =>
             record.tag.toUpperCase().includes(value.toUpperCase()),
           render: (value) => <Text type="secondary">{value}</Text>,
@@ -330,7 +382,7 @@ const MonitoringTable: FC<MonitoringTableProps> = ({ data }) => {
       bordered
       pagination={data.length < 5 && false}
       scroll={{ y: 500, x: "100%" }}
-      dataSource={data}
+      dataSource={dataSource}
       columns={columns}
       rowKey={(record) => Math.random()}
       // summary={(data) => (
