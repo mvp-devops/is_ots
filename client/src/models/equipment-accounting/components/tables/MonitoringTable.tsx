@@ -14,8 +14,9 @@ import {
   ExclamationOutlined,
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
-import { formatDate, setMonitoringFilters } from "./table.setting";
+import { setMonitoringFilters } from "./table.setting";
 import { MonitoringView } from "../../../../../../common/types/equipment-accounting";
+import { formatDate } from "../../../../utils/main.utils";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -62,17 +63,15 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
 
   useEffect(() => {
     unitId
-      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      ? setDataSource(data.filter((item) => item?.unitId === unitId))
       : setDataSource(data);
-  }, [data, unitId]);
+  }, [unitId]);
 
   useEffect(() => {
     subUnitId
-      ? setDataSource(
-          dataSource.filter((item) => item?.subUnitId === subUnitId)
-        )
+      ? setDataSource(data.filter((item) => item?.subUnitId === subUnitId))
       : setDataSource(data);
-  }, [data, subUnitId]);
+  }, [subUnitId]);
 
   const menu = (
     <Menu

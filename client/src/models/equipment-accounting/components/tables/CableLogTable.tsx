@@ -40,17 +40,15 @@ const CableLogTable: FC<CableLogTableProps> = ({
 
   useEffect(() => {
     unitId
-      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      ? setDataSource(data.filter((item) => item?.unitId === unitId))
       : setDataSource(data);
-  }, [data, unitId]);
+  }, [unitId]);
 
   useEffect(() => {
     subUnitId
-      ? setDataSource(
-          dataSource.filter((item) => item?.subUnitId === subUnitId)
-        )
+      ? setDataSource(data.filter((item) => item?.subUnitId === subUnitId))
       : setDataSource(data);
-  }, [data, subUnitId]);
+  }, [subUnitId]);
 
   useEffect(
     () =>

@@ -13,14 +13,13 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
+import { cableSum, setMetrologyFilters } from "./table.setting";
+import { MetrologyView } from "../../../../../../common/types/equipment-accounting";
 import {
-  cableSum,
   formatDate,
   setDateToVerification,
-  setMetrologyFilters,
   verificateDates,
-} from "./table.setting";
-import { MetrologyView } from "../../../../../../common/types/equipment-accounting";
+} from "../../../../utils/main.utils";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -82,17 +81,15 @@ const MetrologyTable: FC<TableProps> = ({
 
   useEffect(() => {
     unitId
-      ? setDataSource(dataSource.filter((item) => item?.unitId === unitId))
+      ? setDataSource(data.filter((item) => item?.unitId === unitId))
       : setDataSource(data);
-  }, [data, unitId]);
+  }, [unitId]);
 
   useEffect(() => {
     subUnitId
-      ? setDataSource(
-          dataSource.filter((item) => item?.subUnitId === subUnitId)
-        )
+      ? setDataSource(data.filter((item) => item?.subUnitId === subUnitId))
       : setDataSource(data);
-  }, [data, subUnitId]);
+  }, [subUnitId]);
   const menu = (
     <Menu
       items={[
