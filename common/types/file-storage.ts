@@ -7,3 +7,17 @@ export interface LogoCreationAttrs {
   fileName: string;
   fileType: string;
 }
+
+export interface DesignDocumentCreateOrUpdateAttrs {
+  projectId: string | number | null;
+  unitId: string | number | null;
+  subUnitId: string | number | null;
+  supplierId: string | number | null;
+  stageId: string | number;
+  sectionId: string | number;
+  code: string;
+  title: string;
+  revision: string;
+  description: string;
+  file: any;
+}

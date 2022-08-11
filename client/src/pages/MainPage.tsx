@@ -12,7 +12,7 @@ import { Space } from "antd";
 import { Layout, Menu } from "antd";
 import React, { useState } from "react";
 import { MenuItem } from "../models/main";
-import ItemPage from "../models/position-tree/views/ItemPage";
+import { ItemPage } from "../models/position-tree";
 
 const { Header, Content, Footer, Sider } = Layout;
 

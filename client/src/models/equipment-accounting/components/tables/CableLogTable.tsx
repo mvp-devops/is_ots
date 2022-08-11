@@ -12,9 +12,16 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { FC, useEffect, useState } from "react";
+import { FC, MouseEvent, useEffect, useState } from "react";
 import { cableSum, setCableLogFilters } from "./table.setting";
-import { CableLogView } from "../../../../../../common/types/equipment-accounting";
+import {
+  CableLogCreateOrUpdateAttrs,
+  CableLogView,
+} from "../../../../../../common/types/equipment-accounting";
+import DeleteDialog from "../forms/DeleteDialog";
+import { CableLogForm, ModalContainer } from "../forms";
+import { Link } from "react-router-dom";
+
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -26,6 +33,13 @@ interface CableLogTableProps {
   subUnitId: string;
 }
 
+enum FormActions {
+  EDIT = "UPDATE",
+  ADD = "POST",
+  REMOVE = "DELETE",
+  VIEW = "GET",
+}
+
 const CableLogTable: FC<CableLogTableProps> = ({
   data,
   searchValue,
@@ -33,10 +47,10 @@ const CableLogTable: FC<CableLogTableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<CableLogView[]>([]);
-
-  // useEffect(() => {
-  //   setDataSource(data);
-  // }, [data]);
+  const [currentRow, setCurrentRow] = useState<CableLogView | undefined>();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
+  const [editRow, setEditRow] = useState<CableLogCreateOrUpdateAttrs[]>([]);
 
   useEffect(() => {
     unitId
@@ -85,10 +99,10 @@ const CableLogTable: FC<CableLogTableProps> = ({
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("POST");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.VIEW);
+                setFormVisible(true);
+              }}
             >
               <SearchOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -98,16 +112,16 @@ const CableLogTable: FC<CableLogTableProps> = ({
             </Space>
           ),
 
-          key: "1",
+          key: "show-document",
         },
         {
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -117,22 +131,28 @@ const CableLogTable: FC<CableLogTableProps> = ({
             </Space>
           ),
 
-          key: "2",
+          key: "EDIT",
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
-          key: "3",
+          key: "REMOVE",
         },
       ]}
     />
@@ -296,29 +316,69 @@ const CableLogTable: FC<CableLogTableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      pagination={data.length < 5 && false}
-      scroll={{ y: 500, x: "100%" }}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-      summary={(data) => (
-        <Row style={{ margin: 0, padding: 0 }}>
-          <Cell index={0} colSpan={11} align="right">
-            <Text strong>Длина:</Text>
-          </Cell>
-          <Cell index={1} align="center">
-            <Text strong>{cableSum(data)}</Text>
-          </Cell>
-          <Cell index={2} align="center">
-            <Text strong>м</Text>
-          </Cell>
-          <Cell index={3} colSpan={2} />
-        </Row>
-      )}
-    />
+    <>
+      <Table
+        size="small"
+        bordered
+        pagination={data.length < 5 && false}
+        scroll={{ y: 500, x: "100%" }}
+        dataSource={dataSource}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        columns={columns}
+        rowKey={(record) => Math.random()}
+        summary={(data) => (
+          <Row style={{ margin: 0, padding: 0 }}>
+            <Cell index={0} colSpan={11} align="right">
+              <Text strong>Длина:</Text>
+            </Cell>
+            <Cell index={1} align="center">
+              <Text strong>{cableSum(data)}</Text>
+            </Cell>
+            <Cell index={2} align="center">
+              <Text strong>м</Text>
+            </Cell>
+            <Cell index={3} colSpan={2} />
+          </Row>
+        )}
+      />
+      {formVisible &&
+        (actionType === FormActions.EDIT ? (
+          <ModalContainer
+            show={formVisible}
+            onCancel={() => setFormVisible(false)}
+            action={FormActions.EDIT}
+            child={
+              <CableLogForm
+                // row={currentRow}
+                data={editRow}
+                setData={setEditRow}
+              />
+            }
+          />
+        ) : actionType === FormActions.ADD ? (
+          <div>Окно добавления записи</div>
+        ) : (
+          <ModalContainer
+            show={formVisible}
+            onCancel={() => setFormVisible(false)}
+            action={FormActions.VIEW}
+            child={
+              <Link
+                to="O:\\is_ots\\server\\dist\\files\\87349857340983495834.pdf"
+                target="_blank"
+              >
+                fdfd
+              </Link>
+            }
+          />
+        ))}
+    </>
   );
 };
 

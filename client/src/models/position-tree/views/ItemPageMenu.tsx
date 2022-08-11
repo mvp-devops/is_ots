@@ -16,7 +16,7 @@ import {
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
 import React, { FC, useEffect, useState } from "react";
-import { MenuItem } from "../../../main";
+import { MenuItem } from "../../main";
 
 const { Sider } = Layout;
 
@@ -28,6 +28,8 @@ export interface ItemPageMenuProps {
   childTarget: string;
   showSLOE: boolean;
   setShowSLOE: () => void;
+  showCCLS: boolean;
+  setShowCCLS: () => void;
 }
 
 export enum Roles {
@@ -74,6 +76,8 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
   childTarget,
   showSLOE,
   setShowSLOE,
+  showCCLS,
+  setShowCCLS,
 }) => {
   const items: MenuItem[] = [
     {
@@ -203,7 +207,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
         },
         {
           label: (
-            <Space>
+            <Space onClick={setShowCCLS}>
               <FileDoneOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}

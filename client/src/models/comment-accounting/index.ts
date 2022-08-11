@@ -3,7 +3,7 @@ import { SolutionFormProps } from "./components/forms/SolutionForm";
 import CollectiveCheckSheet from "./components/views/CollectiveCheckSheet";
 import { CommentTableProps } from "./components/tables/CommentTable";
 import { SolutionTableProps } from "./components/tables/SolutionTable";
-
+import CommentAccountingModalContainer from "./components/views/CommentAccountingModalContainer";
 export type {
   CommentFormProps,
   CommentTableProps,
@@ -11,4 +11,4 @@ export type {
   SolutionTableProps,
 };
 
-export default CollectiveCheckSheet;
+export { CollectiveCheckSheet, CommentAccountingModalContainer };

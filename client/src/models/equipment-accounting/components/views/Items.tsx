@@ -4,14 +4,6 @@ import { Tabs, Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
 import CableLogTable from "../tables/CableLogTable";
 import {
-  cableLog,
-  generalInformation,
-  impulseLineLog,
-  metrology,
-  monitoring,
-  signal,
-} from "../../utils/equipment-accounting.consts";
-import {
   GeneralInformationTable,
   ImpulseLineLogTable,
   MetrologyTable,

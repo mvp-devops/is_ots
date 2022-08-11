@@ -1,4 +1,6 @@
+import { DesignDocumentCreateOrUpdateAttrs } from "./file-storage";
 export interface SummaryListOfEquipmentView {
+  id: string;
   project: string;
   projectId: string;
   unit: string;
@@ -29,6 +31,7 @@ export interface SummaryListOfEquipmentView {
 }
 
 export interface CableLogView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;
@@ -47,7 +50,24 @@ export interface CableLogView {
   description: string;
 }
 
+export interface CableLogCreateOrUpdateAttrs {
+  id: string | number;
+  sloeId: string | number | null;
+  wiringDiagram: DesignDocumentCreateOrUpdateAttrs | null;
+  numberOfTrace: string;
+  cableMark: string;
+  cableSection: string;
+  fromUnit: string;
+  fromPlace: string;
+  toUnit: string;
+  toPlace: string;
+  cableLenght: string;
+  range: string;
+  description: string;
+}
+
 export interface ImpulseLineLogView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;
@@ -63,6 +83,7 @@ export interface ImpulseLineLogView {
 }
 
 export interface SignalView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;
@@ -79,6 +100,7 @@ export interface SignalView {
 }
 
 export interface MetrologyView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;
@@ -107,6 +129,7 @@ export interface MetrologyView {
 }
 
 export interface MonitoringView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;
@@ -126,6 +149,7 @@ export interface MonitoringView {
 }
 
 export interface GeneralInformationView {
+  sloeId: string | number | null;
   unit: string;
   unitId: string;
   subUnit: string;

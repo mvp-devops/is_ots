@@ -526,6 +526,7 @@ export const getAllGeneralInformation = (
   const res: GeneralInformationView[] = [];
   for (let i = 0; i < data.length; i++) {
     const {
+      id,
       unit,
       unitId,
       subUnit,
@@ -548,6 +549,7 @@ export const getAllGeneralInformation = (
       description,
     } = data[i];
     const item: GeneralInformationView = {
+      sloeId: id,
       unit,
       unitId,
       subUnit,

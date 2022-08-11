@@ -1,3 +1,3 @@
-import BreadcrumbsProps from "./views/breadcrumbs/ItemPageBreadcrumbs";
+import ItemPage from "./views/ItemPage";
 
-export { BreadcrumbsProps };
+export { ItemPage };
