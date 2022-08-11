@@ -12,7 +12,7 @@ import {
   EllipsisOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
-import { FC, MouseEvent, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { cableSum, setCableLogFilters } from "./table.setting";
 import {
   CableLogCreateOrUpdateAttrs,
