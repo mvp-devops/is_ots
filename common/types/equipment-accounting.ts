@@ -1,4 +1,7 @@
-import { DesignDocumentCreateOrUpdateAttrs } from "./file-storage";
+import {
+  DesignDocumentCreateOrUpdateAttrs,
+  FacilityDocumentCreateOrUpdateAttrs,
+} from "./file-storage";
 export interface SummaryListOfEquipmentView {
   id: string;
   project: string;
@@ -145,6 +148,7 @@ export interface MetrologyView {
   range: string;
   accuracy: string;
   mpi: string;
+  metrologyType: string;
   documentType: string;
   documentNumber: string;
   document: string;
@@ -155,6 +159,29 @@ export interface MetrologyView {
   arshin: string;
   verificationProcedure: string;
   typeApprovalCertificate: string;
+}
+
+export interface MetrologyCreateOrUpdateAttrs {
+  id: string | number;
+  sloeId: string | number | null;
+  sgroei: string;
+  grsi: string;
+  min: string;
+  max: string;
+  range: string;
+  accuracy: string;
+  mpi: string;
+  metrologyType: string;
+  documentType: string;
+  counterparty: string;
+  documentNumber: string;
+  fromDate: Date | null | string;
+  toDate: Date | null | string;
+  document: any;
+  status: string;
+  arshin: string;
+  verificationProcedure: any;
+  typeApprovalCertificate: any;
 }
 
 export interface MonitoringView {
@@ -182,15 +209,15 @@ export interface MonitoringCreateOrUpdateAttrs {
   id: string | number | null;
   sloeId: string | number | null;
   mountDate: Date | null | string;
-  mountDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  mountDocument: any;
   connectDate: Date | null | string;
-  connectDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  connectDocument: any;
   testDate: Date | null | string;
-  testDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  testDocument: any;
   awpDate: Date | null | string;
-  awpDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  awpDocument: any;
   commisionDate: Date | null | string;
-  commisionDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  commisionDocument: any;
   description: string;
 }
 

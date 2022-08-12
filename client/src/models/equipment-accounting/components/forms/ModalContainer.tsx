@@ -38,6 +38,8 @@ const ModalContainer: FC<ModalContainerProps> = ({
           ? 1200
           : target === "monitoring"
           ? "auto"
+          : target === "metrology"
+          ? 1000
           : 600
       }
       closable

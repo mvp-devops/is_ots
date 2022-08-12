@@ -19,5 +19,14 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   title: string;
   revision: string;
   description: string;
+  filePath: string;
+  file: any;
+}
+
+export interface FacilityDocumentCreateOrUpdateAttrs {
+  sloeId: string | number | null;
+  counterpartyId: string | number | null;
+  title: string;
+  filePath: string;
   file: any;
 }

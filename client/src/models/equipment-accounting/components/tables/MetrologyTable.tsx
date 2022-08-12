@@ -20,6 +20,9 @@ import {
   setDateToVerification,
   verificateDates,
 } from "../../../../utils/main.utils";
+import { MetrologyForm, ModalContainer } from "../forms";
+import DeleteDialog from "../forms/DeleteDialog";
+import { FormActions } from "../forms/form.settings";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -37,6 +40,9 @@ const MetrologyTable: FC<TableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<MetrologyView[]>([]);
+  const [currentRow, setCurrentRow] = useState<MetrologyView | undefined>();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -90,6 +96,7 @@ const MetrologyTable: FC<TableProps> = ({
       ? setDataSource(data.filter((item) => item?.subUnitId === subUnitId))
       : setDataSource(data);
   }, [subUnitId]);
+
   const menu = (
     <Menu
       items={[
@@ -110,7 +117,7 @@ const MetrologyTable: FC<TableProps> = ({
             </Space>
           ),
 
-          key: "1",
+          key: "VIEW",
           children: [
             {
               label: (
@@ -128,7 +135,7 @@ const MetrologyTable: FC<TableProps> = ({
                   Свидетельство об утверждении типа СИ
                 </Space>
               ),
-              key: "2",
+              key: "VIEW-1",
             },
             {
               label: (
@@ -146,7 +153,7 @@ const MetrologyTable: FC<TableProps> = ({
                   Методика поверки
                 </Space>
               ),
-              key: "3",
+              key: "VIEW-2",
             },
             {
               label: (
@@ -164,7 +171,7 @@ const MetrologyTable: FC<TableProps> = ({
                   Документ со сведениями о поверке/калибровке
                 </Space>
               ),
-              key: "4",
+              key: "VIEW-3",
             },
             {
               label: (
@@ -182,7 +189,7 @@ const MetrologyTable: FC<TableProps> = ({
                   "ФГИС «АРШИН»
                 </Space>
               ),
-              key: "5",
+              key: "VIEW-4",
             },
           ],
         },
@@ -190,10 +197,10 @@ const MetrologyTable: FC<TableProps> = ({
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -203,22 +210,28 @@ const MetrologyTable: FC<TableProps> = ({
             </Space>
           ),
 
-          key: "2",
+          key: "EDIT",
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
-          key: "3",
+          key: "REMOVE",
         },
       ]}
     />
@@ -498,15 +511,33 @@ const MetrologyTable: FC<TableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      scroll={{ y: 500, x: "100%" }}
-      pagination={data.length < 5 && false}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-    />
+    <>
+      <Table
+        size="small"
+        bordered
+        scroll={{ y: 500, x: "100%" }}
+        pagination={data.length < 5 && false}
+        dataSource={dataSource}
+        columns={columns}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        rowKey={(record) => Math.random()}
+      />
+      {formVisible && (
+        <ModalContainer
+          target="metrology"
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<MetrologyForm row={currentRow} />}
+        />
+      )}
+    </>
   );
 };
 

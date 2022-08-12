@@ -1,20 +1,16 @@
 import {
   Button,
-  Col,
   DatePicker,
   Divider,
   Form,
   Input,
-  Row,
   Space,
   Switch,
   Typography,
   Upload,
   UploadFile,
-  UploadProps,
 } from "antd";
 import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
-import { Moment } from "moment";
 import { UploadOutlined } from "@ant-design/icons";
 import {
   MonitoringCreateOrUpdateAttrs,
@@ -22,6 +18,8 @@ import {
 } from "../../../../../../common/types/equipment-accounting";
 import { RcFile } from "antd/lib/upload";
 import { setDate } from "../../../../utils/main.utils";
+import "moment/locale/ru";
+import locale from "antd/es/date-picker/locale/ru_RU";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -62,7 +60,6 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
   const [commisionDocument, setCommisionDocument] = useState(false);
 
   const [fileList, setFileList] = useState<UploadFile[]>([]);
-  const [uploading, setUploading] = useState(false);
 
   const changeItems = (key: string, value: string | Date | null | RcFile) => {
     data && setData && setData({ ...data, [key]: value });
@@ -163,6 +160,7 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
         <>
           <Item label={<Text type="secondary">Дата</Text>} className="m-0 me-2">
             <DatePicker
+              locale={locale}
               placeholder=""
               onChange={(date, dateString) =>
                 editRow
@@ -195,7 +193,7 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
                 }}
                 beforeUpload={(file) => {
                   setFileList([...fileList, file]);
-                  const ind = fileList.indexOf(file);
+                  // const ind = fileList.indexOf(file);
                   editRow
                     ? changeEditRowItems(target2, file)
                     : changeItems(target2, file);
