@@ -600,7 +600,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               }}
               beforeUpload={(file) => {
                 setFileList([...fileList, file]);
-                // const ind = fileList.indexOf(file);
+
                 editRow
                   ? setEditRow({ ...editRow, verificationProcedure: file })
                   : changeItems("verificationProcedure", file);

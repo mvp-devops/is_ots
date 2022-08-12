@@ -23,6 +23,7 @@ import {
 import { MetrologyForm, ModalContainer } from "../forms";
 import DeleteDialog from "../forms/DeleteDialog";
 import { FormActions } from "../forms/form.settings";
+import { Link } from "react-router-dom";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -102,13 +103,7 @@ const MetrologyTable: FC<TableProps> = ({
       items={[
         {
           label: (
-            <Space
-              className="text-secondary"
-              // onClick={() => {
-              //   setActionType("POST");
-              //   setFormVisible(true);
-              // }}
-            >
+            <Space className="text-secondary">
               <SearchOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
                 className="text-primary"
@@ -121,72 +116,77 @@ const MetrologyTable: FC<TableProps> = ({
           children: [
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Свидетельство об утверждении типа СИ
+                <Space className="text-secondary">
+                  <Link
+                    to={currentRow ? currentRow.typeApprovalCertificate : "#"}
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">
+                      Свидетельство об утверждении типа СИ
+                    </Text>
+                  </Link>
                 </Space>
               ),
               key: "VIEW-1",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Методика поверки
+                <Space className="text-secondary">
+                  <Link
+                    to={currentRow ? currentRow.verificationProcedure : "#"}
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">Методика поверки</Text>
+                  </Link>
                 </Space>
               ),
               key: "VIEW-2",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Документ со сведениями о поверке/калибровке
+                <Space className="text-secondary">
+                  <Link
+                    to={currentRow ? currentRow.document : "#"}
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">
+                      Документ со сведениями о поверке/калибровке
+                    </Text>
+                  </Link>
                 </Space>
               ),
               key: "VIEW-3",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  "ФГИС «АРШИН»
+                <Space className="text-secondary">
+                  <a
+                    rel="noreferrer"
+                    href={currentRow ? currentRow.arshin : "#"}
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">"ФГИС «АРШИН»</Text>
+                  </a>
                 </Space>
               ),
               key: "VIEW-4",
