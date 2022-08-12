@@ -14,6 +14,8 @@ import {
 
 import ItemPageBreadcrumbs from "./ItemPageBreadcrumbs";
 import ItemPageMenu from "./ItemPageMenu";
+import ListView from "./list/ListView";
+
 const { Content } = Layout;
 
 const ItemPage: React.FC = () => {
@@ -31,6 +33,8 @@ const ItemPage: React.FC = () => {
         />
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <Content style={{ padding: "0 5px", minHeight: "100%" }}>
+            <ListView />
+
             {/* <CollectiveCheckSheet data={commentAccountingRequestData} /> */}
           </Content>
           <ItemPageMenu

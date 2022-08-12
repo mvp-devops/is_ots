@@ -17,7 +17,11 @@ import { FC, useEffect, useState } from "react";
 import { setMonitoringFilters } from "./table.setting";
 import { MonitoringView } from "../../../../../../common/types/equipment-accounting";
 import { formatDate } from "../../../../utils/main.utils";
-const { Row, Cell } = Table.Summary;
+import { ModalContainer, MonitoringForm } from "../forms";
+import { FormActions } from "../forms/form.settings";
+import DeleteDialog from "../forms/DeleteDialog";
+import { Link } from "react-router-dom";
+
 const { Text } = Typography;
 
 interface MonitoringTableProps {
@@ -34,6 +38,9 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<MonitoringView[]>([]);
+  const [currentRow, setCurrentRow] = useState<MonitoringView | undefined>();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -78,13 +85,7 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
       items={[
         {
           label: (
-            <Space
-              className="text-secondary"
-              // onClick={() => {
-              //   setActionType("POST");
-              //   setFormVisible(true);
-              // }}
-            >
+            <Space className="text-secondary">
               <SearchOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
                 className="text-primary"
@@ -93,109 +94,109 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
             </Space>
           ),
 
-          key: "1",
+          key: "VIEW",
           children: [
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Ведомость смонтированного оборудования
+                <Space className="text-secondary">
+                  <Link
+                    to="#"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{
+                        marginRight: "6px",
+
+                        padding: 0,
+                      }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">
+                      Ведомость смонтированного оборудования
+                    </Text>
+                  </Link>
                 </Space>
               ),
-              key: "2",
+              key: "VIEW-1",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Акт о подключении
+                <Space className="text-secondary">
+                  <Link
+                    to="#"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">Акт о подключении</Text>
+                  </Link>
                 </Space>
               ),
-              key: "3",
+              key: "VIEW-2",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Акт об окончии ПНР
+                <Space className="text-secondary">
+                  <Link
+                    to="#"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">Акт об окончии ПНР</Text>
+                  </Link>
                 </Space>
               ),
-              key: "4",
+              key: "VIEW-3",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Протокол проверки сигналов
+                <Space className="text-secondary">
+                  <Link
+                    to="#"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">Протокол проверки сигналов</Text>
+                  </Link>
                 </Space>
               ),
-              key: "5",
+              key: "VIEW-4",
             },
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <SearchOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  Акт ввода в эксплуатацию
+                <Space className="text-secondary">
+                  <Link
+                    to="#"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <SearchOutlined
+                      style={{ marginRight: "6px", padding: 0 }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">Акт ввода в эксплуатацию</Text>
+                  </Link>
                 </Space>
               ),
-              key: "5",
+              key: "VIEW-5",
             },
           ],
         },
         {
           label: (
-            <Space
-              className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
-            >
+            <Space className="text-secondary">
               <ExclamationOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
                 className="text-warning"
@@ -204,16 +205,16 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
             </Space>
           ),
 
-          key: "3",
+          key: "VIEW-6",
         },
         {
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -223,22 +224,28 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
             </Space>
           ),
 
-          key: "2",
+          key: "EDIT",
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
-          key: "3",
+          key: "REMOVE",
         },
       ]}
     />
@@ -376,29 +383,33 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      pagination={data.length < 5 && false}
-      scroll={{ y: 500, x: "100%" }}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-      // summary={(data) => (
-      //   <Row style={{ margin: 0, padding: 0 }}>
-      //     <Cell index={0} colSpan={11} align="right">
-      //       <Text strong>Длина:</Text>
-      //     </Cell>
-      //     <Cell index={1} align="center">
-      //       <Text strong>{cableSum(data)}</Text>
-      //     </Cell>
-      //     <Cell index={2} align="center">
-      //       <Text strong>м</Text>
-      //     </Cell>
-      //     <Cell index={3} colSpan={2} />
-      //   </Row>
-      // )}
-    />
+    <>
+      <Table
+        size="small"
+        bordered
+        pagination={data.length < 5 && false}
+        scroll={{ y: 500, x: "100%" }}
+        dataSource={dataSource}
+        columns={columns}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        rowKey={(record) => Math.random()}
+      />
+      {formVisible && (
+        <ModalContainer
+          target="monitoring"
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<MonitoringForm row={currentRow} />}
+        />
+      )}
+    </>
   );
 };
 

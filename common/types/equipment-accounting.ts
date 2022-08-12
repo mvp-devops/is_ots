@@ -31,6 +31,7 @@ export interface SummaryListOfEquipmentView {
 }
 
 export interface CableLogView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -67,6 +68,7 @@ export interface CableLogCreateOrUpdateAttrs {
 }
 
 export interface ImpulseLineLogView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -82,7 +84,20 @@ export interface ImpulseLineLogView {
   description: string;
 }
 
+export interface ImpulseLineLogCreateOrUpdateAttrs {
+  id: string | number;
+  sloeId: string | number | null;
+  numberOfTrace: string;
+  impulseLineType: string;
+  fromPlace: string;
+  toPlace: string;
+  impulseLineLenght: string;
+  range: string;
+  description: string;
+}
+
 export interface SignalView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -99,7 +114,21 @@ export interface SignalView {
   emergenceProtocol: string;
 }
 
+export interface SignalCreateOrUpdateAttrs {
+  id: string | number;
+  sloeId: string | number | null;
+  signalType: string;
+  signalProtocol: string;
+  signalTag: string;
+  ll: string;
+  l: string;
+  h: string;
+  hh: string;
+  emergenceProtocol: string;
+}
+
 export interface MetrologyView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -129,6 +158,7 @@ export interface MetrologyView {
 }
 
 export interface MonitoringView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -148,7 +178,24 @@ export interface MonitoringView {
   description: string;
 }
 
+export interface MonitoringCreateOrUpdateAttrs {
+  id: string | number | null;
+  sloeId: string | number | null;
+  mountDate: Date | null | string;
+  mountDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  connectDate: Date | null | string;
+  connectDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  testDate: Date | null | string;
+  testDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  awpDate: Date | null | string;
+  awpDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  commisionDate: Date | null | string;
+  commisionDocument: DesignDocumentCreateOrUpdateAttrs | null;
+  description: string;
+}
+
 export interface GeneralInformationView {
+  id: string | number;
   sloeId: string | number | null;
   unit: string;
   unitId: string;

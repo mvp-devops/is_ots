@@ -1,207 +1,249 @@
-// import { Button, Divider, Form, Input, Select } from "antd";
-// import React, { ChangeEvent, FC, ReactNode } from "react";
-// import { SignalCreateOrUpdateAttrs } from "../../types/equipment-accounting.types";
-// import { PlusOutlined, DeleteOutlined } from "@ant-design/icons";
-// import {
-//   ProtocolType,
-//   signalType,
-// } from "../../utils/equipment-accounting.consts";
-// import TextArea from "antd/lib/input/TextArea";
+import { Button, Divider, Form, Input, Space, Typography } from "antd";
+import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import {
+  SignalCreateOrUpdateAttrs,
+  SignalView,
+} from "../../../../../../common/types/equipment-accounting";
 
-// const { Option } = Select;
+const { Item } = Form;
+const { Text } = Typography;
 
-// interface SignalFormProps {
-//   data: SignalCreateOrUpdateAttrs[];
-//   setData: Function;
-// }
+interface FormProps {
+  row?: SignalView;
+  data?: SignalCreateOrUpdateAttrs[];
+  setData?: Function;
+}
 
-// const SignalForm: FC<SignalFormProps> = ({ data, setData }) => {
-//   const item = {
-//     id: Math.random().toString(),
-//     consolidatedListId: 0,
-//     signalType: "",
-//     protocolType: "",
-//     signalTag: "",
-//     ll: "",
-//     l: "",
-//     h: "",
-//     hh: "",
-//     emergencyProtocol: "",
-//   };
+const item: SignalCreateOrUpdateAttrs = {
+  id: Math.random(),
+  sloeId: "",
+  signalType: "",
+  signalProtocol: "",
+  signalTag: "",
+  ll: "",
+  l: "",
+  h: "",
+  hh: "",
+  emergenceProtocol: "",
+};
 
-//   const handleChange = (key: string, value: string, id: string) => {
-//     changeItems(key, value, id);
-//   };
+const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
+  const [editRow, setEditRow] = useState<SignalCreateOrUpdateAttrs>();
 
-//   const addItem = () => {
-//     setData([...data, { ...item, id: Math.random().toString() }]);
-//   };
+  useEffect(
+    () =>
+      row &&
+      setEditRow({
+        id: Math.random(),
+        sloeId: row.sloeId,
+        signalType: row.signalType,
+        signalProtocol: row.signalProtocol,
+        signalTag: row.signalTag,
+        ll: row.ll,
+        l: row.l,
+        h: row.h,
+        hh: row.hh,
+        emergenceProtocol: row.emergenceProtocol,
+      }),
+    [row]
+  );
 
-//   const removeItem = (index: string) => {
-//     setData(data.filter((i) => i.id !== index));
-//   };
+  const addItem = () => {
+    data && setData && setData([...data, { ...item, id: Math.random() }]);
+  };
 
-//   const changeItems = (key: string, value: string, id: string) => {
-//     setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-//   };
+  const removeItem = (index: string | number) => {
+    data && setData && setData(data.filter((i) => i.id !== index));
+  };
 
-//   const formItems = (item: SignalCreateOrUpdateAttrs): ReactNode => (
-//     <div key={item.id}>
-//       <div className="row mx-3">
-//         <div className="col-sm">
-//           <Form.Item label="Тип сигнала">
-//             <Select
-//               size="small"
-//               onChange={(value: string) =>
-//                 changeItems("signalType", value, item.id)
-//               }
-//               style={{ width: 100 }}
-//             >
-//               {signalType.map((item) => (
-//                 <Option key={item.title}>{item.title}</Option>
-//               ))}
-//             </Select>
-//           </Form.Item>
-//         </div>
-//         <div className="col-sm">
-//           <Form.Item label="Тип протокола">
-//             <Select
-//               size="small"
-//               // placeholder="Протокол"
-//               onChange={(value: string) =>
-//                 changeItems("protocolType", value, item.id)
-//               }
-//               style={{ width: 100 }}
-//             >
-//               {ProtocolType.map((item) => (
-//                 <Option key={item.title}>{item.title}</Option>
-//               ))}
-//             </Select>
-//           </Form.Item>
-//         </div>
-//         <div className="col-sm">
-//           <Form.Item label="TAG сигнала">
-//             <Input
-//               size="small"
-//               value={item.signalTag}
-//               style={{ width: 100 }}
-//               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-//                 changeItems("signalTag", e.target.value, item.id)
-//               }
-//             />
-//           </Form.Item>
-//         </div>
-//       </div>
+  const changeItems = (
+    key: string,
+    value: string | number,
+    id: string | number
+  ) => {
+    data &&
+      setData &&
+      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
+  };
 
-//       <div className="row border mx-3 ">
-//         <div className="col-sm mt-3">
-//           <Form.Item label="Авария, min">
-//             <Input
-//               size="small"
-//               style={{ width: 100 }}
-//               value={item.ll}
-//               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-//                 changeItems("ll", e.target.value, item.id)
-//               }
-//             />
-//           </Form.Item>
-//         </div>
-//         <div className="col-sm mt-3">
-//           <Form.Item label="Сигнализация, min">
-//             <Input
-//               size="small"
-//               style={{ width: 100 }}
-//               value={item.l}
-//               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-//                 changeItems("l", e.target.value, item.id)
-//               }
-//             />
-//           </Form.Item>
-//         </div>
-//         <div className="col-sm mt-3">
-//           <Form.Item label="Сигнализация, max">
-//             <Input
-//               size="small"
-//               style={{ width: 100 }}
-//               value={item.h}
-//               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-//                 changeItems("h", e.target.value, item.id)
-//               }
-//             />
-//           </Form.Item>
-//         </div>
-//         <div className="col-sm mt-3">
-//           <Form.Item label="Авария, max">
-//             <Input
-//               size="small"
-//               style={{ width: 100 }}
-//               value={item.hh}
-//               onChange={(e: ChangeEvent<HTMLInputElement>) =>
-//                 changeItems("hh", e.target.value, item.id)
-//               }
-//             />
-//           </Form.Item>
-//         </div>
-//       </div>
-//       <div className="row d-flex justify-content-center mt-3 mb-1 mx-1">
-//         <div className="col-sm">
-//           <Form.Item>
-//             <TextArea
-//               rows={3}
-//               placeholder="Аварийный протокол"
-//               onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-//                 changeItems("emergencyProtocol", e.target.value, item.id)
-//               }
-//               value={item.emergencyProtocol}
-//             />
-//           </Form.Item>
-//         </div>
-//       </div>
-//       <div className="row d-flex justify-content-end mt-1 mb-1 mx-3">
-//         <Button
-//           className="border-0 mb-3 mt-0"
-//           style={{ background: "transparent", width: "5%" }}
-//         >
-//           <DeleteOutlined
-//             title="Удалить строку"
-//             onClick={() => removeItem(item.id)}
-//             style={{ fontSize: " 20px" }}
-//             className="text-danger"
-//           />
-//         </Button>
-//         <Divider />
-//       </div>
-//     </div>
-//   );
+  const formItems = (item: SignalCreateOrUpdateAttrs): ReactNode => (
+    <Form
+      key={item.id}
+      labelCol={{ span: 8 }}
+      wrapperCol={{ span: 16 }}
+      layout="horizontal"
+      className="m-1 p-1 border"
+    >
+      <Item label={<Text type="secondary">Тип сигнала</Text>} className="m-0">
+        <Input
+          size="small"
+          placeholder="Тип сигнала"
+          className="text-secondary"
+          value={editRow ? editRow.signalType : item.signalType}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, signalType: e.target.value })
+              : changeItems("numberOfTrace", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item label={<Text type="secondary">Протокол</Text>} className="m-0">
+        <Input
+          size="small"
+          placeholder="Протокол"
+          className="text-secondary"
+          value={editRow ? editRow.signalProtocol : item.signalProtocol}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, signalProtocol: e.target.value })
+              : changeItems("numberOfTrace", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item label={<Text type="secondary">Авария, min</Text>} className="m-0">
+        <Input
+          size="small"
+          type="number"
+          placeholder="Авария, min"
+          className="text-secondary"
+          value={editRow ? editRow.h : item.h}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, h: e.target.value })
+              : changeItems("fromPlace", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item
+        label={<Text type="secondary">Сигнализация, min</Text>}
+        className="m-0"
+      >
+        <Input
+          size="small"
+          type="number"
+          placeholder="Сигнализация, min"
+          className="text-secondary"
+          value={editRow ? editRow.l : item.l}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, signalProtocol: e.target.value })
+              : changeItems("cableSection", e.target.value, item.id)
+          }
+        />
+      </Item>
 
-//   return (
-//     <div className="container pt-0" style={{ maxWidth: "1800px" }}>
-//       <div className="row d-flex justify-content-center  mx-3 ">
-//         <Button
-//           className="border-0 mb-3 mt-0"
-//           style={{ background: "transparent", width: "5%" }}
-//         >
-//           <PlusOutlined
-//             title="Добавить новую строку"
-//             onClick={addItem}
-//             style={{ fontSize: " 20px" }}
-//             className="text-success"
-//           />
-//         </Button>
+      <Item
+        label={<Text type="secondary">Сигнализация, max</Text>}
+        className="m-0"
+      >
+        <Input
+          size="small"
+          type="number"
+          placeholder="Сигнализация, max"
+          className="text-secondary"
+          value={editRow ? editRow.ll : item.ll}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, ll: e.target.value })
+              : changeItems("toPlace", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item label={<Text type="secondary">Авария, max</Text>} className="m-0">
+        <Input
+          size="small"
+          type="number"
+          placeholder="Авария, max"
+          className="text-secondary"
+          value={editRow ? editRow.hh : item.hh}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, hh: e.target.value })
+              : changeItems("cableLenght", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item
+        label={<Text type="secondary">Аварийны протокол</Text>}
+        className="m-0"
+      >
+        <Input
+          size="small"
+          placeholder="Аварийны протокол"
+          className="text-secondary"
+          value={editRow ? editRow.emergenceProtocol : item.emergenceProtocol}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            editRow
+              ? setEditRow({ ...editRow, emergenceProtocol: e.target.value })
+              : changeItems("description", e.target.value, item.id)
+          }
+        />
+      </Item>
 
-//         <Divider />
-//       </div>
-//       {data.map((item, index) => formItems(item))}
-//     </div>
-//   );
-// };
+      {row ? (
+        <>
+          <Divider className="p-0 mb-3" />
+          <Space className="d-flex justify-content-end mb-2">
+            <Button type="primary" className="me-1">
+              Обновить
+            </Button>
 
-// export default SignalForm;
+            <Button type="default" className="me-2">
+              Отмена
+            </Button>
+          </Space>
+        </>
+      ) : (
+        <Space className="d-flex justify-content-end my-2">
+          <Button
+            type="default"
+            className="me-1"
+            onClick={() => removeItem(item.id)}
+          >
+            <Text type="danger">Удалить</Text>
+          </Button>
+        </Space>
+      )}
+    </Form>
+  );
 
-import React from "react";
+  const editItem = editRow && formItems(editRow);
 
-const SignalForm = () => {
-  return <div>SignalForm</div>;
+  return row ? (
+    <>{editItem}</>
+  ) : (
+    <div className="container pt-0">
+      <Space className="d-flex justify-content-center ">
+        <Button
+          type="ghost"
+          title="Добавить новую строку"
+          onClick={() => addItem()}
+        >
+          <Text type="secondary">Добавить новую строку</Text>
+        </Button>
+      </Space>
+      {data &&
+        data.map((item, index) => (
+          <div
+            key={item.id}
+            className="d-inline-block justify-content-between"
+            style={{ width: 550 }}
+          >
+            <Divider />
+            {formItems(item)}
+          </div>
+        ))}
+      {data && data.length > 0 && (
+        <>
+          <Divider />
+          <Space className="d-flex justify-content-end ">
+            <Button type="primary">Отправить</Button>
+            <Button>Отмена</Button>
+          </Space>
+        </>
+      )}
+    </div>
+  );
 };
 
 export default SignalForm;

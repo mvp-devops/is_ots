@@ -14,7 +14,13 @@ import {
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
 import { signalSum, setSignalFilters } from "./table.setting";
-import { SignalView } from "../../../../../../common/types/equipment-accounting";
+import {
+  SignalCreateOrUpdateAttrs,
+  SignalView,
+} from "../../../../../../common/types/equipment-accounting";
+import { ModalContainer, SignalForm } from "../forms";
+import { FormActions } from "../forms/form.settings";
+import DeleteDialog from "../forms/DeleteDialog";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -32,6 +38,10 @@ const SignalTable: FC<SignalTableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<SignalView[]>([]);
+  const [currentRow, setCurrentRow] = useState<SignalView | undefined>();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
+  const [editRows, setEditRows] = useState<SignalCreateOrUpdateAttrs[]>([]);
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -77,10 +87,10 @@ const SignalTable: FC<SignalTableProps> = ({
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -90,22 +100,28 @@ const SignalTable: FC<SignalTableProps> = ({
             </Space>
           ),
 
-          key: "edit",
+          key: "EDIT",
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
-          key: "delete",
+          key: "REMOVE",
         },
       ]}
     />
@@ -199,7 +215,7 @@ const SignalTable: FC<SignalTableProps> = ({
       render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
-      title: "TAG",
+      title: "TAG сигнала",
       dataIndex: "signalTag",
       key: "signalTag",
       align: "center",
@@ -209,12 +225,12 @@ const SignalTable: FC<SignalTableProps> = ({
       title: "Уставки",
       children: [
         {
-          title: "LL",
-          dataIndex: "ll",
-          key: "ll",
+          title: "H",
+          dataIndex: "h",
+          key: "h",
           align: "center",
           width: 80,
-          render: (value) => <Text type="danger">{value}</Text>,
+          render: (value) => <Text type="warning">{value}</Text>,
         },
         {
           title: "L",
@@ -225,13 +241,14 @@ const SignalTable: FC<SignalTableProps> = ({
           render: (value) => <Text type="warning">{value}</Text>,
         },
         {
-          title: "H",
-          dataIndex: "h",
-          key: "h",
+          title: "LL",
+          dataIndex: "ll",
+          key: "ll",
           align: "center",
           width: 80,
-          render: (value) => <Text type="warning">{value}</Text>,
+          render: (value) => <Text type="danger">{value}</Text>,
         },
+
         {
           title: "HH",
           dataIndex: "hh",
@@ -263,29 +280,52 @@ const SignalTable: FC<SignalTableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      scroll={{ y: 500, x: "100%" }}
-      pagination={data.length < 5 && false}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-      summary={(data) => (
-        <Row style={{ margin: 0, padding: 0 }}>
-          <Cell index={0} colSpan={4} align="right">
-            <Text strong>Количество:</Text>
-          </Cell>
-          <Cell index={1} align="center">
-            <Text strong>{data.length}</Text>
-          </Cell>
-          <Cell index={2} align="center">
-            <Text strong>{data.length}</Text>
-          </Cell>
-          <Cell index={3} colSpan={7} />
-        </Row>
+    <>
+      <Table
+        size="small"
+        bordered
+        scroll={{ y: 500, x: "100%" }}
+        pagination={data.length < 5 && false}
+        dataSource={dataSource}
+        columns={columns}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        rowKey={(record) => Math.random()}
+        summary={(data) => (
+          <Row style={{ margin: 0, padding: 0 }}>
+            <Cell index={0} colSpan={4} align="right">
+              <Text strong>Количество:</Text>
+            </Cell>
+            <Cell index={1} align="center">
+              <Text strong>{data.length}</Text>
+            </Cell>
+            <Cell index={2} align="center">
+              <Text strong>{data.length}</Text>
+            </Cell>
+            <Cell index={3} colSpan={7} />
+          </Row>
+        )}
+      />
+      {formVisible && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={
+            <SignalForm
+              // row={currentRow}
+              data={editRows}
+              setData={setEditRows}
+            />
+          }
+        />
       )}
-    />
+    </>
   );
 };
 

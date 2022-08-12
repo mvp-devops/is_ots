@@ -10,8 +10,8 @@ const { Text } = Typography;
 
 interface FormProps {
   row?: CableLogView;
-  data: CableLogCreateOrUpdateAttrs[];
-  setData: Function;
+  data?: CableLogCreateOrUpdateAttrs[];
+  setData?: Function;
 }
 
 const item: CableLogCreateOrUpdateAttrs = {
@@ -55,11 +55,11 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
   );
 
   const addItem = () => {
-    setData([...data, { ...item, id: Math.random() }]);
+    data && setData && setData([...data, { ...item, id: Math.random() }]);
   };
 
   const removeItem = (index: string | number) => {
-    setData(data.filter((i) => i.id !== index));
+    data && setData && setData(data.filter((i) => i.id !== index));
   };
 
   const changeItems = (
@@ -67,7 +67,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
     value: string | number,
     id: string | number
   ) => {
-    setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
+    data &&
+      setData &&
+      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
   };
 
   const formItems = (item: CableLogCreateOrUpdateAttrs): ReactNode => (
@@ -194,6 +196,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       >
         <Input
           size="small"
+          type={"number"}
           placeholder="Длина кабельной линии"
           addonAfter="м"
           className="text-secondary"
@@ -261,17 +264,18 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           <Text type="secondary">Добавить новую строку</Text>
         </Button>
       </Space>
-      {data.map((item, index) => (
-        <div
-          key={item.id}
-          className="d-inline-block justify-content-between"
-          style={{ width: 550 }}
-        >
-          <Divider />
-          {formItems(item)}
-        </div>
-      ))}
-      {data.length > 0 && (
+      {data &&
+        data.map((item, index) => (
+          <div
+            key={item.id}
+            className="d-inline-block justify-content-between"
+            style={{ width: 550 }}
+          >
+            <Divider />
+            {formItems(item)}
+          </div>
+        ))}
+      {data && data.length > 0 && (
         <>
           <Divider />
           <Space className="d-flex justify-content-end ">

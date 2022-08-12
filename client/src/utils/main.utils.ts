@@ -54,3 +54,11 @@ export const verificateDates = (toDate: string): string => {
 
   return td > currDate && td < wd ? "w" : td > currDate && td > wd ? "s" : "d";
 };
+
+export const setDate = (date: string) => {
+  const arr = date.split("-");
+
+  const d = new Date(+arr[0], +arr[1], +arr[2]);
+
+  return d;
+};

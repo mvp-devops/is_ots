@@ -28,6 +28,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
     cableLog: [],
     impulseLineLog: [],
     metrology: {
+      id: "1",
       sloeId: "1",
       unit: "ОУУ АСВ",
       unitId: "2",
@@ -56,25 +57,6 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
       typeApprovalCertificate: "Ссылка на СоУТ",
     },
     signals: [],
-    monitoring: {
-      sloeId: "1",
-      unit: "ОУУ АСВ",
-      unitId: "2",
-      subUnit: "Линия учета газа от ЦОГ",
-      subUnitId: "1",
-      tag: "PG-3",
-      mountDate: "",
-      mountDocument: "mountDocument",
-      connectDate: "",
-      connectDocument: "connectDocument",
-      testDate: "",
-      testDocument: "testDocument",
-      awpDate: "",
-      awpDocument: "awpDocument",
-      commisionDate: "",
-      commisionDocument: "commisionDocument",
-      description: "Примечание",
-    },
   },
   {
     id: "2",
@@ -102,6 +84,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
     description: "",
     cableLog: [
       {
+        id: "1",
         sloeId: "2",
         unit: "ОУУ АСВ",
         unitId: "2",
@@ -123,6 +106,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
     ],
     impulseLineLog: [
       {
+        id: "1",
         sloeId: "2",
         unit: "ОУУ АСВ",
         unitId: "2",
@@ -139,6 +123,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
       },
     ],
     metrology: {
+      id: "2",
       sloeId: "2",
       unit: "ОУУ АСВ",
       unitId: "2",
@@ -168,6 +153,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
     },
     signals: [
       {
+        id: "1",
         sloeId: "2",
         unit: "ОУУ АСВ",
         unitId: "2",
@@ -185,6 +171,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
       },
     ],
     monitoring: {
+      id: "1",
       sloeId: "2",
       unit: "ОУУ АСВ",
       unitId: "2",

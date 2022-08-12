@@ -13,7 +13,13 @@ import {
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
 import { impulseLineSum, setImpulseLineLogFilters } from "./table.setting";
-import { ImpulseLineLogView } from "../../../../../../common/types/equipment-accounting";
+import {
+  ImpulseLineLogCreateOrUpdateAttrs,
+  ImpulseLineLogView,
+} from "../../../../../../common/types/equipment-accounting";
+import { FormActions } from "../forms/form.settings";
+import DeleteDialog from "../forms/DeleteDialog";
+import { ImpulseLineLogForm, ModalContainer } from "../forms";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -32,6 +38,14 @@ const ImpulseLineLogTable: FC<TableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<ImpulseLineLogView[]>([]);
+  const [currentRow, setCurrentRow] = useState<
+    ImpulseLineLogView | undefined
+  >();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
+  const [editRows, setEditRows] = useState<ImpulseLineLogCreateOrUpdateAttrs[]>(
+    []
+  );
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -75,10 +89,10 @@ const ImpulseLineLogTable: FC<TableProps> = ({
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -92,16 +106,22 @@ const ImpulseLineLogTable: FC<TableProps> = ({
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
           key: "delete",
         },
@@ -251,29 +271,52 @@ const ImpulseLineLogTable: FC<TableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      pagination={data.length < 5 && false}
-      scroll={{ y: 500, x: "100%" }}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-      summary={(data) => (
-        <Row style={{ margin: 0, padding: 0 }}>
-          <Cell index={0} colSpan={8} align="right">
-            <Text strong>Длина:</Text>
-          </Cell>
-          <Cell index={1} align="center">
-            <Text strong>{impulseLineSum(data)}</Text>
-          </Cell>
-          <Cell index={2} align="center">
-            <Text strong>м</Text>
-          </Cell>
-          <Cell index={3} colSpan={2} />
-        </Row>
+    <>
+      <Table
+        size="small"
+        bordered
+        pagination={data.length < 5 && false}
+        scroll={{ y: 500, x: "100%" }}
+        dataSource={dataSource}
+        columns={columns}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        rowKey={(record) => Math.random()}
+        summary={(data) => (
+          <Row style={{ margin: 0, padding: 0 }}>
+            <Cell index={0} colSpan={8} align="right">
+              <Text strong>Длина:</Text>
+            </Cell>
+            <Cell index={1} align="center">
+              <Text strong>{impulseLineSum(data)}</Text>
+            </Cell>
+            <Cell index={2} align="center">
+              <Text strong>м</Text>
+            </Cell>
+            <Cell index={3} colSpan={2} />
+          </Row>
+        )}
+      />
+      {formVisible && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={
+            <ImpulseLineLogForm
+              row={currentRow}
+              // data={editRows}
+              // setData={setEditRows}
+            />
+          }
+        />
       )}
-    />
+    </>
   );
 };
 

@@ -21,6 +21,7 @@ import {
 import DeleteDialog from "../forms/DeleteDialog";
 import { CableLogForm, ModalContainer } from "../forms";
 import { Link } from "react-router-dom";
+import { FormActions } from "../forms/form.settings";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -33,13 +34,6 @@ interface CableLogTableProps {
   subUnitId: string;
 }
 
-enum FormActions {
-  EDIT = "UPDATE",
-  ADD = "POST",
-  REMOVE = "DELETE",
-  VIEW = "GET",
-}
-
 const CableLogTable: FC<CableLogTableProps> = ({
   data,
   searchValue,
@@ -50,7 +44,6 @@ const CableLogTable: FC<CableLogTableProps> = ({
   const [currentRow, setCurrentRow] = useState<CableLogView | undefined>();
   const [actionType, setActionType] = useState("");
   const [formVisible, setFormVisible] = useState(false);
-  const [editRow, setEditRow] = useState<CableLogCreateOrUpdateAttrs[]>([]);
 
   useEffect(() => {
     unitId
@@ -97,18 +90,24 @@ const CableLogTable: FC<CableLogTableProps> = ({
       items={[
         {
           label: (
-            <Space
-              className="text-secondary"
-              onClick={() => {
-                setActionType(FormActions.VIEW);
-                setFormVisible(true);
-              }}
-            >
-              <SearchOutlined
-                style={{ marginBottom: "6px", padding: 0 }}
-                className="text-primary"
-              />
-              Схема внешних электрических проводок (С5)
+            <Space className="text-secondary">
+              <Link
+                to="../../../../GPN-A.PNG"
+                target="_blank"
+                style={{ textDecoration: "none" }}
+              >
+                <SearchOutlined
+                  style={{
+                    marginRight: "6px",
+                    marginBottom: "6px",
+                    padding: 0,
+                  }}
+                  className="text-primary"
+                />
+                <Text type="secondary">
+                  Схема внешних электрических проводок (С5)
+                </Text>
+              </Link>
             </Space>
           ),
 
@@ -347,37 +346,14 @@ const CableLogTable: FC<CableLogTableProps> = ({
           </Row>
         )}
       />
-      {formVisible &&
-        (actionType === FormActions.EDIT ? (
-          <ModalContainer
-            show={formVisible}
-            onCancel={() => setFormVisible(false)}
-            action={FormActions.EDIT}
-            child={
-              <CableLogForm
-                // row={currentRow}
-                data={editRow}
-                setData={setEditRow}
-              />
-            }
-          />
-        ) : actionType === FormActions.ADD ? (
-          <div>Окно добавления записи</div>
-        ) : (
-          <ModalContainer
-            show={formVisible}
-            onCancel={() => setFormVisible(false)}
-            action={FormActions.VIEW}
-            child={
-              <Link
-                to="O:\\is_ots\\server\\dist\\files\\87349857340983495834.pdf"
-                target="_blank"
-              >
-                fdfd
-              </Link>
-            }
-          />
-        ))}
+      {formVisible && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<CableLogForm row={currentRow} />}
+        />
+      )}
     </>
   );
 };

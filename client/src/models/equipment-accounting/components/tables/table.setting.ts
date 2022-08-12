@@ -549,6 +549,7 @@ export const getAllGeneralInformation = (
       description,
     } = data[i];
     const item: GeneralInformationView = {
+      id,
       sloeId: id,
       unit,
       unitId,
