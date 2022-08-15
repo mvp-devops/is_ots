@@ -229,6 +229,8 @@ const MonitoringTable: FC<MonitoringTableProps> = ({
         {
           label: (
             <DeleteDialog
+              target="monitoring"
+              id={currentRow?.id}
               onCancel={() => {
                 setFormVisible(false);
                 setActionType("");

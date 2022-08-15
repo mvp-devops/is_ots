@@ -105,6 +105,8 @@ const SignalTable: FC<SignalTableProps> = ({
         {
           label: (
             <DeleteDialog
+              target="signal"
+              id={currentRow?.id}
               onCancel={() => {
                 setFormVisible(false);
                 setActionType("");

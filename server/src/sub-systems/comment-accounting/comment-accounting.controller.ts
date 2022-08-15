@@ -13,7 +13,7 @@ import {
   UpdateDesignDocumentCommentDto,
 } from "./dto";
 
-@Controller("comment-accounting")
+@Controller("api/comment-accounting")
 export class CommentAccountingController {
   constructor(private readonly service: CommentAccountingService) {}
 

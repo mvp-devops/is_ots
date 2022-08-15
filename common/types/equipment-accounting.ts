@@ -10,6 +10,7 @@ export interface SummaryListOfEquipmentView {
   unitId: string;
   subUnit: string;
   subUnitId: string;
+  facilityId: string | number | null;
   installationLocation: string;
   questionare: string;
   equipmentType: string;
@@ -236,6 +237,7 @@ export interface GeneralInformationView {
   controlledParameter: string;
   country: string;
   vendor: string;
+  facilityId: string | number | null;
   facilityTitle: string;
   facilityModification: string;
   factoryNumber: string;
@@ -245,3 +247,47 @@ export interface GeneralInformationView {
   specification: string;
   description: string;
 }
+
+export interface GeneralInformationCreateOrUpdateAttrs {
+  id: string | number | null;
+  sloeId: string | number | null;
+  unitId: string | number | null;
+  subUnitId: string | number | null;
+  installationLocation: string;
+  questionare: any;
+  systemType: string[];
+  tag: string;
+  controlledParameter: string;
+  facilityId: string | number | null;
+  facility: FacilityCreateOrUpdateAtts;
+  facilityModification: string | null;
+  factoryNumber: string;
+  year: string;
+  month: string;
+  period: string;
+  specification: string;
+  description: string;
+}
+
+export interface FacilityView {
+  id: string | number | null;
+  country: string;
+  vendor: string;
+  title: string;
+  equipmentType: string;
+  measurementArea: string | null;
+  meansurementType: string | null;
+  meansureGroup: string | null;
+  modifications: string[];
+}
+
+export interface FacilityCreateOrUpdateAtts extends FacilityView {}
+
+// export interface FacilityModificationView {
+//   // facilityId: string | number | null;
+//   // id: number | null;
+//   title: string;
+// }
+
+// export interface FacilityModificationCreateOrUpdateAttrs
+//   extends FacilityModificationView {}

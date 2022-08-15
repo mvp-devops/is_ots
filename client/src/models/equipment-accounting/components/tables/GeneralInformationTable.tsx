@@ -22,6 +22,10 @@ import {
   setGeneralInformationFilters,
 } from "./table.setting";
 import { GeneralInformationView } from "../../../../../../common/types/equipment-accounting";
+import { FormActions } from "../forms/form.settings";
+import DeleteDialog from "../forms/DeleteDialog";
+import { Link } from "react-router-dom";
+import { GeneralInformationForm, ModalContainer } from "../forms";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -39,6 +43,11 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
   subUnitId,
 }) => {
   const [dataSource, setDataSource] = useState<GeneralInformationView[]>([]);
+  const [currentRow, setCurrentRow] = useState<
+    GeneralInformationView | undefined
+  >();
+  const [actionType, setActionType] = useState("");
+  const [formVisible, setFormVisible] = useState(false);
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -90,13 +99,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
       items={[
         {
           label: (
-            <Space
-              className="text-secondary"
-              // onClick={() => {
-              //   setActionType("POST");
-              //   setFormVisible(true);
-              // }}
-            >
+            <Space className="text-secondary">
               <PlusOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
                 className="text-success"
@@ -105,26 +108,30 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
             </Space>
           ),
 
-          key: "1",
+          key: "VIEW",
           children: [
             {
               label: (
-                <Space
-                  className="text-secondary"
-                  // onClick={() => {
-                  //   setActionType("POST");
-                  //   setFormVisible(true);
-                  // }}
-                >
-                  <AppstoreAddOutlined
-                    style={{ marginBottom: "6px", padding: 0 }}
-                    className="text-primary"
-                  />
-                  ПНР
+                <Space className="text-secondary">
+                  <Link
+                    to="../../../../GPN-A.PNG"
+                    target="_blank"
+                    style={{ textDecoration: "none" }}
+                  >
+                    <AppstoreAddOutlined
+                      style={{
+                        marginRight: "6px",
+                        marginBottom: "6px",
+                        padding: 0,
+                      }}
+                      className="text-primary"
+                    />
+                    <Text type="secondary">ПНР</Text>
+                  </Link>
                 </Space>
               ),
 
-              key: "1",
+              key: "VIEW-1",
             },
             {
               label: (
@@ -143,7 +150,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
                 </Space>
               ),
 
-              key: "1",
+              key: "VIEW-2",
             },
             {
               label: (
@@ -162,7 +169,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
                 </Space>
               ),
 
-              key: "1",
+              key: "VIEW-3",
             },
           ],
         },
@@ -170,10 +177,10 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
           label: (
             <Space
               className="text-secondary"
-              // onClick={() => {
-              //   setActionType("UPDATE");
-              //   setFormVisible(true);
-              // }}
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
@@ -183,20 +190,28 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
             </Space>
           ),
 
-          key: "2",
+          key: "EDIT",
         },
         {
           label: (
-            <Space
-              // onClick={() => setDetailVisible(true)}
-              className="text-secondary"
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
+            <DeleteDialog
+              target="general-information"
+              id={currentRow?.id}
+              onCancel={() => {
+                setFormVisible(false);
+                setActionType("");
+              }}
+              onConfirm={() => console.log(currentRow)}
+              children={
+                <Space className="text-secondary">
+                  <DeleteOutlined
+                    className="text-danger"
+                    style={{ marginBottom: "6px", padding: 0 }}
+                  />
+                  Удалить
+                </Space>
+              }
+            />
           ),
           key: "3",
         },
@@ -536,15 +551,33 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
   ];
 
   return (
-    <Table
-      size="small"
-      bordered
-      scroll={{ y: 500, x: "100%" }}
-      pagination={data.length < 5 && false}
-      dataSource={dataSource}
-      columns={columns}
-      rowKey={(record) => Math.random()}
-    />
+    <>
+      <Table
+        size="small"
+        bordered
+        pagination={data.length < 5 && false}
+        scroll={{ y: 500, x: "100%" }}
+        dataSource={dataSource}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        columns={columns}
+        rowKey={(record) => Math.random()}
+      />
+      {formVisible && (
+        <ModalContainer
+          target="general-information"
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<GeneralInformationForm row={currentRow} />}
+        />
+      )}
+    </>
   );
 };
 

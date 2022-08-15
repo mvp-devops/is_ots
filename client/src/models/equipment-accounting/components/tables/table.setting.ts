@@ -545,6 +545,7 @@ export const getAllGeneralInformation = (
       year,
       month,
       period,
+      facilityId,
       specification,
       description,
     } = data[i];
@@ -563,6 +564,7 @@ export const getAllGeneralInformation = (
       controlledParameter,
       country,
       vendor,
+      facilityId,
       facilityTitle,
       facilityModification,
       factoryNumber,

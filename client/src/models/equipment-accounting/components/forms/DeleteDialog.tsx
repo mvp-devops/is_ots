@@ -3,12 +3,16 @@ import { Popconfirm } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 interface DeleteDialogProps {
+  target: string;
+  id: string | number | undefined;
   children: ReactNode;
   onCancel: () => void;
   onConfirm: () => void;
 }
 
 const DeleteDialog: FC<DeleteDialogProps> = ({
+  target,
+  id,
   onCancel,
   onConfirm,
   children,

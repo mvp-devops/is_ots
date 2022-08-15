@@ -102,11 +102,13 @@ const ImpulseLineLogTable: FC<TableProps> = ({
             </Space>
           ),
 
-          key: "edit",
+          key: "EDIT",
         },
         {
           label: (
             <DeleteDialog
+              target="impulse-line-log"
+              id={currentRow?.id}
               onCancel={() => {
                 setFormVisible(false);
                 setActionType("");
@@ -123,7 +125,7 @@ const ImpulseLineLogTable: FC<TableProps> = ({
               }
             />
           ),
-          key: "delete",
+          key: "REMOVE",
         },
       ]}
     />

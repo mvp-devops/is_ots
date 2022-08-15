@@ -215,6 +215,8 @@ const MetrologyTable: FC<TableProps> = ({
         {
           label: (
             <DeleteDialog
+              target="metrology"
+              id={currentRow?.id}
               onCancel={() => {
                 setFormVisible(false);
                 setActionType("");

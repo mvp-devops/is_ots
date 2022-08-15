@@ -111,7 +111,7 @@ const CableLogTable: FC<CableLogTableProps> = ({
             </Space>
           ),
 
-          key: "show-document",
+          key: "VIEW",
         },
         {
           label: (
@@ -135,6 +135,8 @@ const CableLogTable: FC<CableLogTableProps> = ({
         {
           label: (
             <DeleteDialog
+              target="cable-log"
+              id={currentRow?.id}
               onCancel={() => {
                 setFormVisible(false);
                 setActionType("");

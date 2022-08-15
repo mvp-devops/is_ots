@@ -1,6 +1,6 @@
 import CableLogForm from "./CableLogForm";
 import FacilityForm from "./FacilityForm";
-import GeneralDetailsForm from "./GeneralDetailsForm";
+import GeneralInformationForm from "./GeneralInformationForm";
 import ImpulseLineLogForm from "./ImpulseLineLogForm";
 import MetrologyForm from "./MetrologyForm";
 import MonitoringForm from "./MonitoringForm";
@@ -11,7 +11,7 @@ export {
   ModalContainer,
   CableLogForm,
   FacilityForm,
-  GeneralDetailsForm,
+  GeneralInformationForm,
   ImpulseLineLogForm,
   MetrologyForm,
   MonitoringForm,
