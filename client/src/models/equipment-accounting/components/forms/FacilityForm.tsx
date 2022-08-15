@@ -1,6 +1,4 @@
 import {
-  Button,
-  DatePicker,
   Divider,
   Form,
   Input,
@@ -8,34 +6,18 @@ import {
   RadioChangeEvent,
   Select,
   Space,
-  Switch,
   TreeSelect,
   Typography,
-  Upload,
-  UploadFile,
 } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import {
-  FacilityCreateOrUpdateAtts,
-  GeneralInformationCreateOrUpdateAttrs,
-} from "../../../../../../common/types/equipment-accounting";
-import { RcFile } from "antd/lib/upload";
-import {
-  formatDate,
-  setDate,
-  setDateToVerification,
-} from "../../../../utils/main.utils";
+import { FacilityCreateOrUpdateAtts } from "../../../../../../common/types/equipment-accounting";
 import {
   countries,
   meansureGroup,
   meansurementArea,
   meansurementType,
-  sgroei,
 } from "../../utils/equipment-accounting.consts";
-import "moment/locale/ru";
-import locale from "antd/es/date-picker/locale/ru_RU";
-import { OptionFC } from "rc-select/lib/Option";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -47,29 +29,11 @@ interface FormProps {
 }
 
 const FacilityForm: FC<FormProps> = ({ data, setData }) => {
-  const [modifications, setModifications] = useState<string[]>([]);
-  const [itemMeansureGroup, setItemMeansureGroup] = useState<string>();
+  const [modifications] = useState<string[]>([]);
+  const [itemMeansureGroup] = useState<string>();
 
-  const onChangeHandler = (key: string, value: string) => {
+  const onChangeHandler = (key: string, value: string | string[]) => {
     setData({ ...data, [key]: value });
-  };
-
-  const setTreeNodes = (arr: any[]) => {
-    const newArr = arr.map((elem) => {
-      const newArr: any[] = [];
-      const newChildren: any[] = [];
-      for (let i = 0; i < elem.children.length; i++) {
-        const child = { ...elem.children[i], value: elem.children[i].title };
-        newChildren.push(child);
-      }
-
-      let item = { ...elem, value: elem.title, children: newChildren };
-      newArr.push(item);
-      return newArr;
-    });
-    console.log(newArr);
-
-    return newArr;
   };
 
   return (
@@ -164,10 +128,13 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
         <Input
           size="small"
           className="text-secondary"
-          value={data.title}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            setModifications([...modifications, e.target.value])
-          }
+          // value={}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => {
+            onChangeHandler("modifications", [
+              ...modifications,
+              e.target.value,
+            ]);
+          }}
         />
       </Item>
       {data.equipmentType === "СИ" && (
@@ -207,7 +174,9 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
               }
             >
               {meansurementArea.map((item) => (
-                <Option key={item.id}>{item.title}</Option>
+                <Option key={item.id} value={item.title}>
+                  {item.title}
+                </Option>
               ))}
             </Select>
           </Item>
@@ -246,7 +215,9 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
               }
             >
               {meansurementType.map((item) => (
-                <Option key={item.id}>{item.title}</Option>
+                <Option key={item.id} value={item.title}>
+                  {item.title}
+                </Option>
               ))}
             </Select>
           </Item>
@@ -270,9 +241,6 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
               treeData={meansureGroup}
               treeDefaultExpandAll
               onChange={(value: string, label) => {
-                console.log(label[0]);
-
-                setItemMeansureGroup(value);
                 onChangeHandler("meansureGroup", value);
               }}
             />

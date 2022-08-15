@@ -1,3 +1,5 @@
+import { GeneralInformationCreateOrUpdateAttrs } from "../../../../../../common/types/equipment-accounting";
+
 export const initData = () => {};
 
 export enum FormActions {
@@ -6,3 +8,46 @@ export enum FormActions {
   REMOVE = "DELETE",
   VIEW = "GET",
 }
+
+export const facilityItem = {
+  id: null,
+  country: "",
+  vendor: "",
+  title: "",
+  equipmentType: "",
+  measurementArea: null,
+  meansurementType: null,
+  meansureGroup: null,
+  modifications: [],
+};
+
+export const generalInformationItem: GeneralInformationCreateOrUpdateAttrs = {
+  id: null,
+  sloeId: null,
+  unitId: null,
+  subUnitId: null,
+  installationLocation: "",
+  questionare: null,
+  systemType: [],
+  tag: "",
+  controlledParameter: "",
+  facilityId: null,
+  facility: {
+    id: null,
+    country: "",
+    vendor: "",
+    title: "",
+    equipmentType: "",
+    measurementArea: null,
+    meansurementType: null,
+    meansureGroup: null,
+    modifications: [],
+  },
+  facilityModification: "",
+  factoryNumber: "",
+  year: "",
+  month: "",
+  period: "",
+  specification: "",
+  description: "",
+};
