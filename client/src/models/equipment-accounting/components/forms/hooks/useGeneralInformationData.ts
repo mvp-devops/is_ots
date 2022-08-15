@@ -21,7 +21,6 @@ export const useGeneralInformationData = (
   const [editRow, setEditRow] =
     useState<GeneralInformationCreateOrUpdateAttrs>();
 
-  const [addFacilityVisible, setAddFacilityVisible] = useState(false);
   const [newFacility, setNewFacility] =
     useState<FacilityCreateOrUpdateAtts>(facilityItem);
   const [facilities, setFacilities] = useState<FacilityView[]>([]);

@@ -1,4 +1,7 @@
-import { GeneralInformationCreateOrUpdateAttrs } from "../../../../../../common/types/equipment-accounting";
+import {
+  CableLogCreateOrUpdateAttrs,
+  GeneralInformationCreateOrUpdateAttrs,
+} from "../../../../../../common/types/equipment-accounting";
 
 export const initData = () => {};
 
@@ -49,5 +52,21 @@ export const generalInformationItem: GeneralInformationCreateOrUpdateAttrs = {
   month: "",
   period: "",
   specification: "",
+  description: "",
+};
+
+export const cableLogItem: CableLogCreateOrUpdateAttrs = {
+  id: null,
+  sloeId: "",
+  wiringDiagram: null,
+  numberOfTrace: "",
+  cableMark: "",
+  cableSection: "",
+  fromUnit: "",
+  fromPlace: "",
+  toUnit: "",
+  toPlace: "",
+  cableLenght: "",
+  range: "м",
   description: "",
 };

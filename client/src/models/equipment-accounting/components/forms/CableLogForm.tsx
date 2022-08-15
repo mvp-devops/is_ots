@@ -4,6 +4,7 @@ import {
   CableLogCreateOrUpdateAttrs,
   CableLogView,
 } from "../../../../../../common/types/equipment-accounting";
+import { useCableLogData } from "./hooks/useCableLogData";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -14,63 +15,14 @@ interface FormProps {
   setData?: Function;
 }
 
-const item: CableLogCreateOrUpdateAttrs = {
-  id: Math.random(),
-  sloeId: "",
-  wiringDiagram: null,
-  numberOfTrace: "",
-  cableMark: "",
-  cableSection: "",
-  fromUnit: "",
-  fromPlace: "",
-  toUnit: "",
-  toPlace: "",
-  cableLenght: "",
-  range: "м",
-  description: "",
-};
-
 const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
-  const [editRow, setEditRow] = useState<CableLogCreateOrUpdateAttrs>();
-
-  useEffect(
-    () =>
-      row &&
-      setEditRow({
-        id: Math.random(),
-        sloeId: row.sloeId,
-        wiringDiagram: null,
-        numberOfTrace: row.numberOfTrace,
-        cableMark: row.cableMark,
-        cableSection: row.cableSection,
-        fromUnit: row.fromUnit,
-        fromPlace: row.fromPlace,
-        toUnit: row.toUnit,
-        toPlace: row.toPlace,
-        cableLenght: row.cableLenght,
-        range: "м",
-        description: row.description,
-      }),
-    [row]
+  const { addItem, removeItem, onHandlerChange, editRow } = useCableLogData(
+    row,
+    data,
+    setData
   );
 
-  const addItem = () => {
-    data && setData && setData([...data, { ...item, id: Math.random() }]);
-  };
-
-  const removeItem = (index: string | number) => {
-    data && setData && setData(data.filter((i) => i.id !== index));
-  };
-
-  const changeItems = (
-    key: string,
-    value: string | number,
-    id: string | number
-  ) => {
-    data &&
-      setData &&
-      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-  };
+  console.log(data);
 
   const formItems = (item: CableLogCreateOrUpdateAttrs): ReactNode => (
     <Form
@@ -88,11 +40,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Номер кабельной линии"
           className="text-secondary"
-          value={editRow ? editRow.numberOfTrace : item.numberOfTrace}
+          value={item.numberOfTrace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, numberOfTrace: e.target.value })
-              : changeItems("numberOfTrace", e.target.value, item.id)
+            onHandlerChange("numberOfTrace", e.target.value, item.id)
           }
         />
       </Item>
@@ -101,11 +51,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Марка кабеля"
           className="text-secondary"
-          value={editRow ? editRow.cableMark : item.cableMark}
+          value={item.cableMark}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, cableMark: e.target.value })
-              : changeItems("cableMark", e.target.value, item.id)
+            onHandlerChange("cableMark", e.target.value, item.id)
           }
         />
       </Item>
@@ -117,11 +65,8 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Сечение кабеля"
           className="text-secondary"
-          value={editRow ? editRow.cableSection : item.cableSection}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, cableSection: e.target.value })
-              : changeItems("cableSection", e.target.value, item.id)
+            onHandlerChange("cableSection", e.target.value, item.id)
           }
         />
       </Item>
@@ -134,11 +79,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Место монтажа, от"
           className="text-secondary"
-          value={editRow ? editRow.fromUnit : item.fromUnit}
+          value={item.fromUnit}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, fromUnit: e.target.value })
-              : changeItems("fromUnit", e.target.value, item.id)
+            onHandlerChange("fromUnit", e.target.value, item.id)
           }
         />
       </Item>
@@ -150,11 +93,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Точка подключения, от"
           className="text-secondary"
-          value={editRow ? editRow.fromPlace : item.fromPlace}
+          value={item.fromPlace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, fromPlace: e.target.value })
-              : changeItems("fromPlace", e.target.value, item.id)
+            onHandlerChange("fromPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -166,11 +107,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Место монтажа, до"
           className="text-secondary"
-          value={editRow ? editRow.toUnit : item.toUnit}
+          value={item.toUnit}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, toUnit: e.target.value })
-              : changeItems("toUnit", e.target.value, item.id)
+            onHandlerChange("toUnit", e.target.value, item.id)
           }
         />
       </Item>
@@ -182,11 +121,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Точка подключения, до"
           className="text-secondary"
-          value={editRow ? editRow.toPlace : item.toPlace}
+          value={item.toPlace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, toPlace: e.target.value })
-              : changeItems("toPlace", e.target.value, item.id)
+            onHandlerChange("toPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -200,11 +137,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           placeholder="Длина кабельной линии"
           addonAfter="м"
           className="text-secondary"
-          value={editRow ? editRow.cableLenght : item.cableLenght}
+          value={item.cableLenght}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, cableLenght: e.target.value })
-              : changeItems("cableLenght", e.target.value, item.id)
+            onHandlerChange("cableLenght", e.target.value, item.id)
           }
         />
       </Item>
@@ -213,11 +148,9 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Длина кабельной линии"
           className="text-secondary"
-          value={editRow ? editRow.description : item.description}
+          value={item.description}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, description: e.target.value })
-              : changeItems("description", e.target.value, item.id)
+            onHandlerChange("description", e.target.value, item.id)
           }
         />
       </Item>

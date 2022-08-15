@@ -44,6 +44,7 @@ const CableLogTable: FC<CableLogTableProps> = ({
   const [currentRow, setCurrentRow] = useState<CableLogView | undefined>();
   const [actionType, setActionType] = useState("");
   const [formVisible, setFormVisible] = useState(false);
+  const [test, setTest] = useState<CableLogCreateOrUpdateAttrs[]>([]);
 
   useEffect(() => {
     unitId
@@ -350,10 +351,17 @@ const CableLogTable: FC<CableLogTableProps> = ({
       />
       {formVisible && (
         <ModalContainer
+          target="cable-log"
           show={formVisible}
           onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<CableLogForm row={currentRow} />}
+          action={FormActions.ADD}
+          child={
+            <CableLogForm
+              // row={currentRow}
+              data={test}
+              setData={setTest}
+            />
+          }
         />
       )}
     </>

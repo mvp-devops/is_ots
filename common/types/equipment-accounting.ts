@@ -56,7 +56,7 @@ export interface CableLogView {
 }
 
 export interface CableLogCreateOrUpdateAttrs {
-  id: string | number;
+  id: string | number | null;
   sloeId: string | number | null;
   wiringDiagram: DesignDocumentCreateOrUpdateAttrs | null;
   numberOfTrace: string;
@@ -163,7 +163,7 @@ export interface MetrologyView {
 }
 
 export interface MetrologyCreateOrUpdateAttrs {
-  id: string | number;
+  id: string | number | null;
   sloeId: string | number | null;
   sgroei: string;
   grsi: string;
@@ -282,12 +282,3 @@ export interface FacilityView {
 }
 
 export interface FacilityCreateOrUpdateAtts extends FacilityView {}
-
-// export interface FacilityModificationView {
-//   // facilityId: string | number | null;
-//   // id: number | null;
-//   title: string;
-// }
-
-// export interface FacilityModificationCreateOrUpdateAttrs
-//   extends FacilityModificationView {}
