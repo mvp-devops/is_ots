@@ -22,8 +22,6 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
     setData
   );
 
-  console.log(data);
-
   const formItems = (item: CableLogCreateOrUpdateAttrs): ReactNode => (
     <Form
       key={item.id}

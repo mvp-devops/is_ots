@@ -1,9 +1,11 @@
 import { Button, Divider, Form, Input, Space, Typography } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,
 } from "../../../../../../common/types/equipment-accounting";
+import { ImpulseLineLogItem } from "./form.settings";
+import { useImpulseLineLogData } from "./hooks/useImpulseLineLogData";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -14,55 +16,11 @@ interface FormProps {
   setData?: Function;
 }
 
-const item: ImpulseLineLogCreateOrUpdateAttrs = {
-  id: Math.random(),
-  sloeId: "",
-  numberOfTrace: "",
-  impulseLineType: "",
-  fromPlace: "",
-  toPlace: "",
-  impulseLineLenght: "",
-  range: "м",
-  description: "",
-};
-
 const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
-  const [editRow, setEditRow] = useState<ImpulseLineLogCreateOrUpdateAttrs>();
+  const { addItem, removeItem, onHandlerChange, editRow } =
+    useImpulseLineLogData(row, data, setData);
 
-  useEffect(
-    () =>
-      row &&
-      setEditRow({
-        id: Math.random(),
-        sloeId: row.sloeId,
-        numberOfTrace: row.numberOfTrace,
-        impulseLineType: row.impulseLineType,
-        fromPlace: row.fromPlace,
-        toPlace: row.toPlace,
-        impulseLineLenght: row.impulseLineLenght,
-        range: "м",
-        description: row.description,
-      }),
-    [row]
-  );
-
-  const addItem = () => {
-    data && setData && setData([...data, { ...item, id: Math.random() }]);
-  };
-
-  const removeItem = (index: string | number) => {
-    data && setData && setData(data.filter((i) => i.id !== index));
-  };
-
-  const changeItems = (
-    key: string,
-    value: string | number,
-    id: string | number
-  ) => {
-    data &&
-      setData &&
-      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-  };
+  console.log(data);
 
   const formItems = (item: ImpulseLineLogCreateOrUpdateAttrs): ReactNode => (
     <Form
@@ -80,11 +38,9 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Номер импульсной линии"
           className="text-secondary"
-          value={editRow ? editRow.numberOfTrace : item.numberOfTrace}
+          value={item.numberOfTrace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, numberOfTrace: e.target.value })
-              : changeItems("numberOfTrace", e.target.value, item.id)
+            onHandlerChange("numberOfTrace", e.target.value, item.id)
           }
         />
       </Item>
@@ -96,11 +52,9 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Тип импульсной линии"
           className="text-secondary"
-          value={editRow ? editRow.impulseLineType : item.impulseLineType}
+          value={item.impulseLineType}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, impulseLineType: e.target.value })
-              : changeItems("cableSection", e.target.value, item.id)
+            onHandlerChange("cableSection", e.target.value, item.id)
           }
         />
       </Item>
@@ -112,11 +66,9 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Точка подключения, от"
           className="text-secondary"
-          value={editRow ? editRow.fromPlace : item.fromPlace}
+          value={item.fromPlace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, fromPlace: e.target.value })
-              : changeItems("fromPlace", e.target.value, item.id)
+            onHandlerChange("fromPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -128,11 +80,9 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Точка подключения, до"
           className="text-secondary"
-          value={editRow ? editRow.toPlace : item.toPlace}
+          value={item.toPlace}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, toPlace: e.target.value })
-              : changeItems("toPlace", e.target.value, item.id)
+            onHandlerChange("toPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -146,24 +96,19 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           placeholder="Длина импульсной линии"
           addonAfter="м"
           className="text-secondary"
-          value={editRow ? editRow.impulseLineLenght : item.impulseLineLenght}
+          value={item.impulseLineLenght}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, impulseLineLenght: e.target.value })
-              : changeItems("cableLenght", e.target.value, item.id)
+            onHandlerChange("cableLenght", e.target.value, item.id)
           }
         />
       </Item>
       <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
         <Input
           size="small"
-          placeholder="Длина кабельной линии"
           className="text-secondary"
-          value={editRow ? editRow.description : item.description}
+          value={item.description}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, description: e.target.value })
-              : changeItems("description", e.target.value, item.id)
+            onHandlerChange("description", e.target.value, item.id)
           }
         />
       </Item>
@@ -218,7 +163,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
             style={{ width: 550 }}
           >
             <Divider />
-            {formItems(item)}
+            {formItems(ImpulseLineLogItem)}
           </div>
         ))}
       {data && data.length > 0 && (

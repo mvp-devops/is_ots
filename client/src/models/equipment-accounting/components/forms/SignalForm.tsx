@@ -1,9 +1,10 @@
 import { Button, Divider, Form, Input, Space, Typography } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import {
   SignalCreateOrUpdateAttrs,
   SignalView,
 } from "../../../../../../common/types/equipment-accounting";
+import { useSignalData } from "./hooks/useSignalData";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -14,57 +15,14 @@ interface FormProps {
   setData?: Function;
 }
 
-const item: SignalCreateOrUpdateAttrs = {
-  id: Math.random(),
-  sloeId: "",
-  signalType: "",
-  signalProtocol: "",
-  signalTag: "",
-  ll: "",
-  l: "",
-  h: "",
-  hh: "",
-  emergenceProtocol: "",
-};
-
 const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
-  const [editRow, setEditRow] = useState<SignalCreateOrUpdateAttrs>();
-
-  useEffect(
-    () =>
-      row &&
-      setEditRow({
-        id: Math.random(),
-        sloeId: row.sloeId,
-        signalType: row.signalType,
-        signalProtocol: row.signalProtocol,
-        signalTag: row.signalTag,
-        ll: row.ll,
-        l: row.l,
-        h: row.h,
-        hh: row.hh,
-        emergenceProtocol: row.emergenceProtocol,
-      }),
-    [row]
+  const { addItem, removeItem, onHandlerChange, editRow } = useSignalData(
+    row,
+    data,
+    setData
   );
 
-  const addItem = () => {
-    data && setData && setData([...data, { ...item, id: Math.random() }]);
-  };
-
-  const removeItem = (index: string | number) => {
-    data && setData && setData(data.filter((i) => i.id !== index));
-  };
-
-  const changeItems = (
-    key: string,
-    value: string | number,
-    id: string | number
-  ) => {
-    data &&
-      setData &&
-      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-  };
+  console.log(data);
 
   const formItems = (item: SignalCreateOrUpdateAttrs): ReactNode => (
     <Form
@@ -79,11 +37,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Тип сигнала"
           className="text-secondary"
-          value={editRow ? editRow.signalType : item.signalType}
+          value={item.signalType}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, signalType: e.target.value })
-              : changeItems("numberOfTrace", e.target.value, item.id)
+            onHandlerChange("numberOfTrace", e.target.value, item.id)
           }
         />
       </Item>
@@ -92,11 +48,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Протокол"
           className="text-secondary"
-          value={editRow ? editRow.signalProtocol : item.signalProtocol}
+          value={item.signalProtocol}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, signalProtocol: e.target.value })
-              : changeItems("numberOfTrace", e.target.value, item.id)
+            onHandlerChange("numberOfTrace", e.target.value, item.id)
           }
         />
       </Item>
@@ -106,11 +60,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           type="number"
           placeholder="Авария, min"
           className="text-secondary"
-          value={editRow ? editRow.h : item.h}
+          value={item.h}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, h: e.target.value })
-              : changeItems("fromPlace", e.target.value, item.id)
+            onHandlerChange("fromPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -123,11 +75,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           type="number"
           placeholder="Сигнализация, min"
           className="text-secondary"
-          value={editRow ? editRow.l : item.l}
+          value={item.l}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, signalProtocol: e.target.value })
-              : changeItems("cableSection", e.target.value, item.id)
+            onHandlerChange("cableSection", e.target.value, item.id)
           }
         />
       </Item>
@@ -141,11 +91,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           type="number"
           placeholder="Сигнализация, max"
           className="text-secondary"
-          value={editRow ? editRow.ll : item.ll}
+          value={item.ll}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, ll: e.target.value })
-              : changeItems("toPlace", e.target.value, item.id)
+            onHandlerChange("toPlace", e.target.value, item.id)
           }
         />
       </Item>
@@ -155,11 +103,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           type="number"
           placeholder="Авария, max"
           className="text-secondary"
-          value={editRow ? editRow.hh : item.hh}
+          value={item.hh}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, hh: e.target.value })
-              : changeItems("cableLenght", e.target.value, item.id)
+            onHandlerChange("cableLenght", e.target.value, item.id)
           }
         />
       </Item>
@@ -171,11 +117,9 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           size="small"
           placeholder="Аварийны протокол"
           className="text-secondary"
-          value={editRow ? editRow.emergenceProtocol : item.emergenceProtocol}
+          value={item.emergenceProtocol}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? setEditRow({ ...editRow, emergenceProtocol: e.target.value })
-              : changeItems("description", e.target.value, item.id)
+            onHandlerChange("description", e.target.value, item.id)
           }
         />
       </Item>

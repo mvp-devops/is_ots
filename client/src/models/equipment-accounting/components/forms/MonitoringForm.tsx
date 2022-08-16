@@ -8,18 +8,17 @@ import {
   Switch,
   Typography,
   Upload,
-  UploadFile,
 } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import { UploadOutlined } from "@ant-design/icons";
 import {
   MonitoringCreateOrUpdateAttrs,
   MonitoringView,
 } from "../../../../../../common/types/equipment-accounting";
-import { RcFile } from "antd/lib/upload";
-import { setDate } from "../../../../utils/main.utils";
 import "moment/locale/ru";
 import locale from "antd/es/date-picker/locale/ru_RU";
+import { useMonitoringData } from "./hooks/useMonitoringData";
+import { monitoringItem } from "./form.settings";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -30,115 +29,23 @@ interface FormProps {
   setData?: Function;
 }
 
-const item: MonitoringCreateOrUpdateAttrs = {
-  id: null,
-  sloeId: null,
-  mountDate: null,
-  mountDocument: null,
-  connectDate: null,
-  connectDocument: null,
-  testDate: null,
-  testDocument: null,
-  awpDate: null,
-  awpDocument: null,
-  commisionDate: null,
-  commisionDocument: null,
-  description: "",
-};
-
 const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
-  const [editRow, setEditRow] = useState<MonitoringCreateOrUpdateAttrs>();
-  const [mount, setMount] = useState(false);
-  const [mountDocument, setMountDocument] = useState(false);
-  const [connect, setConnect] = useState(false);
-  const [connectDocument, setConnectDocument] = useState(false);
-  const [test, setTest] = useState(false);
-  const [testDocument, setTestDocument] = useState(false);
-  const [awp, setAwp] = useState(false);
-  const [awpDocument, setAwpDocument] = useState(false);
-  const [commision, setCommision] = useState(false);
-  const [commisionDocument, setCommisionDocument] = useState(false);
-
-  const [fileList, setFileList] = useState<UploadFile[]>([]);
-
-  const changeItems = (key: string, value: string | Date | null | RcFile) => {
-    data && setData && setData({ ...data, [key]: value });
-  };
-
-  const changeEditRowItems = (
-    key: string,
-    value: string | Date | null | RcFile
-  ) => {
-    row && editRow && setEditRow({ ...editRow, [key]: value });
-  };
-
-  useEffect(
-    () =>
-      row &&
-      setEditRow({
-        id: row.id,
-        sloeId: row.sloeId,
-        mountDate: new Date(row.mountDate),
-        mountDocument: null,
-        connectDate: new Date(row.connectDate),
-        connectDocument: null,
-        testDate: new Date(row.testDate),
-        testDocument: null,
-        awpDate: new Date(row.awpDate),
-        awpDocument: null,
-        commisionDate: new Date(row.commisionDate),
-        commisionDocument: null,
-        description: row.description,
-      }),
-    [row]
-  );
-
-  const onChange = (checked: boolean, target: string) => {
-    switch (target) {
-      case "mountDate": {
-        setMount(checked);
-        break;
-      }
-      case "mountDocument": {
-        setMountDocument(checked);
-        break;
-      }
-      case "connectDate": {
-        setConnect(checked);
-        break;
-      }
-      case "connectDocument": {
-        setConnectDocument(checked);
-        break;
-      }
-      case "testDate": {
-        setTest(checked);
-        break;
-      }
-      case "testDocument": {
-        setTestDocument(checked);
-        break;
-      }
-      case "awpDate": {
-        setAwp(checked);
-        break;
-      }
-      case "awpDocument": {
-        setAwpDocument(checked);
-        break;
-      }
-      case "commisionDate": {
-        setCommision(checked);
-        break;
-      }
-      case "commisionDocument": {
-        setCommisionDocument(checked);
-        break;
-      }
-      default:
-        break;
-    }
-  };
+  const {
+    changeDate,
+    changeData,
+    mount,
+    onChange,
+    editRow,
+    mountDocument,
+    connect,
+    connectDocument,
+    test,
+    testDocument,
+    awp,
+    awpDocument,
+    commision,
+    commisionDocument,
+  } = useMonitoringData(row, data, setData);
 
   const setItems = (
     id: number,
@@ -162,11 +69,7 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
             <DatePicker
               locale={locale}
               placeholder=""
-              onChange={(date, dateString) =>
-                editRow
-                  ? changeEditRowItems(target1, setDate(dateString))
-                  : changeItems(target1, setDate(dateString))
-              }
+              onChange={(date, dateString) => changeDate(target1, dateString)}
             />
           </Item>
           <Item
@@ -183,24 +86,13 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
               <Upload
                 className="mt-5"
                 onRemove={(file) => {
-                  const index = fileList.indexOf(file);
-                  const newFileList = fileList.slice();
-                  newFileList.splice(index, 1);
-                  setFileList(newFileList);
-                  editRow
-                    ? changeEditRowItems(target2, null)
-                    : changeItems(target2, null);
+                  changeData(target2, null);
                 }}
                 beforeUpload={(file) => {
-                  setFileList([...fileList, file]);
-                  // const ind = fileList.indexOf(file);
-                  editRow
-                    ? changeEditRowItems(target2, file)
-                    : changeItems(target2, file);
+                  changeData(target2, file);
 
                   return false;
                 }}
-                fileList={fileList.filter((item, index) => index === id - 1)}
               >
                 <Button icon={<UploadOutlined />}>
                   <Text type="secondary">Выбрать файл</Text>
@@ -278,11 +170,9 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
           style={{ minWidth: 420 }}
           placeholder="Примечание"
           className="text-secondary"
-          value={editRow ? editRow.description : item.description}
+          value={item.description}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            editRow
-              ? changeEditRowItems("description", e.target.value)
-              : changeItems("description", e.target.value)
+            changeData("description", e.target.value)
           }
         />
       </Item>
@@ -305,7 +195,7 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
   );
 
   const editItem = editRow && formItems(editRow);
-  const newRow = data && formItems(item);
+  const newRow = data && formItems(monitoringItem);
 
   return row ? (
     <>{editItem}</>

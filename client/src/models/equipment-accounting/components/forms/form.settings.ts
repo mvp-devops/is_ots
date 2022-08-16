@@ -1,6 +1,10 @@
 import {
   CableLogCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
+  ImpulseLineLogCreateOrUpdateAttrs,
+  MetrologyCreateOrUpdateAttrs,
+  MonitoringCreateOrUpdateAttrs,
+  SignalCreateOrUpdateAttrs,
 } from "../../../../../../common/types/equipment-accounting";
 
 export const initData = () => {};
@@ -69,4 +73,68 @@ export const cableLogItem: CableLogCreateOrUpdateAttrs = {
   cableLenght: "",
   range: "м",
   description: "",
+};
+
+export const ImpulseLineLogItem: ImpulseLineLogCreateOrUpdateAttrs = {
+  id: Math.random(),
+  sloeId: "",
+  numberOfTrace: "",
+  impulseLineType: "",
+  fromPlace: "",
+  toPlace: "",
+  impulseLineLenght: "",
+  range: "м",
+  description: "",
+};
+
+export const signalItem: SignalCreateOrUpdateAttrs = {
+  id: Math.random(),
+  sloeId: "",
+  signalType: "",
+  signalProtocol: "",
+  signalTag: "",
+  ll: "",
+  l: "",
+  h: "",
+  hh: "",
+  emergenceProtocol: "",
+};
+
+export const monitoringItem: MonitoringCreateOrUpdateAttrs = {
+  id: null,
+  sloeId: null,
+  mountDate: null,
+  mountDocument: null,
+  connectDate: null,
+  connectDocument: null,
+  testDate: null,
+  testDocument: null,
+  awpDate: null,
+  awpDocument: null,
+  commisionDate: null,
+  commisionDocument: null,
+  description: "",
+};
+
+export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
+  id: Math.random(),
+  sloeId: null,
+  sgroei: "",
+  grsi: "",
+  min: "",
+  max: "",
+  range: "",
+  accuracy: "",
+  mpi: "",
+  metrologyType: "",
+  documentType: "",
+  documentNumber: "",
+  fromDate: null,
+  toDate: null,
+  counterparty: "",
+  document: null,
+  status: "",
+  arshin: "",
+  verificationProcedure: null,
+  typeApprovalCertificate: null,
 };
