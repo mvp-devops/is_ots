@@ -24,10 +24,15 @@ export class PositionTreeService {
   constructor(
     @InjectModel(SubsidiaryEntity)
     private subsidiaryRepository: typeof SubsidiaryEntity,
+    @InjectModel(FieldEntity)
     private fieldRepository: typeof FieldEntity,
+    @InjectModel(ProjectEntity)
     private projectRepository: typeof ProjectEntity,
+    @InjectModel(UnitEntity)
     private unitRepository: typeof UnitEntity,
+    @InjectModel(SubUnitEntity)
     private subUnitRepository: typeof SubUnitEntity,
+    @InjectModel(LogoEntity)
     private logoRepository: typeof LogoEntity,
     private fileService: FileStorageService
   ) {}
