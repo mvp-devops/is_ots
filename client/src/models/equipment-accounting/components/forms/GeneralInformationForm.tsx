@@ -8,7 +8,7 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, ReactNode, useState } from "react";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   GeneralInformationCreateOrUpdateAttrs,
