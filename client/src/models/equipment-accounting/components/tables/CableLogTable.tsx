@@ -14,10 +14,7 @@ import {
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
 import { cableSum, setCableLogFilters } from "./table.setting";
-import {
-  CableLogCreateOrUpdateAttrs,
-  CableLogView,
-} from "../../../../../../common/types/equipment-accounting";
+import { CableLogView } from "../../../../../../common/types/equipment-accounting";
 import DeleteDialog from "../forms/DeleteDialog";
 import { CableLogForm, ModalContainer } from "../forms";
 import { Link } from "react-router-dom";
