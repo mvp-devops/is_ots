@@ -8,13 +8,13 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { ChangeEvent, FC, ReactNode, useState } from "react";
+import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
 } from "../../../../../../common/types/equipment-accounting";
-import { facility, sgroei } from "../../utils/equipment-accounting.consts";
+import { sgroei } from "../../utils/equipment-accounting.consts";
 import FacilityForm from "./FacilityForm";
 import { useGeneralInformationData } from "./hooks/useGeneralInformationData";
 import { generalInformationItem } from "./form.settings";
@@ -43,9 +43,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     onHandlerChange,
     onModificationChange,
     setNewFacility,
-  } = useGeneralInformationData(facility, row, data, setData);
-
-  // console.log("Install: ", editRow);
+  } = useGeneralInformationData(row, data, setData);
 
   const formItems = (
     item: GeneralInformationCreateOrUpdateAttrs

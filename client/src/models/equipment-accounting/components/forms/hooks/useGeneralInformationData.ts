@@ -7,10 +7,10 @@ import {
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
 } from "../../../../../../../common/types/equipment-accounting";
+import { useActions, useTypedSelector } from "../../../../../hooks";
 import { facilityItem } from "../form.settings";
 
 export const useGeneralInformationData = (
-  facilitiesList: FacilityView[],
   row?: GeneralInformationView,
   data?: GeneralInformationCreateOrUpdateAttrs,
   setData?: Function
@@ -24,6 +24,14 @@ export const useGeneralInformationData = (
   const [newFacility, setNewFacility] =
     useState<FacilityCreateOrUpdateAtts>(facilityItem);
   const [facilities, setFacilities] = useState<FacilityView[]>([]);
+  const { facilitiesList } = useTypedSelector(
+    (state) => state.equipmentAccounting
+  );
+  const { getFacilitiesList } = useActions();
+
+  useEffect(() => {
+    getFacilitiesList();
+  }, []);
 
   useEffect(() => setFacilities(facilitiesList), []);
 

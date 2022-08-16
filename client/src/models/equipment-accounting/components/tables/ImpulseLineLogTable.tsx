@@ -43,9 +43,6 @@ const ImpulseLineLogTable: FC<TableProps> = ({
   >();
   const [actionType, setActionType] = useState("");
   const [formVisible, setFormVisible] = useState(false);
-  const [editRows, setEditRows] = useState<ImpulseLineLogCreateOrUpdateAttrs[]>(
-    []
-  );
 
   useEffect(() => setDataSource(data), [data]);
 
@@ -306,6 +303,7 @@ const ImpulseLineLogTable: FC<TableProps> = ({
       />
       {formVisible && (
         <ModalContainer
+          target="impulse-line-log"
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}

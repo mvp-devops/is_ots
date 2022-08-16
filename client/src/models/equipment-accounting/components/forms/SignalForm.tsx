@@ -22,8 +22,6 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
     setData
   );
 
-  console.log(data);
-
   const formItems = (item: SignalCreateOrUpdateAttrs): ReactNode => (
     <Form
       key={item.id}

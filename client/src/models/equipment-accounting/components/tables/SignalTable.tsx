@@ -315,6 +315,7 @@ const SignalTable: FC<SignalTableProps> = ({
       />
       {formVisible && (
         <ModalContainer
+          target="signal"
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}

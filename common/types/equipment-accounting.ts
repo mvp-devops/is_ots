@@ -34,6 +34,16 @@ export interface SummaryListOfEquipmentView {
   monitoring?: MonitoringView;
 }
 
+export interface SummaryListOfEquipmentFormData {
+  generalInformationCreateOrUpdateData: GeneralInformationCreateOrUpdateAttrs;
+  facilityCreateOrUpdateData: FacilityCreateOrUpdateAtts | null;
+  metrologyCreateOrUpdateData: MetrologyCreateOrUpdateAttrs | null;
+  monitoringCreateOrUpdateData: MonitoringCreateOrUpdateAttrs | null;
+  cableLogCreateOrUpdateData: CableLogCreateOrUpdateAttrs[];
+  impulseLineLogCreateOrUpdateData: ImpulseLineLogCreateOrUpdateAttrs[];
+  signalCreateOrUpdateData: SignalCreateOrUpdateAttrs[];
+}
+
 export interface CableLogView {
   id: string | number;
   sloeId: string | number | null;

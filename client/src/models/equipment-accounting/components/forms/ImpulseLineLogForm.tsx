@@ -20,8 +20,6 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
   const { addItem, removeItem, onHandlerChange, editRow } =
     useImpulseLineLogData(row, data, setData);
 
-  console.log(data);
-
   const formItems = (item: ImpulseLineLogCreateOrUpdateAttrs): ReactNode => (
     <Form
       key={item.id}
