@@ -4,16 +4,30 @@ import {
   DataType,
   ForeignKey,
   HasMany,
+  HasOne,
   Model,
   Table,
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { CapitalConstructionUnitSupervisionCommentCreationAttrs } from "../../../../../common/types/comments-accounting";
+import { SummaryListOfEquipmentCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
+import {
+  ProjectEntity,
+  SubUnitEntity,
+  UnitEntity,
+} from "../../../position-tree";
+import {
+  FacilityEntity,
+  CableLogEntity,
+  ImpulseLineLogEntity,
+  SignalEntity,
+  MetrologyEntity,
+  MonitoringEntity,
+} from "../";
 
-@Table({ tableName: "comments" })
-export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
-  CapitalConstructionUnitSupervisionCommentEntity,
-  CapitalConstructionUnitSupervisionCommentCreationAttrs
+@Table({ tableName: "summary-list-of-equipments" })
+export class SummaryListOfEquipmentEntity extends Model<
+  SummaryListOfEquipmentEntity,
+  SummaryListOfEquipmentCreateOrUpdateAttrs
 > {
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
@@ -26,148 +40,178 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
 
   @ApiProperty({
     example: 1,
-    description:
-      "Уникальный идентификатор родительского узла (Проектная документация проектов)",
+    description: "Уникальный идентификатор Проекта",
   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   pdcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация объектов строительства)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   udcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация подобъектов)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sudcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Технико-коммерческие предложения)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sdcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Функциональные направления)',
-  //   })
-  //   @ForeignKey(() => Direction)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   directionId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Критерии критичности)',
-  //   })
-  //   @ForeignKey(() => Criticality)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   criticalityId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Нормативные документы)',
-  //   })
-  //   @ForeignKey(() => Normative)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   normativeId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description: 'Уникальный идентификатор родительского узла (Пользователи)',
-  //   })
-  //   @ForeignKey(() => User)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   userId: number;
-  @ApiProperty({
-    example: "Поле для замечания",
-    description: "Поле для замечания",
-  })
+  @ForeignKey(() => ProjectEntity)
   @Column({
-    type: DataType.TEXT,
+    type: DataType.INTEGER,
+  })
+  projectId: number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор объекта",
+  })
+  @ForeignKey(() => UnitEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  unitId: number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор установки",
+  })
+  @ForeignKey(() => SubUnitEntity)
+  @Column({
+    type: DataType.INTEGER,
     allowNull: false,
   })
-  comment: string;
+  subUnitId: number;
 
-  //   @BelongsTo(() => Direction)
-  //   direction: Direction;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор марки/типа оборудования",
+  })
+  @ForeignKey(() => FacilityEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  facilityId: number;
 
-  //   @BelongsTo(() => Criticality)
-  //   criticality: Criticality;
+  @ApiProperty({
+    example: "Кран Г-3",
+    description: "Место установки",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  installationLocation: string;
 
-  //   @BelongsTo(() => Normative)
-  //   normative: Normative;
+  @ApiProperty({
+    example: "00dd3128-3332-4ff1-b108-75d739291a0d.pdf",
+    description: "Наименование ОЛ, ТТ, ТЗ (сгенерированное с помощью UUIDv4)",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  questionare: string;
 
-  //   @BelongsTo(() => User)
-  //   user: User;
+  @ApiProperty({
+    example: "РСУ, ПАЗ",
+    description: "Принадлежность к системам управления ТП",
+  })
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    defaultValue: ["РСУ"],
+  })
+  systemType: string[];
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'pdc',
-  //     foreignKey: {
-  //       name: 'pdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   pdc: DesignDocument;
+  @ApiProperty({
+    example: "ТП",
+    description: "Модификация оборудования",
+  })
+  @Column({
+    type: DataType.STRING,
+    defaultValue: "н/д",
+  })
+  facilityModification: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'udc',
-  //     foreignKey: {
-  //       name: 'udcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   udc: DesignDocument;
+  @ApiProperty({
+    example: "456456",
+    description: "Заводской номер",
+  })
+  @Column({
+    type: DataType.STRING,
+    defaultValue: "н/д",
+  })
+  factoryNumber: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sudc',
-  //     foreignKey: {
-  //       name: 'sudcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sudc: DesignDocument;
+  @ApiProperty({
+    example: "PG-1-1",
+    description: "TAG",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  tag: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sdc',
-  //     foreignKey: {
-  //       name: 'sdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sdc: DesignDocument;
+  @ApiProperty({
+    example: "Давление до крана Г-3",
+    description: "Контролируемый параметр",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  controlledParameter: string;
 
-  //   @HasMany(() => DesignDocsSolution)
-  //   solutions: Array<DesignDocsSolution>;
+  @ApiProperty({
+    example: "2020 ",
+    description: "Год выпуска",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  year: string;
+  @ApiProperty({
+    example: "12",
+    description: "Месяц выпуска",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  month: string;
+  @ApiProperty({
+    example: "240",
+    description: "Срок эксплуатации, мес.",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  period: string;
+
+  @ApiProperty({
+    example: "Спецификация",
+    description: "Спецификация поставки",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  specification: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  description: string;
+
+  @BelongsTo(() => FacilityEntity)
+  facility: FacilityEntity;
+
+  @BelongsTo(() => ProjectEntity)
+  project: ProjectEntity;
+
+  @BelongsTo(() => UnitEntity)
+  unit: UnitEntity;
+
+  @BelongsTo(() => SubUnitEntity)
+  subUnit: SubUnitEntity;
+
+  @HasMany(() => CableLogEntity)
+  cableLog: CableLogEntity[];
+
+  @HasMany(() => ImpulseLineLogEntity)
+  impulseLineLog: ImpulseLineLogEntity[];
+
+  @HasMany(() => SignalEntity)
+  signals: SignalEntity[];
+
+  @HasOne(() => MetrologyEntity)
+  metrology: MetrologyEntity;
+
+  @HasOne(() => MonitoringEntity)
+  monitoring: MonitoringEntity;
 }

@@ -8,12 +8,14 @@ import {
   Table,
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { DesignDocumentCommentCreationAttrs } from "../../../../../common/types/comments-accounting";
+import { CableLogCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 
-@Table({ tableName: "comments" })
-export class DesignDocumentCommentEntity extends Model<
-  DesignDocumentCommentEntity,
-  DesignDocumentCommentCreationAttrs
+import { SummaryListOfEquipmentEntity } from "../";
+
+@Table({ tableName: "cable-log" })
+export class CableLogEntity extends Model<
+  CableLogEntity,
+  CableLogCreateOrUpdateAttrs
 > {
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
@@ -26,148 +28,115 @@ export class DesignDocumentCommentEntity extends Model<
 
   @ApiProperty({
     example: 1,
-    description:
-      "Уникальный идентификатор родительского узла (Проектная документация проектов)",
+    description: "Уникальный идентификатор единицы оборудования",
   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   pdcId: number;
+  @ForeignKey(() => SummaryListOfEquipmentEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  sloeId: number;
 
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация объектов строительства)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   udcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация подобъектов)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sudcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Технико-коммерческие предложения)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sdcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Функциональные направления)',
-  //   })
-  //   @ForeignKey(() => Direction)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   directionId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Критерии критичности)',
-  //   })
-  //   @ForeignKey(() => Criticality)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   criticalityId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Нормативные документы)',
-  //   })
-  //   @ForeignKey(() => Normative)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   normativeId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description: 'Уникальный идентификатор родительского узла (Пользователи)',
-  //   })
-  //   @ForeignKey(() => User)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   userId: number;
   @ApiProperty({
-    example: "Поле для замечания",
-    description: "Поле для замечания",
+    example: "00dd3128-3332-4ff1-b108-75d739291a0d.pdf",
+    description:
+      "Наименование схемы внешних электрических проводок (сгенерированное с помощью UUIDv4)",
   })
   @Column({
-    type: DataType.TEXT,
-    allowNull: false,
+    type: DataType.STRING,
   })
-  comment: string;
+  wiringDiagram: string;
 
-  //   @BelongsTo(() => Direction)
-  //   direction: Direction;
+  @ApiProperty({
+    example: "С-3-4-5",
+    description: "№ кабельной линии",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  numberOfTrace: string;
 
-  //   @BelongsTo(() => Criticality)
-  //   criticality: Criticality;
+  @ApiProperty({
+    example: "КВВГ-НГ",
+    description: "Марка кабеля",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  cableMark: string;
 
-  //   @BelongsTo(() => Normative)
-  //   normative: Normative;
+  @ApiProperty({
+    example: "2x2x1.5",
+    description: "Сечение кабеля",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  cableSection: string;
 
-  //   @BelongsTo(() => User)
-  //   user: User;
+  @ApiProperty({
+    example: "Площадка УЗ СОД (1,15 км)",
+    description: "Место расположения точки подключения, от",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  fromUnit: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'pdc',
-  //     foreignKey: {
-  //       name: 'pdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   pdc: DesignDocument;
+  @ApiProperty({
+    example: "Коробка соедини-тельная JB-S-01-A (сигнализация)",
+    description: "Точка подключения, от",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  fromPlace: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'udc',
-  //     foreignKey: {
-  //       name: 'udcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   udc: DesignDocument;
+  @ApiProperty({
+    example: "Блок-бокс БКЭС  (1,15 км)",
+    description: "Место расположения точки подключения, до",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  toUnit: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sudc',
-  //     foreignKey: {
-  //       name: 'sudcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sudc: DesignDocument;
+  @ApiProperty({
+    example: "Шкаф СТК-ТМ на УЗ СОД (1,15 км)",
+    description: "Точка подключения, до",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  toPlace: string;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sdc',
-  //     foreignKey: {
-  //       name: 'sdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sdc: DesignDocument;
+  @ApiProperty({
+    example: "90",
+    description: "Длина кабельной трассы, м",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  cableLenght: string;
 
-  //   @HasMany(() => DesignDocsSolution)
-  //   solutions: Array<DesignDocsSolution>;
+  @ApiProperty({
+    example: "м",
+    description: "Единица измерения",
+  })
+  @Column({
+    type: DataType.STRING,
+    defaultValue: "м",
+  })
+  range: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  @Column({
+    type: DataType.STRING,
+  })
+  description: string;
+
+  @BelongsTo(() => SummaryListOfEquipmentEntity, { foreignKey: "sloeId" })
+  sloe: SummaryListOfEquipmentEntity;
 }

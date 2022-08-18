@@ -9,6 +9,18 @@ import {
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,
 } from "./modules/comment-accounting";
+
+import {
+  FacilityEntity,
+  SummaryListOfEquipmentEntity,
+  CableLogEntity,
+  ImpulseLineLogEntity,
+  SignalEntity,
+  MetrologyEntity,
+  MonitoringEntity,
+  EquipmentAccountingModule,
+} from "./modules/equipment-accounting";
+
 import { FileStorageModule, LogoEntity } from "./modules/file-storage";
 
 import {
@@ -19,6 +31,7 @@ import {
   UnitEntity,
   SubUnitEntity,
 } from "./modules/position-tree";
+
 import {
   CounterpartyEntity,
   DesignEntity,

@@ -34,6 +34,30 @@ export interface SummaryListOfEquipmentView {
   monitoring?: MonitoringView;
 }
 
+export interface SummaryListOfEquipmentCreateOrUpdateAttrs {
+  projectId: string | number | null;
+  unitId: string | number | null;
+  subUnitId: string | number;
+  facilityId: string | number;
+  installationLocation: string;
+  questionare: any;
+  systemType: string[];
+  tag: string;
+  controlledParameter: string;
+  facilityModification: string;
+  factoryNumber: string;
+  year: string;
+  month: string;
+  period: string;
+  specification: string;
+  description: string;
+  cableLog: CableLogCreateOrUpdateAttrs[] | null;
+  impulseLineLog: ImpulseLineLogCreateOrUpdateAttrs[] | null;
+  metrology: MetrologyCreateOrUpdateAttrs | null;
+  signals: SignalCreateOrUpdateAttrs[] | null;
+  monitoring: MonitoringCreateOrUpdateAttrs | null;
+}
+
 export interface SummaryListOfEquipmentFormData {
   generalInformationCreateOrUpdateData: GeneralInformationCreateOrUpdateAttrs;
   facilityCreateOrUpdateData: FacilityCreateOrUpdateAtts | null;
@@ -68,7 +92,7 @@ export interface CableLogView {
 export interface CableLogCreateOrUpdateAttrs {
   id: string | number | null;
   sloeId: string | number | null;
-  wiringDiagram: DesignDocumentCreateOrUpdateAttrs | null;
+  wiringDiagram: any;
   numberOfTrace: string;
   cableMark: string;
   cableSection: string;
@@ -77,6 +101,7 @@ export interface CableLogCreateOrUpdateAttrs {
   toUnit: string;
   toPlace: string;
   cableLenght: string;
+
   range: string;
   description: string;
 }
@@ -269,7 +294,7 @@ export interface GeneralInformationCreateOrUpdateAttrs {
   tag: string;
   controlledParameter: string;
   facilityId: string | number | null;
-  facility: FacilityCreateOrUpdateAtts;
+  facility: FacilityCreateOrUpdateAtts | null;
   facilityModification: string | null;
   factoryNumber: string;
   year: string;

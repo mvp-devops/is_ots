@@ -66,7 +66,7 @@ const ListView: React.FC<ListViewProps> = () => {
         },
         pageSize: 3,
       }}
-      dataSource={setItems([currentItem])}
+      dataSource={dataSource}
       footer={
         <div>
           <b>ant design</b> footer part

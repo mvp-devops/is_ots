@@ -39,7 +39,7 @@ const ItemPage: React.FC = () => {
         )}
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <Content style={{ padding: "0 5px", minHeight: "100%" }}>
-            {/* <ListView /> */}
+            <ListView />
 
             {/* <CollectiveCheckSheet data={commentAccountingRequestData} /> */}
           </Content>

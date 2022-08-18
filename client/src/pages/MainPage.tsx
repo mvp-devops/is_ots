@@ -132,7 +132,7 @@ const MainPage: React.FC = () => {
           <Tree
             showLine={true}
             showIcon={false}
-            onSelect={onSelect}
+            // onSelect={onSelect}
             treeData={menuItems}
             className="text-secondary mx-2"
           />
@@ -199,7 +199,8 @@ const MainPage: React.FC = () => {
           </Space>
         </Header>
         <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
-          {currentItem && <ItemPage />}
+          {/* {currentItem && <ItemPage />} */}
+          <ItemPage />
         </Content>
         <Footer style={{ textAlign: "right", background: "rgb(255,255,255" }}>
           ООО "Газпромнефть-Автоматизация" ©2022
