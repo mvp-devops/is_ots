@@ -71,9 +71,9 @@ export class DesignDocumentCommentEntity extends Model<
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Функциональные направления)',
+  //       'Уникальный идентификатор функционального направления',
   //   })
-  //   @ForeignKey(() => Direction)
+  //   @ForeignKey(() => DirectionEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -82,9 +82,9 @@ export class DesignDocumentCommentEntity extends Model<
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Критерии критичности)',
+  //       'Уникальный идентификатор критерия критичности',
   //   })
-  //   @ForeignKey(() => Criticality)
+  //   @ForeignKey(() => CriticalityEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -93,9 +93,9 @@ export class DesignDocumentCommentEntity extends Model<
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Нормативные документы)',
+  //       'Уникальный идентификатор нормативной ссылки',
   //   })
-  //   @ForeignKey(() => Normative)
+  //   @ForeignKey(() => NormativeEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -103,9 +103,9 @@ export class DesignDocumentCommentEntity extends Model<
 
   //   @ApiProperty({
   //     example: 1,
-  //     description: 'Уникальный идентификатор родительского узла (Пользователи)',
+  //     description: 'Уникальный идентификатор пользователя',
   //   })
-  //   @ForeignKey(() => User)
+  //   @ForeignKey(() => UserEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -120,17 +120,17 @@ export class DesignDocumentCommentEntity extends Model<
   })
   comment: string;
 
-  //   @BelongsTo(() => Direction)
-  //   direction: Direction;
+  //   @BelongsTo(() => DirectionEntity)
+  //   direction: DirectionEntity;
 
-  //   @BelongsTo(() => Criticality)
-  //   criticality: Criticality;
+  //   @BelongsTo(() => CriticalityEntity)
+  //   criticality: CriticalityEntity;
 
-  //   @BelongsTo(() => Normative)
-  //   normative: Normative;
+  //   @BelongsTo(() => NormativeEntity)
+  //   normative: NormativeEntity;
 
-  //   @BelongsTo(() => User)
-  //   user: User;
+  //   @BelongsTo(() => UserEntity)
+  //   user: UserEntity;
 
   //   @BelongsTo(() => DesignDocument, {
   //     as: 'pdc',

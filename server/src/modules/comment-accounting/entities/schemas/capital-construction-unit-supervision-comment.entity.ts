@@ -3,12 +3,17 @@ import {
   Column,
   DataType,
   ForeignKey,
-  HasMany,
   Model,
   Table,
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { CapitalConstructionUnitSupervisionCommentCreationAttrs } from "../../../../../common/types/comments-accounting";
+import {
+  ProjectEntity,
+  SubUnitEntity,
+  UnitEntity,
+} from "../../../position-tree";
+import { MonitoringEntity } from "../../../equipment-accounting";
 
 @Table({ tableName: "comments" })
 export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
@@ -26,54 +31,40 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
 
   @ApiProperty({
     example: 1,
-    description:
-      "Уникальный идентификатор родительского узла (Проектная документация проектов)",
+    description: "Уникальный идентификатор проекта",
   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   pdcId: number;
+  @ForeignKey(() => ProjectEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  projectId: number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор объекта строительства",
+  })
+  @ForeignKey(() => UnitEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  unitId: number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор установки",
+  })
+  @ForeignKey(() => SubUnitEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  subUnitId: number;
 
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация объектов строительства)',
+  //       'Уникальный идентификатор функционального направления',
   //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   udcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Проектная документация подобъектов)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sudcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Технико-коммерческие предложения)',
-  //   })
-  //   @ForeignKey(() => DesignDocument)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   sdcId: number;
-
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор родительского узла (Функциональные направления)',
-  //   })
-  //   @ForeignKey(() => Direction)
+  //   @ForeignKey(() => DirectionEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -82,9 +73,9 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Критерии критичности)',
+  //       'Уникальный идентификатор критерия критичности',
   //   })
-  //   @ForeignKey(() => Criticality)
+  //   @ForeignKey(() => CriticalityEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -93,9 +84,9 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   //   @ApiProperty({
   //     example: 1,
   //     description:
-  //       'Уникальный идентификатор родительского узла (Нормативные документы)',
+  //       'Уникальный идентификатор нормативной ссылки',
   //   })
-  //   @ForeignKey(() => Normative)
+  //   @ForeignKey(() => NormativeEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
@@ -103,13 +94,14 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
 
   //   @ApiProperty({
   //     example: 1,
-  //     description: 'Уникальный идентификатор родительского узла (Пользователи)',
+  //     description: 'Уникальный идентификатор пользователя',
   //   })
-  //   @ForeignKey(() => User)
+  //   @ForeignKey(() => UserEntity)
   //   @Column({
   //     type: DataType.INTEGER,
   //   })
   //   userId: number;
+
   @ApiProperty({
     example: "Поле для замечания",
     description: "Поле для замечания",
@@ -120,54 +112,27 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   })
   comment: string;
 
-  //   @BelongsTo(() => Direction)
-  //   direction: Direction;
+  @BelongsTo(() => ProjectEntity)
+  project: ProjectEntity;
 
-  //   @BelongsTo(() => Criticality)
-  //   criticality: Criticality;
+  @BelongsTo(() => UnitEntity)
+  unit: UnitEntity;
 
-  //   @BelongsTo(() => Normative)
-  //   normative: Normative;
+  @BelongsTo(() => SubUnitEntity)
+  subUnit: SubUnitEntity;
 
-  //   @BelongsTo(() => User)
-  //   user: User;
+  @BelongsTo(() => MonitoringEntity)
+  monitoring: MonitoringEntity;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'pdc',
-  //     foreignKey: {
-  //       name: 'pdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   pdc: DesignDocument;
+  //   @BelongsTo(() => DirectionEntity)
+  //   direction: DirectionEntity;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'udc',
-  //     foreignKey: {
-  //       name: 'udcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   udc: DesignDocument;
+  //   @BelongsTo(() => CriticalityEntity)
+  //   criticality: CriticalityEntity;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sudc',
-  //     foreignKey: {
-  //       name: 'sudcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sudc: DesignDocument;
+  //   @BelongsTo(() => NormativeEntity)
+  //   normative: NormativeEntity;
 
-  //   @BelongsTo(() => DesignDocument, {
-  //     as: 'sdc',
-  //     foreignKey: {
-  //       name: 'sdcId',
-  //       allowNull: true,
-  //     },
-  //   })
-  //   sdc: DesignDocument;
-
-  //   @HasMany(() => DesignDocsSolution)
-  //   solutions: Array<DesignDocsSolution>;
+  //   @BelongsTo(() => UserEntity)
+  //   user: UserEntity;
 }
