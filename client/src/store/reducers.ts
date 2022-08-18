@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
-import { equipmentAccountingReducer } from "../models/equipment-accounting";
+import { equipmentAccountingReducer } from "../modules/equipment-accounting";
+import { positionTreeReducer } from "../modules/position-tree";
 // import { subsidiaryReducer } from "../../models/position-tree/subsidiary/subsidiary.reducer";
 // import { fieldReducer } from "../../models/position-tree/field/field.reducer";
 
@@ -13,6 +14,7 @@ import { equipmentAccountingReducer } from "../models/equipment-accounting";
 
 export const rootReducer = combineReducers({
   equipmentAccounting: equipmentAccountingReducer,
+  positionTree: positionTreeReducer,
   //   main: mainReducer,
   //   project: projectReducer,
   //   subsidiary: subsidiaryReducer,

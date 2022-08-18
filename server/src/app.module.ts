@@ -8,7 +8,8 @@ import {
   CommentAccountingModule,
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,
-} from "./sub-systems/comment-accounting";
+} from "./modules/comment-accounting";
+import { FileStorageModule, LogoEntity } from "./modules/file-storage";
 
 import {
   PositionTreeModule,
@@ -17,7 +18,13 @@ import {
   ProjectEntity,
   UnitEntity,
   SubUnitEntity,
-} from "./sub-systems/position-tree";
+} from "./modules/position-tree";
+import {
+  CounterpartyEntity,
+  DesignEntity,
+  EquipmentEntity,
+  RegulatoryReferenceInformationModule,
+} from "./modules/regulatory-reference-information";
 
 @Module({
   imports: [
@@ -26,7 +33,7 @@ import {
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, "../file-storage"),
+      rootPath: join(__dirname, "..", "file-storage"),
     }),
 
     SequelizeModule.forRoot({
@@ -36,18 +43,24 @@ import {
       username: process.env.DB_USERNAME || "postgres",
       password: process.env.DB_PASSWORD || "541229",
       database: process.env.DB_DATABASE || "ots_test",
-      // logging: false,
+      logging: false,
       autoLoadModels: true,
-      synchronize: true,
+      // synchronize: true,
       models: [
+        LogoEntity,
         SubsidiaryEntity,
         FieldEntity,
         ProjectEntity,
         UnitEntity,
         SubUnitEntity,
+        CounterpartyEntity,
+        DesignEntity,
+        EquipmentEntity,
       ],
     }),
     PositionTreeModule,
+    FileStorageModule,
+    RegulatoryReferenceInformationModule,
     // MulterModule.register({
     //   dest: `.${process.env.NODE_ENV}.env`,
     // }),

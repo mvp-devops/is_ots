@@ -1,4 +1,4 @@
-import { setCurrentDate } from "./../../client/src/utils/main.utils";
+// import { setCurrentDate } from "./../../client/src/utils/main.utils";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { AppModule } from "./app.module";
@@ -24,7 +24,7 @@ async function server() {
   SwaggerModule.setup("docs", app, document);
 
   await app.listen(PORT, () => {
-    console.log(`Сервер запущен ${setCurrentDate()}: ${HOST}:${PORT}`);
+    console.log(`Сервер запущен ${HOST}:${PORT}`);
     console.log(`Документация API: ${HOST}:${PORT}/docs`);
   });
 }
