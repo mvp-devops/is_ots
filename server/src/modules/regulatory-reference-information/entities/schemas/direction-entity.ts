@@ -1,15 +1,16 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { NormativeCreateOrUpdateAttrs } from "../../../../../common/types/file-storage";
+
+import { RegulatoryReferenceInformationCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
 import {
-  CapitalConstructionUnitSupervisionCommentEntity,
   DesignDocumentCommentEntity,
+  CapitalConstructionUnitSupervisionCommentEntity,
 } from "../../../comment-accounting";
 
-@Table({ tableName: "normatives" })
-export class NormativeEntity extends Model<
-  NormativeEntity,
-  NormativeCreateOrUpdateAttrs
+@Table({ tableName: "directions" })
+export class DirectionEntity extends Model<
+  DirectionEntity,
+  RegulatoryReferenceInformationCreationAttrs
 > {
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
@@ -21,18 +22,8 @@ export class NormativeEntity extends Model<
   id: number;
 
   @ApiProperty({
-    example: "М-15.001.002.03",
-    description: "Шифр документа",
-  })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  code: string;
-
-  @ApiProperty({
     example: "Промышленная автоматизация",
-    description: "Наименование нормативного документа",
+    description: "Наименование функционального направления",
   })
   @Column({
     type: DataType.STRING,
@@ -42,39 +33,19 @@ export class NormativeEntity extends Model<
   title: string;
 
   @ApiProperty({
-    example: "PDF",
-    description: "Тип файла",
+    example: "ПА",
+    description: "Шифр",
   })
   @Column({
     type: DataType.STRING,
     allowNull: false,
   })
-  fileType: string;
-
-  @ApiProperty({
-    example: "Путь к файлу",
-    description: "Путь к файлу",
-  })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-    defaultValue: "normatives",
-  })
-  filePath: string;
-
-  @ApiProperty({
-    example: "00dd3128-3332-4ff1-b108-75d739291a0d.pdf",
-    description: "Наименование файла (сгенерированное с помощью UUIDv4)",
-  })
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  fileName: string;
+  code: string;
 
   @ApiProperty({ example: "Поле для примечаний", description: "Примечания" })
   @Column({
     type: DataType.TEXT,
+    allowNull: true,
   })
   description: string;
 

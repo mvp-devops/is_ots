@@ -7,18 +7,21 @@ import {
   Model,
   Table,
   ForeignKey,
+  HasOne,
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { UnitCreationAttrs } from "../../../../../common/types/position-tree";
+import { UnitCreateOrUpdateAttrs } from "../../../../../common/types/position-tree";
 import { ProjectEntity } from "./project.entity";
 import {
   EquipmentEntity,
   CounterpartyEntity,
 } from "../../../regulatory-reference-information";
+import { SummaryListOfEquipmentEntity } from "../../../equipment-accounting";
+import { DesignDocumentEntity } from "../../../file-storage";
 
 @Table({ tableName: "units" })
-export class UnitEntity extends Model<UnitEntity, UnitCreationAttrs> {
+export class UnitEntity extends Model<UnitEntity, UnitCreateOrUpdateAttrs> {
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор проекта",
@@ -122,12 +125,12 @@ export class UnitEntity extends Model<UnitEntity, UnitCreationAttrs> {
   @HasMany(() => SubUnitEntity)
   subUnits: SubUnitEntity[];
 
-  // @HasMany(() => DesignDocumentEntity)
-  // documents: DesignDocumentEntity[];
+  @HasMany(() => DesignDocumentEntity)
+  documents: DesignDocumentEntity[];
 
-  // @HasOne(() => DesignDocumentEntity, { as: 'unitQuestionare', foreignKey: 'uqstId' })
-  // questionare: DesignDocument;
+  @HasOne(() => DesignDocumentEntity)
+  questionare: DesignDocumentEntity;
 
-  // @HasMany(() => ConsolidatedListEntity)
-  // consolidatedList: ConsolidatedListEntity[];
+  @HasMany(() => SummaryListOfEquipmentEntity)
+  summaryListOfEquipments: SummaryListOfEquipmentEntity[];
 }

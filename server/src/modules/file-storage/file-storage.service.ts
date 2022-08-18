@@ -93,12 +93,12 @@ export class FileStorageService {
           });
           break;
         }
-        // case "user": {
-        //   item = await repository.findOne({
-        //     where: { userId: +parrentId },
-        //   });
-        //   break
-        // }
+        case "user": {
+          item = await this.repository.findOne({
+            where: { userId: +parrentId },
+          });
+          break;
+        }
         default:
           break;
       }

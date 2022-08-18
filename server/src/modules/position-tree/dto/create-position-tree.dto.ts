@@ -4,7 +4,7 @@ import {
   ProjectCreationAttrs,
   SubsidiaryCreationAttrs,
   SubUnitCreationAttrs,
-  UnitCreationAttrs,
+  UnitCreateOrUpdateAttrs,
 } from "../../../../common/types/position-tree";
 
 export class CreateSubsidiaryDto implements SubsidiaryCreationAttrs {
@@ -98,7 +98,7 @@ export class CreateProjectDto implements ProjectCreationAttrs {
   readonly description: string;
 }
 
-export class CreateUnitDto implements UnitCreationAttrs {
+export class CreateUnitDto implements UnitCreateOrUpdateAttrs {
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор проекта",

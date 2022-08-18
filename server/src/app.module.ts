@@ -8,6 +8,7 @@ import {
   CommentAccountingModule,
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,
+  DesignDocumentSolutionEntity,
 } from "./modules/comment-accounting";
 
 import {
@@ -21,7 +22,14 @@ import {
   EquipmentAccountingModule,
 } from "./modules/equipment-accounting";
 
-import { FileStorageModule, LogoEntity } from "./modules/file-storage";
+import {
+  FileStorageModule,
+  LogoEntity,
+  SectionEntity,
+  StageEntity,
+  NormativeEntity,
+  DesignDocumentEntity,
+} from "./modules/file-storage";
 
 import {
   PositionTreeModule,
@@ -36,6 +44,9 @@ import {
   CounterpartyEntity,
   DesignEntity,
   EquipmentEntity,
+  DirectionEntity,
+  CriticalityEntity,
+  UserEntity,
   RegulatoryReferenceInformationModule,
 } from "./modules/regulatory-reference-information";
 
@@ -60,7 +71,21 @@ import {
       autoLoadModels: true,
       // synchronize: true,
       models: [
+        CapitalConstructionUnitSupervisionCommentEntity,
+        DesignDocumentCommentEntity,
+        DesignDocumentSolutionEntity,
+        FacilityEntity,
+        SummaryListOfEquipmentEntity,
+        CableLogEntity,
+        ImpulseLineLogEntity,
+        SignalEntity,
+        MetrologyEntity,
+        MonitoringEntity,
         LogoEntity,
+        SectionEntity,
+        StageEntity,
+        NormativeEntity,
+        DesignDocumentEntity,
         SubsidiaryEntity,
         FieldEntity,
         ProjectEntity,
@@ -69,8 +94,13 @@ import {
         CounterpartyEntity,
         DesignEntity,
         EquipmentEntity,
+        DirectionEntity,
+        CriticalityEntity,
+        UserEntity,
       ],
     }),
+    CommentAccountingModule,
+    EquipmentAccountingModule,
     PositionTreeModule,
     FileStorageModule,
     RegulatoryReferenceInformationModule,

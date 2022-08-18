@@ -20,7 +20,17 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   revision: string;
   description: string;
   filePath: string;
-  file: any;
+  fileName: string;
+  fileType: string;
+}
+
+export interface NormativeCreateOrUpdateAttrs {
+  code: string;
+  title: string;
+  description: string;
+  filePath: string;
+  fileName: string;
+  fileType: string;
 }
 
 export interface FacilityDocumentCreateOrUpdateAttrs {

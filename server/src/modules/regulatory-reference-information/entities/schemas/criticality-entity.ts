@@ -1,10 +1,15 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { RegulatoryReferenceInformationCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
 
-@Table({ tableName: "sections" })
-export class SectionEntity extends Model<
-  SectionEntity,
+import { RegulatoryReferenceInformationCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
+import {
+  DesignDocumentCommentEntity,
+  CapitalConstructionUnitSupervisionCommentEntity,
+} from "../../../comment-accounting";
+
+@Table({ tableName: "directions" })
+export class CriticalityEntity extends Model<
+  CriticalityEntity,
   RegulatoryReferenceInformationCreationAttrs
 > {
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
@@ -17,8 +22,8 @@ export class SectionEntity extends Model<
   id: number;
 
   @ApiProperty({
-    example: "Автоматизация комплексная",
-    description: "Наименование марки/раздела документации",
+    example: "Критерий критичности",
+    description: "Наименование критерия критичности",
   })
   @Column({
     type: DataType.STRING,
@@ -28,8 +33,8 @@ export class SectionEntity extends Model<
   title: string;
 
   @ApiProperty({
-    example: "АК",
-    description: "Шифр марки/раздела документации",
+    example: "20",
+    description: "Вес критерия критичности, %",
   })
   @Column({
     type: DataType.STRING,
@@ -43,4 +48,10 @@ export class SectionEntity extends Model<
     allowNull: true,
   })
   description: string;
+
+  @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity)
+  monitoringComments: CapitalConstructionUnitSupervisionCommentEntity[];
+
+  @HasMany(() => DesignDocumentCommentEntity)
+  designDocumentComments: DesignDocumentCommentEntity[];
 }

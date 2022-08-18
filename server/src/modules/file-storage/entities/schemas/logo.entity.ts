@@ -14,6 +14,7 @@ import { SubsidiaryEntity } from "../../../position-tree";
 import {
   CounterpartyEntity,
   DesignEntity,
+  UserEntity,
 } from "../../../regulatory-reference-information";
 
 @Table({ tableName: "logos" })
@@ -42,14 +43,13 @@ export class LogoEntity extends Model<LogoEntity, LogoCreationAttrs> {
   @Column
   designId: number;
 
-  // @ApiProperty({
-  //   example: 1,
-  //   description:
-  //     'Уникальный идентификатор пользователя системы',
-  // })
-  // @ForeignKey(() => UserEntity)
-  // @Column
-  // userId: number;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор пользователя системы",
+  })
+  @ForeignKey(() => UserEntity)
+  @Column
+  userId: number;
 
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
@@ -99,6 +99,6 @@ export class LogoEntity extends Model<LogoEntity, LogoCreationAttrs> {
   @BelongsTo(() => DesignEntity)
   design: DesignEntity;
 
-  // @BelongsTo(() => UserEntity)
-  // user: UserEntity;
+  @BelongsTo(() => UserEntity)
+  user: UserEntity;
 }

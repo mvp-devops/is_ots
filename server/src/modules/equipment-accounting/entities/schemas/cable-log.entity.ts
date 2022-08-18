@@ -4,6 +4,7 @@ import {
   DataType,
   ForeignKey,
   HasMany,
+  HasOne,
   Model,
   Table,
 } from "sequelize-typescript";
@@ -11,6 +12,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CableLogCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 
 import { SummaryListOfEquipmentEntity } from "../";
+import { DesignDocumentEntity } from "src/modules/file-storage";
 
 @Table({ tableName: "cable-log" })
 export class CableLogEntity extends Model<
@@ -35,16 +37,6 @@ export class CableLogEntity extends Model<
     type: DataType.INTEGER,
   })
   sloeId: number;
-
-  @ApiProperty({
-    example: "00dd3128-3332-4ff1-b108-75d739291a0d.pdf",
-    description:
-      "Наименование схемы внешних электрических проводок (сгенерированное с помощью UUIDv4)",
-  })
-  @Column({
-    type: DataType.STRING,
-  })
-  wiringDiagram: string;
 
   @ApiProperty({
     example: "С-3-4-5",
@@ -139,4 +131,7 @@ export class CableLogEntity extends Model<
 
   @BelongsTo(() => SummaryListOfEquipmentEntity, { foreignKey: "sloeId" })
   sloe: SummaryListOfEquipmentEntity;
+
+  @HasOne(() => DesignDocumentEntity)
+  wiringDiagram: DesignDocumentEntity;
 }

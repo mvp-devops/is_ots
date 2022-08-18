@@ -23,6 +23,7 @@ import {
   MetrologyEntity,
   MonitoringEntity,
 } from "../";
+import { DesignDocumentEntity } from "../../../file-storage";
 
 @Table({ tableName: "summary-list-of-equipments" })
 export class SummaryListOfEquipmentEntity extends Model<
@@ -87,15 +88,6 @@ export class SummaryListOfEquipmentEntity extends Model<
     type: DataType.STRING,
   })
   installationLocation: string;
-
-  @ApiProperty({
-    example: "00dd3128-3332-4ff1-b108-75d739291a0d.pdf",
-    description: "Наименование ОЛ, ТТ, ТЗ (сгенерированное с помощью UUIDv4)",
-  })
-  @Column({
-    type: DataType.STRING,
-  })
-  questionare: string;
 
   @ApiProperty({
     example: "РСУ, ПАЗ",
@@ -214,4 +206,7 @@ export class SummaryListOfEquipmentEntity extends Model<
 
   @HasOne(() => MonitoringEntity)
   monitoring: MonitoringEntity;
+
+  @HasOne(() => DesignDocumentEntity)
+  equipmentQuestionare: DesignDocumentEntity;
 }

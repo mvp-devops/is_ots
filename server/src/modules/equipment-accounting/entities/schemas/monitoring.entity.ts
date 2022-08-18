@@ -4,6 +4,7 @@ import {
   DataType,
   ForeignKey,
   HasMany,
+  HasOne,
   Model,
   Table,
 } from "sequelize-typescript";
@@ -12,6 +13,7 @@ import { MonitoringCreateOrUpdateAttrs } from "../../../../../common/types/equip
 
 import { SummaryListOfEquipmentEntity } from "../";
 import { CapitalConstructionUnitSupervisionCommentEntity } from "../../../comment-accounting";
+import { DesignDocumentEntity } from "../../../file-storage";
 
 @Table({ tableName: "monitorings" })
 export class MonitoringEntity extends Model<
@@ -133,4 +135,7 @@ export class MonitoringEntity extends Model<
 
   @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity)
   comments: CapitalConstructionUnitSupervisionCommentEntity;
+
+  @HasOne(() => DesignDocumentEntity)
+  functionalDiagram: DesignDocumentEntity;
 }

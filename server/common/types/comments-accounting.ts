@@ -6,7 +6,6 @@ export interface CommentAccountingNSIView {
 }
 
 export interface DesignDocumentCommentSolutionCreationAttrs {
-  key: string;
   commentId: number | string;
   userId: number | string;
   statusId: number | string;
@@ -34,7 +33,6 @@ export interface DesignDocumentCommentCreationAttrs {
   userId: number | string | null;
   criticalityId: number | string | null;
   comment: string;
-  solutions: DesignDocumentCommentSolutionCreationAttrs[] | null;
 }
 
 export interface DesignDocumentCommentView {
@@ -64,14 +62,12 @@ export interface DesignDocumentCommentRequestData {
 }
 
 export interface CapitalConstructionUnitSupervisionCommentCreationAttrs {
-  projectDocumentId: number | string | null;
-  unitDocumentId: number | string | null;
-  subUnitDocumentId: number | string | null;
-  supplierDocumentId: number | string | null;
+  projectId: number | string | null;
+  unitId: number | string | null;
+  subUnitId: number | string | null;
   directionId: number | string | null;
   normativeId: number | string | null;
   userId: number | string | null;
   criticalityId: number | string | null;
   comment: string;
-  solutions: DesignDocumentCommentSolutionCreationAttrs[] | null;
 }

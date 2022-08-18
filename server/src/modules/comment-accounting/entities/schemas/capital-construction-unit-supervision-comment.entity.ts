@@ -14,8 +14,14 @@ import {
   UnitEntity,
 } from "../../../position-tree";
 import { MonitoringEntity } from "../../../equipment-accounting";
+import {
+  CriticalityEntity,
+  DirectionEntity,
+  UserEntity,
+} from "../../../regulatory-reference-information";
+import { NormativeEntity } from "../../../file-storage";
 
-@Table({ tableName: "comments" })
+@Table({ tableName: "building-comments" })
 export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   CapitalConstructionUnitSupervisionCommentEntity,
   CapitalConstructionUnitSupervisionCommentCreationAttrs
@@ -59,48 +65,55 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   })
   subUnitId: number;
 
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор функционального направления',
-  //   })
-  //   @ForeignKey(() => DirectionEntity)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   directionId: number;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор мониторинга СМР/ПНР",
+  })
+  @ForeignKey(() => MonitoringEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  monitoringId: number;
 
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор критерия критичности',
-  //   })
-  //   @ForeignKey(() => CriticalityEntity)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   criticalityId: number;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор функционального направления",
+  })
+  @ForeignKey(() => DirectionEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  directionId: number;
 
-  //   @ApiProperty({
-  //     example: 1,
-  //     description:
-  //       'Уникальный идентификатор нормативной ссылки',
-  //   })
-  //   @ForeignKey(() => NormativeEntity)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   normativeId: number;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор критерия критичности",
+  })
+  @ForeignKey(() => CriticalityEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  criticalityId: number;
 
-  //   @ApiProperty({
-  //     example: 1,
-  //     description: 'Уникальный идентификатор пользователя',
-  //   })
-  //   @ForeignKey(() => UserEntity)
-  //   @Column({
-  //     type: DataType.INTEGER,
-  //   })
-  //   userId: number;
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор нормативной ссылки",
+  })
+  @ForeignKey(() => NormativeEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  normativeId: number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор пользователя",
+  })
+  @ForeignKey(() => UserEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  userId: number;
 
   @ApiProperty({
     example: "Поле для замечания",
@@ -124,15 +137,15 @@ export class CapitalConstructionUnitSupervisionCommentEntity extends Model<
   @BelongsTo(() => MonitoringEntity)
   monitoring: MonitoringEntity;
 
-  //   @BelongsTo(() => DirectionEntity)
-  //   direction: DirectionEntity;
+  @BelongsTo(() => DirectionEntity)
+  direction: DirectionEntity;
 
-  //   @BelongsTo(() => CriticalityEntity)
-  //   criticality: CriticalityEntity;
+  @BelongsTo(() => CriticalityEntity)
+  criticality: CriticalityEntity;
 
-  //   @BelongsTo(() => NormativeEntity)
-  //   normative: NormativeEntity;
+  @BelongsTo(() => NormativeEntity)
+  normative: NormativeEntity;
 
-  //   @BelongsTo(() => UserEntity)
-  //   user: UserEntity;
+  @BelongsTo(() => UserEntity)
+  user: UserEntity;
 }

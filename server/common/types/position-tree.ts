@@ -21,7 +21,7 @@ export interface ProjectCreationAttrs {
   description: string;
 }
 
-export interface UnitCreationAttrs {
+export interface UnitCreateOrUpdateAttrs {
   projectId: number | string;
   equipmentId: number | string;
   supplierId: number | string;

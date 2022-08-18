@@ -10,7 +10,7 @@ import { ApiProperty } from "@nestjs/swagger";
 
 import { DesignOrCounterpartyCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
 import { UnitEntity, SubUnitEntity } from "../../../position-tree";
-import { LogoEntity } from "../../../file-storage";
+import { DesignDocumentEntity, LogoEntity } from "../../../file-storage";
 import { MetrologyEntity } from "../../../equipment-accounting";
 
 @Table({ tableName: "counterparties" })
@@ -61,6 +61,9 @@ export class CounterpartyEntity extends Model<
 
   @HasMany(() => SubUnitEntity)
   subUnits: SubUnitEntity[];
+
+  @HasMany(() => DesignDocumentEntity)
+  documents: DesignDocumentEntity[];
 
   @HasOne(() => LogoEntity)
   file: LogoEntity;

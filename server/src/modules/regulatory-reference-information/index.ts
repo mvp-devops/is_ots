@@ -1,7 +1,14 @@
 import { RegulatoryReferenceInformationController } from "./regulatory-reference-information.controller";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
 import { RegulatoryReferenceInformationModule } from "./regulatory-reference-information.module";
-import { CounterpartyEntity, DesignEntity, EquipmentEntity } from "./entities";
+import {
+  CounterpartyEntity,
+  DesignEntity,
+  EquipmentEntity,
+  DirectionEntity,
+  CriticalityEntity,
+  UserEntity,
+} from "./entities";
 
 export {
   RegulatoryReferenceInformationController,
@@ -10,4 +17,7 @@ export {
   CounterpartyEntity,
   DesignEntity,
   EquipmentEntity,
+  DirectionEntity,
+  CriticalityEntity,
+  UserEntity,
 };
