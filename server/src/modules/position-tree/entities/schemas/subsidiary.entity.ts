@@ -10,14 +10,14 @@ import {
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { SubsidiaryCreationAttrs } from "../../../../../common/types/position-tree";
+import { SubsidiaryCreateOrUpdateAttrs } from "../../../../../common/types/position-tree";
 import { FieldEntity } from "./field.entity";
 import { LogoEntity } from "../../../file-storage";
 
 @Table({ tableName: "subsidiaries" })
 export class SubsidiaryEntity extends Model<
   SubsidiaryEntity,
-  SubsidiaryCreationAttrs
+  SubsidiaryCreateOrUpdateAttrs
 > {
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({

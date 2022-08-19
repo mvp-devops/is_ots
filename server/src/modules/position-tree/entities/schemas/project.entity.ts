@@ -9,14 +9,17 @@ import {
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { ProjectCreationAttrs } from "../../../../../common/types/position-tree";
+import { ProjectCreateOrUpdateAttrs } from "../../../../../common/types/position-tree";
 
 import { FieldEntity } from "./field.entity";
 import { UnitEntity } from "./unit.entity";
 import { DesignEntity } from "../../../regulatory-reference-information";
 
 @Table({ tableName: "projects" })
-export class ProjectEntity extends Model<ProjectEntity, ProjectCreationAttrs> {
+export class ProjectEntity extends Model<
+  ProjectEntity,
+  ProjectCreateOrUpdateAttrs
+> {
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор родительского узла (Месторождения)",

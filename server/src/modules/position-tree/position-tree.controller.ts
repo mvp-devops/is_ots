@@ -9,6 +9,7 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
+  Put,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
 import { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
@@ -30,8 +31,9 @@ export class PositionTreeController {
   }
 
   @Get("/find")
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.findAll(target);
   }
 
   @Get("/find/:id")
@@ -45,7 +47,7 @@ export class PositionTreeController {
     return this.service.getPositionTree();
   }
 
-  @Patch("/edit/:id")
+  @Put("/edit/:id")
   @UseInterceptors(FileInterceptor("file"))
   update(
     @Param("id") id: string,

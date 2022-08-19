@@ -9,11 +9,11 @@ import {
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { FieldCreationAttrs } from "../../../../../common/types/position-tree";
+import { FieldCreateOrUpdateAttrs } from "../../../../../common/types/position-tree";
 import { SubsidiaryEntity, ProjectEntity } from "../..";
 
 @Table({ tableName: "fields" })
-export class FieldEntity extends Model<FieldEntity, FieldCreationAttrs> {
+export class FieldEntity extends Model<FieldEntity, FieldCreateOrUpdateAttrs> {
   @ApiProperty({
     example: 1,
     description:

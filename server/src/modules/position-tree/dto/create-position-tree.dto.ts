@@ -1,13 +1,13 @@
 import { ApiProperty } from "@nestjs/swagger";
 import {
-  FieldCreationAttrs,
-  ProjectCreationAttrs,
-  SubsidiaryCreationAttrs,
-  SubUnitCreationAttrs,
+  FieldCreateOrUpdateAttrs,
+  ProjectCreateOrUpdateAttrs,
+  SubsidiaryCreateOrUpdateAttrs,
+  SubUnitCreateOrUpdateAttrs,
   UnitCreateOrUpdateAttrs,
 } from "../../../../common/types/position-tree";
 
-export class CreateSubsidiaryDto implements SubsidiaryCreationAttrs {
+export class CreateSubsidiaryDto implements SubsidiaryCreateOrUpdateAttrs {
   @ApiProperty({
     example: "Наименование Дочернего общества/Совместного предприятия",
     description: "АО «Газпромнефть-Ноябрьскнефтегаз»",
@@ -33,13 +33,13 @@ export class CreateSubsidiaryDto implements SubsidiaryCreationAttrs {
   readonly file: any;
 }
 
-export class CreateFieldDto implements FieldCreationAttrs {
+export class CreateFieldDto implements FieldCreateOrUpdateAttrs {
   @ApiProperty({
     example: 1,
     description:
       "Уникальный идентификатор Дочернего общества/Совместного предприятия",
   })
-  readonly subsidiaryId: string | number;
+  readonly subsidiaryId: number;
 
   @ApiProperty({
     example: "Новопортовское нефтегазоконденсатное месторождение",
@@ -60,18 +60,18 @@ export class CreateFieldDto implements FieldCreationAttrs {
   readonly description: string;
 }
 
-export class CreateProjectDto implements ProjectCreationAttrs {
+export class CreateProjectDto implements ProjectCreateOrUpdateAttrs {
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор месторождения",
   })
-  readonly fieldId: string | number;
+  readonly fieldId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор проектного института",
   })
-  readonly designId: string | number;
+  readonly designId: number;
 
   @ApiProperty({
     example: "Обустройство куста скважин №2",
@@ -103,19 +103,19 @@ export class CreateUnitDto implements UnitCreateOrUpdateAttrs {
     example: 1,
     description: "Уникальный идентификатор проекта",
   })
-  readonly projectId: string | number;
+  readonly projectId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор группы оборудования",
   })
-  readonly equipmentId: string | number;
+  readonly equipmentId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор поставщика оборудования",
   })
-  readonly supplierId: string | number;
+  readonly supplierId: number;
 
   @ApiProperty({
     example: "12.3",
@@ -154,24 +154,24 @@ export class CreateUnitDto implements UnitCreateOrUpdateAttrs {
   readonly questionare: any;
 }
 
-export class CreateSubUnitDto implements SubUnitCreationAttrs {
+export class CreateSubUnitDto implements SubUnitCreateOrUpdateAttrs {
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор объекта строительства",
   })
-  readonly unitId: string | number;
+  readonly unitId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор группы оборудования",
   })
-  readonly equipmentId: string | number;
+  readonly equipmentId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор поставщика оборудования",
   })
-  readonly supplierId: string | number;
+  readonly supplierId: number;
 
   @ApiProperty({
     example: "12.3",

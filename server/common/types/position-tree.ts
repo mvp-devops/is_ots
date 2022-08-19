@@ -1,18 +1,18 @@
-export interface SubsidiaryCreationAttrs {
+export interface SubsidiaryCreateOrUpdateAttrs {
   title: string;
   code: string;
   description: string;
   file: any;
 }
 
-export interface FieldCreationAttrs {
+export interface FieldCreateOrUpdateAttrs {
   subsidiaryId: number | string | null;
   title: string;
   code: string;
   description: string;
 }
 
-export interface ProjectCreationAttrs {
+export interface ProjectCreateOrUpdateAttrs {
   fieldId: number | string;
   designId: number | string;
   title: string;
@@ -33,7 +33,7 @@ export interface UnitCreateOrUpdateAttrs {
   questionare: any;
 }
 
-export interface SubUnitCreationAttrs {
+export interface SubUnitCreateOrUpdateAttrs {
   unitId: number | string;
   equipmentId: number | string;
   supplierId: number | string;
