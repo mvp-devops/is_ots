@@ -1,3 +1,4 @@
+import { FileInterceptor } from "@nestjs/platform-express";
 import {
   Controller,
   Get,
@@ -7,6 +8,9 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
+  Put,
 } from "@nestjs/common";
 import {
   CreateRegulatoryReferenceInformationDto,
@@ -14,43 +18,59 @@ import {
 } from "./dto";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
 
-@Controller("regulatory-reference-information")
+@Controller("api/regulatory-reference-information")
 export class RegulatoryReferenceInformationController {
   constructor(
     private readonly service: RegulatoryReferenceInformationService
   ) {}
 
   @Post("/add")
+  @UseInterceptors(FileInterceptor("file"))
   create(
     @Body() dto: CreateRegulatoryReferenceInformationDto,
+    @Query() query: { target: string },
+    @UploadedFile() file?: any
+  ) {
+    const { target } = query;
+    return this.service.createOne(target, dto, file);
+  }
+
+  @Post("/add/many")
+  createMany(
+    @Body("items") dto: CreateRegulatoryReferenceInformationDto[],
     @Query() query: { target: string }
   ) {
     const { target } = query;
-    return this.service.create(target, dto);
+    return this.service.createMany(target, dto);
   }
 
   @Get("/find")
-  findAll() {
-    return this.service.findAll();
+  findAll(@Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.findAll(target);
   }
 
-  @Get("/find:id")
-  findOne(@Param("id") id: string) {
-    return this.service.findOne(id);
+  @Get("/find/:id")
+  findOne(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.findOne(target, id);
   }
 
-  @Patch("/edit:id")
+  @Put("/edit/:id")
+  @UseInterceptors(FileInterceptor("file"))
   update(
     @Param("id") id: string,
     @Query() query: { target: string },
-    @Body() dto: UpdateRegulatoryReferenceInformationDto
+    @Body() dto: UpdateRegulatoryReferenceInformationDto,
+    @UploadedFile() file?: any
   ) {
     const { target } = query;
-    return this.service.update(id, target, dto);
+    return this.service.update(id, target, dto, file);
   }
 
   @Delete("remove/:id")
-  remove(@Param("id") id: string) {
-    return this.service.remove(id);
+  remove(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.remove(id, target);
   }
 }

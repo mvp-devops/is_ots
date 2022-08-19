@@ -20,9 +20,11 @@ import {
   MonitoringEntity,
   SummaryListOfEquipmentEntity,
 } from "../../../equipment-accounting";
-import { StageEntity } from "./stage.entity";
-import { SectionEntity } from "./section.entity";
-import { CounterpartyEntity } from "src/modules/regulatory-reference-information";
+import {
+  StageEntity,
+  SectionEntity,
+  CounterpartyEntity,
+} from "../../../regulatory-reference-information";
 
 @Table({ tableName: "design-documents" })
 export class DesignDocumentEntity extends Model<
@@ -180,6 +182,16 @@ export class DesignDocumentEntity extends Model<
     allowNull: false,
   })
   title: string;
+
+  @ApiProperty({
+    example: 1,
+    description: "Номер ревизии документа",
+  })
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  revision: string;
 
   @ApiProperty({
     example: "PDF",

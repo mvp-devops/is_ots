@@ -104,9 +104,45 @@ export class FileStorageService {
       }
 
       if (item) {
-        const fileName: string = this.fileUpload("logo", file);
-        this.removeDirectoryOrFile(`${item.filePath}/${fileName}`);
+        this.fileUpload("logo", file);
+        this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
       } else this.createLogo(parrentId, target, file);
+    }
+  };
+
+  deleteLogo = async (parrentId: string, target: string): Promise<void> => {
+    let item: any = null;
+    switch (target) {
+      case "subsidiary": {
+        item = await this.repository.findOne({
+          where: { subsidiaryId: parrentId },
+        });
+        break;
+      }
+      case "counterparty": {
+        item = await this.repository.findOne({
+          where: { counterpartyId: parrentId },
+        });
+        break;
+      }
+      case "design": {
+        item = await this.repository.findOne({
+          where: { designId: parrentId },
+        });
+        break;
+      }
+      case "user": {
+        item = await this.repository.findOne({
+          where: { userId: parrentId },
+        });
+        break;
+      }
+      default:
+        break;
+    }
+
+    if (item) {
+      this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
     }
   };
 

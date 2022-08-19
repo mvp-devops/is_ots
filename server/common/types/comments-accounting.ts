@@ -6,6 +6,7 @@ export interface CommentAccountingNSIView {
 }
 
 export interface DesignDocumentCommentSolutionCreationAttrs {
+  key: string;
   commentId: number | string;
   userId: number | string;
   statusId: number | string;
@@ -33,6 +34,7 @@ export interface DesignDocumentCommentCreationAttrs {
   userId: number | string | null;
   criticalityId: number | string | null;
   comment: string;
+  solutions: DesignDocumentCommentSolutionCreationAttrs[];
 }
 
 export interface DesignDocumentCommentView {

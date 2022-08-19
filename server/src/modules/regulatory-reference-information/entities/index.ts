@@ -4,6 +4,9 @@ import { EquipmentEntity } from "./schemas/equipment.entity";
 import { DirectionEntity } from "./schemas/direction-entity";
 import { CriticalityEntity } from "./schemas/criticality-entity";
 import { UserEntity } from "./schemas/user-entity";
+import { StageEntity } from "./schemas/stage.entity";
+import { SectionEntity } from "./schemas/section.entity";
+
 export {
   CounterpartyEntity,
   DesignEntity,
@@ -11,4 +14,6 @@ export {
   DirectionEntity,
   CriticalityEntity,
   UserEntity,
+  StageEntity,
+  SectionEntity,
 };

@@ -8,6 +8,8 @@ import {
   DirectionEntity,
   CriticalityEntity,
   UserEntity,
+  StageEntity,
+  SectionEntity,
 } from "./entities";
 
 export {
@@ -20,4 +22,6 @@ export {
   DirectionEntity,
   CriticalityEntity,
   UserEntity,
+  StageEntity,
+  SectionEntity,
 };

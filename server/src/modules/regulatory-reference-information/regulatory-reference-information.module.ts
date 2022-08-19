@@ -1,6 +1,14 @@
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { CounterpartyEntity, DesignEntity, EquipmentEntity } from "./entities";
+import { FileStorageModule } from "../file-storage";
+import {
+  CounterpartyEntity,
+  DesignEntity,
+  EquipmentEntity,
+  DirectionEntity,
+  CriticalityEntity,
+  UserEntity,
+} from "./entities";
 import { RegulatoryReferenceInformationController } from "./regulatory-reference-information.controller";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
 
@@ -12,7 +20,12 @@ import { RegulatoryReferenceInformationService } from "./regulatory-reference-in
       CounterpartyEntity,
       DesignEntity,
       EquipmentEntity,
+      DirectionEntity,
+      CriticalityEntity,
+      UserEntity,
     ]),
+
+    forwardRef(() => FileStorageModule),
   ],
 })
 export class RegulatoryReferenceInformationModule {}

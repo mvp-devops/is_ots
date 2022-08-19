@@ -1,32 +1,342 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
+import { FileStorageService, LogoEntity } from "../file-storage";
+import { SubsidiaryEntity } from "../position-tree";
 import {
   CreateRegulatoryReferenceInformationDto,
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
+import {
+  CounterpartyEntity,
+  CriticalityEntity,
+  DesignEntity,
+  DirectionEntity,
+  EquipmentEntity,
+  UserEntity,
+  StageEntity,
+  SectionEntity,
+} from "./entities";
+
+type RegulatoryReferenceInformationView =
+  | CounterpartyEntity
+  | CriticalityEntity
+  | DesignEntity
+  | DirectionEntity
+  | EquipmentEntity
+  | UserEntity
+  | StageEntity
+  | SectionEntity
+  | null;
 
 @Injectable()
 export class RegulatoryReferenceInformationService {
-  create(target: string, dto: CreateRegulatoryReferenceInformationDto) {
-    return "This action adds a new commentAccounting";
-  }
+  constructor(
+    @InjectModel(CounterpartyEntity)
+    private counterpartyRepository: typeof CounterpartyEntity,
+    @InjectModel(CriticalityEntity)
+    private criticalityRepository: typeof CriticalityEntity,
+    @InjectModel(DesignEntity) private designRepository: typeof DesignEntity,
+    @InjectModel(DirectionEntity)
+    private directionRepository: typeof DirectionEntity,
+    @InjectModel(EquipmentEntity)
+    private equipmentRepository: typeof EquipmentEntity,
+    @InjectModel(UserEntity) private userRepository: typeof UserEntity,
+    @InjectModel(StageEntity)
+    private stageRepository: typeof StageEntity,
+    @InjectModel(SectionEntity)
+    private sectionRepository: typeof SectionEntity,
+    @Inject(forwardRef(() => FileStorageService))
+    private fileService: FileStorageService
+  ) {}
 
-  findAll() {
-    return `This action returns all commentAccounting`;
-  }
+  createOne = async (
+    target: string,
+    dto: CreateRegulatoryReferenceInformationDto,
+    file?: any
+  ): Promise<RegulatoryReferenceInformationView> => {
+    let item: RegulatoryReferenceInformationView = null;
 
-  findOne(id: string) {
-    return `This action returns a #${id} commentAccounting`;
-  }
+    switch (target) {
+      case "counterparty": {
+        item = await this.counterpartyRepository.create(dto);
+        break;
+      }
+      case "criticality": {
+        item = await this.criticalityRepository.create(dto);
+        break;
+      }
+      case "design": {
+        item = await this.designRepository.create(dto);
+        break;
+      }
+      case "direction": {
+        item = await this.directionRepository.create(dto);
+        break;
+      }
+      case "equipment": {
+        item = await this.equipmentRepository.create(dto);
+        break;
+      }
+      case "stage": {
+        item = await this.stageRepository.create(dto);
+        break;
+      }
+      case "section": {
+        item = await this.sectionRepository.create(dto);
+        break;
+      }
+      // case "user": {
+      //   item = await this.userRepository.create(dto);
+      //   break;
+      // }
+      default:
+        break;
+    }
 
-  update(
+    file &&
+      (target === "design" || target === "counterparty" || target === "user") &&
+      (await this.fileService.createLogo(item.id.toString(), target, file));
+
+    return item;
+  };
+
+  createMany = async (
+    target: string,
+    dto: CreateRegulatoryReferenceInformationDto[]
+  ): Promise<RegulatoryReferenceInformationView[]> => {
+    const items: RegulatoryReferenceInformationView[] = [];
+    for (let i = 0; i < dto.length; i++) {
+      const item = await this.createOne(target, dto[i]);
+      items.push(item);
+    }
+    return items;
+  };
+
+  update = async (
     id: string,
     target: string,
-    dto: UpdateRegulatoryReferenceInformationDto
-  ) {
-    return `This action updates a #${id} commentAccounting`;
-  }
+    dto: UpdateRegulatoryReferenceInformationDto,
+    file?: any
+  ): Promise<RegulatoryReferenceInformationView> => {
+    let item: RegulatoryReferenceInformationView = null;
 
-  remove(id: string) {
-    return `This action removes a #${id} commentAccounting`;
-  }
+    switch (target) {
+      case "counterparty": {
+        await this.counterpartyRepository.update(dto, { where: { id } });
+        item = await this.counterpartyRepository.findOne({ where: { id } });
+        break;
+      }
+      case "criticality": {
+        await this.criticalityRepository.update(dto, { where: { id } });
+        item = await this.criticalityRepository.findOne({ where: { id } });
+        break;
+      }
+      case "design": {
+        await this.designRepository.update(dto, { where: { id } });
+        item = await this.designRepository.findOne({ where: { id } });
+        break;
+      }
+      case "direction": {
+        await this.directionRepository.update(dto, { where: { id } });
+        item = await this.directionRepository.findOne({ where: { id } });
+        break;
+      }
+      case "equipment": {
+        await this.equipmentRepository.update(dto, { where: { id } });
+        item = await this.equipmentRepository.findOne({ where: { id } });
+        break;
+      }
+      // case "user": {
+
+      //   await this.userRepository.update(dto, { where: { id } });
+      //   item = await this.userRepository.findOne( { where: { id } });
+      //   break;
+      // }
+      default:
+        break;
+    }
+
+    file &&
+      (target === "design" || target === "counterparty" || target === "user") &&
+      (await this.fileService.updateLogo(id, target, file));
+
+    return item;
+  };
+
+  remove = async (
+    id: string,
+    target: string
+  ): Promise<RegulatoryReferenceInformationView> => {
+    let item: any = null;
+
+    switch (target) {
+      case "counterparty": {
+        item = await this.counterpartyRepository.findOne({ where: { id } });
+        await this.fileService.deleteLogo(id, target);
+        await this.counterpartyRepository.destroy({ where: { id } });
+        break;
+      }
+      case "criticality": {
+        item = await this.criticalityRepository.findOne({ where: { id } });
+        await this.criticalityRepository.destroy({ where: { id } });
+        break;
+      }
+      case "design": {
+        item = await this.designRepository.findOne({ where: { id } });
+        await this.fileService.deleteLogo(id, target);
+        await this.designRepository.destroy({ where: { id } });
+        break;
+      }
+      case "direction": {
+        item = await this.directionRepository.findOne({ where: { id } });
+
+        await this.directionRepository.destroy({ where: { id } });
+        break;
+      }
+      case "equipment": {
+        item = await this.equipmentRepository.findOne({ where: { id } });
+        await this.fileService.deleteLogo(id, target);
+        await this.equipmentRepository.destroy({ where: { id } });
+        break;
+      }
+      // case "user": {
+      //   item = await this.userRepository.findOne( { where: { id } });
+      //   await this.userRepository.destroy( { where: { id } });
+      //   break;
+      // }
+      default:
+        break;
+    }
+
+    return item;
+  };
+
+  findOne = async (
+    target: string,
+    id: string
+  ): Promise<RegulatoryReferenceInformationView> => {
+    let item: RegulatoryReferenceInformationView = null;
+
+    switch (target) {
+      case "counterparty": {
+        item = await this.counterpartyRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: LogoEntity,
+            },
+          ],
+        });
+        break;
+      }
+      case "criticality": {
+        item = await this.criticalityRepository.findOne({
+          where: { id },
+        });
+        break;
+      }
+      case "design": {
+        item = await this.designRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: LogoEntity,
+            },
+          ],
+        });
+        break;
+      }
+      case "direction": {
+        item = await this.directionRepository.findOne({
+          where: { id },
+        });
+        break;
+      }
+      case "equipment": {
+        item = await this.equipmentRepository.findOne({
+          where: { id },
+          include: [],
+        });
+        break;
+      }
+      case "user": {
+        item = await this.userRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: LogoEntity,
+            },
+            {
+              model: SubsidiaryEntity,
+            },
+          ],
+        });
+        break;
+      }
+      default:
+        break;
+    }
+
+    return item;
+  };
+
+  findAll = async (
+    target: string
+  ): Promise<RegulatoryReferenceInformationView[]> => {
+    let items: RegulatoryReferenceInformationView[] = [];
+
+    switch (target) {
+      case "counterparty": {
+        items = await this.counterpartyRepository.findAll({
+          include: [
+            {
+              model: LogoEntity,
+            },
+          ],
+        });
+        break;
+      }
+      case "criticality": {
+        items = await this.criticalityRepository.findAll({});
+        break;
+      }
+      case "design": {
+        items = await this.designRepository.findAll({
+          include: [
+            {
+              model: LogoEntity,
+            },
+          ],
+        });
+        break;
+      }
+      case "direction": {
+        items = await this.directionRepository.findAll({});
+        break;
+      }
+      case "equipment": {
+        items = await this.equipmentRepository.findAll({
+          include: [],
+        });
+        break;
+      }
+      case "user": {
+        items = await this.userRepository.findAll({
+          include: [
+            {
+              model: LogoEntity,
+            },
+            {
+              model: SubsidiaryEntity,
+            },
+          ],
+        });
+        break;
+      }
+      default:
+        break;
+    }
+
+    return items;
+  };
 }

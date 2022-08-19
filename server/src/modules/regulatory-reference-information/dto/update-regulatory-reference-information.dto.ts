@@ -6,6 +6,6 @@ import {
 
 export class UpdateNSIDto extends PartialType(CreateNSIDto) {}
 
-export class UpdateFDesignOrCounterpartyDto extends PartialType(
+export class UpdateDesignOrCounterpartyDto extends PartialType(
   CreateDesignOrCounterpartyDto
 ) {}

@@ -25,8 +25,6 @@ import {
 import {
   FileStorageModule,
   LogoEntity,
-  SectionEntity,
-  StageEntity,
   NormativeEntity,
   DesignDocumentEntity,
 } from "./modules/file-storage";
@@ -47,6 +45,8 @@ import {
   DirectionEntity,
   CriticalityEntity,
   UserEntity,
+  SectionEntity,
+  StageEntity,
   RegulatoryReferenceInformationModule,
 } from "./modules/regulatory-reference-information";
 

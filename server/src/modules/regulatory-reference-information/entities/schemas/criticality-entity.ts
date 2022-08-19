@@ -7,7 +7,7 @@ import {
   CapitalConstructionUnitSupervisionCommentEntity,
 } from "../../../comment-accounting";
 
-@Table({ tableName: "directions" })
+@Table({ tableName: "criticalities" })
 export class CriticalityEntity extends Model<
   CriticalityEntity,
   RegulatoryReferenceInformationCreationAttrs
@@ -26,7 +26,7 @@ export class CriticalityEntity extends Model<
     description: "Наименование критерия критичности",
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     unique: true,
     allowNull: false,
   })
