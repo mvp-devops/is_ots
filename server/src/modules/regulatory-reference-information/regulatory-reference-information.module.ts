@@ -8,6 +8,8 @@ import {
   DirectionEntity,
   CriticalityEntity,
   UserEntity,
+  StageEntity,
+  SectionEntity,
 } from "./entities";
 import { RegulatoryReferenceInformationController } from "./regulatory-reference-information.controller";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
@@ -23,6 +25,8 @@ import { RegulatoryReferenceInformationService } from "./regulatory-reference-in
       DirectionEntity,
       CriticalityEntity,
       UserEntity,
+      StageEntity,
+      SectionEntity,
     ]),
 
     forwardRef(() => FileStorageModule),

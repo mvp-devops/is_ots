@@ -146,6 +146,17 @@ export class RegulatoryReferenceInformationService {
         item = await this.equipmentRepository.findOne({ where: { id } });
         break;
       }
+      case "stage": {
+        await this.stageRepository.update(dto, { where: { id } });
+        item = await this.stageRepository.findOne({ where: { id } });
+        break;
+      }
+      case "section": {
+        await this.sectionRepository.update(dto, { where: { id } });
+        item = await this.sectionRepository.findOne({ where: { id } });
+        break;
+      }
+
       // case "user": {
 
       //   await this.userRepository.update(dto, { where: { id } });
@@ -189,18 +200,27 @@ export class RegulatoryReferenceInformationService {
       }
       case "direction": {
         item = await this.directionRepository.findOne({ where: { id } });
-
         await this.directionRepository.destroy({ where: { id } });
         break;
       }
       case "equipment": {
         item = await this.equipmentRepository.findOne({ where: { id } });
-        await this.fileService.deleteLogo(id, target);
         await this.equipmentRepository.destroy({ where: { id } });
+        break;
+      }
+      case "stage": {
+        item = await this.stageRepository.findOne({ where: { id } });
+        await this.stageRepository.destroy({ where: { id } });
+        break;
+      }
+      case "section": {
+        item = await this.sectionRepository.findOne({ where: { id } });
+        await this.sectionRepository.destroy({ where: { id } });
         break;
       }
       // case "user": {
       //   item = await this.userRepository.findOne( { where: { id } });
+      // await this.fileService.deleteLogo(id, target);
       //   await this.userRepository.destroy( { where: { id } });
       //   break;
       // }
@@ -273,6 +293,20 @@ export class RegulatoryReferenceInformationService {
         });
         break;
       }
+      case "stage": {
+        item = await this.stageRepository.findOne({
+          where: { id },
+          include: [],
+        });
+        break;
+      }
+      case "section": {
+        item = await this.sectionRepository.findOne({
+          where: { id },
+          include: [],
+        });
+        break;
+      }
       default:
         break;
     }
@@ -330,6 +364,18 @@ export class RegulatoryReferenceInformationService {
               model: SubsidiaryEntity,
             },
           ],
+        });
+        break;
+      }
+      case "stage": {
+        items = await this.stageRepository.findAll({
+          include: [],
+        });
+        break;
+      }
+      case "section": {
+        items = await this.sectionRepository.findAll({
+          include: [],
         });
         break;
       }
