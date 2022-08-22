@@ -19,8 +19,8 @@ import {
   SignalView,
 } from "../../../../../../server/common/types/equipment-accounting";
 import { ModalContainer, SignalForm } from "../forms";
-import { FormActions } from "../forms/form.settings";
 import DeleteDialog from "../forms/DeleteDialog";
+import { FormActions } from "../../../main";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -232,7 +232,7 @@ const SignalTable: FC<SignalTableProps> = ({
           key: "h",
           align: "center",
           width: 80,
-          render: (value) => <Text type="warning">{value}</Text>,
+          render: (value) => <Text type="warning">{+value}</Text>,
         },
         {
           title: "L",
@@ -240,7 +240,7 @@ const SignalTable: FC<SignalTableProps> = ({
           key: "l",
           align: "center",
           width: 80,
-          render: (value) => <Text type="warning">{value}</Text>,
+          render: (value) => <Text type="warning">{+value}</Text>,
         },
         {
           title: "LL",
@@ -248,7 +248,7 @@ const SignalTable: FC<SignalTableProps> = ({
           key: "ll",
           align: "center",
           width: 80,
-          render: (value) => <Text type="danger">{value}</Text>,
+          render: (value) => <Text type="danger">{+value}</Text>,
         },
 
         {
@@ -257,7 +257,7 @@ const SignalTable: FC<SignalTableProps> = ({
           key: "hh",
           align: "center",
           width: 80,
-          render: (value) => <Text type="danger">{value}</Text>,
+          render: (value) => <Text type="danger">{+value}</Text>,
         },
       ],
     },
@@ -321,9 +321,9 @@ const SignalTable: FC<SignalTableProps> = ({
           action={actionType}
           child={
             <SignalForm
-              // row={currentRow}
-              data={editRows}
-              setData={setEditRows}
+              row={currentRow}
+              // data={editRows}
+              // setData={setEditRows}
             />
           }
         />

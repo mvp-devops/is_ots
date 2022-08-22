@@ -1,7 +1,3 @@
-import {
-  DesignDocumentCreateOrUpdateAttrs,
-  FacilityDocumentCreateOrUpdateAttrs,
-} from "./file-storage";
 export interface SummaryListOfEquipmentView {
   id: string;
   project: string;
@@ -12,15 +8,21 @@ export interface SummaryListOfEquipmentView {
   subUnitId: string;
   facilityId: string | number | null;
   installationLocation: string;
-  questionare: string;
-  equipmentType: string;
+  facility: FacilityView;
+  facilityModification: string;
+  questionare?: {
+    questionareType: string;
+    questionareName: string;
+    questionarePath: string;
+  };
+  functionalDiagram?: {
+    functionalDiagramType: string;
+    functionalDiagramName: string;
+    functionalDiagramPath: string;
+  };
   systemType: string[];
   tag: string;
   controlledParameter: string;
-  country: string;
-  vendor: string;
-  facilityTitle: string;
-  facilityModification: string;
   factoryNumber: string;
   year: string;
   month: string;
@@ -38,7 +40,7 @@ export interface SummaryListOfEquipmentCreateOrUpdateAttrs {
   projectId: string | number | null;
   unitId: string | number | null;
   subUnitId: string | number;
-  facilityId: string | number;
+  facilityId: string | number | null;
   installationLocation: string;
   questionare: any;
   systemType: string[];
@@ -51,21 +53,21 @@ export interface SummaryListOfEquipmentCreateOrUpdateAttrs {
   period: string;
   specification: string;
   description: string;
-  cableLog: CableLogCreateOrUpdateAttrs[] | null;
-  impulseLineLog: ImpulseLineLogCreateOrUpdateAttrs[] | null;
-  metrology: MetrologyCreateOrUpdateAttrs | null;
-  signals: SignalCreateOrUpdateAttrs[] | null;
-  monitoring: MonitoringCreateOrUpdateAttrs | null;
+  facility?: FacilityCreateOrUpdateAtts;
+  cableLog?: CableLogCreateOrUpdateAttrs[] | null;
+  impulseLineLog?: ImpulseLineLogCreateOrUpdateAttrs[] | null;
+  metrology?: MetrologyCreateOrUpdateAttrs | null;
+  signals?: SignalCreateOrUpdateAttrs[] | null;
+  monitoring?: MonitoringCreateOrUpdateAttrs | null;
 }
 
 export interface SummaryListOfEquipmentFormData {
-  generalInformationCreateOrUpdateData: GeneralInformationCreateOrUpdateAttrs;
-  facilityCreateOrUpdateData: FacilityCreateOrUpdateAtts | null;
-  metrologyCreateOrUpdateData: MetrologyCreateOrUpdateAttrs | null;
-  monitoringCreateOrUpdateData: MonitoringCreateOrUpdateAttrs | null;
-  cableLogCreateOrUpdateData: CableLogCreateOrUpdateAttrs[];
-  impulseLineLogCreateOrUpdateData: ImpulseLineLogCreateOrUpdateAttrs[];
-  signalCreateOrUpdateData: SignalCreateOrUpdateAttrs[];
+  generalInformation: GeneralInformationCreateOrUpdateAttrs;
+  metrology?: MetrologyCreateOrUpdateAttrs;
+  monitoring?: MonitoringCreateOrUpdateAttrs;
+  cableLog: CableLogCreateOrUpdateAttrs[];
+  impulseLineLog: ImpulseLineLogCreateOrUpdateAttrs[];
+  signals: SignalCreateOrUpdateAttrs[];
 }
 
 export interface CableLogView {
@@ -124,7 +126,7 @@ export interface ImpulseLineLogView {
 }
 
 export interface ImpulseLineLogCreateOrUpdateAttrs {
-  id: string | number;
+  id: string | number | null;
   sloeId: string | number | null;
   numberOfTrace: string;
   impulseLineType: string;
@@ -154,7 +156,7 @@ export interface SignalView {
 }
 
 export interface SignalCreateOrUpdateAttrs {
-  id: string | number;
+  id: string | number | null;
   sloeId: string | number | null;
   signalType: string;
   signalProtocol: string;
@@ -228,6 +230,11 @@ export interface MonitoringView {
   subUnit: string;
   subUnitId: string;
   tag: string;
+  functionalDiagram?: {
+    functionalDiagramType: string;
+    functionalDiagramName: string;
+    functionalDiagramPath: string;
+  };
   mountDate: string;
   mountDocument: string;
   connectDate: string;
@@ -264,16 +271,18 @@ export interface GeneralInformationView {
   unitId: string;
   subUnit: string;
   subUnitId: string;
+  facility: FacilityView;
   installationLocation: string;
-  questionare: string;
-  equipmentType: string;
+  questionare?: {
+    questionareType: string;
+    questionareName: string;
+    questionarePath: string;
+  };
+
   systemType: string[];
   tag: string;
   controlledParameter: string;
-  country: string;
-  vendor: string;
   facilityId: string | number | null;
-  facilityTitle: string;
   facilityModification: string;
   factoryNumber: string;
   year: string;
@@ -294,7 +303,7 @@ export interface GeneralInformationCreateOrUpdateAttrs {
   tag: string;
   controlledParameter: string;
   facilityId: string | number | null;
-  facility: FacilityCreateOrUpdateAtts | null;
+  facility?: FacilityCreateOrUpdateAtts | null;
   facilityModification: string | null;
   factoryNumber: string;
   year: string;
@@ -310,9 +319,9 @@ export interface FacilityView {
   vendor: string;
   title: string;
   equipmentType: string;
-  measurementArea: string | null;
-  meansurementType: string | null;
-  meansureGroup: string | null;
+  measurementArea?: string | null;
+  meansurementType?: string | null;
+  meansureGroup?: string | null;
   modifications: string[];
 }
 

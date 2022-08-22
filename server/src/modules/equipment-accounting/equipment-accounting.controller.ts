@@ -6,35 +6,66 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  UseInterceptors,
+  UploadedFile,
+  Put,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
   constructor(private readonly service: EquipmentAccountingService) {}
 
-  @Post()
-  create(@Body() dto: any) {
-    return this.service.create(dto);
+  // @Post("/add/")
+  // @UseInterceptors(FileInterceptor("file"))
+  // create(
+  //   @Body() dto: any,
+  //   @Query() query: { target: string },
+  //   @UploadedFile() file?: any
+  // ) {
+  //   const { target } = query;
+  //   return this.service.createOne(target, dto, file);
+  // }
+
+  @Get("/facilities")
+  getFacilitiesList() {
+    return this.service.getFacilitiesList();
   }
 
-  @Get()
-  findAll() {
-    return this.service.findAll();
-  }
+  // @Get("/find")
+  // findAll(@Query() query: { target: string }) {
+  //   const { target } = query;
+  //   return this.service.findAll(target);
+  // }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.service.findOne(+id);
-  }
+  // @Get("/find/:id")
+  // findOne(@Param("id") id: string, @Query() query: { target: string }) {
+  //   const { target } = query;
+  //   return this.service.findOne(target, id);
+  // }
 
-  @Patch(":id")
-  update(@Param("id") id: string, @Body() dto: any) {
-    return this.service.update(+id, dto);
-  }
+  // @Get("/tree")
+  // getPositionTree() {
+  //   return this.service.getPositionTree();
+  // }
 
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.service.remove(+id);
-  }
+  // @Put("/edit/:id")
+  // @UseInterceptors(FileInterceptor("file"))
+  // update(
+  //   @Param("id") id: string,
+  //   @Query() query: { target: string },
+  //   @Body() dto: UpdatePositionTreeDto,
+  //   @UploadedFile() file?: any
+  // ) {
+  //   const { target } = query;
+  //   return this.service.update(id, target, dto, file);
+  // }
+
+  // @Delete("remove/:id")
+  // remove(@Param("id") id: string, @Query() query: { target: string }) {
+  //   const { target } = query;
+  //   return this.service.remove(id, target);
+  // }
 }

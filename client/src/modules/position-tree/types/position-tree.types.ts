@@ -4,16 +4,14 @@ export interface EssenceState {
   error: string | null;
   loading: boolean;
   menuItems: PositionTreeItem[];
-  currentItem: any | null;
+  currentItem: PositionTreeItem | null;
 }
 
 export enum ActionTypes {
   GET_MENU_ITEMS = "GET_MENU_ITEMS",
   GET_MENU_ITEMS_SUCCESS = "GET_MENU_ITEMS_SUCCESS",
   GET_MENU_ITEMS_ERROR = "GET_MENU_ITEMS_ERROR",
-  GET_CURRENT_ITEM = "GET_CURRENT_ITEM",
-  GET_CURRENT_ITEM_SUCCESS = "GET_CURRENT_ITEM_SUCCESS",
-  GET_CURRENT_ITEM_ERROR = "GET_CURRENT_ITEM_ERROR",
+  SET_CURRENT_ITEM = "SET_CURRENT_ITEM",
 }
 
 interface GetMenuItemsAction {
@@ -30,24 +28,13 @@ interface GetMenuItemsErrorAction {
   payload: string;
 }
 
-interface GetCurrentItemAction {
-  type: ActionTypes.GET_CURRENT_ITEM;
-}
-
-interface GetCurrentItemSuccessAction {
-  type: ActionTypes.GET_CURRENT_ITEM_SUCCESS;
-  payload: any;
-}
-
-interface GetCurrentItemErrorAction {
-  type: ActionTypes.GET_CURRENT_ITEM_ERROR;
-  payload: string;
+interface SetCurrentItemAction {
+  type: ActionTypes.SET_CURRENT_ITEM;
+  payload: PositionTreeItem;
 }
 
 export type EssenceAction =
   | GetMenuItemsAction
   | GetMenuItemsSuccessAction
   | GetMenuItemsErrorAction
-  | GetCurrentItemAction
-  | GetCurrentItemSuccessAction
-  | GetCurrentItemErrorAction;
+  | SetCurrentItemAction;

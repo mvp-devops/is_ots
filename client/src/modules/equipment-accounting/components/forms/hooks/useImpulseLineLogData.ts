@@ -18,7 +18,7 @@ export const useImpulseLineLogData = (
     () =>
       row &&
       setEditRow({
-        id: Math.random(),
+        id: row.id,
         sloeId: row.sloeId,
         numberOfTrace: row.numberOfTrace,
         impulseLineType: row.impulseLineType,
@@ -35,6 +35,7 @@ export const useImpulseLineLogData = (
     data &&
       setData &&
       setData([...data, { ...ImpulseLineLogItem, id: Math.random() }]);
+    console.log(data);
   };
 
   const removeItem = (index: string | number | null) => {

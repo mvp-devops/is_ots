@@ -6,3 +6,10 @@ export type MenuItem = {
   key: React.Key;
   children?: MenuItem[];
 };
+
+export enum FormActions {
+  EDIT = "UPDATE",
+  ADD = "POST",
+  REMOVE = "DELETE",
+  VIEW = "GET",
+}

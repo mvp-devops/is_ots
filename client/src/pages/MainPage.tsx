@@ -63,7 +63,7 @@ const MainPage: React.FC = () => {
       // setTarget(item.target);
       // setChildTarget(item.childrenTarget);
       // setCurrentId(id);
-      setCurrentItem(target, id);
+      setCurrentItem(item);
       // setStatistic(target, id);
     } else {
       // setKeys([]);
@@ -74,6 +74,7 @@ const MainPage: React.FC = () => {
   };
 
   const onSelect = (selectedKeys: any, e: any) => {
+    console.log(selectedKeys, e.node);
     if (selectedKeys.length > 0) {
       onMenuItemSelected(e.node);
     } else {
@@ -132,7 +133,7 @@ const MainPage: React.FC = () => {
           <Tree
             showLine={true}
             showIcon={false}
-            // onSelect={onSelect}
+            onSelect={onSelect}
             treeData={menuItems}
             className="text-secondary mx-2"
           />

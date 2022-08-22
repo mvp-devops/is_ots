@@ -24,6 +24,10 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   fileType: string;
 }
 
+export interface DesignDocumentView extends DesignDocumentCreateOrUpdateAttrs {
+  comments: any[];
+}
+
 export interface NormativeCreateOrUpdateAttrs {
   code: string;
   title: string;

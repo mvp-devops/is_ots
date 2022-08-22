@@ -122,7 +122,7 @@ export const setGeneralInformationFilters = (
     }
     case "equipment-type": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].equipmentType;
+        const item = items[i].facility.equipmentType;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
         }
@@ -131,7 +131,7 @@ export const setGeneralInformationFilters = (
     }
     case "country": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].country;
+        const item = items[i].facility.country;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
         }
@@ -140,7 +140,7 @@ export const setGeneralInformationFilters = (
     }
     case "vendor": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].vendor;
+        const item = items[i].facility.vendor;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
         }
@@ -149,7 +149,7 @@ export const setGeneralInformationFilters = (
     }
     case "facility-title": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].facilityTitle;
+        const item = items[i].facility.title;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
         }
@@ -533,13 +533,10 @@ export const getAllGeneralInformation = (
       subUnitId,
       installationLocation,
       questionare,
-      equipmentType,
+      facility,
       systemType,
       tag,
       controlledParameter,
-      country,
-      vendor,
-      facilityTitle,
       facilityModification,
       factoryNumber,
       year,
@@ -558,14 +555,13 @@ export const getAllGeneralInformation = (
       subUnitId,
       installationLocation,
       questionare,
-      equipmentType,
+      facility,
       systemType,
       tag,
       controlledParameter,
-      country,
-      vendor,
+
       facilityId,
-      facilityTitle,
+
       facilityModification,
       factoryNumber,
       year,

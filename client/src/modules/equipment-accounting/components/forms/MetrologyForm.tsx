@@ -52,6 +52,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
         wrapperCol={{ span: 18 }}
         layout="horizontal"
         className="m-1 p-1 border"
+        style={{ width: 1000 }}
       >
         <Item
           label={<Text type="secondary">Сфера гос. регулирования ЕИ</Text>}
@@ -438,22 +439,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
   const editItem = editRow && formItems(editRow);
   const newRow = data && formItems(metrologyItem);
 
-  return row ? (
-    <>{editItem}</>
-  ) : (
-    <>
-      {newRow}
-      {data && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
-    </>
-  );
+  return row ? <>{editItem}</> : <>{newRow}</>;
 };
 
 export default MetrologyForm;

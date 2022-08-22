@@ -18,9 +18,9 @@ import { setMonitoringFilters } from "./table.setting";
 import { MonitoringView } from "../../../../../../server/common/types/equipment-accounting";
 import { formatDate } from "../../../../utils/main.utils";
 import { ModalContainer, MonitoringForm } from "../forms";
-import { FormActions } from "../forms/form.settings";
 import DeleteDialog from "../forms/DeleteDialog";
 import { Link } from "react-router-dom";
+import { FormActions } from "../../../main";
 
 const { Text } = Typography;
 

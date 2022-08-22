@@ -418,23 +418,51 @@ export class PositionTreeService {
       case "unit": {
         item = await this.unitRepository.findOne({
           where: { id },
+          attributes: [
+            "projectId",
+            "equipmentId",
+            "supplierId",
+
+            "id",
+            "title",
+            "code",
+            "position",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: SubUnitEntity,
+              attributes: [
+                "unitId",
+                "equipmentId",
+                "supplierId",
+
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
             },
             {
               model: EquipmentEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: CounterpartyEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: DesignDocumentEntity,
               as: "unitDocuments",
+              attributes: ["id", "title", "code"],
             },
             {
               model: DesignDocumentEntity,
-              as: "uqst",
+              as: "unitQuestionare",
+              attributes: ["id", "title", "code"],
             },
           ],
         });
@@ -446,17 +474,21 @@ export class PositionTreeService {
           include: [
             {
               model: EquipmentEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: CounterpartyEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: DesignDocumentEntity,
               as: "subUnitDocuments",
+              attributes: ["id", "title", "code"],
             },
             {
               model: DesignDocumentEntity,
-              as: "suqst",
+              as: "subUnitQuestionare",
+              attributes: ["id", "title", "code"],
             },
           ],
         });
@@ -751,7 +783,7 @@ export class PositionTreeService {
         item = await this.unitRepository.findOne({ where: { id } });
         const parrent = await this.projectRepository.findOne({
           where: { id: item.projectId },
-          attributes: ["id", "code"],
+          attributes: ["id", "code", "description"],
           include: [
             {
               model: FieldEntity,
@@ -768,7 +800,7 @@ export class PositionTreeService {
         const newParrent = (<UpdateUnitDto>dto).projectId
           ? await this.projectRepository.findOne({
               where: { id: (<UpdateUnitDto>dto).projectId },
-              attributes: ["id", "code"],
+              attributes: ["id", "code", "description"],
               include: [
                 {
                   model: FieldEntity,
@@ -861,7 +893,7 @@ export class PositionTreeService {
                 target,
                 +id,
                 (<UpdateUnitDto>dto).position,
-                item.position
+                item.code
               )
             : "";
 
@@ -1020,7 +1052,7 @@ export class PositionTreeService {
                 target,
                 +id,
                 (<UpdateSubUnitDto>dto).position,
-                item.position
+                item.code
               )
             : "";
 
@@ -1033,8 +1065,8 @@ export class PositionTreeService {
             ? `${parrentFolderName}/${oldFolder}`
             : "";
 
-        await this.unitRepository.update(dto, { where: { id } });
-        item = await this.unitRepository.findOne({ where: { id } });
+        await this.subUnitRepository.update(dto, { where: { id } });
+        item = await this.subUnitRepository.findOne({ where: { id } });
         break;
       }
       default:

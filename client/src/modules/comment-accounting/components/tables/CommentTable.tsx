@@ -26,7 +26,7 @@ import {
 import ModalContainer from "../views/ModalContainer";
 import CommentForm from "../forms/CommentForm";
 import SolutionTable from "./SolutionTable";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { setCommentFilters } from "./table.settings";
 
 export interface CommentTableProps {
@@ -44,7 +44,6 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
 
   const navigate = useNavigate();
 
-  const goBack = () => navigate(-1);
   const openDocument = (baseUrl: string, documentPath: string) =>
     navigate(`${baseUrl}/${documentPath}`, { replace: true });
 

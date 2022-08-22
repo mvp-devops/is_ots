@@ -1,42 +1,46 @@
 import { Modal, Space, Typography } from "antd";
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
+import { FormActions } from "../../../main";
 
 const { Text } = Typography;
 
 interface ModalContainerProps {
+  target?: string;
   show: boolean;
   onCancel: () => void;
   action: string;
   child: ReactNode;
 }
 
-const EquipmentAccountingModalContainer: FC<ModalContainerProps> = ({
+const ModalContainer: FC<ModalContainerProps> = ({
   show,
   action,
   child,
   onCancel,
+  target,
 }) => {
   return (
     <Modal
+      style={{ border: "1px white" }}
       title={
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
-            СВОДНЫЙ ПЕРЕЧЕНЬ ОБОРУДОВАНИЯ
+            {action === FormActions.ADD
+              ? "Добавление записи"
+              : "Редактирование записи"}
           </Text>
         </Space>
       }
-      style={{ maxHeight: "920px", width: "1900px", border: "1px white" }}
-      bodyStyle={{ minHeight: "800px", maxWidth: "1800px" }}
-      width={1980}
+      width={600}
       closable
-      centered
-      visible={show}
       closeIcon={
         <Text className="text-white">
           <CloseOutlined />
         </Text>
       }
+      centered
+      visible={show}
       footer={[]}
       onCancel={onCancel}
     >
@@ -45,4 +49,4 @@ const EquipmentAccountingModalContainer: FC<ModalContainerProps> = ({
   );
 };
 
-export default EquipmentAccountingModalContainer;
+export default ModalContainer;

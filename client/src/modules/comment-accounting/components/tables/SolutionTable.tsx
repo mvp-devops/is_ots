@@ -6,7 +6,6 @@ import {
   DesignDocumentCommentView,
 } from "../../../../../../server/common/types/comments-accounting";
 import { setSolutionFilters } from "./table.settings";
-// import "./table.css";
 
 export interface SolutionTableProps {
   record: DesignDocumentCommentView;

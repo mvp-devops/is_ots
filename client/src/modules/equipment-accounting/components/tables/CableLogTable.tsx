@@ -18,7 +18,7 @@ import { CableLogView } from "../../../../../../server/common/types/equipment-ac
 import DeleteDialog from "../forms/DeleteDialog";
 import { CableLogForm, ModalContainer } from "../forms";
 import { Link } from "react-router-dom";
-import { FormActions } from "../forms/form.settings";
+import { FormActions } from "../../../main";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;

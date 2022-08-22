@@ -18,7 +18,7 @@ export const useSignalData = (
     () =>
       row &&
       setEditRow({
-        id: Math.random(),
+        id: row.id,
         sloeId: row.sloeId,
         signalType: row.signalType,
         signalProtocol: row.signalProtocol,

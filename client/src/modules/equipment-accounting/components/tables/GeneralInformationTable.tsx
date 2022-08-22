@@ -1,6 +1,5 @@
 import {
   Dropdown,
-  Layout,
   Menu,
   Space,
   Table,
@@ -16,16 +15,12 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
-import {
-  cableSum,
-  setCableLogFilters,
-  setGeneralInformationFilters,
-} from "./table.setting";
+import { setGeneralInformationFilters } from "./table.setting";
 import { GeneralInformationView } from "../../../../../../server/common/types/equipment-accounting";
-import { FormActions } from "../forms/form.settings";
 import DeleteDialog from "../forms/DeleteDialog";
 import { Link } from "react-router-dom";
 import { GeneralInformationForm, ModalContainer } from "../forms";
+import { FormActions } from "../../../main";
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
@@ -46,6 +41,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
   const [currentRow, setCurrentRow] = useState<
     GeneralInformationView | undefined
   >();
+
   const [actionType, setActionType] = useState("");
   const [formVisible, setFormVisible] = useState(false);
 
@@ -62,13 +58,17 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
               ?.toUpperCase()
               ?.includes(searchValue.toUpperCase()) ||
             item?.tag?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
-            item.equipmentType
+            item.facility.equipmentType
               ?.toUpperCase()
               ?.includes(searchValue.toUpperCase()) ||
             item?.systemType?.includes(searchValue.toUpperCase()) ||
-            item?.country?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
-            item?.vendor?.toUpperCase()?.includes(searchValue.toUpperCase()) ||
-            item?.facilityTitle
+            item?.facility.country
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.facility.vendor
+              ?.toUpperCase()
+              ?.includes(searchValue.toUpperCase()) ||
+            item?.facility.title
               ?.toUpperCase()
               ?.includes(searchValue.toUpperCase()) ||
             item?.facilityModification
@@ -100,15 +100,38 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
         {
           label: (
             <Space className="text-secondary">
-              <PlusOutlined
-                style={{ marginBottom: "6px", padding: 0 }}
-                className="text-success"
-              />
-              Тех. карты
+              <Link
+                to="../../../../GPN-A.PNG"
+                target="_blank"
+                style={{ textDecoration: "none" }}
+              >
+                <SearchOutlined
+                  style={{
+                    marginRight: "6px",
+                    marginBottom: "6px",
+                    padding: 0,
+                  }}
+                  className="text-primary"
+                />
+                <Text type="secondary">Опросный лист</Text>
+              </Link>
             </Space>
           ),
 
           key: "VIEW",
+        },
+        {
+          label: (
+            <Space className="text-secondary">
+              <PlusOutlined
+                style={{ marginBottom: "6px", padding: 0 }}
+                className="text-success"
+              />
+              Опросный лист
+            </Space>
+          ),
+
+          key: "VIEW-1",
           children: [
             {
               label: (
@@ -131,7 +154,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
                 </Space>
               ),
 
-              key: "VIEW-1",
+              key: "VIEW-1-1",
             },
             {
               label: (
@@ -150,7 +173,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
                 </Space>
               ),
 
-              key: "VIEW-2",
+              key: "VIEW-1-2",
             },
             {
               label: (
@@ -169,7 +192,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
                 </Space>
               ),
 
-              key: "VIEW-3",
+              key: "VIEW-1-3",
             },
           ],
         },
@@ -335,7 +358,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
 
     {
       title: "Тип",
-      dataIndex: "equipmentType",
+      dataIndex: "facility",
       key: "equipmentType",
       align: "center",
       width: 80,
@@ -345,10 +368,14 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
           : false,
       filters: setGeneralInformationFilters("equipment-type", dataSource),
       onFilter: (value: any, record) =>
-        record.equipmentType
-          ? record.equipmentType.toUpperCase().includes(value.toUpperCase())
+        record.facility.equipmentType
+          ? record.facility.equipmentType
+              .toUpperCase()
+              .includes(value.toUpperCase())
           : false,
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (facility) => (
+        <Text type="secondary">{facility.equipmentType}</Text>
+      ),
     },
     {
       title: "Система",
@@ -423,7 +450,7 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
       children: [
         {
           title: "Страна",
-          dataIndex: "country",
+          dataIndex: "facility",
           key: "country",
           align: "center",
           filterSearch:
@@ -432,14 +459,18 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
               : false,
           filters: setGeneralInformationFilters("country", dataSource),
           onFilter: (value: any, record) =>
-            record.country
-              ? record.country.toUpperCase().includes(value.toUpperCase())
+            record.facility.country
+              ? record.facility.country
+                  .toUpperCase()
+                  .includes(value.toUpperCase())
               : false,
-          render: (value) => <Text type="secondary">{value}</Text>,
+          render: (facility) => (
+            <Text type="secondary">{facility.country}</Text>
+          ),
         },
         {
           title: "Произв.",
-          dataIndex: "vendor",
+          dataIndex: "facility",
           key: "vendor",
           align: "center",
           filterSearch:
@@ -448,14 +479,16 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
               : false,
           filters: setGeneralInformationFilters("vendor", dataSource),
           onFilter: (value: any, record) =>
-            record.vendor
-              ? record.vendor.toUpperCase().includes(value.toUpperCase())
+            record.facility.vendor
+              ? record.facility.vendor
+                  .toUpperCase()
+                  .includes(value.toUpperCase())
               : false,
-          render: (value) => <Text type="secondary">{value}</Text>,
+          render: (facility) => <Text type="secondary">{facility.vendor}</Text>,
         },
         {
           title: "Наим-е",
-          dataIndex: "facilityTitle",
+          dataIndex: "facility",
           key: "facilityTitle",
           align: "center",
           filterSearch:
@@ -465,10 +498,12 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
               : false,
           filters: setGeneralInformationFilters("facility-title", dataSource),
           onFilter: (value: any, record) =>
-            record.facilityTitle
-              ? record.facilityTitle.toUpperCase().includes(value.toUpperCase())
+            record.facility.title
+              ? record.facility.title
+                  .toUpperCase()
+                  .includes(value.toUpperCase())
               : false,
-          render: (value) => <Text type="secondary">{value}</Text>,
+          render: (facility) => <Text type="secondary">{facility.title}</Text>,
         },
         {
           title: "Модиф.",
@@ -567,6 +602,16 @@ const GeneralInformationTable: FC<GeneralInformationTableProps> = ({
         }}
         columns={columns}
         rowKey={(record) => Math.random()}
+        summary={(data) => (
+          <Row style={{ margin: 0, padding: 0 }}>
+            <Cell index={0} colSpan={18} align="right">
+              <Text strong>Количество:</Text>
+            </Cell>
+            <Cell index={1} colSpan={2} align="center">
+              <Text strong>{data.length}</Text>
+            </Cell>
+          </Row>
+        )}
       />
       {formVisible && (
         <ModalContainer

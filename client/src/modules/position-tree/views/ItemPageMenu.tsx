@@ -16,7 +16,7 @@ import {
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
 import React, { FC, useEffect, useState } from "react";
-import { MenuItem } from "../../main";
+import { FormActions, MenuItem } from "../../main";
 
 const { Sider } = Layout;
 
@@ -26,10 +26,11 @@ export interface ItemPageMenuProps {
   role: string;
   target: string;
   childTarget: string;
-  showSLOE: boolean;
   setShowSLOE: () => void;
-  showCCLS: boolean;
   setShowCCLS: () => void;
+  formVisible: boolean;
+  setFormVisible: (flag: boolean) => void;
+  setActionType: (action: string) => void;
 }
 
 export enum Roles {
@@ -74,10 +75,11 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
   role,
   target,
   childTarget,
-  showSLOE,
   setShowSLOE,
-  showCCLS,
   setShowCCLS,
+  setFormVisible,
+  formVisible,
+  setActionType,
 }) => {
   const items: MenuItem[] = [
     {
@@ -144,7 +146,12 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
         },
         {
           label: (
-            <Space>
+            <Space
+              onClick={() => {
+                setActionType(FormActions.ADD);
+                setFormVisible(!formVisible);
+              }}
+            >
               <PlusOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -152,7 +159,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Добавить
             </Space>
           ),
-          key: "2-2",
+          key: "add-child",
         },
         {
           label: (

@@ -18,9 +18,9 @@ export const useCableLogData = (
     () =>
       row &&
       setEditRow({
-        id: Math.random(),
+        id: row.id,
         sloeId: row.sloeId,
-        wiringDiagram: null,
+        wiringDiagram: row.wiringDiagramTitle,
         numberOfTrace: row.numberOfTrace,
         cableMark: row.cableMark,
         cableSection: row.cableSection,

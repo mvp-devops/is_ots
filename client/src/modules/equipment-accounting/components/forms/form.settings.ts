@@ -5,16 +5,10 @@ import {
   MetrologyCreateOrUpdateAttrs,
   MonitoringCreateOrUpdateAttrs,
   SignalCreateOrUpdateAttrs,
+  SummaryListOfEquipmentFormData,
 } from "../../../../../../server/common/types/equipment-accounting";
 
 export const initData = () => {};
-
-export enum FormActions {
-  EDIT = "UPDATE",
-  ADD = "POST",
-  REMOVE = "DELETE",
-  VIEW = "GET",
-}
 
 export const facilityItem = {
   id: null,
@@ -76,7 +70,7 @@ export const cableLogItem: CableLogCreateOrUpdateAttrs = {
 };
 
 export const ImpulseLineLogItem: ImpulseLineLogCreateOrUpdateAttrs = {
-  id: Math.random(),
+  id: null,
   sloeId: "",
   numberOfTrace: "",
   impulseLineType: "",
@@ -88,7 +82,7 @@ export const ImpulseLineLogItem: ImpulseLineLogCreateOrUpdateAttrs = {
 };
 
 export const signalItem: SignalCreateOrUpdateAttrs = {
-  id: Math.random(),
+  id: null,
   sloeId: "",
   signalType: "",
   signalProtocol: "",
@@ -117,7 +111,7 @@ export const monitoringItem: MonitoringCreateOrUpdateAttrs = {
 };
 
 export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
-  id: Math.random(),
+  id: null,
   sloeId: null,
   sgroei: "",
   grsi: "",
@@ -137,4 +131,13 @@ export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
   arshin: "",
   verificationProcedure: null,
   typeApprovalCertificate: null,
+};
+
+export const summaryListOfEquipmentFormData: SummaryListOfEquipmentFormData = {
+  generalInformation: generalInformationItem,
+  metrology: metrologyItem,
+  monitoring: monitoringItem,
+  cableLog: [],
+  impulseLineLog: [],
+  signals: [],
 };

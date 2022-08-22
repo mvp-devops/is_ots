@@ -1,5 +1,5 @@
 import { Button, Divider, Form, Input, Space, Typography } from "antd";
-import { ChangeEvent, FC, ReactNode, useEffect, useState } from "react";
+import { ChangeEvent, FC, ReactNode } from "react";
 import {
   CableLogCreateOrUpdateAttrs,
   CableLogView,
@@ -29,6 +29,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       wrapperCol={{ span: 16 }}
       layout="horizontal"
       className="m-1 p-1 border"
+      style={{ maxWidth: 1200 }}
     >
       <Item
         label={<Text type="secondary">Номер кабельной линии</Text>}
@@ -202,19 +203,10 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
             className="d-inline-block justify-content-between"
             style={{ width: 550 }}
           >
-            <Divider />
+            <Divider className="p-0 m-1" />
             {formItems(item)}
           </div>
         ))}
-      {data && data.length > 0 && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
     </div>
   );
 };

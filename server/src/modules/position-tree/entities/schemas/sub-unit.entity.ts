@@ -45,7 +45,7 @@ export class SubUnitEntity extends Model<
     allowNull: false,
     defaultValue: 1,
   })
-  equipmnetId: number;
+  equipmentId: number;
 
   @ApiProperty({
     example: 1,

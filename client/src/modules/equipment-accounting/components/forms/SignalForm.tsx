@@ -29,6 +29,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
       wrapperCol={{ span: 16 }}
       layout="horizontal"
       className="m-1 p-1 border"
+      style={{ maxWidth: 1200 }}
     >
       <Item label={<Text type="secondary">Тип сигнала</Text>} className="m-0">
         <Input
@@ -36,8 +37,10 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           placeholder="Тип сигнала"
           className="text-secondary"
           value={item.signalType}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("numberOfTrace", e.target.value, item.id)
+          onChange={
+            (e: ChangeEvent<HTMLInputElement>) =>
+              onHandlerChange("signalType", e.target.value, item.id)
+            // console.log(e.target.value)
           }
         />
       </Item>
@@ -48,7 +51,18 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.signalProtocol}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("numberOfTrace", e.target.value, item.id)
+            onHandlerChange("signalProtocol", e.target.value, item.id)
+          }
+        />
+      </Item>
+      <Item label={<Text type="secondary">TAG сигнала</Text>} className="m-0">
+        <Input
+          size="small"
+          placeholder="TAG сигнала"
+          className="text-secondary"
+          value={item.signalTag}
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            onHandlerChange("signalTag", e.target.value, item.id)
           }
         />
       </Item>
@@ -60,7 +74,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.h}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("fromPlace", e.target.value, item.id)
+            onHandlerChange("h", e.target.value, item.id)
           }
         />
       </Item>
@@ -75,7 +89,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.l}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableSection", e.target.value, item.id)
+            onHandlerChange("l", e.target.value, item.id)
           }
         />
       </Item>
@@ -91,7 +105,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.ll}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("toPlace", e.target.value, item.id)
+            onHandlerChange("ll", e.target.value, item.id)
           }
         />
       </Item>
@@ -103,7 +117,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.hh}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableLenght", e.target.value, item.id)
+            onHandlerChange("hh", e.target.value, item.id)
           }
         />
       </Item>
@@ -117,7 +131,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.emergenceProtocol}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("description", e.target.value, item.id)
+            onHandlerChange("emergenceProtocol", e.target.value, item.id)
           }
         />
       </Item>
@@ -128,10 +142,6 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           <Space className="d-flex justify-content-end mb-2">
             <Button type="primary" className="me-1">
               Обновить
-            </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
             </Button>
           </Space>
         </>
@@ -155,7 +165,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
     <>{editItem}</>
   ) : (
     <div className="container pt-0">
-      <Space className="d-flex justify-content-center ">
+      <Space className="d-flex justify-content-center">
         <Button
           type="ghost"
           title="Добавить новую строку"
@@ -171,19 +181,10 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
             className="d-inline-block justify-content-between"
             style={{ width: 550 }}
           >
-            <Divider />
+            <Divider className="p-0 m-1" />
             {formItems(item)}
           </div>
         ))}
-      {data && data.length > 0 && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
     </div>
   );
 };

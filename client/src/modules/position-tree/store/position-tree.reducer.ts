@@ -33,21 +33,10 @@ export const positionTreeReducer = (
         loading: false,
         error: action.payload,
       };
-    case ActionTypes.GET_CURRENT_ITEM:
-      return state;
-
-    case ActionTypes.GET_CURRENT_ITEM_SUCCESS:
+    case ActionTypes.SET_CURRENT_ITEM:
       return {
         ...state,
-        loading: false,
-        menuItems: action.payload,
-      };
-
-    case ActionTypes.GET_CURRENT_ITEM_ERROR:
-      return {
-        ...state,
-        loading: false,
-        error: action.payload,
+        currentItem: action.payload,
       };
 
     default:

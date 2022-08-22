@@ -5,7 +5,6 @@ import {
   Form,
   Input,
   Space,
-  Switch,
   Typography,
   Upload,
 } from "antd";
@@ -33,103 +32,182 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
   const {
     changeDate,
     changeData,
-    mount,
-    onChange,
+
     editRow,
-    mountDocument,
-    connect,
-    connectDocument,
-    test,
-    testDocument,
-    awp,
-    awpDocument,
-    commision,
-    commisionDocument,
   } = useMonitoringData(row, data, setData);
 
-  const setItems = (
-    id: number,
-    flag1: boolean,
-    target1: string,
-    title1: string,
-    flag2: boolean,
-    target2: string,
-    title2: string
-  ): ReactNode => (
-    <Form layout="inline" className="m-1 p-1 border justify-content-between">
-      <Item label={<Text type="secondary">{title1}</Text>}>
-        <Switch
-          onChange={(flag: boolean) => onChange(flag, target1)}
-          checked={flag1}
+  const formItems = (item: MonitoringCreateOrUpdateAttrs): ReactNode => (
+    <Form
+      layout="horizontal"
+      labelCol={{ span: 10 }}
+      wrapperCol={{ span: 14 }}
+      className="m-1 p-1 border"
+      style={{ width: 800 }}
+    >
+      <Item
+        label={<Text type="secondary">Дата монтажа</Text>}
+        className="m-2 me-2"
+      >
+        <DatePicker
+          size="small"
+          style={{ width: 145 }}
+          locale={locale}
+          placeholder=""
+          onChange={(date, dateString) => changeDate("mountDate", dateString)}
         />
       </Item>
-      {flag1 && (
-        <>
-          <Item label={<Text type="secondary">Дата</Text>} className="m-0 me-2">
-            <DatePicker
-              locale={locale}
-              placeholder=""
-              onChange={(date, dateString) => changeDate(target1, dateString)}
-            />
-          </Item>
-          <Item
-            label={<Text type="secondary">{title2}</Text>}
-            className="m-0 me-2"
-          >
-            <Switch
-              onChange={(flag: boolean) => onChange(flag, target2)}
-              checked={flag2}
-            />
-          </Item>
-          {flag2 && (
-            <Item className="m-0">
-              <Upload
-                className="mt-5"
-                onRemove={(file) => {
-                  changeData(target2, null);
-                }}
-                beforeUpload={(file) => {
-                  changeData(target2, file);
 
-                  return false;
-                }}
-              >
-                <Button icon={<UploadOutlined />}>
-                  <Text type="secondary">Выбрать файл</Text>
-                </Button>
-              </Upload>
-            </Item>
-          )}
-        </>
-      )}
-    </Form>
-  );
+      <Item
+        className="m-2 me-2"
+        label={
+          <Text type="secondary">Ведомость смонтированного оборудования</Text>
+        }
+      >
+        <Upload
+          onRemove={(file) => {
+            changeData("mountDocument", null);
+          }}
+          beforeUpload={(file) => {
+            changeData("mountDocument", file);
 
-  const formItems = (item: MonitoringCreateOrUpdateAttrs): ReactNode => (
-    <>
-      <Item className="mb-1">
-        {setItems(
-          1,
-          mount,
-          "mountDate",
-          "Смонтировано",
-          mountDocument,
-          "mountDocument",
-          "Ведомость смонтированного оборудования"
-        )}
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>
+            <Text type="secondary">Выбрать файл</Text>
+          </Button>
+        </Upload>
       </Item>
-      <Item className="mb-1">
-        {setItems(
-          2,
-          connect,
-          "connectDate",
-          "Подключено",
-          connectDocument,
-          "connectDocument",
-          "Акт о подключении"
-        )}
+      <Item
+        label={<Text type="secondary">Дата подключения питания</Text>}
+        className="m-2 me-2"
+      >
+        <DatePicker
+          size="small"
+          style={{ width: 145 }}
+          locale={locale}
+          placeholder=""
+          onChange={(date, dateString) => changeDate("connectDate", dateString)}
+        />
       </Item>
-      <Item className="mb-1">
+
+      <Item
+        className="m-2 me-2"
+        label={<Text type="secondary">Акт о подключении</Text>}
+      >
+        <Upload
+          onRemove={(file) => {
+            changeData("connectDocument", null);
+          }}
+          beforeUpload={(file) => {
+            changeData("connectDocument", file);
+
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>
+            <Text type="secondary">Выбрать файл</Text>
+          </Button>
+        </Upload>
+      </Item>
+      <Item
+        label={<Text type="secondary">Дата проведения ИИ</Text>}
+        className="m-2 me-2"
+      >
+        <DatePicker
+          size="small"
+          style={{ width: 145 }}
+          locale={locale}
+          placeholder=""
+          onChange={(date, dateString) => changeDate("testDate", dateString)}
+        />
+      </Item>
+      <Item
+        className="m-2 me-2"
+        label={<Text type="secondary">Протокол ИИ</Text>}
+      >
+        <Upload
+          onRemove={(file) => {
+            changeData("testDocument", null);
+          }}
+          beforeUpload={(file) => {
+            changeData("testDocument", file);
+
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>
+            <Text type="secondary">Выбрать файл</Text>
+          </Button>
+        </Upload>
+      </Item>
+      <Item
+        label={<Text type="secondary">Дата проверки сигналов</Text>}
+        className="m-2 me-2"
+      >
+        <DatePicker
+          size="small"
+          style={{ width: 145 }}
+          locale={locale}
+          placeholder=""
+          onChange={(date, dateString) => changeDate("awpDate", dateString)}
+        />
+      </Item>
+      <Item
+        className="m-2 me-2"
+        label={<Text type="secondary">Протокол проверки сигналов</Text>}
+      >
+        <Upload
+          onRemove={(file) => {
+            changeData("awpDocument", null);
+          }}
+          beforeUpload={(file) => {
+            changeData("awpDocument", file);
+
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>
+            <Text type="secondary">Выбрать файл</Text>
+          </Button>
+        </Upload>
+      </Item>
+      <Item
+        label={<Text type="secondary">Дата ввода в эксплуатацию</Text>}
+        className="m-2 me-2"
+      >
+        <DatePicker
+          size="small"
+          style={{ width: 145 }}
+          locale={locale}
+          placeholder=""
+          onChange={(date, dateString) =>
+            changeDate("commisionDate", dateString)
+          }
+        />
+      </Item>
+      <Item
+        className="m-2 me-2"
+        label={<Text type="secondary">Акт ввода в эксплуатацию</Text>}
+      >
+        <Upload
+          onRemove={(file) => {
+            changeData("commisionDocument", null);
+          }}
+          beforeUpload={(file) => {
+            changeData("commisionDocument", file);
+
+            return false;
+          }}
+        >
+          <Button icon={<UploadOutlined />}>
+            <Text type="secondary">Выбрать файл</Text>
+          </Button>
+        </Upload>
+      </Item>
+
+      {/* <>
+      <>
         {setItems(
           3,
           test,
@@ -139,8 +217,8 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
           "testDocument",
           "Протокол ИИ"
         )}
-      </Item>
-      <Item className="mb-1">
+      </>
+      <>
         {setItems(
           4,
           awp,
@@ -150,8 +228,8 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
           "awpDocument",
           "Протокол проверки сигналов"
         )}
-      </Item>
-      <Item className="mb-1">
+      </>
+      <>
         {setItems(
           5,
           commision,
@@ -161,13 +239,12 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
           "commisionDocument",
           "Акт ввода в эксплуатацию"
         )}
-      </Item>
+      </> */}
       <Item
         label={<Text type="secondary">Примечание</Text>}
         className="m-0 mx-2"
       >
         <Input
-          style={{ minWidth: 420 }}
           placeholder="Примечание"
           className="text-secondary"
           value={item.description}
@@ -184,35 +261,16 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
             <Button type="primary" className="me-1">
               Обновить
             </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
-            </Button>
           </Space>
         </>
       )}
-    </>
+    </Form>
   );
 
   const editItem = editRow && formItems(editRow);
   const newRow = data && formItems(monitoringItem);
 
-  return row ? (
-    <>{editItem}</>
-  ) : (
-    <>
-      {newRow}
-      {data && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
-    </>
-  );
+  return row ? <>{editItem}</> : <>{newRow}</>;
 };
 
 export default MonitoringForm;

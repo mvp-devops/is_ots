@@ -13,7 +13,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { FC, useEffect, useState } from "react";
-import { cableSum, setMetrologyFilters } from "./table.setting";
+import { setMetrologyFilters } from "./table.setting";
 import { MetrologyView } from "../../../../../../server/common/types/equipment-accounting";
 import {
   formatDate,
@@ -22,9 +22,8 @@ import {
 } from "../../../../utils/main.utils";
 import { MetrologyForm, ModalContainer } from "../forms";
 import DeleteDialog from "../forms/DeleteDialog";
-import { FormActions } from "../forms/form.settings";
 import { Link } from "react-router-dom";
-const { Row, Cell } = Table.Summary;
+import { FormActions } from "../../../main";
 const { Text } = Typography;
 
 interface TableProps {

@@ -6,6 +6,14 @@ export interface RegulatoryReferenceInformationCreationAttrs {
   description: string | null;
 }
 
+export interface NSIView {
+  id: string | number;
+  title: string;
+  code: string;
+  description: string;
+  logo?: string | null;
+}
+
 export interface DesignOrCounterpartyCreationAttrs
   extends RegulatoryReferenceInformationCreationAttrs {
   file: any;

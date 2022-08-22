@@ -16,12 +16,16 @@ import ItemPageBreadcrumbs from "./ItemPageBreadcrumbs";
 import ItemPageMenu from "./ItemPageMenu";
 import ListView from "./list/ListView";
 import { useActions, useTypedSelector } from "../../../hooks";
+import ModalContainer from "../components/forms/ModalContainer";
+import PositionTreeForm from "../components/forms/PositionTreeForm";
 
 const { Content } = Layout;
 
 const ItemPage: React.FC = () => {
   const [showSLOE, setShowSLOE] = useState(false);
   const [showCCLS, setShowCCLS] = useState(false);
+  const [formVisible, setFormVisible] = useState(false);
+  const [actionType, setActionType] = useState("");
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
 
@@ -40,17 +44,16 @@ const ItemPage: React.FC = () => {
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <Content style={{ padding: "0 5px", minHeight: "100%" }}>
             <ListView />
-
-            {/* <CollectiveCheckSheet data={commentAccountingRequestData} /> */}
           </Content>
           <ItemPageMenu
             target="project"
             childTarget=" unit"
             role="EXPERT"
-            showSLOE={showSLOE}
             setShowSLOE={() => setShowSLOE(!showSLOE)}
-            showCCLS={showCCLS}
             setShowCCLS={() => setShowCCLS(!showCCLS)}
+            setActionType={setActionType}
+            formVisible={formVisible}
+            setFormVisible={setFormVisible}
           />
         </Layout>
       </Content>
@@ -68,6 +71,14 @@ const ItemPage: React.FC = () => {
           onCancel={() => setShowCCLS(false)}
           action={"POST"}
           child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
+        />
+      )}
+      {formVisible && currentItem && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<PositionTreeForm target={currentItem.target} />}
         />
       )}
     </Layout>

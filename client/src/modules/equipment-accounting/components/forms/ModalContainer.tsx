@@ -1,6 +1,7 @@
 import { Modal, Space, Typography } from "antd";
 import { FC, ReactNode } from "react";
-import { FormActions } from "./form.settings";
+import { CloseOutlined } from "@ant-design/icons";
+import { FormActions } from "../../../main";
 
 const { Text } = Typography;
 
@@ -21,6 +22,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
 }) => {
   return (
     <Modal
+      style={{ border: "1px white" }}
       title={
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
@@ -34,17 +36,22 @@ const ModalContainer: FC<ModalContainerProps> = ({
         action === FormActions.ADD &&
         (target === "cable-log" ||
           target === "impulse-line-log" ||
-          target === "signal")
+          target === "signal" ||
+          target === "monitoring" ||
+          target === "summary-list-of-equipment")
           ? 1200
+          : target === "metrology" || target === "general-information"
+          ? 1000
           : target === "monitoring"
-          ? "auto"
-          : target === "metrology"
-          ? 1000
-          : target === "general-information"
-          ? 1000
+          ? 1200
           : 600
       }
       closable
+      closeIcon={
+        <Text className="text-white">
+          <CloseOutlined />
+        </Text>
+      }
       centered
       visible={show}
       footer={[]}

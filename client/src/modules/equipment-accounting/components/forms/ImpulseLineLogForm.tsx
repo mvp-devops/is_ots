@@ -4,7 +4,6 @@ import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,
 } from "../../../../../../server/common/types/equipment-accounting";
-import { ImpulseLineLogItem } from "./form.settings";
 import { useImpulseLineLogData } from "./hooks/useImpulseLineLogData";
 
 const { Item } = Form;
@@ -52,7 +51,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.impulseLineType}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableSection", e.target.value, item.id)
+            onHandlerChange("impulseLineType", e.target.value, item.id)
           }
         />
       </Item>
@@ -96,7 +95,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           className="text-secondary"
           value={item.impulseLineLenght}
           onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableLenght", e.target.value, item.id)
+            onHandlerChange("impulseLineLenght", e.target.value, item.id)
           }
         />
       </Item>
@@ -118,10 +117,6 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
             <Button type="primary" className="me-1">
               Обновить
             </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
-            </Button>
           </Space>
         </>
       ) : (
@@ -129,7 +124,10 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           <Button
             type="default"
             className="me-1"
-            onClick={() => removeItem(item.id)}
+            onClick={() => {
+              console.log(item.id);
+              removeItem(item.id);
+            }}
           >
             <Text type="danger">Удалить</Text>
           </Button>
@@ -160,19 +158,10 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
             className="d-inline-block justify-content-between"
             style={{ width: 550 }}
           >
-            <Divider />
-            {formItems(ImpulseLineLogItem)}
+            <Divider className="p-0 m-1" />
+            {formItems(item)}
           </div>
         ))}
-      {data && data.length > 0 && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
     </div>
   );
 };

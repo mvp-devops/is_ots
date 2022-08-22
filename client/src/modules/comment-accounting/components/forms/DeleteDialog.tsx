@@ -1,5 +1,5 @@
-import React, { FC } from "react";
-import { Button, Popconfirm } from "antd";
+import { FC } from "react";
+import { Popconfirm } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 
 interface DeleteDialogProps {

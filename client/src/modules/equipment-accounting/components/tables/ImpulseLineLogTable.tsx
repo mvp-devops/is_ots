@@ -17,9 +17,9 @@ import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,
 } from "../../../../../../server/common/types/equipment-accounting";
-import { FormActions } from "../forms/form.settings";
 import DeleteDialog from "../forms/DeleteDialog";
 import { ImpulseLineLogForm, ModalContainer } from "../forms";
+import { FormActions } from "../../../main";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;

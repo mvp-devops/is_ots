@@ -1,5 +1,6 @@
 import { Modal, Space, Typography } from "antd";
 import React, { FC, ReactNode } from "react";
+import { CloseOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -25,8 +26,11 @@ const CommentAccountingModalContainer: FC<ModalContainerProps> = ({
           </Text>
         </Space>
       }
-      // style={{ maxHeight: "920px", width: "1900px", border: "1px solid" }}
-      // bodyStyle={{ minHeight: "800px", maxWidth: "1800px" }}
+      closeIcon={
+        <Text className="text-white">
+          <CloseOutlined />
+        </Text>
+      }
       width={1980}
       closable
       centered

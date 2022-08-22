@@ -45,6 +45,8 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     setNewFacility,
   } = useGeneralInformationData(row, data, setData);
 
+  console.log(editRow);
+
   const formItems = (
     item: GeneralInformationCreateOrUpdateAttrs
   ): ReactNode => (
@@ -54,6 +56,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
         wrapperCol={{ span: 18 }}
         layout="horizontal"
         className="m-1 p-1 border"
+        style={{ width: 1000 }}
       >
         {row && (
           <>
@@ -125,7 +128,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           <Input
             size="small"
             className="text-secondary"
-            value={item.installationLocation}
+            value={row && item.installationLocation}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("installationLocation", e.target.value)
             }
@@ -136,7 +139,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             size="small"
             style={{ maxWidth: 150 }}
             className="text-secondary"
-            value={item.tag}
+            value={row && item.tag}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("tag", e.target.value)
             }
@@ -149,7 +152,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           <Input
             size="small"
             className="text-secondary"
-            value={item.controlledParameter}
+            value={row && item.controlledParameter}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("controlledParameter", e.target.value)
             }
@@ -164,6 +167,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             size="small"
             className="text-secondary"
             showSearch
+            defaultValue={row && item.facility?.title}
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option!.children as unknown as string).includes(input)
@@ -204,7 +208,8 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           >
             <Select
               size="small"
-              // style={{ width: 300 }}
+              className="text-secondary"
+              defaultValue={row && item.facilityModification}
               onChange={(value: string) =>
                 onHandlerChange("facilityModification", value)
               }
@@ -235,9 +240,8 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 </>
               )}
             >
-              {modifications.map((item) => (
-                <Option key={item}>{item}</Option>
-              ))}
+              {modifications.length > 0 &&
+                modifications.map((item) => <Option key={item}>{item}</Option>)}
             </Select>
           </Item>
         )}
@@ -246,7 +250,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             size="small"
             style={{ maxWidth: 150 }}
             className="text-secondary"
-            value={item.factoryNumber}
+            value={row && item.factoryNumber}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("factoryNumber", e.target.value)
             }
@@ -281,7 +285,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           <Input
             size="small"
             className="text-secondary"
-            value={item.specification}
+            value={row && item.specification}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("specification", e.target.value)
             }
@@ -294,7 +298,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             type={"number"}
             style={{ maxWidth: 150 }}
             className="text-secondary"
-            value={item.year}
+            value={row && item.year}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("year", e.target.value)
             }
@@ -309,7 +313,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             type={"number"}
             style={{ maxWidth: 150 }}
             className="text-secondary"
-            value={item.month}
+            value={row && item.month}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("month", e.target.value)
             }
@@ -324,7 +328,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             type={"number"}
             style={{ maxWidth: 150 }}
             className="text-secondary"
-            value={item.period}
+            value={row && item.period}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("period", e.target.value)
             }
@@ -334,7 +338,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           <Input
             size="small"
             className="text-secondary"
-            value={item.description}
+            value={row && item.description}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               onHandlerChange("description", e.target.value)
             }
@@ -362,22 +366,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
   const editItem = editRow && formItems(editRow);
   const newRow = data && formItems(generalInformationItem);
 
-  return row ? (
-    <>{editItem}</>
-  ) : (
-    <>
-      {newRow}
-      {data && (
-        <>
-          <Divider />
-          <Space className="d-flex justify-content-end ">
-            <Button type="primary">Отправить</Button>
-            <Button>Отмена</Button>
-          </Space>
-        </>
-      )}
-    </>
-  );
+  return row ? <>{editItem}</> : <>{newRow}</>;
 };
 
 export default GeneralInformationForm;
