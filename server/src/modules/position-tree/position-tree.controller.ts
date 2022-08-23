@@ -31,9 +31,9 @@ export class PositionTreeController {
   }
 
   @Get("/find")
-  findAll(@Query() query: { target: string }) {
-    const { target } = query;
-    return this.service.findAll(target);
+  findAll(@Query() query: { target: string; parrentId?: string }) {
+    const { target, parrentId } = query;
+    return this.service.findAll(target, parrentId);
   }
 
   @Get("/find/:id")

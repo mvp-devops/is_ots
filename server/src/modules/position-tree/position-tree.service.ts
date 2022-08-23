@@ -10,6 +10,7 @@ import {
   CounterpartyEntity,
   DesignEntity,
   EquipmentEntity,
+  UserEntity,
 } from "../regulatory-reference-information";
 import {
   CreatePositionTreeDto,
@@ -357,6 +358,8 @@ export class PositionTreeService {
       target === "subsidiary" &&
       (await this.fileService.createLogo(item.id.toString(), target, file));
 
+    // file && (target === "unit" || target === "sub-unit") &&  (await this.fileService.createLogo(item.id.toString(), target, file));
+
     return item;
   };
 
@@ -382,9 +385,20 @@ export class PositionTreeService {
           include: [
             {
               model: LogoEntity,
+              attributes: ["id", "fileType", "fileName", "filePath"],
             },
             {
               model: FieldEntity,
+              attributes: [
+                "subsidiaryId",
+                "id",
+                "title",
+                "code",
+                "description",
+              ],
+            },
+            {
+              model: UserEntity,
             },
           ],
         });
@@ -396,6 +410,15 @@ export class PositionTreeService {
           include: [
             {
               model: ProjectEntity,
+              attributes: [
+                "fieldId",
+                "designId",
+                "id",
+                "title",
+                "code",
+                "contract",
+                "description",
+              ],
             },
           ],
         });
@@ -404,12 +427,34 @@ export class PositionTreeService {
       case "project": {
         item = await this.projectRepository.findOne({
           where: { id },
+          attributes: [
+            "fieldId",
+            "designId",
+            "id",
+            "title",
+            "code",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: UnitEntity,
             },
             {
               model: DesignEntity,
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "projectDocuments",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
           ],
         });
@@ -457,12 +502,28 @@ export class PositionTreeService {
             {
               model: DesignDocumentEntity,
               as: "unitDocuments",
-              attributes: ["id", "title", "code"],
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
             {
               model: DesignDocumentEntity,
               as: "unitQuestionare",
-              attributes: ["id", "title", "code"],
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
           ],
         });
@@ -471,6 +532,18 @@ export class PositionTreeService {
       case "sub-unit": {
         item = await this.subUnitRepository.findOne({
           where: { id },
+          attributes: [
+            "unitId",
+            "equipmentId",
+            "supplierId",
+
+            "id",
+            "title",
+            "code",
+            "position",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: EquipmentEntity,
@@ -483,12 +556,28 @@ export class PositionTreeService {
             {
               model: DesignDocumentEntity,
               as: "subUnitDocuments",
-              attributes: ["id", "title", "code"],
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
             {
               model: DesignDocumentEntity,
               as: "subUnitQuestionare",
-              attributes: ["id", "title", "code"],
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
           ],
         });
@@ -502,7 +591,10 @@ export class PositionTreeService {
     return item;
   };
 
-  findAll = async (target: string): Promise<PositionTreeView[]> => {
+  findAll = async (
+    target: string,
+    parrentId?: string
+  ): Promise<PositionTreeView[]> => {
     let items: PositionTreeView[] = [];
 
     switch (target) {
@@ -511,9 +603,20 @@ export class PositionTreeService {
           include: [
             {
               model: LogoEntity,
+              attributes: ["id", "fileType", "fileName", "filePath"],
             },
             {
               model: FieldEntity,
+              attributes: [
+                "subsidiaryId",
+                "id",
+                "title",
+                "code",
+                "description",
+              ],
+            },
+            {
+              model: UserEntity,
             },
           ],
         });
@@ -521,9 +624,19 @@ export class PositionTreeService {
       }
       case "field": {
         items = await this.fieldRepository.findAll({
+          where: { subsidiaryId: parrentId },
           include: [
             {
               model: ProjectEntity,
+              attributes: [
+                "fieldId",
+                "designId",
+                "id",
+                "title",
+                "code",
+                "contract",
+                "description",
+              ],
             },
           ],
         });
@@ -531,6 +644,16 @@ export class PositionTreeService {
       }
       case "project": {
         items = await this.projectRepository.findAll({
+          where: { fieldId: parrentId },
+          attributes: [
+            "fieldId",
+            "designId",
+            "id",
+            "title",
+            "code",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: UnitEntity,
@@ -538,29 +661,87 @@ export class PositionTreeService {
             {
               model: DesignEntity,
             },
+            {
+              model: DesignDocumentEntity,
+              as: "projectDocuments",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
+            },
           ],
         });
         break;
       }
       case "unit": {
         items = await this.unitRepository.findAll({
+          where: { projectId: parrentId },
+          attributes: [
+            "projectId",
+            "equipmentId",
+            "supplierId",
+
+            "id",
+            "title",
+            "code",
+            "position",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: SubUnitEntity,
+              attributes: [
+                "unitId",
+                "equipmentId",
+                "supplierId",
+
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
             },
             {
               model: EquipmentEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: CounterpartyEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: DesignDocumentEntity,
               as: "unitDocuments",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
             {
               model: DesignDocumentEntity,
               as: "unitQuestionare",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
           ],
         });
@@ -568,20 +749,53 @@ export class PositionTreeService {
       }
       case "sub-unit": {
         items = await this.subUnitRepository.findAll({
+          where: { unitId: parrentId },
+          attributes: [
+            "unitId",
+            "equipmentId",
+            "supplierId",
+
+            "id",
+            "title",
+            "code",
+            "position",
+            "contract",
+            "description",
+          ],
           include: [
             {
               model: EquipmentEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: CounterpartyEntity,
+              attributes: ["id", "title", "code", "description"],
             },
             {
               model: DesignDocumentEntity,
               as: "subUnitDocuments",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
             {
               model: DesignDocumentEntity,
               as: "subUnitQuestionare",
+              attributes: [
+                "id",
+                "title",
+                "code",
+                "revision",
+                "fileType",
+                "fileName",
+                "filePath",
+              ],
             },
           ],
         });

@@ -13,6 +13,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { SubsidiaryCreateOrUpdateAttrs } from "../../../../../common/types/position-tree";
 import { FieldEntity } from "./field.entity";
 import { LogoEntity } from "../../../file-storage";
+import { UserEntity } from "../../../regulatory-reference-information";
 
 @Table({ tableName: "subsidiaries" })
 export class SubsidiaryEntity extends Model<
@@ -63,6 +64,6 @@ export class SubsidiaryEntity extends Model<
   @HasOne(() => LogoEntity)
   file: LogoEntity;
 
-  // @HasMany(() => UserEntity)
-  // users: UserEntity[];
+  @HasMany(() => UserEntity)
+  users: UserEntity[];
 }

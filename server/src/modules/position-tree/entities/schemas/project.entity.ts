@@ -14,6 +14,7 @@ import { ProjectCreateOrUpdateAttrs } from "../../../../../common/types/position
 import { FieldEntity } from "./field.entity";
 import { UnitEntity } from "./unit.entity";
 import { DesignEntity } from "../../../regulatory-reference-information";
+import { DesignDocumentEntity } from "../../../file-storage";
 
 @Table({ tableName: "projects" })
 export class ProjectEntity extends Model<
@@ -93,6 +94,9 @@ export class ProjectEntity extends Model<
 
   @HasMany(() => UnitEntity)
   units: UnitEntity[];
+
+  @HasMany(() => DesignDocumentEntity, { as: "projectDocuments" })
+  documents: DesignDocumentEntity[];
 
   // @HasMany(() => DesignDocumentEntity)
   // documents: DesignDocumentEntity[];
