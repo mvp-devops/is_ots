@@ -107,22 +107,29 @@ export const usePositionTreeData = (target: string, actionType: string) => {
   const [editRow, setEditRow] = useState<PositionTreeCreateOrUpdateAttrs>(
     initData(target)
   );
+  const [currentTarget, setCurrentTarget] = useState("");
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
 
   const {} = useActions();
 
+  useEffect(() => {}, [currentItem]);
+
   useEffect(() => {
-    actionType === FormActions.EDIT
-      ? currentItem &&
-        getOneItem(currentItem.target, currentItem.id).then(
-          (data) => data && setEditRow(initData(currentItem.target, data))
-        )
-      : currentItem &&
-        setEditRow(
-          initData(currentItem.childrenTarget, undefined, currentItem.id)
-        );
-  }, [currentItem]);
+    if (actionType === FormActions.EDIT && currentItem) {
+      getOneItem(currentItem.target, currentItem.id).then(
+        (data) => data && setEditRow(initData(currentItem.target, data))
+      );
+      setCurrentTarget(currentItem.target);
+    }
+
+    if (actionType === FormActions.ADD && currentItem) {
+      setEditRow(
+        initData(currentItem.childrenTarget, undefined, currentItem.id)
+      );
+      setCurrentTarget(currentItem.childrenTarget);
+    }
+  }, [currentItem, actionType]);
 
   const onHandlerChange = (
     key: string,
@@ -137,7 +144,7 @@ export const usePositionTreeData = (target: string, actionType: string) => {
 
   return {
     currentItem,
-
+    currentTarget,
     editRow,
     onHandlerChange,
   };

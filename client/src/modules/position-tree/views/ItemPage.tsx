@@ -81,7 +81,7 @@ const ItemPage: React.FC = () => {
           child={
             <PositionTreeForm
               target={currentItem.target}
-              actionType={actionType}
+              actionType={"UPDATE"}
             />
           }
         />

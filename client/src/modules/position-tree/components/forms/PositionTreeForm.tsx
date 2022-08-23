@@ -25,11 +25,15 @@ interface FormProps {
 }
 
 const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
-  const { editRow, onHandlerChange } = usePositionTreeData(target, actionType);
+  const { editRow, onHandlerChange, currentTarget } = usePositionTreeData(
+    target,
+    actionType
+  );
 
   console.log(editRow);
 
-  const parrentFieldItem = target === "field" &&
+  const parrentFieldItem = actionType === FormActions.EDIT &&
+    currentTarget === "field" &&
     "subsidiaryId" in editRow &&
     editRow.subsidiaryId && (
       <Item
@@ -63,7 +67,8 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const parrentProjectItem = target === "project" &&
+  const parrentProjectItem = actionType === FormActions.EDIT &&
+    currentTarget === "project" &&
     "fieldId" in editRow &&
     editRow.fieldId && (
       <Item label={<Text type="secondary">Месторождение</Text>} className="m-0">
@@ -94,39 +99,41 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const projectDesignItem = target === "project" && "designId" in editRow && (
-    <Item
-      label={<Text type="secondary">Проектный институт</Text>}
-      className="m-0"
-    >
-      <Select
-        size="small"
-        className="text-secondary"
-        showSearch
-        defaultValue={editRow.designId.toString()}
-        optionFilterProp="children"
-        filterOption={(input, option) =>
-          (option!.children as unknown as string).includes(input)
-        }
-        filterSort={(optionA, optionB) =>
-          (optionA!.children as unknown as string)
-            .toLowerCase()
-            .localeCompare(
-              (optionB!.children as unknown as string).toLowerCase()
-            )
-        }
-        onChange={(value: string) => onHandlerChange("designId", value)}
+  const projectDesignItem = currentTarget === "project" &&
+    "designId" in editRow && (
+      <Item
+        label={<Text type="secondary">Проектный институт</Text>}
+        className="m-0"
       >
-        {sgroei.map((item) => (
-          <Option key={item.id} value={item.id}>
-            {item.title}
-          </Option>
-        ))}
-      </Select>
-    </Item>
-  );
+        <Select
+          size="small"
+          className="text-secondary"
+          showSearch
+          defaultValue={editRow.designId.toString()}
+          optionFilterProp="children"
+          filterOption={(input, option) =>
+            (option!.children as unknown as string).includes(input)
+          }
+          filterSort={(optionA, optionB) =>
+            (optionA!.children as unknown as string)
+              .toLowerCase()
+              .localeCompare(
+                (optionB!.children as unknown as string).toLowerCase()
+              )
+          }
+          onChange={(value: string) => onHandlerChange("designId", value)}
+        >
+          {sgroei.map((item) => (
+            <Option key={item.id} value={item.id}>
+              {item.title}
+            </Option>
+          ))}
+        </Select>
+      </Item>
+    );
 
-  const parrentUnitItem = target === "unit" &&
+  const parrentUnitItem = actionType === FormActions.EDIT &&
+    currentTarget === "unit" &&
     "projectId" in editRow &&
     editRow.projectId && (
       <Item label={<Text type="secondary">Проект</Text>} className="m-0">
@@ -158,7 +165,8 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const parrentSubUnitItem = target === "sub-unit" &&
+  const parrentSubUnitItem = actionType === FormActions.EDIT &&
+    currentTarget === "sub-unit" &&
     "unitId" in editRow &&
     editRow.unitId && (
       <Item
@@ -193,9 +201,9 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const contractItem = (target === "project" ||
-    target === "unit" ||
-    target === "sub-unit") &&
+  const contractItem = (currentTarget === "project" ||
+    currentTarget === "unit" ||
+    currentTarget === "sub-unit") &&
     "contract" in editRow && (
       <Item label={<Text type="secondary">№ договора</Text>} className="m-0">
         <Input
@@ -210,7 +218,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
     );
 
   const fileItem =
-    target === "unit" || target === "sub-unit" ? (
+    currentTarget === "unit" || currentTarget === "sub-unit" ? (
       <Item label={<Text type="secondary">Опросный лист</Text>} className="m-0">
         <Upload
           className="mb-1"
@@ -229,7 +237,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         </Upload>
       </Item>
     ) : (
-      target === "subsidiary" && (
+      currentTarget === "subsidiary" && (
         <Item label={<Text type="secondary">Логотип</Text>} className="m-0">
           <Upload
             className="mb-1"
@@ -264,7 +272,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         {parrentSubUnitItem}
         {projectDesignItem}
 
-        {(target === "unit" || target === "sub-unit") &&
+        {(currentTarget === "unit" || currentTarget === "sub-unit") &&
           "position" in editRow &&
           "equipmentId" in editRow &&
           "supplierId" in editRow && (
@@ -278,7 +286,9 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
                   className="text-secondary"
                   showSearch
                   optionFilterProp="children"
-                  defaultValue={editRow.equipmentId.toString()}
+                  defaultValue={
+                    editRow.equipmentId ? editRow.equipmentId.toString() : ""
+                  }
                   filterOption={(input, option) =>
                     (option!.children as unknown as string).includes(input)
                   }
