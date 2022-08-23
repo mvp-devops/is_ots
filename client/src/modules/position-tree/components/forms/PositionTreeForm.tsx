@@ -13,6 +13,7 @@ import { UploadOutlined } from "@ant-design/icons";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { usePositionTreeData } from "./hooks/usePositionTreeData";
 import { sgroei } from "../../../equipment-accounting/utils/equipment-accounting.consts";
+import { FormActions } from "../../../main";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -20,11 +21,11 @@ const { Option } = Select;
 
 interface FormProps {
   target: string;
-  row?: PositionTreeView;
+  actionType: string;
 }
 
-const PositionTreeForm: FC<FormProps> = ({ target, row }) => {
-  const { editRow, onHandlerChange } = usePositionTreeData(target);
+const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
+  const { editRow, onHandlerChange } = usePositionTreeData(target, actionType);
 
   console.log(editRow);
 
@@ -384,7 +385,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, row }) => {
           />
         </Item>
       </Form>
-      {row ? (
+      {actionType === FormActions.EDIT ? (
         <>
           <Divider className="p-0 mb-3" />
           <Space className="d-flex justify-content-end mb-2">

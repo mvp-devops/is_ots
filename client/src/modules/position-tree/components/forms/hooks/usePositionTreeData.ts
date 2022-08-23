@@ -7,6 +7,7 @@ import {
 } from "../../../../../../../server/common/types/position-tree";
 
 import { useActions, useTypedSelector } from "../../../../../hooks";
+import { FormActions } from "../../../../main";
 import { getOneItem } from "../../../api/position-tree.api";
 import {
   fieldItem,
@@ -16,10 +17,11 @@ import {
   unitItem,
 } from "../form.settings";
 
-export const usePositionTreeData = (target: string) => {
+export const usePositionTreeData = (target: string, actionType: string) => {
   const initData = (
     target: string,
-    row?: PositionTreeView
+    row?: PositionTreeView,
+    parrentId?: string
   ): PositionTreeCreateOrUpdateAttrs => {
     let item: PositionTreeCreateOrUpdateAttrs = subsidiaryItem;
 
@@ -44,7 +46,7 @@ export const usePositionTreeData = (target: string) => {
               code: row.code,
               description: row.description,
             }
-          : fieldItem;
+          : { ...fieldItem, subsidiaryId: parrentId ? parrentId : "" };
         break;
       }
 
@@ -58,7 +60,7 @@ export const usePositionTreeData = (target: string) => {
               contract: "contract" in row ? row.contract : "",
               description: row.description,
             }
-          : projectItem;
+          : { ...projectItem, fieldId: parrentId ? parrentId : "" };
         break;
       }
 
@@ -75,7 +77,7 @@ export const usePositionTreeData = (target: string) => {
               description: row.description,
               questionare: null,
             }
-          : unitItem;
+          : { ...unitItem, projectId: parrentId ? parrentId : "" };
         break;
       }
       case "sub-unit": {
@@ -91,7 +93,7 @@ export const usePositionTreeData = (target: string) => {
               description: row.description,
               questionare: null,
             }
-          : subUnitItem;
+          : { ...subUnitItem, unitId: parrentId ? parrentId : "" };
         break;
       }
 
@@ -106,17 +108,20 @@ export const usePositionTreeData = (target: string) => {
     initData(target)
   );
 
-  const { menuItems, currentItem } = useTypedSelector(
-    (state) => state.positionTree
-  );
+  const { currentItem } = useTypedSelector((state) => state.positionTree);
 
   const {} = useActions();
 
   useEffect(() => {
-    currentItem &&
-      getOneItem(currentItem?.target, currentItem.id).then(
-        (data) => data && setEditRow(initData(currentItem.target, data))
-      );
+    actionType === FormActions.EDIT
+      ? currentItem &&
+        getOneItem(currentItem.target, currentItem.id).then(
+          (data) => data && setEditRow(initData(currentItem.target, data))
+        )
+      : currentItem &&
+        setEditRow(
+          initData(currentItem.childrenTarget, undefined, currentItem.id)
+        );
   }, [currentItem]);
 
   const onHandlerChange = (

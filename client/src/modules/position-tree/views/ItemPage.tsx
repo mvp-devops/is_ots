@@ -78,7 +78,12 @@ const ItemPage: React.FC = () => {
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}
-          child={<PositionTreeForm target={currentItem.target} />}
+          child={
+            <PositionTreeForm
+              target={currentItem.target}
+              actionType={actionType}
+            />
+          }
         />
       )}
     </Layout>
