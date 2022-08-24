@@ -15,17 +15,23 @@ import {
 import ItemPageBreadcrumbs from "./ItemPageBreadcrumbs";
 import ItemPageMenu from "./ItemPageMenu";
 import ListView from "./list/ListView";
-import { useActions, useTypedSelector } from "../../../hooks";
+import { useTypedSelector } from "../../../hooks";
 import ModalContainer from "../components/forms/ModalContainer";
 import PositionTreeForm from "../components/forms/PositionTreeForm";
 
 const { Content } = Layout;
 
-const ItemPage: React.FC = () => {
+interface ItemPageProps {
+  userRole: string;
+}
+
+const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
   const [showSLOE, setShowSLOE] = useState(false);
   const [showCCLS, setShowCCLS] = useState(false);
   const [formVisible, setFormVisible] = useState(false);
   const [actionType, setActionType] = useState("");
+  const [showListItems, setShowListItems] = useState(false);
+  const [showDocumentation, setShowDocumentation] = useState(false);
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
 
@@ -45,16 +51,22 @@ const ItemPage: React.FC = () => {
           <Content style={{ padding: "0 5px", minHeight: "100%" }}>
             <ListView />
           </Content>
-          <ItemPageMenu
-            target="project"
-            childTarget=" unit"
-            role="EXPERT"
-            setShowSLOE={() => setShowSLOE(!showSLOE)}
-            setShowCCLS={() => setShowCCLS(!showCCLS)}
-            setActionType={setActionType}
-            formVisible={formVisible}
-            setFormVisible={setFormVisible}
-          />
+          {currentItem && (
+            <ItemPageMenu
+              target={currentItem.target}
+              childTarget={currentItem.childrenTarget}
+              role={userRole}
+              setShowSLOE={() => setShowSLOE(!showSLOE)}
+              setShowCCLS={() => setShowCCLS(!showCCLS)}
+              setShowListItems={() => setShowListItems(!showListItems)}
+              setShowDocumentation={() =>
+                setShowDocumentation(!showDocumentation)
+              }
+              setActionType={setActionType}
+              formVisible={formVisible}
+              setFormVisible={setFormVisible}
+            />
+          )}
         </Layout>
       </Content>
       {showSLOE && (
@@ -81,7 +93,7 @@ const ItemPage: React.FC = () => {
           child={
             <PositionTreeForm
               target={currentItem.target}
-              actionType={"UPDATE"}
+              actionType={actionType}
             />
           }
         />

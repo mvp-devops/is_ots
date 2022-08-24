@@ -98,6 +98,7 @@ export interface UnitView {
   code: string;
   contract: string;
   description: string;
+  questionare: string | null;
   documents: DesignDocumentView[];
 }
 
@@ -114,6 +115,7 @@ export interface SubUnitView {
   code: string;
   contract: string;
   description: string;
+  questionare: string | null;
   documents: DesignDocumentView[];
 }
 

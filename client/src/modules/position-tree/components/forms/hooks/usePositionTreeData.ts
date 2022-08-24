@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import {
   PositionTreeCreateOrUpdateAttrs,
   PositionTreeView,
-  UnitCreateOrUpdateAttrs,
 } from "../../../../../../../server/common/types/position-tree";
+import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 
-import { useActions, useTypedSelector } from "../../../../../hooks";
+import { useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
-import { getOneItem } from "../../../api/position-tree.api";
+import { getItems } from "../../../../regulatory-reference-information";
+import { getOneItem, getAllItems } from "../../../api/position-tree.api";
 import {
   fieldItem,
   projectItem,
@@ -107,13 +108,41 @@ export const usePositionTreeData = (target: string, actionType: string) => {
   const [editRow, setEditRow] = useState<PositionTreeCreateOrUpdateAttrs>(
     initData(target)
   );
+  const [designsList, setDesignsList] = useState<NSIView[]>([]);
+  const [equipmentsList, setEquipmentsList] = useState<NSIView[]>([]);
+  const [suppliersList, setSuppliersList] = useState<NSIView[]>([]);
   const [currentTarget, setCurrentTarget] = useState("");
+  const [parrentsList, setParrentsList] = useState<PositionTreeView[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
 
-  const {} = useActions();
+  useEffect(() => {
+    switch (currentTarget) {
+      case "field": {
+        getAllItems("subsidiary").then((data) => setParrentsList(data));
 
-  useEffect(() => {}, [currentItem]);
+        break;
+      }
+      case "project": {
+        getItems("design").then((data) => setDesignsList(data));
+        getAllItems("field").then((data) => setParrentsList(data));
+
+        break;
+      }
+      case "unit":
+      case "sub-unit": {
+        getItems("counterparty").then((data) => setSuppliersList(data));
+        getItems("equipment").then((data) => setEquipmentsList(data));
+        const trgt = target === "unit" ? "project" : "unit";
+        getAllItems(trgt).then((data) => setParrentsList(data));
+        break;
+      }
+
+      default:
+        break;
+    }
+  }, [currentTarget]);
 
   useEffect(() => {
     if (actionType === FormActions.EDIT && currentItem) {
@@ -143,7 +172,11 @@ export const usePositionTreeData = (target: string, actionType: string) => {
   };
 
   return {
+    parrentsList,
     currentItem,
+    designsList,
+    equipmentsList,
+    suppliersList,
     currentTarget,
     editRow,
     onHandlerChange,

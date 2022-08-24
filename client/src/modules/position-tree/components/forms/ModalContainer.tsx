@@ -28,7 +28,9 @@ const ModalContainer: FC<ModalContainerProps> = ({
           <Text strong className="text-white">
             {action === FormActions.ADD
               ? "Добавление записи"
-              : "Редактирование записи"}
+              : action === FormActions.EDIT
+              ? "Редактирование записи"
+              : "Удаление записи"}
           </Text>
         </Space>
       }
@@ -41,7 +43,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
       }
       centered
       visible={show}
-      footer={[]}
+      footer={null}
       onCancel={onCancel}
     >
       {child}

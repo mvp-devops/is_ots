@@ -1,79 +1,53 @@
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import { Avatar, List, Space } from "antd";
-import React, { useEffect } from "react";
-import { useActions, useTypedSelector } from "../../../../hooks";
-
-const data = Array.from({ length: 23 }).map((_, i) => ({
-  href: "https://ant.design",
-  title: `ant design part ${i}`,
-  avatar: "https://joeschmoe.io/api/v1/random",
-  description:
-    "Ant Design, a design language for background applications, is refined by Ant UED Team.",
-  content:
-    "We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.",
-}));
-
-const dataSource = [
-  {
-    href: "#",
-    title: "Объект 1",
-    avatar: "1.2.1",
-    description: "Description",
-    content: "code",
-  },
-];
+import { Avatar, Empty, List, Space, Typography } from "antd";
+import { createElement, FC } from "react";
+import { useItemPage } from "../hooks/useItemPage";
+import { CloudSyncOutlined } from "@ant-design/icons";
+const { Text } = Typography;
+const { Item } = List;
 
 const IconText = ({ icon, text }: { icon: React.FC; text: string }) => (
   <Space>
-    {React.createElement(icon)}
+    {createElement(icon)}
     {text}
   </Space>
 );
 
-interface ListViewProps {
-  items?: any[];
-}
+const ListView: FC = () => {
+  const { listItems, childrenListHeader } = useItemPage();
 
-const ListView: React.FC<ListViewProps> = () => {
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
+  const header = (
+    <Space className="d-flex justify-content-start">
+      <Text strong type="secondary" style={{ fontSize: 18 }}>
+        Список {childrenListHeader}
+      </Text>
+    </Space>
+  );
 
-  const setItems = (items: any[]): any[] => {
-    const arr: any[] = [];
-    if (items.length > 0) {
-      for (let i = 0; i < items.length; i++) {
-        console.log(currentItem);
-        const { id, title, code, description, file } = items[i];
-        const item = {
-          href: id,
-          title,
-          avatar: file ? `${file.path}/${file.fileName}` : null,
-          description,
-          content: code,
-        };
+  const emptyText = (
+    <div style={{ textAlign: "center" }}>
+      <CloudSyncOutlined style={{ fontSize: 40 }} />
+      <p style={{ fontSize: 20 }}>Нет данных для отображения</p>
+    </div>
+  );
 
-        arr.push(item);
-      }
-    }
-    return arr;
-  };
   return (
     <List
+      header={header}
       itemLayout="vertical"
-      size="large"
+      size="small"
       pagination={{
         onChange: (page) => {
           console.log(page);
         },
-        pageSize: 3,
+        pageSize: 10,
       }}
-      dataSource={dataSource}
-      footer={
-        <div>
-          <b>ant design</b> footer part
-        </div>
-      }
+      locale={{
+        emptyText,
+      }}
+      dataSource={listItems}
       renderItem={(item) => (
-        <List.Item
+        <Item
           key={item.title}
           actions={[
             <IconText
@@ -93,20 +67,18 @@ const ListView: React.FC<ListViewProps> = () => {
             />,
           ]}
           extra={
-            <img
-              width={272}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
+            item?.avatar ? (
+              <img width={272} alt="logo" src={item.avatar} />
+            ) : null
           }
         >
-          <List.Item.Meta
-            avatar={<Avatar src={item.avatar} />}
+          <Item.Meta
+            avatar={item?.avatar ? <Avatar src={item.avatar} /> : null}
             title={<a href={item.href}>{item.title}</a>}
             description={item.description}
           />
           {item.content}
-        </List.Item>
+        </Item>
       )}
     />
   );

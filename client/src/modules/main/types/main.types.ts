@@ -13,3 +13,18 @@ export enum FormActions {
   REMOVE = "DELETE",
   VIEW = "GET",
 }
+
+export enum Roles {
+  ADMIN = "ADMIN",
+  EXPERT = "EXPERT",
+  OTS = "OTS",
+  CUSTOMER = "CUSTOMER",
+}
+
+export interface ListItem {
+  href: string;
+  title: string;
+  description: string;
+  content: string;
+  avatar: string;
+}

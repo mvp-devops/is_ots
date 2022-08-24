@@ -1,5 +1,6 @@
 import { equipmentAccountingActionCreators } from "../modules/equipment-accounting";
 import { positionTreeActionCreators } from "../modules/position-tree";
+import { nsiActionCreators } from "../modules/regulatory-reference-information";
 // import * as UnitActionCreators from "../../models/position-tree/unit/unit.action-creators";
 // import * as MainActionCreators from "../../models/main/main.action-creators";
 // import * as FieldActionCreators from "../../models/position-tree/field/field.action-creators";
@@ -12,6 +13,7 @@ import { positionTreeActionCreators } from "../modules/position-tree";
 const ActionCreators = {
   ...equipmentAccountingActionCreators,
   ...positionTreeActionCreators,
+  ...nsiActionCreators,
   //   ...UnitActionCreators,
   // ...MainActionCreators,
   //   ...FieldActionCreators,

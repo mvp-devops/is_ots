@@ -22,18 +22,18 @@ export const fieldItem: FieldCreateOrUpdateAttrs = {
 
 export const projectItem: ProjectCreateOrUpdateAttrs = {
   fieldId: "",
-  designId: "",
+  designId: "10",
   title: "",
   code: "",
   contract: "",
-  description: "",
+  description: "PROJECT",
 };
 
 export const unitItem: UnitCreateOrUpdateAttrs = {
   projectId: "",
-  supplierId: "",
-  equipmentId: "",
-  position: "",
+  supplierId: "1",
+  equipmentId: "1",
+  position: "0",
   title: "",
   code: "",
   contract: "",
@@ -43,9 +43,9 @@ export const unitItem: UnitCreateOrUpdateAttrs = {
 
 export const subUnitItem: SubUnitCreateOrUpdateAttrs = {
   unitId: "",
-  supplierId: "",
-  equipmentId: "",
-  position: "",
+  supplierId: "1",
+  equipmentId: "1",
+  position: "0",
   title: "",
   code: "",
   contract: "",

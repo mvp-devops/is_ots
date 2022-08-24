@@ -15,12 +15,12 @@ import {
 } from "@ant-design/icons";
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import { FC } from "react";
+import { useTypedSelector } from "../../../hooks";
+import { useItemPage } from "./hooks/useItemPage";
 import { FormActions, MenuItem } from "../../main";
 
 const { Sider } = Layout;
-
-const userRole = "Administrator";
 
 export interface ItemPageMenuProps {
   role: string;
@@ -28,48 +28,12 @@ export interface ItemPageMenuProps {
   childTarget: string;
   setShowSLOE: () => void;
   setShowCCLS: () => void;
+  setShowListItems: () => void;
+  setShowDocumentation: () => void;
   formVisible: boolean;
   setFormVisible: (flag: boolean) => void;
   setActionType: (action: string) => void;
 }
-
-export enum Roles {
-  ADMIN = "ADMIN",
-  EXPERT = "EXPERT",
-  OTS = "OTS",
-  CUSTOMER = "CUSTOMER",
-}
-
-const setMenuItems = (
-  target: string,
-  role: string,
-  items: MenuItem[]
-): MenuItem[] => {
-  const menuItems: MenuItem[] = [];
-
-  switch (role) {
-    case Roles.ADMIN: {
-      menuItems.push(...items.slice(0, 2));
-      return menuItems;
-    }
-    // case Roles.EXPERT:
-    // case Roles.CUSTOMER: {
-
-    //   console.log(items[1]?.children[0] || [])
-    //   menuItems.push({
-    //     ...items[1],
-    //     children:
-    //   })
-
-    //   menuItems.push(...items.slice(2));
-    //   return menuItems;
-    // }
-    default:
-      return menuItems;
-  }
-
-  return menuItems;
-};
 
 const ItemPageMenu: FC<ItemPageMenuProps> = ({
   role,
@@ -78,9 +42,12 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
   setShowSLOE,
   setShowCCLS,
   setFormVisible,
-  formVisible,
+  setShowListItems,
+  setShowDocumentation,
   setActionType,
 }) => {
+  const { currentItem } = useTypedSelector((state) => state.positionTree);
+
   const items: MenuItem[] = [
     {
       label: (
@@ -92,11 +59,16 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
           Действия
         </Space>
       ),
-      key: "1",
+      key: "ACTIONS",
       children: [
         {
           label: (
-            <Space>
+            <Space
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
+            >
               <EditOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -104,11 +76,16 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Редактировать
             </Space>
           ),
-          key: `1-1`,
+          key: `EDIT`,
         },
         {
           label: (
-            <Space>
+            <Space
+              onClick={() => {
+                setActionType(FormActions.REMOVE);
+                setFormVisible(true);
+              }}
+            >
               <DeleteOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -116,7 +93,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Удалить
             </Space>
           ),
-          key: `1-2`,
+          key: `REMOVE`,
         },
       ],
     },
@@ -127,14 +104,20 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
             className="text-dark"
             style={{ marginBottom: "22px", padding: 0 }}
           />
-          Объекты
+          {childTarget === "field"
+            ? "Месторождения"
+            : childTarget === "project"
+            ? "Проекты"
+            : childTarget === "unit"
+            ? "Объекты строительства"
+            : "Объекты/установки"}
         </Space>
       ),
-      key: childTarget,
+      key: "CHILDREN",
       children: [
         {
           label: (
-            <Space>
+            <Space onClick={setShowListItems}>
               <SearchOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -142,14 +125,14 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Просмотр списка
             </Space>
           ),
-          key: "2-1",
+          key: "CHILDREN-VIEW",
         },
         {
           label: (
             <Space
               onClick={() => {
                 setActionType(FormActions.ADD);
-                setFormVisible(!formVisible);
+                setFormVisible(true);
               }}
             >
               <PlusOutlined
@@ -159,7 +142,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Добавить
             </Space>
           ),
-          key: "add-child",
+          key: "CHILDREN-ADD",
         },
         {
           label: (
@@ -171,7 +154,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Перечень оборудования
             </Space>
           ),
-          key: "2-3",
+          key: "SLOE",
         },
       ],
     },
@@ -186,11 +169,11 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
           Документация
         </Space>
       ),
-      key: "3",
+      key: "DOCUMENTATION",
       children: [
         {
           label: (
-            <Space>
+            <Space onClick={setShowDocumentation}>
               <SearchOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -198,7 +181,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Просмотр
             </Space>
           ),
-          key: "3-1",
+          key: "DOCUMENTATION-VIEW",
         },
         {
           label: (
@@ -210,7 +193,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Добавить новый документ
             </Space>
           ),
-          key: "3-2",
+          key: "DOCUMENTATION-ADD",
         },
         {
           label: (
@@ -222,7 +205,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Сформировать ЛКП
             </Space>
           ),
-          key: "3-3",
+          key: "CCHL",
         },
         {
           label: (
@@ -234,7 +217,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Отчет
             </Space>
           ),
-          key: "3-4",
+          key: "REPORT",
         },
       ],
     },
@@ -249,7 +232,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
           Статистика
         </Space>
       ),
-      key: "4",
+      key: "STATISTIC",
       children: [
         {
           label: (
@@ -261,7 +244,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Чеклист
             </Space>
           ),
-          key: "4-1",
+          key: "CHL",
         },
         {
           label: (
@@ -273,27 +256,17 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Статистика
             </Space>
           ),
-          key: "4-2",
+          key: "STAT",
         },
       ],
     },
   ];
 
-  const [menuItems, setMenuItems] = useState<MenuItem[]>(items);
+  const { menuItems } = useItemPage(role, items);
 
-  useEffect(() => {
-    switch (role) {
-      case Roles.ADMIN:
-        setMenuItems(items.slice(0, 2));
-        break;
-      case Roles.EXPERT:
-      case Roles.CUSTOMER:
-        setMenuItems(items.slice(1, 4));
-        break;
-      default:
-        break;
-    }
-  }, [role]);
+  // useEffect(() => {
+  //   setMenu(setMenuItems(role, items));
+  // }, [role, currentItem]);
 
   return (
     <Sider className="site-layout-background" width={300}>

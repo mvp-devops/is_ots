@@ -13,7 +13,7 @@ import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
 import { PositionTreeItem } from "../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../hooks";
-import { MenuItem } from "../modules/main";
+import { MenuItem, Roles } from "../modules/main";
 import { ItemPage } from "../modules/position-tree";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -32,6 +32,10 @@ function getItem(
     label,
   } as MenuItem;
 }
+
+const role = Roles.EXPERT;
+
+const userSubsidiaryId = "7";
 
 const setMenuItem = (menuItems: PositionTreeItem[]): MenuItem[] => {
   const items: MenuItem[] = [];
@@ -57,20 +61,7 @@ const MainPage: React.FC = () => {
   );
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
-    if (item) {
-      const { target, keys, id } = item;
-      // setKeys(keys);
-      // setTarget(item.target);
-      // setChildTarget(item.childrenTarget);
-      // setCurrentId(id);
-      setCurrentItem(item);
-      // setStatistic(target, id);
-    } else {
-      // setKeys([]);
-      // setCurrentId("");
-      // setTarget("");
-      // setChildTarget("");
-    }
+    item && setCurrentItem(item);
   };
 
   const onSelect = (selectedKeys: any, e: any) => {
@@ -83,39 +74,8 @@ const MainPage: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(currentItem);
-    console.log(menuItems);
-  }, [currentItem, menuItems]);
-
-  useEffect(() => {
-    setMenuItems("Roles.ADMINISTRATOR");
+    setMenuItems(role, userSubsidiaryId);
   }, []);
-
-  const items: MenuItem[] = [
-    getItem(
-      "Меню",
-      "1",
-      <MenuOutlined
-        className={"text-secondary"}
-        onClick={() => setCollapsed(!collapsed)}
-      />
-    ),
-    getItem("Справочники", "2", <BookOutlined className={"text-secondary"} />),
-    getItem(
-      "Дерево позиций",
-      "3",
-      <AppstoreOutlined onClick={() => setCollapsed(!collapsed)} />,
-      [
-        ...setMenuItem(menuItems),
-        // getItem("Option 6", "6"),
-        // getItem("Submenu", "sub3", null, [
-        //   getItem("Option 7", "7"),
-        //   getItem("Option 8", "8"),
-        // ]),
-      ]
-    ),
-    getItem("Files", "9", <FileOutlined className={"text-secondary"} />),
-  ];
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
@@ -200,8 +160,8 @@ const MainPage: React.FC = () => {
           </Space>
         </Header>
         <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
-          {/* {currentItem && <ItemPage />} */}
-          <ItemPage />
+          {currentItem && <ItemPage userRole={role} />}
+          {/* <ItemPage /> */}
         </Content>
         <Footer style={{ textAlign: "right", background: "rgb(255,255,255" }}>
           ООО "Газпромнефть-Автоматизация" ©2022

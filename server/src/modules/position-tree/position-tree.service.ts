@@ -623,11 +623,46 @@ export class PositionTreeService {
         break;
       }
       case "field": {
-        items = await this.fieldRepository.findAll({
-          where: { subsidiaryId: parrentId },
-          include: [
-            {
-              model: ProjectEntity,
+        items = parrentId
+          ? await this.fieldRepository.findAll({
+              where: { subsidiaryId: parrentId },
+              include: [
+                {
+                  model: ProjectEntity,
+                  attributes: [
+                    "fieldId",
+                    "designId",
+                    "id",
+                    "title",
+                    "code",
+                    "contract",
+                    "description",
+                  ],
+                },
+              ],
+            })
+          : await this.fieldRepository.findAll({
+              include: [
+                {
+                  model: ProjectEntity,
+                  attributes: [
+                    "fieldId",
+                    "designId",
+                    "id",
+                    "title",
+                    "code",
+                    "contract",
+                    "description",
+                  ],
+                },
+              ],
+            });
+        break;
+      }
+      case "project": {
+        items = parrentId
+          ? await this.projectRepository.findAll({
+              where: { fieldId: parrentId },
               attributes: [
                 "fieldId",
                 "designId",
@@ -637,65 +672,201 @@ export class PositionTreeService {
                 "contract",
                 "description",
               ],
-            },
-          ],
-        });
-        break;
-      }
-      case "project": {
-        items = await this.projectRepository.findAll({
-          where: { fieldId: parrentId },
-          attributes: [
-            "fieldId",
-            "designId",
-            "id",
-            "title",
-            "code",
-            "contract",
-            "description",
-          ],
-          include: [
-            {
-              model: UnitEntity,
-            },
-            {
-              model: DesignEntity,
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "projectDocuments",
+              include: [
+                {
+                  model: UnitEntity,
+                },
+                {
+                  model: DesignEntity,
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "projectDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            })
+          : await this.projectRepository.findAll({
               attributes: [
+                "fieldId",
+                "designId",
                 "id",
                 "title",
                 "code",
-                "revision",
-                "fileType",
-                "fileName",
-                "filePath",
+                "contract",
+                "description",
               ],
-            },
-          ],
-        });
+              include: [
+                {
+                  model: UnitEntity,
+                },
+                {
+                  model: DesignEntity,
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "projectDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            });
         break;
       }
       case "unit": {
-        items = await this.unitRepository.findAll({
-          where: { projectId: parrentId },
-          attributes: [
-            "projectId",
-            "equipmentId",
-            "supplierId",
+        items = parrentId
+          ? await this.unitRepository.findAll({
+              where: { projectId: parrentId },
+              attributes: [
+                "projectId",
+                "equipmentId",
+                "supplierId",
 
-            "id",
-            "title",
-            "code",
-            "position",
-            "contract",
-            "description",
-          ],
-          include: [
-            {
-              model: SubUnitEntity,
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: SubUnitEntity,
+                  attributes: [
+                    "unitId",
+                    "equipmentId",
+                    "supplierId",
+
+                    "id",
+                    "title",
+                    "code",
+                    "position",
+                    "contract",
+                    "description",
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            })
+          : await this.unitRepository.findAll({
+              attributes: [
+                "projectId",
+                "equipmentId",
+                "supplierId",
+
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: SubUnitEntity,
+                  attributes: [
+                    "unitId",
+                    "equipmentId",
+                    "supplierId",
+
+                    "id",
+                    "title",
+                    "code",
+                    "position",
+                    "contract",
+                    "description",
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            });
+        break;
+      }
+      case "sub-unit": {
+        items = parrentId
+          ? await this.subUnitRepository.findAll({
+              where: { unitId: parrentId },
               attributes: [
                 "unitId",
                 "equipmentId",
@@ -708,97 +879,93 @@ export class PositionTreeService {
                 "contract",
                 "description",
               ],
-            },
-            {
-              model: EquipmentEntity,
-              attributes: ["id", "title", "code", "description"],
-            },
-            {
-              model: CounterpartyEntity,
-              attributes: ["id", "title", "code", "description"],
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "unitDocuments",
-              attributes: [
-                "id",
-                "title",
-                "code",
-                "revision",
-                "fileType",
-                "fileName",
-                "filePath",
+              include: [
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
               ],
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "unitQuestionare",
+            })
+          : await this.subUnitRepository.findAll({
               attributes: [
-                "id",
-                "title",
-                "code",
-                "revision",
-                "fileType",
-                "fileName",
-                "filePath",
-              ],
-            },
-          ],
-        });
-        break;
-      }
-      case "sub-unit": {
-        items = await this.subUnitRepository.findAll({
-          where: { unitId: parrentId },
-          attributes: [
-            "unitId",
-            "equipmentId",
-            "supplierId",
+                "unitId",
+                "equipmentId",
+                "supplierId",
 
-            "id",
-            "title",
-            "code",
-            "position",
-            "contract",
-            "description",
-          ],
-          include: [
-            {
-              model: EquipmentEntity,
-              attributes: ["id", "title", "code", "description"],
-            },
-            {
-              model: CounterpartyEntity,
-              attributes: ["id", "title", "code", "description"],
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "subUnitDocuments",
-              attributes: [
                 "id",
                 "title",
                 "code",
-                "revision",
-                "fileType",
-                "fileName",
-                "filePath",
+                "position",
+                "contract",
+                "description",
               ],
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "subUnitQuestionare",
-              attributes: [
-                "id",
-                "title",
-                "code",
-                "revision",
-                "fileType",
-                "fileName",
-                "filePath",
+              include: [
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
               ],
-            },
-          ],
-        });
+            });
         break;
       }
 
