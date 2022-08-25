@@ -15,6 +15,11 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   supplierId: string | number | null;
   stageId: string | number;
   sectionId: string | number;
+  uqstId: string | number | null;
+  suqstId: string | number | null;
+  sloeId: string | number | null;
+  cableLogId: string | number | null;
+  monitoringId: string | number | null;
   code: string;
   title: string;
   revision: string;

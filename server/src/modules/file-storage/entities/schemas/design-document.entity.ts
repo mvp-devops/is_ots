@@ -178,7 +178,6 @@ export class DesignDocumentEntity extends Model<
   })
   @Column({
     type: DataType.STRING,
-    unique: true,
     allowNull: false,
   })
   title: string;
@@ -188,8 +187,9 @@ export class DesignDocumentEntity extends Model<
     description: "Номер ревизии документа",
   })
   @Column({
-    type: DataType.INTEGER,
+    type: DataType.STRING,
     allowNull: false,
+    defaultValue: "1",
   })
   revision: string;
 

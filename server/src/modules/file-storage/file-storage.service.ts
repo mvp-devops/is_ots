@@ -165,84 +165,130 @@ export class FileStorageService {
     parrentTarget: string,
     parrentFolderPath: string,
     file: any,
-    item?: DesignDocumentCreateOrUpdateAttrs
+    data?: DesignDocumentCreateOrUpdateAttrs
   ): Promise<void> => {
     const document: DesignDocumentCreateOrUpdateAttrs = {
-      projectId: item ? item.projectId : null,
-      unitId: item ? item.unitId : null,
-      subUnitId: item ? item.subUnitId : null,
-      supplierId: item ? item.supplierId : null,
-      stageId: item ? item.stageId : 3,
-      sectionId: item ? item.sectionId : 57,
-      code: item ? item.code : "",
-      title: item ? item.title : "",
-      revision: item ? item.revision : "1",
-      description: item ? item.description : "",
+      projectId: data ? data.projectId : null,
+      unitId: data ? data.unitId : null,
+      subUnitId: data ? data.subUnitId : null,
+      uqstId: null,
+      suqstId: null,
+      sloeId: null,
+      cableLogId: null,
+      monitoringId: null,
+      supplierId: data ? data.supplierId : null,
+      stageId: data ? data.stageId : 3,
+      sectionId: data ? data.sectionId : 57,
+      code: data ? data.code : "000",
+      title: data ? data.title : "",
+      revision: data ? data.revision : "1",
+      description: data ? data.description : "",
       filePath: "",
       fileName: "",
       fileType: "",
     };
 
-    const stage = await this.nsiService.findOne(
-      "stage",
-      document.stageId.toString()
-    );
-    const section = await this.nsiService.findOne(
-      "section",
-      document.sectionId.toString()
-    );
+    // const stage = await this.nsiService.findOne(
+    //   "stage",
+    //   document.stageId.toString()
+    // );
+    // const section = await this.nsiService.findOne(
+    //   "section",
+    //   document.sectionId.toString()
+    // );
 
-    const stageFolderPath = this.generateFolderName(
-      "stage",
-      +document.stageId,
-      stage.code,
-      null
-    );
-    const stageFolder = this.createDirectory(
-      `${parrentFolderPath}/${stageFolderPath}`
-    );
+    // const stageFolderPath = this.generateFolderName(
+    //   "stage",
+    //   +document.stageId,
+    //   stage.code,
+    //   null
+    // );
+    // this.createDirectory(`${parrentFolderPath}/${stageFolderPath}`);
+    // const sectionFolderPath = this.generateFolderName(
+    //   "section",
+    //   +document.sectionId,
+    //   section.code,
+    //   null
+    // );
+    // this.createDirectory(
+    //   `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`
+    // );
+    // const filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
+    const fileName = this.fileUpload(parrentFolderPath, file);
+    document.filePath = parrentFolderPath;
+    document.fileName = fileName;
+    document.fileType = this.getFileType(file);
 
-    const sectionFolderPath = this.generateFolderName(
-      "section",
-      +document.sectionId,
-      section.code,
-      null
-    );
-
-    if (file) {
-      const parrentPath = this.createDirectory(
-        `${stageFolder}/${sectionFolderPath}`
-      );
-      const fileName = this.fileUpload(parrentPath, file);
-      document.filePath = parrentFolderPath;
-      document.fileName = fileName;
-      document.fileType = this.getFileType(file);
-
+    if (data === undefined) {
+      document.title = this.getFileName(file);
       switch (parrentTarget) {
-        case "project": {
-          document.projectId = +parrentId;
-          break;
-        }
         case "unit": {
-          document.unitId = +parrentId;
+          document.uqstId = +parrentId;
           break;
         }
         case "sub-unit": {
-          document.subUnitId = +parrentId;
+          document.suqstId = +parrentId;
           break;
         }
-        case "counterparty": {
-          document.supplierId = +parrentId;
+        case "summary-list-of-equipment": {
+          document.sloeId = +parrentId;
+          break;
+        }
+        case "monitoring": {
+          document.monitoringId = +parrentId;
+          break;
+        }
+        case "cable-log": {
+          document.cableLogId = +parrentId;
           break;
         }
         default:
           break;
       }
-      console.log(document);
-
-      // await this.designDocumentRepository.create(document);
     }
+
+    await this.designDocumentRepository.create(document);
   };
+
+  // updateDesignDocument = async (
+  //   parrentId: string,
+  //   parrentTarget: string,
+  //   parrentFolderPath: string,
+  //   file: any,
+  //   data?: DesignDocumentCreateOrUpdateAttrs
+  // ): Promise<void> => {
+  //   let item: LogoEntity | null = null;
+
+  //   if (file) {
+  //     switch (parrentTarget) {
+  //       case "project": {
+  //         item = await this.logoRepository.findOne({
+  //           where: { counterpartyId: +parrentId },
+  //         });
+  //         break;
+  //       }
+  //       case "unit": {
+  //         item = await this.logoRepository.findOne({
+  //           where: { designId: +parrentId },
+  //         });
+  //         break;
+  //       }
+  //       case "sub-unit": {
+  //         item = await this.logoRepository.findOne({
+  //           where: { userId: +parrentId },
+  //         });
+  //         break;
+  //       }
+  //       default:
+  //         break;
+  //     }
+
+  //     if (item) {
+  //       this.fileUpload("logo", file);
+  //       this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
+  //     } else this.createLogo(parrentId, target, file);
+  //   }
+  // };
 
   getFilePath = (folder: string): string => {
     try {
@@ -348,9 +394,9 @@ export class FileStorageService {
   }
 
   //получить имя файла
-  getFileName = (fileName: string): string => {
+  getFileName = (file: any): string => {
     try {
-      return path.parse(fileName).name;
+      return path.basename(file.originalname);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -377,6 +423,32 @@ export class FileStorageService {
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+  };
+
+  fileDownload = async (
+    data: any,
+    folder: string,
+    fileName: string,
+    fileType: string
+  ): Promise<string> => {
+    const fileFolder = this.getFilePath(`${folder}/imports`);
+
+    console.log(fileFolder);
+    this.createDirectory(`${folder}/imports`);
+
+    // console.log(fileFolder);
+    const filePath = this.getPath([fileFolder, `${fileName}.${fileType}`]);
+
+    console.log(filePath);
+
+    const items = JSON.stringify(data);
+    console.log(items);
+
+    fse.writeJson(filePath, data, (err) => {
+      if (err) return console.error(err);
+    });
+
+    return filePath;
   };
 
   // создание директории

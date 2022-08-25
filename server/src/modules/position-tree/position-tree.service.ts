@@ -184,8 +184,7 @@ export class PositionTreeService {
   createOne = async (
     target: string,
     dto: CreatePositionTreeDto,
-    file?: any,
-    questionare?: any
+    file?: any
   ): Promise<PositionTreeView> => {
     let item: PositionTreeView = null;
     let folderName = "";
@@ -195,6 +194,9 @@ export class PositionTreeService {
         item = await this.subsidiaryRepository.create(dto);
         const { id, code } = item;
         folderName = this.fileService.generateFolderName(target, id, code);
+
+        file &&
+          (await this.fileService.createLogo(item.id.toString(), target, file));
         break;
       }
       case "field": {
@@ -291,6 +293,13 @@ export class PositionTreeService {
           code
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${folder}`;
+        file &&
+          (await this.fileService.createDesignDocument(
+            item.id.toString(),
+            target,
+            folderName,
+            file
+          ));
         break;
       }
       case "sub-unit": {
@@ -347,6 +356,13 @@ export class PositionTreeService {
           code
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${unitFolder}/002. Объекты/${folder}`;
+        file &&
+          (await this.fileService.createDesignDocument(
+            item.id.toString(),
+            target,
+            folderName,
+            file
+          ));
         break;
       }
       default:
@@ -354,19 +370,6 @@ export class PositionTreeService {
     }
 
     this.fileService.createDirectory(folderName);
-
-    file &&
-      target === "subsidiary" &&
-      (await this.fileService.createLogo(item.id.toString(), target, file));
-
-    file &&
-      (target === "unit" || target === "sub-unit") &&
-      (await this.fileService.createDesignDocument(
-        item.id.toString(),
-        target,
-        folderName,
-        file
-      ));
 
     return item;
   };
@@ -1456,6 +1459,13 @@ export class PositionTreeService {
 
         await this.subUnitRepository.update(dto, { where: { id } });
         item = await this.subUnitRepository.findOne({ where: { id } });
+        // file &&
+        // (await this.fileService.updateDesignDocument(
+        //   item.id.toString(),
+        //   target,
+        //   oldFolderName,
+        //   file
+        // ));
         break;
       }
       default:
@@ -1640,5 +1650,21 @@ export class PositionTreeService {
     this.fileService.removeDirectoryOrFile(folderName);
 
     return item;
+  };
+
+  download = async (
+    data: PositionTreeView[] | PositionTreeView,
+    folder: string,
+    fileName: string,
+    fileType: string
+  ): Promise<string> => {
+    const file = this.fileService.fileDownload(
+      data,
+      folder,
+      fileName,
+      fileType
+    );
+
+    return file;
   };
 }

@@ -46,10 +46,11 @@ const setFormData = (item: PositionTreeCreateOrUpdateAttrs): FormData => {
     item.supplierId &&
     typeof item.supplierId === "string" &&
     data.append("supplierId", item.supplierId);
-  // "questionare" in item &&
-  //   item.questionare &&
-  //   typeof item.questionare === "string" &&
-  //   data.append("questionare", item.questionare);
+
+  "questionare" in item &&
+    item.questionare &&
+    data.append("file", item.questionare);
+
   "position" in item &&
     item.position &&
     typeof item.position === "string" &&
