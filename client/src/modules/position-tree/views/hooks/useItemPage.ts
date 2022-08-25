@@ -1,7 +1,7 @@
 import { RcFile } from "antd/lib/upload";
 import { useEffect, useState } from "react";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
-import { useTypedSelector } from "../../../../hooks";
+import { useActions, useTypedSelector } from "../../../../hooks";
 import { ListItem, MenuItem, Roles } from "../../../main";
 import { getAllItems } from "../..";
 
@@ -12,6 +12,9 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [childrenListHeader, setChidrenListHeader] = useState("");
+
+  const { formVisible, actionType } = useTypedSelector((state) => state.main);
+  const { setFormVisible, setActionType } = useActions();
 
   const renderMenuItems = (role: string, items: MenuItem[]): MenuItem[] => {
     const menuItems: MenuItem[] = [];
@@ -161,6 +164,10 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
   }, [childrenList]);
 
   return {
+    formVisible,
+    setFormVisible,
+    actionType,
+    setActionType,
     childrenList,
     childrenListHeader,
     menuItems,

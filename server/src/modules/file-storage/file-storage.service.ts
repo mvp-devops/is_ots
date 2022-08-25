@@ -1,12 +1,22 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from "@nestjs/common";
 import * as path from "path";
 import * as fs from "fs";
 import * as fse from "fs-extra";
 import * as uuid from "uuid";
 import { setCurrentDate } from "../../../common/utils";
-import { LogoCreationAttrs } from "../../../common/types/file-storage";
-import { LogoEntity } from "./entities";
+import {
+  DesignDocumentCreateOrUpdateAttrs,
+  LogoCreationAttrs,
+} from "../../../common/types/file-storage";
+import { DesignDocumentEntity, LogoEntity } from "./entities";
 import { InjectModel } from "@nestjs/sequelize";
+import { RegulatoryReferenceInformationService } from "../regulatory-reference-information";
 
 export enum FileType {
   PDF = "pdf",
@@ -17,7 +27,11 @@ export enum FileType {
 export class FileStorageService {
   constructor(
     @InjectModel(LogoEntity)
-    private repository: typeof LogoEntity
+    private logoRepository: typeof LogoEntity,
+    @InjectModel(DesignDocumentEntity)
+    private designDocumentRepository: typeof DesignDocumentEntity,
+    @Inject(forwardRef(() => RegulatoryReferenceInformationService))
+    private nsiService: RegulatoryReferenceInformationService
   ) {}
 
   createLogo = async (
@@ -62,7 +76,7 @@ export class FileStorageService {
           break;
       }
 
-      await this.repository.create(logo);
+      await this.logoRepository.create(logo);
     }
   };
 
@@ -76,25 +90,25 @@ export class FileStorageService {
     if (file) {
       switch (target) {
         case "subsidiary": {
-          item = await this.repository.findOne({
+          item = await this.logoRepository.findOne({
             where: { subsidiaryId: +parrentId },
           });
           break;
         }
         case "counterparty": {
-          item = await this.repository.findOne({
+          item = await this.logoRepository.findOne({
             where: { counterpartyId: +parrentId },
           });
           break;
         }
         case "design": {
-          item = await this.repository.findOne({
+          item = await this.logoRepository.findOne({
             where: { designId: +parrentId },
           });
           break;
         }
         case "user": {
-          item = await this.repository.findOne({
+          item = await this.logoRepository.findOne({
             where: { userId: +parrentId },
           });
           break;
@@ -114,25 +128,25 @@ export class FileStorageService {
     let item: any = null;
     switch (target) {
       case "subsidiary": {
-        item = await this.repository.findOne({
+        item = await this.logoRepository.findOne({
           where: { subsidiaryId: parrentId },
         });
         break;
       }
       case "counterparty": {
-        item = await this.repository.findOne({
+        item = await this.logoRepository.findOne({
           where: { counterpartyId: parrentId },
         });
         break;
       }
       case "design": {
-        item = await this.repository.findOne({
+        item = await this.logoRepository.findOne({
           where: { designId: parrentId },
         });
         break;
       }
       case "user": {
-        item = await this.repository.findOne({
+        item = await this.logoRepository.findOne({
           where: { userId: parrentId },
         });
         break;
@@ -143,6 +157,90 @@ export class FileStorageService {
 
     if (item) {
       this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
+    }
+  };
+
+  createDesignDocument = async (
+    parrentId: string,
+    parrentTarget: string,
+    parrentFolderPath: string,
+    file: any,
+    item?: DesignDocumentCreateOrUpdateAttrs
+  ): Promise<void> => {
+    const document: DesignDocumentCreateOrUpdateAttrs = {
+      projectId: item ? item.projectId : null,
+      unitId: item ? item.unitId : null,
+      subUnitId: item ? item.subUnitId : null,
+      supplierId: item ? item.supplierId : null,
+      stageId: item ? item.stageId : 3,
+      sectionId: item ? item.sectionId : 57,
+      code: item ? item.code : "",
+      title: item ? item.title : "",
+      revision: item ? item.revision : "1",
+      description: item ? item.description : "",
+      filePath: "",
+      fileName: "",
+      fileType: "",
+    };
+
+    const stage = await this.nsiService.findOne(
+      "stage",
+      document.stageId.toString()
+    );
+    const section = await this.nsiService.findOne(
+      "section",
+      document.sectionId.toString()
+    );
+
+    const stageFolderPath = this.generateFolderName(
+      "stage",
+      +document.stageId,
+      stage.code,
+      null
+    );
+    const stageFolder = this.createDirectory(
+      `${parrentFolderPath}/${stageFolderPath}`
+    );
+
+    const sectionFolderPath = this.generateFolderName(
+      "section",
+      +document.sectionId,
+      section.code,
+      null
+    );
+
+    if (file) {
+      const parrentPath = this.createDirectory(
+        `${stageFolder}/${sectionFolderPath}`
+      );
+      const fileName = this.fileUpload(parrentPath, file);
+      document.filePath = parrentFolderPath;
+      document.fileName = fileName;
+      document.fileType = this.getFileType(file);
+
+      switch (parrentTarget) {
+        case "project": {
+          document.projectId = +parrentId;
+          break;
+        }
+        case "unit": {
+          document.unitId = +parrentId;
+          break;
+        }
+        case "sub-unit": {
+          document.subUnitId = +parrentId;
+          break;
+        }
+        case "counterparty": {
+          document.supplierId = +parrentId;
+          break;
+        }
+        default:
+          break;
+      }
+      console.log(document);
+
+      // await this.designDocumentRepository.create(document);
     }
   };
 

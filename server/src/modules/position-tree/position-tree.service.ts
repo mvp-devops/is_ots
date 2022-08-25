@@ -184,7 +184,8 @@ export class PositionTreeService {
   createOne = async (
     target: string,
     dto: CreatePositionTreeDto,
-    file?: any
+    file?: any,
+    questionare?: any
   ): Promise<PositionTreeView> => {
     let item: PositionTreeView = null;
     let folderName = "";
@@ -358,7 +359,14 @@ export class PositionTreeService {
       target === "subsidiary" &&
       (await this.fileService.createLogo(item.id.toString(), target, file));
 
-    // file && (target === "unit" || target === "sub-unit") &&  (await this.fileService.createLogo(item.id.toString(), target, file));
+    file &&
+      (target === "unit" || target === "sub-unit") &&
+      (await this.fileService.createDesignDocument(
+        item.id.toString(),
+        target,
+        folderName,
+        file
+      ));
 
     return item;
   };

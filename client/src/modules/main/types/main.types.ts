@@ -28,3 +28,24 @@ export interface ListItem {
   content: string;
   avatar: string;
 }
+
+export interface EssenceState {
+  formVisible: boolean;
+  actionType: string;
+}
+
+export enum ActionTypes {
+  SET_FORM_VISIBLE = "SET_FORM_VISIBLE",
+  SET_ACTION_TYPE = "SET_ACTION_TYPE",
+}
+
+interface SetFormVisibleAction {
+  type: ActionTypes.SET_FORM_VISIBLE;
+  payload: boolean;
+}
+interface SetActionTypeAction {
+  type: ActionTypes.SET_ACTION_TYPE;
+  payload: string;
+}
+
+export type EssenceAction = SetFormVisibleAction | SetActionTypeAction;

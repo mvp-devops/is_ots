@@ -46,10 +46,10 @@ const setFormData = (item: PositionTreeCreateOrUpdateAttrs): FormData => {
     item.supplierId &&
     typeof item.supplierId === "string" &&
     data.append("supplierId", item.supplierId);
-  "questionare" in item &&
-    item.questionare &&
-    typeof item.questionare === "string" &&
-    data.append("questionare", item.questionare);
+  // "questionare" in item &&
+  //   item.questionare &&
+  //   typeof item.questionare === "string" &&
+  //   data.append("questionare", item.questionare);
   "position" in item &&
     item.position &&
     typeof item.position === "string" &&
@@ -68,7 +68,7 @@ export const createOneEssence = async (
 ): Promise<PositionTreeView> => {
   const url = setUrl(`${baseUrl}add`);
   const formData = setFormData(item);
-  const { data } = await axios.post(url, formData, { params: target });
+  const { data } = await axios.post(url, formData, { params: { target } });
   return data;
 };
 
@@ -83,7 +83,7 @@ export const createManyEssences = async (
     elems.push(formData);
   }
 
-  const { data } = await axios.post(url, elems, { params: target });
+  const { data } = await axios.post(url, elems, { params: { target } });
   return data;
 };
 
@@ -94,7 +94,7 @@ export const updateOneEssence = async (
 ): Promise<PositionTreeView> => {
   const url = setUrl(`${baseUrl}edit/${id}`);
   const formData = setFormData(item);
-  const { data } = await axios.put(url, formData, { params: target });
+  const { data } = await axios.put(url, formData, { params: { target } });
 
   return data;
 };
@@ -104,7 +104,7 @@ export const deleteOneEssence = async (
   id: string
 ): Promise<PositionTreeView> => {
   const url = setUrl(`${baseUrl}remove/${id}`);
-  const { data } = await axios.delete(url, { params: target });
+  const { data } = await axios.delete(url, { params: { target } });
 
   return data;
 };

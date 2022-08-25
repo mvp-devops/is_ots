@@ -31,6 +31,7 @@ interface FormProps {
 
 const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
   const {
+    currentItem,
     parrentsList,
     designsList,
     equipmentsList,
@@ -38,10 +39,14 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
     editRow,
     onHandlerChange,
     currentTarget,
+    loading,
+    error,
+    addNewChild,
+    addNewChildren,
+    updateOneItem,
+    deleteOneItem,
   } = usePositionTreeData(target, actionType);
-  const { childrenListHeader } = useItemPage();
-
-  console.log(editRow);
+  const { childrenListHeader, setFormVisible } = useItemPage();
 
   const parrentFieldItem = actionType === FormActions.EDIT &&
     currentTarget === "field" &&
@@ -411,7 +416,14 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         <>
           <Divider className="p-0 m-2" />
           <Space className="d-flex justify-content-end mb-2">
-            <Button type="primary" className="me-1">
+            <Button
+              type="primary"
+              className="me-1"
+              onClick={() => {
+                updateOneItem();
+                setFormVisible(false);
+              }}
+            >
               Обновить
             </Button>
           </Space>
@@ -420,7 +432,14 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         <>
           <Divider className="p-0 m-2" />
           <Space className="d-flex justify-content-end mb-0">
-            <Button type="primary" className="me-1">
+            <Button
+              type="primary"
+              className="me-1"
+              onClick={() => {
+                addNewChild();
+                setFormVisible(false);
+              }}
+            >
               Добавить
             </Button>
           </Space>
@@ -429,7 +448,14 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         <>
           <Divider className="p-0 m-2" />
           <Space className="d-flex justify-content-end mb-0">
-            <Button type="primary" className="me-1 ">
+            <Button
+              type="primary"
+              className="me-1 "
+              onClick={() => {
+                deleteOneItem();
+                setFormVisible(false);
+              }}
+            >
               Удалить
             </Button>
           </Space>

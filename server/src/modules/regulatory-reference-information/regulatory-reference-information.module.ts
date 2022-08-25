@@ -31,5 +31,6 @@ import { RegulatoryReferenceInformationService } from "./regulatory-reference-in
 
     forwardRef(() => FileStorageModule),
   ],
+  exports: [RegulatoryReferenceInformationService],
 })
 export class RegulatoryReferenceInformationModule {}

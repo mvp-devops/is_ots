@@ -23,7 +23,6 @@ type RegulatoryReferenceInformationView =
   | DesignEntity
   | DirectionEntity
   | EquipmentEntity
-  | UserEntity
   | StageEntity
   | SectionEntity
   | null;
@@ -279,20 +278,20 @@ export class RegulatoryReferenceInformationService {
         });
         break;
       }
-      case "user": {
-        item = await this.userRepository.findOne({
-          where: { id },
-          include: [
-            {
-              model: LogoEntity,
-            },
-            {
-              model: SubsidiaryEntity,
-            },
-          ],
-        });
-        break;
-      }
+      // case "user": {
+      //   item = await this.userRepository.findOne({
+      //     where: { id },
+      //     include: [
+      //       {
+      //         model: LogoEntity,
+      //       },
+      //       {
+      //         model: SubsidiaryEntity,
+      //       },
+      //     ],
+      //   });
+      //   break;
+      // }
       case "stage": {
         item = await this.stageRepository.findOne({
           where: { id },
@@ -354,19 +353,19 @@ export class RegulatoryReferenceInformationService {
         });
         break;
       }
-      case "user": {
-        items = await this.userRepository.findAll({
-          include: [
-            {
-              model: LogoEntity,
-            },
-            {
-              model: SubsidiaryEntity,
-            },
-          ],
-        });
-        break;
-      }
+      // case "user": {
+      //   items = await this.userRepository.findAll({
+      //     include: [
+      //       {
+      //         model: LogoEntity,
+      //       },
+      //       {
+      //         model: SubsidiaryEntity,
+      //       },
+      //     ],
+      //   });
+      //   break;
+      // }
       case "stage": {
         items = await this.stageRepository.findAll({
           include: [],

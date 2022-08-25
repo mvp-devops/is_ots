@@ -30,9 +30,6 @@ export interface ItemPageMenuProps {
   setShowCCLS: () => void;
   setShowListItems: () => void;
   setShowDocumentation: () => void;
-  formVisible: boolean;
-  setFormVisible: (flag: boolean) => void;
-  setActionType: (action: string) => void;
 }
 
 const ItemPageMenu: FC<ItemPageMenuProps> = ({
@@ -41,13 +38,10 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
   childTarget,
   setShowSLOE,
   setShowCCLS,
-  setFormVisible,
+
   setShowListItems,
   setShowDocumentation,
-  setActionType,
 }) => {
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
-
   const items: MenuItem[] = [
     {
       label: (
@@ -262,11 +256,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
     },
   ];
 
-  const { menuItems } = useItemPage(role, items);
-
-  // useEffect(() => {
-  //   setMenu(setMenuItems(role, items));
-  // }, [role, currentItem]);
+  const { menuItems, setFormVisible, setActionType } = useItemPage(role, items);
 
   return (
     <Sider className="site-layout-background" width={300}>

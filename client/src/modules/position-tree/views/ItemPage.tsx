@@ -18,6 +18,7 @@ import ListView from "./list/ListView";
 import { useTypedSelector } from "../../../hooks";
 import ModalContainer from "../components/forms/ModalContainer";
 import PositionTreeForm from "../components/forms/PositionTreeForm";
+import { useItemPage } from "./hooks/useItemPage";
 
 const { Content } = Layout;
 
@@ -28,12 +29,12 @@ interface ItemPageProps {
 const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
   const [showSLOE, setShowSLOE] = useState(false);
   const [showCCLS, setShowCCLS] = useState(false);
-  const [formVisible, setFormVisible] = useState(false);
-  const [actionType, setActionType] = useState("");
   const [showListItems, setShowListItems] = useState(false);
   const [showDocumentation, setShowDocumentation] = useState(false);
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
+
+  const { formVisible, setFormVisible, actionType } = useItemPage();
 
   return (
     <Layout style={{ minHeight: "100vh", padding: 0 }}>
@@ -62,9 +63,6 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
               setShowDocumentation={() =>
                 setShowDocumentation(!showDocumentation)
               }
-              setActionType={setActionType}
-              formVisible={formVisible}
-              setFormVisible={setFormVisible}
             />
           )}
         </Layout>

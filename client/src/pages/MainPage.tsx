@@ -33,7 +33,7 @@ function getItem(
   } as MenuItem;
 }
 
-const role = Roles.EXPERT;
+const role = Roles.ADMIN;
 
 const userSubsidiaryId = "7";
 
@@ -73,9 +73,11 @@ const MainPage: React.FC = () => {
     }
   };
 
+  const { formVisible } = useTypedSelector((state) => state.main);
+
   useEffect(() => {
     setMenuItems(role, userSubsidiaryId);
-  }, []);
+  }, [formVisible]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

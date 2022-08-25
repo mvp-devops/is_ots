@@ -1,4 +1,5 @@
 import { equipmentAccountingActionCreators } from "../modules/equipment-accounting";
+import { mainActionCreators } from "../modules/main";
 import { positionTreeActionCreators } from "../modules/position-tree";
 import { nsiActionCreators } from "../modules/regulatory-reference-information";
 // import * as UnitActionCreators from "../../models/position-tree/unit/unit.action-creators";
@@ -14,6 +15,7 @@ const ActionCreators = {
   ...equipmentAccountingActionCreators,
   ...positionTreeActionCreators,
   ...nsiActionCreators,
+  ...mainActionCreators,
   //   ...UnitActionCreators,
   // ...MainActionCreators,
   //   ...FieldActionCreators,

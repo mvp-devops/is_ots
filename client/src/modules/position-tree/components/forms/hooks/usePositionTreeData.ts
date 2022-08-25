@@ -6,7 +6,7 @@ import {
 } from "../../../../../../../server/common/types/position-tree";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 
-import { useTypedSelector } from "../../../../../hooks";
+import { useActions, useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
 import { getItems } from "../../../../regulatory-reference-information";
 import { getOneItem, getAllItems } from "../../../api/position-tree.api";
@@ -113,9 +113,17 @@ export const usePositionTreeData = (target: string, actionType: string) => {
   const [suppliersList, setSuppliersList] = useState<NSIView[]>([]);
   const [currentTarget, setCurrentTarget] = useState("");
   const [parrentsList, setParrentsList] = useState<PositionTreeView[]>([]);
-  const [loading, setLoading] = useState(true);
 
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
+  const { currentItem, loading, error } = useTypedSelector(
+    (state) => state.positionTree
+  );
+
+  const {
+    createPositionTreeItem,
+    createManyPositionTreeItems,
+    updatePositionTreeItem,
+    deletePositionTreeItem,
+  } = useActions();
 
   useEffect(() => {
     switch (currentTarget) {
@@ -142,7 +150,7 @@ export const usePositionTreeData = (target: string, actionType: string) => {
       default:
         break;
     }
-  }, [currentTarget]);
+  }, [currentTarget, target]);
 
   useEffect(() => {
     if (actionType === FormActions.EDIT && currentItem) {
@@ -171,7 +179,29 @@ export const usePositionTreeData = (target: string, actionType: string) => {
       });
   };
 
+  const addNewChild = () => {
+    const childrenTarget = currentItem ? currentItem.childrenTarget : null;
+    childrenTarget && createPositionTreeItem(childrenTarget, editRow);
+    console.log(editRow);
+  };
+
+  const addNewChildren = (data: PositionTreeCreateOrUpdateAttrs[]) => {
+    const childrenTarget = currentItem ? currentItem.childrenTarget : null;
+    childrenTarget && createManyPositionTreeItems(childrenTarget, data);
+  };
+
+  const updateOneItem = () => {
+    currentItem &&
+      updatePositionTreeItem(currentItem.target, currentItem.id, editRow);
+  };
+
+  const deleteOneItem = () => {
+    currentItem && deletePositionTreeItem(currentItem.target, currentItem.id);
+  };
+
   return {
+    loading,
+    error,
     parrentsList,
     currentItem,
     designsList,
@@ -180,5 +210,9 @@ export const usePositionTreeData = (target: string, actionType: string) => {
     currentTarget,
     editRow,
     onHandlerChange,
+    addNewChild,
+    addNewChildren,
+    updateOneItem,
+    deleteOneItem,
   };
 };

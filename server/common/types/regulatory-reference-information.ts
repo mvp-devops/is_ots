@@ -1,5 +1,3 @@
-export interface RegulatoryReferenceInformation {}
-
 export interface RegulatoryReferenceInformationCreationAttrs {
   title: string;
   code: number | string | null;
