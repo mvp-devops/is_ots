@@ -25,8 +25,8 @@ export const projectItem: ProjectCreateOrUpdateAttrs = {
   designId: "10",
   title: "",
   code: "",
-  contract: "",
-  description: "PROJECT",
+  contract: "н/д",
+  description: "PRJ",
 };
 
 export const unitItem: UnitCreateOrUpdateAttrs = {
@@ -36,7 +36,7 @@ export const unitItem: UnitCreateOrUpdateAttrs = {
   position: "0",
   title: "",
   code: "",
-  contract: "",
+  contract: "н/д",
   description: "",
   questionare: null,
 };
@@ -48,7 +48,7 @@ export const subUnitItem: SubUnitCreateOrUpdateAttrs = {
   position: "0",
   title: "",
   code: "",
-  contract: "",
+  contract: "н/д",
   description: "",
   questionare: null,
 };

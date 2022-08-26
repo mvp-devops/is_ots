@@ -1,12 +1,21 @@
 import { Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
 import {
   CreateDesignDocumentCommentDto,
   UpdateDesignDocumentCommentDto,
 } from "./dto";
+import { DesignDocumentCommentEntity } from "./entities";
 
 @Injectable()
 export class CommentAccountingService {
-  create(createCommentAccountingDto: CreateDesignDocumentCommentDto) {
+  constructor(
+    @InjectModel(DesignDocumentCommentEntity)
+    private commentRepository: typeof DesignDocumentCommentEntity
+  ) // @Inject(forwardRef(() => RegulatoryReferenceInformationService))
+  // private nsiService: RegulatoryReferenceInformationService
+  {}
+
+  create(dto: CreateDesignDocumentCommentDto) {
     return "This action adds a new commentAccounting";
   }
 

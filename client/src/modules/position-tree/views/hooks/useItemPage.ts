@@ -1,4 +1,3 @@
-import { RcFile } from "antd/lib/upload";
 import { useEffect, useState } from "react";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../../../../hooks";
@@ -153,7 +152,7 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
           break;
       }
     }
-  }, [currentItem]);
+  }, [currentItem, formVisible]);
 
   useEffect(() => {
     items && role && setMenuItems(renderMenuItems(role, items));

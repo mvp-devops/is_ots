@@ -16,7 +16,13 @@ import {
 } from "../../../common/types/file-storage";
 import { DesignDocumentEntity, LogoEntity } from "./entities";
 import { InjectModel } from "@nestjs/sequelize";
-import { RegulatoryReferenceInformationService } from "../regulatory-reference-information";
+import {
+  CounterpartyEntity,
+  RegulatoryReferenceInformationService,
+  SectionEntity,
+  StageEntity,
+} from "../regulatory-reference-information";
+import { CreateDesignDocumentDto } from "./dto/create-file-storage.dto";
 
 export enum FileType {
   PDF = "pdf",
@@ -166,7 +172,7 @@ export class FileStorageService {
     parrentFolderPath: string,
     file: any,
     data?: DesignDocumentCreateOrUpdateAttrs
-  ): Promise<void> => {
+  ): Promise<DesignDocumentEntity> => {
     const document: DesignDocumentCreateOrUpdateAttrs = {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
@@ -177,7 +183,7 @@ export class FileStorageService {
       cableLogId: null,
       monitoringId: null,
       supplierId: data ? data.supplierId : null,
-      stageId: data ? data.stageId : 3,
+      stageId: data ? data.stageId : 1,
       sectionId: data ? data.sectionId : 57,
       code: data ? data.code : "000",
       title: data ? data.title : "",
@@ -188,58 +194,111 @@ export class FileStorageService {
       fileType: "",
     };
 
-    // const stage = await this.nsiService.findOne(
-    //   "stage",
-    //   document.stageId.toString()
-    // );
-    // const section = await this.nsiService.findOne(
-    //   "section",
-    //   document.sectionId.toString()
-    // );
+    let tkpPath = "";
+    let filePath = "";
+    let fileName = "";
 
-    // const stageFolderPath = this.generateFolderName(
-    //   "stage",
-    //   +document.stageId,
-    //   stage.code,
-    //   null
-    // );
-    // this.createDirectory(`${parrentFolderPath}/${stageFolderPath}`);
-    // const sectionFolderPath = this.generateFolderName(
-    //   "section",
-    //   +document.sectionId,
-    //   section.code,
-    //   null
-    // );
-    // this.createDirectory(
-    //   `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`
-    // );
-    // const filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
-    const fileName = this.fileUpload(parrentFolderPath, file);
-    document.filePath = parrentFolderPath;
-    document.fileName = fileName;
-    document.fileType = this.getFileType(file);
+    if (data !== undefined) {
+      const stage = await this.nsiService.findOne(
+        "stage",
+        document.stageId.toString()
+      );
+      const section = await this.nsiService.findOne(
+        "section",
+        document.sectionId.toString()
+      );
 
-    if (data === undefined) {
+      const stageFolderPath = this.generateFolderName(
+        "stage",
+        +document.stageId,
+        stage.code,
+        null
+      );
+
+      this.createDirectory(`${parrentFolderPath}/${stageFolderPath}`);
+
+      if (document.supplierId) {
+        const supplier = await this.nsiService.findOne(
+          "counterparty",
+          document.supplierId.toString()
+        );
+        const supplierFolder = this.generateFolderName(
+          "counterparty",
+          +document.supplierId,
+          supplier.title
+        );
+        tkpPath = `${parrentFolderPath}/${stageFolderPath}/${supplierFolder}`;
+        this.createDirectory(tkpPath);
+      }
+
+      const sectionFolderPath = this.generateFolderName(
+        "section",
+        +document.sectionId,
+        section.code,
+        null
+      );
+
+      filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
+      this.createDirectory(filePath);
+
+      const pathToFile = document.supplierId ? tkpPath : filePath;
+
+      fileName = this.fileUpload(pathToFile, file);
+      document.filePath = pathToFile;
+      document.fileName = fileName;
+    } else {
       document.title = this.getFileName(file);
+
       switch (parrentTarget) {
         case "unit": {
           document.uqstId = +parrentId;
+          const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
+          this.createDirectory(pathToFile);
+
+          fileName = this.fileUpload(pathToFile, file);
+          document.filePath = pathToFile;
+          document.fileName = fileName;
           break;
         }
         case "sub-unit": {
           document.suqstId = +parrentId;
+          const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
+          this.createDirectory(pathToFile);
+
+          fileName = this.fileUpload(pathToFile, file);
+          document.filePath = pathToFile;
+          document.fileName = fileName;
           break;
         }
         case "summary-list-of-equipment": {
           document.sloeId = +parrentId;
+          this.createDirectory(`${parrentFolderPath}/Оборудование`);
+          const pathToFile = `${parrentFolderPath}/Оборудование/ОЛ, ТТ, ТЗ`;
+          this.createDirectory(pathToFile);
+
+          fileName = this.fileUpload(pathToFile, file);
+          document.filePath = pathToFile;
+          document.fileName = fileName;
           break;
         }
         case "monitoring": {
           document.monitoringId = +parrentId;
+          this.createDirectory(`${parrentFolderPath}/Оборудование`);
+          const pathToFile = `${parrentFolderPath}/Оборудование`;
+          fileName = this.fileUpload(pathToFile, file);
+          document.filePath = pathToFile;
+          document.fileName = fileName;
+
           break;
         }
         case "cable-log": {
           document.cableLogId = +parrentId;
+          this.createDirectory(`${parrentFolderPath}/Оборудование`);
+          const pathToFile = `${parrentFolderPath}/Оборудование/Схемы`;
+          this.createDirectory(pathToFile);
+          fileName = this.fileUpload(pathToFile, file);
+          document.filePath = pathToFile;
+          document.fileName = fileName;
           break;
         }
         default:
@@ -247,48 +306,184 @@ export class FileStorageService {
       }
     }
 
-    await this.designDocumentRepository.create(document);
+    document.fileType = this.getFileType(file);
+
+    const item = await this.designDocumentRepository.create(document);
+
+    return item;
   };
 
-  // updateDesignDocument = async (
-  //   parrentId: string,
-  //   parrentTarget: string,
-  //   parrentFolderPath: string,
-  //   file: any,
-  //   data?: DesignDocumentCreateOrUpdateAttrs
-  // ): Promise<void> => {
-  //   let item: LogoEntity | null = null;
+  deleteDesignDocument = async (id: string): Promise<DesignDocumentEntity> => {
+    const item = await this.designDocumentRepository.findOne({ where: { id } });
+    if (item) {
+      this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
+      this.designDocumentRepository.destroy({ where: { id } });
+    }
 
-  //   if (file) {
-  //     switch (parrentTarget) {
-  //       case "project": {
-  //         item = await this.logoRepository.findOne({
-  //           where: { counterpartyId: +parrentId },
-  //         });
-  //         break;
-  //       }
-  //       case "unit": {
-  //         item = await this.logoRepository.findOne({
-  //           where: { designId: +parrentId },
-  //         });
-  //         break;
-  //       }
-  //       case "sub-unit": {
-  //         item = await this.logoRepository.findOne({
-  //           where: { userId: +parrentId },
-  //         });
-  //         break;
-  //       }
-  //       default:
-  //         break;
+    return item;
+  };
+
+  //   updateDesignDocument = async (
+  // id: string,
+
+  //     data: DesignDocumentCreateOrUpdateAttrs,
+  //     file?: File,
+  //   ): Promise<DesignDocumentEntity> => {
+  //     let filePath = "";
+
+  //     const item = await this.designDocumentRepository.findOne({ where: { id } });
+
+  //     const { projectId, unitId, uqstId, subUnitId, suqstId, sloeId, cableLogId, monitoringId, supplierId, stageId, sectionId } = data;
+
+  //     const document: DesignDocumentCreateOrUpdateAttrs = {
+  //       projectId: data.projectId,
+  //       unitId:data.unitId,
+  //       subUnitId: data.subUnitId,
+  //       uqstId:  data.uqstId,
+  //       suqstId:  data.uqstId,
+  //       sloeId:  data.uqstId,
+  //       cableLogId: data.cableLogId,
+  //       monitoringId: data.monitoringId,
+  //       supplierId: data.supplierId,
+  //       stageId: data.stageId,
+  //       sectionId: data.sectionId,
+  //       code: data.code,
+  //       title: data.title,
+  //       revision:data.revision,
+  //       description: data.description,
+  //       filePath: item.filePath,
+  //       fileName: !file ?  item.fileName : "",
+  //       fileType: !file ? item.fileType : this.getFileType(file),
+  //     };
+
+  //     if (uqstId) {
+
   //     }
 
-  //     if (item) {
-  //       this.fileUpload("logo", file);
-  //       this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
-  //     } else this.createLogo(parrentId, target, file);
-  //   }
-  // };
+  //     if (file) {
+
+  //     } else {
+
+  //     }
+
+  //     // let tkpPath = "";
+  //     // let filePath = "";
+  //     // let fileName = "";
+
+  //     // if (data !== undefined) {
+  //     //   const stage = await this.nsiService.findOne(
+  //     //     "stage",
+  //     //     document.stageId.toString()
+  //     //   );
+  //     //   const section = await this.nsiService.findOne(
+  //     //     "section",
+  //     //     document.sectionId.toString()
+  //     //   );
+
+  //     //   const stageFolderPath = this.generateFolderName(
+  //     //     "stage",
+  //     //     +document.stageId,
+  //     //     stage.code,
+  //     //     null
+  //     //   );
+
+  //     //   this.createDirectory(`${parrentFolderPath}/${stageFolderPath}`);
+
+  //     //   if (document.supplierId) {
+  //     //     const supplier = await this.nsiService.findOne(
+  //     //       "counterparty",
+  //     //       document.supplierId.toString()
+  //     //     );
+  //     //     const supplierFolder = this.generateFolderName(
+  //     //       "counterparty",
+  //     //       +document.supplierId,
+  //     //       supplier.title
+  //     //     );
+  //     //     tkpPath = `${parrentFolderPath}/${stageFolderPath}/${supplierFolder}`;
+  //     //     this.createDirectory(tkpPath);
+  //     //   }
+
+  //     //   const sectionFolderPath = this.generateFolderName(
+  //     //     "section",
+  //     //     +document.sectionId,
+  //     //     section.code,
+  //     //     null
+  //     //   );
+
+  //     //   filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
+  //     //   this.createDirectory(filePath);
+
+  //     //   const pathToFile = document.supplierId ? tkpPath : filePath;
+
+  //     //   fileName = this.fileUpload(pathToFile, file);
+  //     //   document.filePath = pathToFile;
+  //     //   document.fileName = fileName;
+  //     // } else {
+  //     //   document.title = this.getFileName(file);
+
+  //     //   switch (parrentTarget) {
+  //     //     case "unit": {
+  //     //       document.uqstId = +parrentId;
+  //     //       const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
+  //     //       this.createDirectory(pathToFile);
+
+  //     //       fileName = this.fileUpload(pathToFile, file);
+  //     //       document.filePath = pathToFile;
+  //     //       document.fileName = fileName;
+  //     //       break;
+  //     //     }
+  //     //     case "sub-unit": {
+  //     //       document.suqstId = +parrentId;
+  //     //       const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
+  //     //       this.createDirectory(pathToFile);
+
+  //     //       fileName = this.fileUpload(pathToFile, file);
+  //     //       document.filePath = pathToFile;
+  //     //       document.fileName = fileName;
+  //     //       break;
+  //     //     }
+  //     //     case "summary-list-of-equipment": {
+  //     //       document.sloeId = +parrentId;
+  //     //       this.createDirectory(`${parrentFolderPath}/Оборудование`);
+  //     //       const pathToFile = `${parrentFolderPath}/Оборудование/ОЛ, ТТ, ТЗ`;
+  //     //       this.createDirectory(pathToFile);
+
+  //     //       fileName = this.fileUpload(pathToFile, file);
+  //     //       document.filePath = pathToFile;
+  //     //       document.fileName = fileName;
+  //     //       break;
+  //     //     }
+  //     //     case "monitoring": {
+  //     //       document.monitoringId = +parrentId;
+  //     //       this.createDirectory(`${parrentFolderPath}/Оборудование`);
+  //     //       const pathToFile = `${parrentFolderPath}/Оборудование`;
+  //     //       fileName = this.fileUpload(pathToFile, file);
+  //     //       document.filePath = pathToFile;
+  //     //       document.fileName = fileName;
+
+  //     //       break;
+  //     //     }
+  //     //     case "cable-log": {
+  //     //       document.cableLogId = +parrentId;
+  //     //       this.createDirectory(`${parrentFolderPath}/Оборудование`);
+  //     //       const pathToFile = `${parrentFolderPath}/Оборудование/Схемы`;
+  //     //       this.createDirectory(pathToFile);
+  //     //       fileName = this.fileUpload(pathToFile, file);
+  //     //       document.filePath = pathToFile;
+  //     //       document.fileName = fileName;
+  //     //       break;
+  //     //     }
+  //     //     default:
+  //     //       break;
+  //     //   }
+  //     // }
+
+  //     // document.fileType = this.getFileType(file);
+
+  //     await this.designDocumentRepository.update(document, {where: {id}});
+
+  //     return item;
+  //   };
 
   getFilePath = (folder: string): string => {
     try {
@@ -437,12 +632,10 @@ export class FileStorageService {
     this.createDirectory(`${folder}/imports`);
 
     // console.log(fileFolder);
-    const filePath = this.getPath([fileFolder, `${fileName}.${fileType}`]);
-
-    console.log(filePath);
-
-    const items = JSON.stringify(data);
-    console.log(items);
+    const filePath = this.getPath([
+      fileFolder,
+      `${fileName}_${setCurrentDate()}.${fileType}`,
+    ]);
 
     fse.writeJson(filePath, data, (err) => {
       if (err) return console.error(err);
@@ -517,26 +710,5 @@ export class FileStorageService {
     file.end();
 
     // fs.writeFileSync(filePath, data);
-  };
-
-  //Будем использовать в иных сервисах
-
-  writeImportData = (unit: string, system: string, data: any) => {
-    const filePath = this.getFilePath("imports");
-    const fileName = `${filePath}/${unit}_${system}_${setCurrentDate()}.json`;
-    fs.writeFile(fileName, JSON.stringify(data), (err) => {
-      if (err) throw err;
-      console.log("Data has been added!");
-    });
-
-    // fs.open(fileName, 'r+', (err) => {
-    //   if (err) throw err;
-    //   console.log('File was created!');
-
-    // });
-
-    // console.log('data: ', data);
-    // const json = JSON.parse(data);
-    // console.log('JSON parse: ', json);
   };
 }

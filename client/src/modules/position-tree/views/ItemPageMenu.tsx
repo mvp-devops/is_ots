@@ -59,6 +59,23 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
           label: (
             <Space
               onClick={() => {
+                setActionType(FormActions.ADD);
+                setFormVisible(true);
+              }}
+            >
+              <PlusOutlined
+                className="text-dark"
+                style={{ marginBottom: "16px", padding: 0 }}
+              />
+              Добавить
+            </Space>
+          ),
+          key: `ADD`,
+        },
+        {
+          label: (
+            <Space
+              onClick={() => {
                 setActionType(FormActions.EDIT);
                 setFormVisible(true);
               }}

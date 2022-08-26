@@ -7,21 +7,38 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
 } from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { CreateDesignDocumentDto } from "./dto/create-file-storage.dto";
 import { FileStorageService } from "./file-storage.service";
 
-@Controller("file-storage")
+@Controller("api/file-storage")
 export class FileStorageController {
   constructor(private readonly service: FileStorageService) {}
 
-  // @Post("/add")
-  // create(
-  //   @Body() dto: CreateFileStorageDto,
-  //   @Query() query: { target: string }
-  // ) {
-  //   const { target } = query;
-  //   return this.service.create(target, dto);
-  // }
+  @Post("/add")
+  @UseInterceptors(FileInterceptor("file"))
+  create(
+    @Body() dto: CreateDesignDocumentDto,
+    @Query()
+    query: {
+      parrentId: string;
+      parrentTarget: string;
+      parrentFolderPath: string;
+    },
+    @UploadedFile() file?: any
+  ) {
+    const { parrentId, parrentTarget, parrentFolderPath } = query;
+    return this.service.createDesignDocument(
+      parrentId,
+      parrentTarget,
+      parrentFolderPath,
+      file,
+      dto
+    );
+  }
 
   // @Get("/find")
   // findAll() {
@@ -43,8 +60,16 @@ export class FileStorageController {
   //   return this.service.update(id, target, dto);
   // }
 
-  // @Delete("remove/:id")
-  // remove(@Param("id") id: string) {
-  //   return this.service.remove(id);
-  // }
+  @Delete("remove/:id")
+  remove(
+    @Param("id") id: string
+    // @Query()
+    // query: {
+    //   parrentId: string;
+    //   parrentTarget: string;
+    // },
+  ) {
+    // const {parrentId, parrentTarget} = query
+    return this.service.deleteDesignDocument(id);
+  }
 }

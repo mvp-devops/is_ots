@@ -48,6 +48,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
             ]}
           />
         )}
+
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <Content style={{ padding: "0 5px", minHeight: "100%" }}>
             <ListView />

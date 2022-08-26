@@ -139,7 +139,9 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
           onChange={(value: string) => onHandlerChange("designId", value)}
         >
           {designsList.map((item) => (
-            <Option key={item.id}>{item.title}</Option>
+            <Option key={item.id} title={item.id}>
+              {item.title}
+            </Option>
           ))}
         </Select>
       </Item>

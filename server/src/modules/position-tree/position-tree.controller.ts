@@ -37,6 +37,15 @@ export class PositionTreeController {
     return this.service.createOne(target, dto, file);
   }
 
+  @Post("/add/many")
+  createMany(
+    @Body("items") dto: CreatePositionTreeDto[],
+    @Query() query: { target: string }
+  ) {
+    const { target } = query;
+    return this.service.createMany(target, dto);
+  }
+
   @Get("/find")
   findAll(@Query() query: { target: string; parrentId?: string }) {
     const { target, parrentId } = query;
