@@ -55,6 +55,16 @@ export class DesignDocumentSolutionEntity extends Model<
   answer: string;
 
   @ApiProperty({
+    example: "Контактные данные проектировщика",
+    description: "Контактные данные проектировщика",
+  })
+  @Column({
+    type: DataType.TEXT,
+    allowNull: false,
+  })
+  designContacts: string;
+
+  @ApiProperty({
     example: 1,
     description: "Статус решения",
   })

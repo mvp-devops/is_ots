@@ -11,27 +11,27 @@ export class CreateDesignDocumentCommentDto
     example: 1,
     description: "Уникальный идентификатор документации проекта",
   })
-  readonly projectDocumentId: number | string | null;
+  readonly pdcId: number | string | null;
 
   @ApiProperty({
     example: 1,
     description:
       "Уникальный идентификатор документации объекта капитального строительства",
   })
-  readonly unitDocumentId: number | string | null;
+  readonly udcId: number | string | null;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор документации подобъекта",
   })
-  readonly subUnitDocumentId: number | string | null;
+  readonly sudcId: number | string | null;
 
   @ApiProperty({
     example: 1,
     description:
       "Уникальный идентификатор документации поставщика (технико-коммерческие предложения)",
   })
-  readonly supplierDocumentId: number | string | null;
+  readonly sdcId: number | string | null;
 
   @ApiProperty({
     example: 1,
@@ -68,6 +68,58 @@ export class CreateDesignDocumentCommentDto
     description: "Решения по замечанию",
   })
   readonly solutions: DesignDocumentCommentSolutionCreationAttrs[];
+}
+
+export class CreateDesignDocumentSolutionDto
+  implements DesignDocumentCommentSolutionCreationAttrs
+{
+  @ApiProperty({
+    example: 1,
+    description: "Ключ",
+  })
+  readonly key: string;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор замечания",
+  })
+  readonly commentId: string | number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор эксперта, выдавшего замечание",
+  })
+  readonly userId: string | number;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор статуса ответа на замечание",
+  })
+  readonly statusId: string | number;
+
+  @ApiProperty({
+    example: "Ответ",
+    description: "Ответ на замечание от проектировщика",
+  })
+  readonly answer: string;
+
+  @ApiProperty({
+    example: "Контактные данные проектировщика",
+    description: "Контактные данные проектировщика",
+  })
+  readonly designContacts: string;
+
+  @ApiProperty({
+    example: 1,
+    description: "Уникальный идентификатор статуса решения по замечанию",
+  })
+  readonly solutionId: string | number;
+
+  @ApiProperty({
+    example: "Решение",
+    description: "Решение эксперта",
+  })
+  readonly solution: string;
 }
 
 export class CreateCapitalConstructionUnitSupervisiontDto {}

@@ -61,15 +61,7 @@ export class FileStorageController {
   // }
 
   @Delete("remove/:id")
-  remove(
-    @Param("id") id: string
-    // @Query()
-    // query: {
-    //   parrentId: string;
-    //   parrentTarget: string;
-    // },
-  ) {
-    // const {parrentId, parrentTarget} = query
+  remove(@Param("id") id: string) {
     return this.service.deleteDesignDocument(id);
   }
 }

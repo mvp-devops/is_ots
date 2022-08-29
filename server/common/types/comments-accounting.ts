@@ -7,11 +7,12 @@ export interface CommentAccountingNSIView {
 
 export interface DesignDocumentCommentSolutionCreationAttrs {
   key: string;
-  commentId: number | string;
-  userId: number | string;
-  statusId: number | string;
+  commentId: string | number;
+  userId: string | number;
+  statusId: string | number;
   answer: string;
-  solutionId: number | string;
+  designContacts: string;
+  solutionId: string | number;
   solution: string;
 }
 
@@ -25,14 +26,14 @@ export interface DesignDocumentCommentSolutionView {
 }
 
 export interface DesignDocumentCommentCreationAttrs {
-  projectDocumentId: number | string | null;
-  unitDocumentId: number | string | null;
-  subUnitDocumentId: number | string | null;
-  supplierDocumentId: number | string | null;
-  directionId: number | string | null;
-  normativeId: number | string | null;
-  userId: number | string | null;
-  criticalityId: number | string | null;
+  pdcId: string | number | null;
+  udcId: string | number | null;
+  sudcId: string | number | null;
+  sdcId: string | number | null;
+  directionId: string | number | null;
+  normativeId: string | number | null;
+  userId: string | number | null;
+  criticalityId: string | number | null;
   comment: string;
   solutions: DesignDocumentCommentSolutionCreationAttrs[];
 }

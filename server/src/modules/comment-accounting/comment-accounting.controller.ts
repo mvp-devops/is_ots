@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  Query,
+  Put,
 } from "@nestjs/common";
 import { CommentAccountingService } from "./comment-accounting.service";
 import {
@@ -17,31 +19,40 @@ import {
 export class CommentAccountingController {
   constructor(private readonly service: CommentAccountingService) {}
 
-  @Post()
-  create(@Body() createCommentAccountingDto: CreateDesignDocumentCommentDto) {
-    return this.service.create(createCommentAccountingDto);
+  @Post("/add")
+  create(@Body() dto: CreateDesignDocumentCommentDto) {
+    return this.service.createOne(dto);
   }
 
-  @Get()
-  findAll() {
-    return this.service.findAll();
+  @Post("/add/many")
+  createMany(@Body("items") dto: CreateDesignDocumentCommentDto[]) {
+    return this.service.createMany(dto);
   }
 
-  @Get(":id")
-  findOne(@Param("id") id: string) {
-    return this.service.findOne(+id);
+  @Get("/find")
+  findAll(@Query() query: { parrentTarget: string; parrentId: string }) {
+    const { parrentTarget, parrentId } = query;
+    return this.service.findAll(parrentTarget, parrentId);
   }
 
-  @Patch(":id")
+  @Get("/find/:id")
+  findOne(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.findOne(target, id);
+  }
+  @Put("/edit/:id")
   update(
     @Param("id") id: string,
-    @Body() updateCommentAccountingDto: UpdateDesignDocumentCommentDto
+    @Query() query: { target: string },
+    @Body() dto: UpdateDesignDocumentCommentDto
   ) {
-    return this.service.update(+id, updateCommentAccountingDto);
+    const { target } = query;
+    // return this.service.update(id, target, dto,);
   }
 
-  @Delete(":id")
-  remove(@Param("id") id: string) {
-    return this.service.remove(+id);
+  @Delete("remove/:id")
+  remove(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.remove(target, id);
   }
 }
