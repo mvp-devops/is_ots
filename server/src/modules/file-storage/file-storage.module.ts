@@ -1,6 +1,6 @@
 import { Module } from "@nestjs/common";
 import { SequelizeModule } from "@nestjs/sequelize";
-import { DesignDocumentEntity, LogoEntity } from "./entities";
+import { DesignDocumentEntity, LogoEntity, NormativeEntity } from "./entities";
 import { FileStorageController } from "./file-storage.controller";
 import { FileStorageService } from "./file-storage.service";
 import { RegulatoryReferenceInformationModule } from "../regulatory-reference-information";
@@ -10,7 +10,11 @@ import { RegulatoryReferenceInformationModule } from "../regulatory-reference-in
   providers: [FileStorageService],
   exports: [FileStorageService],
   imports: [
-    SequelizeModule.forFeature([LogoEntity, DesignDocumentEntity]),
+    SequelizeModule.forFeature([
+      LogoEntity,
+      DesignDocumentEntity,
+      NormativeEntity,
+    ]),
     RegulatoryReferenceInformationModule,
   ],
 })

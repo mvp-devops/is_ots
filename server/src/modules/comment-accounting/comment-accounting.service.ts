@@ -41,11 +41,14 @@ export class CommentAccountingService {
 
     if (dto.solutions.length > 0) {
       for (let i = 0; i < dto.solutions.length; i++) {
-        const { statusId, solutionId, answer, solution } = dto.solutions[i];
+        const { statusId, solutionId, answer, designContacts, solution } =
+          dto.solutions[i];
         const solutionItem = {
+          key: item.id.toString(),
           commentId: item.id,
           statusId,
           solutionId,
+          designContacts,
           answer,
           solution,
           userId: dto.userId,

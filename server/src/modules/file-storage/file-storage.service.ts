@@ -13,8 +13,9 @@ import { setCurrentDate } from "../../../common/utils";
 import {
   DesignDocumentCreateOrUpdateAttrs,
   LogoCreationAttrs,
+  NormativeCreateOrUpdateAttrs,
 } from "../../../common/types/file-storage";
-import { DesignDocumentEntity, LogoEntity } from "./entities";
+import { DesignDocumentEntity, LogoEntity, NormativeEntity } from "./entities";
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CounterpartyEntity,
@@ -36,6 +37,8 @@ export class FileStorageService {
     private logoRepository: typeof LogoEntity,
     @InjectModel(DesignDocumentEntity)
     private designDocumentRepository: typeof DesignDocumentEntity,
+    @InjectModel(NormativeEntity)
+    private normativeRepository: typeof NormativeEntity,
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
     private nsiService: RegulatoryReferenceInformationService
   ) {}
@@ -217,6 +220,16 @@ export class FileStorageService {
 
       this.createDirectory(`${parrentFolderPath}/${stageFolderPath}`);
 
+      const sectionFolderPath = this.generateFolderName(
+        "section",
+        +document.sectionId,
+        section.code,
+        null
+      );
+
+      filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
+      this.createDirectory(filePath);
+
       if (document.supplierId) {
         const supplier = await this.nsiService.findOne(
           "counterparty",
@@ -230,16 +243,6 @@ export class FileStorageService {
         tkpPath = `${parrentFolderPath}/${stageFolderPath}/${supplierFolder}`;
         this.createDirectory(tkpPath);
       }
-
-      const sectionFolderPath = this.generateFolderName(
-        "section",
-        +document.sectionId,
-        section.code,
-        null
-      );
-
-      filePath = `${parrentFolderPath}/${stageFolderPath}/${sectionFolderPath}`;
-      this.createDirectory(filePath);
 
       const pathToFile = document.supplierId ? tkpPath : filePath;
 
@@ -321,6 +324,31 @@ export class FileStorageService {
     }
 
     return item;
+  };
+
+  createNormative = async (
+    data: NormativeCreateOrUpdateAttrs,
+    file: File
+  ): Promise<NormativeEntity> => {
+    const document: NormativeCreateOrUpdateAttrs = {
+      code: data.code,
+      title: data.title,
+      revision: data.revision,
+      description: data.description,
+      filePath: "normatives",
+      fileName: "",
+      fileType: this.getFileType(file),
+    };
+
+    this.createDirectory(document.filePath);
+
+    try {
+      document.fileName = this.fileUpload(document.filePath, file);
+      const item = await this.normativeRepository.create(document);
+      return item;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   };
 
   //   updateDesignDocument = async (

@@ -1,6 +1,7 @@
 import {
   DesignDocumentCreateOrUpdateAttrs,
   LogoCreationAttrs,
+  NormativeCreateOrUpdateAttrs,
 } from "../../../../common/types/file-storage";
 
 import { ApiProperty } from "@nestjs/swagger";
@@ -122,6 +123,50 @@ export class CreateDesignDocumentDto
   })
   readonly cableLogId: string | number | null;
 
+  @ApiProperty({
+    example: "Шифр документа",
+    description: "Шифр документа",
+  })
+  readonly code: string;
+
+  @ApiProperty({
+    example: "Наименование документа",
+    description: "Наименование документа",
+  })
+  readonly title: string;
+
+  @ApiProperty({
+    example: "№ ревизии",
+    description: "№ ревизии",
+  })
+  readonly revision: string;
+
+  @ApiProperty({
+    example: "Путь к файлу",
+    description: "Путь к файлу",
+  })
+  readonly filePath: string;
+
+  @ApiProperty({
+    example: "Тип файла",
+    description: "Тип файла",
+  })
+  readonly fileType: string;
+
+  @ApiProperty({
+    example: "00dd3128-3332-4ff1-b108-75d739291a0d.png",
+    description: "Путь к файлу",
+  })
+  readonly fileName: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  readonly description: string;
+}
+
+export class CreateNormativeDto implements NormativeCreateOrUpdateAttrs {
   @ApiProperty({
     example: "Шифр документа",
     description: "Шифр документа",

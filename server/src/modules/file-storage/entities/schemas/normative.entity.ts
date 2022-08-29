@@ -36,10 +36,20 @@ export class NormativeEntity extends Model<
   })
   @Column({
     type: DataType.STRING,
-    unique: true,
+
     allowNull: false,
   })
   title: string;
+
+  @ApiProperty({
+    example: "№ актуальной ревизии документа",
+    description: "№ актуальной ревизии документа",
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  revision: string;
 
   @ApiProperty({
     example: "PDF",

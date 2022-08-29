@@ -11,7 +11,10 @@ import {
   UploadedFile,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { CreateDesignDocumentDto } from "./dto/create-file-storage.dto";
+import {
+  CreateDesignDocumentDto,
+  CreateNormativeDto,
+} from "./dto/create-file-storage.dto";
 import { FileStorageService } from "./file-storage.service";
 
 @Controller("api/file-storage")
@@ -38,6 +41,12 @@ export class FileStorageController {
       file,
       dto
     );
+  }
+
+  @Post("/add/normative")
+  @UseInterceptors(FileInterceptor("file"))
+  createNormative(@Body() dto: CreateNormativeDto, @UploadedFile() file: any) {
+    return this.service.createNormative(dto, file);
   }
 
   // @Get("/find")

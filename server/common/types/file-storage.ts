@@ -29,17 +29,18 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   fileType: string;
 }
 
-export interface DesignDocumentView extends DesignDocumentCreateOrUpdateAttrs {
-  comments: any[];
-}
-
 export interface NormativeCreateOrUpdateAttrs {
   code: string;
   title: string;
+  revision: string;
   description: string;
   filePath: string;
   fileName: string;
   fileType: string;
+}
+
+export interface DesignDocumentView extends DesignDocumentCreateOrUpdateAttrs {
+  comments: any[];
 }
 
 export interface FacilityDocumentCreateOrUpdateAttrs {
