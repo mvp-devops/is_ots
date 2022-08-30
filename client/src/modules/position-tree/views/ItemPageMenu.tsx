@@ -16,8 +16,7 @@ import {
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
 import { FC } from "react";
-import { useTypedSelector } from "../../../hooks";
-import { useItemPage } from "./hooks/useItemPage";
+import { useItemPage } from "../";
 import { FormActions, MenuItem } from "../../main";
 
 const { Sider } = Layout;

@@ -67,6 +67,20 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           }
         />
       </Item>
+      <Item label="Ответ" className="m-1 p-1">
+        <TextArea
+          rows={4}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+            changeItems(
+              items,
+              setItems,
+              "designContacts",
+              e.target.value,
+              item.key
+            )
+          }
+        />
+      </Item>
       <Item label="Статус решения" className="m-1 p-1">
         <Select
           size="small"

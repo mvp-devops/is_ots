@@ -6,26 +6,25 @@ export const initCommentFormData = (
   data: DesignDocumentCommentCreationAttrs | null
 ): DesignDocumentCommentCreationAttrs => {
   return {
-    projectDocumentId:
-      data && data.projectDocumentId
-        ? data.projectDocumentId
+    pdcId:
+      data && data.pdcId
+        ? data.pdcId
         : !data && target === "project"
         ? currentId
         : null,
-    unitDocumentId:
-      data && data.unitDocumentId
-        ? data.unitDocumentId
+    udcId:
+      data && data.udcId
+        ? data.udcId
         : !data && target === "unit"
         ? currentId
         : null,
-    subUnitDocumentId:
-      data && data.subUnitDocumentId
-        ? data.subUnitDocumentId
+    sudcId:
+      data && data.sudcId
+        ? data.sudcId
         : !data && target === "sub-unit"
         ? currentId
         : null,
-    supplierDocumentId:
-      data && data.supplierDocumentId ? data.supplierDocumentId : null,
+    sdcId: data && data.sdcId ? data.sdcId : null,
     directionId: data && data.directionId ? data.directionId : null,
     normativeId: data && data.normativeId ? data.normativeId : null,
     userId: data && data.userId ? data.userId : null,

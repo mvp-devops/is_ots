@@ -1,5 +1,5 @@
 import { Layout } from "antd";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { commentAccountingRequestData } from "../../comment-accounting/utils/comment-accounting.consts";
 
@@ -12,13 +12,9 @@ import {
   SummaryListOfEquipment,
 } from "../../equipment-accounting";
 
-import ItemPageBreadcrumbs from "./ItemPageBreadcrumbs";
-import ItemPageMenu from "./ItemPageMenu";
-import ListView from "./list/ListView";
+import { ItemPageBreadcrumbs, ItemPageMenu, ListView, useItemPage } from "../";
 import { useTypedSelector } from "../../../hooks";
-import ModalContainer from "../components/forms/ModalContainer";
-import PositionTreeForm from "../components/forms/PositionTreeForm";
-import { useItemPage } from "./hooks/useItemPage";
+import { ModalContainer, PositionTreeForm } from "../components/forms";
 
 const { Content } = Layout;
 
@@ -32,12 +28,14 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
   const [showListItems, setShowListItems] = useState(false);
   const [showDocumentation, setShowDocumentation] = useState(false);
 
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
+  const { menuItems, currentItem } = useTypedSelector(
+    (state) => state.positionTree
+  );
 
   const { formVisible, setFormVisible, actionType } = useItemPage();
 
   return (
-    <Layout style={{ minHeight: "100vh", padding: 0 }}>
+    <Layout style={{ padding: 0 }}>
       <Content style={{ padding: "0 10px" }}>
         {currentItem && (
           <ItemPageBreadcrumbs
@@ -50,7 +48,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
         )}
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
-          <Content style={{ padding: "0 5px", minHeight: "100%" }}>
+          <Content style={{ padding: "0 5px" }}>
             <ListView />
           </Content>
           {currentItem && (

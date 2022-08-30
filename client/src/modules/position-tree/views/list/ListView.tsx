@@ -1,5 +1,5 @@
 import { LikeOutlined, MessageOutlined, StarOutlined } from "@ant-design/icons";
-import { Avatar, Empty, List, Space, Typography } from "antd";
+import { Avatar, List, Space, Typography } from "antd";
 import { createElement, FC } from "react";
 import { useItemPage } from "../hooks/useItemPage";
 import { CloudSyncOutlined } from "@ant-design/icons";

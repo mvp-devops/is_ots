@@ -41,6 +41,7 @@ const CommentForm: FC<CommentFormProps> = ({
     userId: "",
     statusId: "",
     answer: "",
+    designContacts: "",
     solutionId: "",
     solution: "",
   };
