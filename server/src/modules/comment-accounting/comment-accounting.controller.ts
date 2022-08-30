@@ -9,6 +9,7 @@ import {
   Query,
   Put,
 } from "@nestjs/common";
+import { CheckListSets } from "common/types/comments-accounting";
 import { CommentAccountingService } from "./comment-accounting.service";
 import {
   CreateDesignDocumentCommentDto,

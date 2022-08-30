@@ -1,6 +1,7 @@
 import { CommentAccountingModule } from "./comment-accounting.module";
 import { CommentAccountingController } from "./comment-accounting.controller";
 import { CommentAccountingService } from "./comment-accounting.service";
+import { CheckListService } from "./check-list.service";
 import {
   CapitalConstructionUnitSupervisionCommentEntity,
   DesignDocumentCommentEntity,
@@ -10,6 +11,7 @@ import {
 export {
   CommentAccountingController,
   CommentAccountingService,
+  CheckListService,
   CommentAccountingModule,
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,

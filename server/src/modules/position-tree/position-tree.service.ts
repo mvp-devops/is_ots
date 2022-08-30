@@ -1,6 +1,12 @@
 import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
+import { CheckListSets } from "../../../common/types/comments-accounting";
 import { PositionTreeItem } from "../../../common/types/position-tree";
+import {
+  CheckListService,
+  DesignDocumentCommentEntity,
+  DesignDocumentSolutionEntity,
+} from "../comment-accounting";
 import {
   DesignDocumentEntity,
   FileStorageService,
@@ -52,7 +58,10 @@ export class PositionTreeService {
     private subUnitRepository: typeof SubUnitEntity,
 
     @Inject(forwardRef(() => FileStorageService))
-    private fileService: FileStorageService
+    private fileService: FileStorageService,
+
+    @Inject(forwardRef(() => CheckListService))
+    private readonly checkListService: CheckListService
   ) {}
 
   getPositionTree = async (): Promise<PositionTreeItem[]> => {
@@ -1666,5 +1675,178 @@ export class PositionTreeService {
     );
 
     return file;
+  };
+
+  getCheckList = async (
+    target: string,
+    id: string,
+    settings: CheckListSets
+  ) => {
+    let item: ProjectEntity | UnitEntity | null = null;
+    let checkList = null;
+
+    switch (target) {
+      case "project": {
+        item = await this.projectRepository.findOne({
+          where: { id },
+          attributes: [
+            "fieldId",
+            "designId",
+            "id",
+            "title",
+            "code",
+            "contract",
+            "description",
+          ],
+          include: [
+            {
+              model: UnitEntity,
+              include: [
+                {
+                  model: SubUnitEntity,
+                  include: [
+                    {
+                      model: DesignDocumentEntity,
+                      as: "subUnitDocuments",
+
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "sudc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "udc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: DesignEntity,
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "projectDocuments",
+
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "pdc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+        checkList = this.checkListService.projectChecklist(item, settings);
+        break;
+      }
+      case "unit": {
+        item = await this.unitRepository.findOne({
+          where: { id },
+          attributes: [
+            "projectId",
+            "equipmentId",
+            "supplierId",
+            "id",
+            "position",
+            "title",
+            "code",
+            "contract",
+            "description",
+          ],
+          include: [
+            {
+              model: SubUnitEntity,
+              include: [
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "sudc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "unitDocuments",
+
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "udc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+
+            {
+              model: CounterpartyEntity,
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "supplierDocuments",
+
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "sdc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+        checkList = this.checkListService.unitChecklist(item, settings);
+        break;
+      }
+
+      default:
+        break;
+    }
+
+    return checkList;
   };
 }

@@ -10,17 +10,12 @@ import {
   UseInterceptors,
   UploadedFile,
   Put,
-  Header,
-  StreamableFile,
-  Res,
-  HttpStatus,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
 import { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { createReadStream, createWriteStream, writeFile } from "fs";
-import path, { join } from "path";
-import { Response } from "express";
+
+import { CheckListSets } from "common/types/comments-accounting";
 
 @Controller("api/position-tree")
 export class PositionTreeController {
@@ -79,5 +74,14 @@ export class PositionTreeController {
   remove(@Param("id") id: string, @Query() query: { target: string }) {
     const { target } = query;
     return this.service.remove(id, target);
+  }
+
+  @Post("check-list/:target/:id")
+  checklist(
+    @Param("target") target: string,
+    @Param("id") id: string,
+    @Body() settings: CheckListSets
+  ) {
+    return this.service.getCheckList(target, id, settings);
   }
 }

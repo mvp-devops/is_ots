@@ -126,7 +126,7 @@ export class UnitEntity extends Model<UnitEntity, UnitCreateOrUpdateAttrs> {
   subUnits: SubUnitEntity[];
 
   @HasMany(() => DesignDocumentEntity, { as: "unitDocuments" })
-  documents: DesignDocumentEntity[];
+  unitDocuments: DesignDocumentEntity[];
 
   @HasOne(() => DesignDocumentEntity, { as: "unitQuestionare" })
   questionare: DesignDocumentEntity;

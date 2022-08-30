@@ -10,6 +10,7 @@ import {
 import { PositionTreeController } from "./position-tree.controller";
 import { PositionTreeService } from "./position-tree.service";
 import { FileStorageModule } from "../file-storage";
+import { CommentAccountingModule } from "../comment-accounting";
 
 @Module({
   controllers: [PositionTreeController],
@@ -24,6 +25,7 @@ import { FileStorageModule } from "../file-storage";
       SubUnitEntity,
     ]),
     forwardRef(() => FileStorageModule),
+    forwardRef(() => CommentAccountingModule),
   ],
 })
 export class PositionTreeModule {}

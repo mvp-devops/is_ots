@@ -74,3 +74,77 @@ export interface CapitalConstructionUnitSupervisionCommentCreationAttrs {
   criticalityId: number | string | null;
   comment: string;
 }
+
+export interface CheckListCoefficient {
+  count: number;
+  eliminated: number;
+  coef: number;
+  reductionFactor: number;
+  feedbackFactor: number;
+  result: number;
+}
+
+export interface CheckListCommentCriterions {
+  count: number;
+  eliminated: number;
+}
+
+export interface CheckListDocumentCriterions
+  extends CheckListCommentCriterions {
+  criticalityTitle: string;
+}
+
+export interface CheckListCriticalityCriterions
+  extends CheckListDocumentCriterions {
+  weight: number;
+  coef: number;
+  reductionFactor: number;
+  feedbackFactor: number;
+  result: number;
+}
+
+export interface CheckListStageCriterions {
+  stageTitle: string;
+  stageTotal: number;
+  criterions: CheckListCriticalityCriterions[];
+}
+
+interface CheckListSettings {
+  stage: CommentAccountingNSIView;
+  stageFactor: string | number;
+  criticalities: CommentAccountingNSIView[];
+  tenseGoal: string;
+  goal: string;
+  threshold: string;
+}
+
+export interface CheckListSets {
+  satisfactorily: number;
+  okay: number;
+  great: number;
+  settings: CheckListSettings[];
+}
+
+export interface ProjectCheckListView {
+  design: string;
+  code: string;
+  title: string;
+  contract: string;
+  user: string;
+  date: string;
+  result: number;
+  grade: string;
+  criterions: CheckListStageCriterions[];
+}
+
+export interface UnitCheckListView {
+  supplier: string;
+  code: string;
+  title: string;
+  contract: string;
+  user: string;
+  date: string;
+  result: number;
+  grade: string;
+  criterions: CheckListStageCriterions[];
+}

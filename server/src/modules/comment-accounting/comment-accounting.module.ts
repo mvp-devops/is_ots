@@ -7,10 +7,11 @@ import {
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
 } from "./entities";
+import { CheckListService } from "./check-list.service";
 
 @Module({
   controllers: [CommentAccountingController],
-  providers: [CommentAccountingService],
+  providers: [CommentAccountingService, CheckListService],
   imports: [
     SequelizeModule.forFeature([
       DesignDocumentCommentEntity,
@@ -18,5 +19,6 @@ import {
       CapitalConstructionUnitSupervisionCommentEntity,
     ]),
   ],
+  exports: [CheckListService],
 })
 export class CommentAccountingModule {}

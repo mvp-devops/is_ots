@@ -96,7 +96,7 @@ export class ProjectEntity extends Model<
   units: UnitEntity[];
 
   @HasMany(() => DesignDocumentEntity, { as: "projectDocuments" })
-  documents: DesignDocumentEntity[];
+  projectDocuments: DesignDocumentEntity[];
 
   // @HasMany(() => DesignDocumentEntity)
   // documents: DesignDocumentEntity[];

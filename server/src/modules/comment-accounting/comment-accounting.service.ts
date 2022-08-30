@@ -10,6 +10,7 @@ import {
   DesignDocumentSolutionEntity,
 } from "./entities";
 import {
+  CheckListSets,
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
 } from "../../../common/types/comments-accounting";

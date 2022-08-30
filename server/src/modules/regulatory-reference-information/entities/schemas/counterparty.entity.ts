@@ -63,7 +63,7 @@ export class CounterpartyEntity extends Model<
   subUnits: SubUnitEntity[];
 
   @HasMany(() => DesignDocumentEntity)
-  documents: DesignDocumentEntity[];
+  supplierDocuments: DesignDocumentEntity[];
 
   @HasOne(() => LogoEntity)
   file: LogoEntity;

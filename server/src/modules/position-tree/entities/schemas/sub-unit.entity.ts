@@ -125,7 +125,7 @@ export class SubUnitEntity extends Model<
   equipment: EquipmentEntity;
 
   @HasMany(() => DesignDocumentEntity, { as: "subUnitDocuments" })
-  documents: DesignDocumentEntity[];
+  subUnitDocuments: DesignDocumentEntity[];
 
   @HasOne(() => DesignDocumentEntity, { as: "subUnitQuestionare" })
   questionare: DesignDocumentEntity;
