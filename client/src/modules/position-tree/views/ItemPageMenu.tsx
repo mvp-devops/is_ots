@@ -54,23 +54,23 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
       ),
       key: "ACTIONS",
       children: [
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setActionType(FormActions.ADD);
-                setFormVisible(true);
-              }}
-            >
-              <PlusOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
-              Добавить
-            </Space>
-          ),
-          key: `ADD`,
-        },
+        // {
+        //   label: (
+        //     <Space
+        //       onClick={() => {
+        //         setActionType(FormActions.ADD);
+        //         setFormVisible(true);
+        //       }}
+        //     >
+        //       <PlusOutlined
+        //         className="text-dark"
+        //         style={{ marginBottom: "16px", padding: 0 }}
+        //       />
+        //       Добавить
+        //     </Space>
+        //   ),
+        //   key: `ADD`,
+        // },
         {
           label: (
             <Space
@@ -246,7 +246,12 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
       children: [
         {
           label: (
-            <Space>
+            <Space
+              onClick={() => {
+                setActionType(FormActions.CHECKLIST);
+                setFormVisible(true);
+              }}
+            >
               <AuditOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -254,7 +259,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Чеклист
             </Space>
           ),
-          key: "CHL",
+          key: "CHECKLIST",
         },
         {
           label: (

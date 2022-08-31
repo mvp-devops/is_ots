@@ -109,8 +109,9 @@ export interface CheckListStageCriterions {
   criterions: CheckListCriticalityCriterions[];
 }
 
-interface CheckListSettings {
-  stage: CommentAccountingNSIView;
+export interface CheckListSettings {
+  key?: number | string | null;
+  stage: CommentAccountingNSIView | null;
   stageFactor: string | number;
   criticalities: CommentAccountingNSIView[];
   tenseGoal: string;

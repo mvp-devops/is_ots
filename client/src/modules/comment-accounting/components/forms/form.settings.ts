@@ -1,4 +1,8 @@
-import { DesignDocumentCommentCreationAttrs } from "../../../../../../server/common/types/comments-accounting";
+import {
+  CheckListSets,
+  CheckListSettings,
+  DesignDocumentCommentCreationAttrs,
+} from "../../../../../../server/common/types/comments-accounting";
 
 export const initCommentFormData = (
   target: string,
@@ -32,4 +36,27 @@ export const initCommentFormData = (
     comment: data && data.comment ? data.comment : "",
     solutions: data && data.solutions ? data.solutions : [],
   };
+};
+
+export const initCheckListSets: CheckListSets = {
+  satisfactorily: 0,
+  okay: 0,
+  great: 0,
+  settings: [],
+};
+
+export const initCheckListSettingsItem: CheckListSettings = {
+  key: null,
+  stage: null,
+  // stage: {
+  //   id: "",
+  //   title: "",
+  //   code: "",
+  //   description: "",
+  // },
+  stageFactor: "",
+  criticalities: [],
+  threshold: "",
+  goal: "",
+  tenseGoal: "",
 };

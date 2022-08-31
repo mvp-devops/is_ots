@@ -30,7 +30,11 @@ const ModalContainer: FC<ModalContainerProps> = ({
               ? "Добавление записи"
               : action === FormActions.EDIT
               ? "Редактирование записи"
-              : "Удаление записи"}
+              : action === FormActions.REMOVE
+              ? "Удаление записи"
+              : action === FormActions.CHECKLIST
+              ? "Чек-лист"
+              : ""}
           </Text>
         </Space>
       }

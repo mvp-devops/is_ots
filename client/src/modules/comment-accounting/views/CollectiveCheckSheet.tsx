@@ -6,10 +6,10 @@ import {
   CloseOutlined,
   PrinterOutlined,
 } from "@ant-design/icons";
-import { setCurrentDate } from "../../../../utils/main.utils";
-import { DesignDocumentCommentRequestData } from "../../../../../../server/common/types/comments-accounting";
+import { setCurrentDate } from "../../../utils/main.utils";
+import { DesignDocumentCommentRequestData } from "../../../../../server/common/types/comments-accounting";
 import Header from "./Header";
-import CommentTable from "../tables/CommentTable";
+import CommentTable from "../components/tables/CommentTable";
 import { useNavigate } from "react-router-dom";
 
 interface CollectiveCheckSheetProps {

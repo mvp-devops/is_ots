@@ -12,6 +12,7 @@ export enum FormActions {
   ADD = "POST",
   REMOVE = "DELETE",
   VIEW = "GET",
+  CHECKLIST = "CHECKLIST",
 }
 
 export enum Roles {

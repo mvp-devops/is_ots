@@ -6,6 +6,7 @@ import { commentAccountingRequestData } from "../../comment-accounting/utils/com
 import {
   CommentAccountingModalContainer,
   CollectiveCheckSheet,
+  CheckListForm,
 } from "../../comment-accounting";
 import {
   EquipmentAccountingModalContainer,
@@ -70,7 +71,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
         <EquipmentAccountingModalContainer
           show={showSLOE}
           onCancel={() => setShowSLOE(false)}
-          action={"POST"}
+          action={actionType}
           child={<SummaryListOfEquipment data={null} />}
         />
       )}
@@ -78,7 +79,7 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
         <CommentAccountingModalContainer
           show={showCCLS}
           onCancel={() => setShowCCLS(false)}
-          action={"POST"}
+          action={actionType}
           child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
         />
       )}
@@ -95,6 +96,14 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
           }
         />
       )}
+      {/* {formVisible && currentItem && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<CheckListForm />}
+        />
+      )} */}
     </Layout>
   );
 };

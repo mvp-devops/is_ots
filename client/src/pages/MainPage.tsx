@@ -33,7 +33,7 @@ function getItem(
   } as MenuItem;
 }
 
-const role = Roles.ADMIN;
+const role = Roles.EXPERT;
 
 const userSubsidiaryId = "7";
 
@@ -87,12 +87,15 @@ const MainPage: React.FC = () => {
           width={"auto"}
           style={{
             left: 0,
-            top: 66,
+            top: 0,
             bottom: 0,
           }}
           theme={"light"}
         >
+          <div className="bg-primary" style={{ height: 52 }} />
+
           <Tree
+            style={{ top: 14 }}
             showLine={true}
             showIcon={false}
             onSelect={onSelect}

@@ -34,7 +34,7 @@ const ListView: FC = () => {
   return (
     <List
       header={header}
-      itemLayout="vertical"
+      // itemLayout="vertical"
       size="small"
       pagination={{
         onChange: (page) => {
@@ -49,23 +49,23 @@ const ListView: FC = () => {
       renderItem={(item) => (
         <Item
           key={item.title}
-          actions={[
-            <IconText
-              icon={StarOutlined}
-              text="156"
-              key="list-vertical-star-o"
-            />,
-            <IconText
-              icon={LikeOutlined}
-              text="156"
-              key="list-vertical-like-o"
-            />,
-            <IconText
-              icon={MessageOutlined}
-              text="2"
-              key="list-vertical-message"
-            />,
-          ]}
+          // actions={[
+          //   <IconText
+          //     icon={StarOutlined}
+          //     text="156"
+          //     key="list-vertical-star-o"
+          //   />,
+          //   <IconText
+          //     icon={LikeOutlined}
+          //     text="156"
+          //     key="list-vertical-like-o"
+          //   />,
+          //   <IconText
+          //     icon={MessageOutlined}
+          //     text="2"
+          //     key="list-vertical-message"
+          //   />,
+          // ]}
           extra={
             item?.avatar ? (
               <img width={272} alt="logo" src={item.avatar} />

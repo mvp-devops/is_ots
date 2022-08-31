@@ -23,7 +23,7 @@ import {
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import ModalContainer from "../views/ModalContainer";
+import ModalContainer from "../../views/ModalContainer";
 import CommentForm from "../forms/CommentForm";
 import SolutionTable from "./SolutionTable";
 import { useNavigate } from "react-router-dom";
