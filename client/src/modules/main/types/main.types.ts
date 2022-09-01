@@ -33,11 +33,23 @@ export interface ListItem {
 export interface EssenceState {
   formVisible: boolean;
   actionType: string;
+  checkListView: boolean;
+  summaryListOfEquipmentView: boolean;
+  statisticView: boolean;
+  collectiveCheckSheetView: boolean;
+  listItemsView: boolean;
+  documentationView: boolean;
 }
 
 export enum ActionTypes {
   SET_FORM_VISIBLE = "SET_FORM_VISIBLE",
   SET_ACTION_TYPE = "SET_ACTION_TYPE",
+  SET_CHECK_LIST_VIEW = "SET_CHECK_LIST_VIEW",
+  SET_SUMMARY_LIST_OF_EQUIPMENT_VIEW = "SET_SUMMARY_LIST_OF_EQUIPMENT_VIEW",
+  SET_STATISTIC_VIEW = "SET_STATISTIC_VIEW",
+  SET_COLLECTIVE_CHECK_SHEET_VIEW = "SET_COLLECTIVE_CHECK_SHEET_VIEW",
+  SET_LIST_ITEMS_VIEW = "SET_LIST_ITEMS_VIEW",
+  SET_DOCUMENTATION_VIEW = "SET_DOCUMENTATION_VIEW",
 }
 
 interface SetFormVisibleAction {
@@ -48,5 +60,42 @@ interface SetActionTypeAction {
   type: ActionTypes.SET_ACTION_TYPE;
   payload: string;
 }
+interface SetActionCheckListView {
+  type: ActionTypes.SET_CHECK_LIST_VIEW;
+  payload: boolean;
+}
 
-export type EssenceAction = SetFormVisibleAction | SetActionTypeAction;
+interface SetActionStatisticView {
+  type: ActionTypes.SET_STATISTIC_VIEW;
+  payload: boolean;
+}
+
+interface SetActionSummaryListOfEquipmentView {
+  type: ActionTypes.SET_SUMMARY_LIST_OF_EQUIPMENT_VIEW;
+  payload: boolean;
+}
+
+interface SetActionCollectiveCheckSheetView {
+  type: ActionTypes.SET_COLLECTIVE_CHECK_SHEET_VIEW;
+  payload: boolean;
+}
+
+interface SetActionListItemsView {
+  type: ActionTypes.SET_LIST_ITEMS_VIEW;
+  payload: boolean;
+}
+
+interface SetActionDocumentationView {
+  type: ActionTypes.SET_DOCUMENTATION_VIEW;
+  payload: boolean;
+}
+
+export type EssenceAction =
+  | SetFormVisibleAction
+  | SetActionTypeAction
+  | SetActionCheckListView
+  | SetActionStatisticView
+  | SetActionSummaryListOfEquipmentView
+  | SetActionCollectiveCheckSheetView
+  | SetActionListItemsView
+  | SetActionDocumentationView;

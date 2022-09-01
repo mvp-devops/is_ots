@@ -1,24 +1,35 @@
-import { useEffect, useState } from "react";
+import { useActions } from "./../../../../../hooks/useActions";
+import { useCallback, useEffect, useState } from "react";
 import {
   CheckListSets,
   CheckListSettings,
+  CheckListView,
 } from "../../../../../../../server/common/types/comments-accounting";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 import { useTypedSelector } from "../../../../../hooks";
+import { getCheckList } from "../../../../position-tree/api/position-tree.api";
 import { getItems } from "../../../../regulatory-reference-information";
 import { initCheckListSets, initCheckListSettingsItem } from "../form.settings";
 
 export const useCommentAccountingFormData = () => {
   const [stages, setStages] = useState<NSIView[]>([]);
   const [criticalities, setCriticalities] = useState<NSIView[]>([]);
-  const [currentCriticalities, setCurrentCriticalities] = useState<NSIView[]>(
-    []
+  const [stage, setStage] = useState<NSIView | null>(null);
+  const [currentCriticalities, setCurrentCriticalities] = useState<{
+    criticalities: NSIView[];
+    index: string | number | null | undefined;
+  } | null>(null);
+
+  const [checkListData, setCheckListData] = useState<CheckListView | null>(
+    null
   );
 
   const [sets, setSets] = useState<CheckListSets>(initCheckListSets);
   const [settings, setSettings] = useState<CheckListSettings[]>([]);
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
+
+  const { setCheckListView, setFormVisible } = useActions();
 
   const target = currentItem?.target;
   const id = currentItem?.id;
@@ -79,8 +90,9 @@ export const useCommentAccountingFormData = () => {
   ) => {
     if (key === "stage") {
       const stage = stages.filter((item) => item.id === value)[0];
+      setStage(stage);
+      setCurrentCriticalities(getCriticalities(value, index));
       changeItems(key, stage, index);
-      setCurrentCriticalities(getCriticalities(value));
     } else {
       changeItems(key, value, index);
     }
@@ -91,8 +103,12 @@ export const useCommentAccountingFormData = () => {
   };
 
   const getCriticalities = (
-    value: string | number | null | NSIView | NSIView[]
-  ): NSIView[] => {
+    value: string | number | null | NSIView | NSIView[],
+    index: string | number | null | undefined
+  ): {
+    criticalities: NSIView[];
+    index: string | number | null | undefined;
+  } => {
     let crits: NSIView[] = [];
 
     switch (value) {
@@ -122,26 +138,41 @@ export const useCommentAccountingFormData = () => {
       default:
         break;
     }
-    return crits;
+    return {
+      criticalities: crits,
+      index,
+    };
   };
 
-  const getCheckList = () => {};
+  const checkList = () => {
+    target &&
+      id &&
+      getCheckList(target, id, sets).then((data) => setCheckListData(data));
+    setCheckListView(true);
+    setFormVisible(false);
+  };
 
   useEffect(() => {
-    console.log(currentCriticalities);
-    console.log("settings: ", settings);
-  }, [settings]);
+    currentCriticalities &&
+      changeItems(
+        "criticalities",
+        currentCriticalities.criticalities,
+        currentCriticalities.index
+      );
+  }, [currentCriticalities, stage]);
 
   return {
     addItem,
     removeItem,
     onHandlerChange,
     setCheckListSets,
+    checkList,
     target,
     id,
     stages,
     criticalities,
     sets,
     settings,
+    checkListData,
   };
 };

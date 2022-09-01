@@ -8,7 +8,7 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useEffect } from "react";
 import {
   UploadOutlined,
   DeleteOutlined,
@@ -19,7 +19,10 @@ import { usePositionTreeData } from "./hooks/usePositionTreeData";
 import { sgroei } from "../../../equipment-accounting/utils/equipment-accounting.consts";
 import { FormActions } from "../../../main";
 import { useItemPage } from "../../views/hooks/useItemPage";
-import { CheckListForm } from "../../../comment-accounting";
+import {
+  CheckListForm,
+  useCommentAccountingFormData,
+} from "../../../comment-accounting";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -409,15 +412,11 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
     </Space>
   );
 
-  const checkListForm = <CheckListForm />;
-
   return (
     <>
       {actionType === FormActions.EDIT || actionType === FormActions.ADD
         ? renderForm
-        : actionType === FormActions.REMOVE
-        ? renderDelete
-        : checkListForm}
+        : renderDelete}
 
       {actionType === FormActions.EDIT ? (
         <>
@@ -451,7 +450,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
             </Button>
           </Space>
         </>
-      ) : actionType === FormActions.REMOVE ? (
+      ) : (
         <>
           <Divider className="p-0 m-2" />
           <Space className="d-flex justify-content-end mb-0">
@@ -464,22 +463,6 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
               }}
             >
               Удалить
-            </Button>
-          </Space>
-        </>
-      ) : (
-        <>
-          <Divider className="p-0 m-2" />
-          <Space className="d-flex justify-content-end mb-0">
-            <Button
-              type="primary"
-              className="me-1 "
-              onClick={() => {
-                // deleteOneItem();
-                setFormVisible(false);
-              }}
-            >
-              Сформировать
             </Button>
           </Space>
         </>

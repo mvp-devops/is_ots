@@ -23,24 +23,10 @@ const { Sider } = Layout;
 
 export interface ItemPageMenuProps {
   role: string;
-  target: string;
   childTarget: string;
-  setShowSLOE: () => void;
-  setShowCCLS: () => void;
-  setShowListItems: () => void;
-  setShowDocumentation: () => void;
 }
 
-const ItemPageMenu: FC<ItemPageMenuProps> = ({
-  role,
-  target,
-  childTarget,
-  setShowSLOE,
-  setShowCCLS,
-
-  setShowListItems,
-  setShowDocumentation,
-}) => {
+const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
   const items: MenuItem[] = [
     {
       label: (
@@ -127,7 +113,13 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
       children: [
         {
           label: (
-            <Space onClick={setShowListItems}>
+            <Space
+              onClick={() => {
+                setDocumentationView(false);
+                setStatisticView(false);
+                setListItemsView(true);
+              }}
+            >
               <SearchOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -156,7 +148,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
         },
         {
           label: (
-            <Space onClick={setShowSLOE}>
+            <Space onClick={() => setSummaryListOfEquipmentView(true)}>
               <AppstoreOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -164,7 +156,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Перечень оборудования
             </Space>
           ),
-          key: "SLOE",
+          key: "SUMMARY_LIST_OF_EQUIPMENT",
         },
       ],
     },
@@ -183,7 +175,13 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
       children: [
         {
           label: (
-            <Space onClick={setShowDocumentation}>
+            <Space
+              onClick={() => {
+                setListItemsView(false);
+                setStatisticView(false);
+                setDocumentationView(true);
+              }}
+            >
               <SearchOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -207,7 +205,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
         },
         {
           label: (
-            <Space onClick={setShowCCLS}>
+            <Space onClick={() => setCollectiveCheckSheetView(true)}>
               <FileDoneOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -215,7 +213,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Сформировать ЛКП
             </Space>
           ),
-          key: "CCHL",
+          key: "COLLECTIVE_CHECK_SHEET",
         },
         {
           label: (
@@ -242,7 +240,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
           Статистика
         </Space>
       ),
-      key: "STATISTIC",
+      key: "STATS",
       children: [
         {
           label: (
@@ -259,11 +257,17 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Чеклист
             </Space>
           ),
-          key: "CHECKLIST",
+          key: "CHECK_LIST",
         },
         {
           label: (
-            <Space>
+            <Space
+              onClick={() => {
+                setDocumentationView(false);
+                setListItemsView(false);
+                setStatisticView(true);
+              }}
+            >
               <PieChartOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -271,13 +275,26 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({
               Статистика
             </Space>
           ),
-          key: "STAT",
+          key: "STATISTIC",
         },
       ],
     },
   ];
 
-  const { menuItems, setFormVisible, setActionType } = useItemPage(role, items);
+  const {
+    currentItem,
+    menuItems,
+    setFormVisible,
+    setActionType,
+    documentationView,
+    listItemsView,
+    setStatisticView,
+    setCollectiveCheckSheetView,
+    setSummaryListOfEquipmentView,
+
+    setListItemsView,
+    setDocumentationView,
+  } = useItemPage(role, items);
 
   return (
     <Sider className="site-layout-background" width={300}>

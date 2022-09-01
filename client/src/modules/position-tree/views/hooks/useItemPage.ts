@@ -12,8 +12,27 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [childrenListHeader, setChidrenListHeader] = useState("");
 
-  const { formVisible, actionType } = useTypedSelector((state) => state.main);
-  const { setFormVisible, setActionType } = useActions();
+  const {
+    formVisible,
+    actionType,
+    checkListView,
+    statisticView,
+    collectiveCheckSheetView,
+    summaryListOfEquipmentView,
+    listItemsView,
+    documentationView,
+  } = useTypedSelector((state) => state.main);
+  const {
+    setFormVisible,
+    setActionType,
+    setCheckListView,
+    setStatisticView,
+    setCollectiveCheckSheetView,
+    setSummaryListOfEquipmentView,
+
+    setListItemsView,
+    setDocumentationView,
+  } = useActions();
 
   const renderMenuItems = (role: string, items: MenuItem[]): MenuItem[] => {
     const menuItems: MenuItem[] = [];
@@ -166,10 +185,24 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     formVisible,
     setFormVisible,
     actionType,
+    checkListView,
+    setCheckListView,
     setActionType,
     childrenList,
     childrenListHeader,
     menuItems,
     listItems,
+    currentItem,
+
+    setStatisticView,
+    setCollectiveCheckSheetView,
+    setSummaryListOfEquipmentView,
+    statisticView,
+    collectiveCheckSheetView,
+    summaryListOfEquipmentView,
+    listItemsView,
+    documentationView,
+    setListItemsView,
+    setDocumentationView,
   };
 };

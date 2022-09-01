@@ -169,7 +169,7 @@ const MainPage: React.FC = () => {
           {/* <ItemPage /> */}
         </Content>
         <Footer style={{ textAlign: "right", background: "rgb(255,255,255" }}>
-          ООО "Газпромнефть-Автоматизация" ©2022
+          <Text type="secondary">ООО "Газпромнефть-Автоматизация" © 2022</Text>
         </Footer>
       </Layout>
     </Layout>

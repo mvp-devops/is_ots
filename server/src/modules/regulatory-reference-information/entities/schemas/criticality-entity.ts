@@ -1,4 +1,12 @@
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import {
+  BelongsTo,
+  Column,
+  DataType,
+  ForeignKey,
+  HasMany,
+  Model,
+  Table,
+} from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
 import { RegulatoryReferenceInformationCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
@@ -6,6 +14,7 @@ import {
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,
 } from "../../../comment-accounting";
+import { StageEntity } from "./stage.entity";
 
 @Table({ tableName: "criticalities" })
 export class CriticalityEntity extends Model<

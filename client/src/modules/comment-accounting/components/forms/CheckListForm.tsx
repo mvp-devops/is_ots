@@ -10,11 +10,12 @@ import {
   Row,
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import { ChangeEvent, FC, ReactNode } from "react";
+import { ChangeEvent, FC, ReactNode, useEffect } from "react";
 import { CheckListSettings } from "../../../../../../server/common/types/comments-accounting";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";
+import { useItemPage } from "../../../position-tree";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -27,9 +28,12 @@ const CheckListForm = () => {
     settings,
     addItem,
     removeItem,
+    checkList,
     onHandlerChange,
     setCheckListSets,
   } = useCommentAccountingFormData();
+
+  const { setFormVisible } = useItemPage();
 
   const formItems = (item: CheckListSettings) => (
     <Space
@@ -162,7 +166,7 @@ const CheckListForm = () => {
       </Divider>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Не удовлетворительно:</Text>
+          <Text type="secondary">Не удовлетворительно: &lt;</Text>
         </Space>
         <Space>
           <Input
@@ -179,7 +183,7 @@ const CheckListForm = () => {
       </Space>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Удовлетворительно:</Text>
+          <Text type="secondary">Удовлетворительно: &ge;</Text>
         </Space>
         <Space>
           <Input
@@ -196,7 +200,7 @@ const CheckListForm = () => {
       </Space>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Хорошо:</Text>
+          <Text type="secondary">Хорошо: &ge;</Text>
         </Space>
         <Space>
           <Input
@@ -259,6 +263,12 @@ const CheckListForm = () => {
         </Button>
       </Space>
       {settings.map((item) => formItems(item))}
+      <Divider className="p-0 m-2" />
+      <Space className="d-flex justify-content-end mb-0">
+        <Button type="primary" className="me-1 " onClick={() => checkList()}>
+          Сформировать
+        </Button>
+      </Space>
     </div>
   );
 };

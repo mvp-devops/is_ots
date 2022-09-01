@@ -1,21 +1,21 @@
+import { FC } from "react";
 import { Layout } from "antd";
-import { useState } from "react";
 
 import { commentAccountingRequestData } from "../../comment-accounting/utils/comment-accounting.consts";
-
 import {
   CommentAccountingModalContainer,
   CollectiveCheckSheet,
   CheckListForm,
+  CheckListView,
+  StatisticView,
 } from "../../comment-accounting";
 import {
   EquipmentAccountingModalContainer,
   SummaryListOfEquipment,
 } from "../../equipment-accounting";
-
 import { ItemPageBreadcrumbs, ItemPageMenu, ListView, useItemPage } from "../";
-import { useTypedSelector } from "../../../hooks";
 import { ModalContainer, PositionTreeForm } from "../components/forms";
+import { FormActions } from "../../main";
 
 const { Content } = Layout;
 
@@ -23,17 +23,22 @@ interface ItemPageProps {
   userRole: string;
 }
 
-const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
-  const [showSLOE, setShowSLOE] = useState(false);
-  const [showCCLS, setShowCCLS] = useState(false);
-  const [showListItems, setShowListItems] = useState(false);
-  const [showDocumentation, setShowDocumentation] = useState(false);
-
-  const { menuItems, currentItem } = useTypedSelector(
-    (state) => state.positionTree
-  );
-
-  const { formVisible, setFormVisible, actionType } = useItemPage();
+const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
+  const {
+    formVisible,
+    setFormVisible,
+    actionType,
+    checkListView,
+    setCheckListView,
+    currentItem,
+    statisticView,
+    listItemsView,
+    documentationView,
+    collectiveCheckSheetView,
+    setCollectiveCheckSheetView,
+    setSummaryListOfEquipmentView,
+    summaryListOfEquipmentView,
+  } = useItemPage();
 
   return (
     <Layout style={{ padding: 0 }}>
@@ -50,35 +55,30 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <Content style={{ padding: "0 5px" }}>
-            <ListView />
+            {listItemsView && <ListView />}
+            {documentationView && <div>Будет таблица документов</div>}
+            {statisticView && <StatisticView />}
           </Content>
           {currentItem && (
             <ItemPageMenu
-              target={currentItem.target}
               childTarget={currentItem.childrenTarget}
               role={userRole}
-              setShowSLOE={() => setShowSLOE(!showSLOE)}
-              setShowCCLS={() => setShowCCLS(!showCCLS)}
-              setShowListItems={() => setShowListItems(!showListItems)}
-              setShowDocumentation={() =>
-                setShowDocumentation(!showDocumentation)
-              }
             />
           )}
         </Layout>
       </Content>
-      {showSLOE && (
+      {summaryListOfEquipmentView && (
         <EquipmentAccountingModalContainer
-          show={showSLOE}
-          onCancel={() => setShowSLOE(false)}
+          show={summaryListOfEquipmentView}
+          onCancel={() => setSummaryListOfEquipmentView(false)}
           action={actionType}
           child={<SummaryListOfEquipment data={null} />}
         />
       )}
-      {showCCLS && (
+      {collectiveCheckSheetView && (
         <CommentAccountingModalContainer
-          show={showCCLS}
-          onCancel={() => setShowCCLS(false)}
+          show={collectiveCheckSheetView}
+          onCancel={() => setCollectiveCheckSheetView(false)}
           action={actionType}
           child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
         />
@@ -89,21 +89,25 @@ const ItemPage: React.FC<ItemPageProps> = ({ userRole }) => {
           onCancel={() => setFormVisible(false)}
           action={actionType}
           child={
-            <PositionTreeForm
-              target={currentItem.target}
-              actionType={actionType}
-            />
+            actionType === FormActions.CHECKLIST ? (
+              <CheckListForm />
+            ) : (
+              <PositionTreeForm
+                target={currentItem.target}
+                actionType={actionType}
+              />
+            )
           }
         />
       )}
-      {/* {formVisible && currentItem && (
+      {checkListView && (
         <ModalContainer
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
+          show={checkListView}
+          onCancel={() => setCheckListView(false)}
           action={actionType}
-          child={<CheckListForm />}
+          child={<CheckListView />}
         />
-      )} */}
+      )}
     </Layout>
   );
 };

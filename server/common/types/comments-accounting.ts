@@ -149,3 +149,5 @@ export interface UnitCheckListView {
   grade: string;
   criterions: CheckListStageCriterions[];
 }
+
+export type CheckListView = ProjectCheckListView | UnitCheckListView;

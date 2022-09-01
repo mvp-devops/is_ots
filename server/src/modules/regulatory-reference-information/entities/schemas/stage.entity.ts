@@ -1,6 +1,8 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { RegulatoryReferenceInformationCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
+import { CriticalityEntity } from "./criticality-entity";
+import { DesignDocumentEntity } from "./../../../file-storage";
 
 @Table({ tableName: "stages" })
 export class StageEntity extends Model<
@@ -44,12 +46,23 @@ export class StageEntity extends Model<
   })
   description: string;
 
-  // @HasMany(() => ProjectDocuments)
-  // projectDocs: Array<ProjectDocuments>;
+  @HasMany(() => DesignDocumentEntity, {
+    as: "projectDocuments",
+  })
+  projectDocuments: DesignDocumentEntity[];
 
-  // @HasMany(() => UnitDocuments)
-  // unitDocs: Array<UnitDocuments>;
+  @HasMany(() => DesignDocumentEntity, {
+    as: "unitDocuments",
+  })
+  unitDocuments: DesignDocumentEntity[];
 
-  // @HasMany(() => SubUnitDocuments)
-  // subUnitDocs: Array<SubUnitDocuments>;
+  @HasMany(() => DesignDocumentEntity, {
+    as: "subUnitDocuments",
+  })
+  subUnitDocuments: DesignDocumentEntity[];
+
+  @HasMany(() => DesignDocumentEntity, {
+    as: "supplierDocuments",
+  })
+  supplierDocuments: DesignDocumentEntity[];
 }

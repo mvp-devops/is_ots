@@ -162,7 +162,6 @@ export class CheckListService {
       eliminated: 0,
     };
     let criterions = [];
-    // console.log(document);
 
     if (document.stageId === stageId) {
       for (let i = 1; i < criticalityArr.length; i++) {
