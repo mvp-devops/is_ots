@@ -1,19 +1,23 @@
 import {
+  CreateCriticalityDto,
   CreateDesignOrCounterpartyDto,
   CreateNSIDto,
 } from "./create-regulatory-reference-information.dto";
 import {
+  UpdateCriticalityDto,
   UpdateDesignOrCounterpartyDto,
   UpdateNSIDto,
 } from "./update-regulatory-reference-information.dto";
 
 type CreateRegulatoryReferenceInformationDto =
   | CreateDesignOrCounterpartyDto
-  | CreateNSIDto;
+  | CreateNSIDto
+  | CreateCriticalityDto;
 
 type UpdateRegulatoryReferenceInformationDto =
   | UpdateDesignOrCounterpartyDto
-  | UpdateNSIDto;
+  | UpdateNSIDto
+  | UpdateCriticalityDto;
 
 export {
   CreateRegulatoryReferenceInformationDto,

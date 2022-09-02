@@ -20,16 +20,12 @@ export const useCommentAccountingFormData = () => {
     index: string | number | null | undefined;
   } | null>(null);
 
-  const [checkListData, setCheckListData] = useState<CheckListView | null>(
-    null
-  );
-
   const [sets, setSets] = useState<CheckListSets>(initCheckListSets);
   const [settings, setSettings] = useState<CheckListSettings[]>([]);
 
   const { currentItem } = useTypedSelector((state) => state.positionTree);
 
-  const { setCheckListView, setFormVisible } = useActions();
+  const { setCheckListView, setFormVisible, getCheckListData } = useActions();
 
   const target = currentItem?.target;
   const id = currentItem?.id;
@@ -145,9 +141,8 @@ export const useCommentAccountingFormData = () => {
   };
 
   const checkList = () => {
-    target &&
-      id &&
-      getCheckList(target, id, sets).then((data) => setCheckListData(data));
+    target && id && getCheckListData(target, id, sets);
+    // getCheckList(target, id, sets).then((data) => setCheckListData(data));
     setCheckListView(true);
     setFormVisible(false);
   };
@@ -173,6 +168,5 @@ export const useCommentAccountingFormData = () => {
     criticalities,
     sets,
     settings,
-    checkListData,
   };
 };

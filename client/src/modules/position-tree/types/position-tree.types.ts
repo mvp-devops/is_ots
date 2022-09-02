@@ -1,3 +1,4 @@
+import { CheckListView } from "../../../../../server/common/types/comments-accounting";
 import {
   PositionTreeItem,
   PositionTreeView,
@@ -10,6 +11,7 @@ export interface EssenceState {
   currentItem: PositionTreeItem | null;
   renderItems: PositionTreeView[];
   renderOneItem: PositionTreeView | null;
+  checkListData: CheckListView | null;
 }
 
 export enum ActionTypes {
@@ -35,6 +37,9 @@ export enum ActionTypes {
   GET_MANY_ITEMS_SUCCESS = "GET_MANY_ITEMS_SUCCESS",
   GET_MANY_ITEMS_ERROR = "GET_MANY_ITEMS_ERROR",
   SET_CURRENT_ITEM = "SET_CURRENT_ITEM",
+  GET_CHECK_LIST_DATA = "GET_CHECK_LIST_DATA",
+  GET_CHECK_LIST_DATA_SUCCESS = "GET_CHECK_LIST_DATA_SUCCESS",
+  GET_CHECK_LIST_DATA_ERROR = "GET_CHECK_LIST_DATA_ERROR",
 }
 
 interface GetMenuItemsAction {
@@ -139,6 +144,20 @@ interface SetCurrentItemAction {
   payload: PositionTreeItem;
 }
 
+interface GetCheckListDataAction {
+  type: ActionTypes.GET_CHECK_LIST_DATA;
+}
+
+interface GetCheckListDataSuccessAction {
+  type: ActionTypes.GET_CHECK_LIST_DATA_SUCCESS;
+  payload: CheckListView;
+}
+
+interface GetCheckListDataErrorAction {
+  type: ActionTypes.GET_CHECK_LIST_DATA_ERROR;
+  payload: string;
+}
+
 export type EssenceAction =
   | GetMenuItemsAction
   | GetMenuItemsSuccessAction
@@ -161,4 +180,7 @@ export type EssenceAction =
   | GetOneItemErrorAction
   | GetManyItemsAction
   | GetManyItemsSuccessAction
-  | GetManyItemsErrorAction;
+  | GetManyItemsErrorAction
+  | GetCheckListDataAction
+  | GetCheckListDataSuccessAction
+  | GetCheckListDataErrorAction;

@@ -14,7 +14,6 @@ import {
   DesignDocumentCommentEntity,
   CapitalConstructionUnitSupervisionCommentEntity,
 } from "../../../comment-accounting";
-import { StageEntity } from "./stage.entity";
 
 @Table({ tableName: "criticalities" })
 export class CriticalityEntity extends Model<
@@ -57,6 +56,36 @@ export class CriticalityEntity extends Model<
     allowNull: true,
   })
   description: string;
+
+  @ApiProperty({
+    example: "4",
+    description: "Порог",
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  threshold: string;
+
+  @ApiProperty({
+    example: "2",
+    description: "Цель",
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  goal: string;
+
+  @ApiProperty({
+    example: "0",
+    description: "Амцель",
+  })
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  tenseGoal: string;
 
   @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity)
   monitoringComments: CapitalConstructionUnitSupervisionCommentEntity[];

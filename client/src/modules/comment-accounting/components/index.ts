@@ -3,12 +3,14 @@ import {
   SolutionForm,
   useCommentAccountingFormData,
   CheckListForm,
+  ModalContainer,
 } from "./forms";
 
 import {
   CommentTable,
   SolutionTable,
   useCommentAccountingTableData,
+  CheckListTable,
 } from "./tables";
 
 export {
@@ -19,4 +21,6 @@ export {
   CommentTable,
   SolutionTable,
   useCommentAccountingTableData,
+  CheckListTable,
+  ModalContainer,
 };

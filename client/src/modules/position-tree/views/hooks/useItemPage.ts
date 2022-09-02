@@ -22,6 +22,11 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     listItemsView,
     documentationView,
   } = useTypedSelector((state) => state.main);
+
+  const { checkListData, loading } = useTypedSelector(
+    (state) => state.positionTree
+  );
+
   const {
     setFormVisible,
     setActionType,
@@ -193,6 +198,7 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     menuItems,
     listItems,
     currentItem,
+    loading,
 
     setStatisticView,
     setCollectiveCheckSheetView,
@@ -204,5 +210,6 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     documentationView,
     setListItemsView,
     setDocumentationView,
+    checkListData,
   };
 };

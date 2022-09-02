@@ -39,21 +39,15 @@ export const initCommentFormData = (
 };
 
 export const initCheckListSets: CheckListSets = {
-  satisfactorily: 0,
-  okay: 0,
-  great: 0,
+  satisfactorily: 95,
+  okay: 96,
+  great: 98,
   settings: [],
 };
 
 export const initCheckListSettingsItem: CheckListSettings = {
   key: null,
   stage: null,
-  // stage: {
-  //   id: "",
-  //   title: "",
-  //   code: "",
-  //   description: "",
-  // },
   stageFactor: "",
   criticalities: [],
   threshold: "",

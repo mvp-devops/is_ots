@@ -1,16 +1,11 @@
 import { FC } from "react";
 
 import { Skeleton, Space, Typography } from "antd";
-import {
-  FileExcelOutlined,
-  CloseOutlined,
-  PrinterOutlined,
-} from "@ant-design/icons";
-import { setCurrentDate } from "../../../utils/main.utils";
-import { DesignDocumentCommentRequestData } from "../../../../../server/common/types/comments-accounting";
+import { FileExcelOutlined, PrinterOutlined } from "@ant-design/icons";
+import { setCurrentDate } from "../../../../utils/main.utils";
+import { DesignDocumentCommentRequestData } from "../../../../../../server/common/types/comments-accounting";
 import Header from "./Header";
-import CommentTable from "../components/tables/CommentTable";
-import { useNavigate } from "react-router-dom";
+import CommentTable from "../../components/tables/CommentTable";
 
 interface CollectiveCheckSheetProps {
   data: DesignDocumentCommentRequestData;
@@ -19,10 +14,6 @@ interface CollectiveCheckSheetProps {
 const { Text } = Typography;
 
 const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
-  const navigate = useNavigate();
-
-  const goBack = () => navigate(-1);
-
   return (
     <Skeleton active loading={false}>
       <Space direction="vertical" size="small" className="p-3 m-1 border">
@@ -31,7 +22,7 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
           <Text strong>ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ</Text>
           <Space className="d-flex justify-content-between mx-3">
             <PrinterOutlined
-              style={{ cursor: "pointer" }}
+              style={{ fontSize: "20px", cursor: "pointer" }}
               title="Печать"
               className="text-primary"
               //  onClick={() => {
@@ -40,15 +31,9 @@ const CollectiveCheckSheet: FC<CollectiveCheckSheetProps> = ({ data }) => {
               //  }}
             />
             <FileExcelOutlined
-              style={{ cursor: "pointer" }}
+              style={{ fontSize: "20px", cursor: "pointer" }}
               title="Выгрузить"
               className="text-success"
-            />
-            <CloseOutlined
-              style={{ cursor: "pointer" }}
-              title="Закрыть"
-              className="text-secondary"
-              onClick={goBack}
             />
           </Space>
         </Space>

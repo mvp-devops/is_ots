@@ -6,6 +6,7 @@ import {
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
+  getCheckList,
 } from "./position-tree.api";
 
 export {
@@ -16,4 +17,5 @@ export {
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
+  getCheckList,
 };

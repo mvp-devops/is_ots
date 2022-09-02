@@ -23,11 +23,11 @@ import {
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import ModalContainer from "../../views/ModalContainer";
 import CommentForm from "../forms/CommentForm";
 import SolutionTable from "./SolutionTable";
 import { useNavigate } from "react-router-dom";
 import { setCommentFilters } from "./table.settings";
+import { ModalContainer } from "../forms";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];

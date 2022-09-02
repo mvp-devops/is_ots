@@ -7,6 +7,11 @@ import {
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 import {
+  UpdateCriticalityDto,
+  UpdateDesignOrCounterpartyDto,
+  UpdateNSIDto,
+} from "./dto/update-regulatory-reference-information.dto";
+import {
   CounterpartyEntity,
   CriticalityEntity,
   DesignEntity,
@@ -121,44 +126,57 @@ export class RegulatoryReferenceInformationService {
 
     switch (target) {
       case "counterparty": {
-        await this.counterpartyRepository.update(dto, { where: { id } });
+        await this.counterpartyRepository.update(
+          <UpdateDesignOrCounterpartyDto>dto,
+          { where: { id } }
+        );
         item = await this.counterpartyRepository.findOne({ where: { id } });
         break;
       }
       case "criticality": {
-        await this.criticalityRepository.update(dto, { where: { id } });
+        await this.criticalityRepository.update(<UpdateCriticalityDto>dto, {
+          where: { id },
+        });
         item = await this.criticalityRepository.findOne({ where: { id } });
         break;
       }
       case "design": {
-        await this.designRepository.update(dto, { where: { id } });
+        await this.designRepository.update(<UpdateNSIDto>dto, {
+          where: { id },
+        });
         item = await this.designRepository.findOne({ where: { id } });
         break;
       }
       case "direction": {
-        await this.directionRepository.update(dto, { where: { id } });
+        await this.directionRepository.update(<UpdateNSIDto>dto, {
+          where: { id },
+        });
         item = await this.directionRepository.findOne({ where: { id } });
         break;
       }
       case "equipment": {
-        await this.equipmentRepository.update(dto, { where: { id } });
+        await this.equipmentRepository.update(<UpdateNSIDto>dto, {
+          where: { id },
+        });
         item = await this.equipmentRepository.findOne({ where: { id } });
         break;
       }
       case "stage": {
-        await this.stageRepository.update(dto, { where: { id } });
+        await this.stageRepository.update(<UpdateNSIDto>dto, { where: { id } });
         item = await this.stageRepository.findOne({ where: { id } });
         break;
       }
       case "section": {
-        await this.sectionRepository.update(dto, { where: { id } });
+        await this.sectionRepository.update(<UpdateNSIDto>dto, {
+          where: { id },
+        });
         item = await this.sectionRepository.findOne({ where: { id } });
         break;
       }
 
       // case "user": {
 
-      //   await this.userRepository.update(dto, { where: { id } });
+      //   await this.userRepository.update((<UpdateUserDto>)dto, { where: { id } });
       //   item = await this.userRepository.findOne( { where: { id } });
       //   break;
       // }

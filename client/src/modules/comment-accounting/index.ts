@@ -5,7 +5,7 @@
 // import { SolutionTableProps } from "./components/tables/SolutionTable";
 
 import {
-  CheckListView,
+  CheckList,
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
   StatisticView,
@@ -29,7 +29,7 @@ import {
 
 export {
   CheckListForm,
-  CheckListView,
+  CheckList,
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
   StatisticView,

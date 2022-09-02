@@ -9,7 +9,7 @@ const initialState: EssenceState = {
   currentItem: null,
   renderItems: [],
   renderOneItem: null,
-
+  checkListData: null,
   error: null,
   loading: true,
 };
@@ -146,6 +146,26 @@ export const positionTreeReducer = (
       };
 
     case ActionTypes.DELETE_ONE_ITEM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case ActionTypes.GET_CHECK_LIST_DATA:
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case ActionTypes.GET_CHECK_LIST_DATA_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        checkListData: action.payload,
+      };
+
+    case ActionTypes.GET_CHECK_LIST_DATA_ERROR:
       return {
         ...state,
         loading: false,

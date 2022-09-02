@@ -1,4 +1,5 @@
 import { Dispatch } from "redux";
+import { CheckListSets } from "../../../../../server/common/types/comments-accounting";
 import {
   PositionTreeCreateOrUpdateAttrs,
   PositionTreeItem,
@@ -11,6 +12,7 @@ import {
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
+  getCheckList,
 } from "../api";
 import { ActionTypes, EssenceAction } from "../types";
 
@@ -156,5 +158,27 @@ export const setCurrentItem = (item: PositionTreeItem) => {
   return {
     type: ActionTypes.SET_CURRENT_ITEM,
     payload: item,
+  };
+};
+
+export const getCheckListData = (
+  target: string,
+  id: string,
+  settings: CheckListSets
+) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({ type: ActionTypes.GET_CHECK_LIST_DATA });
+      const data = await getCheckList(target, id, settings);
+      dispatch({
+        type: ActionTypes.GET_CHECK_LIST_DATA_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.GET_CHECK_LIST_DATA_ERROR,
+        payload: "Ошибка получения данных",
+      });
+    }
   };
 };

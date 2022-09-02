@@ -22,7 +22,8 @@ const CommentAccountingModalContainer: FC<ModalContainerProps> = ({
       title={
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
-            ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ
+            ФОРМА
+            {/* ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ */}
           </Text>
         </Space>
       }

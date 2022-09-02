@@ -1,6 +1,6 @@
 import { Space, Typography } from "antd";
-import React, { FC } from "react";
-import { DesignDocumentCommentRequestData } from "../../../../../server/common/types/comments-accounting";
+import { FC } from "react";
+import { DesignDocumentCommentRequestData } from "../../../../../../server/common/types/comments-accounting";
 
 interface HeaderProps {
   data: DesignDocumentCommentRequestData;

@@ -4,6 +4,16 @@ export interface RegulatoryReferenceInformationCreationAttrs {
   description: string | null;
 }
 
+export interface CriticalityCreationAttrs {
+  title: string;
+  code: number | string;
+  description: string;
+  threshold: number | string;
+
+  goal: number | string;
+  tenseGoal: number | string;
+}
+
 export interface NSIView {
   id: string | number;
   title: string;

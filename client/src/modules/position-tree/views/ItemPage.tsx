@@ -1,12 +1,12 @@
 import { FC } from "react";
-import { Layout } from "antd";
+import { Layout, Skeleton, Spin } from "antd";
 
 import { commentAccountingRequestData } from "../../comment-accounting/utils/comment-accounting.consts";
 import {
   CommentAccountingModalContainer,
   CollectiveCheckSheet,
   CheckListForm,
-  CheckListView,
+  CheckList,
   StatisticView,
 } from "../../comment-accounting";
 import {
@@ -38,6 +38,8 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
     setCollectiveCheckSheetView,
     setSummaryListOfEquipmentView,
     summaryListOfEquipmentView,
+    checkListData,
+    loading,
   } = useItemPage();
 
   return (
@@ -54,11 +56,22 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
         )}
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
-          <Content style={{ padding: "0 5px" }}>
-            {listItemsView && <ListView />}
-            {documentationView && <div>Будет таблица документов</div>}
-            {statisticView && <StatisticView />}
-          </Content>
+          {loading ? (
+            <Content
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: window.innerHeight - 54 }}
+            >
+              <Spin size="large" />
+            </Content>
+          ) : (
+            <Content style={{ padding: "0 5px" }}>
+              {listItemsView && <ListView />}
+
+              {documentationView && <div>Будет таблица документов</div>}
+              {statisticView && <StatisticView />}
+            </Content>
+          )}
+
           {currentItem && (
             <ItemPageMenu
               childTarget={currentItem.childrenTarget}
@@ -100,13 +113,21 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
           }
         />
       )}
-      {checkListView && (
-        <ModalContainer
-          show={checkListView}
-          onCancel={() => setCheckListView(false)}
-          action={actionType}
-          child={<CheckListView />}
-        />
+      {loading ? (
+        <Spin size="large" />
+      ) : (
+        checkListView && (
+          <CommentAccountingModalContainer
+            show={checkListView}
+            onCancel={() => setCheckListView(false)}
+            action={actionType}
+            child={
+              <Skeleton active loading={loading}>
+                <CheckList />
+              </Skeleton>
+            }
+          />
+        )
       )}
     </Layout>
   );
