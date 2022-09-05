@@ -3,7 +3,17 @@ export interface CommentAccountingNSIView {
   title: string;
   code: number | string;
   description: string;
+  threshold?: string | number;
+  goal?: string | number;
+  tenseGoal?: string | number;
 }
+
+// export interface CommentAccountingNSIView {
+//   id: number | string;
+//   title: string;
+//   code: number | string;
+//   description: string;
+// }
 
 export interface DesignDocumentCommentSolutionCreationAttrs {
   key: string;
@@ -75,9 +85,7 @@ export interface CapitalConstructionUnitSupervisionCommentCreationAttrs {
   comment: string;
 }
 
-export interface CheckListCoefficient {
-  count: number;
-  eliminated: number;
+export interface CheckListCoefficient extends CheckListCommentCriterions {
   coef: number;
   reductionFactor: number;
   feedbackFactor: number;
@@ -101,6 +109,9 @@ export interface CheckListCriticalityCriterions
   reductionFactor: number;
   feedbackFactor: number;
   result: number;
+  threshold: number;
+  goal: number;
+  tenseGoal: number;
 }
 
 export interface CheckListStageCriterions {
@@ -114,9 +125,9 @@ export interface CheckListSettings {
   stage: CommentAccountingNSIView | null;
   stageFactor: string | number;
   criticalities: CommentAccountingNSIView[];
-  tenseGoal: string;
-  goal: string;
-  threshold: string;
+  // tenseGoal: string;
+  // goal: string;
+  // threshold: string;
 }
 
 export interface CheckListSets {
@@ -127,6 +138,7 @@ export interface CheckListSets {
 }
 
 export interface ProjectCheckListView {
+  subsidiary: string;
   design: string;
   code: string;
   title: string;
@@ -139,6 +151,7 @@ export interface ProjectCheckListView {
 }
 
 export interface UnitCheckListView {
+  subsidiary: string;
   supplier: string;
   code: string;
   title: string;

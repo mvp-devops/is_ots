@@ -1700,6 +1700,14 @@ export class PositionTreeService {
           ],
           include: [
             {
+              model: FieldEntity,
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+              ],
+            },
+            {
               model: UnitEntity,
               include: [
                 {
@@ -1781,6 +1789,19 @@ export class PositionTreeService {
           ],
           include: [
             {
+              model: ProjectEntity,
+              include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
               model: SubUnitEntity,
               include: [
                 {
@@ -1820,18 +1841,20 @@ export class PositionTreeService {
 
             {
               model: CounterpartyEntity,
-            },
-            {
-              model: DesignDocumentEntity,
-              as: "supplierDocuments",
-
               include: [
                 {
-                  model: DesignDocumentCommentEntity,
-                  as: "sdc",
+                  model: DesignDocumentEntity,
+                  as: "supplierDocuments",
+
                   include: [
                     {
-                      model: DesignDocumentSolutionEntity,
+                      model: DesignDocumentCommentEntity,
+                      as: "sdc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
                     },
                   ],
                 },
@@ -1842,6 +1865,81 @@ export class PositionTreeService {
         checkList = this.checkListService.unitChecklist(item, settings);
         break;
       }
+      // case "sub-unit": {
+      //   item = await this.subUnitRepository.findOne({
+      //     where: { id },
+      //     attributes: [
+      //       "projectId",
+      //       "equipmentId",
+      //       "supplierId",
+      //       "id",
+      //       "position",
+      //       "title",
+      //       "code",
+      //       "contract",
+      //       "description",
+      //     ],
+      //     include: [
+      //       {
+      //         model: UnitEntity,
+      //         include: [
+      //           {
+      //             model: ProjectEntity,
+      //             include: [
+      //               {
+      //                 model: FieldEntity,
+      //                 include: [
+      //                   {
+      //                     model: SubsidiaryEntity
+      //                   }
+      //                 ]
+      //               }
+      //             ]
+      //         }
+      //         ]
+      //       },
+
+      //       {
+      //         model: DesignDocumentEntity,
+      //         as: "subUnitDocuments",
+
+      //         include: [
+      //           {
+      //             model: DesignDocumentCommentEntity,
+      //             as: "sudc",
+      //             include: [
+      //               {
+      //                 model: DesignDocumentSolutionEntity,
+      //               },
+      //             ],
+      //           },
+      //         ],
+      //       },
+
+      //       {
+      //         model: CounterpartyEntity,
+      //       },
+      //       {
+      //         model: DesignDocumentEntity,
+      //         as: "supplierDocuments",
+
+      //         include: [
+      //           {
+      //             model: DesignDocumentCommentEntity,
+      //             as: "sdc",
+      //             include: [
+      //               {
+      //                 model: DesignDocumentSolutionEntity,
+      //               },
+      //             ],
+      //           },
+      //         ],
+      //       },
+      //     ],
+      //   });
+      //   checkList = this.checkListService.unitChecklist(item, settings);
+      //   break;
+      // }
 
       default:
         break;

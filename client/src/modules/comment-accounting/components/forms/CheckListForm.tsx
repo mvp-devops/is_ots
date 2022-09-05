@@ -1,7 +1,6 @@
 import {
   Button,
   Divider,
-  Form,
   Input,
   Select,
   Space,
@@ -9,15 +8,13 @@ import {
   Col,
   Row,
 } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import { ChangeEvent, FC, ReactNode, useEffect } from "react";
+
+import { ChangeEvent } from "react";
 import { CheckListSettings } from "../../../../../../server/common/types/comments-accounting";
 import { DeleteOutlined } from "@ant-design/icons";
 
 import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";
-import { useItemPage } from "../../../position-tree";
 
-const { Item } = Form;
 const { Text } = Typography;
 const { Option } = Select;
 
@@ -32,8 +29,6 @@ const CheckListForm = () => {
     onHandlerChange,
     setCheckListSets,
   } = useCommentAccountingFormData();
-
-  const { setFormVisible } = useItemPage();
 
   const formItems = (item: CheckListSettings) => (
     <Space
@@ -103,59 +98,6 @@ const CheckListForm = () => {
           />
         </Col>
       </Row>
-
-      {item.stage && (
-        <>
-          <Divider className="p-0 m-0" />
-          <Row justify="start" align="middle" wrap gutter={10}>
-            <Col flex="80px">
-              <Text type="secondary">Порог:</Text>
-            </Col>
-            <Col flex="100px" className="text-secondary">
-              <Input
-                size="small"
-                style={{ minWidth: 100 }}
-                addonAfter="шт."
-                className="text-secondary"
-                value={item.threshold}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onHandlerChange("threshold", e.target.value, item.key)
-                }
-              />
-            </Col>
-            <Col>
-              <Text type="secondary">Цель:</Text>
-            </Col>
-            <Col flex="100px" className="text-secondary">
-              <Input
-                size="small"
-                style={{ minWidth: 100 }}
-                addonAfter="шт."
-                className="text-secondary"
-                value={item.goal}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onHandlerChange("goal", e.target.value, item.key)
-                }
-              />
-            </Col>
-            <Col>
-              <Text type="secondary">Амцель:</Text>
-            </Col>
-            <Col flex="100px" className="text-secondary">
-              <Input
-                size="small"
-                style={{ minWidth: 100 }}
-                addonAfter="шт."
-                className="text-secondary"
-                value={item.tenseGoal}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onHandlerChange("tenseGoal", e.target.value, item.key)
-                }
-              />
-            </Col>
-          </Row>
-        </>
-      )}
     </Space>
   );
 

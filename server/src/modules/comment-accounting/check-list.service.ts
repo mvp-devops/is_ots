@@ -212,6 +212,15 @@ export class CheckListService {
             return null;
           });
         }
+        const { coef, reductionFactor, feedbackFactor, result } =
+          this.coefficientCalculation(
+            criterion.count,
+            criterion.eliminated,
+            +criticalityArr[i].code,
+            +criticalityArr[i].threshold,
+            +criticalityArr[i].goal,
+            +criticalityArr[i].tenseGoal
+          );
 
         criterions.push(criterion);
         criterion = {
@@ -289,10 +298,7 @@ export class CheckListService {
     item: ProjectEntity | UnitEntity | SubUnitEntity,
     stage: CommentAccountingNSIView,
     stageFactor: number,
-    criticalityArr: CommentAccountingNSIView[],
-    threshold: number,
-    goal: number,
-    tenseGoal: number
+    criticalityArr: CommentAccountingNSIView[]
   ): CheckListStageCriterions => {
     let criterion: CheckListCriticalityCriterions = {
       criticalityTitle: "",
@@ -303,6 +309,9 @@ export class CheckListService {
       reductionFactor: 0,
       feedbackFactor: 0,
       result: 0,
+      threshold: 0,
+      goal: 0,
+      tenseGoal: 0,
     };
     let total = 0;
     let criterions: CheckListCriticalityCriterions[] = [],
@@ -364,6 +373,9 @@ export class CheckListService {
     for (let i = 0; i < criticalityArr.length; i++) {
       criterion.criticalityTitle = criticalityArr[i].title;
       criterion.weight = +criticalityArr[i].code;
+      criterion.threshold = +criticalityArr[i].threshold;
+      criterion.goal = +criticalityArr[i].goal;
+      criterion.tenseGoal = +criticalityArr[i].tenseGoal;
 
       newArr = intermediateArr.filter(
         ({ criticalityTitle }) => criticalityTitle === criticalityArr[i].title
@@ -380,9 +392,9 @@ export class CheckListService {
           criterion.count,
           criterion.eliminated,
           criterion.weight,
-          threshold,
-          goal,
-          tenseGoal
+          criterion.threshold,
+          criterion.goal,
+          criterion.tenseGoal
         );
 
       criterion.coef = coef;
@@ -403,6 +415,9 @@ export class CheckListService {
         reductionFactor: 0,
         feedbackFactor: 0,
         result: 0,
+        threshold: 0,
+        goal: 0,
+        tenseGoal: 0,
       };
     }
 
@@ -440,18 +455,9 @@ export class CheckListService {
     const { satisfactorily, okay, great } = settings;
 
     for (let i = 0; i < settings.settings.length; i++) {
-      const { stage, stageFactor, criticalities, threshold, goal, tenseGoal } =
-        settings.settings[i];
+      const { stage, stageFactor, criticalities } = settings.settings[i];
       criterions.push(
-        this.stageCheck(
-          item,
-          stage,
-          +stageFactor,
-          criticalities,
-          +threshold,
-          +goal,
-          +tenseGoal
-        )
+        this.stageCheck(item, stage, +stageFactor, criticalities)
       );
     }
 
@@ -460,13 +466,14 @@ export class CheckListService {
     const grade = this.gradeCheck(result, +satisfactorily, +okay, +great);
 
     return {
+      subsidiary: item.field.subsidiary.title,
       design: item.design.title,
       code: item.code,
       title: item.title,
       contract: item.contract,
       user: "",
       date: setCurrentDate(),
-      result,
+      result: Math.round(result * 100) / 100,
       grade,
       criterions,
     };
@@ -482,18 +489,9 @@ export class CheckListService {
     const { satisfactorily, okay, great } = settings;
 
     for (let i = 0; i < settings.settings.length; i++) {
-      const { stage, stageFactor, criticalities, threshold, goal, tenseGoal } =
-        settings.settings[i];
+      const { stage, stageFactor, criticalities } = settings.settings[i];
       criterions.push(
-        this.stageCheck(
-          item,
-          stage,
-          +stageFactor,
-          criticalities,
-          +threshold,
-          +goal,
-          +tenseGoal
-        )
+        this.stageCheck(item, stage, +stageFactor, criticalities)
       );
     }
 
@@ -502,13 +500,19 @@ export class CheckListService {
     const grade = this.gradeCheck(result, +satisfactorily, +okay, +great);
 
     return {
+      subsidiary:
+        "project" in item
+          ? item.project.field.subsidiary.title
+          : "unit" in item
+          ? item.unit.project.field.subsidiary.title
+          : "",
       supplier: item.supplier.title,
       code: item.code,
       title: item.title,
       contract: item.contract,
       user: "",
       date: setCurrentDate(),
-      result,
+      result: Math.round(result * 100) / 100,
       grade,
       criterions,
     };

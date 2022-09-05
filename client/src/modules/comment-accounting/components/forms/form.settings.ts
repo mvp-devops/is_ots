@@ -50,7 +50,4 @@ export const initCheckListSettingsItem: CheckListSettings = {
   stage: null,
   stageFactor: "",
   criticalities: [],
-  threshold: "",
-  goal: "",
-  tenseGoal: "",
 };
