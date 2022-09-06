@@ -121,6 +121,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "number",
       width: 50,
       align: "center",
+      render: (value, record, index) => (
+        <Text type="secondary">{index + 1}</Text>
+      ),
     },
     {
       title: "Раздел/Марка документа",
@@ -135,6 +138,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 50,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
       title: "Обозначение документа",
@@ -142,6 +146,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "documentCode",
       width: 100,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
 
     {
@@ -164,12 +169,12 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               />
             ) : (
               <FileUnknownOutlined
-                style={{ marginBottom: "8px" }}
+                style={{ marginBottom: "8px", marginRight: "4px" }}
                 className="text-secondary"
               />
             )}
 
-            <Text>{record.documentTitle}</Text>
+            <Text type="secondary">{record.documentTitle}</Text>
           </Text>
         );
       },
@@ -180,6 +185,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "documentPage",
       width: 50,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
       title: "Замечание",
@@ -187,6 +193,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "comment",
       width: 400,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
       title: "Нормативная ссылка",
@@ -201,6 +208,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 250,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
 
     {
@@ -219,6 +227,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 50,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
 
     {
@@ -233,6 +242,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           ? record.expertSubdivision.toUpperCase().includes(value.toUpperCase())
           : false,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
       title: "Ф.И.О. специалиста, контактные данные",
@@ -246,6 +256,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           ? record.expertContacts.toUpperCase().includes(value.toUpperCase())
           : false,
       align: "center",
+      render: (value) => <Text type="secondary">{value}</Text>,
     },
     {
       title: "",

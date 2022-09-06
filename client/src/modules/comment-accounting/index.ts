@@ -4,6 +4,9 @@
 // import { CommentTableProps } from "./components/tables/CommentTable";
 // import { SolutionTableProps } from "./components/tables/SolutionTable";
 
+import { commentAccountingReducer } from "./store/comment-accounting.reducer";
+import * as commentAccountingActionCreators from "./store/comment-accounting.action-creators";
+
 import {
   CheckList,
   CollectiveCheckSheet,
@@ -36,4 +39,6 @@ export {
   CommentForm,
   SolutionForm,
   useCommentAccountingFormData,
+  commentAccountingReducer,
+  commentAccountingActionCreators,
 };

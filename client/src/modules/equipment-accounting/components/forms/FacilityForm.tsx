@@ -48,6 +48,19 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
           className="text-secondary"
           showSearch
           optionFilterProp="children"
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string).includes(input)
           }
@@ -73,6 +86,19 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
           className="text-secondary"
           showSearch
           optionFilterProp="children"
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string).includes(input)
           }
@@ -152,7 +178,9 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
                     />
                   </Text>
 
-                  <Text type="secondary">Нет данных для отображения</Text>
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
                 </Space>
               }
               size="small"
@@ -193,7 +221,9 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
                     />
                   </Text>
 
-                  <Text type="secondary">Нет данных для отображения</Text>
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
                 </Space>
               }
               size="small"
@@ -232,7 +262,9 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
                     />
                   </Text>
 
-                  <Text type="secondary">Нет данных для отображения</Text>
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
                 </Space>
               }
               style={{ width: "100%" }}

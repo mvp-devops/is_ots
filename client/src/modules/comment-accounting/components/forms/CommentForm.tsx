@@ -1,4 +1,4 @@
-import { Button, Divider, Form, Select, Space } from "antd";
+import { Button, Divider, Form, Select, Space, Typography } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { ChangeEvent, FC, useEffect, useState } from "react";
 import {
@@ -9,11 +9,14 @@ import {
   criticalityRequestData,
   directionRequestData,
 } from "../../utils/comment-accounting.consts";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { addItem } from "./form.actions";
 import { initCommentFormData } from "./form.settings";
+import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";
 import SolutionForm from "./SolutionForm";
 
 const { Item } = Form;
+const { Text } = Typography;
 
 export interface CommentFormProps {
   target: string;
@@ -35,6 +38,8 @@ const CommentForm: FC<CommentFormProps> = ({
     DesignDocumentCommentSolutionCreationAttrs[]
   >([]);
 
+  const { criticalities } = useCommentAccountingFormData();
+
   const solution = {
     key: "",
     commentId: "",
@@ -55,10 +60,27 @@ const CommentForm: FC<CommentFormProps> = ({
       layout="horizontal"
       className="m-1 p-1 border"
     >
-      <Item label="Функциональное направление" className="m-1 p-1">
+      <Item
+        label={<Text type="secondary">Функциональное направление</Text>}
+        className="m-1 p-1"
+      >
         <Select
           size="small"
           showSearch
+          className="text-secondary"
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string)
               .toLowerCase()
@@ -75,18 +97,36 @@ const CommentForm: FC<CommentFormProps> = ({
           ))}
         </Select>
       </Item>
-      <Item label="Замечание" className="m-1 p-1">
+      <Item label={<Text type="secondary">Замечание</Text>} className="m-1 p-1">
         <TextArea
           rows={4}
+          className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setRequestData({ ...requestData, comment: e.target.value })
           }
         />
       </Item>
-      <Item label="Нормативная ссылка" className="m-1 p-1">
+      <Item
+        label={<Text type="secondary">Нормативная ссылка</Text>}
+        className="m-1 p-1"
+      >
         <Select
           size="small"
           showSearch
+          className="text-secondary"
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string)
               .toLowerCase()
@@ -99,10 +139,27 @@ const CommentForm: FC<CommentFormProps> = ({
           <Select.Option value="demo">Demo</Select.Option>
         </Select>
       </Item>
-      <Item label="Код критерия критичности" className="m-1 p-1">
+      <Item
+        label={<Text type="secondary">Код критерия критичности</Text>}
+        className="m-1 p-1"
+      >
         <Select
           size="small"
+          className="text-secondary"
           showSearch
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string)
               .toLowerCase()
@@ -112,7 +169,7 @@ const CommentForm: FC<CommentFormProps> = ({
             setRequestData({ ...requestData, criticalityId: value })
           }
         >
-          {criticalityRequestData.slice(1, 11).map(({ id, title }) => (
+          {criticalities.slice(1, 11).map(({ id, title }) => (
             <Select.Option key={id} value={id}>
               {title}
             </Select.Option>

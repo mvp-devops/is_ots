@@ -310,7 +310,7 @@ const CheckListTable = () => {
       render: (value, record) => (
         <Text type="secondary">
           <Tooltip
-            placement="left"
+            placement="right"
             color="white"
             title={
               record.stageTitle === "Заводские приемо-сдаточные испытания" ? (

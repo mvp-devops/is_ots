@@ -14,6 +14,8 @@ import {
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
 } from "../../../../../../server/common/types/equipment-accounting";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
 import { sgroei } from "../../utils/equipment-accounting.consts";
 import FacilityForm from "./FacilityForm";
 import { useGeneralInformationData } from "./hooks/useGeneralInformationData";
@@ -68,6 +70,19 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 size="small"
                 className="text-secondary"
                 showSearch
+                notFoundContent={
+                  <Space className="d-flex justify-content-center p-3">
+                    <Text type="warning">
+                      <ExclamationCircleOutlined
+                        style={{ fontSize: 20, marginBottom: 2 }}
+                      />
+                    </Text>
+
+                    <Text type="secondary">
+                      Нет данных для отображения. Уточнить поиск
+                    </Text>
+                  </Space>
+                }
                 optionFilterProp="children"
                 filterOption={(input, option) =>
                   (option!.children as unknown as string).includes(input)
@@ -97,6 +112,19 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 className="text-secondary"
                 showSearch
                 optionFilterProp="children"
+                notFoundContent={
+                  <Space className="d-flex justify-content-center p-3">
+                    <Text type="warning">
+                      <ExclamationCircleOutlined
+                        style={{ fontSize: 20, marginBottom: 2 }}
+                      />
+                    </Text>
+
+                    <Text type="secondary">
+                      Нет данных для отображения. Уточнить поиск
+                    </Text>
+                  </Space>
+                }
                 filterOption={(input, option) =>
                   (option!.children as unknown as string).includes(input)
                 }
@@ -167,6 +195,19 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             size="small"
             className="text-secondary"
             showSearch
+            notFoundContent={
+              <Space className="d-flex justify-content-center p-3">
+                <Text type="warning">
+                  <ExclamationCircleOutlined
+                    style={{ fontSize: 20, marginBottom: 2 }}
+                  />
+                </Text>
+
+                <Text type="secondary">
+                  Нет данных для отображения. Уточнить поиск
+                </Text>
+              </Space>
+            }
             defaultValue={row && item.facility?.title}
             optionFilterProp="children"
             filterOption={(input, option) =>
@@ -209,6 +250,19 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             <Select
               size="small"
               className="text-secondary"
+              notFoundContent={
+                <Space className="d-flex justify-content-center p-3">
+                  <Text type="warning">
+                    <ExclamationCircleOutlined
+                      style={{ fontSize: 20, marginBottom: 2 }}
+                    />
+                  </Text>
+
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
+                </Space>
+              }
               defaultValue={row && item.facilityModification}
               onChange={(value: string) =>
                 onHandlerChange("facilityModification", value)

@@ -3,6 +3,7 @@ import { equipmentAccountingReducer } from "../modules/equipment-accounting";
 import { mainReducer } from "../modules/main";
 import { positionTreeReducer } from "../modules/position-tree";
 import { nsiReducer } from "../modules/regulatory-reference-information";
+import { commentAccountingReducer } from "../modules/comment-accounting";
 // import { subsidiaryReducer } from "../../models/position-tree/subsidiary/subsidiary.reducer";
 // import { fieldReducer } from "../../models/position-tree/field/field.reducer";
 
@@ -15,6 +16,7 @@ import { nsiReducer } from "../modules/regulatory-reference-information";
 // import { equipmentAccountingReducer } from "../../models/equipment-accounting/store/equipment-accounting.reducer";
 
 export const rootReducer = combineReducers({
+  commentAccounting: commentAccountingReducer,
   equipmentAccounting: equipmentAccountingReducer,
   positionTree: positionTreeReducer,
   nsi: nsiReducer,

@@ -8,13 +8,6 @@ export interface CommentAccountingNSIView {
   tenseGoal?: string | number;
 }
 
-// export interface CommentAccountingNSIView {
-//   id: number | string;
-//   title: string;
-//   code: number | string;
-//   description: string;
-// }
-
 export interface DesignDocumentCommentSolutionCreationAttrs {
   key: string;
   commentId: string | number;
@@ -49,6 +42,7 @@ export interface DesignDocumentCommentCreationAttrs {
 }
 
 export interface DesignDocumentCommentView {
+  id?: number | string;
   number: number | string;
   documentSection: string; // марка/раздел документации
   documentCode: string;

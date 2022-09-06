@@ -1,6 +1,7 @@
-import { Button, Form, Select } from "antd";
+import { Button, Form, Select, Space, Typography } from "antd";
 import TextArea from "antd/lib/input/TextArea";
 import { ChangeEvent, FC } from "react";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { DesignDocumentCommentSolutionCreationAttrs } from "../../../../../../server/common/types/comments-accounting";
 import {
   solutionRequestData,
@@ -10,6 +11,7 @@ import { changeItems, removeItem } from "./form.actions";
 import { CloseOutlined } from "@ant-design/icons";
 
 const { Item } = Form;
+const { Text } = Typography;
 
 export interface SolutionFormProps {
   items: DesignDocumentCommentSolutionCreationAttrs[];
@@ -39,10 +41,27 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           />
         </Button>
       </div>
-      <Item label="Статус ответа" className="m-1 p-1">
+      <Item
+        label={<Text type="secondary">Статус ответа</Text>}
+        className="m-1 p-1"
+      >
         <Select
           size="small"
+          className="text-secondary"
           showSearch
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string)
               .toLowerCase()
@@ -59,17 +78,19 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           ))}
         </Select>
       </Item>
-      <Item label="Ответ" className="m-1 p-1">
+      <Item label={<Text type="secondary">Ответ</Text>} className="m-1 p-1">
         <TextArea
           rows={4}
+          className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(items, setItems, "answer", e.target.value, item.key)
           }
         />
       </Item>
-      <Item label="Ответ" className="m-1 p-1">
+      <Item label={<Text type="secondary">Контакты</Text>} className="m-1 p-1">
         <TextArea
           rows={4}
+          className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(
               items,
@@ -81,10 +102,27 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           }
         />
       </Item>
-      <Item label="Статус решения" className="m-1 p-1">
+      <Item
+        label={<Text type="secondary">Статус решения</Text>}
+        className="m-1 p-1"
+      >
         <Select
           size="small"
           showSearch
+          className="text-secondary"
+          notFoundContent={
+            <Space className="d-flex justify-content-center p-3">
+              <Text type="warning">
+                <ExclamationCircleOutlined
+                  style={{ fontSize: 20, marginBottom: 2 }}
+                />
+              </Text>
+
+              <Text type="secondary">
+                Нет данных для отображения. Уточнить поиск
+              </Text>
+            </Space>
+          }
           filterOption={(input, option) =>
             (option!.children as unknown as string)
               .toLowerCase()
@@ -98,9 +136,10 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           ))}
         </Select>
       </Item>
-      <Item label="Решение" className="m-1 p-1">
+      <Item label={<Text type="secondary">Решение</Text>} className="m-1 p-1">
         <TextArea
           rows={4}
+          className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(items, setItems, "solution", e.target.value, item.key)
           }

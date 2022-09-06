@@ -22,7 +22,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
       className: "bg-primary text-white",
       children: [
         {
-          title: "Статус",
+          title: "Статус**",
           dataIndex: "statusId",
           key: "statusId",
           width: 50,
@@ -40,17 +40,11 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
               : false,
           render: (value: string) =>
             value === "1" ? (
-              <Text type="success" strong>
-                {value}
-              </Text>
+              <Text type="success">{value}</Text>
             ) : value === "2" ? (
-              <Text type="danger" strong>
-                {value}
-              </Text>
+              <Text type="danger">{value}</Text>
             ) : (
-              <Text type="warning" strong>
-                {value}
-              </Text>
+              <Text type="warning">{value}</Text>
             ),
         },
         {
@@ -59,6 +53,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           key: "answer",
           width: 600,
           align: "center",
+          render: (value) => <Text type="secondary">{value}</Text>,
         },
         {
           title: "Ф.И.О. специалиста, контактные данные",
@@ -66,6 +61,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           key: "designContacts",
           width: 300,
           align: "center",
+          render: (value) => <Text type="secondary">{value}</Text>,
         },
       ],
     },
@@ -74,7 +70,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
       width: 950,
       children: [
         {
-          title: "Статус",
+          title: "Статус***",
           dataIndex: "solutionId",
           key: "solutionId",
           width: 50,
@@ -91,17 +87,11 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
               : false,
           render: (value: string) =>
             value === "1" ? (
-              <Text type="success" strong>
-                {value}
-              </Text>
+              <Text type="success">{value}</Text>
             ) : value === "2" ? (
-              <Text type="danger" strong>
-                {value}
-              </Text>
+              <Text type="danger">{value}</Text>
             ) : (
-              <Text type="warning" strong>
-                {value}
-              </Text>
+              <Text type="warning">{value}</Text>
             ),
         },
         {
@@ -110,13 +100,15 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           key: "solution",
           width: 600,
           align: "center",
+          render: (value) => <Text type="secondary">{value}</Text>,
         },
         {
           title: "Ф.И.О. специалиста, контактные данные",
-          dataIndex: "designContacts",
+          dataIndex: "expertContacts",
           key: "expertContacts",
           width: 300,
           align: "center",
+          render: (value) => <Text type="secondary">{value}</Text>,
         },
       ],
     },
@@ -144,18 +136,16 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
   }
 
   return (
-    <div className="mt-3 mb-3">
-      <Table
-        bordered
-        className="d-flex"
-        locale={tableLocale}
-        columns={columns}
-        dataSource={data}
-        rowClassName={(record) => "bg-white"}
-        pagination={false}
-        rowKey={() => Math.random()}
-      />
-    </div>
+    <Table
+      bordered
+      className="d-flex"
+      locale={tableLocale}
+      columns={columns}
+      dataSource={data}
+      rowClassName={(record) => "bg-white"}
+      pagination={false}
+      rowKey={() => Math.random()}
+    />
   );
 };
 

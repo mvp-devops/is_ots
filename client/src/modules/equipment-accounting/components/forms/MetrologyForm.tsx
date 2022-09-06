@@ -13,6 +13,8 @@ import {
 } from "antd";
 import { ChangeEvent, FC, ReactNode } from "react";
 import { UploadOutlined } from "@ant-design/icons";
+import { ExclamationCircleOutlined } from "@ant-design/icons";
+
 import {
   MetrologyCreateOrUpdateAttrs,
   MetrologyView,
@@ -62,6 +64,19 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             size="small"
             className="text-secondary"
             showSearch
+            notFoundContent={
+              <Space className="d-flex justify-content-center p-3">
+                <Text type="warning">
+                  <ExclamationCircleOutlined
+                    style={{ fontSize: 20, marginBottom: 2 }}
+                  />
+                </Text>
+
+                <Text type="secondary">
+                  Нет данных для отображения. Уточнить поиск
+                </Text>
+              </Space>
+            }
             optionFilterProp="children"
             filterOption={(input, option) =>
               (option!.children as unknown as string).includes(input)
@@ -235,6 +250,19 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               showSearch
               defaultValue={item.counterparty}
               optionFilterProp="children"
+              notFoundContent={
+                <Space className="d-flex justify-content-center p-3">
+                  <Text type="warning">
+                    <ExclamationCircleOutlined
+                      style={{ fontSize: 20, marginBottom: 2 }}
+                    />
+                  </Text>
+
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
+                </Space>
+              }
               filterOption={(input, option) =>
                 (option!.children as unknown as string).includes(input)
               }
@@ -270,6 +298,19 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               size="small"
               className="text-secondary"
               showSearch
+              notFoundContent={
+                <Space className="d-flex justify-content-center p-3">
+                  <Text type="warning">
+                    <ExclamationCircleOutlined
+                      style={{ fontSize: 20, marginBottom: 2 }}
+                    />
+                  </Text>
+
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
+                </Space>
+              }
               defaultValue={item.documentType}
               optionFilterProp="children"
               filterOption={(input, option) =>

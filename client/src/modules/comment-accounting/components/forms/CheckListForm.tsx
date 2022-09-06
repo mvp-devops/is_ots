@@ -12,7 +12,7 @@ import {
 
 import { ChangeEvent } from "react";
 import { CheckListSettings } from "../../../../../../server/common/types/comments-accounting";
-import { DeleteOutlined } from "@ant-design/icons";
+import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";
 
@@ -51,6 +51,19 @@ const CheckListForm = () => {
           <Select
             size="small"
             className="text-secondary"
+            notFoundContent={
+              <Space className="d-flex justify-content-center p-3">
+                <Text type="warning">
+                  <ExclamationCircleOutlined
+                    style={{ fontSize: 20, marginBottom: 2 }}
+                  />
+                </Text>
+
+                <Text type="secondary">
+                  Нет данных для отображения. Уточнить поиск
+                </Text>
+              </Space>
+            }
             style={{ width: 300 }}
             showSearch
             optionFilterProp="children"
@@ -133,6 +146,19 @@ const CheckListForm = () => {
               className="text-secondary"
               style={{ width: 300 }}
               showSearch
+              notFoundContent={
+                <Space className="d-flex justify-content-center p-3">
+                  <Text type="warning">
+                    <ExclamationCircleOutlined
+                      style={{ fontSize: 20, marginBottom: 2 }}
+                    />
+                  </Text>
+
+                  <Text type="secondary">
+                    Нет данных для отображения. Уточнить поиск
+                  </Text>
+                </Space>
+              }
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option!.children as unknown as string).includes(input)
@@ -165,6 +191,19 @@ const CheckListForm = () => {
               <Select
                 size="small"
                 className="text-secondary"
+                notFoundContent={
+                  <Space className="d-flex justify-content-center p-3">
+                    <Text type="warning">
+                      <ExclamationCircleOutlined
+                        style={{ fontSize: 20, marginBottom: 2 }}
+                      />
+                    </Text>
+
+                    <Text type="secondary">
+                      Нет данных для отображения. Уточнить поиск
+                    </Text>
+                  </Space>
+                }
                 style={{ width: 300 }}
                 showSearch
                 optionFilterProp="children"
