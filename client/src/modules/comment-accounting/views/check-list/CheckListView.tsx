@@ -48,9 +48,9 @@ const CheckList = () => {
 
           <CheckListTable />
 
-          <Divider className="m-1" />
+          {/* <Divider className="m-1" /> */}
 
-          <Footer />
+          {/* <Footer /> */}
         </>
       )}
     </Space>

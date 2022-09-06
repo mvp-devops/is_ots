@@ -1,6 +1,7 @@
 import { Modal, Space, Typography } from "antd";
 import React, { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
+import { FormActions } from "../../main";
 
 const { Text } = Typography;
 
@@ -20,10 +21,11 @@ const CommentAccountingModalContainer: FC<ModalContainerProps> = ({
   return (
     <Modal
       title={
-        <Space className="d-flex justify-content-center">
+        <Space className="d-flex justify-content-start">
           <Text strong className="text-white">
-            ФОРМА
-            {/* ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ */}
+            {action === FormActions.CHECKLIST
+              ? "Ш-03.01.05.01-01 - ОЦЕНОЧНЫЙ ЛИСТ КОНТРАГЕНТА"
+              : "ЛИСТ КОЛЛЕКТИВНОЙ ПРОВЕРКИ"}
           </Text>
         </Space>
       }

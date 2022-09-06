@@ -28,6 +28,7 @@ import SolutionTable from "./SolutionTable";
 import { useNavigate } from "react-router-dom";
 import { setCommentFilters } from "./table.settings";
 import { ModalContainer } from "../forms";
+import { tableLocale } from "../../../main";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -263,10 +264,14 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         size="small"
         loading={false}
         bordered
+        locale={tableLocale}
         pagination={data.length < 10 && false}
         columns={columns}
         dataSource={data}
-        expandable={{ expandedRowRender }}
+        expandable={{
+          expandedRowRender,
+          rowExpandable: (record) => (record.comment.length > 0 ? true : false),
+        }}
         summary={(data) => (
           <Row>
             <Cell index={0} colSpan={11} align="right">

@@ -57,7 +57,7 @@ const Footer = () => {
   ];
 
   return (
-    <Space direction="vertical" size="small" style={{ minWidth: 1805 }}>
+    <Space direction="vertical" size="small" style={{ minWidth: 1780 }}>
       <Collapse>
         <Panel header="Примечание" key="1" className="m-0 p-0">
           <Table

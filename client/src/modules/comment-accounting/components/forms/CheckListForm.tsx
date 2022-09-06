@@ -113,8 +113,8 @@ const CheckListForm = () => {
         <Space>
           <Input
             size="small"
-            style={{ width: 100 }}
-            addonAfter="%"
+            style={{ width: 100, color: "red" }}
+            addonAfter={<Text type="secondary">%</Text>}
             className="text-secondary"
             value={sets.satisfactorily}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -131,7 +131,7 @@ const CheckListForm = () => {
           <Input
             size="small"
             style={{ width: 100 }}
-            addonAfter="%"
+            addonAfter={<Text type="secondary">%</Text>}
             className="text-secondary"
             value={sets.okay}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -148,7 +148,7 @@ const CheckListForm = () => {
           <Input
             size="small"
             style={{ width: 100 }}
-            addonAfter="%"
+            addonAfter={<Text type="secondary">%</Text>}
             className="text-secondary"
             value={sets.great}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
@@ -156,43 +156,6 @@ const CheckListForm = () => {
             }
           />
         </Space>
-
-        {/* <Row justify="center" align="middle" wrap gutter={10}>
-          <Col flex="200"></Col>
-          <Col flex="100px" className="text-secondary"></Col>
-        </Row>
-        <Row justify="start" align="middle" wrap gutter={10}>
-          <Col>
-            <Text type="secondary">Удовлетворительно:</Text>
-          </Col>
-          <Col flex="100px" className="text-secondary">
-            <Input
-              size="small"
-              style={{ minWidth: 100 }}
-              addonAfter="шт."
-              className="text-secondary"
-              value={sets.okay}
-              //   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              //     onHandlerChange("goal", e.target.value, item.key)
-              //   }
-            />
-          </Col>
-          <Col>
-            <Text type="secondary">Хорошо:</Text>
-          </Col>
-          <Col flex="100px" className="text-secondary">
-            <Input
-              size="small"
-              style={{ minWidth: 100 }}
-              addonAfter="шт."
-              className="text-secondary"
-              value={sets.great}
-              //   onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              //     onHandlerChange("tenseGoal", e.target.value, item.key)
-              //   }
-            />
-          </Col>
-        </Row> */}
       </Space>
       <Divider className="m-0 p-0" />
       <Space className="d-flex justify-content-center mt-2 mb-2 ">
@@ -207,7 +170,12 @@ const CheckListForm = () => {
       {settings.map((item) => formItems(item))}
       <Divider className="p-0 m-2" />
       <Space className="d-flex justify-content-end mb-0">
-        <Button type="primary" className="me-1 " onClick={() => checkList()}>
+        <Button
+          type="primary"
+          className="me-1 "
+          onClick={() => checkList()}
+          disabled={settings.length > 0 ? false : true}
+        >
           Сформировать
         </Button>
       </Space>

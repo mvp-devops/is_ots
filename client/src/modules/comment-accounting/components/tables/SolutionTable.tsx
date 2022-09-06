@@ -6,6 +6,7 @@ import {
   DesignDocumentCommentView,
 } from "../../../../../../server/common/types/comments-accounting";
 import { setSolutionFilters } from "./table.settings";
+import { tableLocale } from "../../../main";
 
 export interface SolutionTableProps {
   record: DesignDocumentCommentView;
@@ -147,6 +148,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
       <Table
         bordered
         className="d-flex"
+        locale={tableLocale}
         columns={columns}
         dataSource={data}
         rowClassName={(record) => "bg-white"}

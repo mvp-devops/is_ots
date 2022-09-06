@@ -9,6 +9,14 @@
   color: rgb(255, 255, 255) !important;
 } */
 
+.bg-table-blue {
+  background-color: #d4efff;
+}
+
+.ant-menu-sub.ant-menu-inline {
+  background: rgb(255, 255, 255);
+}
+
 .ant-modal-header {
   background-color: rgb(0, 120, 210) !important;
   color: rgb(255, 255, 255) !important;

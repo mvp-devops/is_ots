@@ -20,7 +20,7 @@ const EquipmentAccountingModalContainer: FC<ModalContainerProps> = ({
   return (
     <Modal
       title={
-        <Space className="d-flex justify-content-center">
+        <Space className="d-flex justify-content-start">
           <Text strong className="text-white">
             СВОДНЫЙ ПЕРЕЧЕНЬ ОБОРУДОВАНИЯ
           </Text>

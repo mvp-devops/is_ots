@@ -105,9 +105,6 @@ export interface CheckListDocumentCriterions
 export interface CheckListCriticalityCriterions
   extends CheckListDocumentCriterions {
   weight: number;
-  coef: number;
-  reductionFactor: number;
-  feedbackFactor: number;
   result: number;
   threshold: number;
   goal: number;
@@ -117,6 +114,7 @@ export interface CheckListCriticalityCriterions
 export interface CheckListStageCriterions {
   stageTitle: string;
   stageTotal: number;
+  stageFactor: number | string;
   criterions: CheckListCriticalityCriterions[];
 }
 
@@ -138,6 +136,9 @@ export interface CheckListSets {
 }
 
 export interface ProjectCheckListView {
+  satisfactorily: number | string;
+  okay: number | string;
+  great: number | string;
   subsidiary: string;
   design: string;
   code: string;
@@ -151,9 +152,12 @@ export interface ProjectCheckListView {
 }
 
 export interface UnitCheckListView {
+  satisfactorily: number | string;
+  okay: number | string;
+  great: number | string;
   subsidiary: string;
   supplier: string;
-  code: string;
+  position: string;
   title: string;
   contract: string;
   user: string;

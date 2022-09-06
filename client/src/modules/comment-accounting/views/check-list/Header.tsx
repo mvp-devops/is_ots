@@ -12,13 +12,17 @@ const Header: FC<HeaderProps> = ({ data }) => {
   const designTitle = data && "design" in data && data.design;
   const supplierTitle = data && "supplier" in data && data.supplier;
   const contract = data && data.contract;
-  const objectTitle = data && `${data.code}. ${data.title}`;
-  // const satisfactorily = data && data.satisfactorily;
-  // const okay = data && data.okay;
-  // const greate = data && data.greate;
-  const satisfactorily = 95;
-  const okay = 96;
-  const greate = 98;
+  const objectTitle =
+    data && "position" in data
+      ? `поз. ${data.position}. ${data.title}`
+      : `${data.code}. ${data.title}`;
+  const subsidiaryTitle = data && data.subsidiary;
+  const satisfactorily = data && data.satisfactorily;
+  const okay = data && data.okay;
+  const great = data && data.great;
+  // const satisfactorily = 95;
+  // const okay = 96;
+  // const greate = 98;
 
   return (
     <Space
@@ -30,7 +34,7 @@ const Header: FC<HeaderProps> = ({ data }) => {
         <Space direction="horizontal" className="d-flex justify-content-start">
           <Text strong>Заказчик:</Text>
 
-          <Text type="secondary">Наименование ДО/СП</Text>
+          <Text type="secondary">{subsidiaryTitle}</Text>
         </Space>
         <Space direction="horizontal" className="d-flex justify-content-start">
           <Text strong>Код и наименование работы/ услуги (КТ-777):</Text>
@@ -77,7 +81,7 @@ const Header: FC<HeaderProps> = ({ data }) => {
           <Row gutter={20} justify="start">
             <Col>
               <Text strong type="secondary">
-                {greate}
+                {great}
               </Text>
             </Col>
             <Col

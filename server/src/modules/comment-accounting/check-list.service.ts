@@ -212,15 +212,6 @@ export class CheckListService {
             return null;
           });
         }
-        const { coef, reductionFactor, feedbackFactor, result } =
-          this.coefficientCalculation(
-            criterion.count,
-            criterion.eliminated,
-            +criticalityArr[i].code,
-            +criticalityArr[i].threshold,
-            +criticalityArr[i].goal,
-            +criticalityArr[i].tenseGoal
-          );
 
         criterions.push(criterion);
         criterion = {
@@ -273,6 +264,7 @@ export class CheckListService {
         newArr.map(({ count, eliminated }) => {
           criterion.count += count;
           criterion.eliminated += eliminated;
+
           return null;
         });
         criterions.push(criterion);
@@ -305,9 +297,6 @@ export class CheckListService {
       count: 0,
       eliminated: 0,
       weight: 0,
-      coef: 0,
-      reductionFactor: 0,
-      feedbackFactor: 0,
       result: 0,
       threshold: 0,
       goal: 0,
@@ -397,13 +386,7 @@ export class CheckListService {
           criterion.tenseGoal
         );
 
-      criterion.coef = coef;
-
-      criterion.reductionFactor = reductionFactor;
-
-      criterion.feedbackFactor = feedbackFactor;
-
-      criterion.result = result;
+      // criterion.result = result;
 
       criterions.push(criterion);
       criterion = {
@@ -411,9 +394,7 @@ export class CheckListService {
         count: 0,
         eliminated: 0,
         weight: 0,
-        coef: 0,
-        reductionFactor: 0,
-        feedbackFactor: 0,
+
         result: 0,
         threshold: 0,
         goal: 0,
@@ -425,7 +406,8 @@ export class CheckListService {
 
     return {
       stageTitle: stage.title,
-      stageTotal: (total * stageFactor) / 100,
+      stageTotal: Math.round(total * stageFactor) / 100,
+      stageFactor,
       criterions,
     };
   };
@@ -466,6 +448,9 @@ export class CheckListService {
     const grade = this.gradeCheck(result, +satisfactorily, +okay, +great);
 
     return {
+      satisfactorily: satisfactorily,
+      okay: okay,
+      great: great,
       subsidiary: item.field.subsidiary.title,
       design: item.design.title,
       code: item.code,
@@ -500,6 +485,9 @@ export class CheckListService {
     const grade = this.gradeCheck(result, +satisfactorily, +okay, +great);
 
     return {
+      satisfactorily: satisfactorily,
+      okay: okay,
+      great: great,
       subsidiary:
         "project" in item
           ? item.project.field.subsidiary.title
@@ -507,7 +495,7 @@ export class CheckListService {
           ? item.unit.project.field.subsidiary.title
           : "",
       supplier: item.supplier.title,
-      code: item.code,
+      position: item.position,
       title: item.title,
       contract: item.contract,
       user: "",

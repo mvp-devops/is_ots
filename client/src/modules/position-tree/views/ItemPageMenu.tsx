@@ -148,7 +148,12 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
         },
         {
           label: (
-            <Space onClick={() => setSummaryListOfEquipmentView(true)}>
+            <Space
+              onClick={() => {
+                setSummaryListOfEquipmentView(true);
+                setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
+              }}
+            >
               <AppstoreOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
@@ -205,7 +210,12 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
         },
         {
           label: (
-            <Space onClick={() => setCollectiveCheckSheetView(true)}>
+            <Space
+              onClick={() => {
+                setCollectiveCheckSheetView(true);
+                setActionType(FormActions.COLLECTIVE_CHECK_SHEET);
+              }}
+            >
               <FileDoneOutlined
                 className="text-dark"
                 style={{ marginBottom: "16px", padding: 0 }}
