@@ -7,6 +7,7 @@ import {
   Typography,
   Col,
   Row,
+  Tabs,
 } from "antd";
 
 import { ChangeEvent } from "react";
@@ -20,6 +21,7 @@ const { Option } = Select;
 
 const CheckListForm = () => {
   const {
+    target,
     sets,
     stages,
     settings,
@@ -28,6 +30,8 @@ const CheckListForm = () => {
     checkList,
     onHandlerChange,
     setCheckListSets,
+    counterpartiesList,
+    equipmentsList,
   } = useCommentAccountingFormData();
 
   const formItems = (item: CheckListSettings) => (
@@ -101,6 +105,107 @@ const CheckListForm = () => {
     </Space>
   );
 
+  const tabs = (
+    <Tabs defaultActiveKey="project-unit">
+      <Tabs.TabPane tab="Проект/объект" key="project-unit">
+        {/* <Divider className="m-0 p-0" /> */}
+        <Space className="d-flex justify-content-center mt-2 mb-2 ">
+          <Button
+            type="ghost"
+            title="Добавить новую строку"
+            onClick={() => addItem()}
+          >
+            <Text type="secondary">Добавить стадию</Text>
+          </Button>
+        </Space>
+        {settings.map((item) => formItems(item))}
+      </Tabs.TabPane>
+      <Tabs.TabPane tab="Контрагент" key="counterparty">
+        <Row justify="start" align="middle" wrap gutter={10}>
+          <Col flex="180px">
+            <Text type="secondary">
+              {target === "project" ? "Проектный институт:" : "Поставщик:"}
+            </Text>
+          </Col>
+          <Col flex="300px">
+            <Select
+              size="small"
+              className="text-secondary"
+              style={{ width: 300 }}
+              showSearch
+              optionFilterProp="children"
+              filterOption={(input, option) =>
+                (option!.children as unknown as string).includes(input)
+              }
+              filterSort={(optionA, optionB) =>
+                (optionA!.children as unknown as string)
+                  .toLowerCase()
+                  .localeCompare(
+                    (optionB!.children as unknown as string).toLowerCase()
+                  )
+              }
+              // onChange={(value: string) =>
+              //   onHandlerChange("stage", value, item.key)
+              // }
+            >
+              {counterpartiesList.map((item) => (
+                <Option key={item.id} value={item.id}>
+                  {item.title}
+                </Option>
+              ))}
+            </Select>
+          </Col>
+        </Row>
+        {(target === "unit" || target === "sub-unit") && (
+          <Row justify="start" align="middle" wrap gutter={10} className="mt-1">
+            <Col flex="180px">
+              <Text type="secondary">Группа оборудования:</Text>
+            </Col>
+            <Col flex="200px">
+              <Select
+                size="small"
+                className="text-secondary"
+                style={{ width: 300 }}
+                showSearch
+                optionFilterProp="children"
+                filterOption={(input, option) =>
+                  (option!.children as unknown as string).includes(input)
+                }
+                filterSort={(optionA, optionB) =>
+                  (optionA!.children as unknown as string)
+                    .toLowerCase()
+                    .localeCompare(
+                      (optionB!.children as unknown as string).toLowerCase()
+                    )
+                }
+                // onChange={(value: string) =>
+                //   onHandlerChange("stage", value, item.key)
+                // }
+              >
+                {equipmentsList.map((item) => (
+                  <Option key={item.id} value={item.id}>
+                    {item.title}
+                  </Option>
+                ))}
+              </Select>
+            </Col>
+          </Row>
+        )}
+        <Divider className="m-0 p-0 mt-3" />
+        <Space className="d-flex justify-content-center mt-2 mb-2 ">
+          <Button
+            type="ghost"
+            title="Добавить новую строку"
+            onClick={() => addItem()}
+          >
+            <Text type="secondary">Добавить стадию</Text>
+          </Button>
+        </Space>
+        {settings.map((item) => formItems(item))}
+      </Tabs.TabPane>
+    </Tabs>
+  );
+
   return (
     <div className="container ">
       <Divider orientation="center" className="text-secondary m-0 p-0">
@@ -157,17 +262,7 @@ const CheckListForm = () => {
           />
         </Space>
       </Space>
-      <Divider className="m-0 p-0" />
-      <Space className="d-flex justify-content-center mt-2 mb-2 ">
-        <Button
-          type="ghost"
-          title="Добавить новую строку"
-          onClick={() => addItem()}
-        >
-          <Text type="secondary">Добавить стадию</Text>
-        </Button>
-      </Space>
-      {settings.map((item) => formItems(item))}
+      {tabs}
       <Divider className="p-0 m-2" />
       <Space className="d-flex justify-content-end mb-0">
         <Button

@@ -13,6 +13,10 @@
   background-color: #d4efff;
 }
 
+.table-col {
+  min-width: 50;
+}
+
 .ant-menu-sub.ant-menu-inline {
   background: rgb(255, 255, 255);
 }

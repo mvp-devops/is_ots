@@ -4,7 +4,6 @@ import { setCurrentDate } from "../../../../utils/main.utils";
 import Header from "./Header";
 import { CheckListTable } from "../../components";
 import { useTypedSelector } from "../../../../hooks";
-import Footer from "./Footer";
 
 const { Text } = Typography;
 

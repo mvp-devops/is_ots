@@ -125,7 +125,6 @@ export class CheckListService {
       ) {
         eliminated = 1;
       }
-      return null;
     });
 
     return eliminated;
@@ -163,6 +162,7 @@ export class CheckListService {
     };
     let criterions = [];
 
+    let docs = 0;
     if (document.stageId === stageId) {
       for (let i = 1; i < criticalityArr.length; i++) {
         criterion.criticalityTitle = criticalityArr[i].title;
@@ -376,17 +376,16 @@ export class CheckListService {
         // return null;
       });
 
-      const { coef, reductionFactor, feedbackFactor, result } =
-        this.coefficientCalculation(
-          criterion.count,
-          criterion.eliminated,
-          criterion.weight,
-          criterion.threshold,
-          criterion.goal,
-          criterion.tenseGoal
-        );
+      const { result } = this.coefficientCalculation(
+        criterion.count,
+        criterion.eliminated,
+        criterion.weight,
+        criterion.threshold,
+        criterion.goal,
+        criterion.tenseGoal
+      );
 
-      // criterion.result = result;
+      criterion.result = result;
 
       criterions.push(criterion);
       criterion = {

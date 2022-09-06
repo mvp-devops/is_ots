@@ -15,6 +15,8 @@ export const useCommentAccountingFormData = () => {
   const [stages, setStages] = useState<NSIView[]>([]);
   const [criticalities, setCriticalities] = useState<NSIView[]>([]);
   const [stage, setStage] = useState<NSIView | null>(null);
+  const [counterpartiesList, setCounterpartiesList] = useState<NSIView[]>([]);
+  const [equipmentsList, setEquipmentsList] = useState<NSIView[]>([]);
   const [currentCriticalities, setCurrentCriticalities] = useState<{
     criticalities: NSIView[];
     index: string | number | null | undefined;
@@ -39,7 +41,39 @@ export const useCommentAccountingFormData = () => {
         }
         case "unit":
         case "sub-unit": {
-          setStages([...data.slice(4, 8), ...data.slice(9, 10)]);
+          setStages([...data.slice(4, 8), ...data.slice(10)]);
+          break;
+        }
+        default:
+          break;
+      }
+    });
+  }, [target]);
+
+  useEffect(() => {
+    switch (target) {
+      case "project": {
+        getItems("design").then((data) => setCounterpartiesList(data));
+        break;
+      }
+      case "unit":
+      case "sub-unit": {
+        getItems("counterparty").then((data) => setCounterpartiesList(data));
+        getItems("equipment").then((data) => setEquipmentsList(data));
+        break;
+      }
+      default:
+        break;
+    }
+    getItems("stage").then((data) => {
+      switch (target) {
+        case "project": {
+          setStages(data.slice(1, 4));
+          break;
+        }
+        case "unit":
+        case "sub-unit": {
+          setStages([...data.slice(4, 8), ...data.slice(10)]);
           break;
         }
         default:
@@ -159,6 +193,8 @@ export const useCommentAccountingFormData = () => {
   return {
     addItem,
     removeItem,
+    counterpartiesList,
+    equipmentsList,
     onHandlerChange,
     setCheckListSets,
     checkList,
