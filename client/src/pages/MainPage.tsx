@@ -11,6 +11,7 @@ import {
 import { Divider, Space, Tree, Typography } from "antd";
 import { Layout, Menu } from "antd";
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { PositionTreeItem } from "../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../hooks";
 import { MenuItem, Roles } from "../modules/main";
@@ -54,6 +55,8 @@ const userSubsidiaryId = "7";
 // };
 
 const MainPage: React.FC = () => {
+  const navigate = useNavigate();
+
   const [collapsed, setCollapsed] = useState(false);
   const { setMenuItems, setCurrentItem } = useActions();
   const { menuItems, currentItem } = useTypedSelector(
@@ -76,6 +79,8 @@ const MainPage: React.FC = () => {
   const { formVisible } = useTypedSelector((state) => state.main);
 
   const { isAuth, currentUser } = useTypedSelector((state) => state.main);
+
+  const { logout } = useActions();
 
   useEffect(() => {
     currentUser &&
@@ -165,6 +170,10 @@ const MainPage: React.FC = () => {
               className={"text-white me-2"}
               title="Выход"
               style={{ cursor: "pointer" }}
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
             />
           </Space>
         </Header>

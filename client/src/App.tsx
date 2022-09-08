@@ -2,6 +2,7 @@ import { Provider } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { RequireAuth } from "./hoc/RequireAuth";
 import { AuthPage, MainPage } from "./pages";
+import AppRouter from "./routes/AppRouter";
 import { appStore } from "./store";
 
 // export const BASENAME = window.location.pathname.slice(0, -1);
@@ -10,21 +11,13 @@ import { appStore } from "./store";
 function App() {
   return (
     <Provider store={appStore}>
-      <BrowserRouter basename={"/"}>
+      {/* <BrowserRouter basename={"/"}>
         <Routes>
           <Route path="/" element={<AuthPage />} />
           <Route path="/main" element={<MainPage />} />
-          {/* <Route path="/login" element={<AuthPage />} /> */}
-          {/* {publicRoutes.map(({ path, Component }) => (
-          <Route key={path} path={path} element={<Component />} />
-        ))}
-        {isAuth &&
-          authRoutes.map(({ path, Component }) => (
-            <Route key={path} path={path} element={<Component />} />
-          ))}
-        <Route path={"*"} element={<ErrorPage />} /> */}
         </Routes>
-      </BrowserRouter>
+      </BrowserRouter> */}
+      <AppRouter />
     </Provider>
   );
 }

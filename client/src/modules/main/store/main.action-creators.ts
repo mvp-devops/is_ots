@@ -76,3 +76,9 @@ export const login = (email: string, password: string) => {
     }
   };
 };
+
+export const logout = () => {
+  return {
+    type: ActionTypes.USER_LOGOUT,
+  };
+};

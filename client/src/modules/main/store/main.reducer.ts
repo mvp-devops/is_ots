@@ -93,6 +93,13 @@ export const mainReducer = (
         currentUser: action.payload,
       };
 
+    case ActionTypes.USER_LOGOUT:
+      return {
+        ...state,
+        isAuth: false,
+        currentUser: null,
+      };
+
     default:
       return state;
   }

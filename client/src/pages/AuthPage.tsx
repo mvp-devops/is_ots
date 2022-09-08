@@ -17,16 +17,17 @@ function AuthPage() {
 
   const { login } = useActions();
 
+  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
+
   const onFormSubmit = (data: LoginData) => {
     const { email, password } = data;
     login(email, password);
+    isAuth && navigate("/main");
   };
 
   const onChangeData = (key: string, value: string) => {
     setData({ ...data, [key]: value });
   };
-
-  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
 
   let navigate = useNavigate();
 
@@ -36,7 +37,7 @@ function AuthPage() {
     } else {
       navigate("/");
     }
-  }, [isAuth, navigate]);
+  }, [isAuth]);
 
   const authForm = (
     <Form
