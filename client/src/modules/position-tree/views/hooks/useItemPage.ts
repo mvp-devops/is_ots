@@ -4,7 +4,7 @@ import { useActions, useTypedSelector } from "../../../../hooks";
 import { ListItem, MenuItem, Roles } from "../../../main";
 import { getAllItems } from "../..";
 
-export const useItemPage = (role?: string, items?: MenuItem[]) => {
+export const useItemPage = (items?: MenuItem[]) => {
   const { currentItem } = useTypedSelector((state) => state.positionTree);
   const [childrenList, setChildrenList] = useState<PositionTreeView[]>([]);
   const [listItems, setListItems] = useState<ListItem[]>([]);
@@ -40,7 +40,7 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     setDocumentationView,
   } = useActions();
 
-  const renderMenuItems = (role: string, items: MenuItem[]): MenuItem[] => {
+  const renderMenuItems = (items: MenuItem[]): MenuItem[] => {
     const menuItems: MenuItem[] = [];
     const docMark =
       currentItem?.target === "project" ||
@@ -54,60 +54,46 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
         ? false
         : true;
 
-    switch (role) {
-      case Roles.ADMINISTRATOR: {
-        const firstItem = {
-          ...items[1],
-          children: items[1].children?.filter((item) => item.key !== "SLOE"),
-        };
-        const thirdItem = {
-          ...items[2],
-          children: items[2].children?.filter(
-            (item) => item.key !== "CCHL" && item.key !== "REPORT"
-          ),
-        };
-        menuItems.push(items[0]);
-        menuItems.push(firstItem);
-        docMark && menuItems.push(thirdItem);
-        break;
-      }
-      case Roles.EXPERT:
-      case Roles.CUSTOMER: {
-        const children = facilityMark
-          ? items[1].children?.filter((item) => item.key !== "CHILDREN-ADD")
-          : items[1].children?.filter(
-              (item) => item.key !== "CHILDREN-ADD" && item.key !== "SLOE"
-            );
-        const firstItem = {
-          ...items[1],
-          children,
-        };
+    const checkListMark =
+      currentItem?.target === "subsidiary" || currentItem?.target === "field"
+        ? false
+        : true;
 
-        menuItems.push(firstItem);
-        docMark && menuItems.push(items[2]);
-        menuItems.push(items[3]);
-        break;
-      }
-      case Roles.OTS: {
-        const firstItem = {
-          ...items[1],
-          children: items[1].children?.filter(
-            (item) => item.key !== "CHILDREN-ADD"
-          ),
-        };
-        const thirdItem = {
-          ...items[3],
-          children: items[3].children?.filter((item) => item.key !== "CHL"),
-        };
+    const children = facilityMark
+      ? items[1].children
+      : items[1].children?.filter(
+          (item) => item.key !== "SUMMARY_LIST_OF_EQUIPMENT"
+        );
+    const firstItem = {
+      ...items[1],
+      children,
+    };
 
-        menuItems.push(firstItem);
-        docMark && menuItems.push(items[2]);
-        menuItems.push(thirdItem);
-        break;
-      }
+    const statChildren = checkListMark
+      ? items[3].children
+      : items[3].children?.filter((item) => item.key !== "CHECK_LIST");
 
-      default:
-        break;
+    const thirdItem = { ...items[3], children: statChildren };
+
+    if (currentUser?.roles.includes(Roles.ADMINISTRATOR)) {
+      menuItems.push(items[0]);
+      menuItems.push(firstItem);
+      docMark && menuItems.push(items[2]);
+      menuItems.push(thirdItem);
+      menuItems.push(items[5]);
+      menuItems.push(items[4]);
+      return menuItems;
+    }
+
+    if (
+      currentUser?.roles.includes(Roles.EXPERT) ||
+      currentUser?.roles.includes(Roles.CUSTOMER) ||
+      currentUser?.roles.includes(Roles.OTS)
+    ) {
+      menuItems.push(firstItem);
+      docMark && menuItems.push(items[2]);
+      menuItems.push(thirdItem);
+      return menuItems;
     }
 
     return menuItems;
@@ -180,8 +166,8 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
   }, [currentItem, formVisible]);
 
   useEffect(() => {
-    items && role && setMenuItems(renderMenuItems(role, items));
-  }, [role, currentItem]);
+    items && setMenuItems(renderMenuItems(items));
+  }, [currentItem]);
 
   useEffect(() => {
     setListItems(renderListItems(childrenList));

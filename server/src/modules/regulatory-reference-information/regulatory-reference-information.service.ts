@@ -78,84 +78,90 @@ export class RegulatoryReferenceInformationService {
     let item: UserEntity | null = null;
     let token = "";
 
-    const candidate = await this.userRepository.findOne({
-      where: { email: dto.email.toLocaleLowerCase() },
-    });
-    if (!candidate) {
-      const hashPassword = await bcrypt.hash(dto.password, 5);
-      item = await this.userRepository.create({
-        ...dto,
-        email: dto.email.toLocaleLowerCase(),
-        password: hashPassword,
+    try {
+      const candidate = await this.userRepository.findOne({
+        where: { email: dto.email.toLocaleLowerCase() },
+      });
+      if (!candidate) {
+        const hashPassword = await bcrypt.hash(dto.password, 5);
+        item = await this.userRepository.create({
+          ...dto,
+          email: dto.email.toLocaleLowerCase(),
+          password: hashPassword,
+        });
+
+        file &&
+          (await this.fileService.createLogo(item.id.toString(), "user", file));
+
+        token = item && generateJwt(item.id, item.email);
+      }
+      const {
+        id,
+        subsidiaryId,
+        designId,
+        counterpartyId,
+        fieldId,
+        firstName,
+        secondName,
+        lastName,
+        subdivision,
+        position,
+        email,
+        phone,
+        roles,
+        subsidiary,
+        design,
+        counterparty,
+        field,
+        avatar,
+      } = await this.userRepository.findOne({
+        where: { id: item.id },
+        include: [
+          {
+            model: SubsidiaryEntity,
+          },
+          {
+            model: CounterpartyEntity,
+          },
+          {
+            model: DesignEntity,
+          },
+          {
+            model: FieldEntity,
+          },
+          {
+            model: LogoEntity,
+          },
+        ],
       });
 
-      file &&
-        (await this.fileService.createLogo(item.id.toString(), "user", file));
-      token = item && generateJwt(item.id, item.email);
-      // console.log(token);
+      return {
+        id,
+        subsidiaryId,
+        subsidiaryTitle: subsidiary ? subsidiary.title : null,
+        designId,
+        designTitle: design ? design.title : null,
+        counterpartyId,
+        counterpartyTitle: counterparty ? counterparty.title : null,
+        fieldId,
+        fieldTitle: field ? field.title : null,
+        firstName,
+        secondName,
+        lastName,
+        subdivision,
+        position,
+        email,
+        phone,
+        roles,
+        token,
+        avatar: avatar ? `logo/${avatar.fileName}` : null,
+      };
+    } catch (e) {
+      throw new HttpException(
+        "Пользователь с таким e-mail уже существует",
+        HttpStatus.CONFLICT
+      );
     }
-
-    const {
-      id,
-      subsidiaryId,
-      designId,
-      counterpartyId,
-      fieldId,
-      firstName,
-      secondName,
-      lastName,
-      subdivision,
-      position,
-      email,
-      phone,
-      roles,
-      subsidiary,
-      design,
-      counterparty,
-      field,
-      avatar,
-    } = await this.userRepository.findOne({
-      where: { id: item.id },
-      include: [
-        {
-          model: SubsidiaryEntity,
-        },
-        {
-          model: CounterpartyEntity,
-        },
-        {
-          model: DesignEntity,
-        },
-        {
-          model: FieldEntity,
-        },
-        {
-          model: LogoEntity,
-        },
-      ],
-    });
-
-    return {
-      id,
-      subsidiaryId,
-      subsidiaryTitle: subsidiary ? subsidiary.title : null,
-      designId,
-      designTitle: design ? design.title : null,
-      counterpartyId,
-      counterpartyTitle: counterparty ? counterparty.title : null,
-      fieldId,
-      fieldTitle: field ? field.title : null,
-      firstName,
-      secondName,
-      lastName,
-      subdivision,
-      position,
-      email,
-      phone,
-      roles,
-      token,
-      avatar: avatar ? `logo/${avatar.fileName}` : null,
-    };
   };
 
   userLogin = async (email: string, password: string): Promise<UserEntity> => {
@@ -168,7 +174,7 @@ export class RegulatoryReferenceInformationService {
       } else {
         const comparePassword = bcrypt.compareSync(password, item.password);
         if (!comparePassword) {
-          throw new HttpException("Не верный пароль", HttpStatus.NOT_FOUND);
+          throw new HttpException("Не верный пароль", HttpStatus.UNAUTHORIZED);
         }
         const token = generateJwt(item.id, item.email);
       }

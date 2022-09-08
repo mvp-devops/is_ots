@@ -24,11 +24,11 @@ import { FormActions, MenuItem } from "../../main";
 const { Sider } = Layout;
 
 export interface ItemPageMenuProps {
-  role: string;
+  // role: string;
   childTarget: string;
 }
 
-const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
+const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
   const items: MenuItem[] = [
     {
       label: (
@@ -388,7 +388,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
 
     setListItemsView,
     setDocumentationView,
-  } = useItemPage(role, items);
+  } = useItemPage(items);
 
   return (
     <Sider className="site-layout-background" width={300}>

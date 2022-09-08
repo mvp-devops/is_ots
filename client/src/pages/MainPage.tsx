@@ -169,7 +169,7 @@ const MainPage: React.FC = () => {
           </Space>
         </Header>
         <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
-          {currentItem && <ItemPage userRole={role} />}
+          {currentItem && <ItemPage />}
           {/* <ItemPage /> */}
         </Content>
         <Footer style={{ textAlign: "right", background: "rgb(255,255,255" }}>

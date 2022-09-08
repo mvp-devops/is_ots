@@ -20,9 +20,6 @@ function AuthPage() {
 
   const { isAuth, currentUser } = useTypedSelector((state) => state.main);
 
-  console.log(isAuth);
-  console.log(currentUser);
-
   let navigate = useNavigate();
 
   useEffect(() => {

@@ -66,8 +66,7 @@ export const useRegulatoryReferenceInformationForm = () => {
   };
 
   const userRegistration = () => {
-    const user = createNewUser(userData);
-    console.log(user);
+    createNewUser(userData);
   };
 
   return {

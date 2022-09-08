@@ -21,10 +21,10 @@ import { UserForm } from "../../regulatory-reference-information";
 const { Content } = Layout;
 
 interface ItemPageProps {
-  userRole: string;
+  // userRole: string;
 }
 
-const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
+const ItemPage: FC<ItemPageProps> = () => {
   const {
     formVisible,
     setFormVisible,
@@ -74,10 +74,7 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
           )}
 
           {currentItem && (
-            <ItemPageMenu
-              childTarget={currentItem.childrenTarget}
-              role={userRole}
-            />
+            <ItemPageMenu childTarget={currentItem.childrenTarget} />
           )}
         </Layout>
       </Content>

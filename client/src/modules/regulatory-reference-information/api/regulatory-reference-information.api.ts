@@ -6,74 +6,39 @@ import {
   UserView,
 } from "../../../../../server/common/types/regulatory-reference-information";
 import { setUrl } from "../../main";
-import { userItem } from "../components/forms/form.settings";
 
 const baseUrl = "api/regulatory-reference-information";
 
 const setFormData = (item: UserCreateOrUpdateAttrs): FormData => {
   const data = new FormData();
 
-  "file" in item && item.file && data.append("file", item.file);
+  item.file && data.append("file", item.file);
 
-  "subsidiaryId" in item &&
-    item.subsidiaryId &&
-    typeof item.subsidiaryId === "string" &&
-    data.append("subsidiaryId", item.subsidiaryId);
+  item.subsidiaryId &&
+    data.append("subsidiaryId", item.subsidiaryId.toString());
 
-  "fieldId" in item &&
-    item.fieldId &&
-    typeof item.fieldId === "string" &&
-    data.append("fieldId", item.fieldId);
+  item.fieldId && data.append("fieldId", item.fieldId.toString());
 
-  "designId" in item &&
-    item.designId &&
-    typeof item.designId === "string" &&
-    data.append("designId", item.designId);
+  item.designId && data.append("designId", item.designId.toString());
 
-  "counterpartyId" in item &&
-    item.counterpartyId &&
-    typeof item.counterpartyId === "string" &&
-    data.append("counterpartyId", item.counterpartyId);
+  item.counterpartyId &&
+    data.append("counterpartyId", item.counterpartyId.toString());
 
-  "firstName" in item &&
-    item.firstName &&
-    typeof item.firstName === "string" &&
-    data.append("firstName", item.firstName);
+  item.firstName && data.append("firstName", item.firstName);
 
-  "secondName" in item &&
-    item.secondName &&
-    typeof item.secondName === "string" &&
-    data.append("secondName", item.secondName);
+  item.secondName && data.append("secondName", item.secondName);
 
-  "lastName" in item &&
-    item.lastName &&
-    typeof item.lastName === "string" &&
-    data.append("lastName", item.lastName);
+  item.lastName && data.append("lastName", item.lastName);
 
-  "subdivision" in item &&
-    item.subdivision &&
-    typeof item.subdivision === "string" &&
-    data.append("subdivision", item.subdivision);
+  item.subdivision && data.append("subdivision", item.subdivision);
 
-  "position" in item &&
-    item.position &&
-    typeof item.position === "string" &&
-    data.append("position", item.position);
+  item.position && data.append("position", item.position);
 
-  "email" in item &&
-    item.email &&
-    typeof item.email === "string" &&
-    data.append("email", item.email);
+  item.email && data.append("email", item.email);
 
-  "phone" in item &&
-    item.phone &&
-    typeof item.phone === "string" &&
-    data.append("phone", item.phone);
+  item.phone && data.append("phone", item.phone);
 
-  "password" in item &&
-    item.password &&
-    typeof item.password === "string" &&
-    data.append("password", item.password);
+  item.password && data.append("password", item.password);
 
   return data;
 };
@@ -99,16 +64,9 @@ export const userRegistration = async (
 ): Promise<UserView | null> => {
   const formData = setFormData(item);
   const url = setUrl(`${baseUrl}/add/user`);
-  let elem: UserView | null = null;
+  const { data } = await axios.post<UserView>(url, formData);
 
-  try {
-    const { data } = await axios.post<UserView>(url, formData);
-    elem = data;
-    return elem;
-  } catch (error) {
-    alert(error);
-  }
-  return elem;
+  return data;
 };
 
 export const userLogin = async (

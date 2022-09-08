@@ -182,8 +182,7 @@ const UserForm = () => {
           onClick={() => {
             console.log(userData);
             userRegistration();
-
-            setFormVisible(false);
+            // setFormVisible(false);
           }}
         >
           Добавить
