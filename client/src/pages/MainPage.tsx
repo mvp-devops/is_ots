@@ -1,74 +1,38 @@
+import { FC, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { Collapse, Space, Tree, Typography, Layout } from "antd";
 import {
   MenuOutlined,
   BookOutlined,
   QuestionCircleOutlined,
-  FileOutlined,
   SettingOutlined,
   AppstoreOutlined,
   LogoutOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Divider, Space, Tree, Typography } from "antd";
-import { Layout, Menu } from "antd";
-import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import { PositionTreeItem } from "../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../hooks";
-import { MenuItem, Roles } from "../modules/main";
 import { ItemPage } from "../modules/position-tree";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
+const { Panel } = Collapse;
 
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  } as MenuItem;
-}
-
-const role = Roles.EXPERT;
-
-const userSubsidiaryId = "7";
-
-// const setMenuItem = (menuItems: PositionTreeItem[]): MenuItem[] => {
-//   const items: MenuItem[] = [];
-
-//   for (let i = 0; i < menuItems.length; i++) {
-//     const { key, title } = menuItems[i];
-//     const subItems = menuItems[i].children;
-//     const item = getItem(title, key);
-//     if (subItems) {
-//       item.children = setMenuItem(subItems);
-//     }
-//     items.push(item);
-//   }
-
-//   return items;
-// };
-
-const MainPage: React.FC = () => {
+const MainPage: FC = () => {
   const navigate = useNavigate();
-
   const [collapsed, setCollapsed] = useState(false);
-  const { setMenuItems, setCurrentItem } = useActions();
+  const { setMenuItems, setCurrentItem, logout } = useActions();
   const { menuItems, currentItem } = useTypedSelector(
     (state) => state.positionTree
   );
+  const { formVisible, currentUser } = useTypedSelector((state) => state.main);
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
     item && setCurrentItem(item);
   };
 
   const onSelect = (selectedKeys: any, e: any) => {
-    console.log(selectedKeys, e.node);
     if (selectedKeys.length > 0) {
       onMenuItemSelected(e.node);
     } else {
@@ -76,43 +40,14 @@ const MainPage: React.FC = () => {
     }
   };
 
-  const { formVisible } = useTypedSelector((state) => state.main);
-
-  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
-
-  const { logout } = useActions();
-
   useEffect(() => {
     currentUser &&
       currentUser.subsidiaryId &&
       setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
-  }, [formVisible]);
+  }, [formVisible, currentUser]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      {!collapsed && (
-        <Sider
-          breakpoint="xl"
-          width={"auto"}
-          style={{
-            left: 0,
-            top: 0,
-            bottom: 0,
-          }}
-          theme={"light"}
-        >
-          <div className="bg-primary" style={{ height: 52 }} />
-
-          <Tree
-            style={{ top: 14 }}
-            showLine={true}
-            showIcon={false}
-            onSelect={onSelect}
-            treeData={menuItems}
-            className="text-secondary mx-2"
-          />
-        </Sider>
-      )}
       <Layout className="site-layout">
         <Header className="site-layout-background d-flex justify-content-between">
           <Space className="d-flex justify-content-start mx-3 mb-2">
@@ -122,33 +57,6 @@ const MainPage: React.FC = () => {
               title="Меню"
               onClick={() => setCollapsed(!collapsed)}
             />
-            <Text
-              onClick={() => setCollapsed(!collapsed)}
-              className="d-flex align-items-center"
-              title="Справочники"
-            >
-              <BookOutlined
-                className={"text-white me-2"}
-                style={{ cursor: "pointer" }}
-              />
-              <Text className="text-white" style={{ cursor: "pointer" }}>
-                Справочники
-              </Text>
-            </Text>
-            <Divider type="vertical" />
-            <Text
-              onClick={() => setCollapsed(!collapsed)}
-              className="d-flex align-items-center"
-              title="Дерево позиций"
-            >
-              <AppstoreOutlined
-                className={"text-white me-2"}
-                style={{ cursor: "pointer" }}
-              />
-              <Text className="text-white" style={{ cursor: "pointer" }}>
-                Дерево позиций
-              </Text>
-            </Text>
           </Space>
           <Space className=" mb-2 me-2">
             <UserOutlined
@@ -177,10 +85,69 @@ const MainPage: React.FC = () => {
             />
           </Space>
         </Header>
-        <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
-          {currentItem && <ItemPage />}
-          {/* <ItemPage /> */}
-        </Content>
+        <Layout>
+          {!collapsed && (
+            <Sider
+              breakpoint="xl"
+              style={{
+                marginRight: 100,
+                left: 0,
+                top: 0,
+                bottom: 0,
+              }}
+              theme={"light"}
+            >
+              <Collapse
+                style={{
+                  backgroundColor: "white",
+                  margin: "1px 0",
+                  minWidth: 300,
+                  border: "none",
+                }}
+              >
+                <Panel
+                  header={
+                    <Space className="d-flex align-items-center">
+                      <AppstoreOutlined
+                        style={{ marginBottom: 4 }}
+                        className="text-secondary"
+                      />
+                      <Text type="secondary">Дерево позиций</Text>
+                    </Space>
+                  }
+                  key="position-tree"
+                >
+                  <Tree
+                    style={{ top: 2, width: 275 }}
+                    showLine={true}
+                    showIcon={false}
+                    onSelect={onSelect}
+                    treeData={menuItems}
+                    className="text-secondary mx-2"
+                  />
+                </Panel>
+                <Panel
+                  header={
+                    <Space className="d-flex align-items-center">
+                      <BookOutlined
+                        style={{ marginBottom: 4 }}
+                        className="text-secondary"
+                      />
+                      <Text type="secondary">Справочники</Text>
+                    </Space>
+                  }
+                  key="regulatory-reference-information"
+                >
+                  Будет перечень справочников
+                </Panel>
+              </Collapse>
+            </Sider>
+          )}
+          <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
+            {currentItem && <ItemPage />}
+          </Content>
+        </Layout>
+
         <Footer style={{ textAlign: "right", background: "rgb(255,255,255" }}>
           <Text type="secondary">ООО "Газпромнефть-Автоматизация" © 2022</Text>
         </Footer>
