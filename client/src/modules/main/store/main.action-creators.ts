@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { Dispatch } from "redux";
 import { userLogin } from "../../regulatory-reference-information/api/regulatory-reference-information.api";
 import { ActionTypes, EssenceAction } from "../types/main.types";
@@ -68,7 +69,10 @@ export const login = (email: string, password: string) => {
         payload: data,
       });
     } catch (error) {
-      alert("error");
+      notification["error"]({
+        message: "Ошибка",
+        description: "Неверный E-mail или пароль. Повторите ввод",
+      });
     }
   };
 };

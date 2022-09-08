@@ -1,7 +1,11 @@
-import { Input } from "antd";
+import { Button, Divider, Form, Input, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { InputUIComponent } from "../components";
 import { useActions, useTypedSelector } from "../hooks";
+
+const { Item } = Form;
+const { Text } = Typography;
 
 export interface LoginData {
   email: string;
@@ -18,6 +22,10 @@ function AuthPage() {
     login(email, password);
   };
 
+  const onChangeData = (key: string, value: string) => {
+    setData({ ...data, [key]: value });
+  };
+
   const { isAuth, currentUser } = useTypedSelector((state) => state.main);
 
   let navigate = useNavigate();
@@ -30,54 +38,60 @@ function AuthPage() {
     }
   }, [isAuth, navigate]);
 
-  return (
-    <div
-      className="d-flex justify-content-center align-items-center"
-      style={{ height: window.innerHeight - 54 }}
+  const authForm = (
+    <Form
+      labelCol={{ span: 5 }}
+      wrapperCol={{ span: 17 }}
+      layout="horizontal"
+      style={{ width: 400 }}
+      className="p-1 border"
+      // title="АВТОРИЗАЦИЯ"
     >
-      <div className="card border-secondary mb-3 w-30 mr-auto ml-auto">
-        <div className="card-header text-center font-weight-bolder text-muted">
-          АВТОРИЗАЦИЯ
-        </div>
-        <div className="card-body">
-          <div className="form-group row">
-            <div className="col-sm-12">
-              <div className=" d-flex flex-wrap align-content-center">
-                <Input
-                  type="email"
-                  className="mb-3"
-                  value={data.email}
-                  onChange={(e) => setData({ ...data, email: e.target.value })}
-                />
-                <Input
-                  type="password"
-                  value={data.password}
-                  onChange={(e) =>
-                    setData({ ...data, password: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-          </div>
-          <hr />
-          <div className="d-flex flex-row justify-content-center mb-3">
-            <button
-              type="button"
-              disabled={
-                data.email === "" || data.password === "" ? true : false
-              }
-              className="btn btn-outline-primary mr-2"
-              data-bs-toggle="tooltip"
-              data-bs-placement="bottom"
-              title="Для входа заполните поля формы"
-              onClick={() => onFormSubmit(data)}
-            >
-              <i className="bi bi-box-arrow-in-right"></i> Войти
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+      <Divider orientation="center" className="text-secondary">
+        АВТОРИЗАЦИЯ
+      </Divider>
+      <Item label={<Text type="secondary">E-mail</Text>} className="m-0">
+        <InputUIComponent
+          value={data.email}
+          id="email"
+          changeValue={onChangeData}
+        />
+      </Item>
+
+      <Item label={<Text type="secondary">Пароль</Text>} className="m-0">
+        <InputUIComponent
+          type="password"
+          value={data.password}
+          id="password"
+          changeValue={onChangeData}
+        />
+      </Item>
+
+      <Divider className="p-0 m-2" />
+      <Space className="d-flex justify-content-end mb-1">
+        <Button
+          type="primary"
+          className="me-1 "
+          title="Для входа заполните поля формы"
+          onClick={() => onFormSubmit(data)}
+          disabled={data.email === "" || data.password === "" ? true : false}
+        >
+          Войти
+        </Button>
+      </Space>
+    </Form>
+  );
+
+  return (
+    <Space
+      className="d-flex justify-content-center align-items-center"
+      style={{
+        height: window.innerHeight - 40,
+        width: window.innerWidth - 200,
+      }}
+    >
+      {authForm}
+    </Space>
   );
 }
 

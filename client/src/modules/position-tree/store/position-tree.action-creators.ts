@@ -1,3 +1,4 @@
+import { notification } from "antd";
 import { Dispatch } from "redux";
 import { CheckListSets } from "../../../../../server/common/types/comments-accounting";
 import {
@@ -32,6 +33,10 @@ export const setMenuItems = (roles: string[], id?: string) => {
         type: ActionTypes.GET_MENU_ITEMS_ERROR,
         payload: "Ошибка получения данных",
       });
+      notification["error"]({
+        message: "Ошибка",
+        description: "Ошибка получения данных",
+      });
     }
   };
 };
@@ -48,10 +53,18 @@ export const createPositionTreeItem = (
         type: ActionTypes.POST_ONE_ITEM_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно добавлены",
+      });
     } catch (error) {
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_ERROR,
-        payload: "Ошибка получения данных",
+        payload: "Ошибка отправки данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: "Ошибка отправки данных",
       });
     }
   };
@@ -69,10 +82,18 @@ export const createManyPositionTreeItems = (
         type: ActionTypes.POST_MANY_ITEMS_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно добавлены",
+      });
     } catch (error) {
       dispatch({
         type: ActionTypes.POST_MANY_ITEMS_ERROR,
-        payload: "Ошибка получения данных",
+        payload: "Ошибка отправки данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: "Ошибка отправки данных",
       });
     }
   };
@@ -91,10 +112,18 @@ export const updatePositionTreeItem = (
         type: ActionTypes.UPDATE_ONE_ITEM_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно обновлены",
+      });
     } catch (error) {
       dispatch({
         type: ActionTypes.UPDATE_ONE_ITEM_ERROR,
-        payload: "Ошибка получения данных",
+        payload: "Ошибка обновления данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: "Ошибка обновления данных",
       });
     }
   };
@@ -109,10 +138,18 @@ export const deletePositionTreeItem = (target: string, id: string) => {
         type: ActionTypes.DELETE_ONE_ITEM_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно удалены",
+      });
     } catch (error) {
       dispatch({
         type: ActionTypes.DELETE_ONE_ITEM_ERROR,
-        payload: "Ошибка получения данных",
+        payload: "Ошибка удаления данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: "Ошибка удаления данных",
       });
     }
   };
