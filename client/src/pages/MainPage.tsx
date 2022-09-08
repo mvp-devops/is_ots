@@ -75,8 +75,12 @@ const MainPage: React.FC = () => {
 
   const { formVisible } = useTypedSelector((state) => state.main);
 
+  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
+
   useEffect(() => {
-    setMenuItems(role, userSubsidiaryId);
+    currentUser &&
+      currentUser.subsidiaryId &&
+      setMenuItems(role, currentUser.subsidiaryId.toString());
   }, [formVisible]);
 
   return (

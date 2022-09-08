@@ -4,18 +4,17 @@ import { RequireAuth } from "./hoc/RequireAuth";
 import { AuthPage, MainPage } from "./pages";
 import { appStore } from "./store";
 
-export const BASENAME = window.location.pathname.slice(0, -1);
-
+// export const BASENAME = window.location.pathname.slice(0, -1);
 // export const site = window.location.origin + BASENAME;
 
 function App() {
   return (
     <Provider store={appStore}>
-      <BrowserRouter basename={BASENAME}>
+      <BrowserRouter basename={"/"}>
         <Routes>
-          <Route path="/" element={<MainPage />} />
-          <Route path="/project" element={<MainPage />} />
-          <Route path="login" element={<AuthPage />} />
+          <Route path="/" element={<AuthPage />} />
+          <Route path="/main" element={<MainPage />} />
+          {/* <Route path="/login" element={<AuthPage />} /> */}
           {/* {publicRoutes.map(({ path, Component }) => (
           <Route key={path} path={path} element={<Component />} />
         ))}

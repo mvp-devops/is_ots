@@ -18,15 +18,18 @@ function AuthPage() {
     login(email, password);
   };
 
-  const { isAuth } = useTypedSelector((state) => state.main);
+  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
+
+  console.log(isAuth);
+  console.log(currentUser);
 
   let navigate = useNavigate();
 
   useEffect(() => {
     if (isAuth) {
-      navigate("/");
+      navigate("/main");
     } else {
-      navigate("/login");
+      navigate("/");
     }
   }, [isAuth, navigate]);
 
