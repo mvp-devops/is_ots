@@ -1,4 +1,6 @@
-import { ActionTypes } from "../types/main.types";
+import { Dispatch } from "redux";
+import { userLogin } from "../../regulatory-reference-information/api/regulatory-reference-information.api";
+import { ActionTypes, EssenceAction } from "../types/main.types";
 
 export const setFormVisible = (flag: boolean) => {
   return {
@@ -53,5 +55,20 @@ export const setDocumentationView = (flag: boolean) => {
   return {
     type: ActionTypes.SET_DOCUMENTATION_VIEW,
     payload: flag,
+  };
+};
+
+export const login = (email: string, password: string) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      const data = await userLogin(email, password);
+
+      dispatch({
+        type: ActionTypes.USER_LOGIN,
+        payload: data,
+      });
+    } catch (error) {
+      alert("error");
+    }
   };
 };

@@ -111,6 +111,19 @@ export const userRegistration = async (
   return elem;
 };
 
+export const userLogin = async (
+  email: string,
+  password: string
+): Promise<UserView> => {
+  const url = setUrl(`${baseUrl}/auth`);
+
+  const { data } = await axios.get<UserView>(url, {
+    params: { email, password },
+  });
+
+  return data;
+};
+
 // export const getOneItem = async (
 //   target: string,
 //   id: string

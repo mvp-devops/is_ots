@@ -86,6 +86,13 @@ export const mainReducer = (
         documentationView: action.payload,
       };
 
+    case ActionTypes.USER_LOGIN:
+      return {
+        ...state,
+        isAuth: true,
+        currentUser: action.payload,
+      };
+
     default:
       return state;
   }
