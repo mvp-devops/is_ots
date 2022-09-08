@@ -36,7 +36,7 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           <CloseOutlined
             title="Удалить строку"
             onClick={() => removeItem(items, setItems, item.key)}
-            style={{ fontSize: " 20px" }}
+            style={{ fontSize: " 14px" }}
             className="text-danger"
           />
         </Button>
@@ -72,15 +72,13 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
           }
         >
           {statusRequestData.map(({ id, title }) => (
-            <Select.Option key={id} value={id}>
-              {title}
-            </Select.Option>
+            <Select.Option key={id}>{title}</Select.Option>
           ))}
         </Select>
       </Item>
       <Item label={<Text type="secondary">Ответ</Text>} className="m-1 p-1">
         <TextArea
-          rows={4}
+          rows={2}
           className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(items, setItems, "answer", e.target.value, item.key)
@@ -89,7 +87,7 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
       </Item>
       <Item label={<Text type="secondary">Контакты</Text>} className="m-1 p-1">
         <TextArea
-          rows={4}
+          rows={2}
           className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(
@@ -128,17 +126,18 @@ const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
               .toLowerCase()
               .includes(input.toLowerCase())
           }
+          onChange={(value: string) =>
+            changeItems(items, setItems, "solutionId", value, item.key)
+          }
         >
           {solutionRequestData.map(({ id, title }) => (
-            <Select.Option key={id} value={id}>
-              {title}
-            </Select.Option>
+            <Select.Option key={id}>{title}</Select.Option>
           ))}
         </Select>
       </Item>
       <Item label={<Text type="secondary">Решение</Text>} className="m-1 p-1">
         <TextArea
-          rows={4}
+          rows={2}
           className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             changeItems(items, setItems, "solution", e.target.value, item.key)

@@ -21,6 +21,7 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
     summaryListOfEquipmentView,
     listItemsView,
     documentationView,
+    currentUser,
   } = useTypedSelector((state) => state.main);
 
   const { checkListData, loading } = useTypedSelector(
@@ -54,7 +55,7 @@ export const useItemPage = (role?: string, items?: MenuItem[]) => {
         : true;
 
     switch (role) {
-      case Roles.ADMIN: {
+      case Roles.ADMINISTRATOR: {
         const firstItem = {
           ...items[1],
           children: items[1].children?.filter((item) => item.key !== "SLOE"),

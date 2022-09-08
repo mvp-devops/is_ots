@@ -17,6 +17,10 @@ export const useCommentAccountingFormData = () => {
   const [stage, setStage] = useState<NSIView | null>(null);
   const [counterpartiesList, setCounterpartiesList] = useState<NSIView[]>([]);
   const [equipmentsList, setEquipmentsList] = useState<NSIView[]>([]);
+  const [directionsList, setDirectionsList] = useState<NSIView[]>([]);
+
+  const [normativesList, setNormativesList] = useState<NSIView[]>([]);
+
   const [currentCriticalities, setCurrentCriticalities] = useState<{
     criticalities: NSIView[];
     index: string | number | null | undefined;
@@ -48,7 +52,8 @@ export const useCommentAccountingFormData = () => {
           break;
       }
     });
-  }, [target]);
+    getItems("direction").then((data) => setDirectionsList(data));
+  }, []);
 
   useEffect(() => {
     switch (target) {
@@ -195,6 +200,7 @@ export const useCommentAccountingFormData = () => {
     removeItem,
     counterpartiesList,
     equipmentsList,
+    directionsList,
     onHandlerChange,
     setCheckListSets,
     checkList,

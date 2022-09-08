@@ -3,6 +3,7 @@ import {
   CreateCriticalityDto,
   CreateDesignOrCounterpartyDto,
   CreateNSIDto,
+  CreateUserDto,
 } from "./create-regulatory-reference-information.dto";
 
 export class UpdateNSIDto extends PartialType(CreateNSIDto) {}
@@ -12,3 +13,5 @@ export class UpdateDesignOrCounterpartyDto extends PartialType(
 ) {}
 
 export class UpdateCriticalityDto extends PartialType(CreateCriticalityDto) {}
+
+export class UpdateUserDto extends PartialType(CreateUserDto) {}

@@ -2,7 +2,7 @@ import { MenuItem, FormActions, ListItem, Roles } from "./types/main.types";
 import { setUrl } from "./api/main.api";
 import { mainReducer } from "./store/main.reducer";
 import * as mainActionCreators from "./store/main.action-creators";
-import { tableLocale } from "./utils/main.consts";
+import { tableLocale, userRoles } from "./utils/main.consts";
 
 export type { MenuItem, ListItem };
 
@@ -13,4 +13,5 @@ export {
   mainReducer,
   mainActionCreators,
   tableLocale,
+  userRoles,
 };

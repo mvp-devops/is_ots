@@ -9,6 +9,30 @@ const initialState: EssenceState = {
   summaryListOfEquipmentView: false,
   listItemsView: false,
   documentationView: false,
+  isAuth: false,
+  // currentUser: null,
+  currentUser: {
+    id: 1,
+    subsidiaryId: 4,
+    subsidiaryTitle: "ООО «Газпромнефть-Автоматизация»",
+    designId: null,
+    designTitle: null,
+    counterpartyId: null,
+    counterpartyTitle: null,
+    fieldId: null,
+    fieldTitle: null,
+    firstName: "Михаил",
+    secondName: "Васильевич",
+    lastName: "Поляруш",
+    subdivision: "Управление перспективных технологий",
+    position: "Главный специалист",
+    email: "polyarush.mv@gazprom-neft.ru",
+    phone: "+7(812) 449-03-90 (доб. 7963)",
+    roles: ["ADMINISTRATOR"],
+    token:
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJwb2x5YXJ1c2gubXZAZ2F6cHJvbS1uZWZ0LnJ1ZSIsImlhdCI6MTY2MjYxNTk5MSwiZXhwIjoxNjYyNzAyMzkxfQ.ehlUhST0N8ReXIMKHD5V45DQzqcczq5g8gLqgRnTTnA",
+    avatar: "logo/a6787605-f1a6-4be7-a238-e8e921fd3d6a.png",
+  },
 };
 
 export const mainReducer = (

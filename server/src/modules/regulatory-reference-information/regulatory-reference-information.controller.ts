@@ -17,6 +17,7 @@ import {
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
+import { CreateUserDto } from "./dto/create-regulatory-reference-information.dto";
 
 @Controller("api/regulatory-reference-information")
 export class RegulatoryReferenceInformationController {
@@ -33,6 +34,18 @@ export class RegulatoryReferenceInformationController {
   ) {
     const { target } = query;
     return this.service.createOne(target, dto, file);
+  }
+
+  @Post("/add/user")
+  @UseInterceptors(FileInterceptor("file"))
+  registration(@Body() dto: CreateUserDto, @UploadedFile() file?: any) {
+    return this.service.userRegistration(dto, file);
+  }
+
+  @Get("/auth")
+  login(@Query() query: { email: string; password: string }) {
+    const { email, password } = query;
+    return this.service.userLogin(email, password);
   }
 
   @Post("/add/many")

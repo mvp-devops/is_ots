@@ -1,5 +1,6 @@
 import { Modal, Space, Typography } from "antd";
 import React, { FC, ReactNode } from "react";
+import { CloseOutlined } from "@ant-design/icons";
 
 const { Text } = Typography;
 
@@ -29,6 +30,11 @@ const ModalContainer: FC<ModalContainerProps> = ({
       }
       width={1000}
       closable
+      closeIcon={
+        <Text className="text-white">
+          <CloseOutlined />
+        </Text>
+      }
       centered
       visible={show}
       footer={[]}

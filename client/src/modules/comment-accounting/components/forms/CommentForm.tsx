@@ -31,14 +31,14 @@ const CommentForm: FC<CommentFormProps> = ({
   data,
   onCancel,
 }) => {
+  const { criticalities, directionsList } = useCommentAccountingFormData();
+
   const [requestData, setRequestData] = useState(
     initCommentFormData(target, currentId, data ? data : null)
   );
   const [solutions, setSolutions] = useState<
     DesignDocumentCommentSolutionCreationAttrs[]
   >([]);
-
-  const { criticalities } = useCommentAccountingFormData();
 
   const solution = {
     key: "",
@@ -90,7 +90,7 @@ const CommentForm: FC<CommentFormProps> = ({
             setRequestData({ ...requestData, directionId: value })
           }
         >
-          {directionRequestData.map(({ id, title }) => (
+          {directionsList.map(({ id, title }) => (
             <Select.Option key={id} value={id}>
               {title}
             </Select.Option>
@@ -99,7 +99,7 @@ const CommentForm: FC<CommentFormProps> = ({
       </Item>
       <Item label={<Text type="secondary">Замечание</Text>} className="m-1 p-1">
         <TextArea
-          rows={4}
+          rows={2}
           className="text-secondary"
           onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
             setRequestData({ ...requestData, comment: e.target.value })
@@ -169,7 +169,7 @@ const CommentForm: FC<CommentFormProps> = ({
             setRequestData({ ...requestData, criticalityId: value })
           }
         >
-          {criticalities.slice(1, 11).map(({ id, title }) => (
+          {criticalities.map(({ id, title }) => (
             <Select.Option key={id} value={id}>
               {title}
             </Select.Option>

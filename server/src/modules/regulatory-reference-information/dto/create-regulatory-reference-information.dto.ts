@@ -4,6 +4,7 @@ import {
   RegulatoryReferenceInformationCreationAttrs,
   DesignOrCounterpartyCreationAttrs,
   CriticalityCreationAttrs,
+  UserCreateOrUpdateAttrs,
 } from "../../../../common/types/regulatory-reference-information";
 
 export class CreateDesignOrCounterpartyDto
@@ -92,4 +93,84 @@ export class CreateCriticalityDto implements CriticalityCreationAttrs {
     description: "Амцель",
   })
   readonly tenseGoal: string;
+}
+
+export class CreateUserDto implements UserCreateOrUpdateAttrs {
+  @ApiProperty({
+    example: "Уникальный идентификатор ДО/СП",
+    description: "Уникальный идентификатор ДО/СП",
+  })
+  readonly subsidiaryId: string;
+
+  @ApiProperty({
+    example: "Уникальный идентификатор контрагента",
+    description: "Уникальный идентификатор контрагента",
+  })
+  readonly designId: string;
+
+  @ApiProperty({
+    example: "Уникальный идентификатор контрагента",
+    description: "Уникальный идентификатор контрагента",
+  })
+  readonly counterpartyId: string;
+
+  @ApiProperty({
+    example: "Уникальный идентификатор месторождения",
+    description: "Уникальный идентификатор месторождения",
+  })
+  readonly fieldId: string;
+
+  @ApiProperty({
+    example: "Имя",
+    description: "Имя",
+  })
+  readonly firstName: string;
+
+  @ApiProperty({
+    example: "Отчество",
+    description: "Отчество",
+  })
+  readonly secondName: string;
+
+  @ApiProperty({
+    example: "Фамилия",
+    description: "Фамилия",
+  })
+  readonly lastName: string;
+
+  @ApiProperty({
+    example: "Подразделение",
+    description: "Подразделение",
+  })
+  readonly subdivision: string;
+
+  @ApiProperty({
+    example: "Должность",
+    description: "Должность",
+  })
+  readonly position: string;
+
+  @ApiProperty({
+    example: "Телефон",
+    description: "Телефон",
+  })
+  readonly phone: string;
+
+  @ApiProperty({
+    example: "E-mail",
+    description: "E-mail",
+  })
+  readonly email: string;
+
+  @ApiProperty({
+    example: "Пароль",
+    description: "Пароль",
+  })
+  readonly password: string;
+
+  @ApiProperty({
+    example: "Роли доступа",
+    description: "Роли доступа",
+  })
+  readonly roles: string[];
 }

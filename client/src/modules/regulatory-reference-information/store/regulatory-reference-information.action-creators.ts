@@ -1,5 +1,9 @@
 import { Dispatch } from "redux";
-import { getItems } from "../api/regulatory-reference-information.api";
+import { UserCreateOrUpdateAttrs } from "../../../../../server/common/types/regulatory-reference-information";
+import {
+  getItems,
+  userRegistration,
+} from "../api/regulatory-reference-information.api";
 import {
   ActionTypes,
   EssenceAction,
@@ -22,5 +26,14 @@ export const setNsiItems = (target: string) => {
         payload: "Ошибка получения данных",
       });
     }
+  };
+};
+
+export const createNewUser = (item: UserCreateOrUpdateAttrs) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      const data = await userRegistration(item);
+      dispatch({ type: ActionTypes.USER_REGISTRATION, payload: data });
+    } catch (error) {}
   };
 };

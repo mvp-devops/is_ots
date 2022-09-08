@@ -1,0 +1,16 @@
+export const userItem = {
+  subsidiaryId: null,
+  designId: null,
+  counterpartyId: null,
+  fieldId: null,
+  firstName: "",
+  secondName: "",
+  lastName: "",
+  subdivision: "",
+  position: "",
+  email: "",
+  phone: "",
+  password: "",
+  roles: [],
+  file: null,
+};

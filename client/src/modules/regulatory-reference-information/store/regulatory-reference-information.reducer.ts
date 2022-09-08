@@ -32,6 +32,12 @@ export const nsiReducer = (
         loading: false,
         error: action.payload,
       };
+
+    case ActionTypes.USER_REGISTRATION:
+      return {
+        ...state,
+        loading: false,
+      };
     // case ActionTypes.SET_CURRENT_ITEM:
     //   return {
     //     ...state,

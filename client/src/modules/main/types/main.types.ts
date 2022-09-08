@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { UserView } from "../../../../../server/common/types/regulatory-reference-information";
 
 // export type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItem = {
@@ -15,13 +16,16 @@ export enum FormActions {
   CHECKLIST = "CHECKLIST",
   SUMMARY_LIST_OF_EQUIPMENT = "SUMMARY_LIST_OF_EQUIPMENT",
   COLLECTIVE_CHECK_SHEET = "COLLECTIVE_CHECK_SHEET",
+  USER = "USER",
 }
 
 export enum Roles {
-  ADMIN = "ADMIN",
+  ADMINISTRATOR = "ADMINISTRATOR",
   EXPERT = "EXPERT",
   OTS = "OTS",
   CUSTOMER = "CUSTOMER",
+  COUNTERPARTY = "COUNTERPARTY",
+  DESIGN = "DESIGN",
 }
 
 export interface ListItem {
@@ -41,6 +45,8 @@ export interface EssenceState {
   collectiveCheckSheetView: boolean;
   listItemsView: boolean;
   documentationView: boolean;
+  isAuth: boolean;
+  currentUser: UserView | null;
 }
 
 export enum ActionTypes {
@@ -52,6 +58,8 @@ export enum ActionTypes {
   SET_COLLECTIVE_CHECK_SHEET_VIEW = "SET_COLLECTIVE_CHECK_SHEET_VIEW",
   SET_LIST_ITEMS_VIEW = "SET_LIST_ITEMS_VIEW",
   SET_DOCUMENTATION_VIEW = "SET_DOCUMENTATION_VIEW",
+  USER_LOGIN = "USER_LOGIN",
+  USER_LOGOUT = "USER_LOGOUT",
 }
 
 interface SetFormVisibleAction {
@@ -92,6 +100,15 @@ interface SetActionDocumentationView {
   payload: boolean;
 }
 
+interface UserLoginAction {
+  type: ActionTypes.USER_LOGIN;
+  payload: UserView;
+}
+
+interface UserLogoutAction {
+  type: ActionTypes.USER_LOGOUT;
+}
+
 export type EssenceAction =
   | SetFormVisibleAction
   | SetActionTypeAction
@@ -100,4 +117,6 @@ export type EssenceAction =
   | SetActionSummaryListOfEquipmentView
   | SetActionCollectiveCheckSheetView
   | SetActionListItemsView
-  | SetActionDocumentationView;
+  | SetActionDocumentationView
+  | UserLoginAction
+  | UserLogoutAction;

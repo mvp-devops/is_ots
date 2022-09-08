@@ -16,6 +16,7 @@ import {
 import { ItemPageBreadcrumbs, ItemPageMenu, ListView, useItemPage } from "../";
 import { ModalContainer, PositionTreeForm } from "../components/forms";
 import { FormActions } from "../../main";
+import { UserForm } from "../../regulatory-reference-information";
 
 const { Content } = Layout;
 
@@ -104,6 +105,8 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
           child={
             actionType === FormActions.CHECKLIST ? (
               <CheckListForm />
+            ) : actionType === FormActions.USER ? (
+              <UserForm />
             ) : (
               <PositionTreeForm
                 target={currentItem.target}
@@ -113,6 +116,7 @@ const ItemPage: FC<ItemPageProps> = ({ userRole }) => {
           }
         />
       )}
+
       {loading ? (
         <Spin size="large" />
       ) : (

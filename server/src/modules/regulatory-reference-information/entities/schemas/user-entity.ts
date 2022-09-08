@@ -103,8 +103,6 @@ export class UserEntity extends Model<UserEntity, UserCreateOrUpdateAttrs> {
   })
   @Column({
     type: DataType.STRING,
-    unique: true,
-    allowNull: false,
   })
   position: string;
 
@@ -137,6 +135,17 @@ export class UserEntity extends Model<UserEntity, UserCreateOrUpdateAttrs> {
     allowNull: false,
   })
   password: string;
+
+  @ApiProperty({
+    example: "Администратор",
+    description: "Роли доступа",
+  })
+  @Column({
+    type: DataType.ARRAY(DataType.STRING),
+    allowNull: false,
+    defaultValue: ["OTS"],
+  })
+  roles: string[];
 
   @BelongsTo(() => SubsidiaryEntity)
   subsidiary: SubsidiaryEntity;

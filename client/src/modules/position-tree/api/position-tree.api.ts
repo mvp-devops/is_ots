@@ -126,7 +126,7 @@ export const getMenuItems = async (
     const { data } = await axios.get<PositionTreeItem[]>(url);
 
     items =
-      role === Roles.ADMIN || role === Roles.EXPERT
+      role === Roles.ADMINISTRATOR || role === Roles.EXPERT
         ? data
         : data.filter((item) => item.id === id);
   } catch (error) {

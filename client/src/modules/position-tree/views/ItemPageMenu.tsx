@@ -12,6 +12,8 @@ import {
   ContainerOutlined,
   SearchOutlined,
   AppstoreOutlined,
+  UserAddOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Layout, Space } from "antd";
 import { Menu } from "antd";
@@ -286,6 +288,88 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ role, childTarget }) => {
             </Space>
           ),
           key: "STATISTIC",
+        },
+      ],
+    },
+    {
+      label: (
+        <Space
+          onClick={() => {
+            setFormVisible(true);
+            setActionType(FormActions.USER);
+          }}
+        >
+          <UserAddOutlined
+            className="text-dark"
+            style={{ marginBottom: "16px", padding: 0 }}
+          />
+          Регистрация пользователя
+        </Space>
+      ),
+      key: "USER",
+    },
+    {
+      label: (
+        <Space>
+          <BookOutlined
+            className="text-dark"
+            style={{ marginBottom: "22px", padding: 0 }}
+          />
+          Справочники
+        </Space>
+      ),
+      key: "DICTIONARIES",
+      children: [
+        {
+          label: (
+            <Space
+              onClick={() => {
+                setActionType(FormActions.ADD);
+                setFormVisible(true);
+              }}
+            >
+              <PlusOutlined
+                className="text-dark"
+                style={{ marginBottom: "16px", padding: 0 }}
+              />
+              Добавить
+            </Space>
+          ),
+          key: `ADD_DICTIONARY`,
+        },
+        {
+          label: (
+            <Space
+              onClick={() => {
+                setActionType(FormActions.EDIT);
+                setFormVisible(true);
+              }}
+            >
+              <EditOutlined
+                className="text-dark"
+                style={{ marginBottom: "16px", padding: 0 }}
+              />
+              Редактировать
+            </Space>
+          ),
+          key: `EDIT_DICTIONARY`,
+        },
+        {
+          label: (
+            <Space
+              onClick={() => {
+                setActionType(FormActions.REMOVE);
+                setFormVisible(true);
+              }}
+            >
+              <DeleteOutlined
+                className="text-dark"
+                style={{ marginBottom: "16px", padding: 0 }}
+              />
+              Удалить
+            </Space>
+          ),
+          key: `REMOVE_DICTIONARY`,
         },
       ],
     },

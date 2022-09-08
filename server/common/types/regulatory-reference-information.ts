@@ -40,5 +40,28 @@ export interface UserCreateOrUpdateAttrs {
   email: string;
   phone: string;
   password: string;
-  file: any;
+  roles: string[];
+  file?: File | null;
+}
+
+export interface UserView {
+  id: string | number | null;
+  subsidiaryId: string | number | null;
+  subsidiaryTitle: string | null;
+  designId: string | number | null;
+  designTitle: string | null;
+  counterpartyId: string | number | null;
+  counterpartyTitle: string | null;
+  fieldId: string | number | null;
+  fieldTitle: string | null;
+  firstName: string;
+  secondName: string;
+  lastName: string;
+  subdivision: string;
+  position: string;
+  email: string;
+  phone: string;
+  roles: string[];
+  token: string | null;
+  avatar?: string | null;
 }
