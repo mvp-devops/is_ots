@@ -16,12 +16,12 @@ import {
 } from "../api";
 import { ActionTypes, EssenceAction } from "../types";
 
-export const setMenuItems = (role: string, id?: string) => {
+export const setMenuItems = (roles: string[], id?: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.GET_MENU_ITEMS });
 
-      const data = await getMenuItems(role, id);
+      const data = await getMenuItems(roles, id);
 
       dispatch({
         type: ActionTypes.GET_MENU_ITEMS_SUCCESS,

@@ -37,21 +37,21 @@ const role = Roles.EXPERT;
 
 const userSubsidiaryId = "7";
 
-const setMenuItem = (menuItems: PositionTreeItem[]): MenuItem[] => {
-  const items: MenuItem[] = [];
+// const setMenuItem = (menuItems: PositionTreeItem[]): MenuItem[] => {
+//   const items: MenuItem[] = [];
 
-  for (let i = 0; i < menuItems.length; i++) {
-    const { key, title } = menuItems[i];
-    const subItems = menuItems[i].children;
-    const item = getItem(title, key);
-    if (subItems) {
-      item.children = setMenuItem(subItems);
-    }
-    items.push(item);
-  }
+//   for (let i = 0; i < menuItems.length; i++) {
+//     const { key, title } = menuItems[i];
+//     const subItems = menuItems[i].children;
+//     const item = getItem(title, key);
+//     if (subItems) {
+//       item.children = setMenuItem(subItems);
+//     }
+//     items.push(item);
+//   }
 
-  return items;
-};
+//   return items;
+// };
 
 const MainPage: React.FC = () => {
   const [collapsed, setCollapsed] = useState(false);
@@ -80,7 +80,7 @@ const MainPage: React.FC = () => {
   useEffect(() => {
     currentUser &&
       currentUser.subsidiaryId &&
-      setMenuItems(role, currentUser.subsidiaryId.toString());
+      setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
   }, [formVisible]);
 
   return (

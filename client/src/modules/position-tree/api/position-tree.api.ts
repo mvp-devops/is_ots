@@ -115,7 +115,7 @@ export const deleteOneEssence = async (
 };
 
 export const getMenuItems = async (
-  role: string,
+  roles: string[],
   id?: string
 ): Promise<PositionTreeItem[]> => {
   const url = setUrl(`${baseUrl}/tree`);
@@ -125,10 +125,12 @@ export const getMenuItems = async (
   try {
     const { data } = await axios.get<PositionTreeItem[]>(url);
 
-    items =
-      role === Roles.ADMINISTRATOR || role === Roles.EXPERT
-        ? data
-        : data.filter((item) => item.id === id);
+    items = roles.includes(Roles.ADMINISTRATOR || Roles.EXPERT)
+      ? data
+      : !roles.includes(Roles.ADMINISTRATOR || Roles.EXPERT) &&
+        roles.includes(Roles.OTS || Roles.CUSTOMER)
+      ? data.filter((item) => item.id === id)
+      : [];
   } catch (error) {
     alert(error);
   }
