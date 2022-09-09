@@ -49,10 +49,17 @@ export class FileStorageController {
     return this.service.createNormative(dto, file);
   }
 
-  // @Get("/find")
-  // findAll() {
-  //   return this.service.findAll();
-  // }
+  @Get("/find/design-documents")
+  findAllDesignDocuments(
+    @Query()
+    query: {
+      parrentTarget: string;
+      parrentId: string;
+    }
+  ) {
+    const { parrentTarget, parrentId } = query;
+    return this.service.findAllDesignDocuments(parrentTarget, parrentId);
+  }
 
   // @Get("/find:id")
   // findOne(@Param("id") id: string) {

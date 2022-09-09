@@ -4,6 +4,7 @@ import { mainReducer } from "../modules/main";
 import { positionTreeReducer } from "../modules/position-tree";
 import { nsiReducer } from "../modules/regulatory-reference-information";
 import { commentAccountingReducer } from "../modules/comment-accounting";
+import { fileStorageReducer } from "../modules/file-storage";
 // import { subsidiaryReducer } from "../../models/position-tree/subsidiary/subsidiary.reducer";
 // import { fieldReducer } from "../../models/position-tree/field/field.reducer";
 
@@ -21,6 +22,7 @@ export const rootReducer = combineReducers({
   positionTree: positionTreeReducer,
   nsi: nsiReducer,
   main: mainReducer,
+  fileStorage: fileStorageReducer,
   //   main: mainReducer,
   //   project: projectReducer,
   //   subsidiary: subsidiaryReducer,

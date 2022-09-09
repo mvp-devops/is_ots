@@ -1,3 +1,5 @@
+import { DesignDocumentCommentView } from "./comments-accounting";
+
 export interface LogoCreationAttrs {
   subsidiaryId: number | string | null;
   counterpartyId: number | string | null;
@@ -39,8 +41,30 @@ export interface NormativeCreateOrUpdateAttrs {
   fileType: string;
 }
 
-export interface DesignDocumentView extends DesignDocumentCreateOrUpdateAttrs {
-  comments: any[];
+export interface DesignDocumentView {
+  id: string;
+  projectId: string | number | null;
+  projectTitle: string;
+  unitId?: string | number | null;
+  unitTitle?: string;
+  subUnitId?: string | number | null;
+  subUnitTitle?: string;
+  stageId: string | number | null;
+  stageTitle: string;
+  sectionId: string | number | null;
+  sectionTitle: string;
+  supplierId?: string | number | null;
+  supplierTitle?: string;
+  code: string;
+  title: string;
+  revision: string;
+  description: string;
+  filePath: string;
+  fileName: string;
+  fileType: string;
+  createdAt: string;
+  updatedAt: string;
+  comments: DesignDocumentCommentView[];
 }
 
 export interface FacilityDocumentCreateOrUpdateAttrs {

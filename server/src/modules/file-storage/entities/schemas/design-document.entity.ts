@@ -229,10 +229,10 @@ export class DesignDocumentEntity extends Model<
   })
   description: string;
 
-  @BelongsTo(() => ProjectEntity, { as: "projectDocuments" })
+  @BelongsTo(() => ProjectEntity, { as: "project" })
   project: ProjectEntity;
 
-  @BelongsTo(() => UnitEntity, { as: "unitDocuments" })
+  @BelongsTo(() => UnitEntity, { as: "unit" })
   unit: UnitEntity;
 
   @BelongsTo(() => UnitEntity, {
@@ -241,7 +241,7 @@ export class DesignDocumentEntity extends Model<
   })
   unitQuestionare: UnitEntity;
 
-  @BelongsTo(() => SubUnitEntity, { as: "subUnitDocuments" })
+  @BelongsTo(() => SubUnitEntity, { as: "subUnit" })
   subUnit: SubUnitEntity;
 
   @BelongsTo(() => SubUnitEntity, {
@@ -251,7 +251,7 @@ export class DesignDocumentEntity extends Model<
   subUnitQuestionare: SubUnitEntity;
 
   @BelongsTo(() => CounterpartyEntity, {
-    as: "supplierDocuments",
+    as: "supplier",
     foreignKey: "supplierId",
   })
   supplier: CounterpartyEntity;

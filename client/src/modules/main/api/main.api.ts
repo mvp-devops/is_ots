@@ -20,6 +20,10 @@ export const setUrl = (target: string, id?: string): string => {
   return url;
 };
 
+export const setFilePath = (filePath: string): string => {
+  return setUrl(filePath);
+};
+
 // export const getCurrentEssence = async (
 //   target: string,
 //   id: string

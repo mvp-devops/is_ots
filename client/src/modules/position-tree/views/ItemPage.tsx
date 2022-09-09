@@ -17,6 +17,7 @@ import { ItemPageBreadcrumbs, ItemPageMenu, ListView, useItemPage } from "../";
 import { ModalContainer, PositionTreeForm } from "../components/forms";
 import { FormActions } from "../../main";
 import { UserForm } from "../../regulatory-reference-information";
+import { DesignDocumentTable } from "../../file-storage";
 
 const { Content } = Layout;
 
@@ -68,7 +69,7 @@ const ItemPage: FC<ItemPageProps> = () => {
             <Content style={{ padding: "0 5px" }}>
               {listItemsView && <ListView />}
 
-              {documentationView && <div>Будет таблица документов</div>}
+              {documentationView && <DesignDocumentTable />}
               {statisticView && <StatisticView />}
             </Content>
           )}

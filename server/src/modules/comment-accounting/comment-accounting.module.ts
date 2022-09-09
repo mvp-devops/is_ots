@@ -1,13 +1,14 @@
 import { SequelizeModule } from "@nestjs/sequelize";
 import { Module } from "@nestjs/common";
 import { CommentAccountingService } from "./comment-accounting.service";
+import { CheckListService } from "./check-list.service";
+
 import { CommentAccountingController } from "./comment-accounting.controller";
 import {
   CapitalConstructionUnitSupervisionCommentEntity,
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
 } from "./entities";
-import { CheckListService } from "./check-list.service";
 
 @Module({
   controllers: [CommentAccountingController],
@@ -19,6 +20,6 @@ import { CheckListService } from "./check-list.service";
       CapitalConstructionUnitSupervisionCommentEntity,
     ]),
   ],
-  exports: [CheckListService],
+  exports: [CheckListService, CommentAccountingService],
 })
 export class CommentAccountingModule {}

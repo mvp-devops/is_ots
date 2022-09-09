@@ -536,4 +536,73 @@ export class CommentAccountingService {
 
     return item;
   };
+
+  solutionsRender = (
+    solutions: DesignDocumentSolutionEntity[]
+  ): DesignDocumentCommentSolutionView[] => {
+    let commentSolutions: DesignDocumentCommentSolutionView[] = [];
+
+    if (solutions?.length > 0) {
+      for (let s = 0; s < solutions.length; s++) {
+        const { statusId, answer, designContacts, solutionId, solution, user } =
+          solutions[s];
+
+        const elem: DesignDocumentCommentSolutionView = {
+          statusId,
+          answer,
+          designContacts,
+          solutionId,
+          solution,
+          expertContacts: `${user.subsidiary.title} \n ${user.subdivision} \n ${user.position} \n почта: ${user.email} \n телефон: ${user.phone}`,
+        };
+        commentSolutions.push(elem);
+      }
+    }
+    return commentSolutions;
+  };
+
+  commentRender = (
+    items: DesignDocumentCommentEntity[],
+    documentSection: string,
+    documentCode: string,
+    documentTitle: string
+  ): DesignDocumentCommentView[] => {
+    let comments: DesignDocumentCommentView[] = [];
+
+    if (items && items.length > 0) {
+      for (let c = 0; c < items.length; c++) {
+        const {
+          id,
+          directionId,
+          direction,
+          comment,
+          normativeId,
+          normative,
+          criticalityId,
+          criticality,
+          solutions,
+          user,
+        } = items[c];
+
+        const item: DesignDocumentCommentView = {
+          id,
+          number: c + 1,
+          documentSection,
+          documentCode,
+          documentTitle,
+          documentPage: 0,
+          comment,
+          normative: `${normative.code}. ${normative.title}`,
+          criticalityId,
+          expertSubdivision: user.subsidiary.title,
+          expertContacts: `${user.subdivision} \n ${user.position} \n почта: ${user.email} \n телефон: ${user.phone}`,
+          solutions: this.solutionsRender(solutions),
+        };
+
+        comments.push(item);
+      }
+    }
+
+    return comments;
+  };
 }

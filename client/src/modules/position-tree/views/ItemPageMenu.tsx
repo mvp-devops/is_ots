@@ -15,13 +15,14 @@ import {
   UserAddOutlined,
   BookOutlined,
 } from "@ant-design/icons";
-import { Layout, Space } from "antd";
+import { Layout, Space, Typography } from "antd";
 import { Menu } from "antd";
 import { FC } from "react";
 import { useItemPage } from "../";
 import { FormActions, MenuItem } from "../../main";
 
 const { Sider } = Layout;
+const { Text } = Typography;
 
 export interface ItemPageMenuProps {
   // role: string;
@@ -33,10 +34,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
     {
       label: (
         <Space>
-          <MoreOutlined
-            className="text-dark"
-            style={{ marginBottom: "22px", padding: 0 }}
-          />
+          <MoreOutlined style={{ marginBottom: 20, padding: 0 }} />
           Действия
         </Space>
       ),
@@ -67,10 +65,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <EditOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <EditOutlined style={{ marginBottom: 20, padding: 0 }} />
               Редактировать
             </Space>
           ),
@@ -84,10 +79,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <DeleteOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <DeleteOutlined style={{ marginBottom: 20, padding: 0 }} />
               Удалить
             </Space>
           ),
@@ -98,10 +90,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
     {
       label: (
         <Space>
-          <SisternodeOutlined
-            className="text-dark"
-            style={{ marginBottom: "22px", padding: 0 }}
-          />
+          <SisternodeOutlined style={{ marginBottom: 20, padding: 0 }} />
           {childTarget === "field"
             ? "Месторождения"
             : childTarget === "project"
@@ -122,10 +111,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setListItemsView(true);
               }}
             >
-              <SearchOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
               Просмотр списка
             </Space>
           ),
@@ -139,10 +125,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <PlusOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
               Добавить
             </Space>
           ),
@@ -156,10 +139,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
               }}
             >
-              <AppstoreOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <AppstoreOutlined style={{ marginBottom: 20, padding: 0 }} />
               Перечень оборудования
             </Space>
           ),
@@ -171,10 +151,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
     {
       label: (
         <Space>
-          <DatabaseOutlined
-            className="text-dark"
-            style={{ marginBottom: "22px", padding: 0 }}
-          />
+          <DatabaseOutlined style={{ marginBottom: 20, padding: 0 }} />
           Документация
         </Space>
       ),
@@ -189,10 +166,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setDocumentationView(true);
               }}
             >
-              <SearchOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
               Просмотр
             </Space>
           ),
@@ -201,10 +175,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
         {
           label: (
             <Space>
-              <FileAddOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <FileAddOutlined style={{ marginBottom: 20, padding: 0 }} />
               Добавить новый документ
             </Space>
           ),
@@ -218,10 +189,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setActionType(FormActions.COLLECTIVE_CHECK_SHEET);
               }}
             >
-              <FileDoneOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <FileDoneOutlined style={{ marginBottom: 20, padding: 0 }} />
               Сформировать ЛКП
             </Space>
           ),
@@ -230,10 +198,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
         {
           label: (
             <Space>
-              <ContainerOutlined
-                className="text-dark"
-                style={{ marginBottom: "22px", padding: 0 }}
-              />
+              <ContainerOutlined style={{ marginBottom: 20, padding: 0 }} />
               Отчет
             </Space>
           ),
@@ -245,10 +210,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
     {
       label: (
         <Space>
-          <PieChartOutlined
-            className="text-dark"
-            style={{ marginBottom: "22px", padding: 0 }}
-          />
+          <PieChartOutlined style={{ marginBottom: 20, padding: 0 }} />
           Статистика
         </Space>
       ),
@@ -262,10 +224,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <AuditOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <AuditOutlined style={{ marginBottom: 20, padding: 0 }} />
               Чеклист
             </Space>
           ),
@@ -280,10 +239,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setStatisticView(true);
               }}
             >
-              <PieChartOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <PieChartOutlined style={{ marginBottom: 20, padding: 0 }} />
               Статистика
             </Space>
           ),
@@ -299,10 +255,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
             setActionType(FormActions.USER);
           }}
         >
-          <UserAddOutlined
-            className="text-dark"
-            style={{ marginBottom: "16px", padding: 0 }}
-          />
+          <UserAddOutlined style={{ marginBottom: 20, padding: 0 }} />
           Регистрация пользователя
         </Space>
       ),
@@ -311,10 +264,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
     {
       label: (
         <Space>
-          <BookOutlined
-            className="text-dark"
-            style={{ marginBottom: "22px", padding: 0 }}
-          />
+          <BookOutlined style={{ marginBottom: 20, padding: 0 }} />
           Справочники
         </Space>
       ),
@@ -328,10 +278,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <PlusOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
               Добавить
             </Space>
           ),
@@ -345,10 +292,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <EditOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <EditOutlined style={{ marginBottom: 20, padding: 0 }} />
               Редактировать
             </Space>
           ),
@@ -362,10 +306,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <DeleteOutlined
-                className="text-dark"
-                style={{ marginBottom: "16px", padding: 0 }}
-              />
+              <DeleteOutlined style={{ marginBottom: 20, padding: 0 }} />
               Удалить
             </Space>
           ),
