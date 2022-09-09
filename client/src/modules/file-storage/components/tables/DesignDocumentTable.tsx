@@ -9,7 +9,8 @@ import {
 } from "antd";
 import {
   EditOutlined,
-  PlusOutlined,
+  FileAddOutlined,
+  ContainerOutlined,
   FilePdfOutlined,
   FileUnknownOutlined,
   DeleteOutlined,
@@ -32,11 +33,18 @@ const DesignDocumentTable = () => {
     dataSource,
     searchValue,
     onSearch,
-    setCurrentDesignDocument,
+    setCurrentDocument,
+    setCheckedDocuments,
     setFilePath,
   } = useFileStorageTableData();
 
   const columns: TableColumnsType<DesignDocumentView> = [
+    {
+      title: "№ п/п",
+
+      align: "center",
+      render: (value, record, ind) => <Text type="secondary">{ind + 1}</Text>,
+    },
     {
       title: "Шифр",
       dataIndex: "code",
@@ -171,66 +179,69 @@ const DesignDocumentTable = () => {
             size="small"
             locale={tableLocale}
             loading={loading}
+            pagination={dataSource.length < 10 && false}
             rowSelection={{
               onChange: (
                 selectedRowKeys: React.Key[],
                 selectedRows: DesignDocumentView[]
               ) => {
-                console.log(
-                  `selectedRowKeys: ${selectedRowKeys}`,
-                  "selectedRows: ",
-                  selectedRows
-                );
+                setCheckedDocuments(selectedRows);
               },
             }}
             onRow={(record, rowIndex) => {
               return {
-                onClick: (event) => {
-                  setCurrentDesignDocument(record);
-                }, // click row
+                onMouseEnter: (event) => setCurrentDocument(record),
               };
             }}
             title={() => (
-              <div className="d-flex justify-content-between font-weight-bold">
-                <Text type="secondary">
+              <Space className="d-flex justify-content-between align-items-center">
+                <Space>
                   <Input
-                    className="mb-3 text-secondary"
+                    size="small"
+                    className="text-secondary"
+                    style={{ minWidth: 300 }}
                     placeholder="Поиск..."
                     title="Поиск записей по шифру/наименованию/дате"
                     value={searchValue}
                     suffix={<SearchOutlined className="text-secondary" />}
                     onChange={onSearch}
                   />
+                </Space>
+                <Text strong type="secondary">
+                  ДОКУМЕНТАЦИЯ
                 </Text>
-                <Text type="secondary">ДОКУМЕНТАЦИЯ</Text>
                 <Space>
-                  <PlusOutlined
-                    key="add"
-                    className="text-success mx-2 mb-2"
-                    style={{ fontSize: "20px" }}
+                  <FileAddOutlined
+                    key="DOCUMENTATION_ADD"
+                    className="text-secondary mb-2"
+                    style={{ fontSize: 20, cursor: "pointer" }}
                     title="Добавить документ"
-                    //   onClick={() => setAddDocumentVisible(true)}
+                    onClick={() => console.log("Добавить документ")}
                   />
                   <DownloadOutlined
-                    disabled
-                    key="download"
-                    className="text-info mx-2 mb-2"
-                    style={{ fontSize: "20px" }}
+                    key="DOCUMENTATION_DOWNLOAD"
+                    className="text-secondary  mb-2"
+                    style={{ fontSize: 20, cursor: "pointer" }}
                     title="Скачать"
                     onClick={() => console.log("Скачать документы")}
                   />
+                  <ContainerOutlined
+                    key="download"
+                    className="text-secondary mb-2"
+                    style={{ fontSize: 20, cursor: "pointer" }}
+                    title="Сформировать ЛКП"
+                    onClick={() => console.log("Сформировать ЛКП")}
+                  />
                 </Space>
-              </div>
+              </Space>
             )}
             rowKey={(record) => record.id}
             columns={columns}
             dataSource={dataSource}
             footer={() => (
               <Space className="d-flex justify-content-end ">
-                <Text className="mx-2 text-secondary">
-                  Количество документов:{" "}
-                </Text>
-                <Text className="font-weight-bolder text-secondary">
+                <Text className="text-secondary">Количество документов:</Text>
+                <Text strong type="secondary">
                   {dataSource.length}
                 </Text>
               </Space>

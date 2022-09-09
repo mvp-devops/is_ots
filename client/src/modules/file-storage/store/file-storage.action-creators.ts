@@ -35,4 +35,16 @@ export const getAllDesignDocuments = (
 //     description: "Данные успешно удалены",
 //   });
 
-export const setCurrentDesignDocument = (item: DesignDocumentView) => {};
+export const setCurrentDocument = (item: DesignDocumentView) => {
+  return {
+    type: ActionTypes.SET_CURRENT_DOCUMENT,
+    payload: item,
+  };
+};
+
+export const setCheckedDocuments = (items: DesignDocumentView[]) => {
+  return {
+    type: ActionTypes.SET_CHECKED_DOCUMENTS,
+    payload: items,
+  };
+};

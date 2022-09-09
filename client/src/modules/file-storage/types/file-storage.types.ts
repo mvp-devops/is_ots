@@ -23,6 +23,9 @@ export enum ActionTypes {
 
   SET_PAGE = "SET_PAGE",
   SET_LIMIT = "SET_LIMIT",
+
+  SET_CURRENT_DOCUMENT = "SET_CURRENT_DOCUMENT",
+  SET_CHECKED_DOCUMENTS = "SET_CHECKED_DOCUMENTS",
 }
 
 export interface EssenceState {
@@ -32,6 +35,7 @@ export interface EssenceState {
   limit: number;
   designDocuments: DesignDocumentView[];
   currentDesignDocument: DesignDocumentView | null;
+  checkedDesignDocuments: DesignDocumentView[];
 }
 
 interface GetAllItemsAction {
@@ -99,6 +103,16 @@ interface SetPageAction {
   payload: number;
 }
 
+interface SetCurrentDocumentAction {
+  type: ActionTypes.SET_CURRENT_DOCUMENT;
+  payload: DesignDocumentView;
+}
+
+interface SetCheckedDocumentsAction {
+  type: ActionTypes.SET_CHECKED_DOCUMENTS;
+  payload: DesignDocumentView[];
+}
+
 export type EssenceAction =
   | GetAllItemsAction
   | GetAllItemsSuccessAction
@@ -116,4 +130,6 @@ export type EssenceAction =
   | DeleteOneItemSuccessAction
   | DeleteOneItemErrorAction
   | SetPageAction
-  | SetLimitAction;
+  | SetLimitAction
+  | SetCurrentDocumentAction
+  | SetCheckedDocumentsAction;

@@ -8,13 +8,17 @@ export const useFileStorageTableData = () => {
   const [searchValue, setSearchValue] = useState("");
   const [dataSource, setDataSource] = useState<DesignDocumentView[]>([]);
 
-  const { designDocuments, currentDesignDocument, loading } = useTypedSelector(
-    (state) => state.fileStorage
-  );
+  const {
+    designDocuments,
+    currentDesignDocument,
+    checkedDesignDocuments,
+    loading,
+  } = useTypedSelector((state) => state.fileStorage);
   const { currentItem } = useTypedSelector((state) => state.positionTree);
   const { documentationView } = useTypedSelector((state) => state.main);
 
-  const { getAllDesignDocuments, setCurrentDesignDocument } = useActions();
+  const { getAllDesignDocuments, setCurrentDocument, setCheckedDocuments } =
+    useActions();
 
   useEffect(() => {
     documentationView &&
@@ -45,8 +49,9 @@ export const useFileStorageTableData = () => {
     dataSource,
     searchValue,
     onSearch,
-    setCurrentDesignDocument,
-    currentDesignDocument,
+    setCurrentDocument,
+    setCheckedDocuments,
+
     setFilePath,
   };
 };

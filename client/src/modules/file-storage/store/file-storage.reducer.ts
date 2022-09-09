@@ -11,6 +11,7 @@ const initialState: EssenceState = {
   limit: 10,
   designDocuments: [],
   currentDesignDocument: null,
+  checkedDesignDocuments: [],
 };
 
 export const fileStorageReducer = (
@@ -61,6 +62,18 @@ export const fileStorageReducer = (
     //       loading: false,
     //       error: action.payload,
     //     };
+
+    case ActionTypes.SET_CURRENT_DOCUMENT:
+      return {
+        ...state,
+        currentDesignDocument: action.payload,
+      };
+
+    case ActionTypes.SET_CHECKED_DOCUMENTS:
+      return {
+        ...state,
+        checkedDesignDocuments: action.payload,
+      };
     default:
       return state;
   }
