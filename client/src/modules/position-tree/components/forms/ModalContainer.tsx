@@ -2,6 +2,7 @@ import { Modal, Space, Typography } from "antd";
 import { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { FormActions } from "../../../main";
+import { useTypedSelector } from "../../../../hooks";
 
 const { Text } = Typography;
 
@@ -20,6 +21,8 @@ const ModalContainer: FC<ModalContainerProps> = ({
   onCancel,
   target,
 }) => {
+  const { currentItem } = useTypedSelector((state) => state.positionTree);
+
   return (
     <Modal
       style={{ border: "1px white" }}
@@ -27,7 +30,7 @@ const ModalContainer: FC<ModalContainerProps> = ({
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
             {action === FormActions.ADD || action === FormActions.ADD_CHILD
-              ? "Добавление записи"
+              ? `Добавление записи`
               : action === FormActions.EDIT || action === FormActions.EDIT_CHILD
               ? "Редактирование записи"
               : action === FormActions.REMOVE ||

@@ -160,7 +160,7 @@ export const usePositionTreeData = (target: string, actionType: string) => {
       setCurrentTarget(currentItem.target);
     }
 
-    if (actionType === FormActions.ADD && currentItem) {
+    if (actionType === FormActions.ADD_CHILD && currentItem) {
       setEditRow(
         initData(currentItem.childrenTarget, undefined, currentItem.id)
       );

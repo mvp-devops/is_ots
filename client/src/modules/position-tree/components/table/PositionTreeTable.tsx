@@ -48,8 +48,6 @@ const PositionTreeTable = () => {
 
   const columns = TableColumns();
 
-  console.log("childTarget: ", childTarget);
-
   return (
     <Layout>
       {loading ? (
@@ -129,12 +127,15 @@ const PositionTreeTable = () => {
           />
         </Content>
       )}
-      {formVisible && target && (
+      {formVisible && childTarget && (
         <ModalContainer
+          target={childTarget}
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}
-          child={<PositionTreeForm target={target} actionType={actionType} />}
+          child={
+            <PositionTreeForm target={childTarget} actionType={actionType} />
+          }
         />
       )}
     </Layout>

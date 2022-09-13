@@ -414,7 +414,10 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
 
   return (
     <>
-      {actionType === FormActions.EDIT || actionType === FormActions.ADD
+      {actionType === FormActions.EDIT ||
+      actionType === FormActions.ADD ||
+      actionType === FormActions.EDIT_CHILD ||
+      actionType === FormActions.ADD_CHILD
         ? renderForm
         : renderDelete}
 
@@ -434,7 +437,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
             </Button>
           </Space>
         </>
-      ) : actionType === FormActions.ADD ? (
+      ) : actionType === FormActions.ADD_CHILD ? (
         <>
           <Divider className="p-0 m-2" />
           <Space className="d-flex justify-content-end mb-0">
@@ -442,6 +445,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
               type="primary"
               className="me-1"
               onClick={() => {
+                console.log(editRow);
                 addNewChild();
                 setFormVisible(false);
               }}
