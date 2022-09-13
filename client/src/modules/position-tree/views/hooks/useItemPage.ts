@@ -24,7 +24,7 @@ export const useItemPage = (items?: MenuItem[]) => {
     currentUser,
   } = useTypedSelector((state) => state.main);
 
-  const { checkListData, loading } = useTypedSelector(
+  const { checkListData, loading, renderItems } = useTypedSelector(
     (state) => state.positionTree
   );
 
@@ -35,7 +35,7 @@ export const useItemPage = (items?: MenuItem[]) => {
     setStatisticView,
     setCollectiveCheckSheetView,
     setSummaryListOfEquipmentView,
-
+    getPositionTreeItems,
     setListItemsView,
     setDocumentationView,
   } = useActions();
@@ -129,9 +129,12 @@ export const useItemPage = (items?: MenuItem[]) => {
     if (currentItem) {
       switch (currentItem.target) {
         case "subsidiary": {
-          getAllItems("field", currentItem.id).then((data) =>
-            setChildrenList(data)
-          );
+          getPositionTreeItems("field", currentItem.id);
+          setChildrenList(renderItems);
+
+          // getAllItems("field", currentItem.id).then((data) =>
+          //   setChildrenList(data)
+          // );
           setChidrenListHeader("месторождений");
 
           break;

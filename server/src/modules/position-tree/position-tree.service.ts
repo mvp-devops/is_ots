@@ -429,6 +429,9 @@ export class PositionTreeService {
           where: { id },
           include: [
             {
+              model: SubsidiaryEntity,
+            },
+            {
               model: ProjectEntity,
               attributes: [
                 "fieldId",
@@ -457,6 +460,14 @@ export class PositionTreeService {
             "description",
           ],
           include: [
+            {
+              model: SubsidiaryEntity,
+              include: [
+                {
+                  model: FieldEntity,
+                },
+              ],
+            },
             {
               model: UnitEntity,
             },
@@ -496,6 +507,19 @@ export class PositionTreeService {
             "description",
           ],
           include: [
+            {
+              model: ProjectEntity,
+              include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
             {
               model: SubUnitEntity,
               attributes: [
@@ -565,6 +589,24 @@ export class PositionTreeService {
             "description",
           ],
           include: [
+            {
+              model: UnitEntity,
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
             {
               model: EquipmentEntity,
               attributes: ["id", "title", "code", "description"],
@@ -648,6 +690,9 @@ export class PositionTreeService {
               where: { subsidiaryId: parrentId },
               include: [
                 {
+                  model: SubsidiaryEntity,
+                },
+                {
                   model: ProjectEntity,
                   attributes: [
                     "fieldId",
@@ -663,6 +708,9 @@ export class PositionTreeService {
             })
           : await this.fieldRepository.findAll({
               include: [
+                {
+                  model: SubsidiaryEntity,
+                },
                 {
                   model: ProjectEntity,
                   attributes: [
@@ -693,6 +741,14 @@ export class PositionTreeService {
                 "description",
               ],
               include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
                 {
                   model: UnitEntity,
                 },
@@ -725,6 +781,14 @@ export class PositionTreeService {
                 "description",
               ],
               include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
                 {
                   model: UnitEntity,
                 },
@@ -765,6 +829,19 @@ export class PositionTreeService {
                 "description",
               ],
               include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
                 {
                   model: SubUnitEntity,
                   attributes: [
@@ -830,6 +907,19 @@ export class PositionTreeService {
                 "description",
               ],
               include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
                 {
                   model: SubUnitEntity,
                   attributes: [
@@ -901,6 +991,24 @@ export class PositionTreeService {
               ],
               include: [
                 {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: ProjectEntity,
+                      include: [
+                        {
+                          model: FieldEntity,
+                          include: [
+                            {
+                              model: SubsidiaryEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
                   model: EquipmentEntity,
                   attributes: ["id", "title", "code", "description"],
                 },
@@ -950,6 +1058,24 @@ export class PositionTreeService {
                 "description",
               ],
               include: [
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: ProjectEntity,
+                      include: [
+                        {
+                          model: FieldEntity,
+                          include: [
+                            {
+                              model: SubsidiaryEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
                 {
                   model: EquipmentEntity,
                   attributes: ["id", "title", "code", "description"],

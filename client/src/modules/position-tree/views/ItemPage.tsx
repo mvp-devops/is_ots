@@ -18,6 +18,7 @@ import { ModalContainer, PositionTreeForm } from "../components/forms";
 import { FormActions } from "../../main";
 import { UserForm } from "../../regulatory-reference-information";
 import { DesignDocumentTable } from "../../file-storage";
+import { TabsView } from "../";
 
 const { Content } = Layout;
 
@@ -58,6 +59,7 @@ const ItemPage: FC<ItemPageProps> = () => {
         )}
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
+          <TabsView />
           {loading ? (
             <Content
               className="d-flex justify-content-center align-items-center"
@@ -67,10 +69,10 @@ const ItemPage: FC<ItemPageProps> = () => {
             </Content>
           ) : (
             <Content style={{ padding: "0 5px" }}>
-              {listItemsView && <ListView />}
+              {/* {listItemsView && <ListView />} */}
 
-              {documentationView && <DesignDocumentTable />}
-              {statisticView && <StatisticView />}
+              {/* {documentationView && <DesignDocumentTable />} */}
+              {/* {statisticView && <StatisticView />} */}
             </Content>
           )}
 

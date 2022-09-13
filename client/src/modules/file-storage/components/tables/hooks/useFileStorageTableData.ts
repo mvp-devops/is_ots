@@ -17,8 +17,12 @@ export const useFileStorageTableData = () => {
   const { currentItem } = useTypedSelector((state) => state.positionTree);
   const { documentationView } = useTypedSelector((state) => state.main);
 
-  const { getAllDesignDocuments, setCurrentDocument, setCheckedDocuments } =
-    useActions();
+  const {
+    getAllDesignDocuments,
+    setCurrentDocument,
+    setCheckedDocuments,
+    setDocumentationView,
+  } = useActions();
 
   useEffect(() => {
     documentationView &&
@@ -50,6 +54,7 @@ export const useFileStorageTableData = () => {
     searchValue,
     onSearch,
     setCurrentDocument,
+    checkedDesignDocuments,
     setCheckedDocuments,
 
     setFilePath,

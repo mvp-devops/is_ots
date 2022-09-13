@@ -33,6 +33,7 @@ const DesignDocumentTable = () => {
     dataSource,
     searchValue,
     onSearch,
+    checkedDesignDocuments,
     setCurrentDocument,
     setCheckedDocuments,
     setFilePath,
@@ -213,22 +214,24 @@ const DesignDocumentTable = () => {
                 <Space>
                   <FileAddOutlined
                     key="DOCUMENTATION_ADD"
-                    className="text-secondary mb-2"
-                    style={{ fontSize: 20, cursor: "pointer" }}
+                    className="text-success mb-2"
+                    style={{ fontSize: 16, cursor: "pointer" }}
                     title="Добавить документ"
                     onClick={() => console.log("Добавить документ")}
                   />
-                  <DownloadOutlined
-                    key="DOCUMENTATION_DOWNLOAD"
-                    className="text-secondary  mb-2"
-                    style={{ fontSize: 20, cursor: "pointer" }}
-                    title="Скачать"
-                    onClick={() => console.log("Скачать документы")}
-                  />
+                  {checkedDesignDocuments.length > 0 && (
+                    <DownloadOutlined
+                      key="DOCUMENTATION_DOWNLOAD"
+                      className="text-primary  mb-2"
+                      style={{ fontSize: 16, cursor: "pointer" }}
+                      title="Скачать"
+                      onClick={() => console.log("Скачать документы")}
+                    />
+                  )}
                   <ContainerOutlined
                     key="download"
-                    className="text-secondary mb-2"
-                    style={{ fontSize: 20, cursor: "pointer" }}
+                    className="text-warning mb-2"
+                    style={{ fontSize: 16, cursor: "pointer" }}
                     title="Сформировать ЛКП"
                     onClick={() => console.log("Сформировать ЛКП")}
                   />

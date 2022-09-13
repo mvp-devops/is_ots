@@ -26,11 +26,12 @@ const ModalContainer: FC<ModalContainerProps> = ({
       title={
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
-            {action === FormActions.ADD
+            {action === FormActions.ADD || action === FormActions.ADD_CHILD
               ? "Добавление записи"
-              : action === FormActions.EDIT
+              : action === FormActions.EDIT || action === FormActions.EDIT_CHILD
               ? "Редактирование записи"
-              : action === FormActions.REMOVE
+              : action === FormActions.REMOVE ||
+                action === FormActions.REMOVE_CHILD
               ? "Удаление записи"
               : action === FormActions.CHECKLIST
               ? "Чек-лист"

@@ -107,7 +107,7 @@ export interface SubUnitView {
   unitId: string | number;
   supplierId: string | number;
   equipmentId: string | number;
-  project: UnitView;
+  unit: UnitView;
   supplier: NSIView;
   equipment: NSIView;
   position: string;
@@ -136,10 +136,3 @@ export interface PositionTreeItem {
   children?: PositionTreeItem[];
   onClick?: (target: string) => void;
 }
-
-// export interface TreeDataNode {
-//   title: string;
-//   key: string;
-//   children?: Array<TreeDataNode>;
-//   onClick?: (target: string) => void;
-// }
