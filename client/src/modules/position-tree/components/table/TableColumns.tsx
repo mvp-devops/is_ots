@@ -21,7 +21,7 @@ import { usePositionTreeTable } from "./hooks";
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<PositionTreeView> => {
-  const { loading, childTarget, renderItems, setFormVisible, setActionType } =
+  const { childTarget, renderItems, setFormVisible, setActionType } =
     usePositionTreeTable();
 
   const numberColumn: ColumnType<PositionTreeView> = {
@@ -38,12 +38,15 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const titleFilters = setTableColumnFilters("title", renderItems);
+
   const titleColumn: ColumnType<PositionTreeView> = {
     title: "Наименование",
     dataIndex: "title",
     key: "title",
     align: "center",
-    filters: setTableColumnFilters("title", renderItems),
+    filters: titleFilters,
+    filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.title.toUpperCase().includes(value.toUpperCase()),
     render: (value: string) => (
@@ -57,13 +60,16 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const codeFilters = setTableColumnFilters("code", renderItems);
+
   const codeColumn: ColumnType<PositionTreeView> = {
     title: "Шифр",
     dataIndex: "code",
     key: "code",
     align: "center",
     width: 100,
-    filters: setTableColumnFilters("code", renderItems),
+    filters: codeFilters,
+    filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.code.toUpperCase().includes(value.toUpperCase()),
     render: (value: string) => (
@@ -85,12 +91,15 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const contractFilters = setTableColumnFilters("contract", renderItems);
+
   const contractColumn: ColumnType<PositionTreeView> = {
     title: "№ договора",
     dataIndex: "contract",
     key: "contract",
     align: "center",
-    filters: setTableColumnFilters("contract", renderItems),
+    filters: contractFilters,
+    filterSearch: contractFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "contract" in record &&
       record.contract.toUpperCase().includes(value.toUpperCase()),
@@ -101,12 +110,15 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const positionFilters = setTableColumnFilters("position", renderItems);
+
   const positionColumn: ColumnType<PositionTreeView> = {
     title: "Позиция по ГП",
     dataIndex: "position",
     key: "position",
     align: "center",
-    filters: setTableColumnFilters("position", renderItems),
+    filters: positionFilters,
+    filterSearch: positionFilters ? true : false,
     onFilter: (value: any, record) =>
       "position" in record &&
       record.position.toUpperCase().includes(value.toUpperCase()),
