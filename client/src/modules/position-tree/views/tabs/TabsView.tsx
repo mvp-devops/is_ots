@@ -63,23 +63,25 @@ const TabsView = () => {
       >
         <StatisticView />
       </TabPane>
-      <TabPane
-        key="children"
-        tab={
-          <Space>
-            <SisternodeOutlined style={{ marginBottom: 6, padding: 0 }} />
-            {childTarget === "field"
-              ? "Месторождения"
-              : childTarget === "project"
-              ? "Проекты"
-              : childTarget === "unit"
-              ? "Объекты строительства"
-              : "Объекты/установки"}
-          </Space>
-        }
-      >
-        <PositionTreeTable />
-      </TabPane>
+      {currentItem && currentItem.target !== "sub-unit" && (
+        <TabPane
+          key="children"
+          tab={
+            <Space>
+              <SisternodeOutlined style={{ marginBottom: 6, padding: 0 }} />
+              {childTarget === "field"
+                ? "Месторождения"
+                : childTarget === "project"
+                ? "Проекты"
+                : childTarget === "unit"
+                ? "Объекты строительства"
+                : "Объекты/установки"}
+            </Space>
+          }
+        >
+          <PositionTreeTable />
+        </TabPane>
+      )}
       {documentationView && (
         <TabPane
           key="documentation"

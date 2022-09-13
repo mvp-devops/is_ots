@@ -1,17 +1,28 @@
 import { Space, TableColumnsType, Typography } from "antd";
-import { ColumnType } from "antd/lib/table";
-import React from "react";
 import {
-  FieldView,
-  PositionTreeView,
-} from "../../../../../../server/common/types/position-tree";
-import { usePositionTreeTableData } from "./hooks/usePositionTreeTableData";
+  PlusOutlined,
+  EditOutlined,
+  FileAddOutlined,
+  ContainerOutlined,
+  FilePdfOutlined,
+  FileUnknownOutlined,
+  DeleteOutlined,
+  CheckOutlined,
+  SearchOutlined,
+  MessageOutlined,
+  DownloadOutlined,
+} from "@ant-design/icons";
+import { ColumnType } from "antd/lib/table";
+import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
+import { FormActions } from "../../../main";
 import { setTableColumnFilters } from "./table.settings";
+import { usePositionTreeTable } from "./hooks";
 
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<PositionTreeView> => {
-  const { renderItems, currentItem } = usePositionTreeTableData();
+  const { loading, childTarget, renderItems, setFormVisible, setActionType } =
+    usePositionTreeTable();
 
   const numberColumn: ColumnType<PositionTreeView> = {
     title: "№ п/п",
@@ -74,63 +85,151 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
-  //   const subsidiaryTitleColumn: ColumnType<PositionTreeView> = {
-  //     title: "До/СП",
-  //     key: "subsidiary",
-  //     align: "center",
-  //     width: 300,
-  //     filters: setTableColumnFilters("subsidiary", renderItems),
-  //     onFilter: (value: any, record) =>
-  //       "subsidiary" in record &&
-  //       record.subsidiary.title.toUpperCase().includes(value.toUpperCase()),
-  //     render: (_, record) => (
-  //       <Text
-  //         type="secondary"
-  //         className="d-flex justify-content-start mx-2"
-  //         style={{ fontSize: 12 }}
-  //       >
-  //         {"subsidiary" in record && record.subsidiary.title}
-  //       </Text>
-  //     ),
-  //   };
+  const contractColumn: ColumnType<PositionTreeView> = {
+    title: "№ договора",
+    dataIndex: "contract",
+    key: "contract",
+    align: "center",
+    filters: setTableColumnFilters("contract", renderItems),
+    onFilter: (value: any, record) =>
+      "contract" in record &&
+      record.contract.toUpperCase().includes(value.toUpperCase()),
+    render: (_, record) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {"contract" in record && record.contract}
+      </Text>
+    ),
+  };
 
-  //   const actionsColumn: ColumnType<PositionTreeView> = {
-  //     title: "Действия",
-  //     key: "operation",
-  //     render: (_blank, record) => (
-  //       <Space size="middle">
-  //         <MessageOutlined
-  //           title="Добавить замечание"
-  //           className="text-info"
-  //           // onClick={() => {
-  //           //   setActionType(FormActions.POST);
-  //           //   setCurrentDocument(record);
-  //           //   setAddCommentsVisible(true);
-  //           // }}
-  //         />
-  //         <EditOutlined
-  //           title="Редактировать информацию"
-  //           className="text-secondary"
-  //           onClick={() => console.log("Edit")}
-  //         />
-  //         <DeleteOutlined
-  //           title="Удалить документ"
-  //           className="text-danger"
-  //           onClick={() => {}}
-  //         />
-  //       </Space>
-  //     ),
-  //   };
+  const positionColumn: ColumnType<PositionTreeView> = {
+    title: "Позиция по ГП",
+    dataIndex: "position",
+    key: "position",
+    align: "center",
+    filters: setTableColumnFilters("position", renderItems),
+    onFilter: (value: any, record) =>
+      "position" in record &&
+      record.position.toUpperCase().includes(value.toUpperCase()),
+    render: (_, record) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {"position" in record && record.position}
+      </Text>
+    ),
+  };
+
+  const designTitleFilters = setTableColumnFilters("design", renderItems);
+
+  const designTitleColumn: ColumnType<PositionTreeView> = {
+    title: "Проектировщик",
+    key: "designTitle",
+    align: "center",
+    filters: designTitleFilters,
+    filterSearch: designTitleFilters.length > 5 ? true : false,
+    onFilter: (value: any, record) =>
+      "design" in record &&
+      record.design.title.toUpperCase().includes(value.toUpperCase()),
+    render: (_, record) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {"design" in record && record.design.title}
+      </Text>
+    ),
+  };
+
+  const equipmenTypeFilters = setTableColumnFilters("equipment", renderItems);
+
+  const equipmentTypeColumn: ColumnType<PositionTreeView> = {
+    title: "Группа",
+    key: "equipmentType",
+    align: "center",
+    filters: equipmenTypeFilters,
+    filterSearch: equipmenTypeFilters.length > 5 ? true : false,
+    onFilter: (value: any, record) =>
+      "equipment" in record &&
+      record.equipment.title.toUpperCase().includes(value.toUpperCase()),
+    render: (_, record) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {"equipment" in record && record.equipment.title}
+      </Text>
+    ),
+  };
+
+  const supplierTitleFilters = setTableColumnFilters("supplier", renderItems);
+
+  const supplierTitleColumn: ColumnType<PositionTreeView> = {
+    title: "Поставщик",
+    key: "supplierTitle",
+    align: "center",
+    filters: supplierTitleFilters,
+    filterSearch: supplierTitleFilters.length > 5 ? true : false,
+    onFilter: (value: any, record) =>
+      "supplier" in record &&
+      record.supplier.title.toUpperCase().includes(value.toUpperCase()),
+
+    render: (_, record) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {"supplier" in record && record.supplier.title}
+      </Text>
+    ),
+  };
+
+  const actionsColumn: ColumnType<PositionTreeView> = {
+    title: "Действия",
+    key: "operation",
+    align: "right",
+    render: (_blank, record) => (
+      <Space size="middle" className="d-flex justify-content-end">
+        <EditOutlined
+          title="Редактировать информацию"
+          className="text-secondary"
+          onClick={() => {
+            setActionType(FormActions.EDIT_CHILD);
+            setFormVisible(true);
+          }}
+        />
+
+        <DeleteOutlined
+          title="Удалить запись"
+          className="text-danger"
+          onClick={() => {
+            setActionType(FormActions.REMOVE_CHILD);
+            setFormVisible(true);
+          }}
+        />
+      </Space>
+    ),
+  };
 
   const columns: TableColumnsType<PositionTreeView> = [];
 
-  switch (currentItem?.childrenTarget) {
+  switch (childTarget) {
     case "field": {
       columns.push(numberColumn);
-      //   columns.push(subsidiaryTitleColumn);
       columns.push(titleColumn);
       columns.push(codeColumn);
       columns.push(descriptionColumn);
+      columns.push(actionsColumn);
+      break;
+    }
+    case "project": {
+      columns.push(numberColumn);
+      columns.push(codeColumn);
+      columns.push(titleColumn);
+      columns.push(designTitleColumn);
+      columns.push(contractColumn);
+      columns.push(descriptionColumn);
+      columns.push(actionsColumn);
+      break;
+    }
+    case "unit":
+    case "sub-unit": {
+      columns.push(numberColumn);
+      columns.push(positionColumn);
+      columns.push(titleColumn);
+      columns.push(equipmentTypeColumn);
+      columns.push(supplierTitleColumn);
+      columns.push(contractColumn);
+      columns.push(descriptionColumn);
+      columns.push(actionsColumn);
       break;
     }
     default:

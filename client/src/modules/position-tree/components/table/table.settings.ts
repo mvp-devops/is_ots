@@ -2,6 +2,9 @@ import { ColumnFilterItem } from "antd/lib/table/interface";
 import {
   FieldView,
   PositionTreeView,
+  ProjectView,
+  SubUnitView,
+  UnitView,
 } from "../../../../../../server/common/types/position-tree";
 
 export const setTableColumnFilters = (
@@ -38,7 +41,59 @@ export const setTableColumnFilters = (
           array.push(item);
         }
       }
+      break;
+    }
 
+    case "contract": {
+      for (let i = 0; i < items.length; i++) {
+        const item = (items[i] as ProjectView | UnitView | SubUnitView)
+          .contract;
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
+    case "position": {
+      for (let i = 0; i < items.length; i++) {
+        const item = (items[i] as UnitView | SubUnitView).position;
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
+    case "design": {
+      for (let i = 0; i < items.length; i++) {
+        const item = (items[i] as ProjectView).design
+          ? (items[i] as ProjectView).design.title
+          : "";
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
+    case "equipment": {
+      for (let i = 0; i < items.length; i++) {
+        const item = (items[i] as UnitView | SubUnitView).equipment
+          ? (items[i] as UnitView | SubUnitView).equipment.title
+          : "";
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
+    case "supplier": {
+      for (let i = 0; i < items.length; i++) {
+        const item = (items[i] as UnitView | SubUnitView).supplier
+          ? (items[i] as UnitView | SubUnitView).supplier.title
+          : "";
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
       break;
     }
 
