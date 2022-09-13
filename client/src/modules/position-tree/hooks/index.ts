@@ -9,7 +9,13 @@ export const usePositionTree = () => {
   );
 
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
-  const { setFormVisible, setActionType, getPositionTreeItems } = useActions();
+  const {
+    setFormVisible,
+    setActionType,
+    getPositionTreeItems,
+    setPositionTreeItem,
+    setPositionTreeItems,
+  } = useActions();
 
   useLayoutEffect(() => {
     if (currentItem) {
@@ -29,5 +35,7 @@ export const usePositionTree = () => {
     actionType,
     setActionType,
     getPositionTreeItems,
+    setPositionTreeItem,
+    setPositionTreeItems,
   };
 };

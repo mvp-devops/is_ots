@@ -4,6 +4,7 @@ import { CheckListSets } from "../../../../../server/common/types/comments-accou
 import {
   PositionTreeCreateOrUpdateAttrs,
   PositionTreeItem,
+  PositionTreeView,
 } from "../../../../../server/common/types/position-tree";
 import {
   getAllItems,
@@ -188,6 +189,20 @@ export const getPositionTreeItems = (target: string, parrentId?: string) => {
         payload: "Ошибка получения данных",
       });
     }
+  };
+};
+
+export const setPositionTreeItem = (item: PositionTreeView) => {
+  return {
+    type: ActionTypes.SET_POSITION_TREE_ITEM,
+    payload: item,
+  };
+};
+
+export const setPositionTreeItems = (items: PositionTreeView[]) => {
+  return {
+    type: ActionTypes.SET_POSITION_TREE_ITEMS,
+    payload: items,
   };
 };
 

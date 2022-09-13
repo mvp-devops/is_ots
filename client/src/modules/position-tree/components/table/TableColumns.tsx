@@ -21,8 +21,14 @@ import { usePositionTreeTable } from "./hooks";
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<PositionTreeView> => {
-  const { childTarget, renderItems, setFormVisible, setActionType } =
-    usePositionTreeTable();
+  const {
+    childTarget,
+    renderItems,
+    setFormVisible,
+    setActionType,
+    dataSource,
+    titleFilters,
+  } = usePositionTreeTable();
 
   const numberColumn: ColumnType<PositionTreeView> = {
     title: "№ п/п",
@@ -37,8 +43,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       </Text>
     ),
   };
-
-  const titleFilters = setTableColumnFilters("title", renderItems);
 
   const titleColumn: ColumnType<PositionTreeView> = {
     title: "Наименование",

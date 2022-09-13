@@ -12,6 +12,8 @@ export interface EssenceState {
   renderItems: PositionTreeView[];
   renderOneItem: PositionTreeView | null;
   checkListData: CheckListView | null;
+  checkedItem: PositionTreeView | null;
+  checkedItems: PositionTreeView[];
 }
 
 export enum ActionTypes {
@@ -40,6 +42,8 @@ export enum ActionTypes {
   GET_CHECK_LIST_DATA = "GET_CHECK_LIST_DATA",
   GET_CHECK_LIST_DATA_SUCCESS = "GET_CHECK_LIST_DATA_SUCCESS",
   GET_CHECK_LIST_DATA_ERROR = "GET_CHECK_LIST_DATA_ERROR",
+  SET_POSITION_TREE_ITEM = "SET_POSITION_TREE_ITEM",
+  SET_POSITION_TREE_ITEMS = "SET_POSITION_TREE_ITEMS",
 }
 
 interface GetMenuItemsAction {
@@ -158,6 +162,16 @@ interface GetCheckListDataErrorAction {
   payload: string;
 }
 
+interface SetPositionTreeItem {
+  type: ActionTypes.SET_POSITION_TREE_ITEM;
+  payload: PositionTreeView;
+}
+
+interface SetPositionTreeItems {
+  type: ActionTypes.SET_POSITION_TREE_ITEMS;
+  payload: PositionTreeView[];
+}
+
 export type EssenceAction =
   | GetMenuItemsAction
   | GetMenuItemsSuccessAction
@@ -183,4 +197,6 @@ export type EssenceAction =
   | GetManyItemsErrorAction
   | GetCheckListDataAction
   | GetCheckListDataSuccessAction
-  | GetCheckListDataErrorAction;
+  | GetCheckListDataErrorAction
+  | SetPositionTreeItem
+  | SetPositionTreeItems;

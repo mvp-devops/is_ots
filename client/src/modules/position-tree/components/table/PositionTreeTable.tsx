@@ -1,13 +1,4 @@
-import {
-  Button,
-  Input,
-  Layout,
-  Space,
-  Spin,
-  Table,
-  TableColumnsType,
-  Typography,
-} from "antd";
+import { Input, Layout, Space, Table, Typography } from "antd";
 import {
   PlusOutlined,
   EditOutlined,
@@ -24,7 +15,6 @@ import {
 import { FormActions, tableLocale } from "../../../main";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import TableColumns from "./TableColumns";
-import { ChangeEvent, MouseEvent } from "react";
 import { ModalContainer, PositionTreeForm } from "../forms";
 import { usePositionTreeTable } from "./hooks";
 
@@ -36,7 +26,7 @@ const PositionTreeTable = () => {
     loading,
     target,
     childTarget,
-    renderItems,
+    dataSource,
     formVisible,
     setFormVisible,
     actionType,
@@ -44,6 +34,10 @@ const PositionTreeTable = () => {
 
     tableTitle,
     addChildButtonTitle,
+    setPositionTreeItem,
+    setPositionTreeItems,
+    searchValue,
+    onSearch,
   } = usePositionTreeTable();
 
   const columns = TableColumns();
@@ -57,18 +51,18 @@ const PositionTreeTable = () => {
           size="small"
           locale={tableLocale}
           loading={loading}
-          pagination={renderItems.length < 10 && false}
+          pagination={dataSource.length < 10 && false}
           rowSelection={{
             onChange: (
               selectedRowKeys: React.Key[],
               selectedRows: PositionTreeView[]
             ) => {
-              // setCheckedDocuments(selectedRows);
+              setPositionTreeItems(selectedRows);
             },
           }}
           onRow={(record, rowIndex) => {
             return {
-              // onMouseEnter: (event) => setCurrentDocument(record),
+              onMouseEnter: (event) => setPositionTreeItem(record),
             };
           }}
           title={() => (
@@ -86,9 +80,9 @@ const PositionTreeTable = () => {
                   style={{ minWidth: 300 }}
                   placeholder="Поиск..."
                   title="Поиск записей по шифру/наименованию и др."
-                  // value={searchValue}
-                  // suffix={<SearchOutlined className="text-secondary" />}
-                  // onChange={onSearch}
+                  value={searchValue}
+                  suffix={<SearchOutlined className="text-secondary" />}
+                  onChange={onSearch}
                 />
                 <Space>
                   <PlusOutlined
@@ -107,12 +101,12 @@ const PositionTreeTable = () => {
           )}
           rowKey={(record) => record.id}
           columns={columns}
-          dataSource={renderItems}
+          dataSource={dataSource}
           footer={() => (
             <Space className="d-flex justify-content-end ">
               <Text className="text-secondary">Количество:</Text>
               <Text strong type="secondary">
-                {renderItems.length}
+                {dataSource.length}
               </Text>
             </Space>
           )}

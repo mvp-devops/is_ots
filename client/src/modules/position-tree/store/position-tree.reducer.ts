@@ -10,6 +10,8 @@ const initialState: EssenceState = {
   renderItems: [],
   renderOneItem: null,
   checkListData: null,
+  checkedItem: null,
+  checkedItems: [],
   error: null,
   loading: true,
 };
@@ -170,6 +172,20 @@ export const positionTreeReducer = (
         ...state,
         loading: false,
         error: action.payload,
+      };
+
+    case ActionTypes.SET_POSITION_TREE_ITEM:
+      return {
+        ...state,
+
+        checkedItem: action.payload,
+      };
+
+    case ActionTypes.SET_POSITION_TREE_ITEMS:
+      return {
+        ...state,
+
+        checkedItems: action.payload,
       };
 
     default:

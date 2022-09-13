@@ -108,5 +108,5 @@ export const setTableColumnFilters = (
     });
   }
 
-  return result;
+  return result.sort((a, b) => (a.value < b.value ? -1 : 0));
 };
