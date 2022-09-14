@@ -115,7 +115,6 @@ const PositionTreeTable = () => {
 
       {formVisible && childTarget && (
         <ModalContainer
-          target={childTarget}
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}
