@@ -59,6 +59,21 @@ export const getItems = async (target: string): Promise<NSIView[]> => {
   return items;
 };
 
+export const getAllItems = async (target: string): Promise<NSIView[]> => {
+  const url = setUrl(`${baseUrl}/find`);
+  const { data } = await axios.get<NSIView[]>(url, { params: { target } });
+  return data;
+};
+
+export const getOneItem = async (
+  target: string,
+  id: string
+): Promise<NSIView> => {
+  const url = setUrl(`${baseUrl}/find${id}`);
+  const { data } = await axios.get<NSIView>(url, { params: { target } });
+  return data;
+};
+
 export const userRegistration = async (
   item: UserCreateOrUpdateAttrs
 ): Promise<UserView | null> => {

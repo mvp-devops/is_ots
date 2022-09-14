@@ -14,6 +14,8 @@ const initialState: EssenceState = {
   checkedItems: [],
   error: null,
   loading: true,
+  target: "",
+  childTarget: "",
 };
 
 export const positionTreeReducer = (
@@ -186,6 +188,18 @@ export const positionTreeReducer = (
         ...state,
 
         checkedItems: action.payload,
+      };
+    case ActionTypes.SET_TARGET:
+      return {
+        ...state,
+
+        target: action.payload,
+      };
+    case ActionTypes.SET_CHILD_TARGET:
+      return {
+        ...state,
+
+        childTarget: action.payload,
       };
 
     default:

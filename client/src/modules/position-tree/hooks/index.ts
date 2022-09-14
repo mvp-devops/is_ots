@@ -1,12 +1,16 @@
-import { useLayoutEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useActions, useTypedSelector } from "../../../hooks";
+import { getAllItems, getOneItem } from "..";
 
 export const usePositionTree = () => {
-  const [target, setTarget] = useState("");
-  const [childTarget, setChildTarget] = useState("");
-  const { renderItems, currentItem, loading } = useTypedSelector(
-    (state) => state.positionTree
-  );
+  const {
+    target,
+    childTarget,
+    renderItems,
+    currentItem,
+    loading,
+    checkedItem,
+  } = useTypedSelector((state) => state.positionTree);
 
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
   const {
@@ -15,17 +19,25 @@ export const usePositionTree = () => {
     getPositionTreeItems,
     setPositionTreeItem,
     setPositionTreeItems,
+    setTarget,
+    setChildTarget,
   } = useActions();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     if (currentItem) {
       setTarget(currentItem.target);
       setChildTarget(currentItem.childrenTarget);
     }
   }, [currentItem]);
 
+  useEffect(() => {
+    console.log("Target: ", target);
+    console.log("childTarget: ", childTarget);
+  }, [target]);
+
   return {
     currentItem,
+    checkedItem,
     target,
     childTarget,
     renderItems,
@@ -37,5 +49,7 @@ export const usePositionTree = () => {
     getPositionTreeItems,
     setPositionTreeItem,
     setPositionTreeItems,
+    getAllItems,
+    getOneItem,
   };
 };

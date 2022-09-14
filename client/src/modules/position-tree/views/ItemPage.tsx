@@ -108,10 +108,7 @@ const ItemPage: FC<ItemPageProps> = () => {
             ) : actionType === FormActions.USER ? (
               <UserForm />
             ) : (
-              <PositionTreeForm
-                target={currentItem.target}
-                actionType={actionType}
-              />
+              <PositionTreeForm />
             )
           }
         />

@@ -6,10 +6,17 @@ import {
   useRegulatoryReferenceInformationForm,
 } from "./components/forms";
 
+import { getAllItems, getOneItem } from "./api";
+
+import { useRegulatoryReferenceInformation } from "./hooks";
+
 export {
   nsiReducer,
   nsiActionCreators,
   getItems,
   UserForm,
   useRegulatoryReferenceInformationForm,
+  useRegulatoryReferenceInformation,
+  getAllItems,
+  getOneItem,
 };

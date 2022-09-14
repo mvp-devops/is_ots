@@ -118,9 +118,7 @@ const PositionTreeTable = () => {
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}
-          child={
-            <PositionTreeForm target={childTarget} actionType={actionType} />
-          }
+          child={<PositionTreeForm />}
         />
       )}
     </Layout>

@@ -234,3 +234,17 @@ export const getCheckListData = (
     }
   };
 };
+
+export const setTarget = (target: string) => {
+  return {
+    type: ActionTypes.SET_TARGET,
+    payload: target,
+  };
+};
+
+export const setChildTarget = (childTarget: string) => {
+  return {
+    type: ActionTypes.SET_CHILD_TARGET,
+    payload: childTarget,
+  };
+};

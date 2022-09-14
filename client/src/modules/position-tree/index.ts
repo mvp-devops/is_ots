@@ -7,6 +7,7 @@ import ItemPageBreadcrumbs from "./views/ItemPageBreadcrumbs";
 import ItemPageMenu from "./views/ItemPageMenu";
 import ListView from "./views/list/ListView";
 import TabsView from "./views/tabs/TabsView";
+import { usePositionTree } from "./hooks";
 
 export {
   useItemPage,
@@ -20,4 +21,5 @@ export {
   getOneItem,
   getMenuItems,
   TabsView,
+  usePositionTree,
 };

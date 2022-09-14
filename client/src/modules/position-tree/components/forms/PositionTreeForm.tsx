@@ -1,3 +1,5 @@
+import { ChangeEvent, FC } from "react";
+
 import {
   Button,
   Divider,
@@ -8,7 +10,7 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { ChangeEvent, FC, useEffect } from "react";
+
 import {
   UploadOutlined,
   DeleteOutlined,
@@ -23,6 +25,8 @@ import {
   CheckListForm,
   useCommentAccountingFormData,
 } from "../../../comment-accounting";
+import { usePositionTreeForm } from "./hooks";
+import { SelectUIComponent } from "../../../../components";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -33,60 +37,46 @@ interface FormProps {
   actionType: string;
 }
 
-const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
+const PositionTreeForm = () => {
   const {
-    currentItem,
+    // loading,
+    // error,
+    formTarget,
     parrentsList,
+    currentItem,
     designsList,
     equipmentsList,
     suppliersList,
+    // currentTarget,
     editRow,
     onHandlerChange,
-    currentTarget,
-    loading,
-    error,
-    addNewChild,
-    addNewChildren,
-    updateOneItem,
-    deleteOneItem,
-  } = usePositionTreeData(target, actionType);
-  const { childrenListHeader, setFormVisible } = useItemPage();
+    addNewItem,
+    addNewItems,
+    updateItem,
+    deleteItem,
 
-  const parrentFieldItem = actionType === FormActions.EDIT &&
-    currentTarget === "field" &&
-    "subsidiaryId" in editRow &&
-    editRow.subsidiaryId && (
-      <Item
-        label={<Text type="secondary">Дочернее общество</Text>}
-        className="m-0"
-      >
-        <Select
-          size="small"
-          className="text-secondary"
-          showSearch
-          defaultValue={editRow.subsidiaryId.toString()}
-          optionFilterProp="children"
-          filterOption={(input, option) =>
-            (option!.children as unknown as string).includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA!.children as unknown as string)
-              .toLowerCase()
-              .localeCompare(
-                (optionB!.children as unknown as string).toLowerCase()
-              )
-          }
-          onChange={(value: string) => onHandlerChange("subsidiaryId", value)}
-        >
-          {parrentsList.map((item) => (
-            <Option key={item.id}>{item.title}</Option>
-          ))}
-        </Select>
+    formVisible,
+    setFormVisible,
+    actionType,
+    setActionType,
+  } = usePositionTreeForm();
+
+  const parrentFieldItem = (actionType === FormActions.EDIT ||
+    actionType === FormActions.EDIT_CHILD) &&
+    editRow &&
+    "subsidiaryId" in editRow && (
+      <Item label={<Text type="secondary">Дочернее общество</Text>}>
+        <SelectUIComponent
+          id="subsidiaryId"
+          changeValue={onHandlerChange}
+          items={parrentsList}
+        />
       </Item>
     );
 
-  const parrentProjectItem = actionType === FormActions.EDIT &&
-    currentTarget === "project" &&
+  const parrentProjectItem = editRow &&
+    actionType === FormActions.EDIT &&
+    formTarget === "project" &&
     "fieldId" in editRow &&
     editRow.fieldId && (
       <Item label={<Text type="secondary">Месторождение</Text>} className="m-0">
@@ -116,7 +106,8 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const projectDesignItem = currentTarget === "project" &&
+  const projectDesignItem = editRow &&
+    formTarget === "project" &&
     "designId" in editRow &&
     editRow.designId && (
       <Item
@@ -151,8 +142,9 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const parrentUnitItem = actionType === FormActions.EDIT &&
-    currentTarget === "unit" &&
+  const parrentUnitItem = editRow &&
+    actionType === FormActions.EDIT &&
+    formTarget === "unit" &&
     "projectId" in editRow &&
     editRow.projectId && (
       <Item label={<Text type="secondary">Проект</Text>} className="m-0">
@@ -184,8 +176,9 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const parrentSubUnitItem = actionType === FormActions.EDIT &&
-    currentTarget === "sub-unit" &&
+  const parrentSubUnitItem = editRow &&
+    actionType === FormActions.EDIT &&
+    formTarget === "sub-unit" &&
     "unitId" in editRow &&
     editRow.unitId && (
       <Item
@@ -218,9 +211,10 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </Item>
     );
 
-  const contractItem = (currentTarget === "project" ||
-    currentTarget === "unit" ||
-    currentTarget === "sub-unit") &&
+  const contractItem = editRow &&
+    (formTarget === "project" ||
+      formTarget === "unit" ||
+      formTarget === "sub-unit") &&
     "contract" in editRow && (
       <Item label={<Text type="secondary">№ договора</Text>} className="m-0">
         <Input
@@ -235,7 +229,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
     );
 
   const fileItem =
-    currentTarget === "unit" || currentTarget === "sub-unit" ? (
+    formTarget === "unit" || formTarget === "sub-unit" ? (
       <Item label={<Text type="secondary">Опросный лист</Text>} className="m-0">
         <Upload
           className="mb-1"
@@ -254,7 +248,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         </Upload>
       </Item>
     ) : (
-      currentTarget === "subsidiary" && (
+      formTarget === "subsidiary" && (
         <Item label={<Text type="secondary">Логотип</Text>} className="m-0">
           <Upload
             className="mb-1"
@@ -275,8 +269,8 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       )
     );
 
-  const unitSubUnitItems = (currentTarget === "unit" ||
-    currentTarget === "sub-unit") &&
+  const unitSubUnitItems = editRow &&
+    (formTarget === "unit" || formTarget === "sub-unit") &&
     "position" in editRow &&
     "equipmentId" in editRow &&
     "supplierId" in editRow && (
@@ -350,7 +344,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
       </>
     );
 
-  const renderForm = (
+  const renderForm = editRow && (
     <Form
       labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
@@ -407,7 +401,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
         className="text-warning me-3"
       />
       <Text type="secondary">
-        Удаление записи приведет к удалению всех дочерних {childrenListHeader}
+        Удаление записи приведет к удалению всех дочерних записей
       </Text>
     </Space>
   );
@@ -430,7 +424,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
               type="primary"
               className="me-1"
               onClick={() => {
-                updateOneItem();
+                updateItem();
                 setFormVisible(false);
               }}
             >
@@ -446,7 +440,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
               type="primary"
               className="me-1"
               onClick={() => {
-                addNewChild();
+                addNewItem();
                 setFormVisible(false);
               }}
             >
@@ -462,7 +456,7 @@ const PositionTreeForm: FC<FormProps> = ({ target, actionType }) => {
               type="primary"
               className="me-1 "
               onClick={() => {
-                deleteOneItem();
+                deleteItem();
                 setFormVisible(false);
               }}
             >

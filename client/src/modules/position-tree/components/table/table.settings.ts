@@ -16,7 +16,6 @@ export const setTableColumnFilters = (
 
   switch (target) {
     case "title": {
-      console.log(items);
       for (let i = 0; i < items.length; i++) {
         const item = items[i].title;
         if (item && !array.includes(item)) {

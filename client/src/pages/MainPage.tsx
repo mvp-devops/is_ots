@@ -22,14 +22,22 @@ const { Panel } = Collapse;
 const MainPage: FC = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const { setMenuItems, setCurrentItem, logout } = useActions();
-  const { menuItems, currentItem } = useTypedSelector(
+  const { setMenuItems, setCurrentItem, logout, setTarget, setChildTarget } =
+    useActions();
+  const { menuItems, currentItem, target, childTarget } = useTypedSelector(
     (state) => state.positionTree
   );
   const { formVisible, currentUser } = useTypedSelector((state) => state.main);
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
-    item && setCurrentItem(item);
+    if (item) {
+      setCurrentItem(item);
+      setTarget(item.target);
+      setChildTarget(item.childrenTarget);
+    } else {
+      setTarget("");
+      setChildTarget("");
+    }
   };
 
   const onSelect = (selectedKeys: any, e: any) => {
