@@ -17,18 +17,28 @@ import { PositionTreeView } from "../../../../../../server/common/types/position
 import { FormActions } from "../../../main";
 import { setTableColumnFilters } from "./table.settings";
 import { usePositionTreeTable } from "./hooks";
+import { useCallback, useEffect, useState } from "react";
+import { ColumnFilterItem } from "antd/lib/table/interface";
 
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<PositionTreeView> => {
+  // const [titleFilters, setTitleFilters] = useState<ColumnFilterItem[]>([]);
   const {
     childTarget,
     renderItems,
     setFormVisible,
     setActionType,
     dataSource,
-    titleFilters,
+    searchValue,
   } = usePositionTreeTable();
+
+  // useEffect(() => {
+  //   setTitleFilters(setTableColumnFilters("title", renderItems));
+  //   console.log("titleFilters: ", dataSource);
+
+  //   console.count("change: ");
+  // }, [renderItems]);
 
   const numberColumn: ColumnType<PositionTreeView> = {
     title: "№ п/п",
@@ -44,12 +54,16 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const titleFilters = setTableColumnFilters("title", dataSource);
+
   const titleColumn: ColumnType<PositionTreeView> = {
     title: "Наименование",
     dataIndex: "title",
     key: "title",
     align: "center",
     filters: titleFilters,
+
+    filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.title.toUpperCase().includes(value.toUpperCase()),
@@ -121,6 +135,9 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     dataIndex: "position",
     key: "position",
     align: "center",
+    sorter: (a, b) =>
+      "position" in a && "position" in b && a.position < b.position ? -1 : 0,
+    filtered: true,
     filters: positionFilters,
     filterSearch: positionFilters ? true : false,
     onFilter: (value: any, record) =>

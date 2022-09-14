@@ -7,7 +7,6 @@ import { setTableColumnFilters } from "../table.settings";
 export const usePositionTreeTable = () => {
   const [searchValue, setSearchValue] = useState("");
   const [dataSource, setDataSource] = useState<PositionTreeView[]>([]);
-  const [titleFilters, setTitleFilters] = useState<ColumnFilterItem[]>([]);
 
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) => {
     setSearchValue(e.target.value);
@@ -57,11 +56,6 @@ export const usePositionTreeTable = () => {
     );
   }, [searchValue]);
 
-  useEffect(
-    () => setTitleFilters(setTableColumnFilters("title", dataSource)),
-    [dataSource]
-  );
-
   const tableTitle =
     childTarget === "field"
       ? "Месторождения"
@@ -109,6 +103,7 @@ export const usePositionTreeTable = () => {
           break;
       }
     }
+    setSearchValue("");
   }, [currentItem, target, formVisible]);
 
   useEffect(() => setDataSource(renderItems), [renderItems]);
@@ -129,6 +124,5 @@ export const usePositionTreeTable = () => {
     setPositionTreeItems,
     onSearch,
     searchValue,
-    titleFilters,
   };
 };
