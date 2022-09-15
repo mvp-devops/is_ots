@@ -1,44 +1,28 @@
 import { Space, TableColumnsType, Typography } from "antd";
 import {
-  PlusOutlined,
   EditOutlined,
-  FileAddOutlined,
-  ContainerOutlined,
   FilePdfOutlined,
   FileUnknownOutlined,
   DeleteOutlined,
-  CheckOutlined,
-  SearchOutlined,
-  MessageOutlined,
-  DownloadOutlined,
+  FileSearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { FormActions, setFilePath } from "../../../main";
-import { setTableColumnFilters } from "./table.settings";
 import { usePositionTreeTable } from "./hooks";
-import { useCallback, useEffect, useState } from "react";
-import { ColumnFilterItem } from "antd/lib/table/interface";
+import { setTableColumnFilters } from "./table.settings";
+import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<PositionTreeView> => {
-  // const [titleFilters, setTitleFilters] = useState<ColumnFilterItem[]>([]);
   const {
     childTarget,
     renderItems,
     setFormVisible,
     setActionType,
     dataSource,
-    searchValue,
   } = usePositionTreeTable();
-
-  // useEffect(() => {
-  //   setTitleFilters(setTableColumnFilters("title", renderItems));
-  //   console.log("titleFilters: ", dataSource);
-
-  //   console.count("change: ");
-  // }, [renderItems]);
 
   const numberColumn: ColumnType<PositionTreeView> = {
     title: "№ п/п",
@@ -205,79 +189,42 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
-  const unitQuestionareColumn: ColumnType<PositionTreeView> = {
-    title: "ОЛ/ТТ/ТЗ",
-    key: "questionare",
-    // align: "center",
-    render: (_, record) => {
-      return (
-        "unitQuestionare" in record &&
-        record.unitQuestionare && (
-          <Space className="d-flex justify-content-start">
-            <Text type="secondary">
-              {record.unitQuestionare.fileType.toUpperCase() === ".PDF" ? (
-                <FilePdfOutlined className="text-danger" />
-              ) : (
-                <FileUnknownOutlined className="text-secondary" />
-              )}
-            </Text>
-            <a
-              href={setFilePath(
-                `${record.unitQuestionare.filePath}/${record.unitQuestionare.fileName}`
-              )}
-              target="_blank"
-              rel="noreferrer"
-              className="mx-2 text-secondary"
-              title={record.unitQuestionare.title}
-            >
-              {record.unitQuestionare.title && record.unitQuestionare.title}
-            </a>
-          </Space>
-        )
-      );
-    },
-  };
-
-  const subUnitQuestionareColumn: ColumnType<PositionTreeView> = {
-    title: "ОЛ/ТТ/ТЗ",
-    key: "questionare",
-    // align: "center",
-    render: (_, record) => {
-      return (
-        "subUnitQuestionare" in record &&
-        record.subUnitQuestionare && (
-          <Space className="d-flex justify-content-start">
-            <Text type="secondary">
-              {record.subUnitQuestionare.fileType.toUpperCase() === ".PDF" ? (
-                <FilePdfOutlined className="text-danger" />
-              ) : (
-                <FileUnknownOutlined className="text-secondary" />
-              )}
-            </Text>
-            <a
-              href={setFilePath(
-                `${record.subUnitQuestionare.filePath}/${record.subUnitQuestionare.fileName}`
-              )}
-              target="_blank"
-              rel="noreferrer"
-              className="mx-2 text-secondary"
-              title={record.subUnitQuestionare.title}
-            >
-              {record.subUnitQuestionare.title &&
-                record.subUnitQuestionare.title}
-            </a>
-          </Space>
-        )
-      );
-    },
-  };
-
   const actionsColumn: ColumnType<PositionTreeView> = {
     title: "Действия",
     key: "operation",
     align: "right",
     render: (_blank, record) => (
       <Space size="middle" className="d-flex justify-content-end">
+        {"unitQuestionare" in record && record.unitQuestionare && (
+          <a
+            href={setFilePath(
+              `${record.unitQuestionare.filePath}/${record.unitQuestionare.fileName}`
+            )}
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              title={`${record.unitQuestionare.code}. ${record.unitQuestionare.title}`}
+            />
+          </a>
+        )}
+        {"subUnitQuestionare" in record && record.subUnitQuestionare && (
+          <a
+            href={setFilePath(
+              `${record.subUnitQuestionare.filePath}/${record.subUnitQuestionare.fileName}`
+            )}
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              title={`${record.subUnitQuestionare.code}. ${record.subUnitQuestionare.title}`}
+            />
+          </a>
+        )}
         <EditOutlined
           title="Редактировать информацию"
           className="text-secondary"
@@ -328,7 +275,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       columns.push(supplierTitleColumn);
       columns.push(contractColumn);
       columns.push(descriptionColumn);
-      columns.push(unitQuestionareColumn);
       columns.push(actionsColumn);
       break;
     }
@@ -340,7 +286,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       columns.push(supplierTitleColumn);
       columns.push(contractColumn);
       columns.push(descriptionColumn);
-      columns.push(subUnitQuestionareColumn);
       columns.push(actionsColumn);
       break;
     }
