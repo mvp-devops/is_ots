@@ -133,9 +133,15 @@ export class MonitoringEntity extends Model<
   @BelongsTo(() => SummaryListOfEquipmentEntity, { foreignKey: "sloeId" })
   sloe: SummaryListOfEquipmentEntity;
 
-  @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity)
+  @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   comments: CapitalConstructionUnitSupervisionCommentEntity;
 
-  @HasOne(() => DesignDocumentEntity)
+  @HasOne(() => DesignDocumentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   functionalDiagram: DesignDocumentEntity;
 }

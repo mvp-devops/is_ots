@@ -92,12 +92,16 @@ export class ProjectEntity extends Model<
   @BelongsTo(() => DesignEntity)
   design: DesignEntity;
 
-  @HasMany(() => UnitEntity)
+  @HasMany(() => UnitEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   units: UnitEntity[];
 
-  @HasMany(() => DesignDocumentEntity, { as: "projectDocuments" })
+  @HasMany(() => DesignDocumentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    as: "projectDocuments",
+  })
   projectDocuments: DesignDocumentEntity[];
-
-  // @HasMany(() => DesignDocumentEntity)
-  // documents: DesignDocumentEntity[];
 }

@@ -64,6 +64,9 @@ export class FieldEntity extends Model<FieldEntity, FieldCreateOrUpdateAttrs> {
   @BelongsTo(() => SubsidiaryEntity)
   subsidiary: SubsidiaryEntity;
 
-  @HasMany(() => ProjectEntity)
+  @HasMany(() => ProjectEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   projects: ProjectEntity[];
 }

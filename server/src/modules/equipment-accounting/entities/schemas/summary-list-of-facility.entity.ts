@@ -192,21 +192,39 @@ export class SummaryListOfEquipmentEntity extends Model<
   @BelongsTo(() => SubUnitEntity)
   subUnit: SubUnitEntity;
 
-  @HasMany(() => CableLogEntity)
+  @HasMany(() => CableLogEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   cableLog: CableLogEntity[];
 
-  @HasMany(() => ImpulseLineLogEntity)
+  @HasMany(() => ImpulseLineLogEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   impulseLineLog: ImpulseLineLogEntity[];
 
-  @HasMany(() => SignalEntity)
+  @HasMany(() => SignalEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   signals: SignalEntity[];
 
-  @HasOne(() => MetrologyEntity)
+  @HasOne(() => MetrologyEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   metrology: MetrologyEntity;
 
-  @HasOne(() => MonitoringEntity)
+  @HasOne(() => MonitoringEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   monitoring: MonitoringEntity;
 
-  @HasOne(() => DesignDocumentEntity)
+  @HasOne(() => DesignDocumentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   equipmentQuestionare: DesignDocumentEntity;
 }

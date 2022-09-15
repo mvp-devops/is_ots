@@ -281,24 +281,33 @@ export class DesignDocumentEntity extends Model<
   functionalDiagram: MonitoringEntity;
 
   @HasMany(() => DesignDocumentCommentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+
     as: "pdc",
     foreignKey: "pdcId",
   })
   pdc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     as: "udc",
     foreignKey: "udcId",
   })
   udc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     as: "sudc",
     foreignKey: "sudcId",
   })
   sudc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     as: "sdc",
     foreignKey: "sdcId",
   })

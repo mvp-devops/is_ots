@@ -168,6 +168,9 @@ export class DesignDocumentCommentEntity extends Model<
   })
   sdc: DesignDocumentEntity;
 
-  @HasMany(() => DesignDocumentSolutionEntity)
+  @HasMany(() => DesignDocumentSolutionEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   solutions: DesignDocumentSolutionEntity[];
 }

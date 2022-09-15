@@ -2,7 +2,6 @@ import { Modal, Space, Typography } from "antd";
 import { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { FormActions } from "../../../main";
-import { useTypedSelector } from "../../../../hooks";
 
 const { Text } = Typography;
 
@@ -21,8 +20,6 @@ const ModalContainer: FC<ModalContainerProps> = ({
   onCancel,
   target,
 }) => {
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
-
   return (
     <Modal
       style={{ border: "1px white" }}

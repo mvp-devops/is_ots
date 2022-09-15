@@ -242,6 +242,7 @@ const PositionTreeForm = () => {
       </Item>
     </Form>
   );
+
   const renderDelete = (
     <Space className="d-flex justify-content-start ">
       <InfoCircleOutlined
@@ -254,65 +255,65 @@ const PositionTreeForm = () => {
     </Space>
   );
 
+  const render =
+    actionType === FormActions.EDIT ||
+    actionType === FormActions.EDIT_CHILD ||
+    actionType === FormActions.ADD ||
+    actionType === FormActions.ADD_CHILD
+      ? renderForm
+      : renderDelete;
+
+  const renderAddActions = (actionType === FormActions.ADD ||
+    actionType === FormActions.ADD_CHILD) && (
+    <Button
+      type="primary"
+      className="me-1"
+      onClick={() => {
+        addNewItem();
+        setFormVisible(false);
+      }}
+    >
+      Добавить
+    </Button>
+  );
+
+  const renderEditActions = (actionType === FormActions.EDIT ||
+    actionType === FormActions.EDIT_CHILD) && (
+    <Button
+      type="primary"
+      className="me-1"
+      onClick={() => {
+        updateItem();
+        setFormVisible(false);
+      }}
+    >
+      Обновить
+    </Button>
+  );
+
+  const renderRemoveActions = (actionType === FormActions.REMOVE ||
+    actionType === FormActions.REMOVE_CHILD) && (
+    <Button
+      type="primary"
+      className="me-1"
+      onClick={() => {
+        deleteItem();
+        setFormVisible(false);
+      }}
+    >
+      Удалить
+    </Button>
+  );
+
   return (
     <>
-      {actionType === FormActions.EDIT ||
-      actionType === FormActions.EDIT_CHILD ||
-      actionType === FormActions.ADD ||
-      actionType === FormActions.ADD_CHILD
-        ? renderForm
-        : renderDelete}
-
-      {actionType === FormActions.EDIT ||
-      actionType === FormActions.EDIT_CHILD ? (
-        <>
-          <Divider className="p-0 m-2" />
-          <Space className="d-flex justify-content-end mb-2">
-            <Button
-              type="primary"
-              className="me-1"
-              onClick={() => {
-                updateItem();
-                setFormVisible(false);
-              }}
-            >
-              Обновить
-            </Button>
-          </Space>
-        </>
-      ) : actionType === FormActions.ADD_CHILD || FormActions.ADD ? (
-        <>
-          <Divider className="p-0 m-2" />
-          <Space className="d-flex justify-content-end mb-0">
-            <Button
-              type="primary"
-              className="me-1"
-              onClick={() => {
-                addNewItem();
-                setFormVisible(false);
-              }}
-            >
-              Добавить
-            </Button>
-          </Space>
-        </>
-      ) : (
-        <>
-          <Divider className="p-0 m-2" />
-          <Space className="d-flex justify-content-end mb-0">
-            <Button
-              type="primary"
-              className="me-1 "
-              onClick={() => {
-                deleteItem();
-                setFormVisible(false);
-              }}
-            >
-              Удалить
-            </Button>
-          </Space>
-        </>
-      )}
+      {render}
+      <Divider className="p-0 m-2" />
+      <Space className="d-flex justify-content-end mb-2">
+        {renderAddActions}
+        {renderEditActions}
+        {renderRemoveActions}
+      </Space>
     </>
   );
 };

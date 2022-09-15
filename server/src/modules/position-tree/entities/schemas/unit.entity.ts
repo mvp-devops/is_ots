@@ -122,15 +122,29 @@ export class UnitEntity extends Model<UnitEntity, UnitCreateOrUpdateAttrs> {
   @BelongsTo(() => EquipmentEntity)
   equipment: EquipmentEntity;
 
-  @HasMany(() => SubUnitEntity)
+  @HasMany(() => SubUnitEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   subUnits: SubUnitEntity[];
 
-  @HasMany(() => DesignDocumentEntity, { as: "unitDocuments" })
+  @HasMany(() => DesignDocumentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    as: "unitDocuments",
+  })
   unitDocuments: DesignDocumentEntity[];
 
-  @HasOne(() => DesignDocumentEntity, { as: "unitQuestionare" })
+  @HasOne(() => DesignDocumentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+    as: "unitQuestionare",
+  })
   unitQuestionare: DesignDocumentEntity;
 
-  @HasMany(() => SummaryListOfEquipmentEntity)
+  @HasMany(() => SummaryListOfEquipmentEntity, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   summaryListOfEquipments: SummaryListOfEquipmentEntity[];
 }
