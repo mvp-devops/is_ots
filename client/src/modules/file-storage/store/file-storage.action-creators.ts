@@ -44,7 +44,6 @@ export const createOneDesignDocument = (
   item: DesignDocumentCreateOrUpdateAttrs
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
-    console.log("FS_AC: ", item);
     try {
       dispatch({ type: ActionTypes.POST_ONE_ITEM });
       const data = await createDesignDocument(

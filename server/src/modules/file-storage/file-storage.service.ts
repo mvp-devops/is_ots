@@ -265,7 +265,6 @@ export class FileStorageService {
     file: any,
     data?: DesignDocumentCreateOrUpdateAttrs
   ): Promise<DesignDocumentView> => {
-    console.log("FS_SERVICE: ", data);
     const document: DesignDocumentCreateOrUpdateAttrs = {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
@@ -1147,10 +1146,8 @@ export class FileStorageService {
   ): Promise<string> => {
     const fileFolder = this.getFilePath(`${folder}/imports`);
 
-    console.log(fileFolder);
     this.createDirectory(`${folder}/imports`);
 
-    // console.log(fileFolder);
     const filePath = this.getPath([
       fileFolder,
       `${fileName}_${setCurrentDate()}.${fileType}`,
@@ -1179,7 +1176,6 @@ export class FileStorageService {
     try {
       const from: string = this.getFilePath(oldPath);
       const to: string = this.getFilePath(newPath);
-      console.log("Paths: ", newPath === oldPath);
       newPath !== oldPath && fse.copy(from, to).then(() => fse.remove(from));
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
