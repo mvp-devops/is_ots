@@ -164,6 +164,12 @@ export class CreateDesignDocumentDto
     description: "Примечание",
   })
   readonly description: string;
+
+  @ApiProperty({
+    example: "Файл",
+    description: "Файл",
+  })
+  readonly file: any;
 }
 
 export class CreateNormativeDto implements NormativeCreateOrUpdateAttrs {

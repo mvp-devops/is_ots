@@ -21,7 +21,7 @@ import { FileStorageService } from "./file-storage.service";
 export class FileStorageController {
   constructor(private readonly service: FileStorageService) {}
 
-  @Post("/add")
+  @Post("/add/design-document")
   @UseInterceptors(FileInterceptor("file"))
   create(
     @Body() dto: CreateDesignDocumentDto,
@@ -61,6 +61,11 @@ export class FileStorageController {
     return this.service.findAllDesignDocuments(parrentTarget, parrentId);
   }
 
+  @Get("/find/design-document/:id")
+  findOneDesignDocument(@Param("id") id: string) {
+    return this.service.findOneDesignDocument(+id);
+  }
+
   // @Get("/find:id")
   // findOne(@Param("id") id: string) {
   //   return this.service.findOne(id);
@@ -76,7 +81,7 @@ export class FileStorageController {
   //   return this.service.update(id, target, dto);
   // }
 
-  @Delete("remove/:id")
+  @Delete("remove/design-document/:id")
   remove(@Param("id") id: string) {
     return this.service.deleteDesignDocument(id);
   }

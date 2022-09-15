@@ -21,7 +21,10 @@ import {
 } from "@ant-design/icons";
 import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
 import { useFileStorageTableData } from "./hooks/useFileStorageTableData";
-import { tableLocale } from "../../../main";
+import { FormActions, tableLocale } from "../../../main";
+import { useFileStorage } from "../../hooks";
+import { DesignDocumentForm } from "../forms";
+import { ModalContainer } from "../../../../components";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -38,6 +41,9 @@ const DesignDocumentTable = () => {
     setCheckedDocuments,
     setFilePath,
   } = useFileStorageTableData();
+
+  const { formVisible, setFormVisible, actionType, setActionType } =
+    useFileStorage();
 
   const columns: TableColumnsType<DesignDocumentView> = [
     {
@@ -213,11 +219,14 @@ const DesignDocumentTable = () => {
                 </Text>
                 <Space>
                   <FileAddOutlined
-                    key="DOCUMENTATION_ADD"
+                    key="ADD_DOCUMENT"
                     className="text-success mb-2"
                     style={{ fontSize: 16, cursor: "pointer" }}
                     title="Добавить документ"
-                    onClick={() => console.log("Добавить документ")}
+                    onClick={() => {
+                      setFormVisible(true);
+                      setActionType(FormActions.ADD_DOCUMENT);
+                    }}
                   />
                   {checkedDesignDocuments.length > 0 && (
                     <DownloadOutlined
@@ -251,6 +260,14 @@ const DesignDocumentTable = () => {
             )}
           />
         </Content>
+      )}
+      {formVisible && (
+        <ModalContainer
+          show={formVisible}
+          onCancel={() => setFormVisible(false)}
+          action={actionType}
+          child={<DesignDocumentForm />}
+        />
       )}
     </Layout>
   );

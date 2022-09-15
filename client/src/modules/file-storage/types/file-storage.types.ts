@@ -43,7 +43,7 @@ interface GetAllItemsAction {
 }
 interface GetAllItemsSuccessAction {
   type: ActionTypes.GET_ALL_ITEMS_SUCCESS;
-  payload: Array<DesignDocumentView>;
+  payload: DesignDocumentView[];
 }
 interface GetAllItemsErrorAction {
   type: ActionTypes.GET_ALL_ITEMS_ERROR;
@@ -54,7 +54,7 @@ interface GetOneItemAction {
 }
 interface GetOneItemSuccessAction {
   type: ActionTypes.GET_ONE_ITEM_SUCCESS;
-  payload: DesignDocumentView[];
+  payload: DesignDocumentView;
 }
 interface GetOneItemErrorAction {
   type: ActionTypes.GET_ONE_ITEM_ERROR;
@@ -76,7 +76,7 @@ interface UpdateOneItemAction {
 }
 interface UpdateOneItemSuccessAction {
   type: ActionTypes.UPDATE_ONE_ITEM_SUCCESS;
-  payload: DesignDocumentView[];
+  payload: DesignDocumentView;
 }
 interface UpdateOneItemErrorAction {
   type: ActionTypes.UPDATE_ONE_ITEM_ERROR;
@@ -87,7 +87,7 @@ interface DeleteOneItemAction {
 }
 interface DeleteOneItemSuccessAction {
   type: ActionTypes.DELETE_ONE_ITEM_SUCCESS;
-  payload: DesignDocumentView[];
+  payload: DesignDocumentView;
 }
 interface DeleteOneItemErrorAction {
   type: ActionTypes.DELETE_ONE_ITEM_ERROR;

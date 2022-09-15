@@ -15,8 +15,8 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   unitId: string | number | null;
   subUnitId: string | number | null;
   supplierId: string | number | null;
-  stageId: string | number;
-  sectionId: string | number;
+  stageId: string | number | null;
+  sectionId: string | number | null;
   uqstId: string | number | null;
   suqstId: string | number | null;
   sloeId: string | number | null;
@@ -29,6 +29,7 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   filePath: string;
   fileName: string;
   fileType: string;
+  file: any;
 }
 
 export interface NormativeCreateOrUpdateAttrs {
@@ -45,10 +46,10 @@ export interface DesignDocumentView {
   id: string;
   projectId: string | number | null;
   projectTitle: string;
-  unitId?: string | number | null;
-  unitTitle?: string;
-  subUnitId?: string | number | null;
-  subUnitTitle?: string;
+  unitId: string | number | null;
+  unitTitle: string;
+  subUnitId: string | number | null;
+  subUnitTitle: string;
   stageId: string | number | null;
   stageTitle: string;
   sectionId: string | number | null;

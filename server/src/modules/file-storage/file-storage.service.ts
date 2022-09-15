@@ -187,13 +187,84 @@ export class FileStorageService {
     }
   };
 
+  renderDesignDocument = (data: DesignDocumentEntity): DesignDocumentView => {
+    const {
+      id,
+      projectId,
+      project,
+      unitId,
+      unit,
+      subUnitId,
+      subUnit,
+      supplierId,
+      supplier,
+      stageId,
+      stage,
+      sectionId,
+      section,
+      code,
+      title,
+      revision,
+      description,
+      filePath,
+      fileName,
+      fileType,
+      createdAt,
+      updatedAt,
+      pdc,
+      udc,
+      sudc,
+      sdc,
+    } = data;
+
+    const documentSection = `${stage.code}/${section.code}`;
+
+    const comments = pdc
+      ? this.commentService.commentRender(pdc, documentSection, code, title)
+      : udc
+      ? this.commentService.commentRender(udc, documentSection, code, title)
+      : sudc
+      ? this.commentService.commentRender(sudc, documentSection, code, title)
+      : sdc
+      ? this.commentService.commentRender(sdc, documentSection, code, title)
+      : [];
+
+    const item: DesignDocumentView = {
+      id: id.toString(),
+      projectId,
+      projectTitle: project ? `${project.code}.${project.title}` : null,
+      unitId: unitId ? unitId : null,
+      unitTitle: unit ? `${unit.title} (${unit.position})` : null,
+      subUnitId: subUnitId ? subUnitId : null,
+      subUnitTitle: subUnit ? `${subUnit.title} (${subUnit.position})` : null,
+      stageId: stageId,
+      stageTitle: stage.code,
+      sectionId: sectionId,
+      sectionTitle: section.code,
+      supplierId: supplierId ? supplierId : null,
+      supplierTitle: supplier ? supplier.title : null,
+      code,
+      title,
+      revision,
+      description,
+      filePath,
+      fileName,
+      fileType,
+      createdAt: formatDate(createdAt),
+      updatedAt: formatDate(updatedAt),
+      comments,
+    };
+
+    return item;
+  };
+
   createDesignDocument = async (
     parrentId: string,
     parrentTarget: string,
     parrentFolderPath: string,
     file: any,
     data?: DesignDocumentCreateOrUpdateAttrs
-  ): Promise<DesignDocumentEntity> => {
+  ): Promise<DesignDocumentView> => {
     const document: DesignDocumentCreateOrUpdateAttrs = {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
@@ -213,6 +284,7 @@ export class FileStorageService {
       filePath: "",
       fileName: "",
       fileType: "",
+      file: data ? data.file : null,
     };
 
     let tkpPath = "";
@@ -323,8 +395,9 @@ export class FileStorageService {
     document.fileType = this.getFileType(file);
 
     const item = await this.designDocumentRepository.create(document);
+    const render = await this.findOneDesignDocument(item.id);
 
-    return item;
+    return render;
   };
 
   deleteDesignDocument = async (id: string): Promise<DesignDocumentEntity> => {
@@ -607,77 +680,151 @@ export class FileStorageService {
     }
 
     for (let i = 0; i < data.length; i++) {
-      const {
-        id,
-        projectId,
-        project,
-        unitId,
-        unit,
-        subUnitId,
-        subUnit,
-        supplierId,
-        supplier,
-        stageId,
-        stage,
-        sectionId,
-        section,
-        code,
-        title,
-        revision,
-        description,
-        filePath,
-        fileName,
-        fileType,
-        createdAt,
-        updatedAt,
-        pdc,
-        udc,
-        sudc,
-        sdc,
-      } = data[i];
-
-      const documentSection = `${stage.code}/${section.code}`;
-
-      const comments = pdc
-        ? this.commentService.commentRender(pdc, documentSection, code, title)
-        : udc
-        ? this.commentService.commentRender(udc, documentSection, code, title)
-        : sudc
-        ? this.commentService.commentRender(sudc, documentSection, code, title)
-        : sdc
-        ? this.commentService.commentRender(sdc, documentSection, code, title)
-        : [];
-
-      const item: DesignDocumentView = {
-        id: id.toString(),
-        projectId,
-        projectTitle: project ? `${project.code}.${project.title}` : null,
-        unitId: unitId ? unitId : null,
-        unitTitle: unit ? `${unit.title} (${unit.position})` : null,
-        subUnitId: subUnitId ? subUnitId : null,
-        subUnitTitle: subUnit ? `${subUnit.title} (${subUnit.position})` : null,
-        stageId: stageId,
-        stageTitle: stage.code,
-        sectionId: sectionId,
-        sectionTitle: section.code,
-        supplierId: supplierId ? supplierId : null,
-        supplierTitle: supplier ? supplier.title : null,
-        code,
-        title,
-        revision,
-        description,
-        filePath,
-        fileName,
-        fileType,
-        createdAt: formatDate(createdAt),
-        updatedAt: formatDate(updatedAt),
-        comments,
-      };
-
+      const item = this.renderDesignDocument(data[i]);
       items.push(item);
     }
-
     return items;
+  };
+
+  findOneDesignDocument = async (id: number): Promise<DesignDocumentView> => {
+    const data = await this.designDocumentRepository.findOne({
+      where: { id },
+      include: [
+        {
+          model: ProjectEntity,
+          as: "project",
+        },
+        {
+          model: UnitEntity,
+          as: "unit",
+        },
+        {
+          model: SubUnitEntity,
+          as: "subUnit",
+        },
+        {
+          model: CounterpartyEntity,
+          as: "supplier",
+        },
+        {
+          model: StageEntity,
+        },
+        {
+          model: SectionEntity,
+        },
+        {
+          model: DesignDocumentCommentEntity,
+          as: "pdc",
+          include: [
+            {
+              model: DesignDocumentSolutionEntity,
+              include: [
+                {
+                  model: UserEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: UserEntity,
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+              ],
+            },
+
+            {
+              model: NormativeEntity,
+            },
+            {
+              model: CriticalityEntity,
+            },
+            {
+              model: DirectionEntity,
+            },
+          ],
+        },
+        {
+          model: DesignDocumentCommentEntity,
+          as: "udc",
+          include: [
+            {
+              model: DesignDocumentSolutionEntity,
+              include: [
+                {
+                  model: UserEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: UserEntity,
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+              ],
+            },
+            {
+              model: NormativeEntity,
+            },
+            {
+              model: CriticalityEntity,
+            },
+            {
+              model: DirectionEntity,
+            },
+          ],
+        },
+        {
+          model: DesignDocumentCommentEntity,
+          as: "sudc",
+          include: [
+            {
+              model: DesignDocumentSolutionEntity,
+              include: [
+                {
+                  model: UserEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: UserEntity,
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+              ],
+            },
+            {
+              model: NormativeEntity,
+            },
+            {
+              model: CriticalityEntity,
+            },
+            {
+              model: DirectionEntity,
+            },
+          ],
+        },
+      ],
+    });
+
+    return this.renderDesignDocument(data);
   };
 
   //   updateDesignDocument = async (
