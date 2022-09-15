@@ -2,7 +2,7 @@ import {
   ActionTypes,
   EssenceAction,
   EssenceState,
-} from "../types/position-tree.types";
+} from "../types/comment-accounting.types";
 
 const initialState: EssenceState = {
   currentItem: null,
@@ -97,9 +97,11 @@ export const commentAccountingReducer = (
 
     case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
       const editedOne = [
-        ...state.renderItems.filter((item) => item.id !== action.payload.id),
+        ...state.renderItems.slice(0, +action.payload.id),
         action.payload,
+        ...state.renderItems.slice(+action.payload.id + 1),
       ];
+
       return {
         ...state,
         loading: false,

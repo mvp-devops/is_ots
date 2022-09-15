@@ -163,6 +163,7 @@ export class CommentAccountingService {
     });
 
     const render: DesignDocumentCommentView = {
+      id: item.id,
       number: item.id,
       documentSection: "",
       documentCode: "",
@@ -453,6 +454,7 @@ export class CommentAccountingService {
 
     for (let i = 0; i < items.length; i++) {
       const renderItem: DesignDocumentCommentView = {
+        id: items[i].id,
         number: items[i].id,
         documentSection: "",
         documentCode: "",

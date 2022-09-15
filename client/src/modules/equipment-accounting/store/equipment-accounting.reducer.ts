@@ -122,16 +122,15 @@ export const equipmentAccountingReducer = (
     case ActionTypes.UPDATE_ONE_ITEM:
       return state;
     case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
-      const updatedArr = [
-        ...state.generalInformationList.filter(
-          (item) => item.id !== action.payload.id
-        ),
+      const editedOne = [
+        ...state.generalInformationList.slice(0, +action.payload.id),
         action.payload,
+        ...state.generalInformationList.slice(+action.payload.id + 1),
       ];
       return {
         ...state,
         loading: false,
-        generalInformationList: updatedArr,
+        generalInformationList: editedOne,
       };
     case ActionTypes.UPDATE_ONE_ITEM_ERROR:
       return {

@@ -42,7 +42,7 @@ export interface DesignDocumentCommentCreationAttrs {
 }
 
 export interface DesignDocumentCommentView {
-  id?: number | string;
+  id: number | string;
   number: number | string;
   documentSection: string; // марка/раздел документации
   documentCode: string;

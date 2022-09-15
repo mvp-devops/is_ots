@@ -120,14 +120,11 @@ export const positionTreeReducer = (
 
     case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
       const editedOne = [
-        ...state.renderItems.slice(0, +action.payload.id - 1),
+        ...state.renderItems.slice(0, +action.payload.id),
         action.payload,
         ...state.renderItems.slice(+action.payload.id + 1),
       ];
-      // const editedOne = [
-      //   ...state.renderItems.filter((item) => item.id !== action.payload.id),
-      //   action.payload,
-      // ];
+
       return {
         ...state,
         loading: false,

@@ -1,4 +1,4 @@
-import { ActionTypes, EssenceAction } from "./position-tree.types";
+import { ActionTypes, EssenceAction } from "./comment-accounting.types";
 
 export type { EssenceAction };
 export { ActionTypes };

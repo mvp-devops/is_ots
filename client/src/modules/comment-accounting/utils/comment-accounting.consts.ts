@@ -296,6 +296,7 @@ export const commentAccountingRequestData: DesignDocumentCommentRequestData = {
   subUnitQuestionareTitle: "sub-unit questionare",
   view: [
     {
+      id: 1,
       number: 1,
       documentSection: "satge/section",
       documentCode: "document code",
@@ -326,6 +327,7 @@ export const commentAccountingRequestData: DesignDocumentCommentRequestData = {
       ],
     },
     {
+      id: 2,
       number: 2,
       documentSection: "satge/section",
       documentCode: "document code",
@@ -356,6 +358,7 @@ export const commentAccountingRequestData: DesignDocumentCommentRequestData = {
       ],
     },
     {
+      id: 3,
       number: 3,
       documentSection: "satge/section",
       documentCode: "document code",
