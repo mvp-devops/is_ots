@@ -97,8 +97,8 @@ export class FacilityEntity extends Model<
   modifications: string[];
 
   @HasMany(() => SummaryListOfEquipmentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   summaryListOfEquipments: SummaryListOfEquipmentEntity[];
 }

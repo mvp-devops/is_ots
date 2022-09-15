@@ -281,8 +281,8 @@ export class DesignDocumentEntity extends Model<
   functionalDiagram: MonitoringEntity;
 
   @HasMany(() => DesignDocumentCommentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
 
     as: "pdc",
     foreignKey: "pdcId",
@@ -290,24 +290,24 @@ export class DesignDocumentEntity extends Model<
   pdc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
     as: "udc",
     foreignKey: "udcId",
   })
   udc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
     as: "sudc",
     foreignKey: "sudcId",
   })
   sudc: DesignDocumentCommentEntity[];
 
   @HasMany(() => DesignDocumentCommentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
     as: "sdc",
     foreignKey: "sdcId",
   })

@@ -103,7 +103,7 @@ export const usePositionTreeTable = () => {
       }
     }
     setSearchValue("");
-  }, [currentItem, target, formVisible]);
+  }, [target]);
 
   useEffect(() => setDataSource(renderItems), [renderItems]);
 

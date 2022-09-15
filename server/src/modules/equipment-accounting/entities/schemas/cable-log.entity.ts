@@ -133,8 +133,8 @@ export class CableLogEntity extends Model<
   sloe: SummaryListOfEquipmentEntity;
 
   @HasOne(() => DesignDocumentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   wiringDiagram: DesignDocumentEntity;
 }

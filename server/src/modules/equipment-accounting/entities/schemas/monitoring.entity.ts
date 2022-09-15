@@ -134,14 +134,14 @@ export class MonitoringEntity extends Model<
   sloe: SummaryListOfEquipmentEntity;
 
   @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   comments: CapitalConstructionUnitSupervisionCommentEntity;
 
   @HasOne(() => DesignDocumentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   functionalDiagram: DesignDocumentEntity;
 }

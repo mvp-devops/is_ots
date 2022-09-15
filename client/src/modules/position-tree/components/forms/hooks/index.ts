@@ -195,8 +195,8 @@ export const usePositionTreeForm = () => {
   };
 
   useEffect(() => {
-    console.log("actionType: ", actionType);
-  }, [actionType]);
+    console.log("posy: ", editRow);
+  }, [editRow]);
 
   return {
     // loading,

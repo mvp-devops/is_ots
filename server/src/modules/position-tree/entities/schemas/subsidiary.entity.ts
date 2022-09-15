@@ -59,20 +59,20 @@ export class SubsidiaryEntity extends Model<
   description: string;
 
   @HasMany(() => FieldEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   fields: FieldEntity[];
 
   @HasOne(() => LogoEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   file: LogoEntity;
 
   @HasMany(() => UserEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   users: UserEntity[];
 }

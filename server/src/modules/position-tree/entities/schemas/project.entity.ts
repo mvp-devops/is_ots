@@ -100,14 +100,14 @@ export class ProjectEntity extends Model<
   design: DesignEntity;
 
   @HasMany(() => UnitEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
   })
   units: UnitEntity[];
 
   @HasMany(() => DesignDocumentEntity, {
-    onUpdate: "CASCADE",
-    onDelete: "SET NULL",
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
     as: "projectDocuments",
   })
   projectDocuments: DesignDocumentEntity[];

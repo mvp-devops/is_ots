@@ -24,41 +24,28 @@ const setFormData = (item: PositionTreeCreateOrUpdateAttrs): FormData => {
 
   "subsidiaryId" in item &&
     item.subsidiaryId &&
-    typeof item.subsidiaryId === "string" &&
-    data.append("subsidiaryId", item.subsidiaryId);
+    data.append("subsidiaryId", item.subsidiaryId.toString());
   "fieldId" in item &&
     item.fieldId &&
-    typeof item.fieldId === "string" &&
-    data.append("fieldId", item.fieldId);
+    data.append("fieldId", item.fieldId.toString());
   "designId" in item &&
     item.designId &&
-    typeof item.designId === "string" &&
-    data.append("designId", item.designId);
-  "contract" in item &&
-    item.contract &&
-    typeof item.contract === "string" &&
-    data.append("contract", item.contract);
+    data.append("designId", item.designId.toString());
+  "contract" in item && item.contract && data.append("contract", item.contract);
   "projectId" in item &&
     item.projectId &&
-    typeof item.projectId === "string" &&
-    data.append("projectId", item.projectId);
+    data.append("projectId", item.projectId.toString());
   "equipmentId" in item &&
     item.equipmentId &&
-    typeof item.equipmentId === "string" &&
-    data.append("equipmentId", item.equipmentId);
+    data.append("equipmentId", item.equipmentId.toString());
   "supplierId" in item &&
     item.supplierId &&
-    typeof item.supplierId === "string" &&
-    data.append("supplierId", item.supplierId);
+    data.append("supplierId", item.supplierId.toString());
 
-  "position" in item &&
-    item.position &&
-    typeof item.position === "string" &&
-    data.append("position", item.position);
+  "position" in item && item.position && data.append("position", item.position);
   "unitId" in item &&
     item.unitId &&
-    typeof item.unitId === "string" &&
-    data.append("unitId", item.unitId);
+    data.append("unitId", item.unitId.toString());
 
   return data;
 };
