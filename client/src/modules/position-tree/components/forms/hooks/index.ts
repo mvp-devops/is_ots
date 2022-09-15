@@ -75,13 +75,23 @@ export const usePositionTreeForm = () => {
         break;
       }
 
+      case FormActions.REMOVE: {
+        setFormTarget(target);
+        break;
+      }
+
+      case FormActions.REMOVE_CHILD: {
+        setFormTarget(childTarget);
+        break;
+      }
+
       default:
         break;
     }
   }, [actionType]);
 
   useEffect(() => {
-    switch (childTarget) {
+    switch (formTarget) {
       case "field": {
         getParrentsList("subsidiary").then((data) => setParrentsList(data));
 
@@ -110,7 +120,7 @@ export const usePositionTreeForm = () => {
       default:
         break;
     }
-  }, [childTarget]);
+  }, [formTarget]);
 
   //Обновление данных полей формы
   const onHandlerChange = (

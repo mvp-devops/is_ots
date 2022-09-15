@@ -53,6 +53,12 @@ export class PositionTreeController {
     return this.service.findOne(target, id);
   }
 
+  @Get("/find/folder/:id")
+  getFolderPath(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.getItemFolderPath(target, id);
+  }
+
   @Get("/tree")
   getPositionTree() {
     return this.service.getPositionTree();

@@ -18,62 +18,28 @@ const setFormData = (item: DesignDocumentCreateOrUpdateAttrs): FormData => {
 
   item.description && data.append("description", item.description);
 
-  "file" in item && item.file && data.append("file", item.file);
+  item.file && data.append("file", item.file);
 
-  "projectId" in item &&
-    item.projectId &&
-    typeof item.projectId === "string" &&
-    data.append("projectId", item.projectId);
+  item.projectId && data.append("projectId", item.projectId.toString());
 
-  "unitId" in item &&
-    item.unitId &&
-    typeof item.unitId === "string" &&
-    data.append("unitId", item.unitId);
+  item.unitId && data.append("unitId", item.unitId.toString());
 
-  "subUnitId" in item &&
-    item.subUnitId &&
-    typeof item.subUnitId === "string" &&
-    data.append("subUnitId", item.subUnitId);
+  item.subUnitId && data.append("subUnitId", item.subUnitId.toString());
 
-  "supplierId" in item &&
-    item.supplierId &&
-    typeof item.supplierId === "string" &&
-    data.append("supplierId", item.supplierId);
+  item.supplierId && data.append("supplierId", item.supplierId.toString());
 
-  "stageId" in item &&
-    item.stageId &&
-    typeof item.stageId === "string" &&
-    data.append("stageId", item.stageId);
+  item.stageId && data.append("stageId", item.stageId.toString());
 
-  "sectionId" in item &&
-    item.sectionId &&
-    typeof item.sectionId === "string" &&
-    data.append("sectionId", item.sectionId);
+  item.sectionId && data.append("sectionId", item.sectionId.toString());
 
-  "sectionId" in item &&
-    item.sectionId &&
-    typeof item.sectionId === "string" &&
-    data.append("sectionId", item.sectionId);
+  item.uqstId && data.append("uqstId", item.uqstId.toString());
 
-  "uqstId" in item &&
-    item.uqstId &&
-    typeof item.uqstId === "string" &&
-    data.append("uqstId", item.uqstId);
+  item.suqstId && data.append("suqstId", item.suqstId.toString());
 
-  "suqstId" in item &&
-    item.suqstId &&
-    typeof item.suqstId === "string" &&
-    data.append("suqstId", item.suqstId);
+  item.cableLogId && data.append("cableLogId", item.cableLogId.toString());
 
-  "cableLogId" in item &&
-    item.cableLogId &&
-    typeof item.cableLogId === "string" &&
-    data.append("cableLogId", item.cableLogId);
-
-  "monitoringId" in item &&
-    item.monitoringId &&
-    typeof item.monitoringId === "string" &&
-    data.append("monitoringId", item.monitoringId);
+  item.monitoringId &&
+    data.append("monitoringId", item.monitoringId.toString());
 
   return data;
 };

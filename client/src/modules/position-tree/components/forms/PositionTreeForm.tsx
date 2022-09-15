@@ -1,7 +1,11 @@
 import { Button, Divider, Form, Select, Space, Typography, Upload } from "antd";
 
 import { UploadOutlined, InfoCircleOutlined } from "@ant-design/icons";
-import { InputUIComponent, SelectUIComponent } from "../../../../components";
+import {
+  DeleteForm,
+  InputUIComponent,
+  SelectUIComponent,
+} from "../../../../components";
 import { FormActions } from "../../../main";
 import { usePositionTreeForm } from "./hooks";
 
@@ -129,7 +133,14 @@ const PositionTreeForm = () => {
   );
 
   const fileItem = editRow && "file" in editRow && (
-    <Item label={<Text type="secondary">Опросный лист</Text>} className="m-0">
+    <Item
+      label={
+        <Text type="secondary">
+          {formTarget === "subsidiary" ? "Логотип" : "Опросный лист"}
+        </Text>
+      }
+      className="m-0"
+    >
       <Upload
         className="mb-1"
         onRemove={(file) => {
@@ -227,17 +238,18 @@ const PositionTreeForm = () => {
     </Form>
   );
 
-  const renderDelete = (
-    <Space className="d-flex justify-content-start ">
-      <InfoCircleOutlined
-        style={{ fontSize: 30 }}
-        className="text-warning me-3"
-      />
-      <Text type="secondary">
-        Удаление записи приведет к удалению всех дочерних записей
-      </Text>
-    </Space>
-  );
+  const deleteMessage =
+    formTarget === "subsidiary"
+      ? "Удаление ДО/СП приведет к удалению месторождений"
+      : formTarget === "field"
+      ? "Удаление месторождения приведет к удалению проектов"
+      : formTarget === "project"
+      ? "Удаление проекта приведет к удалению сводного перечня оборудования, объектов, документации"
+      : formTarget === "unit"
+      ? "Удаление объекта приведет к удалению сводного перечня оборудования, установок/объектов и документации"
+      : "Удаление установки/объекта приведет к удалению сводного перечня оборудования данной установки/объекта";
+
+  const renderDelete = <DeleteForm message={deleteMessage} />;
 
   const render =
     actionType === FormActions.EDIT ||

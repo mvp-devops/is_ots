@@ -183,3 +183,16 @@ export const getCheckList = async (
 
   return data;
 };
+
+export const getFolderPath = async (
+  target: string,
+  id: string
+): Promise<string> => {
+  const url = setUrl(`${baseUrl}/find/folder/${id}`);
+
+  const { data } = await axios.get<string>(url, {
+    params: { target },
+  });
+
+  return data;
+};

@@ -16,6 +16,7 @@ export interface EssenceState {
   checkedItems: PositionTreeView[];
   target: string;
   childTarget: string;
+  currentItemFolderPath: string;
 }
 
 export enum ActionTypes {
@@ -48,6 +49,7 @@ export enum ActionTypes {
   SET_POSITION_TREE_ITEMS = "SET_POSITION_TREE_ITEMS",
   SET_TARGET = "SET_TARGET",
   SET_CHILD_TARGET = "SET_CHILD_TARGET",
+  SET_CURRENT_ITEM_FOLDER_PATH = "SET_CURRENT_ITEM_FOLDER_PATH",
 }
 
 interface GetMenuItemsAction {
@@ -186,6 +188,11 @@ interface SetChildTargetAction {
   payload: string;
 }
 
+interface SetCurrentItemFolderPathAction {
+  type: ActionTypes.SET_CURRENT_ITEM_FOLDER_PATH;
+  payload: string;
+}
+
 export type EssenceAction =
   | GetMenuItemsAction
   | GetMenuItemsSuccessAction
@@ -215,4 +222,5 @@ export type EssenceAction =
   | SetPositionTreeItem
   | SetPositionTreeItems
   | SetTargetAction
-  | SetChildTargetAction;
+  | SetChildTargetAction
+  | SetCurrentItemFolderPathAction;

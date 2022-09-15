@@ -45,6 +45,12 @@ const DesignDocumentTable = () => {
   const { formVisible, setFormVisible, actionType, setActionType } =
     useFileStorage();
 
+  const renderFormFlag =
+    formVisible &&
+    (actionType === FormActions.ADD_DOCUMENT ||
+      actionType === FormActions.REMOVE_DOCUMENT ||
+      actionType === FormActions.EDIT_DOCUMENT);
+
   const columns: TableColumnsType<DesignDocumentView> = [
     {
       title: "№ п/п",
@@ -158,12 +164,18 @@ const DesignDocumentTable = () => {
           <EditOutlined
             title="Редактировать информацию"
             className="text-secondary"
-            onClick={() => console.log("Edit")}
+            onClick={() => {
+              setActionType(FormActions.EDIT_DOCUMENT);
+              setFormVisible(true);
+            }}
           />
           <DeleteOutlined
             title="Удалить документ"
             className="text-danger"
-            onClick={() => {}}
+            onClick={() => {
+              setActionType(FormActions.REMOVE_DOCUMENT);
+              setFormVisible(true);
+            }}
           />
         </Space>
       ),
@@ -224,8 +236,8 @@ const DesignDocumentTable = () => {
                     style={{ fontSize: 16, cursor: "pointer" }}
                     title="Добавить документ"
                     onClick={() => {
-                      setFormVisible(true);
                       setActionType(FormActions.ADD_DOCUMENT);
+                      setFormVisible(true);
                     }}
                   />
                   {checkedDesignDocuments.length > 0 && (
@@ -261,7 +273,7 @@ const DesignDocumentTable = () => {
           />
         </Content>
       )}
-      {formVisible && (
+      {renderFormFlag && (
         <ModalContainer
           show={formVisible}
           onCancel={() => setFormVisible(false)}

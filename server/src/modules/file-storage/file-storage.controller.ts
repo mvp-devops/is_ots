@@ -34,6 +34,7 @@ export class FileStorageController {
     @UploadedFile() file?: any
   ) {
     const { parrentId, parrentTarget, parrentFolderPath } = query;
+
     return this.service.createDesignDocument(
       parrentId,
       parrentTarget,

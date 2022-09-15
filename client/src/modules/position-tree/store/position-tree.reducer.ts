@@ -16,6 +16,7 @@ const initialState: EssenceState = {
   loading: true,
   target: "",
   childTarget: "",
+  currentItemFolderPath: "",
 };
 
 export const positionTreeReducer = (
@@ -203,6 +204,13 @@ export const positionTreeReducer = (
         ...state,
 
         childTarget: action.payload,
+      };
+
+    case ActionTypes.SET_CURRENT_ITEM_FOLDER_PATH:
+      return {
+        ...state,
+
+        currentItemFolderPath: action.payload,
       };
 
     default:

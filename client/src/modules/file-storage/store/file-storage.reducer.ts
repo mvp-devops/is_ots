@@ -47,21 +47,21 @@ export const fileStorageReducer = (
     //     loading: false,
     //     error: action.payload,
     //   };
-    //   case ActionTypes.POST_ONE_ITEM:
-    //     return state;
-    //   case ActionTypes.POST_ONE_ITEM_SUCCESS:
-    //     const newArr = [...state.render, action.payload];
-    //     return {
-    //       ...state,
+    case ActionTypes.POST_ONE_ITEM:
+      return state;
+    case ActionTypes.POST_ONE_ITEM_SUCCESS:
+      const newArr = [...state.designDocuments, action.payload];
+      return {
+        ...state,
 
-    //       render: newArr,
-    //     };
-    //   case ActionTypes.POST_ONE_ITEM_ERROR:
-    //     return {
-    //       ...state,
-    //       loading: false,
-    //       error: action.payload,
-    //     };
+        designDocuments: newArr,
+      };
+    case ActionTypes.POST_ONE_ITEM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
 
     case ActionTypes.SET_CURRENT_DOCUMENT:
       return {

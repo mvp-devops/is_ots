@@ -45,6 +45,17 @@ const ItemPage: FC<ItemPageProps> = () => {
     loading,
   } = useItemPage();
 
+  // const renderCheckListForm =  formVisible && currentItem && actionType === FormActions.CHECKLIST &&  (
+  //   <ModalContainer
+  //     show={formVisible}
+  //     onCancel={() => setFormVisible(false)}
+  //     action={actionType}
+  //     child={
+  //         <CheckListForm />
+  //     }
+  //   />
+  // )}
+
   return (
     <Layout style={{ padding: 0 }}>
       <Content style={{ padding: "0 10px" }}>
@@ -95,7 +106,7 @@ const ItemPage: FC<ItemPageProps> = () => {
           child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
         />
       )}
-      {formVisible && currentItem && (
+      {/* {formVisible && currentItem && (
         <ModalContainer
           show={formVisible}
           onCancel={() => setFormVisible(false)}
@@ -110,7 +121,7 @@ const ItemPage: FC<ItemPageProps> = () => {
             )
           }
         />
-      )}
+      )} */}
 
       {loading ? (
         <Spin size="large" />

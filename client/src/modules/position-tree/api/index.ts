@@ -7,6 +7,7 @@ import {
   updateOneEssence,
   deleteOneEssence,
   getCheckList,
+  getFolderPath,
 } from "./position-tree.api";
 
 export {
@@ -18,4 +19,5 @@ export {
   updateOneEssence,
   deleteOneEssence,
   getCheckList,
+  getFolderPath,
 };

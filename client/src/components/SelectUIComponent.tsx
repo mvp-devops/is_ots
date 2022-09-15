@@ -59,11 +59,13 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
       }
       onChange={(value: string) => changeValue(id, value)}
     >
-      {items.map((item) => (
-        <Option key={item.id} value={item.value ? item.value : item.id}>
-          {item.title}
-        </Option>
-      ))}
+      {items
+        .sort((a, b) => (a.title < b.title ? -1 : 0))
+        .map((item) => (
+          <Option key={item.id} value={item.value ? item.value : item.id}>
+            {item.title}
+          </Option>
+        ))}
     </Select>
   );
 };

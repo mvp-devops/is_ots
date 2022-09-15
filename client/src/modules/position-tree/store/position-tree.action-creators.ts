@@ -15,6 +15,7 @@ import {
   updateOneEssence,
   deleteOneEssence,
   getCheckList,
+  getFolderPath,
 } from "../api";
 import { ActionTypes, EssenceAction } from "../types";
 
@@ -58,14 +59,14 @@ export const createPositionTreeItem = (
         message: "ОК",
         description: "Данные успешно добавлены",
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_ERROR,
         payload: "Ошибка отправки данных",
       });
       notification["error"]({
         message: "Ошибка",
-        description: "Ошибка отправки данных",
+        description: error.message,
       });
     }
   };
@@ -87,14 +88,14 @@ export const createManyPositionTreeItems = (
         message: "ОК",
         description: "Данные успешно добавлены",
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: ActionTypes.POST_MANY_ITEMS_ERROR,
         payload: "Ошибка отправки данных",
       });
       notification["error"]({
         message: "Ошибка",
-        description: "Ошибка отправки данных",
+        description: error.message,
       });
     }
   };
@@ -117,14 +118,14 @@ export const updatePositionTreeItem = (
         message: "ОК",
         description: "Данные успешно обновлены",
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: ActionTypes.UPDATE_ONE_ITEM_ERROR,
         payload: "Ошибка обновления данных",
       });
       notification["error"]({
         message: "Ошибка",
-        description: "Ошибка обновления данных",
+        description: error.message,
       });
     }
   };
@@ -143,14 +144,14 @@ export const deletePositionTreeItem = (target: string, id: string) => {
         message: "ОК",
         description: "Данные успешно удалены",
       });
-    } catch (error) {
+    } catch (error: any) {
       dispatch({
         type: ActionTypes.DELETE_ONE_ITEM_ERROR,
         payload: "Ошибка удаления данных",
       });
       notification["error"]({
         message: "Ошибка",
-        description: "Ошибка удаления данных",
+        description: error,
       });
     }
   };
@@ -246,5 +247,22 @@ export const setChildTarget = (childTarget: string) => {
   return {
     type: ActionTypes.SET_CHILD_TARGET,
     payload: childTarget,
+  };
+};
+
+export const setFolderPath = (target: string, id: string) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      const data = await getFolderPath(target, id);
+      dispatch({
+        type: ActionTypes.SET_CURRENT_ITEM_FOLDER_PATH,
+        payload: data,
+      });
+    } catch (error: any) {
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+      });
+    }
   };
 };

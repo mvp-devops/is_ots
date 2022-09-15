@@ -3,6 +3,7 @@ import { useFileStorageForm } from "./hooks";
 import {
   DeleteForm,
   InputUIComponent,
+  SelectUIComponent,
   UploadUIComponent,
 } from "../../../../components";
 import { FormActions } from "../../../main";
@@ -14,6 +15,9 @@ const DesignDocumentForm = () => {
   const {
     editRow,
     onHandlerChange,
+    stagesList,
+    sectionsList,
+    suppliersList,
     actionType,
     setFormVisible,
     addNewItem,
@@ -28,6 +32,39 @@ const DesignDocumentForm = () => {
     </Item>
   );
 
+  const stageItem = editRow && "stageId" in editRow && (
+    <Item label={<Text type="secondary">Стадия</Text>} className="m-0">
+      <SelectUIComponent
+        id="stageId"
+        defaultValue={(editRow.stageId as string) || "Выбрать"}
+        changeValue={onHandlerChange}
+        items={stagesList}
+      />
+    </Item>
+  );
+
+  const sectionItem = editRow && "sectionId" in editRow && (
+    <Item label={<Text type="secondary">Марка/раздел</Text>} className="m-0">
+      <SelectUIComponent
+        id="sectionId"
+        defaultValue={(editRow.sectionId as string) || "Выбрать"}
+        changeValue={onHandlerChange}
+        items={sectionsList}
+      />
+    </Item>
+  );
+
+  const supplierItem = editRow && "supplierId" in editRow && (
+    <Item label={<Text type="secondary">Поставщик</Text>} className="m-0">
+      <SelectUIComponent
+        id="supplierId"
+        defaultValue={(editRow.supplierId as string) || "Выбрать"}
+        changeValue={onHandlerChange}
+        items={suppliersList}
+      />
+    </Item>
+  );
+
   const renderForm = (
     <Form
       labelCol={{ span: 8 }}
@@ -37,6 +74,9 @@ const DesignDocumentForm = () => {
     >
       {editRow && (
         <>
+          {stageItem}
+          {sectionItem}
+          {editRow && editRow.stageId === 5 && supplierItem}
           <Item label={<Text type="secondary">Шифр</Text>} className="m-0">
             <InputUIComponent
               value={editRow.code}
@@ -57,7 +97,7 @@ const DesignDocumentForm = () => {
           <Item label={<Text type="secondary">Ревизия</Text>} className="m-0">
             <InputUIComponent
               value={editRow.revision}
-              id="description"
+              id="revision"
               changeValue={onHandlerChange}
             />
           </Item>

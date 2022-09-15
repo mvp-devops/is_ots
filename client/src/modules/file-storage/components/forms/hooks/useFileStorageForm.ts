@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RcFile } from "antd/lib/upload";
 import { DesignDocumentCreateOrUpdateAttrs } from "../../../../../../../server/common/types/file-storage";
 import { useActions } from "../../../../../hooks";
@@ -6,25 +6,15 @@ import { useFileStorage } from "../../..";
 import { usePositionTree } from "../../../../position-tree";
 import { notification } from "antd";
 import { FormActions } from "../../../../main";
+import { initData } from "../form.settings";
+import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
+import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 
 export const useFileStorageForm = () => {
-  const {
-    loading,
-    error,
-    page,
-    limit,
-    formVisible,
-    setFormVisible,
-    actionType,
-    setActionType,
-    designDocuments,
-    checkedDesignDocuments,
-    setCheckedDocuments,
-    currentDesignDocument,
-    setCurrentDocument,
-  } = useFileStorage();
+  const { setFormVisible, actionType, currentDesignDocument } =
+    useFileStorage();
 
-  const { target, currentItem } = usePositionTree();
+  const { target, currentItem, currentItemFolderPath } = usePositionTree();
 
   const {
     createOneDesignDocument,
@@ -33,8 +23,72 @@ export const useFileStorageForm = () => {
     deleteOneDesignDocument,
   } = useActions();
 
+  const { getAllItems: getNSIList } = useRegulatoryReferenceInformation();
+
   const [editRow, setEditRow] =
     useState<DesignDocumentCreateOrUpdateAttrs | null>(null);
+  const [stagesList, setStagesList] = useState<NSIView[]>([]);
+  const [sectionsList, setSectionsList] = useState<NSIView[]>([]);
+  const [suppliersList, setSuppliersList] = useState<NSIView[]>([]);
+
+  useEffect(() => {
+    if (currentItem) {
+      switch (actionType) {
+        case FormActions.ADD_DOCUMENT: {
+          setEditRow(
+            initData("design-document", undefined, target, currentItem.id)
+          );
+          getNSIList("stage").then((data) => {
+            switch (target) {
+              case "project": {
+                setStagesList(data.slice(0, 4));
+                break;
+              }
+              case "unit":
+              case "sub-unit": {
+                setStagesList([...data.slice(4, 8), ...data.slice(10)]);
+                break;
+              }
+              default:
+                break;
+            }
+          });
+          getNSIList("section").then((data) => setSectionsList(data));
+          break;
+        }
+        case FormActions.EDIT_DOCUMENT: {
+          currentDesignDocument &&
+            setEditRow(initData("design-document", currentDesignDocument));
+          getNSIList("stage").then((data) => {
+            switch (target) {
+              case "project": {
+                setStagesList(data.slice(0, 4));
+                break;
+              }
+              case "unit":
+              case "sub-unit": {
+                setStagesList([...data.slice(4, 8), ...data.slice(10)]);
+                break;
+              }
+              default:
+                break;
+            }
+          });
+          getNSIList("section").then((data) => setSectionsList(data));
+          break;
+        }
+
+        default:
+          break;
+      }
+    }
+  }, [actionType]);
+
+  useEffect(() => {
+    editRow &&
+      editRow.stageId &&
+      getNSIList("counterparty").then((data) => setSuppliersList(data));
+  }, [editRow?.stageId]);
 
   //Обновление данных полей формы
   const onHandlerChange = (
@@ -52,14 +106,14 @@ export const useFileStorageForm = () => {
   const addNewItem = () => {
     editRow && currentItem
       ? createOneDesignDocument(
-          currentItem?.id,
+          currentItem.id,
           target,
-          "parrentFolderPath",
+          currentItemFolderPath,
           editRow
         )
       : notification["error"]({
-          message: "Ошибка добавления записи!",
-          description: "Несоответствие типов actions",
+          message: "Ошибка добавления документа!",
+          description: "Проверьте форму отправки данных",
         });
   };
 
@@ -75,6 +129,8 @@ export const useFileStorageForm = () => {
     currentDesignDocument && deleteOneDesignDocument(currentDesignDocument.id);
   };
 
+  useEffect(() => console.log("EdirDocument: ", editRow), [editRow]);
+
   return {
     actionType,
     editRow,
@@ -84,5 +140,8 @@ export const useFileStorageForm = () => {
     deleteItem,
     updateItem,
     setFormVisible,
+    stagesList,
+    sectionsList,
+    suppliersList,
   };
 };

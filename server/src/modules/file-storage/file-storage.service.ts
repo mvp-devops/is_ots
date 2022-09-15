@@ -265,6 +265,7 @@ export class FileStorageService {
     file: any,
     data?: DesignDocumentCreateOrUpdateAttrs
   ): Promise<DesignDocumentView> => {
+    console.log("FS_SERVICE: ", data);
     const document: DesignDocumentCreateOrUpdateAttrs = {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
@@ -442,389 +443,403 @@ export class FileStorageService {
     let data: DesignDocumentEntity[] = [];
     let items: DesignDocumentView[] = [];
 
-    switch (parrentTarget) {
-      case "project": {
-        data = await this.designDocumentRepository.findAll({
-          where: { projectId: parrentId },
-          include: [
-            {
-              model: ProjectEntity,
-              as: "project",
-            },
-            {
-              model: StageEntity,
-            },
-            {
-              model: SectionEntity,
-            },
-            {
-              model: DesignDocumentCommentEntity,
-              as: "pdc",
-              include: [
-                {
-                  model: DesignDocumentSolutionEntity,
-                  include: [
-                    {
-                      model: UserEntity,
-                      include: [
-                        {
-                          model: SubsidiaryEntity,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-                {
-                  model: NormativeEntity,
-                },
-                {
-                  model: CriticalityEntity,
-                },
-                {
-                  model: DirectionEntity,
-                },
-              ],
-            },
-          ],
-        });
-        break;
+    try {
+      switch (parrentTarget) {
+        case "project": {
+          data = await this.designDocumentRepository.findAll({
+            where: { projectId: parrentId },
+            include: [
+              {
+                model: ProjectEntity,
+                as: "project",
+              },
+              {
+                model: StageEntity,
+              },
+              {
+                model: SectionEntity,
+              },
+              {
+                model: DesignDocumentCommentEntity,
+                as: "pdc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                    include: [
+                      {
+                        model: UserEntity,
+                        include: [
+                          {
+                            model: SubsidiaryEntity,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                  {
+                    model: NormativeEntity,
+                  },
+                  {
+                    model: CriticalityEntity,
+                  },
+                  {
+                    model: DirectionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "unit": {
+          data = await this.designDocumentRepository.findAll({
+            where: { unitId: parrentId },
+            include: [
+              {
+                model: UnitEntity,
+                as: "unit",
+              },
+              {
+                model: CounterpartyEntity,
+                as: "supplier",
+              },
+              {
+                model: StageEntity,
+              },
+              {
+                model: SectionEntity,
+              },
+              {
+                model: DesignDocumentCommentEntity,
+                as: "udc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                    include: [
+                      {
+                        model: UserEntity,
+                        include: [
+                          {
+                            model: SubsidiaryEntity,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                  {
+                    model: NormativeEntity,
+                  },
+                  {
+                    model: CriticalityEntity,
+                  },
+                  {
+                    model: DirectionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "sub-unit": {
+          data = await this.designDocumentRepository.findAll({
+            where: { subUnitId: parrentId },
+            include: [
+              {
+                model: SubUnitEntity,
+                as: "subUnit",
+              },
+              {
+                model: CounterpartyEntity,
+                as: "supplier",
+              },
+              {
+                model: StageEntity,
+              },
+              {
+                model: SectionEntity,
+              },
+              {
+                model: DesignDocumentCommentEntity,
+                as: "sudc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                    include: [
+                      {
+                        model: UserEntity,
+                        include: [
+                          {
+                            model: SubsidiaryEntity,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                  {
+                    model: NormativeEntity,
+                  },
+                  {
+                    model: CriticalityEntity,
+                  },
+                  {
+                    model: DirectionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "supplier": {
+          data = await this.designDocumentRepository.findAll({
+            where: { supplierId: parrentId },
+            include: [
+              {
+                model: UnitEntity,
+                as: "unit",
+              },
+              {
+                model: SubUnitEntity,
+                as: "subUnit",
+              },
+              {
+                model: CounterpartyEntity,
+                as: "supplier",
+              },
+              {
+                model: StageEntity,
+              },
+              {
+                model: SectionEntity,
+              },
+              {
+                model: DesignDocumentCommentEntity,
+                as: "sudc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                    include: [
+                      {
+                        model: UserEntity,
+                        include: [
+                          {
+                            model: SubsidiaryEntity,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                  {
+                    model: NormativeEntity,
+                  },
+                  {
+                    model: CriticalityEntity,
+                  },
+                  {
+                    model: DirectionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        default:
+          break;
       }
-      case "unit": {
-        data = await this.designDocumentRepository.findAll({
-          where: { unitId: parrentId },
-          include: [
-            {
-              model: UnitEntity,
-              as: "unit",
-            },
-            {
-              model: CounterpartyEntity,
-              as: "supplier",
-            },
-            {
-              model: StageEntity,
-            },
-            {
-              model: SectionEntity,
-            },
-            {
-              model: DesignDocumentCommentEntity,
-              as: "udc",
-              include: [
-                {
-                  model: DesignDocumentSolutionEntity,
-                  include: [
-                    {
-                      model: UserEntity,
-                      include: [
-                        {
-                          model: SubsidiaryEntity,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-                {
-                  model: NormativeEntity,
-                },
-                {
-                  model: CriticalityEntity,
-                },
-                {
-                  model: DirectionEntity,
-                },
-              ],
-            },
-          ],
-        });
-        break;
+
+      for (let i = 0; i < data.length; i++) {
+        const item = this.renderDesignDocument(data[i]);
+        items.push(item);
       }
-      case "sub-unit": {
-        data = await this.designDocumentRepository.findAll({
-          where: { subUnitId: parrentId },
-          include: [
-            {
-              model: SubUnitEntity,
-              as: "subUnit",
-            },
-            {
-              model: CounterpartyEntity,
-              as: "supplier",
-            },
-            {
-              model: StageEntity,
-            },
-            {
-              model: SectionEntity,
-            },
-            {
-              model: DesignDocumentCommentEntity,
-              as: "sudc",
-              include: [
-                {
-                  model: DesignDocumentSolutionEntity,
-                  include: [
-                    {
-                      model: UserEntity,
-                      include: [
-                        {
-                          model: SubsidiaryEntity,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-                {
-                  model: NormativeEntity,
-                },
-                {
-                  model: CriticalityEntity,
-                },
-                {
-                  model: DirectionEntity,
-                },
-              ],
-            },
-          ],
-        });
-        break;
-      }
-      case "supplier": {
-        data = await this.designDocumentRepository.findAll({
-          where: { supplierId: parrentId },
-          include: [
-            {
-              model: UnitEntity,
-              as: "unit",
-            },
-            {
-              model: SubUnitEntity,
-              as: "subUnit",
-            },
-            {
-              model: CounterpartyEntity,
-              as: "supplier",
-            },
-            {
-              model: StageEntity,
-            },
-            {
-              model: SectionEntity,
-            },
-            {
-              model: DesignDocumentCommentEntity,
-              as: "sudc",
-              include: [
-                {
-                  model: DesignDocumentSolutionEntity,
-                  include: [
-                    {
-                      model: UserEntity,
-                      include: [
-                        {
-                          model: SubsidiaryEntity,
-                        },
-                      ],
-                    },
-                  ],
-                },
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-                {
-                  model: NormativeEntity,
-                },
-                {
-                  model: CriticalityEntity,
-                },
-                {
-                  model: DirectionEntity,
-                },
-              ],
-            },
-          ],
-        });
-        break;
-      }
-      default:
-        break;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    for (let i = 0; i < data.length; i++) {
-      const item = this.renderDesignDocument(data[i]);
-      items.push(item);
-    }
     return items;
   };
 
-  findOneDesignDocument = async (id: number): Promise<DesignDocumentView> => {
-    const data = await this.designDocumentRepository.findOne({
-      where: { id },
-      include: [
-        {
-          model: ProjectEntity,
-          as: "project",
-        },
-        {
-          model: UnitEntity,
-          as: "unit",
-        },
-        {
-          model: SubUnitEntity,
-          as: "subUnit",
-        },
-        {
-          model: CounterpartyEntity,
-          as: "supplier",
-        },
-        {
-          model: StageEntity,
-        },
-        {
-          model: SectionEntity,
-        },
-        {
-          model: DesignDocumentCommentEntity,
-          as: "pdc",
-          include: [
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
+  findOneDesignDocument = async (
+    id: number
+  ): Promise<DesignDocumentView | null> => {
+    let item: DesignDocumentView | null = null;
+    try {
+      const data = await this.designDocumentRepository.findOne({
+        where: { id },
+        include: [
+          {
+            model: ProjectEntity,
+            as: "project",
+          },
+          {
+            model: UnitEntity,
+            as: "unit",
+          },
+          {
+            model: SubUnitEntity,
+            as: "subUnit",
+          },
+          {
+            model: CounterpartyEntity,
+            as: "supplier",
+          },
+          {
+            model: StageEntity,
+          },
+          {
+            model: SectionEntity,
+          },
+          {
+            model: DesignDocumentCommentEntity,
+            as: "pdc",
+            include: [
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
 
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: DirectionEntity,
-            },
-          ],
-        },
-        {
-          model: DesignDocumentCommentEntity,
-          as: "udc",
-          include: [
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: DirectionEntity,
-            },
-          ],
-        },
-        {
-          model: DesignDocumentCommentEntity,
-          as: "sudc",
-          include: [
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: DirectionEntity,
-            },
-          ],
-        },
-      ],
-    });
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: DirectionEntity,
+              },
+            ],
+          },
+          {
+            model: DesignDocumentCommentEntity,
+            as: "udc",
+            include: [
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: DirectionEntity,
+              },
+            ],
+          },
+          {
+            model: DesignDocumentCommentEntity,
+            as: "sudc",
+            include: [
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: DirectionEntity,
+              },
+            ],
+          },
+        ],
+      });
 
-    return this.renderDesignDocument(data);
+      item = this.renderDesignDocument(data);
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    return item;
   };
 
   //   updateDesignDocument = async (

@@ -3,8 +3,9 @@ import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { FormActions, tableLocale } from "../../../main";
 import TableColumns from "./TableColumns";
-import { ModalContainer, PositionTreeForm } from "../forms";
+import { PositionTreeForm } from "../forms";
 import { usePositionTreeTable } from "./hooks";
+import { ModalContainer } from "../../../../components";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -28,6 +29,15 @@ const PositionTreeTable = () => {
   } = usePositionTreeTable();
 
   const columns = TableColumns();
+
+  const renderFormFlag =
+    formVisible &&
+    (actionType === FormActions.ADD ||
+      actionType === FormActions.ADD_CHILD ||
+      actionType === FormActions.REMOVE ||
+      actionType === FormActions.REMOVE_CHILD ||
+      actionType === FormActions.EDIT ||
+      actionType === FormActions.EDIT_CHILD);
 
   return (
     <Layout>
@@ -103,7 +113,7 @@ const PositionTreeTable = () => {
         />
       </Content>
 
-      {formVisible && childTarget && (
+      {renderFormFlag && (
         <ModalContainer
           show={formVisible}
           onCancel={() => setFormVisible(false)}
