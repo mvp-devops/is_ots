@@ -30,7 +30,7 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   return (
     <Select
       size={size ? size : "small"}
-      className={className ? className : "text-secondary"}
+      className={className ? `text-secondary ${className}` : "text-secondary"}
       defaultValue={defaultValue}
       mode={mode}
       allowClear={allowClear}
@@ -48,15 +48,15 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
         </Space>
       }
       showSearch
-      // optionFilterProp="children"
-      // filterOption={(input, option) =>
-      //   (option!.children as unknown as string).includes(input)
-      // }
-      // filterSort={(optionA, optionB) =>
-      //   (optionA!.children as unknown as string)
-      //     .toLowerCase()
-      //     .localeCompare((optionB!.children as unknown as string).toLowerCase())
-      // }
+      optionFilterProp="children"
+      filterOption={(input, option) =>
+        (option!.children as unknown as string).includes(input)
+      }
+      filterSort={(optionA, optionB) =>
+        (optionA!.children as unknown as string)
+          .toLowerCase()
+          .localeCompare((optionB!.children as unknown as string).toLowerCase())
+      }
       onChange={(value: string) => changeValue(id, value)}
     >
       {items.map((item) => (

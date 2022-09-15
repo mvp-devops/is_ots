@@ -33,7 +33,7 @@ export interface UnitCreateOrUpdateAttrs extends Object {
   code: string;
   contract: string;
   description: string;
-  questionare: any;
+  file: any;
 }
 
 export interface SubUnitCreateOrUpdateAttrs extends Object {
@@ -45,7 +45,7 @@ export interface SubUnitCreateOrUpdateAttrs extends Object {
   code: string;
   contract: string;
   description: string;
-  questionare: any;
+  file: any;
 }
 
 export type PositionTreeCreateOrUpdateAttrs =
@@ -98,7 +98,7 @@ export interface UnitView {
   code: string;
   contract: string;
   description: string;
-  questionare: string | null;
+  unitQuestionare: DesignDocumentView;
   documents: DesignDocumentView[];
 }
 
@@ -115,7 +115,7 @@ export interface SubUnitView {
   code: string;
   contract: string;
   description: string;
-  questionare: string | null;
+  subUnitQuestionare: DesignDocumentView;
   documents: DesignDocumentView[];
 }
 

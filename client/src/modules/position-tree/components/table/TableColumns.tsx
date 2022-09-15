@@ -14,7 +14,7 @@ import {
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
-import { FormActions } from "../../../main";
+import { FormActions, setFilePath } from "../../../main";
 import { setTableColumnFilters } from "./table.settings";
 import { usePositionTreeTable } from "./hooks";
 import { useCallback, useEffect, useState } from "react";
@@ -205,6 +205,73 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const unitQuestionareColumn: ColumnType<PositionTreeView> = {
+    title: "ОЛ/ТТ/ТЗ",
+    key: "questionare",
+    // align: "center",
+    render: (_, record) => {
+      return (
+        "unitQuestionare" in record &&
+        record.unitQuestionare && (
+          <Space className="d-flex justify-content-start">
+            <Text type="secondary">
+              {record.unitQuestionare.fileType.toUpperCase() === ".PDF" ? (
+                <FilePdfOutlined className="text-danger" />
+              ) : (
+                <FileUnknownOutlined className="text-secondary" />
+              )}
+            </Text>
+            <a
+              href={setFilePath(
+                `${record.unitQuestionare.filePath}/${record.unitQuestionare.fileName}`
+              )}
+              target="_blank"
+              rel="noreferrer"
+              className="mx-2 text-secondary"
+              title={record.unitQuestionare.title}
+            >
+              {record.unitQuestionare.title && record.unitQuestionare.title}
+            </a>
+          </Space>
+        )
+      );
+    },
+  };
+
+  const subUnitQuestionareColumn: ColumnType<PositionTreeView> = {
+    title: "ОЛ/ТТ/ТЗ",
+    key: "questionare",
+    // align: "center",
+    render: (_, record) => {
+      return (
+        "subUnitQuestionare" in record &&
+        record.subUnitQuestionare && (
+          <Space className="d-flex justify-content-start">
+            <Text type="secondary">
+              {record.subUnitQuestionare.fileType.toUpperCase() === ".PDF" ? (
+                <FilePdfOutlined className="text-danger" />
+              ) : (
+                <FileUnknownOutlined className="text-secondary" />
+              )}
+            </Text>
+            <a
+              href={setFilePath(
+                `${record.subUnitQuestionare.filePath}/${record.subUnitQuestionare.fileName}`
+              )}
+              target="_blank"
+              rel="noreferrer"
+              className="mx-2 text-secondary"
+              title={record.subUnitQuestionare.title}
+            >
+              {record.subUnitQuestionare.title &&
+                record.subUnitQuestionare.title}
+            </a>
+          </Space>
+        )
+      );
+    },
+  };
+
   const actionsColumn: ColumnType<PositionTreeView> = {
     title: "Действия",
     key: "operation",
@@ -253,7 +320,18 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       columns.push(actionsColumn);
       break;
     }
-    case "unit":
+    case "unit": {
+      columns.push(numberColumn);
+      columns.push(positionColumn);
+      columns.push(titleColumn);
+      columns.push(equipmentTypeColumn);
+      columns.push(supplierTitleColumn);
+      columns.push(contractColumn);
+      columns.push(descriptionColumn);
+      columns.push(unitQuestionareColumn);
+      columns.push(actionsColumn);
+      break;
+    }
     case "sub-unit": {
       columns.push(numberColumn);
       columns.push(positionColumn);
@@ -262,6 +340,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       columns.push(supplierTitleColumn);
       columns.push(contractColumn);
       columns.push(descriptionColumn);
+      columns.push(subUnitQuestionareColumn);
       columns.push(actionsColumn);
       break;
     }

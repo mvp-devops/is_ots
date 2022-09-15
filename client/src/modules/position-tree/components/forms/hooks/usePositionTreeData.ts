@@ -76,7 +76,7 @@ export const usePositionTreeData = (target: string, actionType: string) => {
               code: row.code,
               contract: "contract" in row ? row.contract : "",
               description: row.description,
-              questionare: null,
+              file: null,
             }
           : { ...unitItem, projectId: parrentId ? parrentId : "" };
         break;
@@ -92,7 +92,7 @@ export const usePositionTreeData = (target: string, actionType: string) => {
               code: row.code,
               contract: "contract" in row ? row.contract : "",
               description: row.description,
-              questionare: null,
+              file: null,
             }
           : { ...subUnitItem, unitId: parrentId ? parrentId : "" };
         break;

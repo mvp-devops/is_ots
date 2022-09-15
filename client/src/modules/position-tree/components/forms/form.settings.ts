@@ -28,7 +28,7 @@ export const fieldItem: FieldCreateOrUpdateAttrs = {
 
 export const projectItem: ProjectCreateOrUpdateAttrs = {
   fieldId: "",
-  designId: "10",
+  designId: 10,
   title: "",
   code: "",
   contract: "н/д",
@@ -37,26 +37,26 @@ export const projectItem: ProjectCreateOrUpdateAttrs = {
 
 export const unitItem: UnitCreateOrUpdateAttrs = {
   projectId: "",
-  supplierId: "1",
-  equipmentId: "1",
+  supplierId: 1,
+  equipmentId: 1,
   position: "0",
   title: "",
   code: "",
   contract: "н/д",
   description: "",
-  questionare: null,
+  file: null,
 };
 
 export const subUnitItem: SubUnitCreateOrUpdateAttrs = {
   unitId: "",
-  supplierId: "1",
-  equipmentId: "1",
+  supplierId: 1,
+  equipmentId: 1,
   position: "0",
   title: "",
   code: "",
   contract: "н/д",
   description: "",
-  questionare: null,
+  file: null,
 };
 
 export const initData = (
@@ -113,7 +113,7 @@ export const initData = (
             code: row.code,
             contract: (row as UnitView).contract,
             description: row.description,
-            questionare: null,
+            file: null,
           }
         : { ...unitItem, projectId: parrentId ? parrentId : "" };
       break;
@@ -129,7 +129,7 @@ export const initData = (
             code: row.code,
             contract: (row as SubUnitView).contract,
             description: row.description,
-            questionare: null,
+            file: null,
           }
         : { ...subUnitItem, unitId: parrentId ? parrentId : "" };
       break;

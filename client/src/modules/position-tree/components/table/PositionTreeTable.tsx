@@ -31,7 +31,7 @@ const PositionTreeTable = () => {
     setFormVisible,
     actionType,
     setActionType,
-
+    checkedItem,
     tableTitle,
     addChildButtonTitle,
     setPositionTreeItem,
@@ -62,7 +62,10 @@ const PositionTreeTable = () => {
           }}
           onRow={(record, rowIndex) => {
             return {
-              onMouseEnter: (event) => setPositionTreeItem(record),
+              onMouseEnter: (event) => {
+                setPositionTreeItem(record);
+                console.log(checkedItem);
+              },
             };
           }}
           title={() => (

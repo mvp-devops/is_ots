@@ -151,7 +151,7 @@ export class CreateUnitDto implements UnitCreateOrUpdateAttrs {
     example: "ТЗ",
     description: "ТЗ, ТТ, ОЛ",
   })
-  readonly questionare: any;
+  readonly file: any;
 }
 
 export class CreateSubUnitDto implements SubUnitCreateOrUpdateAttrs {
@@ -207,5 +207,5 @@ export class CreateSubUnitDto implements SubUnitCreateOrUpdateAttrs {
     example: "ТЗ",
     description: "ТЗ, ТТ, ОЛ",
   })
-  readonly questionare: any;
+  readonly file: any;
 }

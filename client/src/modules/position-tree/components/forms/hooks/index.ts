@@ -36,7 +36,7 @@ export const usePositionTreeForm = () => {
   } = useActions();
 
   const [editRow, setEditRow] =
-    useState<PositionTreeCreateOrUpdateAttrs | null>(initData(target));
+    useState<PositionTreeCreateOrUpdateAttrs | null>(null);
   const [designsList, setDesignsList] = useState<NSIView[]>([]);
   const [equipmentsList, setEquipmentsList] = useState<NSIView[]>([]);
   const [suppliersList, setSuppliersList] = useState<NSIView[]>([]);
@@ -60,13 +60,17 @@ export const usePositionTreeForm = () => {
         break;
       }
       case FormActions.ADD_CHILD: {
-        currentItem && initData(childTarget, undefined, currentItem.id);
+        currentItem &&
+          setEditRow(initData(childTarget, undefined, currentItem.id));
         setFormTarget(childTarget);
         break;
       }
       case FormActions.EDIT_CHILD: {
         checkedItem &&
-          initData(childTarget, undefined, checkedItem.id.toString());
+          getEditedItem(childTarget, checkedItem.id.toString()).then((data) =>
+            setEditRow(initData(childTarget, data))
+          );
+
         setFormTarget(childTarget);
         break;
       }
@@ -89,10 +93,14 @@ export const usePositionTreeForm = () => {
 
         break;
       }
-      case "unit":
+      case "unit": {
+        getParrentsList("project").then((data) => setParrentsList(data));
+        getNSIList("counterparty").then((data) => setSuppliersList(data));
+        getNSIList("equipment").then((data) => setEquipmentsList(data));
+        break;
+      }
       case "sub-unit": {
-        const trgt = target === "unit" ? "project" : "unit";
-        getParrentsList(trgt).then((data) => setParrentsList(data));
+        getParrentsList("unit").then((data) => setParrentsList(data));
         getNSIList("counterparty").then((data) => setSuppliersList(data));
         getNSIList("equipment").then((data) => setEquipmentsList(data));
 
@@ -149,14 +157,11 @@ export const usePositionTreeForm = () => {
   const updateItem = () => {
     if (actionType === FormActions.EDIT && currentItem && editRow) {
       updatePositionTreeItem(target, currentItem.id, editRow);
-    } else {
-      notification["error"]({
-        message: "Ошибка обновления записи!",
-        description: "Отсутствует информация для отправки на сервер",
-      });
-    }
-
-    if (actionType === FormActions.EDIT_CHILD && checkedItem && editRow) {
+    } else if (
+      actionType === FormActions.EDIT_CHILD &&
+      checkedItem &&
+      editRow
+    ) {
       updatePositionTreeItem(childTarget, checkedItem.id.toString(), editRow);
     } else {
       notification["error"]({
@@ -180,11 +185,8 @@ export const usePositionTreeForm = () => {
   };
 
   useEffect(() => {
-    console.log("target: ", target);
-    console.log("childTarget: ", childTarget);
-    console.log("formTarget: ", formTarget);
-    console.log("editRow: ", editRow);
-  }, [currentItem]);
+    console.log("actionType: ", actionType);
+  }, [actionType]);
 
   return {
     // loading,

@@ -198,11 +198,11 @@ export class FileStorageService {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
       subUnitId: data ? data.subUnitId : null,
-      uqstId: null,
-      suqstId: null,
-      sloeId: null,
-      cableLogId: null,
-      monitoringId: null,
+      uqstId: data ? data.uqstId : null,
+      suqstId: data ? data.suqstId : null,
+      sloeId: data ? data.sloeId : null,
+      cableLogId: data ? data.cableLogId : null,
+      monitoringId: data ? data.monitoringId : null,
       supplierId: data ? data.supplierId : null,
       stageId: data ? data.stageId : 1,
       sectionId: data ? data.sectionId : 57,
@@ -272,23 +272,16 @@ export class FileStorageService {
 
       switch (parrentTarget) {
         case "unit": {
-          document.uqstId = +parrentId;
-          const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
-          this.createDirectory(pathToFile);
-
-          fileName = this.fileUpload(pathToFile, file);
-          document.filePath = pathToFile;
-          document.fileName = fileName;
+          document.uqstId = parrentId;
+          document.fileName = this.fileUpload(parrentFolderPath, file);
+          document.filePath = parrentFolderPath;
           break;
         }
         case "sub-unit": {
-          document.suqstId = +parrentId;
-          const pathToFile = `${parrentFolderPath}/ОЛ, ТТ, ТЗ`;
-          this.createDirectory(pathToFile);
+          document.suqstId = parrentId;
 
-          fileName = this.fileUpload(pathToFile, file);
-          document.filePath = pathToFile;
-          document.fileName = fileName;
+          document.fileName = this.fileUpload(parrentFolderPath, file);
+          document.filePath = parrentFolderPath;
           break;
         }
         case "summary-list-of-equipment": {
@@ -963,14 +956,13 @@ export class FileStorageService {
 
   //загрузка файла на сервер
   fileUpload = (folder: string, file: any): string => {
+    const fileName = this.generateFileName(file);
     try {
-      const fileName: string = this.generateFileName(file);
-
-      const fileFolder: string = this.getFilePath(folder);
+      const fileFolder = this.getFilePath(folder);
 
       const filePath = this.getPath([fileFolder, fileName]);
 
-      const dir: string = path.dirname(filePath);
+      const dir = path.dirname(filePath);
       if (!fs.existsSync(dir)) {
         fs.mkdirSync(dir);
         fs.writeFileSync(path.join(filePath), file.buffer);
@@ -982,6 +974,7 @@ export class FileStorageService {
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+    return fileName;
   };
 
   fileDownload = async (
@@ -1024,7 +1017,8 @@ export class FileStorageService {
     try {
       const from: string = this.getFilePath(oldPath);
       const to: string = this.getFilePath(newPath);
-      fse.copy(from, to).then(() => fse.remove(from));
+      console.log("Paths: ", newPath === oldPath);
+      newPath !== oldPath && fse.copy(from, to).then(() => fse.remove(from));
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

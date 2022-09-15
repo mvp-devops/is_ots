@@ -108,8 +108,10 @@ export const useItemPage = (items?: MenuItem[]) => {
         const file =
           "logo" in elem
             ? elem.logo
-            : "questionare" in elem
-            ? elem.questionare
+            : "unitQuestionare" in elem
+            ? elem.unitQuestionare
+            : "subUnitQuestionare" in elem
+            ? elem.subUnitQuestionare
             : null;
         const item = {
           href: id,

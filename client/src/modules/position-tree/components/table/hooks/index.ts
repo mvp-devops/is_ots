@@ -13,6 +13,7 @@ export const usePositionTreeTable = () => {
   };
   const {
     currentItem,
+    checkedItem,
     target,
     childTarget,
     renderItems,
@@ -110,6 +111,7 @@ export const usePositionTreeTable = () => {
 
   return {
     target,
+    checkedItem,
     childTarget,
     dataSource,
     renderItems,

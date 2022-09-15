@@ -53,8 +53,8 @@ export interface DesignDocumentView {
   stageTitle: string;
   sectionId: string | number | null;
   sectionTitle: string;
-  supplierId?: string | number | null;
-  supplierTitle?: string;
+  supplierId: string | number | null;
+  supplierTitle: string;
   code: string;
   title: string;
   revision: string;

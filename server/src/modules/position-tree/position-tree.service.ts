@@ -206,6 +206,7 @@ export class PositionTreeService {
 
         file &&
           (await this.fileService.createLogo(item.id.toString(), target, file));
+        item = await this.findOne(target, id.toString());
         break;
       }
       case "field": {
@@ -226,6 +227,7 @@ export class PositionTreeService {
           code
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}`;
+        item = await this.findOne(target, id.toString());
         break;
       }
       case "project": {
@@ -258,6 +260,8 @@ export class PositionTreeService {
           description
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}/${folder}`;
+
+        item = await this.findOne(target, id.toString());
         break;
       }
       case "unit": {
@@ -302,6 +306,10 @@ export class PositionTreeService {
           code
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${folder}`;
+
+        // const pathToFile = `${folderName}/ОЛ, ТТ, ТЗ`;
+        // this.fileService.createDirectory(pathToFile);
+
         file &&
           (await this.fileService.createDesignDocument(
             item.id.toString(),
@@ -309,6 +317,7 @@ export class PositionTreeService {
             folderName,
             file
           ));
+        item = await this.findOne(target, id.toString());
         break;
       }
       case "sub-unit": {
@@ -365,6 +374,9 @@ export class PositionTreeService {
           code
         );
         folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${unitFolder}/002. Объекты/${folder}`;
+        // const pathToFile = `${folderName}/ОЛ, ТТ, ТЗ`;
+        // this.fileService.createDirectory(pathToFile);
+
         file &&
           (await this.fileService.createDesignDocument(
             item.id.toString(),
@@ -372,6 +384,7 @@ export class PositionTreeService {
             folderName,
             file
           ));
+        item = await this.findOne(target, id.toString());
         break;
       }
       default:
@@ -461,10 +474,10 @@ export class PositionTreeService {
           ],
           include: [
             {
-              model: SubsidiaryEntity,
+              model: FieldEntity,
               include: [
                 {
-                  model: FieldEntity,
+                  model: SubsidiaryEntity,
                 },
               ],
             },
@@ -1435,6 +1448,7 @@ export class PositionTreeService {
 
         await this.unitRepository.update(dto, { where: { id } });
         item = await this.unitRepository.findOne({ where: { id } });
+
         break;
       }
       case "sub-unit": {

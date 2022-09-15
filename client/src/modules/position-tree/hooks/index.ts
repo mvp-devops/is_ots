@@ -30,11 +30,6 @@ export const usePositionTree = () => {
     }
   }, [currentItem]);
 
-  useEffect(() => {
-    console.log("Target: ", target);
-    console.log("childTarget: ", childTarget);
-  }, [target]);
-
   return {
     currentItem,
     checkedItem,

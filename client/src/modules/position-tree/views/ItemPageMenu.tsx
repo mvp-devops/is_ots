@@ -40,23 +40,20 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
       ),
       key: "ACTIONS",
       children: [
-        // {
-        //   label: (
-        //     <Space
-        //       onClick={() => {
-        //         setActionType(FormActions.ADD);
-        //         setFormVisible(true);
-        //       }}
-        //     >
-        //       <PlusOutlined
-        //         className="text-dark"
-        //         style={{ marginBottom: "16px", padding: 0 }}
-        //       />
-        //       Добавить
-        //     </Space>
-        //   ),
-        //   key: `ADD`,
-        // },
+        {
+          label: (
+            <Space
+              onClick={() => {
+                setActionType(FormActions.ADD);
+                setFormVisible(true);
+              }}
+            >
+              <PlusOutlined style={{ marginBottom: 16, padding: 0 }} />
+              Добавить
+            </Space>
+          ),
+          key: "ADD",
+        },
         {
           label: (
             <Space
@@ -65,7 +62,7 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
                 setFormVisible(true);
               }}
             >
-              <EditOutlined style={{ marginBottom: 20, padding: 0 }} />
+              <EditOutlined style={{ marginBottom: 16, padding: 0 }} />
               Редактировать
             </Space>
           ),
