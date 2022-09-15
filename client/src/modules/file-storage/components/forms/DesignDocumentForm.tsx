@@ -121,7 +121,7 @@ const DesignDocumentForm = () => {
     actionType !== FormActions.REMOVE_DOCUMENT ? (
       renderForm
     ) : (
-      <DeleteForm message="Удвление документа приведет к удалению всех замечаний, выданных к данному документу" />
+      <DeleteForm message="Удаление документа приведет к удалению всех замечаний, выданных к данному документу" />
     );
 
   const renderAddActions = actionType === FormActions.ADD_DOCUMENT && (

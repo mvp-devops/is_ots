@@ -50,13 +50,29 @@ export const fileStorageReducer = (
     case ActionTypes.POST_ONE_ITEM:
       return state;
     case ActionTypes.POST_ONE_ITEM_SUCCESS:
-      const newArr = [...state.designDocuments, action.payload];
       return {
         ...state,
 
-        designDocuments: newArr,
+        designDocuments: [...state.designDocuments, action.payload],
       };
     case ActionTypes.POST_ONE_ITEM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
+    case ActionTypes.DELETE_ONE_ITEM:
+      return state;
+    case ActionTypes.DELETE_ONE_ITEM_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        designDocuments: state.designDocuments.filter(
+          (item) => item.id !== action.payload.id
+        ),
+      };
+    case ActionTypes.DELETE_ONE_ITEM_ERROR:
       return {
         ...state,
         loading: false,

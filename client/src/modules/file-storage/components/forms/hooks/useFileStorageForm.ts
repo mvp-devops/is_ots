@@ -14,7 +14,8 @@ export const useFileStorageForm = () => {
   const { setFormVisible, actionType, currentDesignDocument } =
     useFileStorage();
 
-  const { target, currentItem, currentItemFolderPath } = usePositionTree();
+  const { target, currentItem, currentItemFolderPath, setFolderPath } =
+    usePositionTree();
 
   const {
     createOneDesignDocument,
@@ -38,6 +39,7 @@ export const useFileStorageForm = () => {
           setEditRow(
             initData("design-document", undefined, target, currentItem.id)
           );
+          setFolderPath(currentItem.target, currentItem.id);
           getNSIList("stage").then((data) => {
             switch (target) {
               case "project": {
@@ -130,6 +132,10 @@ export const useFileStorageForm = () => {
   };
 
   useEffect(() => console.log("EdirDocument: ", editRow), [editRow]);
+  useEffect(
+    () => console.log("currentItemFolderPath: ", currentItemFolderPath),
+    [currentItemFolderPath]
+  );
 
   return {
     actionType,

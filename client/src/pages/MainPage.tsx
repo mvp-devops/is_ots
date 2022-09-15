@@ -22,16 +22,11 @@ const { Panel } = Collapse;
 const MainPage: FC = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const {
-    setMenuItems,
-    setCurrentItem,
-    logout,
-    setTarget,
-    setChildTarget,
-    setFolderPath,
-  } = useActions();
-  const { menuItems, currentItem, target, childTarget, currentItemFolderPath } =
-    useTypedSelector((state) => state.positionTree);
+  const { setMenuItems, setCurrentItem, logout, setTarget, setChildTarget } =
+    useActions();
+  const { menuItems, currentItem, target, childTarget } = useTypedSelector(
+    (state) => state.positionTree
+  );
   const { formVisible, currentUser } = useTypedSelector((state) => state.main);
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
@@ -39,7 +34,6 @@ const MainPage: FC = () => {
       setCurrentItem(item);
       setTarget(item.target);
       setChildTarget(item.childrenTarget);
-      setFolderPath(item.target, item.id);
     } else {
       setTarget("");
       setChildTarget("");
@@ -59,11 +53,6 @@ const MainPage: FC = () => {
       currentUser.subsidiaryId &&
       setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
   }, [formVisible, currentUser]);
-
-  useEffect(
-    () => console.log("currentItemFolderPath: ", currentItemFolderPath),
-    [currentItem]
-  );
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

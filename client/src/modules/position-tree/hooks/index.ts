@@ -39,6 +39,7 @@ export const usePositionTree = () => {
     target,
     childTarget,
     currentItemFolderPath,
+    setFolderPath,
     renderItems,
     loading,
     formVisible,
