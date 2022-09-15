@@ -1,19 +1,7 @@
 import { Input, Layout, Space, Table, Typography } from "antd";
-import {
-  PlusOutlined,
-  EditOutlined,
-  FileAddOutlined,
-  ContainerOutlined,
-  FilePdfOutlined,
-  FileUnknownOutlined,
-  DeleteOutlined,
-  CheckOutlined,
-  SearchOutlined,
-  MessageOutlined,
-  DownloadOutlined,
-} from "@ant-design/icons";
-import { FormActions, tableLocale } from "../../../main";
+import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
+import { FormActions, tableLocale } from "../../../main";
 import TableColumns from "./TableColumns";
 import { ModalContainer, PositionTreeForm } from "../forms";
 import { usePositionTreeTable } from "./hooks";
@@ -24,7 +12,6 @@ const { Content } = Layout;
 const PositionTreeTable = () => {
   const {
     loading,
-    target,
     childTarget,
     dataSource,
     formVisible,

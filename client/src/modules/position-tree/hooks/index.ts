@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../hooks";
 import { getAllItems, getOneItem } from "..";
 

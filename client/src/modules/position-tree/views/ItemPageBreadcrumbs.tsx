@@ -1,6 +1,8 @@
-import { Breadcrumb } from "antd";
+import { Breadcrumb, Typography } from "antd";
 import React, { FC } from "react";
 const { Item } = Breadcrumb;
+
+const { Text } = Typography;
 
 export interface BreadcrumbsProps {
   items: { id: string; title: string }[];
@@ -11,7 +13,7 @@ const ItemPageBreadcrumbs: FC<BreadcrumbsProps> = ({ items }) => {
     <Breadcrumb style={{ margin: "16px 0" }}>
       {items.map((item) => (
         <Item key={item.id} onClick={() => console.log(item.id)}>
-          {item.title}
+          <Text type="secondary">{item.title}</Text>
         </Item>
       ))}
     </Breadcrumb>

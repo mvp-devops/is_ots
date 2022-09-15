@@ -1,25 +1,9 @@
-import { ChangeEvent, FC } from "react";
+import { Button, Divider, Form, Select, Space, Typography, Upload } from "antd";
 
-import {
-  Button,
-  Divider,
-  Form,
-  Input,
-  Select,
-  Space,
-  Typography,
-  Upload,
-} from "antd";
-
-import {
-  UploadOutlined,
-  DeleteOutlined,
-  InfoCircleOutlined,
-} from "@ant-design/icons";
-import { FormActions } from "../../../main";
-
-import { usePositionTreeForm } from "./hooks";
+import { UploadOutlined, InfoCircleOutlined } from "@ant-design/icons";
 import { InputUIComponent, SelectUIComponent } from "../../../../components";
+import { FormActions } from "../../../main";
+import { usePositionTreeForm } from "./hooks";
 
 const { Item } = Form;
 const { Text } = Typography;

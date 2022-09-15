@@ -1,8 +1,6 @@
-import { ColumnFilterItem } from "antd/lib/table/interface";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { PositionTreeView } from "../../../../../../../server/common/types/position-tree";
 import { usePositionTree } from "../../../hooks";
-import { setTableColumnFilters } from "../table.settings";
 
 export const usePositionTreeTable = () => {
   const [searchValue, setSearchValue] = useState("");

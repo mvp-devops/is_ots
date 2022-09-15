@@ -4,28 +4,14 @@ import {
   DatabaseOutlined,
   PieChartOutlined,
   SisternodeOutlined,
-  MoreOutlined,
-  DeleteOutlined,
-  FileDoneOutlined,
-  AuditOutlined,
-  EditOutlined,
-  PlusOutlined,
-  FileAddOutlined,
-  ContainerOutlined,
-  SearchOutlined,
-  AppstoreOutlined,
-  UserAddOutlined,
-  BookOutlined,
 } from "@ant-design/icons";
 import React, { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { DesignDocumentTable } from "../../../file-storage";
-import ListView from "../list/ListView";
 import { StatisticView } from "../../../comment-accounting";
 import PositionTreeTable from "../../components/table/PositionTreeTable";
 
 const { TabPane } = Tabs;
-const { Text } = Typography;
 
 const TabsView = () => {
   const { documentationView } = useTypedSelector((state) => state.main);

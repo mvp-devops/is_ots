@@ -1,8 +1,6 @@
 import { Space, TableColumnsType, Typography } from "antd";
 import {
   EditOutlined,
-  FilePdfOutlined,
-  FileUnknownOutlined,
   DeleteOutlined,
   FileSearchOutlined,
 } from "@ant-design/icons";
@@ -11,7 +9,6 @@ import { PositionTreeView } from "../../../../../../server/common/types/position
 import { FormActions, setFilePath } from "../../../main";
 import { usePositionTreeTable } from "./hooks";
 import { setTableColumnFilters } from "./table.settings";
-import { Link } from "react-router-dom";
 
 const { Text } = Typography;
 

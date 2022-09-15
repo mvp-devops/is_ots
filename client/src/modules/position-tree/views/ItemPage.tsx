@@ -13,7 +13,7 @@ import {
   EquipmentAccountingModalContainer,
   SummaryListOfEquipment,
 } from "../../equipment-accounting";
-import { ItemPageBreadcrumbs, ItemPageMenu, ListView, useItemPage } from "../";
+import { ItemPageBreadcrumbs, ItemPageMenu, useItemPage } from "../";
 import { ModalContainer, PositionTreeForm } from "../components/forms";
 import { FormActions } from "../../main";
 import { UserForm } from "../../regulatory-reference-information";
@@ -69,8 +69,6 @@ const ItemPage: FC<ItemPageProps> = () => {
             </Content>
           ) : (
             <Content style={{ padding: "0 5px" }}>
-              {/* {listItemsView && <ListView />} */}
-
               {/* {documentationView && <DesignDocumentTable />} */}
               {/* {statisticView && <StatisticView />} */}
             </Content>
