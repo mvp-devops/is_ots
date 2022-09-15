@@ -26,7 +26,10 @@ export class ProjectEntity extends Model<
     description: "Уникальный идентификатор родительского узла (Месторождения)",
   })
   @ForeignKey(() => FieldEntity)
-  @Column
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
   fieldId: number;
 
   @ApiProperty({
@@ -35,7 +38,11 @@ export class ProjectEntity extends Model<
       "Уникальный идентификатор родительского узла (Проектные организации)",
   })
   @ForeignKey(() => DesignEntity)
-  @Column
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+    defaultValue: 10,
+  })
   designId: number;
 
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
@@ -94,13 +101,13 @@ export class ProjectEntity extends Model<
 
   @HasMany(() => UnitEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   units: UnitEntity[];
 
   @HasMany(() => DesignDocumentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "projectDocuments",
   })
   projectDocuments: DesignDocumentEntity[];

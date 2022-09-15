@@ -87,7 +87,8 @@ export const positionTreeReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: addedOne,
+        // renderItems: addedOne,
+        renderItems: [...state.renderItems, action.payload],
       };
 
     case ActionTypes.POST_ONE_ITEM_ERROR:

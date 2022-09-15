@@ -282,7 +282,7 @@ export class DesignDocumentEntity extends Model<
 
   @HasMany(() => DesignDocumentCommentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
 
     as: "pdc",
     foreignKey: "pdcId",
@@ -291,7 +291,7 @@ export class DesignDocumentEntity extends Model<
 
   @HasMany(() => DesignDocumentCommentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "udc",
     foreignKey: "udcId",
   })
@@ -299,7 +299,7 @@ export class DesignDocumentEntity extends Model<
 
   @HasMany(() => DesignDocumentCommentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "sudc",
     foreignKey: "sudcId",
   })
@@ -307,7 +307,7 @@ export class DesignDocumentEntity extends Model<
 
   @HasMany(() => DesignDocumentCommentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "sdc",
     foreignKey: "sdcId",
   })

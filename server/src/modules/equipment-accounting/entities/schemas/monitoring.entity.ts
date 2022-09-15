@@ -135,13 +135,13 @@ export class MonitoringEntity extends Model<
 
   @HasMany(() => CapitalConstructionUnitSupervisionCommentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   comments: CapitalConstructionUnitSupervisionCommentEntity;
 
   @HasOne(() => DesignDocumentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   functionalDiagram: DesignDocumentEntity;
 }

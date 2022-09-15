@@ -126,21 +126,21 @@ export class SubUnitEntity extends Model<
 
   @HasMany(() => DesignDocumentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "subUnitDocuments",
   })
   subUnitDocuments: DesignDocumentEntity[];
 
   @HasOne(() => DesignDocumentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
     as: "subUnitQuestionare",
   })
   questionare: DesignDocumentEntity;
 
   @HasMany(() => SummaryListOfEquipmentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   summaryListOfEquipments: SummaryListOfEquipmentEntity[];
 }

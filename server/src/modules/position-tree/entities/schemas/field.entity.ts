@@ -66,7 +66,7 @@ export class FieldEntity extends Model<FieldEntity, FieldCreateOrUpdateAttrs> {
 
   @HasMany(() => ProjectEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   projects: ProjectEntity[];
 }

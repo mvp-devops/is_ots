@@ -170,7 +170,7 @@ export class DesignDocumentCommentEntity extends Model<
 
   @HasMany(() => DesignDocumentSolutionEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   solutions: DesignDocumentSolutionEntity[];
 }

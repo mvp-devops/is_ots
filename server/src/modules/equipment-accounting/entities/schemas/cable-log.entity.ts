@@ -134,7 +134,7 @@ export class CableLogEntity extends Model<
 
   @HasOne(() => DesignDocumentEntity, {
     onUpdate: "CASCADE",
-    onDelete: "CASCADE",
+    onDelete: "SET NULL",
   })
   wiringDiagram: DesignDocumentEntity;
 }
