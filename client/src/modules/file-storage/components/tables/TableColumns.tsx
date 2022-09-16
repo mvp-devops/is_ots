@@ -12,11 +12,14 @@ import { DesignDocumentView } from "../../../../../../server/common/types/file-s
 import { FormActions, setFilePath } from "../../../main";
 import { useFileStorage } from "../../hooks";
 import { setTableColumnFilters } from "./table.settings";
+import { useFileStorageTable } from "./hooks";
 
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<DesignDocumentView> => {
   const { setFormVisible, setActionType, designDocuments } = useFileStorage();
+
+  const { setCollectiveCheckSheetView } = useFileStorageTable();
 
   const columns: TableColumnsType<DesignDocumentView> = [];
 
@@ -190,7 +193,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
           className="text-info"
           onClick={() => {
             setActionType(FormActions.VIEW_COMMENT);
-            setFormVisible(true);
+            setCollectiveCheckSheetView(true);
           }}
         />
         <EditOutlined

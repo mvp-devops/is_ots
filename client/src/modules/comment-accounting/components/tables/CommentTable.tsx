@@ -56,25 +56,6 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
             <Space
               className="text-secondary"
               onClick={() => {
-                setActionType("POST");
-                setFormVisible(true);
-              }}
-            >
-              <PlusOutlined
-                style={{ marginBottom: "6px", padding: 0 }}
-                className="text-success"
-              />
-              Добавить
-            </Space>
-          ),
-
-          key: "1",
-        },
-        {
-          label: (
-            <Space
-              className="text-secondary"
-              onClick={() => {
                 setActionType("UPDATE");
                 setFormVisible(true);
               }}
@@ -87,7 +68,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
             </Space>
           ),
 
-          key: "2",
+          key: "EDIT_COMMENT",
         },
         {
           label: (
@@ -102,7 +83,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               Удалить
             </Space>
           ),
-          key: "3",
+          key: "REMOVE_COMMENT",
         },
       ]}
     />

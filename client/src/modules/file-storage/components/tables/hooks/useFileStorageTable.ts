@@ -6,13 +6,16 @@ import { useFileStorage } from "../../../hooks";
 export const useFileStorageTable = () => {
   const [dataSource, setDataSource] = useState<DesignDocumentView[]>([]);
   const { currentItem } = useTypedSelector((state) => state.positionTree);
-  const { documentationView } = useTypedSelector((state) => state.main);
+  const { documentationView, collectiveCheckSheetView } = useTypedSelector(
+    (state) => state.main
+  );
 
   const {
     getAllDesignDocuments,
     setCurrentDocument,
     setCheckedDocuments,
     setDocumentationView,
+    setCollectiveCheckSheetView,
   } = useActions();
 
   const {
@@ -68,5 +71,7 @@ export const useFileStorageTable = () => {
     loading,
     currentDesignDocument,
     checkedDesignDocuments,
+    collectiveCheckSheetView,
+    setCollectiveCheckSheetView,
   };
 };

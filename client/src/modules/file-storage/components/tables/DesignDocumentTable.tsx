@@ -14,6 +14,10 @@ import { useFileStorageTable } from "./hooks";
 import TableColumns from "./TableColumns";
 import TableFooter from "./TableFooter";
 import TableTitle from "./TableTitle";
+import {
+  CollectiveCheckSheet,
+  CommentAccountingModalContainer,
+} from "../../../comment-accounting";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -32,24 +36,27 @@ const DesignDocumentTable = () => {
     setFormVisible,
     actionType,
     setActionType,
+    collectiveCheckSheetView,
+    setCollectiveCheckSheetView,
   } = useFileStorageTable();
 
   const columns = TableColumns();
 
-  const commentsViewFlag =
-    formVisible && actionType === FormActions.VIEW_COMMENT;
-
-  const form = (
+  const formRender = renderFileStorageFormFlag && (
     <ModalContainer
       show={formVisible}
       onCancel={() => setFormVisible(false)}
       action={actionType}
-      child={
-        <>
-          {renderFileStorageFormFlag && <DesignDocumentForm />}
-          {commentsViewFlag && <div>Таблица с замечаниями</div>}
-        </>
-      }
+      child={<DesignDocumentForm />}
+    />
+  );
+
+  const collectiveCheckSheetViewRender = collectiveCheckSheetView && (
+    <CommentAccountingModalContainer
+      show={collectiveCheckSheetView}
+      onCancel={() => setCollectiveCheckSheetView(false)}
+      action={actionType}
+      child={<CollectiveCheckSheet />}
     />
   );
 
@@ -144,7 +151,8 @@ const DesignDocumentTable = () => {
           />
         </Content>
       )}
-      {form}
+      {formRender}
+      {collectiveCheckSheetViewRender}
     </Layout>
   );
 };

@@ -99,14 +99,7 @@ const ItemPage: FC<ItemPageProps> = () => {
           child={<SummaryListOfEquipment data={null} />}
         />
       )}
-      {collectiveCheckSheetView && (
-        <CommentAccountingModalContainer
-          show={collectiveCheckSheetView}
-          onCancel={() => setCollectiveCheckSheetView(false)}
-          action={actionType}
-          child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
-        />
-      )}
+
       {renderFormFlag && (
         <ModalContainer
           show={formVisible}

@@ -555,7 +555,15 @@ export class CommentAccountingService {
           designContacts,
           solutionId,
           solution,
-          expertContacts: `${user.subsidiary.title} \n ${user.subdivision} \n ${user.position} \n почта: ${user.email} \n телефон: ${user.phone}`,
+          expertContacts: `${user.lastName} ${user.firstName.slice(
+            0,
+            1
+          )}. ${user.secondName.slice(0, 1)}. \n\ 
+          ${user.subsidiary.title} \n\ 
+          ${user.subdivision} \n\ 
+          ${user.position} \n\ 
+          почта: ${user.email} \n\ 
+          телефон: ${user.phone}`,
         };
         commentSolutions.push(elem);
       }
@@ -597,7 +605,15 @@ export class CommentAccountingService {
           normative: `${normative.code}. ${normative.title}`,
           criticalityId,
           expertSubdivision: user.subsidiary.title,
-          expertContacts: `${user.subdivision} \n ${user.position} \n почта: ${user.email} \n телефон: ${user.phone}`,
+          expertContacts: `${user.lastName} ${user.firstName.slice(
+            0,
+            1
+          )}. ${user.secondName.slice(0, 1)}. \n\ 
+          ${user.subdivision} \n\ 
+          ${user.position} \n\ 
+          почта: ${user.email} \n\ 
+          телефон: ${user.phone}`,
+
           solutions: this.solutionsRender(solutions),
         };
 

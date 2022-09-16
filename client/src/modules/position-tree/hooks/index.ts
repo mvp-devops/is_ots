@@ -12,6 +12,7 @@ export const usePositionTree = () => {
     loading,
     checkedItem,
     currentItemFolderPath,
+    renderOneItem,
   } = useTypedSelector((state) => state.positionTree);
 
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
@@ -24,6 +25,7 @@ export const usePositionTree = () => {
     setTarget,
     setChildTarget,
     setFolderPath,
+    getPositionTreeItem,
   } = useActions();
 
   useEffect(() => {
@@ -31,6 +33,7 @@ export const usePositionTree = () => {
       setTarget(currentItem.target);
       setChildTarget(currentItem.childrenTarget);
       setFolderPath(currentItem.target, currentItem.id);
+      getPositionTreeItem(currentItem.target, currentItem.id);
     }
   }, [currentItem]);
 
@@ -69,5 +72,6 @@ export const usePositionTree = () => {
     getAllItems,
     getOneItem,
     renderFormFlag,
+    renderOneItem,
   };
 };

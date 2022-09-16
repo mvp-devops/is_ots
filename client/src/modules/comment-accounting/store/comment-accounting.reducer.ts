@@ -60,11 +60,10 @@ export const commentAccountingReducer = (
       return state;
 
     case ActionTypes.POST_ONE_ITEM_SUCCESS:
-      const addedOne = [...state.renderItems, action.payload];
       return {
         ...state,
         loading: false,
-        renderItems: addedOne,
+        renderItems: [...state.renderItems, action.payload],
       };
 
     case ActionTypes.POST_ONE_ITEM_ERROR:
@@ -78,11 +77,10 @@ export const commentAccountingReducer = (
       return state;
 
     case ActionTypes.POST_MANY_ITEMS_SUCCESS:
-      const addedMany = [...state.renderItems, ...action.payload];
       return {
         ...state,
         loading: false,
-        renderItems: addedMany,
+        renderItems: [...state.renderItems, ...action.payload],
       };
 
     case ActionTypes.POST_MANY_ITEMS_ERROR:
@@ -96,16 +94,13 @@ export const commentAccountingReducer = (
       return state;
 
     case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
-      const editedOne = [
-        ...state.renderItems.slice(0, +action.payload.id),
-        action.payload,
-        ...state.renderItems.slice(+action.payload.id + 1),
-      ];
-
       return {
         ...state,
         loading: false,
-        renderItems: editedOne,
+        renderItems: [
+          ...state.renderItems.filter((item) => item.id !== action.payload.id),
+          action.payload,
+        ],
       };
 
     case ActionTypes.UPDATE_ONE_ITEM_ERROR:
@@ -119,13 +114,12 @@ export const commentAccountingReducer = (
       return state;
 
     case ActionTypes.DELETE_ONE_ITEM_SUCCESS:
-      const deletedOne = [
-        ...state.renderItems.filter((item) => item.id !== action.payload.id),
-      ];
       return {
         ...state,
         loading: false,
-        renderItems: deletedOne,
+        renderItems: state.renderItems.filter(
+          (item) => item.id !== action.payload.id
+        ),
       };
 
     case ActionTypes.DELETE_ONE_ITEM_ERROR:
