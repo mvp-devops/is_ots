@@ -18,33 +18,46 @@ const ModalContainer: FC<ModalContainerProps> = ({
   child,
   onCancel,
 }) => {
+  const addActionsFlag =
+    action === FormActions.ADD ||
+    action === FormActions.ADD_CHILD ||
+    action === FormActions.ADD_DOCUMENT;
+
+  const editActionsFlag =
+    action === FormActions.EDIT ||
+    action === FormActions.EDIT_CHILD ||
+    action === FormActions.EDIT_DOCUMENT;
+
+  const removeActionsFlag =
+    action === FormActions.REMOVE ||
+    action === FormActions.REMOVE_CHILD ||
+    action === FormActions.REMOVE_DOCUMENT;
+
+  const containerWidth = action === FormActions.VIEW_COMMENT ? 1800 : 600;
+
   return (
     <Modal
       style={{ border: "1px white" }}
       title={
         <Space className="d-flex justify-content-center">
           <Text strong className="text-white">
-            {action === FormActions.ADD ||
-            action === FormActions.ADD_CHILD ||
-            action === FormActions.ADD_DOCUMENT
+            {addActionsFlag
               ? `Добавление записи`
-              : action === FormActions.EDIT ||
-                action === FormActions.EDIT_CHILD ||
-                action === FormActions.EDIT_DOCUMENT
+              : editActionsFlag
               ? "Редактирование записи"
-              : action === FormActions.REMOVE ||
-                action === FormActions.REMOVE_CHILD ||
-                action === FormActions.REMOVE_DOCUMENT
+              : removeActionsFlag
               ? "Удаление записи"
               : action === FormActions.CHECKLIST
               ? "Чек-лист"
-              : action === FormActions.USER
+              : action === FormActions.ADD_USER
               ? "Регистрация пользователя"
-              : "Gbpltw"}
+              : action === FormActions.VIEW_COMMENT
+              ? "Таблица замечаний к документу"
+              : "Другое"}
           </Text>
         </Space>
       }
-      width={600}
+      width={containerWidth}
       closable
       closeIcon={
         <Text className="text-white">

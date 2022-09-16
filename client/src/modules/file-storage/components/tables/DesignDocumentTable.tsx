@@ -1,30 +1,19 @@
+import { Input, Layout, Space, Spin, Table, Typography } from "antd";
 import {
-  Input,
-  Layout,
-  Space,
-  Spin,
-  Table,
-  TableColumnsType,
-  Typography,
-} from "antd";
-import {
-  EditOutlined,
-  FileAddOutlined,
-  ContainerOutlined,
-  FilePdfOutlined,
-  FileUnknownOutlined,
-  DeleteOutlined,
-  CheckOutlined,
+  PlusOutlined,
   SearchOutlined,
-  MessageOutlined,
+  ContainerOutlined,
   DownloadOutlined,
 } from "@ant-design/icons";
+
 import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
-import { useFileStorageTableData } from "./hooks/useFileStorageTableData";
 import { FormActions, tableLocale } from "../../../main";
-import { useFileStorage } from "../../hooks";
 import { DesignDocumentForm } from "../forms";
 import { ModalContainer } from "../../../../components";
+import { useFileStorageTable } from "./hooks";
+import TableColumns from "./TableColumns";
+import TableFooter from "./TableFooter";
+import TableTitle from "./TableTitle";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -32,155 +21,37 @@ const { Content } = Layout;
 const DesignDocumentTable = () => {
   const {
     loading,
-    setTableColumnFilters,
-    dataSource,
-    searchValue,
-    onSearch,
     checkedDesignDocuments,
     setCurrentDocument,
     setCheckedDocuments,
-    setFilePath,
-  } = useFileStorageTableData();
+    dataSource,
+    searchValue,
+    onSearch,
+    renderFileStorageFormFlag,
+    formVisible,
+    setFormVisible,
+    actionType,
+    setActionType,
+  } = useFileStorageTable();
 
-  const { formVisible, setFormVisible, actionType, setActionType } =
-    useFileStorage();
+  const columns = TableColumns();
 
-  const renderFormFlag =
-    formVisible &&
-    (actionType === FormActions.ADD_DOCUMENT ||
-      actionType === FormActions.REMOVE_DOCUMENT ||
-      actionType === FormActions.EDIT_DOCUMENT);
+  const commentsViewFlag =
+    formVisible && actionType === FormActions.VIEW_COMMENT;
 
-  const columns: TableColumnsType<DesignDocumentView> = [
-    {
-      title: "№ п/п",
-
-      align: "center",
-      render: (value, record, ind) => <Text type="secondary">{ind + 1}</Text>,
-    },
-    {
-      title: "Шифр",
-      dataIndex: "code",
-      key: "code",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-    },
-    {
-      title: "Наименование",
-      dataIndex: "title",
-      key: "title",
-      align: "center",
-      render: (_, record) => {
-        return (
-          <Space className="d-flex justify-content-start">
-            <Text type="secondary">
-              {record.fileType.toUpperCase() === ".PDF" ? (
-                <FilePdfOutlined className="text-danger" />
-              ) : (
-                <FileUnknownOutlined className="text-secondary" />
-              )}
-            </Text>
-            <a
-              href={setFilePath(`${record.filePath}/${record.fileName}`)}
-              target="_blank"
-              rel="noreferrer"
-              className="mx-2 text-secondary"
-              title={record.title}
-            >
-              {record.title && record.title}
-            </a>
-          </Space>
-        );
-      },
-    },
-
-    {
-      title: "Ревизия",
-      dataIndex: "revision",
-      key: "revision",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-    },
-    {
-      title: "Стадия",
-      dataIndex: "stageTitle",
-      key: "stageTitle",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-      filters: setTableColumnFilters("stage", dataSource),
-      onFilter: (value: any, record) =>
-        record.stageTitle.toUpperCase().includes(value.toUpperCase()),
-    },
-    {
-      title: "Марка/раздел",
-      dataIndex: "sectionTitle",
-      key: "sectionTitle",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-      filters: setTableColumnFilters("section", dataSource),
-      onFilter: (value: any, record) =>
-        record.sectionTitle.toUpperCase().includes(value.toUpperCase()),
-    },
-    {
-      title: "Контрагент",
-      dataIndex: "supplierTitle",
-      key: "supplierTitle",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-      filters: setTableColumnFilters("supplier", dataSource),
-      onFilter: (value: any, record) =>
-        record.supplierTitle
-          ? record.supplierTitle.toUpperCase().includes(value.toUpperCase())
-          : false,
-    },
-    {
-      title: "Дата",
-      dataIndex: "createdAt",
-      key: "createdAt",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-    },
-    {
-      title: "Примечание",
-      dataIndex: "description",
-      key: "description",
-      align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
-    },
-    {
-      title: "Действия",
-      key: "operation",
-      render: (_blank, record) => (
-        <Space size="middle">
-          <MessageOutlined
-            title="Добавить замечание"
-            className="text-info"
-            // onClick={() => {
-            //   setActionType(FormActions.POST);
-            //   setCurrentDocument(record);
-            //   setAddCommentsVisible(true);
-            // }}
-          />
-          <EditOutlined
-            title="Редактировать информацию"
-            className="text-secondary"
-            onClick={() => {
-              setActionType(FormActions.EDIT_DOCUMENT);
-              setFormVisible(true);
-            }}
-          />
-          <DeleteOutlined
-            title="Удалить документ"
-            className="text-danger"
-            onClick={() => {
-              setActionType(FormActions.REMOVE_DOCUMENT);
-              setFormVisible(true);
-            }}
-          />
-        </Space>
-      ),
-    },
-  ];
+  const form = (
+    <ModalContainer
+      show={formVisible}
+      onCancel={() => setFormVisible(false)}
+      action={actionType}
+      child={
+        <>
+          {renderFileStorageFormFlag && <DesignDocumentForm />}
+          {commentsViewFlag && <div>Таблица с замечаниями</div>}
+        </>
+      }
+    />
+  );
 
   return (
     <Layout>
@@ -212,75 +83,68 @@ const DesignDocumentTable = () => {
                 onMouseEnter: (event) => setCurrentDocument(record),
               };
             }}
+            // title={() => <TableTitle />}
             title={() => (
-              <Space className="d-flex justify-content-between align-items-center">
-                <Space>
+              <Space className="d-flex align-items-center justify-content-between">
+                <Text strong type="secondary">
+                  ДОКУМЕНТАЦИЯ
+                </Text>
+                <Space
+                  direction="horizontal"
+                  className="d-flex align-items-center justify-content-between"
+                >
                   <Input
                     size="small"
                     className="text-secondary"
                     style={{ minWidth: 300 }}
                     placeholder="Поиск..."
-                    title="Поиск записей по шифру/наименованию/дате"
+                    title="Поиск записей по шифру/наименованию и др."
                     value={searchValue}
                     suffix={<SearchOutlined className="text-secondary" />}
                     onChange={onSearch}
                   />
-                </Space>
-                <Text strong type="secondary">
-                  ДОКУМЕНТАЦИЯ
-                </Text>
-                <Space>
-                  <FileAddOutlined
-                    key="ADD_DOCUMENT"
-                    className="text-success mb-2"
-                    style={{ fontSize: 16, cursor: "pointer" }}
-                    title="Добавить документ"
-                    onClick={() => {
-                      setActionType(FormActions.ADD_DOCUMENT);
-                      setFormVisible(true);
-                    }}
-                  />
-                  {checkedDesignDocuments.length > 0 && (
-                    <DownloadOutlined
-                      key="DOCUMENTATION_DOWNLOAD"
-                      className="text-primary  mb-2"
+                  <Space>
+                    <PlusOutlined
+                      key="ADD_DOCUMENT"
+                      className="text-success mr-3 mb-2"
                       style={{ fontSize: 16, cursor: "pointer" }}
-                      title="Скачать"
-                      onClick={() => console.log("Скачать документы")}
+                      title="Добавить документ"
+                      onClick={() => {
+                        setActionType(FormActions.ADD_DOCUMENT);
+                        setFormVisible(true);
+                      }}
                     />
-                  )}
-                  <ContainerOutlined
-                    key="download"
-                    className="text-warning mb-2"
-                    style={{ fontSize: 16, cursor: "pointer" }}
-                    title="Сформировать ЛКП"
-                    onClick={() => console.log("Сформировать ЛКП")}
-                  />
+
+                    {checkedDesignDocuments.length > 0 && (
+                      <ContainerOutlined
+                        key="download"
+                        className="text-warning mb-2"
+                        style={{ fontSize: 16, cursor: "pointer" }}
+                        title="Сформировать ЛКП"
+                        onClick={() => console.log("Сформировать ЛКП")}
+                      />
+                    )}
+                    {checkedDesignDocuments.length > 0 && (
+                      <DownloadOutlined
+                        key="DOCUMENTATION_DOWNLOAD"
+                        className="text-primary  mb-2"
+                        style={{ fontSize: 16, cursor: "pointer" }}
+                        title="Скачать"
+                        onClick={() => console.log("Скачать документы")}
+                      />
+                    )}
+                  </Space>
                 </Space>
               </Space>
             )}
             rowKey={(record) => record.id}
             columns={columns}
             dataSource={dataSource}
-            footer={() => (
-              <Space className="d-flex justify-content-end ">
-                <Text className="text-secondary">Количество документов:</Text>
-                <Text strong type="secondary">
-                  {dataSource.length}
-                </Text>
-              </Space>
-            )}
+            footer={() => <TableFooter />}
           />
         </Content>
       )}
-      {renderFormFlag && (
-        <ModalContainer
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<DesignDocumentForm />}
-        />
-      )}
+      {form}
     </Layout>
   );
 };

@@ -9,6 +9,25 @@ export const setTableColumnFilters = (
   const result: ColumnFilterItem[] = [];
 
   switch (target) {
+    case "title": {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i].title;
+        if (item && !array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
+
+    case "code": {
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i].code;
+        if (!array.includes(item)) {
+          array.push(item);
+        }
+      }
+      break;
+    }
     case "stage": {
       for (let i = 0; i < items.length; i++) {
         const item = "stageTitle" in items[i] ? items[i].stageTitle : "";
@@ -50,5 +69,5 @@ export const setTableColumnFilters = (
     });
   }
 
-  return result;
+  return result.sort((a, b) => (a.value < b.value ? -1 : 0));
 };

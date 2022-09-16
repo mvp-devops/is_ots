@@ -1,4 +1,6 @@
+import { useEffect, useState } from "react";
 import { useActions, useTypedSelector } from "../../../hooks";
+import { FormActions } from "../../main";
 
 export const useFileStorage = () => {
   const {
@@ -19,6 +21,20 @@ export const useFileStorage = () => {
     setCurrentDocument,
   } = useActions();
 
+  const [renderFileStorageFormFlag, setRenderFileStorageFormFlag] =
+    useState(false);
+
+  useEffect(
+    () =>
+      setRenderFileStorageFormFlag(
+        formVisible &&
+          (actionType === FormActions.ADD_DOCUMENT ||
+            actionType === FormActions.REMOVE_DOCUMENT ||
+            actionType === FormActions.EDIT_DOCUMENT)
+      ),
+    [actionType, formVisible]
+  );
+
   return {
     loading,
     error,
@@ -33,5 +49,6 @@ export const useFileStorage = () => {
     setCheckedDocuments,
     currentDesignDocument,
     setCurrentDocument,
+    renderFileStorageFormFlag,
   };
 };

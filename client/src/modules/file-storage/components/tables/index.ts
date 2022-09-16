@@ -1,4 +1,4 @@
 import DesignDocumentTable from "./DesignDocumentTable";
-import { useFileStorageTableData } from "./hooks/useFileStorageTableData";
+import { useFileStorageTable } from "./hooks";
 
-export { DesignDocumentTable, useFileStorageTableData };
+export { DesignDocumentTable, useFileStorageTable };
