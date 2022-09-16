@@ -47,6 +47,27 @@ export const fileStorageReducer = (
     //     loading: false,
     //     error: action.payload,
     //   };
+
+    case ActionTypes.UPDATE_ONE_ITEM:
+      return state;
+    case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
+      return {
+        ...state,
+
+        designDocuments: [
+          ...state.designDocuments.filter(
+            (item) => item.id !== action.payload.id
+          ),
+          action.payload,
+        ],
+      };
+    case ActionTypes.UPDATE_ONE_ITEM_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case ActionTypes.POST_ONE_ITEM:
       return state;
     case ActionTypes.POST_ONE_ITEM_SUCCESS:

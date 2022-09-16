@@ -1660,176 +1660,45 @@ export class PositionTreeService {
 
   remove = async (id: string, target: string): Promise<PositionTreeView> => {
     let item: PositionTreeView = null;
-    let folderName = "";
+    const folderName = await this.getItemFolderPath(target, id);
     try {
       switch (target) {
         case "subsidiary": {
           item = await this.subsidiaryRepository.findOne({ where: { id } });
-          folderName = this.fileService.generateFolderName(
-            target,
-            item.id,
-            item.code
-          );
           await this.fileService.deleteLogo(id, target);
           await this.subsidiaryRepository.destroy({ where: { id } });
+
           break;
         }
         case "field": {
           item = await this.fieldRepository.findOne({ where: { id } });
-          const parrent = await this.subsidiaryRepository.findOne({
-            where: { id: item.subsidiaryId },
-            attributes: ["id", "code"],
-          });
-          const subsidiaryFolderName = this.fileService.generateFolderName(
-            "subsidiary",
-            parrent.id,
-            parrent.code
-          );
-          const fieldFolderName = this.fileService.generateFolderName(
-            target,
-            item.id,
-            item.code
-          );
-          folderName = `${subsidiaryFolderName}/${fieldFolderName}`;
           await this.fieldRepository.destroy({ where: { id } });
           break;
         }
         case "project": {
           item = await this.projectRepository.findOne({ where: { id } });
-          const parrent = await this.fieldRepository.findOne({
-            where: { id: item.fieldId },
-            attributes: ["id", "code"],
-            include: [
-              {
-                model: SubsidiaryEntity,
-                attributes: ["id", "code"],
-              },
-            ],
-          });
-          const subsidiaryFolderName = this.fileService.generateFolderName(
-            "subsidiary",
-            parrent.subsidiary.id,
-            parrent.subsidiary.code
-          );
-          const fieldFolderName = this.fileService.generateFolderName(
-            "field",
-            parrent.id,
-            parrent.code
-          );
-          const folder = this.fileService.generateFolderName(
-            target,
-            item.id,
-            item.code,
-            item.description
-          );
-          folderName = `${subsidiaryFolderName}/${fieldFolderName}/${folder}`;
+          await this.projectRepository.destroy({ where: { id } });
           break;
         }
         case "unit": {
           item = await this.unitRepository.findOne({ where: { id } });
-          const parrent = await this.projectRepository.findOne({
-            where: { id: item.projectId },
-            attributes: ["id", "code", "description"],
-            include: [
-              {
-                model: FieldEntity,
-                attributes: ["id", "code"],
-                include: [
-                  {
-                    model: SubsidiaryEntity,
-                    attributes: ["id", "code"],
-                  },
-                ],
-              },
-            ],
-          });
-          const subsidiaryFolderName = this.fileService.generateFolderName(
-            "subsidiary",
-            parrent.field.subsidiary.id,
-            parrent.field.subsidiary.code
-          );
-          const fieldFolderName = this.fileService.generateFolderName(
-            "field",
-            parrent.field.id,
-            parrent.field.code
-          );
-          const projectFolderName = this.fileService.generateFolderName(
-            "project",
-            parrent.id,
-            parrent.code,
-            parrent.description
-          );
-          const folder = this.fileService.generateFolderName(
-            target,
-            item.id,
-            item.position,
-            item.code
-          );
-          folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${folder}`;
+          await this.unitRepository.destroy({ where: { id } });
           break;
         }
         case "sub-unit": {
           item = await this.subUnitRepository.findOne({ where: { id } });
-          const parrent = await this.unitRepository.findOne({
-            where: { id: item.unitId },
-            attributes: ["id", "code", "position"],
-            include: [
-              {
-                model: ProjectEntity,
-                attributes: ["id", "code", "description"],
-                include: [
-                  {
-                    model: FieldEntity,
-                    attributes: ["id", "code"],
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                        attributes: ["id", "code"],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
-          });
-          const subsidiaryFolderName = this.fileService.generateFolderName(
-            "subsidiary",
-            parrent.project.field.subsidiary.id,
-            parrent.project.field.subsidiary.code
-          );
-          const fieldFolderName = this.fileService.generateFolderName(
-            "field",
-            parrent.project.field.id,
-            parrent.project.field.code
-          );
-          const projectFolderName = this.fileService.generateFolderName(
-            "project",
-            parrent.project.id,
-            parrent.project.code,
-            parrent.project.description
-          );
-          const unitFolder = this.fileService.generateFolderName(
-            "unit",
-            parrent.id,
-            parrent.position,
-            parrent.code
-          );
-          const folder = this.fileService.generateFolderName(
-            target,
-            item.id,
-            item.position,
-            item.code
-          );
-          folderName = `${subsidiaryFolderName}/${fieldFolderName}/${projectFolderName}/002. Объекты/${unitFolder}/002. Объекты/${folder}`;
+          await this.subUnitRepository.destroy({ where: { id } });
           break;
         }
         default:
           break;
       }
-      // this.fileService.removeDirectoryOrFile(folderName);
+
+      this.fileService.removeDirectoryOrFile(folderName);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
     return item;
   };
 

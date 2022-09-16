@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useActions, useTypedSelector } from "../../../hooks";
 import { getAllItems, getOneItem } from "..";
+import { FormActions } from "../../main";
 
 export const usePositionTree = () => {
   const {
@@ -33,6 +34,22 @@ export const usePositionTree = () => {
     }
   }, [currentItem]);
 
+  const [renderFormFlag, setRenderFormFlag] = useState(false);
+
+  useEffect(
+    () =>
+      setRenderFormFlag(
+        formVisible &&
+          (actionType === FormActions.ADD ||
+            actionType === FormActions.ADD_CHILD ||
+            actionType === FormActions.REMOVE ||
+            actionType === FormActions.REMOVE_CHILD ||
+            actionType === FormActions.EDIT ||
+            actionType === FormActions.EDIT_CHILD)
+      ),
+    [actionType, formVisible]
+  );
+
   return {
     currentItem,
     checkedItem,
@@ -51,5 +68,6 @@ export const usePositionTree = () => {
     setPositionTreeItems,
     getAllItems,
     getOneItem,
+    renderFormFlag,
   };
 };

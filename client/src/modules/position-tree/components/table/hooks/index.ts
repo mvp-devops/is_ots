@@ -23,6 +23,7 @@ export const usePositionTreeTable = () => {
     getPositionTreeItems,
     setPositionTreeItem,
     setPositionTreeItems,
+    renderFormFlag,
   } = usePositionTree();
 
   useEffect(() => {
@@ -103,7 +104,9 @@ export const usePositionTreeTable = () => {
       }
     }
     setSearchValue("");
-  }, [target]);
+    setActionType("");
+    setFormVisible(false);
+  }, [currentItem?.id, target]);
 
   useEffect(() => setDataSource(renderItems), [renderItems]);
 
@@ -124,5 +127,6 @@ export const usePositionTreeTable = () => {
     setPositionTreeItems,
     onSearch,
     searchValue,
+    renderFormFlag,
   };
 };

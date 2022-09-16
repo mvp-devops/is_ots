@@ -43,6 +43,7 @@ const ItemPage: FC<ItemPageProps> = () => {
     summaryListOfEquipmentView,
     checkListData,
     loading,
+    renderFormFlag,
   } = useItemPage();
 
   // const renderCheckListForm =  formVisible && currentItem && actionType === FormActions.CHECKLIST &&  (
@@ -106,22 +107,14 @@ const ItemPage: FC<ItemPageProps> = () => {
           child={<CollectiveCheckSheet data={commentAccountingRequestData} />}
         />
       )}
-      {/* {formVisible && currentItem && (
+      {renderFormFlag && (
         <ModalContainer
           show={formVisible}
           onCancel={() => setFormVisible(false)}
           action={actionType}
-          child={
-            actionType === FormActions.CHECKLIST ? (
-              <CheckListForm />
-            ) : actionType === FormActions.USER ? (
-              <UserForm />
-            ) : (
-              <PositionTreeForm />
-            )
-          }
+          child={<PositionTreeForm />}
         />
-      )} */}
+      )}
 
       {loading ? (
         <Spin size="large" />

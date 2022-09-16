@@ -404,7 +404,7 @@ export class FileStorageService {
     const item = await this.designDocumentRepository.findOne({ where: { id } });
     if (item) {
       this.removeDirectoryOrFile(`${item.filePath}/${item.fileName}`);
-      this.designDocumentRepository.destroy({ where: { id } });
+      await this.designDocumentRepository.destroy({ where: { id } });
     }
 
     return item;

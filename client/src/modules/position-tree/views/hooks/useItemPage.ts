@@ -1,3 +1,4 @@
+import { usePositionTree } from "./../../hooks/index";
 import { useEffect, useState } from "react";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../../../../hooks";
@@ -27,6 +28,8 @@ export const useItemPage = (items?: MenuItem[]) => {
   const { checkListData, loading, renderItems } = useTypedSelector(
     (state) => state.positionTree
   );
+
+  const { renderFormFlag } = usePositionTree();
 
   const {
     setFormVisible,
@@ -203,5 +206,6 @@ export const useItemPage = (items?: MenuItem[]) => {
     setListItemsView,
     setDocumentationView,
     checkListData,
+    renderFormFlag,
   };
 };

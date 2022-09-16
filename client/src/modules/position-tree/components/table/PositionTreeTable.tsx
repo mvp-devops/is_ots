@@ -26,18 +26,10 @@ const PositionTreeTable = () => {
     setPositionTreeItems,
     searchValue,
     onSearch,
+    renderFormFlag,
   } = usePositionTreeTable();
 
   const columns = TableColumns();
-
-  const renderFormFlag =
-    formVisible &&
-    (actionType === FormActions.ADD ||
-      actionType === FormActions.ADD_CHILD ||
-      actionType === FormActions.REMOVE ||
-      actionType === FormActions.REMOVE_CHILD ||
-      actionType === FormActions.EDIT ||
-      actionType === FormActions.EDIT_CHILD);
 
   return (
     <Layout>
@@ -59,10 +51,7 @@ const PositionTreeTable = () => {
           }}
           onRow={(record, rowIndex) => {
             return {
-              onMouseEnter: (event) => {
-                setPositionTreeItem(record);
-                console.log(checkedItem);
-              },
+              onMouseEnter: (event) => setPositionTreeItem(record),
             };
           }}
           title={() => (
