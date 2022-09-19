@@ -19,13 +19,22 @@ export interface NSIView {
   title: string;
   code: string;
   description: string;
-  logo?: string | null;
+  file?: string | null;
+  threshold?: string | number;
+  goal?: string | number;
+  tenseGoal?: string | number;
 }
 
 export interface DesignOrCounterpartyCreationAttrs
   extends RegulatoryReferenceInformationCreationAttrs {
   file: any;
 }
+
+export type NsiCreateOrUpdateAttrs =
+  | DesignOrCounterpartyCreationAttrs
+  | CriticalityCreationAttrs
+  | RegulatoryReferenceInformationCreationAttrs
+  | null;
 
 export interface UserCreateOrUpdateAttrs {
   subsidiaryId: string | number | null;

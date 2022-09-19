@@ -10,7 +10,7 @@ import {
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
-import { useRegulatoryReferenceInformationForm } from "./";
+import { useUserForm } from "./hooks";
 import { SelectUIComponent, InputUIComponent } from "../../../../components";
 import { userRoles } from "../../../main";
 
@@ -27,8 +27,7 @@ const UserForm = () => {
     fieldsList,
     emailValidate,
     userRegistration,
-    setFormVisible,
-  } = useRegulatoryReferenceInformationForm();
+  } = useUserForm();
 
   return (
     <Form

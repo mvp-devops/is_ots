@@ -1,6 +1,7 @@
 import { ActionTypes, EssenceAction, EssenceState } from "../types/main.types";
 
 const initialState: EssenceState = {
+  baseTarget: "",
   formVisible: false,
   actionType: "",
   checkListView: false,
@@ -98,6 +99,12 @@ export const mainReducer = (
         ...state,
         isAuth: false,
         currentUser: null,
+      };
+
+    case ActionTypes.SET_BASE_TARGET:
+      return {
+        ...state,
+        baseTarget: action.payload,
       };
 
     default:

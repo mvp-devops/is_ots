@@ -1,6 +1,7 @@
 import axios from "axios";
 
 import {
+  NsiCreateOrUpdateAttrs,
   NSIView,
   UserCreateOrUpdateAttrs,
   UserView,
@@ -9,36 +10,88 @@ import { setUrl } from "../../main";
 
 const baseUrl = "api/regulatory-reference-information";
 
-const setFormData = (item: UserCreateOrUpdateAttrs): FormData => {
+const setFormData = (
+  item: UserCreateOrUpdateAttrs | NsiCreateOrUpdateAttrs
+): FormData => {
   const data = new FormData();
 
-  item.file && data.append("file", item.file);
+  item && "file" in item && item.file && data.append("file", item.file);
 
-  item.subsidiaryId &&
+  item &&
+    "subsidiaryId" in item &&
+    item.subsidiaryId &&
     data.append("subsidiaryId", item.subsidiaryId.toString());
 
-  item.fieldId && data.append("fieldId", item.fieldId.toString());
+  item &&
+    "fieldId" in item &&
+    item.fieldId &&
+    data.append("fieldId", item.fieldId.toString());
 
-  item.designId && data.append("designId", item.designId.toString());
+  item &&
+    "designId" in item &&
+    item.designId &&
+    data.append("designId", item.designId.toString());
 
-  item.counterpartyId &&
+  item &&
+    "counterpartyId" in item &&
+    item.counterpartyId &&
     data.append("counterpartyId", item.counterpartyId.toString());
 
-  item.firstName && data.append("firstName", item.firstName);
+  item &&
+    "firstName" in item &&
+    item.firstName &&
+    data.append("firstName", item.firstName);
 
-  item.secondName && data.append("secondName", item.secondName);
+  item &&
+    "secondName" in item &&
+    item.secondName &&
+    data.append("secondName", item.secondName);
 
-  item.lastName && data.append("lastName", item.lastName);
+  item &&
+    "lastName" in item &&
+    item.lastName &&
+    data.append("lastName", item.lastName);
 
-  item.subdivision && data.append("subdivision", item.subdivision);
+  item &&
+    "subdivision" in item &&
+    item.subdivision &&
+    data.append("subdivision", item.subdivision);
 
-  item.position && data.append("position", item.position);
+  item &&
+    "position" in item &&
+    item.position &&
+    data.append("position", item.position);
 
-  item.email && data.append("email", item.email);
+  item && "email" in item && item.email && data.append("email", item.email);
 
-  item.phone && data.append("phone", item.phone);
+  item && "phone" in item && item.phone && data.append("phone", item.phone);
 
-  item.password && data.append("password", item.password);
+  item &&
+    "password" in item &&
+    item.password &&
+    data.append("password", item.password);
+
+  item && "title" in item && item.title && data.append("title", item.title);
+  item &&
+    "code" in item &&
+    item.code &&
+    data.append("code", item.code as string);
+  item &&
+    "description" in item &&
+    item.description &&
+    data.append("description", item.description);
+  item &&
+    "goal" in item &&
+    item.goal &&
+    data.append("goal", item.goal as string);
+  item &&
+    "tenseGoal" in item &&
+    item.tenseGoal &&
+    data.append("tenseGoal", item.tenseGoal as string);
+  item &&
+    "threshold" in item &&
+    item.threshold &&
+    data.append("threshold", item.threshold as string);
 
   return data;
 };
@@ -62,6 +115,42 @@ export const getItems = async (target: string): Promise<NSIView[]> => {
 export const getAllItems = async (target: string): Promise<NSIView[]> => {
   const url = setUrl(`${baseUrl}/find`);
   const { data } = await axios.get<NSIView[]>(url, { params: { target } });
+  return data;
+};
+
+export const createOneEssence = async (
+  target: string,
+  item: NsiCreateOrUpdateAttrs
+): Promise<NSIView> => {
+  const url = setUrl(`${baseUrl}/add`);
+  const formData = setFormData(item);
+  const { data } = await axios.post<NSIView>(url, formData, {
+    params: { target },
+  });
+  return data;
+};
+
+export const updateOneEssence = async (
+  target: string,
+  id: string,
+  item: NsiCreateOrUpdateAttrs
+): Promise<NSIView> => {
+  const url = setUrl(`${baseUrl}/edit/${id}`);
+  const formData = setFormData(item);
+  const { data } = await axios.put<NSIView>(url, formData, {
+    params: { target },
+  });
+  return data;
+};
+
+export const deleteOneEssense = async (
+  target: string,
+  id: string
+): Promise<NSIView> => {
+  const url = setUrl(`${baseUrl}/remove/${id}`);
+  const { data } = await axios.delete<NSIView>(url, {
+    params: { target },
+  });
   return data;
 };
 

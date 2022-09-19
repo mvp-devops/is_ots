@@ -1,5 +1,6 @@
 export const tableLocale = {
-  filterTitle: "Filter menu",
+  pagination: "",
+  filterTitle: "Фильтр",
   filterConfirm: "OK",
   filterReset: "Сбросить",
   filterEmptyText: "Нет данных",

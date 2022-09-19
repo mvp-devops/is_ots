@@ -82,3 +82,10 @@ export const logout = () => {
     type: ActionTypes.USER_LOGOUT,
   };
 };
+
+export const setBaseTarget = (target: string) => {
+  return {
+    type: ActionTypes.SET_BASE_TARGET,
+    payload: target,
+  };
+};

@@ -1,3 +1,8 @@
+import {
+  NsiCreateOrUpdateAttrs,
+  NSIView,
+} from "../../../../../../server/common/types/regulatory-reference-information";
+
 export const userItem = {
   subsidiaryId: null,
   designId: null,
@@ -13,4 +18,34 @@ export const userItem = {
   password: "",
   roles: [],
   file: null,
+};
+
+export const nsiItem: NsiCreateOrUpdateAttrs = {
+  title: "",
+  code: "",
+  description: "",
+  threshold: "",
+  goal: "",
+  tenseGoal: "",
+  file: null,
+};
+
+export const initFormData = (row?: NSIView): NsiCreateOrUpdateAttrs => {
+  let item: NsiCreateOrUpdateAttrs = null;
+
+  if (row) {
+    item = {
+      title: row.title,
+      code: row.code,
+      description: row.description,
+      threshold: row.threshold,
+      goal: row.goal,
+      tenseGoal: row.tenseGoal,
+      file: null,
+    };
+  } else {
+    item = nsiItem;
+  }
+
+  return item;
 };

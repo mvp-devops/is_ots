@@ -14,6 +14,8 @@ import {
 import { PositionTreeItem } from "../../../server/common/types/position-tree";
 import { useActions, useTypedSelector } from "../hooks";
 import { ItemPage } from "../modules/position-tree";
+import { RegulatoryReferenceInformationList } from "../modules/regulatory-reference-information";
+import NsiPage from "../modules/regulatory-reference-information/views/NsiPage";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Text } = Typography;
@@ -22,12 +24,24 @@ const { Panel } = Collapse;
 const MainPage: FC = () => {
   const navigate = useNavigate();
   const [collapsed, setCollapsed] = useState(false);
-  const { setMenuItems, setCurrentItem, logout, setTarget, setChildTarget } =
-    useActions();
+  const {
+    setMenuItems,
+    setCurrentItem,
+    logout,
+    setTarget,
+    setChildTarget,
+    setBaseTarget,
+  } = useActions();
   const { menuItems, currentItem, target, childTarget } = useTypedSelector(
     (state) => state.positionTree
   );
-  const { formVisible, currentUser } = useTypedSelector((state) => state.main);
+  const { formVisible, currentUser, baseTarget } = useTypedSelector(
+    (state) => state.main
+  );
+
+  const { renderNsiItems, loading: nsiView } = useTypedSelector(
+    (state) => state.nsi
+  );
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
     if (item) {
@@ -115,7 +129,10 @@ const MainPage: FC = () => {
               >
                 <Panel
                   header={
-                    <Space className="d-flex align-items-center">
+                    <Space
+                      className="d-flex align-items-center"
+                      onClick={() => setBaseTarget("POSITION_TREE")}
+                    >
                       <AppstoreOutlined
                         style={{ marginBottom: 4 }}
                         className="text-secondary"
@@ -123,7 +140,7 @@ const MainPage: FC = () => {
                       <Text type="secondary">Дерево позиций</Text>
                     </Space>
                   }
-                  key="position-tree"
+                  key="POSITION_TREE"
                 >
                   <Tree
                     style={{ top: 2, width: 275 }}
@@ -136,7 +153,12 @@ const MainPage: FC = () => {
                 </Panel>
                 <Panel
                   header={
-                    <Space className="d-flex align-items-center">
+                    <Space
+                      className="d-flex align-items-center"
+                      onClick={() =>
+                        setBaseTarget("REGULATORY_REFERENCE_INFORMATION")
+                      }
+                    >
                       <BookOutlined
                         style={{ marginBottom: 4 }}
                         className="text-secondary"
@@ -144,15 +166,16 @@ const MainPage: FC = () => {
                       <Text type="secondary">Справочники</Text>
                     </Space>
                   }
-                  key="regulatory-reference-information"
+                  key="REGULATORY_REFERENCE_INFORMATION"
                 >
-                  Будет перечень справочников
+                  <RegulatoryReferenceInformationList />
                 </Panel>
               </Collapse>
             </Sider>
           )}
           <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
-            {currentItem && <ItemPage />}
+            {currentItem && baseTarget === "POSITION_TREE" && <ItemPage />}
+            {baseTarget === "REGULATORY_REFERENCE_INFORMATION" && <NsiPage />}
           </Content>
         </Layout>
 

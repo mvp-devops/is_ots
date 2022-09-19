@@ -1,31 +1,25 @@
-import { FC } from "react";
 import { Layout, Skeleton, Spin } from "antd";
 
 import {
   CommentAccountingModalContainer,
-  CollectiveCheckSheet,
-  CheckListForm,
   CheckList,
-  StatisticView,
 } from "../../comment-accounting";
 import {
   EquipmentAccountingModalContainer,
   SummaryListOfEquipment,
 } from "../../equipment-accounting";
-import { ItemPageBreadcrumbs, ItemPageMenu, useItemPage } from "../";
-import { ModalContainer, PositionTreeForm } from "../components/forms";
-import { FormActions } from "../../main";
-import { UserForm } from "../../regulatory-reference-information";
-import { DesignDocumentTable } from "../../file-storage";
-import { TabsView } from "../";
+import {
+  ItemPageBreadcrumbs,
+  ItemPageMenu,
+  useItemPage,
+  TabsView,
+  PositionTreeForm,
+} from "../";
+import { ModalContainer } from "../../../components";
 
 const { Content } = Layout;
 
-interface ItemPageProps {
-  // userRole: string;
-}
-
-const ItemPage: FC<ItemPageProps> = () => {
+const ItemPage = () => {
   const {
     formVisible,
     setFormVisible,
@@ -33,14 +27,8 @@ const ItemPage: FC<ItemPageProps> = () => {
     checkListView,
     setCheckListView,
     currentItem,
-    statisticView,
-    listItemsView,
-    documentationView,
-    collectiveCheckSheetView,
-    setCollectiveCheckSheetView,
     setSummaryListOfEquipmentView,
     summaryListOfEquipmentView,
-    checkListData,
     loading,
     renderFormFlag,
   } = useItemPage();
@@ -94,21 +82,17 @@ const ItemPage: FC<ItemPageProps> = () => {
         />
       )}
 
-      {loading ? (
-        <Spin size="large" />
-      ) : (
-        checkListView && (
-          <CommentAccountingModalContainer
-            show={checkListView}
-            onCancel={() => setCheckListView(false)}
-            action={actionType}
-            child={
-              <Skeleton active loading={loading}>
-                <CheckList />
-              </Skeleton>
-            }
-          />
-        )
+      {checkListView && (
+        <CommentAccountingModalContainer
+          show={checkListView}
+          onCancel={() => setCheckListView(false)}
+          action={actionType}
+          child={
+            <Skeleton active loading={loading}>
+              <CheckList />
+            </Skeleton>
+          }
+        />
       )}
     </Layout>
   );

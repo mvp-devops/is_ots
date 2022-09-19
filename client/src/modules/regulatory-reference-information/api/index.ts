@@ -1,6 +1,17 @@
 import {
   getAllItems,
   getOneItem,
+  createOneEssence,
+  updateOneEssence,
+  deleteOneEssense,
+  userRegistration,
 } from "./regulatory-reference-information.api";
 
-export { getAllItems, getOneItem };
+export {
+  userRegistration,
+  getAllItems,
+  getOneItem,
+  createOneEssence,
+  updateOneEssence,
+  deleteOneEssense,
+};

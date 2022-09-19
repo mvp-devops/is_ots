@@ -22,19 +22,22 @@ const ModalContainer: FC<ModalContainerProps> = ({
     action === FormActions.ADD ||
     action === FormActions.ADD_CHILD ||
     action === FormActions.ADD_DOCUMENT ||
-    action === FormActions.ADD_COMMENT;
+    action === FormActions.ADD_COMMENT ||
+    action === FormActions.ADD_DICTIONARY_ITEM;
 
   const editActionsFlag =
     action === FormActions.EDIT ||
     action === FormActions.EDIT_CHILD ||
     action === FormActions.EDIT_DOCUMENT ||
-    action === FormActions.EDIT_COMMENT;
+    action === FormActions.EDIT_COMMENT ||
+    action === FormActions.EDIT_DICTIONARY_ITEM;
 
   const removeActionsFlag =
     action === FormActions.REMOVE ||
     action === FormActions.REMOVE_CHILD ||
     action === FormActions.REMOVE_DOCUMENT ||
-    action === FormActions.REMOVE_COMMENT;
+    action === FormActions.REMOVE_COMMENT ||
+    action === FormActions.REMOVE_DICTIONARY_ITEM;
 
   const containerWidth =
     action === FormActions.ADD_COMMENT || action === FormActions.EDIT_COMMENT

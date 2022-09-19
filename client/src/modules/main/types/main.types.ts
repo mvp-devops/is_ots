@@ -39,6 +39,10 @@ export enum FormActions {
   EDIT_USER = "EDIT_USER",
   REMOVE_USER = "REMOVE_USER",
 
+  ADD_DICTIONARY_ITEM = "ADD_DICTIONARY_ITEM",
+  EDIT_DICTIONARY_ITEM = "EDIT_DICTIONARY_ITEM",
+  REMOVE_DICTIONARY_ITEM = "REMOVE_DICTIONARY_ITEM",
+
   USER = "USER",
 }
 
@@ -60,6 +64,7 @@ export interface ListItem {
 }
 
 export interface EssenceState {
+  baseTarget: string;
   formVisible: boolean;
   actionType: string;
   checkListView: boolean;
@@ -83,6 +88,7 @@ export enum ActionTypes {
   SET_DOCUMENTATION_VIEW = "SET_DOCUMENTATION_VIEW",
   USER_LOGIN = "USER_LOGIN",
   USER_LOGOUT = "USER_LOGOUT",
+  SET_BASE_TARGET = "SET_BASE_TARGET",
 }
 
 interface SetFormVisibleAction {
@@ -132,6 +138,11 @@ interface UserLogoutAction {
   type: ActionTypes.USER_LOGOUT;
 }
 
+interface SetBaseTargetAction {
+  type: ActionTypes.SET_BASE_TARGET;
+  payload: string;
+}
+
 export type EssenceAction =
   | SetFormVisibleAction
   | SetActionTypeAction
@@ -141,5 +152,6 @@ export type EssenceAction =
   | SetActionCollectiveCheckSheetView
   | SetActionListItemsView
   | SetActionDocumentationView
+  | SetBaseTargetAction
   | UserLoginAction
   | UserLogoutAction;

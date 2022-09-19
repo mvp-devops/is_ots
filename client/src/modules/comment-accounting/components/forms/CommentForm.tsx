@@ -1,14 +1,5 @@
-import { Button, Divider, Form, Select, Space, Typography } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import {
-  DesignDocumentCommentCreationAttrs,
-  DesignDocumentCommentSolutionCreationAttrs,
-} from "../../../../../../server/common/types/comments-accounting";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { addItem } from "./form.actions";
-import { initCommentFormData } from "./form.settings";
-import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";
+import { Button, Divider, Form, Space, Typography } from "antd";
+import { DesignDocumentCommentCreationAttrs } from "../../../../../../server/common/types/comments-accounting";
 import SolutionForm from "./SolutionForm";
 import { useCommentAccountingForm } from "./hooks/useCommentAccountingForm";
 import {
