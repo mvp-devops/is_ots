@@ -39,9 +39,15 @@ const Header = () => {
                 <Space className="d-flex justify-content-start">
                   <Text type="secondary">
                     {unitQuestionareRender.fileType.toUpperCase() === ".PDF" ? (
-                      <FilePdfOutlined className="text-danger" />
+                      <FilePdfOutlined
+                        className="text-danger"
+                        style={{ marginBottom: 6 }}
+                      />
                     ) : (
-                      <FileUnknownOutlined className="text-secondary" />
+                      <FileUnknownOutlined
+                        className="text-secondary"
+                        style={{ marginBottom: 6 }}
+                      />
                     )}
                   </Text>
                   <a

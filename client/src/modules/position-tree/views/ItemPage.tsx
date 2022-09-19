@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Layout, Skeleton, Spin } from "antd";
 
-import { commentAccountingRequestData } from "../../comment-accounting/utils/comment-accounting.consts";
 import {
   CommentAccountingModalContainer,
   CollectiveCheckSheet,
@@ -72,20 +71,6 @@ const ItemPage: FC<ItemPageProps> = () => {
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <TabsView />
-          {loading ? (
-            <Content
-              className="d-flex justify-content-center align-items-center"
-              style={{ height: window.innerHeight - 54 }}
-            >
-              <Spin size="large" />
-            </Content>
-          ) : (
-            <Content style={{ padding: "0 5px" }}>
-              {/* {documentationView && <DesignDocumentTable />} */}
-              {/* {statisticView && <StatisticView />} */}
-            </Content>
-          )}
-
           {currentItem && (
             <ItemPageMenu childTarget={currentItem.childrenTarget} />
           )}

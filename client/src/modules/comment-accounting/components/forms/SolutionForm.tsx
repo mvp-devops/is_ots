@@ -1,147 +1,85 @@
-import { Button, Form, Select, Space, Typography } from "antd";
-import TextArea from "antd/lib/input/TextArea";
-import { ChangeEvent, FC } from "react";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { DesignDocumentCommentSolutionCreationAttrs } from "../../../../../../server/common/types/comments-accounting";
+import { FC } from "react";
+import { Button, Form, Space, Typography } from "antd";
+import { CloseOutlined } from "@ant-design/icons";
 import {
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import { changeItems, removeItem } from "./form.actions";
-import { CloseOutlined } from "@ant-design/icons";
+
+import { useCommentAccountingForm } from "./hooks/useCommentAccountingForm";
+import { SelectUIComponent, TextAreaUIComponent } from "../../../../components";
 
 const { Item } = Form;
 const { Text } = Typography;
 
 export interface SolutionFormProps {
-  items: DesignDocumentCommentSolutionCreationAttrs[];
-  setItems: Function;
-  item: DesignDocumentCommentSolutionCreationAttrs;
+  id: string | number;
+  onRemove: () => void;
+  changeValue: Function;
 }
 
-const SolutionForm: FC<SolutionFormProps> = ({ items, setItems, item }) => {
+const SolutionForm: FC<SolutionFormProps> = ({ id, onRemove, changeValue }) => {
+  const { solutions: items } = useCommentAccountingForm();
+
   return (
     <Form
-      labelCol={{ span: 6 }}
-      wrapperCol={{ span: 18 }}
+      labelCol={{ span: 10 }}
+      wrapperCol={{ span: 14 }}
       layout="horizontal"
-      className="m-1 p-1 border"
-      style={{ width: items.length > 1 ? "410px" : "900px" }}
+      className="m-0 p-1 border"
+      style={{ width: items.length > 1 ? 400 : 800 }}
     >
-      <div className="row d-flex justify-content-end mt-1 mx-3">
+      <Space className="d-flex justify-content-end">
         <Button
           className="border-0 mb-3 mt-0"
           style={{ background: "transparent", width: "5%" }}
         >
           <CloseOutlined
             title="Удалить строку"
-            onClick={() => removeItem(items, setItems, item.key)}
+            onClick={onRemove}
             style={{ fontSize: " 14px" }}
             className="text-danger"
           />
         </Button>
-      </div>
-      <Item
-        label={<Text type="secondary">Статус ответа</Text>}
-        className="m-1 p-1"
-      >
-        <Select
-          size="small"
-          className="text-secondary"
-          showSearch
-          notFoundContent={
-            <Space className="d-flex justify-content-center p-3">
-              <Text type="warning">
-                <ExclamationCircleOutlined
-                  style={{ fontSize: 20, marginBottom: 2 }}
-                />
-              </Text>
-
-              <Text type="secondary">
-                Нет данных для отображения. Уточнить поиск
-              </Text>
-            </Space>
-          }
-          filterOption={(input, option) =>
-            (option!.children as unknown as string)
-              .toLowerCase()
-              .includes(input.toLowerCase())
-          }
-          onChange={(value: string) =>
-            changeItems(items, setItems, "statusId", value, item.key)
-          }
-        >
-          {statusRequestData.map(({ id, title }) => (
-            <Select.Option key={id}>{title}</Select.Option>
-          ))}
-        </Select>
-      </Item>
-      <Item label={<Text type="secondary">Ответ</Text>} className="m-1 p-1">
-        <TextArea
-          rows={2}
-          className="text-secondary"
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            changeItems(items, setItems, "answer", e.target.value, item.key)
-          }
+      </Space>
+      <Item label={<Text type="secondary">Статус ответа</Text>} className="m-0">
+        <SelectUIComponent
+          id="statusId"
+          itemId={id}
+          items={statusRequestData}
+          changeValue={changeValue}
         />
       </Item>
-      <Item label={<Text type="secondary">Контакты</Text>} className="m-1 p-1">
-        <TextArea
-          rows={2}
-          className="text-secondary"
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            changeItems(
-              items,
-              setItems,
-              "designContacts",
-              e.target.value,
-              item.key
-            )
-          }
+      <Item label={<Text type="secondary">Ответ</Text>} className="m-0 mb-1">
+        <TextAreaUIComponent
+          id="answer"
+          itemId={id}
+          changeValue={changeValue}
+        />
+      </Item>
+      <Item label={<Text type="secondary">Контакты</Text>} className="m-0">
+        <TextAreaUIComponent
+          id="designContacts"
+          itemId={id}
+          changeValue={changeValue}
         />
       </Item>
       <Item
         label={<Text type="secondary">Статус решения</Text>}
-        className="m-1 p-1"
+        className="m-0"
       >
-        <Select
-          size="small"
-          showSearch
-          className="text-secondary"
-          notFoundContent={
-            <Space className="d-flex justify-content-center p-3">
-              <Text type="warning">
-                <ExclamationCircleOutlined
-                  style={{ fontSize: 20, marginBottom: 2 }}
-                />
-              </Text>
-
-              <Text type="secondary">
-                Нет данных для отображения. Уточнить поиск
-              </Text>
-            </Space>
-          }
-          filterOption={(input, option) =>
-            (option!.children as unknown as string)
-              .toLowerCase()
-              .includes(input.toLowerCase())
-          }
-          onChange={(value: string) =>
-            changeItems(items, setItems, "solutionId", value, item.key)
-          }
-        >
-          {solutionRequestData.map(({ id, title }) => (
-            <Select.Option key={id}>{title}</Select.Option>
-          ))}
-        </Select>
+        <SelectUIComponent
+          id="solutionId"
+          itemId={id}
+          items={solutionRequestData}
+          changeValue={changeValue}
+        />
       </Item>
-      <Item label={<Text type="secondary">Решение</Text>} className="m-1 p-1">
-        <TextArea
-          rows={2}
-          className="text-secondary"
-          onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
-            changeItems(items, setItems, "solution", e.target.value, item.key)
-          }
+      <Item label={<Text type="secondary">Решение</Text>} className="m-0">
+        <TextAreaUIComponent
+          id="solution"
+          itemId={id}
+          changeValue={changeValue}
         />
       </Item>
     </Form>

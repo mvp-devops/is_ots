@@ -6,7 +6,8 @@ import CommentTable from "../../components/tables/CommentTable";
 import { useCollectiveCheckSheet } from "./hooks/useCollectiveCheckSheet";
 import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
-import { CommentForm, ModalContainer } from "../../components";
+import { CommentForm } from "../../components";
+import { ModalContainer } from "../../../../components";
 
 const { Text } = Typography;
 
@@ -25,13 +26,7 @@ const CollectiveCheckSheet = () => {
       show={formVisible}
       onCancel={() => setFormVisible(false)}
       action={actionType}
-      child={
-        <CommentForm
-          target="mock"
-          currentId="mock_id"
-          onCancel={() => setFormVisible(false)}
-        />
-      }
+      child={<CommentForm />}
     />
   );
 

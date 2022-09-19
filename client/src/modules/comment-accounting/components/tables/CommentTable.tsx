@@ -12,23 +12,22 @@ import {
   EditOutlined,
   DeleteOutlined,
   EllipsisOutlined,
-  PlusOutlined,
   FilePdfOutlined,
   FileUnknownOutlined,
 } from "@ant-design/icons";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 import { DesignDocumentCommentView } from "../../../../../../server/common/types/comments-accounting";
 import {
   criticalityRequestData,
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
-import CommentForm from "../forms/CommentForm";
 import SolutionTable from "./SolutionTable";
 import { useNavigate } from "react-router-dom";
 import { setCommentFilters } from "./table.settings";
-import { ModalContainer } from "../forms";
-import { tableLocale } from "../../../main";
+import { FormActions, tableLocale } from "../../../main";
+import { useCommentAccounting } from "../../hooks";
+import { useCommentAccountingTable } from "./hooks/useCommentAccountingTable";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -40,8 +39,9 @@ const { Panel } = Collapse;
 const { Row, Cell } = Table.Summary;
 
 const CommentTable: FC<CommentTableProps> = ({ data }) => {
-  const [formVisible, setFormVisible] = useState(false);
-  const [actionType, setActionType] = useState("POST");
+  const { setFormVisible, setActionType } = useCommentAccounting();
+
+  const { selectedRow, setSelectedRow } = useCommentAccountingTable();
 
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
             <Space
               className="text-secondary"
               onClick={() => {
-                setActionType("UPDATE");
+                setActionType(FormActions.EDIT_COMMENT);
                 setFormVisible(true);
               }}
             >
@@ -73,8 +73,11 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         {
           label: (
             <Space
-              // onClick={() => setDetailVisible(true)}
               className="text-secondary"
+              onClick={() => {
+                setActionType(FormActions.REMOVE_COMMENT);
+                setFormVisible(true);
+              }}
             >
               <DeleteOutlined
                 className="text-danger"
@@ -264,6 +267,11 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           expandedRowRender,
           rowExpandable: (record) => (record.comment.length > 0 ? true : false),
         }}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: (event) => setSelectedRow(record),
+          };
+        }}
         summary={(data) => (
           <Row>
             <Cell index={0} colSpan={11} align="right">
@@ -275,7 +283,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           </Row>
         )}
         footer={() => (
-          <Collapse defaultActiveKey={["1"]}>
+          <Collapse>
             <Panel header="Легенда" key="1">
               <Space
                 direction="horizontal"
@@ -359,20 +367,6 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           </Collapse>
         )}
       />
-      {formVisible && (
-        <ModalContainer
-          show={formVisible}
-          action={actionType}
-          onCancel={() => setFormVisible(false)}
-          child={
-            <CommentForm
-              target="project"
-              currentId="1"
-              onCancel={() => setFormVisible(false)}
-            />
-          }
-        />
-      )}
     </>
   );
 };

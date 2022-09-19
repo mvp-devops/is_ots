@@ -162,77 +162,55 @@ export class CommentAccountingService {
       ],
     });
 
-    const render: DesignDocumentCommentView = {
-      id: item.id,
-      number: item.id,
-      documentSection: "",
-      documentCode: "",
-      documentTitle: "",
-      documentPage: "",
-      comment: item.comment,
-      normative: `${item.normative.code}. ${item.normative.title}`,
-      criticalityId: item.criticalityId,
-      expertSubdivision: `${item.user.subsidiary.title}  \n\
-      ${item.user.subdivision} `,
-      expertContacts: ` ${item.user.position} \n\
-      ${item.user.email} \n\
-      ${item.user.phone}`,
-      solutions: [],
-    };
-
-    const solutionsRender: DesignDocumentCommentSolutionView[] = [];
-
-    for (let i = 0; i < item.solutions.length; i++) {
-      const { statusId, answer, user, solutionId, solution, designContacts } =
-        item.solutions[i];
-
-      const renderItem: DesignDocumentCommentSolutionView = {
-        statusId,
-        answer,
-        designContacts,
-        solutionId,
-        solution,
-        expertContacts: formatUser(user),
-      };
-      solutionsRender.push(renderItem);
-    }
-
-    render.solutions = solutionsRender;
+    let render: DesignDocumentCommentView[] = [];
+    let documentSection = "",
+      documentCode = "",
+      documentTitle = "";
 
     switch (target) {
       case "project": {
-        render.documentSection = `${item.pdc.stage.code}/${item.pdc.section.code}`;
-        render.documentCode = item.pdc.code;
-        render.documentTitle = item.pdc.title;
-        render.documentPage = "н/д";
+        documentSection = `${item.pdc.stage.code}/${item.pdc.section.code}`;
+        documentCode = item.pdc.code;
+        documentTitle = item.pdc.title;
+        render = this.commentRender(
+          [item],
+          documentSection,
+          documentCode,
+          documentTitle
+        );
+
         break;
       }
       case "unit": {
-        render.documentSection = `${item.udc.stage.code}/${item.udc.section.code}`;
-        render.documentCode = item.udc.code;
-        render.documentTitle = item.udc.title;
-        render.documentPage = "н/д";
+        documentSection = `${item.udc.stage.code}/${item.udc.section.code}`;
+        documentCode = item.udc.code;
+        documentTitle = item.udc.title;
         break;
       }
       case "sub-unit": {
-        render.documentSection = `${item.sudc.stage.code}/${item.sudc.section.code}`;
-        render.documentCode = item.sudc.code;
-        render.documentTitle = item.sudc.title;
-        render.documentPage = "н/д";
+        documentSection = `${item.sudc.stage.code}/${item.sudc.section.code}`;
+        documentCode = item.sudc.code;
+        documentTitle = item.sudc.title;
         break;
       }
       case "supplier": {
-        render.documentSection = `${item.sdc.stage.code}/${item.sdc.supplier.title}`;
-        render.documentCode = item.sdc.code;
-        render.documentTitle = item.sdc.title;
-        render.documentPage = "н/д";
+        documentSection = `${item.sdc.stage.code}/${item.sdc.supplier.title}`;
+        documentCode = item.sdc.code;
+        documentTitle = item.sdc.title;
         break;
       }
       default:
         break;
     }
 
-    return render;
+    render = this.commentRender(
+      [item],
+      documentSection,
+      documentCode,
+      documentTitle
+    );
+
+    return render[0];
   };
 
   findAll = async (
@@ -469,6 +447,13 @@ export class CommentAccountingService {
         ${items[i].user.email} \n\
         ${items[i].user.phone}`,
         solutions: [],
+        pdcId: items[i].pdcId,
+        udcId: items[i].udcId,
+        sudcId: items[i].sudcId,
+        sdcId: items[i].sdcId,
+        userId: items[i].userId,
+        directionId: items[i].directionId,
+        normativeId: items[i].normativeId,
       };
 
       const solutionsRender: DesignDocumentCommentSolutionView[] = [];
@@ -583,6 +568,11 @@ export class CommentAccountingService {
       for (let c = 0; c < items.length; c++) {
         const {
           id,
+          pdcId,
+          udcId,
+          sudcId,
+          sdcId,
+          userId,
           directionId,
           direction,
           comment,
@@ -615,6 +605,13 @@ export class CommentAccountingService {
           телефон: ${user.phone}`,
 
           solutions: this.solutionsRender(solutions),
+          pdcId,
+          udcId,
+          sudcId,
+          sdcId,
+          directionId,
+          normativeId,
+          userId,
         };
 
         comments.push(item);

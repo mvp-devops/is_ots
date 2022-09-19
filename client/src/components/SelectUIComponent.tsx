@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Select, Space, Typography } from "antd";
+import { Select, SelectProps, Space, Typography } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { SizeType } from "antd/lib/config-provider/SizeContext";
 
@@ -15,6 +15,8 @@ interface SelectUIComponentProps {
   id: string;
   changeValue: Function;
   items: any[];
+  itemId?: any;
+  props?: SelectProps;
 }
 
 const SelectUIComponent: FC<SelectUIComponentProps> = ({
@@ -26,9 +28,12 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   id,
   changeValue,
   items,
+  itemId,
+  props,
 }) => {
   return (
     <Select
+      {...props}
       size={size ? size : "small"}
       className={className ? `text-secondary ${className}` : "text-secondary"}
       defaultValue={defaultValue}
@@ -57,7 +62,7 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
           .toLowerCase()
           .localeCompare((optionB!.children as unknown as string).toLowerCase())
       }
-      onChange={(value: string) => changeValue(id, value)}
+      onChange={(value: string) => changeValue(id, value, itemId)}
     >
       {items
         .sort((a, b) => (a.title < b.title ? -1 : 0))

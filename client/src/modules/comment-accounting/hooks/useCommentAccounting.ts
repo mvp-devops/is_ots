@@ -1,4 +1,3 @@
-import React from "react";
 import { useActions, useTypedSelector } from "../../../hooks";
 import { FormActions } from "../../main";
 
@@ -9,7 +8,8 @@ export const useCommentAccounting = () => {
   const renderCommentAccountingFormFlag =
     formVisible &&
     (actionType === FormActions.ADD_COMMENT ||
-      actionType === FormActions.EDIT_COMMENT);
+      actionType === FormActions.EDIT_COMMENT ||
+      actionType === FormActions.REMOVE_COMMENT);
 
   return {
     formVisible,

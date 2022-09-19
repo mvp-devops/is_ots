@@ -21,19 +21,25 @@ const ModalContainer: FC<ModalContainerProps> = ({
   const addActionsFlag =
     action === FormActions.ADD ||
     action === FormActions.ADD_CHILD ||
-    action === FormActions.ADD_DOCUMENT;
+    action === FormActions.ADD_DOCUMENT ||
+    action === FormActions.ADD_COMMENT;
 
   const editActionsFlag =
     action === FormActions.EDIT ||
     action === FormActions.EDIT_CHILD ||
-    action === FormActions.EDIT_DOCUMENT;
+    action === FormActions.EDIT_DOCUMENT ||
+    action === FormActions.EDIT_COMMENT;
 
   const removeActionsFlag =
     action === FormActions.REMOVE ||
     action === FormActions.REMOVE_CHILD ||
-    action === FormActions.REMOVE_DOCUMENT;
+    action === FormActions.REMOVE_DOCUMENT ||
+    action === FormActions.REMOVE_COMMENT;
 
-  const containerWidth = action === FormActions.VIEW_COMMENT ? 1800 : 600;
+  const containerWidth =
+    action === FormActions.ADD_COMMENT || action === FormActions.EDIT_COMMENT
+      ? 900
+      : 600;
 
   return (
     <Modal
@@ -51,8 +57,6 @@ const ModalContainer: FC<ModalContainerProps> = ({
               ? "Чек-лист"
               : action === FormActions.ADD_USER
               ? "Регистрация пользователя"
-              : action === FormActions.VIEW_COMMENT
-              ? "Таблица замечаний к документу"
               : "Другое"}
           </Text>
         </Space>

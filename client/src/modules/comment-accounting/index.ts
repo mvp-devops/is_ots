@@ -7,6 +7,8 @@
 import { commentAccountingReducer } from "./store/comment-accounting.reducer";
 import * as commentAccountingActionCreators from "./store/comment-accounting.action-creators";
 
+import { useCommentAccounting } from "./hooks";
+
 import {
   CheckList,
   CollectiveCheckSheet,
@@ -41,4 +43,5 @@ export {
   useCommentAccountingFormData,
   commentAccountingReducer,
   commentAccountingActionCreators,
+  useCommentAccounting,
 };

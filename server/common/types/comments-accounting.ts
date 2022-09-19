@@ -29,6 +29,7 @@ export interface DesignDocumentCommentSolutionView {
 }
 
 export interface DesignDocumentCommentCreationAttrs {
+  id?: string | number | null;
   pdcId: string | number | null;
   udcId: string | number | null;
   sudcId: string | number | null;
@@ -54,6 +55,13 @@ export interface DesignDocumentCommentView {
   expertSubdivision: string;
   expertContacts: string;
   solutions: DesignDocumentCommentSolutionView[];
+  pdcId: string | number | null;
+  udcId: string | number | null;
+  sudcId: string | number | null;
+  sdcId: string | number | null;
+  directionId: string | number | null;
+  normativeId: string | number | null;
+  userId: string | number | null;
 }
 
 export interface DesignDocumentCommentRequestData {
