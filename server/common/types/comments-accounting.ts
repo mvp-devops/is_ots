@@ -176,7 +176,7 @@ export type CheckListView = ProjectCheckListView | UnitCheckListView;
 export interface CollectiveCheckSheetHeaders {
   projectTitleRender: string;
   unitTitleRender: string;
-  unitQuestionareRender: DesignDocumentView;
+  unitQuestionareRender: DesignDocumentView | null;
   subUnitTitleRender: string;
-  subUnitQuestionareRender: DesignDocumentView;
+  subUnitQuestionareRender: DesignDocumentView | null;
 }

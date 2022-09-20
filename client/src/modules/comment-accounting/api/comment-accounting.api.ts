@@ -80,17 +80,17 @@ export const getAllItems = async (
   return data;
 };
 
-// export const exportLKPData = async (body: {
-//   headers: CollectiveCheckSheetHeaders;
-//   data: DesignDocumentCommentView[];
-// }) => {
-//   const url = setUrl(`${baseUrl}/download`);
+export const exportLKPData = async (body: {
+  headers: CollectiveCheckSheetHeaders;
+  data: DesignDocumentCommentView[];
+}) => {
+  const url = setUrl(`${baseUrl}/download`);
 
-//   axios
-//     .post(url, body, {
-//       responseType: "blob",
-//     })
-//     .then((resp) => {
-//       download(resp.data, `LKP_${Math.random()}.xlsx`);
-//     });
-// };
+  axios
+    .post(url, body, {
+      responseType: "blob",
+    })
+    .then((resp) => {
+      download(resp.data, `LKP_${Math.random()}.xlsx`);
+    });
+};

@@ -10,8 +10,7 @@ import {
   Put,
   Res,
 } from "@nestjs/common";
-import { setCurrentDate } from "common/utils";
-import { Response } from "express";
+import { setCurrentDate } from "../../../common/utils";
 import {
   CheckListSets,
   CollectiveCheckSheetHeaders,
@@ -22,6 +21,7 @@ import {
   CreateDesignDocumentCommentDto,
   UpdateDesignDocumentCommentDto,
 } from "./dto";
+import { Response } from "express";
 
 @Controller("api/comment-accounting")
 export class CommentAccountingController {

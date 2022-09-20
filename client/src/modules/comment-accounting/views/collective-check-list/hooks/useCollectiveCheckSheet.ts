@@ -1,3 +1,4 @@
+import { exportLKPData } from "./../../../api";
 import { useEffect, useState } from "react";
 import { DesignDocumentView } from "../../../../../../../server/common/types/file-storage";
 import { useFileStorage } from "../../../../file-storage";
@@ -71,5 +72,6 @@ export const useCollectiveCheckSheet = () => {
     subUnitQuestionareRender,
     checkedDesignDocuments,
     currentDesignDocument,
+    exportLKPData,
   };
 };

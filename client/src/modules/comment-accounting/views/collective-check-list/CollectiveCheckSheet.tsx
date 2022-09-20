@@ -8,11 +8,23 @@ import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
 import { CommentForm } from "../../components";
 import { ModalContainer } from "../../../../components";
+import {
+  CollectiveCheckSheetHeaders,
+  DesignDocumentCommentView,
+} from "../../../../../../server/common/types/comments-accounting";
 
 const { Text } = Typography;
 
 const CollectiveCheckSheet = () => {
-  const { currentDesignDocument } = useCollectiveCheckSheet();
+  const {
+    currentDesignDocument,
+    exportLKPData,
+    projectTitleRender,
+    unitTitleRender,
+    unitQuestionareRender,
+    subUnitTitleRender,
+    subUnitQuestionareRender,
+  } = useCollectiveCheckSheet();
   const {
     formVisible,
     setFormVisible,
@@ -20,6 +32,20 @@ const CollectiveCheckSheet = () => {
     setActionType,
     renderCommentAccountingFormFlag,
   } = useCommentAccounting();
+
+  const body: {
+    headers: CollectiveCheckSheetHeaders;
+    data: DesignDocumentCommentView[];
+  } = {
+    headers: {
+      projectTitleRender,
+      unitTitleRender,
+      unitQuestionareRender,
+      subUnitTitleRender,
+      subUnitQuestionareRender,
+    },
+    data: currentDesignDocument ? currentDesignDocument.comments : [],
+  };
 
   const renderForm = renderCommentAccountingFormFlag && (
     <ModalContainer
@@ -48,7 +74,8 @@ const CollectiveCheckSheet = () => {
           <FileExcelOutlined
             style={{ fontSize: 16, cursor: "pointer" }}
             title="Выгрузить"
-            className="text-info"
+            className="text-success"
+            onClick={() => exportLKPData(body)}
           />
         </Space>
       </Space>
