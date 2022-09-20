@@ -11,6 +11,8 @@ import {
   UseInterceptors,
   UploadedFile,
   Put,
+  Header,
+  Res,
 } from "@nestjs/common";
 import {
   CreateRegulatoryReferenceInformationDto,
@@ -18,6 +20,8 @@ import {
 } from "./dto";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
 import { CreateUserDto } from "./dto/create-regulatory-reference-information.dto";
+import { Response } from "express";
+import { setCurrentDate } from "common/utils";
 
 @Controller("api/regulatory-reference-information")
 export class RegulatoryReferenceInformationController {
@@ -85,5 +89,26 @@ export class RegulatoryReferenceInformationController {
   remove(@Param("id") id: string, @Query() query: { target: string }) {
     const { target } = query;
     return this.service.remove(id, target);
+  }
+
+  @Get("/download")
+  async download(@Query() query: { target: string }, @Res() res: Response) {
+    const { target } = query;
+    let fileLocation = await this.service.downdoad(target);
+    res.header(
+      "Content-disposition",
+      `attachment; filename=import_${target}_${setCurrentDate()}.xlsx`
+    );
+    res.type(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.download(
+      fileLocation,
+      `import_${target}_${setCurrentDate()}.xlsx`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
   }
 }

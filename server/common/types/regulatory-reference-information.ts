@@ -1,3 +1,14 @@
+import {
+  CounterpartyEntity,
+  CriticalityEntity,
+  DesignEntity,
+  DirectionEntity,
+  EquipmentEntity,
+  SectionEntity,
+  StageEntity,
+  UserEntity,
+} from "../../src/modules/regulatory-reference-information";
+
 export interface RegulatoryReferenceInformationCreationAttrs {
   title: string;
   code: number | string | null;
@@ -74,3 +85,13 @@ export interface UserView {
   token: string | null;
   avatar?: string | null;
 }
+
+export type NsiEntries =
+  | CounterpartyEntity
+  | CriticalityEntity
+  | DesignEntity
+  | DirectionEntity
+  | EquipmentEntity
+  | SectionEntity
+  | StageEntity
+  | UserEntity;

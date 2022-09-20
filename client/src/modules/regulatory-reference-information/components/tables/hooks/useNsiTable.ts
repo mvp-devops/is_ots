@@ -1,8 +1,9 @@
-import React, { ChangeEventHandler, useEffect, useState } from "react";
+import { ChangeEventHandler, useEffect, useState } from "react";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 import { useActions, useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
 import { useRegulatoryReferenceInformationList } from "../../../views/hooks";
+import { exportData } from "./../../../api";
 
 export const useNsiTable = () => {
   const [dataSource, setDataSource] = useState<NSIView[]>([]);
@@ -98,5 +99,6 @@ export const useNsiTable = () => {
     setCurrentNsiItem,
     searchValue,
     onSearch,
+    exportData,
   };
 };

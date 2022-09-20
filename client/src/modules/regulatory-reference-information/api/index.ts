@@ -5,6 +5,7 @@ import {
   updateOneEssence,
   deleteOneEssense,
   userRegistration,
+  exportData,
 } from "./regulatory-reference-information.api";
 
 export {
@@ -14,4 +15,5 @@ export {
   createOneEssence,
   updateOneEssence,
   deleteOneEssense,
+  exportData,
 };

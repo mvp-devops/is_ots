@@ -15,6 +15,7 @@ const { Content } = Layout;
 
 const NsiTable = () => {
   const {
+    dictionaryTarget,
     renderNsiFormFlag,
     renderNsiItems,
     tableTitle,
@@ -27,6 +28,7 @@ const NsiTable = () => {
     setCurrentNsiItem,
     searchValue,
     onSearch,
+    exportData,
   } = useNsiTable();
 
   const columns = NsiTableColumns();
@@ -73,7 +75,7 @@ const NsiTable = () => {
                       style={{ fontSize: 16, cursor: "pointer" }}
                       title={`Выгрузить в формате MS Excel`}
                       onClick={() => {
-                        console.log("download");
+                        exportData(dictionaryTarget);
                       }}
                     />
                     <PlusOutlined

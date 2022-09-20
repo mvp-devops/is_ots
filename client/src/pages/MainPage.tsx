@@ -51,12 +51,14 @@ const MainPage: FC = () => {
     } else {
       setTarget("");
       setChildTarget("");
+      setBaseTarget("POSITION_TREE");
     }
   };
 
   const onSelect = (selectedKeys: any, e: any) => {
     if (selectedKeys.length > 0) {
       onMenuItemSelected(e.node);
+      setBaseTarget("POSITION_TREE");
     } else {
       onMenuItemSelected();
     }

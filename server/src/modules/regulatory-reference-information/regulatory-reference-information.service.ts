@@ -31,6 +31,7 @@ import {
   UpdateDesignOrCounterpartyDto,
   UpdateNSIDto,
 } from "./dto/update-regulatory-reference-information.dto";
+import { ExcelService } from "../file-storage/excel.service";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -68,7 +69,9 @@ export class RegulatoryReferenceInformationService {
     private sectionRepository: typeof SectionEntity,
 
     @Inject(forwardRef(() => FileStorageService))
-    private fileService: FileStorageService
+    private fileService: FileStorageService,
+    @Inject(forwardRef(() => ExcelService))
+    private excelService: ExcelService
   ) {}
 
   userRegistration = async (
@@ -527,5 +530,12 @@ export class RegulatoryReferenceInformationService {
     }
 
     return items;
+  };
+
+  downdoad = async (target: string) => {
+    const items = await this.findAll(target);
+    const file = await this.excelService.exportNsiToExcel(target, items);
+
+    return file;
   };
 }

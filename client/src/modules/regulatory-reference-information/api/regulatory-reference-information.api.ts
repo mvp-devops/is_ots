@@ -7,6 +7,7 @@ import {
   UserView,
 } from "../../../../../server/common/types/regulatory-reference-information";
 import { setUrl } from "../../main";
+import download from "js-file-download";
 
 const baseUrl = "api/regulatory-reference-information";
 
@@ -184,6 +185,19 @@ export const userLogin = async (
   });
 
   return data;
+};
+
+export const exportData = async (target: string) => {
+  const url = setUrl(`${baseUrl}/download`);
+
+  axios
+    .get(url, {
+      responseType: "blob",
+      params: { target },
+    })
+    .then((resp) => {
+      download(resp.data, `${target}.xlsx`);
+    });
 };
 
 // export const getOneItem = async (
