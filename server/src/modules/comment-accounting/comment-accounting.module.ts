@@ -1,5 +1,5 @@
 import { SequelizeModule } from "@nestjs/sequelize";
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { CommentAccountingService } from "./comment-accounting.service";
 import { CheckListService } from "./check-list.service";
 
@@ -9,6 +9,7 @@ import {
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
 } from "./entities";
+import { FileStorageModule } from "../file-storage";
 
 @Module({
   controllers: [CommentAccountingController],
@@ -19,6 +20,7 @@ import {
       DesignDocumentSolutionEntity,
       CapitalConstructionUnitSupervisionCommentEntity,
     ]),
+    forwardRef(() => FileStorageModule),
   ],
   exports: [CheckListService, CommentAccountingService],
 })

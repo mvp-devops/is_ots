@@ -4,11 +4,15 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { join } from "path";
+import * as uuid from "uuid";
 import { Workbook, Font, Alignment } from "exceljs";
 
 import { setCurrentDate } from "../../../common/utils";
 import { NsiEntries } from "../../../common/types/regulatory-reference-information";
-import { DesignDocumentCommentView } from "../../../common/types/comments-accounting";
+import {
+  CollectiveCheckSheetHeaders,
+  DesignDocumentCommentView,
+} from "../../../common/types/comments-accounting";
 
 @Injectable()
 export class ExcelService {
@@ -134,11 +138,11 @@ export class ExcelService {
       "imports"
     );
 
-    const fileName = `${target}_import_${setCurrentDate()}.xlsx`;
+    const fileName = `${uuid.v4()}.xlsx`;
 
     await workBook.xlsx
       .writeFile(`${filePath}/${fileName}`)
-      .then((_) => `${filePath}/${fileName}`)
+      .then(() => console.log("Файл сохранен!"))
       .catch((err) => {
         throw new BadRequestException(err);
       });
@@ -148,8 +152,116 @@ export class ExcelService {
     return fileLocation;
   };
 
-  exportCollectiveCheckSheet = async (data: DesignDocumentCommentView) => {
+  exportCollectiveCheckSheet = async (
+    headers: CollectiveCheckSheetHeaders,
+    data: DesignDocumentCommentView[]
+  ) => {
     const workBook = new Workbook();
-    const sheet = workBook.addWorksheet("ЛКП");
+
+    const templateFilePath = join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "file-storage",
+      "templates",
+      "collective-check-sheet.xlsx"
+    );
+
+    let outputFilePath = "";
+
+    const {
+      projectTitleRender,
+      unitTitleRender,
+      unitQuestionareRender,
+      subUnitTitleRender,
+      subUnitQuestionareRender,
+    } = headers;
+
+    workBook.xlsx.readFile(templateFilePath).then(async () => {
+      const workSheet = workBook.getWorksheet(1);
+
+      const projectTitleRow = workSheet.getRow(4);
+      projectTitleRow.getCell("E").value = projectTitleRender;
+
+      const unitTitleRow = workSheet.getRow(5);
+      unitTitleRow.getCell("B").value = unitTitleRender
+        ? "Объект строительства:"
+        : null;
+      unitTitleRow.getCell("E").value = unitTitleRender
+        ? unitTitleRender
+        : null;
+
+      const unitQuestionareRenderRow = workSheet.getRow(6);
+      unitQuestionareRenderRow.getCell("B").value = unitQuestionareRender
+        ? "ОЛ, ТТ, ТЗ:"
+        : null;
+      unitQuestionareRenderRow.getCell("E").value = unitQuestionareRender
+        ? `${unitQuestionareRender.code}. ${unitQuestionareRender.title}`
+        : null;
+
+      const subUnitTitleRow = workSheet.getRow(7);
+      subUnitTitleRow.getCell("B").value = subUnitTitleRender
+        ? "Установка/объект:"
+        : null;
+      subUnitTitleRow.getCell("E").value = subUnitTitleRender
+        ? subUnitTitleRender
+        : null;
+
+      const subUnitQuestionareRenderRow = workSheet.getRow(8);
+      subUnitQuestionareRenderRow.getCell("B").value = subUnitQuestionareRender
+        ? "ОЛ, ТТ, ТЗ:"
+        : null;
+      subUnitQuestionareRenderRow.getCell("E").value = subUnitQuestionareRender
+        ? `${subUnitQuestionareRender.code}. ${subUnitQuestionareRender.title}`
+        : null;
+
+      data.map((item, index) => {
+        const {
+          id,
+          documentSection,
+          documentCode,
+          documentTitle,
+          documentPage,
+          comment,
+          normative,
+          criticalityId,
+          expertSubdivision,
+          expertContacts,
+          solutions,
+        } = item;
+
+        const row = workSheet.getRow(14 + index);
+        row.getCell("B").value = id;
+        row.getCell("C").value = documentSection;
+        row.getCell("D").value = documentCode;
+        row.getCell("E").value = documentTitle;
+        row.getCell("F").value = documentPage;
+        row.getCell("G").value = comment;
+        row.getCell("H").value = normative;
+        row.getCell("I").value = criticalityId;
+        row.getCell("J").value = expertSubdivision;
+        row.getCell("K").value = expertContacts;
+      });
+
+      outputFilePath = join(
+        __dirname,
+        "..",
+        "..",
+        "..",
+        "file-storage",
+        "imports",
+        `${uuid.v4()}.xlsx`
+      );
+
+      await workBook.xlsx
+        .writeFile(outputFilePath)
+        .then(() => console.log("Файл сохранен!"))
+        .catch((err) => {
+          throw new BadRequestException(err);
+        });
+    });
+
+    return outputFilePath;
   };
 }

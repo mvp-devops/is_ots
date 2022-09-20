@@ -1,10 +1,11 @@
 import axios from "axios";
 import { setUrl } from "../../main";
 import {
+  CollectiveCheckSheetHeaders,
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentView,
 } from "./../../../../../server/common/types/comments-accounting";
-export const createOneItem = () => {};
+import download from "js-file-download";
 
 const baseUrl = "api/comment-accounting";
 
@@ -78,3 +79,18 @@ export const getAllItems = async (
 
   return data;
 };
+
+// export const exportLKPData = async (body: {
+//   headers: CollectiveCheckSheetHeaders;
+//   data: DesignDocumentCommentView[];
+// }) => {
+//   const url = setUrl(`${baseUrl}/download`);
+
+//   axios
+//     .post(url, body, {
+//       responseType: "blob",
+//     })
+//     .then((resp) => {
+//       download(resp.data, `LKP_${Math.random()}.xlsx`);
+//     });
+// };

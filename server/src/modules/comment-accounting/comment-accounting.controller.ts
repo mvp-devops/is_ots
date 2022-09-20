@@ -8,8 +8,15 @@ import {
   Delete,
   Query,
   Put,
+  Res,
 } from "@nestjs/common";
-import { CheckListSets } from "common/types/comments-accounting";
+import { setCurrentDate } from "common/utils";
+import { Response } from "express";
+import {
+  CheckListSets,
+  CollectiveCheckSheetHeaders,
+  DesignDocumentCommentView,
+} from "../../../common/types/comments-accounting";
 import { CommentAccountingService } from "./comment-accounting.service";
 import {
   CreateDesignDocumentCommentDto,
@@ -55,5 +62,29 @@ export class CommentAccountingController {
   remove(@Param("id") id: string, @Query() query: { target: string }) {
     const { target } = query;
     return this.service.remove(target, id);
+  }
+
+  @Post("/download")
+  async download(
+    @Body("body")
+    body: {
+      headers: CollectiveCheckSheetHeaders;
+      data: DesignDocumentCommentView[];
+    },
+    @Res() res: Response
+  ) {
+    const { headers, data } = body;
+    let fileLocation = await this.service.exportExcelFile(headers, data);
+    res.header(
+      "Content-disposition",
+      `attachment; filename=CCKSH_${setCurrentDate()}.xlsx`
+    );
+    res.type(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.download(fileLocation, `CCKSH_${setCurrentDate()}.xlsx`, (err) => {
+      if (err) console.log(err);
+    });
   }
 }

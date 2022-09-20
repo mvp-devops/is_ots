@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CreateDesignDocumentCommentDto,
@@ -11,6 +11,7 @@ import {
 } from "./entities";
 import {
   CheckListSets,
+  CollectiveCheckSheetHeaders,
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
 } from "../../../common/types/comments-accounting";
@@ -23,8 +24,9 @@ import {
   StageEntity,
   UserEntity,
 } from "../regulatory-reference-information";
-import { formatUser } from "common/utils";
+import { formatUser } from "../../../common/utils";
 import { SubsidiaryEntity } from "../position-tree";
+import { ExcelService } from "../file-storage/excel.service";
 
 @Injectable()
 export class CommentAccountingService {
@@ -32,7 +34,9 @@ export class CommentAccountingService {
     @InjectModel(DesignDocumentCommentEntity)
     private commentRepository: typeof DesignDocumentCommentEntity,
     @InjectModel(DesignDocumentSolutionEntity)
-    private solutionRepository: typeof DesignDocumentSolutionEntity // @Inject(forwardRef(() => RegulatoryReferenceInformationService)) // private nsiService: RegulatoryReferenceInformationService
+    private solutionRepository: typeof DesignDocumentSolutionEntity,
+    @Inject(forwardRef(() => ExcelService))
+    private excelService: ExcelService
   ) {}
 
   async createOne(
@@ -215,7 +219,8 @@ export class CommentAccountingService {
 
   findAll = async (
     parrentTarget: string,
-    parrentId: string
+    parrentId?: string,
+    parrentIds?: string[]
   ): Promise<DesignDocumentCommentView[]> => {
     let items: DesignDocumentCommentEntity[] = [];
 
@@ -619,5 +624,17 @@ export class CommentAccountingService {
     }
 
     return comments;
+  };
+
+  exportExcelFile = async (
+    headers: CollectiveCheckSheetHeaders,
+    data: DesignDocumentCommentView[]
+  ) => {
+    const outputFilePath = await this.excelService.exportCollectiveCheckSheet(
+      headers,
+      data
+    );
+
+    return outputFilePath;
   };
 }

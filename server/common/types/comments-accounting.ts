@@ -1,3 +1,5 @@
+import { DesignDocumentView } from "./file-storage";
+
 export interface CommentAccountingNSIView {
   id: number | string;
   title: string;
@@ -170,3 +172,11 @@ export interface UnitCheckListView {
 }
 
 export type CheckListView = ProjectCheckListView | UnitCheckListView;
+
+export interface CollectiveCheckSheetHeaders {
+  projectTitleRender: string;
+  unitTitleRender: string;
+  unitQuestionareRender: DesignDocumentView;
+  subUnitTitleRender: string;
+  subUnitQuestionareRender: DesignDocumentView;
+}
