@@ -1,7 +1,4 @@
-import {
-  CommentAccountingNSIView,
-  DesignDocumentCommentRequestData,
-} from "../../../../../server/common/types/comments-accounting";
+import { CommentAccountingNSIView } from "../../../../../server/common/types/comments-accounting";
 
 export const statusRequestData: CommentAccountingNSIView[] = [
   {

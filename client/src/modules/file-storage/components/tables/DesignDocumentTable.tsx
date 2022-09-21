@@ -128,7 +128,10 @@ const DesignDocumentTable = () => {
                         className="text-warning mb-2"
                         style={{ fontSize: 16, cursor: "pointer" }}
                         title="Сформировать ЛКП"
-                        onClick={() => console.log("Сформировать ЛКП")}
+                        onClick={() => {
+                          setActionType(FormActions.VIEW_COMMENT);
+                          setCollectiveCheckSheetView(true);
+                        }}
                       />
                     )}
                     {checkedDesignDocuments.length > 0 && (

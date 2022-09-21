@@ -28,6 +28,7 @@ import { setCommentFilters } from "./table.settings";
 import { FormActions, tableLocale } from "../../../main";
 import { useCommentAccounting } from "../../hooks";
 import { useCommentAccountingTable } from "./hooks/useCommentAccountingTable";
+import { useCollectiveCheckSheet } from "../../views/collective-check-list/hooks/useCollectiveCheckSheet";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -40,6 +41,8 @@ const { Row, Cell } = Table.Summary;
 
 const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const { setFormVisible, setActionType } = useCommentAccounting();
+
+  const { dataSource } = useCollectiveCheckSheet();
 
   const { selectedRow, setSelectedRow } = useCommentAccountingTable();
 
@@ -260,9 +263,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         loading={false}
         bordered
         locale={tableLocale}
-        pagination={data.length < 10 && false}
+        pagination={dataSource.length < 10 && false}
         columns={columns}
-        dataSource={data}
+        dataSource={dataSource}
         expandable={{
           expandedRowRender,
           rowExpandable: (record) => (record.comment.length > 0 ? true : false),
@@ -278,7 +281,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               <Text strong>Количество:</Text>
             </Cell>
             <Cell index={1} align="center">
-              <Text strong>{data.length}</Text>
+              <Text strong>{dataSource.length}</Text>
             </Cell>
           </Row>
         )}

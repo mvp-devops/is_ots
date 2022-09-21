@@ -25,7 +25,12 @@ import {
   UserEntity,
 } from "../regulatory-reference-information";
 import { formatUser } from "../../../common/utils";
-import { SubsidiaryEntity } from "../position-tree";
+import {
+  ProjectEntity,
+  SubsidiaryEntity,
+  SubUnitEntity,
+  UnitEntity,
+} from "../position-tree";
 import { ExcelService } from "../file-storage/excel.service";
 
 @Injectable()
@@ -224,213 +229,262 @@ export class CommentAccountingService {
   ): Promise<DesignDocumentCommentView[]> => {
     let items: DesignDocumentCommentEntity[] = [];
 
-    switch (parrentTarget) {
-      case "project": {
-        items = await this.commentRepository.findAll({
-          where: { pdcId: parrentId },
-          include: [
-            {
-              model: DesignDocumentEntity,
-              as: "pdc",
-              include: [
-                {
-                  model: StageEntity,
-                },
-                {
-                  model: SectionEntity,
-                },
-              ],
-            },
-            {
-              model: DirectionEntity,
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        });
+    const getItems = async (
+      parrentTarget: string,
+      parrentId: string
+    ): Promise<DesignDocumentCommentEntity[]> => {
+      let items: DesignDocumentCommentEntity[] = [];
+      switch (parrentTarget) {
+        case "project": {
+          items = await this.commentRepository.findAll({
+            where: { pdcId: parrentId },
+            include: [
+              {
+                model: DesignDocumentEntity,
+                as: "pdc",
+                include: [
+                  {
+                    model: StageEntity,
+                  },
+                  {
+                    model: SectionEntity,
+                  },
+                  {
+                    model: ProjectEntity,
+                  },
+                ],
+              },
+              {
+                model: DirectionEntity,
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
 
-        break;
-      }
-      case "unit": {
-        items = await this.commentRepository.findAll({
-          where: { pdcId: parrentId },
-          include: [
-            {
-              model: DesignDocumentEntity,
-              as: "udc",
-              include: [
-                {
-                  model: StageEntity,
-                },
-                {
-                  model: SectionEntity,
-                },
-              ],
-            },
-            {
-              model: DirectionEntity,
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        });
+          break;
+        }
+        case "unit": {
+          items = await this.commentRepository.findAll({
+            where: { pdcId: parrentId },
+            include: [
+              {
+                model: DesignDocumentEntity,
+                as: "udc",
+                include: [
+                  {
+                    model: StageEntity,
+                  },
+                  {
+                    model: SectionEntity,
+                  },
+                  {
+                    model: UnitEntity,
+                    include: [
+                      {
+                        model: ProjectEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                model: DirectionEntity,
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
 
-        break;
-      }
-      case "sub-unit": {
-        items = await this.commentRepository.findAll({
-          where: { pdcId: parrentId },
-          include: [
-            {
-              model: DesignDocumentEntity,
-              as: "sudc",
-              include: [
-                {
-                  model: StageEntity,
-                },
-                {
-                  model: SectionEntity,
-                },
-              ],
-            },
-            {
-              model: DirectionEntity,
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        });
+          break;
+        }
+        case "sub-unit": {
+          items = await this.commentRepository.findAll({
+            where: { pdcId: parrentId },
+            include: [
+              {
+                model: DesignDocumentEntity,
+                as: "sudc",
+                include: [
+                  {
+                    model: StageEntity,
+                  },
+                  {
+                    model: SectionEntity,
+                  },
+                  {
+                    model: SubUnitEntity,
+                    include: [
+                      {
+                        model: UnitEntity,
+                        include: [
+                          {
+                            model: ProjectEntity,
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                ],
+              },
+              {
+                model: DirectionEntity,
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
 
-        break;
-      }
-      case "supplier": {
-        items = await this.commentRepository.findAll({
-          where: { pdcId: parrentId },
-          include: [
-            {
-              model: DesignDocumentEntity,
-              as: "sdc",
-              include: [
-                {
-                  model: StageEntity,
-                },
-                {
-                  model: CounterpartyEntity,
-                },
-              ],
-            },
-            {
-              model: DirectionEntity,
-            },
-            {
-              model: NormativeEntity,
-            },
-            {
-              model: CriticalityEntity,
-            },
-            {
-              model: UserEntity,
-              include: [
-                {
-                  model: SubsidiaryEntity,
-                },
-              ],
-            },
-            {
-              model: DesignDocumentSolutionEntity,
-              include: [
-                {
-                  model: UserEntity,
-                  include: [
-                    {
-                      model: SubsidiaryEntity,
-                    },
-                  ],
-                },
-              ],
-            },
-          ],
-        });
+          break;
+        }
+        case "supplier": {
+          items = await this.commentRepository.findAll({
+            where: { pdcId: parrentId },
+            include: [
+              {
+                model: DesignDocumentEntity,
+                as: "sdc",
+                include: [
+                  {
+                    model: StageEntity,
+                  },
+                  {
+                    model: CounterpartyEntity,
+                  },
+                  {
+                    model: UnitEntity,
+                  },
+                  {
+                    model: SubUnitEntity,
+                  },
+                ],
+              },
+              {
+                model: DirectionEntity,
+              },
+              {
+                model: NormativeEntity,
+              },
+              {
+                model: CriticalityEntity,
+              },
+              {
+                model: UserEntity,
+                include: [
+                  {
+                    model: SubsidiaryEntity,
+                  },
+                ],
+              },
+              {
+                model: DesignDocumentSolutionEntity,
+                include: [
+                  {
+                    model: UserEntity,
+                    include: [
+                      {
+                        model: SubsidiaryEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          });
 
-        break;
+          break;
+        }
+        default:
+          break;
       }
-      default:
-        break;
+
+      return items;
+    };
+
+    if (parrentId) {
+      items = await getItems(parrentTarget, parrentId);
+    }
+
+    if (parrentIds) {
+      for (let i = 0; i < parrentIds.length; i++) {
+        const elems = await getItems(parrentTarget, parrentIds[i]);
+        items.push(...elems);
+      }
     }
 
     const render: DesignDocumentCommentView[] = [];
@@ -446,11 +500,20 @@ export class CommentAccountingService {
         comment: items[i].comment,
         normative: `${items[i].normative.code}. ${items[i].normative.title}`,
         criticalityId: items[i].criticalityId,
-        expertSubdivision: `${items[i].user.subsidiary.title}  \n\
+        expertSubdivision: `${items[i].user.subsidiary.title}
+        \r\n\
         ${items[i].user.subdivision} `,
-        expertContacts: ` ${items[i].user.position} \n\
-        ${items[i].user.email} \n\
-        ${items[i].user.phone}`,
+        expertContacts: `${items[i].user.lastName} ${items[
+          i
+        ].user.firstName.slice(0, 1)}. ${items[i].user.secondName.slice(0, 1)}.
+        \r\n\
+        ${items[i].user.position}
+        \r\n\
+
+        почта: ${items[i].user.email}
+        \r\n\
+        
+        телефон: ${items[i].user.phone}`,
         solutions: [],
         pdcId: items[i].pdcId,
         udcId: items[i].udcId,
@@ -548,11 +611,16 @@ export class CommentAccountingService {
           expertContacts: `${user.lastName} ${user.firstName.slice(
             0,
             1
-          )}. ${user.secondName.slice(0, 1)}. \n\ 
-          ${user.subsidiary.title} \n\ 
-          ${user.subdivision} \n\ 
-          ${user.position} \n\ 
-          почта: ${user.email} \n\ 
+          )}. ${user.secondName.slice(0, 1)}.  \r\n\
+          
+          ${user.subsidiary.title} \r\n\
+          
+          ${user.subdivision} \r\n\
+          
+          ${user.position} \r\n\
+          
+          почта: ${user.email} \r\n\
+          
           телефон: ${user.phone}`,
         };
         commentSolutions.push(elem);
@@ -603,10 +671,12 @@ export class CommentAccountingService {
           expertContacts: `${user.lastName} ${user.firstName.slice(
             0,
             1
-          )}. ${user.secondName.slice(0, 1)}. \n\ 
-          ${user.subdivision} \n\ 
-          ${user.position} \n\ 
-          почта: ${user.email} \n\ 
+          )}. ${user.secondName.slice(0, 1)}.  \r\n\       
+
+          ${user.position} \r\n\
+          
+          почта: ${user.email}  \r\n\
+          
           телефон: ${user.phone}`,
 
           solutions: this.solutionsRender(solutions),
@@ -626,11 +696,15 @@ export class CommentAccountingService {
     return comments;
   };
 
-  exportExcelFile = async (target: string, parrentId: string) => {
-    const data = await this.findAll(target, parrentId);
+  exportExcelFile = async (
+    target: string,
+    parrentId?: string,
+    parrentIds?: string[]
+  ) => {
+    const data = await this.findAll(target, parrentId, parrentIds);
 
-    const headers = {
-      projectTitleRender: "Test",
+    const headers: CollectiveCheckSheetHeaders = {
+      projectTitleRender: "",
       unitTitleRender: "",
       unitQuestionareRender: null,
       subUnitTitleRender: "",

@@ -5,7 +5,7 @@ import {
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
-  // exportLKPData,
+  exportLKPData,
 } from "./comment-accounting.api";
 
 export {
@@ -15,5 +15,5 @@ export {
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
-  // exportLKPData,
+  exportLKPData,
 };

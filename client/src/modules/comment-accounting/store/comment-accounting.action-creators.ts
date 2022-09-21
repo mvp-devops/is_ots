@@ -108,11 +108,15 @@ export const getOneComment = (target: string, id: string) => {
   };
 };
 
-export const getManyComments = (target: string, parrentId?: string) => {
+export const getManyComments = (
+  parrentTarget: string,
+  parrentId?: string,
+  parrentIds?: string[]
+) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.GET_MANY_ITEMS });
-      const data = await getAllItems(target, parrentId);
+      const data = await getAllItems(parrentTarget, parrentId, parrentIds);
       dispatch({
         type: ActionTypes.GET_MANY_ITEMS_SUCCESS,
         payload: data,

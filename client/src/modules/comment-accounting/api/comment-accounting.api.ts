@@ -6,6 +6,7 @@ import {
   DesignDocumentCommentView,
 } from "./../../../../../server/common/types/comments-accounting";
 import download from "js-file-download";
+import { URLSearchParams } from "url";
 
 const baseUrl = "api/comment-accounting";
 
@@ -59,36 +60,31 @@ export const getOneItem = async (
 };
 
 export const getAllItems = async (
-  target: string,
-  parrentId?: string
+  parrentTarget: string,
+  parrentId?: string,
+  parrentIds?: string[]
 ): Promise<DesignDocumentCommentView[]> => {
   const url = setUrl(`${baseUrl}/find`);
-  let data: DesignDocumentCommentView[] = [];
-
-  try {
-    data = (
-      await axios.get<DesignDocumentCommentView[]>(url, {
-        params: { target, parrentId },
-      })
-    ).data;
-
-    return data;
-  } catch (error) {
-    alert(error);
-  }
+  const { data } = await axios.get<DesignDocumentCommentView[]>(url, {
+    params: { parrentTarget, parrentId, parrentIds },
+  });
 
   return data;
 };
 
-// export const exportLKPData = async (target: string, parrentId: string) => {
-//   const url = setUrl(`${baseUrl}/download`);
+export const exportLKPData = async (
+  target: string,
+  parrentId?: string,
+  parrentIds?: string[]
+) => {
+  const url = setUrl(`${baseUrl}/download`);
 
-//   axios
-//     .get(url, {
-//       responseType: "blob",
-//       params: { target, parrentId },
-//     })
-//     .then((resp) => {
-//       download(resp.data, `LKP_${Math.random()}.xlsx`);
-//     });
-// };
+  axios
+    .get(url, {
+      responseType: "blob",
+      params: { target, parrentId, parrentIds },
+    })
+    .then((resp) => {
+      download(resp.data, `LKP_${Math.random()}.xlsx`);
+    });
+};

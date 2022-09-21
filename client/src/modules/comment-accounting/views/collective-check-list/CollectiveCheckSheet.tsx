@@ -14,12 +14,16 @@ const { Text } = Typography;
 const CollectiveCheckSheet = () => {
   const {
     currentDesignDocument,
-    // exportLKPData,
+    exportLKPData,
     // projectTitleRender,
     // unitTitleRender,
     // unitQuestionareRender,
     // subUnitTitleRender,
     // subUnitQuestionareRender,
+    checkedDesignDocuments,
+    target,
+    ids,
+    dataSource,
   } = useCollectiveCheckSheet();
   const {
     formVisible,
@@ -29,7 +33,13 @@ const CollectiveCheckSheet = () => {
     renderCommentAccountingFormFlag,
   } = useCommentAccounting();
 
-  const docId = currentDesignDocument ? currentDesignDocument.id : "1";
+  const onCollectiveCheckSheetDownload = () => {
+    if (checkedDesignDocuments.length > 0) {
+      exportLKPData(target, undefined, ids);
+    } else {
+      currentDesignDocument && exportLKPData(target, currentDesignDocument.id);
+    }
+  };
 
   const renderForm = renderCommentAccountingFormFlag && (
     <ModalContainer
@@ -59,15 +69,13 @@ const CollectiveCheckSheet = () => {
             style={{ fontSize: 16, cursor: "pointer" }}
             title="Выгрузить"
             className="text-success"
-            // onClick={() => exportLKPData("project", docId)}
+            onClick={onCollectiveCheckSheetDownload}
           />
         </Space>
       </Space>
       <Header />
 
-      {currentDesignDocument && (
-        <CommentTable data={currentDesignDocument.comments} />
-      )}
+      {<CommentTable data={dataSource} />}
       {renderForm}
     </Space>
   );

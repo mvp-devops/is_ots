@@ -37,9 +37,17 @@ export class CommentAccountingController {
   }
 
   @Get("/find")
-  findAll(@Query() query: { parrentTarget: string; parrentId: string }) {
-    const { parrentTarget, parrentId } = query;
-    return this.service.findAll(parrentTarget, parrentId);
+  findAll(
+    @Query()
+    query: {
+      parrentTarget: string;
+      parrentId?: string;
+      parrentIds?: string[];
+    }
+  ) {
+    const { parrentTarget, parrentId, parrentIds } = query;
+
+    return this.service.findAll(parrentTarget, parrentId, parrentIds);
   }
 
   @Get("/find/:id")

@@ -6,7 +6,7 @@ import {
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 import { usePositionTree } from "../../../../position-tree";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
-import { useCommentAccounting } from "../../../";
+import { useCommentAccounting } from "../../..";
 import { FormActions } from "../../../../main";
 import { useFileStorage } from "../../../../file-storage";
 import { initFormData, solutionItem } from "../form.settings";
