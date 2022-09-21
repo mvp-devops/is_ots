@@ -10,8 +10,8 @@ import {
   DesignDocumentSolutionEntity,
 } from "./entities";
 import {
-  CheckListSets,
-  CollectiveCheckSheetHeaders,
+  // CheckListSets,
+  // CollectiveCheckSheetHeaders,
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
 } from "../../../common/types/comments-accounting";
@@ -34,10 +34,10 @@ export class CommentAccountingService {
     @InjectModel(DesignDocumentCommentEntity)
     private commentRepository: typeof DesignDocumentCommentEntity,
     @InjectModel(DesignDocumentSolutionEntity)
-    private solutionRepository: typeof DesignDocumentSolutionEntity,
-    @Inject(forwardRef(() => ExcelService))
-    private excelService: ExcelService
-  ) {}
+    private solutionRepository: typeof DesignDocumentSolutionEntity
+  ) // @Inject(forwardRef(() => ExcelService))
+  // private excelService: ExcelService
+  {}
 
   async createOne(
     dto: CreateDesignDocumentCommentDto
@@ -626,15 +626,22 @@ export class CommentAccountingService {
     return comments;
   };
 
-  exportExcelFile = async (
-    headers: CollectiveCheckSheetHeaders,
-    data: DesignDocumentCommentView[]
-  ) => {
-    const outputFilePath = await this.excelService.exportCollectiveCheckSheet(
-      headers,
-      data
-    );
+  // exportExcelFile = async (target: string, parrentId: string) => {
+  //   const data = await this.findAll(target, parrentId);
 
-    return outputFilePath;
-  };
+  //   const headers = {
+  //     projectTitleRender: "Test",
+  //     unitTitleRender: "",
+  //     unitQuestionareRender: null,
+  //     subUnitTitleRender: "",
+  //     subUnitQuestionareRender: null,
+  //   };
+
+  //   const outputFilePath = await this.excelService.exportCollectiveCheckSheet(
+  //     headers,
+  //     data
+  //   );
+
+  //   return outputFilePath;
+  // };
 }

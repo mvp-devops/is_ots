@@ -9,7 +9,7 @@ import {
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
 } from "./entities";
-import { FileStorageModule } from "../file-storage";
+// import { FileStorageModule } from "../file-storage";
 
 @Module({
   controllers: [CommentAccountingController],
@@ -20,7 +20,7 @@ import { FileStorageModule } from "../file-storage";
       DesignDocumentSolutionEntity,
       CapitalConstructionUnitSupervisionCommentEntity,
     ]),
-    forwardRef(() => FileStorageModule),
+    // forwardRef(() => FileStorageModule),
   ],
   exports: [CheckListService, CommentAccountingService],
 })

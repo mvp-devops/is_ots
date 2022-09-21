@@ -8,22 +8,18 @@ import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
 import { CommentForm } from "../../components";
 import { ModalContainer } from "../../../../components";
-import {
-  CollectiveCheckSheetHeaders,
-  DesignDocumentCommentView,
-} from "../../../../../../server/common/types/comments-accounting";
 
 const { Text } = Typography;
 
 const CollectiveCheckSheet = () => {
   const {
     currentDesignDocument,
-    exportLKPData,
-    projectTitleRender,
-    unitTitleRender,
-    unitQuestionareRender,
-    subUnitTitleRender,
-    subUnitQuestionareRender,
+    // exportLKPData,
+    // projectTitleRender,
+    // unitTitleRender,
+    // unitQuestionareRender,
+    // subUnitTitleRender,
+    // subUnitQuestionareRender,
   } = useCollectiveCheckSheet();
   const {
     formVisible,
@@ -33,19 +29,7 @@ const CollectiveCheckSheet = () => {
     renderCommentAccountingFormFlag,
   } = useCommentAccounting();
 
-  const body: {
-    headers: CollectiveCheckSheetHeaders;
-    data: DesignDocumentCommentView[];
-  } = {
-    headers: {
-      projectTitleRender,
-      unitTitleRender,
-      unitQuestionareRender,
-      subUnitTitleRender,
-      subUnitQuestionareRender,
-    },
-    data: currentDesignDocument ? currentDesignDocument.comments : [],
-  };
+  const docId = currentDesignDocument ? currentDesignDocument.id : "1";
 
   const renderForm = renderCommentAccountingFormFlag && (
     <ModalContainer
@@ -75,7 +59,7 @@ const CollectiveCheckSheet = () => {
             style={{ fontSize: 16, cursor: "pointer" }}
             title="Выгрузить"
             className="text-success"
-            onClick={() => exportLKPData(body)}
+            // onClick={() => exportLKPData("project", docId)}
           />
         </Space>
       </Space>
