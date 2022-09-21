@@ -77,14 +77,18 @@ export class CommentAccountingController {
     let fileLocation = await this.service.exportExcelFile(target, parrentId);
     res.header(
       "Content-disposition",
-      `attachment; filename=CCKSH_${setCurrentDate()}.xlsx`
+      `attachment; filename=${target}_CCKSH_${setCurrentDate()}.xlsx`
     );
     res.type(
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
 
-    res.download(fileLocation, `CCKSH_${setCurrentDate()}.xlsx`, (err) => {
-      if (err) console.log(err);
-    });
+    res.download(
+      fileLocation,
+      `${target}_CCKSH_${setCurrentDate()}.xlsx`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
   }
 }

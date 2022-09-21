@@ -255,14 +255,15 @@ export class ExcelService {
           row.getCell("J").value = expertSubdivision;
           row.getCell("K").value = expertContacts;
         });
-
-        await workBook.xlsx
+      })
+      .then(() =>
+        workBook.xlsx
           .writeFile(`${outputFilePath}/${outputFileName}`)
           .then(() => console.log("Файл сохранен!"))
           .catch((err) => {
             throw new BadRequestException(err);
-          });
-      });
+          })
+      );
 
     return `${outputFilePath}/${outputFileName}`;
   };

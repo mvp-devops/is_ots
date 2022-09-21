@@ -711,11 +711,10 @@ export class CommentAccountingService {
       subUnitQuestionareRender: null,
     };
 
-    const outputFilePath = await this.excelService.exportCollectiveCheckSheet(
+    const file = await this.excelService.exportCollectiveCheckSheet(
       headers,
       data
     );
-
-    return outputFilePath;
+    return file;
   };
 }
