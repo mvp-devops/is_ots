@@ -7,12 +7,12 @@ import { join } from "path";
 import * as uuid from "uuid";
 import { Workbook, Font, Alignment } from "exceljs";
 
-// import { setCurrentDate } from "../../../common/utils";
+import { setCurrentDate } from "../../../common/utils";
 import { NsiEntries } from "../../../common/types/regulatory-reference-information";
-// import {
-//   CollectiveCheckSheetHeaders,
-//   DesignDocumentCommentView,
-// } from "../../../common/types/comments-accounting";
+import {
+  CollectiveCheckSheetHeaders,
+  DesignDocumentCommentView,
+} from "../../../common/types/comments-accounting";
 
 @Injectable()
 export class ExcelService {
@@ -152,118 +152,118 @@ export class ExcelService {
     return fileLocation;
   };
 
-  // exportCollectiveCheckSheet = async (
-  //   headers: CollectiveCheckSheetHeaders,
-  //   data: DesignDocumentCommentView[]
-  // ) => {
-  //   const workBook = new Workbook();
+  exportCollectiveCheckSheet = async (
+    headers: CollectiveCheckSheetHeaders,
+    data: DesignDocumentCommentView[]
+  ) => {
+    const workBook = new Workbook();
 
-  //   const templateFilePath = join(
-  //     __dirname,
-  //     "..",
-  //     "..",
-  //     "..",
-  //     "file-storage",
-  //     "templates"
-  //   );
+    const templateFilePath = join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "file-storage",
+      "templates"
+    );
 
-  //   const templateFileName = "collective-check-sheet.xlsx";
+    const templateFileName = "collective-check-sheet.xlsx";
 
-  //   const outputFilePath = join(
-  //     __dirname,
-  //     "..",
-  //     "..",
-  //     "..",
-  //     "file-storage",
-  //     "imports"
-  //   );
+    const outputFilePath = join(
+      __dirname,
+      "..",
+      "..",
+      "..",
+      "file-storage",
+      "imports"
+    );
 
-  //   const outputFileName = `${uuid.v4()}.xlsx`;
+    const outputFileName = `${uuid.v4()}.xlsx`;
 
-  //   const {
-  //     projectTitleRender,
-  //     unitTitleRender,
-  //     unitQuestionareRender,
-  //     subUnitTitleRender,
-  //     subUnitQuestionareRender,
-  //   } = headers;
+    const {
+      projectTitleRender,
+      unitTitleRender,
+      unitQuestionareRender,
+      subUnitTitleRender,
+      subUnitQuestionareRender,
+    } = headers;
 
-  //   workBook.xlsx
-  //     .readFile(`${templateFilePath}/${templateFileName}`)
-  //     .then(async () => {
-  //       const workSheet = workBook.getWorksheet(1);
+    workBook.xlsx
+      .readFile(`${templateFilePath}/${templateFileName}`)
+      .then(async () => {
+        const workSheet = workBook.getWorksheet(1);
 
-  //       const projectTitleRow = workSheet.getRow(4);
-  //       projectTitleRow.getCell("E").value = projectTitleRender;
+        const projectTitleRow = workSheet.getRow(4);
+        projectTitleRow.getCell("E").value = projectTitleRender;
 
-  //       const unitTitleRow = workSheet.getRow(5);
-  //       unitTitleRow.getCell("B").value = unitTitleRender
-  //         ? "Объект строительства:"
-  //         : null;
-  //       unitTitleRow.getCell("E").value = unitTitleRender
-  //         ? unitTitleRender
-  //         : null;
+        const unitTitleRow = workSheet.getRow(5);
+        unitTitleRow.getCell("B").value = unitTitleRender
+          ? "Объект строительства:"
+          : null;
+        unitTitleRow.getCell("E").value = unitTitleRender
+          ? unitTitleRender
+          : null;
 
-  //       const unitQuestionareRenderRow = workSheet.getRow(6);
-  //       unitQuestionareRenderRow.getCell("B").value = unitQuestionareRender
-  //         ? "ОЛ, ТТ, ТЗ:"
-  //         : null;
-  //       unitQuestionareRenderRow.getCell("E").value = unitQuestionareRender
-  //         ? `${unitQuestionareRender.code}. ${unitQuestionareRender.title}`
-  //         : null;
+        const unitQuestionareRenderRow = workSheet.getRow(6);
+        unitQuestionareRenderRow.getCell("B").value = unitQuestionareRender
+          ? "ОЛ, ТТ, ТЗ:"
+          : null;
+        unitQuestionareRenderRow.getCell("E").value = unitQuestionareRender
+          ? `${unitQuestionareRender.code}. ${unitQuestionareRender.title}`
+          : null;
 
-  //       const subUnitTitleRow = workSheet.getRow(7);
-  //       subUnitTitleRow.getCell("B").value = subUnitTitleRender
-  //         ? "Установка/объект:"
-  //         : null;
-  //       subUnitTitleRow.getCell("E").value = subUnitTitleRender
-  //         ? subUnitTitleRender
-  //         : null;
+        const subUnitTitleRow = workSheet.getRow(7);
+        subUnitTitleRow.getCell("B").value = subUnitTitleRender
+          ? "Установка/объект:"
+          : null;
+        subUnitTitleRow.getCell("E").value = subUnitTitleRender
+          ? subUnitTitleRender
+          : null;
 
-  //       const subUnitQuestionareRenderRow = workSheet.getRow(8);
-  //       subUnitQuestionareRenderRow.getCell("B").value =
-  //         subUnitQuestionareRender ? "ОЛ, ТТ, ТЗ:" : null;
-  //       subUnitQuestionareRenderRow.getCell("E").value =
-  //         subUnitQuestionareRender
-  //           ? `${subUnitQuestionareRender.code}. ${subUnitQuestionareRender.title}`
-  //           : null;
+        const subUnitQuestionareRenderRow = workSheet.getRow(8);
+        subUnitQuestionareRenderRow.getCell("B").value =
+          subUnitQuestionareRender ? "ОЛ, ТТ, ТЗ:" : null;
+        subUnitQuestionareRenderRow.getCell("E").value =
+          subUnitQuestionareRender
+            ? `${subUnitQuestionareRender.code}. ${subUnitQuestionareRender.title}`
+            : null;
 
-  //       data.map((item, index) => {
-  //         const {
-  //           id,
-  //           documentSection,
-  //           documentCode,
-  //           documentTitle,
-  //           documentPage,
-  //           comment,
-  //           normative,
-  //           criticalityId,
-  //           expertSubdivision,
-  //           expertContacts,
-  //           solutions,
-  //         } = item;
+        data.map((item, index) => {
+          const {
+            id,
+            documentSection,
+            documentCode,
+            documentTitle,
+            documentPage,
+            comment,
+            normative,
+            criticalityId,
+            expertSubdivision,
+            expertContacts,
+            solutions,
+          } = item;
 
-  //         const row = workSheet.getRow(14 + index);
-  //         row.getCell("B").value = id;
-  //         row.getCell("C").value = documentSection;
-  //         row.getCell("D").value = documentCode;
-  //         row.getCell("E").value = documentTitle;
-  //         row.getCell("F").value = documentPage;
-  //         row.getCell("G").value = comment;
-  //         row.getCell("H").value = normative;
-  //         row.getCell("I").value = criticalityId;
-  //         row.getCell("J").value = expertSubdivision;
-  //         row.getCell("K").value = expertContacts;
-  //       });
+          const row = workSheet.getRow(14 + index);
+          row.getCell("B").value = id;
+          row.getCell("C").value = documentSection;
+          row.getCell("D").value = documentCode;
+          row.getCell("E").value = documentTitle;
+          row.getCell("F").value = documentPage;
+          row.getCell("G").value = comment;
+          row.getCell("H").value = normative;
+          row.getCell("I").value = criticalityId;
+          row.getCell("J").value = expertSubdivision;
+          row.getCell("K").value = expertContacts;
+        });
 
-  //       await workBook.xlsx
-  //         .writeFile(`${outputFilePath}/${outputFileName}`)
-  //         .then(() => console.log("Файл сохранен!"))
-  //         .catch((err) => {
-  //           throw new BadRequestException(err);
-  //         });
-  //     });
+        await workBook.xlsx
+          .writeFile(`${outputFilePath}/${outputFileName}`)
+          .then(() => console.log("Файл сохранен!"))
+          .catch((err) => {
+            throw new BadRequestException(err);
+          });
+      });
 
-  //   return `${outputFilePath}/${outputFileName}`;
-  // };
+    return `${outputFilePath}/${outputFileName}`;
+  };
 }

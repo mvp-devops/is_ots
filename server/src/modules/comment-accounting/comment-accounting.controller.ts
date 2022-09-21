@@ -7,20 +7,20 @@ import {
   Delete,
   Query,
   Put,
-  // Res,
+  Res,
 } from "@nestjs/common";
-// import { setCurrentDate } from "../../../common/utils";
-// import {
-//   CheckListSets,
-//   CollectiveCheckSheetHeaders,
-//   DesignDocumentCommentView,
-// } from "../../../common/types/comments-accounting";
+import { setCurrentDate } from "../../../common/utils";
+import {
+  CheckListSets,
+  CollectiveCheckSheetHeaders,
+  DesignDocumentCommentView,
+} from "../../../common/types/comments-accounting";
 import { CommentAccountingService } from "./comment-accounting.service";
 import {
   CreateDesignDocumentCommentDto,
   UpdateDesignDocumentCommentDto,
 } from "./dto";
-// import { Response } from "express";
+import { Response } from "express";
 
 @Controller("api/comment-accounting")
 export class CommentAccountingController {
@@ -63,20 +63,20 @@ export class CommentAccountingController {
     return this.service.remove(target, id);
   }
 
-  // @Get("/download")
-  // async download(@Query() query, @Res() res: Response) {
-  //   const { target, parrentId } = query;
-  //   let fileLocation = await this.service.exportExcelFile(target, parrentId);
-  //   res.header(
-  //     "Content-disposition",
-  //     `attachment; filename=CCKSH_${setCurrentDate()}.xlsx`
-  //   );
-  //   res.type(
-  //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  //   );
+  @Get("/download")
+  async download(@Query() query, @Res() res: Response) {
+    const { target, parrentId } = query;
+    let fileLocation = await this.service.exportExcelFile(target, parrentId);
+    res.header(
+      "Content-disposition",
+      `attachment; filename=CCKSH_${setCurrentDate()}.xlsx`
+    );
+    res.type(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
 
-  //   res.download(fileLocation, `CCKSH_${setCurrentDate()}.xlsx`, (err) => {
-  //     if (err) console.log(err);
-  //   });
-  // }
+    res.download(fileLocation, `CCKSH_${setCurrentDate()}.xlsx`, (err) => {
+      if (err) console.log(err);
+    });
+  }
 }

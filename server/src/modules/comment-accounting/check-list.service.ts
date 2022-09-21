@@ -362,9 +362,13 @@ export class CheckListService {
     for (let i = 0; i < criticalityArr.length; i++) {
       criterion.criticalityTitle = criticalityArr[i].title;
       criterion.weight = +criticalityArr[i].code;
-      criterion.threshold = +criticalityArr[i].threshold;
-      criterion.goal = +criticalityArr[i].goal;
-      criterion.tenseGoal = +criticalityArr[i].tenseGoal;
+      criterion.threshold = criticalityArr[i].threshold
+        ? +criticalityArr[i].threshold
+        : 0;
+      criterion.goal = criticalityArr[i].goal ? +criticalityArr[i].goal : 0;
+      criterion.tenseGoal = criticalityArr[i].tenseGoal
+        ? +criticalityArr[i].tenseGoal
+        : 0;
 
       newArr = intermediateArr.filter(
         ({ criticalityTitle }) => criticalityTitle === criticalityArr[i].title
@@ -438,7 +442,12 @@ export class CheckListService {
     for (let i = 0; i < settings.settings.length; i++) {
       const { stage, stageFactor, criticalities } = settings.settings[i];
       criterions.push(
-        this.stageCheck(item, stage, +stageFactor, criticalities)
+        this.stageCheck(
+          item,
+          stage as CommentAccountingNSIView,
+          +stageFactor,
+          criticalities
+        )
       );
     }
 
@@ -475,7 +484,12 @@ export class CheckListService {
     for (let i = 0; i < settings.settings.length; i++) {
       const { stage, stageFactor, criticalities } = settings.settings[i];
       criterions.push(
-        this.stageCheck(item, stage, +stageFactor, criticalities)
+        this.stageCheck(
+          item,
+          stage as CommentAccountingNSIView,
+          +stageFactor,
+          criticalities
+        )
       );
     }
 
