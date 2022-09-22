@@ -2,14 +2,15 @@ import { Modal, Space, Typography } from "antd";
 import { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { FormActions } from "../modules/main";
+import { useActions, useTypedSelector } from "../hooks";
 
 const { Text } = Typography;
 
 interface ModalContainerProps {
-  show: boolean;
-  onCancel: () => void;
-  action: string;
   child: ReactNode;
+  show?: boolean;
+  onCancel?: () => void;
+  action?: string;
 }
 
 const ModalContainer: FC<ModalContainerProps> = ({
@@ -18,29 +19,33 @@ const ModalContainer: FC<ModalContainerProps> = ({
   child,
   onCancel,
 }) => {
+  const { formVisible, actionType } = useTypedSelector((state) => state.main);
+  const { setFormVisible } = useActions();
+
   const addActionsFlag =
-    action === FormActions.ADD ||
-    action === FormActions.ADD_CHILD ||
-    action === FormActions.ADD_DOCUMENT ||
-    action === FormActions.ADD_COMMENT ||
-    action === FormActions.ADD_DICTIONARY_ITEM;
+    actionType === FormActions.ADD ||
+    actionType === FormActions.ADD_CHILD ||
+    actionType === FormActions.ADD_DOCUMENT ||
+    actionType === FormActions.ADD_COMMENT ||
+    actionType === FormActions.ADD_DICTIONARY_ITEM;
 
   const editActionsFlag =
-    action === FormActions.EDIT ||
-    action === FormActions.EDIT_CHILD ||
-    action === FormActions.EDIT_DOCUMENT ||
-    action === FormActions.EDIT_COMMENT ||
-    action === FormActions.EDIT_DICTIONARY_ITEM;
+    actionType === FormActions.EDIT ||
+    actionType === FormActions.EDIT_CHILD ||
+    actionType === FormActions.EDIT_DOCUMENT ||
+    actionType === FormActions.EDIT_COMMENT ||
+    actionType === FormActions.EDIT_DICTIONARY_ITEM;
 
   const removeActionsFlag =
-    action === FormActions.REMOVE ||
-    action === FormActions.REMOVE_CHILD ||
-    action === FormActions.REMOVE_DOCUMENT ||
-    action === FormActions.REMOVE_COMMENT ||
-    action === FormActions.REMOVE_DICTIONARY_ITEM;
+    actionType === FormActions.REMOVE ||
+    actionType === FormActions.REMOVE_CHILD ||
+    actionType === FormActions.REMOVE_DOCUMENT ||
+    actionType === FormActions.REMOVE_COMMENT ||
+    actionType === FormActions.REMOVE_DICTIONARY_ITEM;
 
   const containerWidth =
-    action === FormActions.ADD_COMMENT || action === FormActions.EDIT_COMMENT
+    actionType === FormActions.ADD_COMMENT ||
+    actionType === FormActions.EDIT_COMMENT
       ? 900
       : 600;
 
@@ -56,9 +61,9 @@ const ModalContainer: FC<ModalContainerProps> = ({
               ? "Редактирование записи"
               : removeActionsFlag
               ? "Удаление записи"
-              : action === FormActions.CHECKLIST
+              : actionType === FormActions.CHECKLIST
               ? "Чек-лист"
-              : action === FormActions.ADD_USER
+              : actionType === FormActions.ADD_USER
               ? "Регистрация пользователя"
               : "Другое"}
           </Text>
@@ -72,9 +77,9 @@ const ModalContainer: FC<ModalContainerProps> = ({
         </Text>
       }
       centered
-      visible={show}
+      visible={formVisible}
       footer={null}
-      onCancel={onCancel}
+      onCancel={() => setFormVisible(false)}
     >
       {child}
     </Modal>

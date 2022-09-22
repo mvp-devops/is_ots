@@ -8,113 +8,113 @@ export interface EssenceState {
 }
 
 export enum ActionTypes {
-  POST_MANY_ITEMS = "POST_MANY_ITEMS",
-  POST_MANY_ITEMS_SUCCESS = "POST_MANY_ITEMS_SUCCESS",
-  POST_MANY_ITEMS_ERROR = "POST_MANY_ITEMS_ERROR",
-  POST_ONE_ITEM = "POST_ONE_ITEM",
-  POST_ONE_ITEM_SUCCESS = "POST_ONE_ITEM_SUCCESS",
-  POST_ONE_ITEM_ERROR = "POST_ONE_ITEM_ERROR",
-  UPDATE_ONE_ITEM = "UPDATE_ONE_ITEM",
-  UPDATE_ONE_ITEM_SUCCESS = "UPDATE_ONE_ITEM_SUCCESS",
-  UPDATE_ONE_ITEM_ERROR = "UPDATE_ONE_ITEM_ERROR",
-  DELETE_ONE_ITEM = "DELETE_ONE_ITEM",
-  DELETE_ONE_ITEM_SUCCESS = "DELETE_ONE_ITEM_SUCCESS",
-  DELETE_ONE_ITEM_ERROR = "DELETE_ONE_ITEM_ERROR",
-  GET_ONE_ITEM = "GET_ONE_ITEM",
-  GET_ONE_ITEM_SUCCESS = "GET_ONE_ITEM_SUCCESS",
-  GET_ONE_ITEM_ERROR = "GET_ONE_ITEM_ERROR",
-  GET_MANY_ITEMS = "GET_MANY_ITEMS",
-  GET_MANY_ITEMS_SUCCESS = "GET_MANY_ITEMS_SUCCESS",
-  GET_MANY_ITEMS_ERROR = "GET_MANY_ITEMS_ERROR",
-  SET_CURRENT_ITEM = "SET_CURRENT_ITEM",
-  SET_RENDER_ITEMS = "SET_RENDER_ITEMS",
+  POST_MANY_COMMENTS = "POST_MANY_COMMENTS",
+  POST_MANY_COMMENTS_SUCCESS = "POST_MANY_COMMENTS_SUCCESS",
+  POST_MANY_COMMENTS_ERROR = "POST_MANY_COMMENTS_ERROR",
+  POST_ONE_COMMENT = "POST_ONE_COMMENT",
+  POST_ONE_COMMENT_SUCCESS = "POST_ONE_COMMENT_SUCCESS",
+  POST_ONE_COMMENT_ERROR = "POST_ONE_COMMENT_ERROR",
+  UPDATE_ONE_COMMENT = "UPDATE_ONE_COMMENT",
+  UPDATE_ONE_COMMENT_SUCCESS = "UPDATE_ONE_COMMENT_SUCCESS",
+  UPDATE_ONE_COMMENT_ERROR = "UPDATE_ONE_COMMENT_ERROR",
+  DELETE_ONE_COMMENT = "DELETE_ONE_COMMENT",
+  DELETE_ONE_COMMENT_SUCCESS = "DELETE_ONE_COMMENT_SUCCESS",
+  DELETE_ONE_COMMENT_ERROR = "DELETE_ONE_COMMENT_ERROR",
+  GET_ONE_COMMENT = "GET_ONE_COMMENT",
+  GET_ONE_COMMENT_SUCCESS = "GET_ONE_COMMENT_SUCCESS",
+  GET_ONE_COMMENT_ERROR = "GET_ONE_COMMENT_ERROR",
+  GET_MANY_COMMENTS = "GET_MANY_COMMENTS",
+  GET_MANY_COMMENTS_SUCCESS = "GET_MANY_COMMENTS_SUCCESS",
+  GET_MANY_COMMENTS_ERROR = "GET_MANY_COMMENTS_ERROR",
+  SET_CURRENT_COMMENT = "SET_CURRENT_COMMENT",
+  SET_RENDER_COMMENTS = "SET_RENDER_COMMENTS",
 }
 
 interface PostOneItemAction {
-  type: ActionTypes.POST_ONE_ITEM;
+  type: ActionTypes.POST_ONE_COMMENT;
 }
 
 interface PostOneItemSuccessAction {
-  type: ActionTypes.POST_ONE_ITEM_SUCCESS;
+  type: ActionTypes.POST_ONE_COMMENT_SUCCESS;
   payload: DesignDocumentCommentView;
 }
 
 interface PostOneItemErrorAction {
-  type: ActionTypes.POST_ONE_ITEM_ERROR;
+  type: ActionTypes.POST_ONE_COMMENT_ERROR;
   payload: string;
 }
 
 interface PostManyItemsAction {
-  type: ActionTypes.POST_MANY_ITEMS;
+  type: ActionTypes.POST_MANY_COMMENTS;
 }
 
 interface PostManyItemsSuccessAction {
-  type: ActionTypes.POST_MANY_ITEMS_SUCCESS;
+  type: ActionTypes.POST_MANY_COMMENTS_SUCCESS;
   payload: DesignDocumentCommentView[];
 }
 
 interface PostManyItemsErrorAction {
-  type: ActionTypes.POST_MANY_ITEMS_ERROR;
+  type: ActionTypes.POST_MANY_COMMENTS_ERROR;
   payload: string;
 }
 
 interface UpdateOneItemAction {
-  type: ActionTypes.UPDATE_ONE_ITEM;
+  type: ActionTypes.UPDATE_ONE_COMMENT;
 }
 
 interface UpdateOneItemSuccessAction {
-  type: ActionTypes.UPDATE_ONE_ITEM_SUCCESS;
+  type: ActionTypes.UPDATE_ONE_COMMENT_SUCCESS;
   payload: DesignDocumentCommentView;
 }
 
 interface UpdateOneItemErrorAction {
-  type: ActionTypes.UPDATE_ONE_ITEM_ERROR;
+  type: ActionTypes.UPDATE_ONE_COMMENT_ERROR;
   payload: string;
 }
 
 interface DeleteOneItemAction {
-  type: ActionTypes.DELETE_ONE_ITEM;
+  type: ActionTypes.DELETE_ONE_COMMENT;
 }
 
 interface DeleteOneItemSuccessAction {
-  type: ActionTypes.DELETE_ONE_ITEM_SUCCESS;
+  type: ActionTypes.DELETE_ONE_COMMENT_SUCCESS;
   payload: DesignDocumentCommentView;
 }
 
 interface DeleteOneItemErrorAction {
-  type: ActionTypes.DELETE_ONE_ITEM_ERROR;
+  type: ActionTypes.DELETE_ONE_COMMENT_ERROR;
   payload: string;
 }
 interface GetOneItemAction {
-  type: ActionTypes.GET_ONE_ITEM;
+  type: ActionTypes.GET_ONE_COMMENT;
 }
 
 interface GetOneItemSuccessAction {
-  type: ActionTypes.GET_ONE_ITEM_SUCCESS;
+  type: ActionTypes.GET_ONE_COMMENT_SUCCESS;
   payload: DesignDocumentCommentView;
 }
 
 interface GetOneItemErrorAction {
-  type: ActionTypes.GET_ONE_ITEM_ERROR;
+  type: ActionTypes.GET_ONE_COMMENT_ERROR;
   payload: string;
 }
 
 interface GetManyItemsAction {
-  type: ActionTypes.GET_MANY_ITEMS;
+  type: ActionTypes.GET_MANY_COMMENTS;
 }
 
 interface GetManyItemsSuccessAction {
-  type: ActionTypes.GET_MANY_ITEMS_SUCCESS;
+  type: ActionTypes.GET_MANY_COMMENTS_SUCCESS;
   payload: DesignDocumentCommentView[];
 }
 
 interface GetManyItemsErrorAction {
-  type: ActionTypes.GET_MANY_ITEMS_ERROR;
+  type: ActionTypes.GET_MANY_COMMENTS_ERROR;
   payload: string;
 }
 
 interface SetCurrentItemAction {
-  type: ActionTypes.SET_CURRENT_ITEM;
+  type: ActionTypes.SET_CURRENT_COMMENT;
   payload: DesignDocumentCommentView;
 }
 

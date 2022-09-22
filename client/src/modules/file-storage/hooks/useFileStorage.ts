@@ -32,7 +32,7 @@ export const useFileStorage = () => {
             actionType === FormActions.REMOVE_DOCUMENT ||
             actionType === FormActions.EDIT_DOCUMENT)
       ),
-    [actionType, formVisible]
+    [actionType]
   );
 
   return {

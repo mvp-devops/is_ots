@@ -1,3 +1,3 @@
 import CommentTable from "./CommentTable";
 
-export default CommentTable;
+export { CommentTable };

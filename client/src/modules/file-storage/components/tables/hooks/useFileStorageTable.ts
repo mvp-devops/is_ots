@@ -36,7 +36,9 @@ export const useFileStorageTable = () => {
       getAllDesignDocuments(currentItem.target, currentItem.id);
   }, [documentationView, currentItem, formVisible]);
 
-  useEffect(() => setDataSource(designDocuments), [designDocuments]);
+  useEffect(() => {
+    setDataSource(designDocuments);
+  }, [designDocuments]);
 
   const [searchValue, setSearchValue] = useState("");
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) => {

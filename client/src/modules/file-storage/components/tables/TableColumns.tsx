@@ -189,11 +189,11 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     render: (_blank, record) => (
       <Space size="middle">
         <MessageOutlined
-          title="Просмотр замечаний"
+          title="Добавить замечание"
           className="text-info"
           onClick={() => {
-            setActionType(FormActions.VIEW_COMMENT);
-            setCollectiveCheckSheetView(true);
+            setActionType(FormActions.ADD_COMMENT);
+            setFormVisible(true);
           }}
         />
         <EditOutlined

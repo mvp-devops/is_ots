@@ -5,7 +5,7 @@ import {
   CheckListForm,
 } from "./forms";
 
-import CommentTable from "./tables/commentTable/";
+import CommentTable from "./tables/commentTable/CommentTable";
 
 import { SolutionTable, CheckListTable } from "./tables";
 

@@ -5,9 +5,9 @@ import Header from "./Header";
 import { useCollectiveCheckSheet } from "./hooks/useCollectiveCheckSheet";
 import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
-import { CommentForm } from "../../components";
+import { CommentForm, CommentTable } from "../../components";
 import { ModalContainer } from "../../../../components";
-import CommentTable from "../../components/tables/CommentTable";
+// import CommentTable from "../../components/tables/CommentTable";
 
 const { Text } = Typography;
 
@@ -75,8 +75,9 @@ const CollectiveCheckSheet = () => {
       </Space>
       <Header />
 
-      <CommentTable data={dataSource} />
-      {renderForm}
+      {/* <CommentTable data={dataSource} /> */}
+      <CommentTable />
+      {/* {renderForm} */}
     </Space>
   );
 };

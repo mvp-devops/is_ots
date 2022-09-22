@@ -35,7 +35,7 @@ const CommentForm = () => {
     deleteItem,
   } = useCommentAccountingForm();
 
-  const renderAddActions = actionType === FormActions.ADD_COMMENT && (
+  const renderAddActions = (
     <Button
       type="primary"
       className="m-1"
@@ -49,7 +49,7 @@ const CommentForm = () => {
     </Button>
   );
 
-  const renderEditActions = FormActions.EDIT_COMMENT && (
+  const renderEditActions = (
     <Button
       type="primary"
       className="m-1"
@@ -63,7 +63,7 @@ const CommentForm = () => {
     </Button>
   );
 
-  const renderRemoveActions = FormActions.REMOVE_COMMENT && (
+  const renderRemoveActions = (
     <Button
       type="primary"
       className="m-1"
@@ -76,6 +76,11 @@ const CommentForm = () => {
       Удалить
     </Button>
   );
+
+  const renderAction =
+    actionType === FormActions.ADD_COMMENT
+      ? renderAddActions
+      : renderEditActions;
 
   const renderForm = (actionType === FormActions.ADD_COMMENT ||
     actionType === FormActions.EDIT_COMMENT) && (
@@ -143,26 +148,25 @@ const CommentForm = () => {
           </Space>
         ))}
       </Space>
+      <Divider className="m-1" />
+      <Space className="d-flex justify-content-end mb-2">{renderAction}</Space>
     </>
   );
 
   const renderDelete = actionType === FormActions.REMOVE_COMMENT && (
-    <DeleteForm message="Удалить замечание?" />
-  );
-
-  return (
     <>
-      {renderForm}
-      {renderDelete}
-
+      <DeleteForm message="Удалить замечание?" />
       <Divider className="m-1" />
       <Space className="d-flex justify-content-end mb-2">
-        {renderAddActions}
-        {renderEditActions}
         {renderRemoveActions}
       </Space>
     </>
   );
+
+  const render =
+    actionType === FormActions.REMOVE_COMMENT ? renderDelete : renderForm;
+
+  return render;
 };
 
 export default CommentForm;

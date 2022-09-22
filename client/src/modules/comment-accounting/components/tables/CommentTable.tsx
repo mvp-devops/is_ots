@@ -29,7 +29,7 @@ import { FormActions, setFilePath, tableLocale } from "../../../main";
 import { useCommentAccounting } from "../../hooks";
 import { useCommentAccountingTable } from "./hooks/useCommentAccountingTable";
 import { useCollectiveCheckSheet } from "../../views/collective-check-list/hooks/useCollectiveCheckSheet";
-import { useTypedSelector } from "../../../../hooks";
+import { useActions, useTypedSelector } from "../../../../hooks";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -43,13 +43,13 @@ const { Row, Cell } = Table.Summary;
 const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const { setFormVisible, setActionType } = useCommentAccounting();
 
+  // const { setCurrentComment } = useActions();
+
   const { currentDesignDocument } = useTypedSelector(
     (state) => state.fileStorage
   );
 
   const { dataSource } = useCollectiveCheckSheet();
-
-  const { selectedRow, setSelectedRow } = useCommentAccountingTable();
 
   const navigate = useNavigate();
 
@@ -276,11 +276,11 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           expandedRowRender,
           rowExpandable: (record) => (record.comment.length > 0 ? true : false),
         }}
-        onRow={(record, rowIndex) => {
-          return {
-            onMouseEnter: (event) => setSelectedRow(record),
-          };
-        }}
+        // onRow={(record, rowIndex) => {
+        //   return {
+        //     onMouseEnter: (event) => setCurrentComment(record),
+        //   };
+        // }}
         summary={(data) => (
           <Row>
             <Cell index={0} colSpan={11} align="right">

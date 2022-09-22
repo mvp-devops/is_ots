@@ -17,6 +17,8 @@ import TableTitle from "./TableTitle";
 import {
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
+  CommentForm,
+  useCommentAccounting,
 } from "../../../comment-accounting";
 import { memo } from "react";
 
@@ -41,6 +43,8 @@ const DesignDocumentTable = () => {
     setCollectiveCheckSheetView,
   } = useFileStorageTable();
 
+  const { renderCommentAccountingFormFlag } = useCommentAccounting();
+
   const columns = TableColumns();
 
   const formRender = renderFileStorageFormFlag && (
@@ -50,6 +54,10 @@ const DesignDocumentTable = () => {
       action={actionType}
       child={<DesignDocumentForm />}
     />
+  );
+
+  const addCommentForm = renderCommentAccountingFormFlag && (
+    <ModalContainer child={<CommentForm />} />
   );
 
   const collectiveCheckSheetViewRender = collectiveCheckSheetView && (
@@ -157,6 +165,7 @@ const DesignDocumentTable = () => {
       )}
       {formRender}
       {collectiveCheckSheetViewRender}
+      {addCommentForm}
     </Layout>
   );
 };

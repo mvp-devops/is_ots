@@ -31,6 +31,8 @@ const MainPage: FC = () => {
     setTarget,
     setChildTarget,
     setBaseTarget,
+    setActionType,
+    setFormVisible,
   } = useActions();
   const { menuItems, currentItem, target, childTarget } = useTypedSelector(
     (state) => state.positionTree
@@ -68,7 +70,7 @@ const MainPage: FC = () => {
     currentUser &&
       currentUser.subsidiaryId &&
       setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
-  }, [formVisible, currentUser]);
+  }, [currentUser]);
 
   return (
     <Layout style={{ minHeight: "100vh" }}>

@@ -16,12 +16,8 @@ import { setCommentFilters } from "../table.settings";
 const { Text } = Typography;
 
 const CommentTableColumns = () => {
-  const {
-    renderComments,
-    currentDesignDocument,
-    setActionType,
-    setFormVisible,
-  } = useCommentTable();
+  const { dataSource, currentDesignDocument, setActionType, setFormVisible } =
+    useCommentTable();
 
   const numberColumn: ColumnType<DesignDocumentCommentView> = {
     title: "№ п/п",
@@ -37,7 +33,7 @@ const CommentTableColumns = () => {
     ),
   };
 
-  const markFilters = setCommentFilters("document-section", renderComments);
+  const markFilters = setCommentFilters("document-section", dataSource);
 
   const markColumn: ColumnType<DesignDocumentCommentView> = {
     title: "Раздел/Марка документа",
@@ -115,7 +111,7 @@ const CommentTableColumns = () => {
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const normativeFilters = setCommentFilters("normative", renderComments);
+  const normativeFilters = setCommentFilters("normative", dataSource);
 
   const normativeColumn: ColumnType<DesignDocumentCommentView> = {
     title: "Нормативная ссылка",
@@ -132,7 +128,7 @@ const CommentTableColumns = () => {
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const criticalityFilters = setCommentFilters("criticality", renderComments);
+  const criticalityFilters = setCommentFilters("criticality", dataSource);
 
   const criticalityColumn: ColumnType<DesignDocumentCommentView> = {
     title: "Код замечания*",
@@ -154,7 +150,7 @@ const CommentTableColumns = () => {
 
   const subdivisionFilters = setCommentFilters(
     "expert-subdivision",
-    renderComments
+    dataSource
   );
 
   const subdivisionColumn: ColumnType<DesignDocumentCommentView> = {
@@ -173,7 +169,7 @@ const CommentTableColumns = () => {
 
   const expertContactsFilters = setCommentFilters(
     "expert-contacts",
-    renderComments
+    dataSource
   );
 
   const expertContactsColumn: ColumnType<DesignDocumentCommentView> = {

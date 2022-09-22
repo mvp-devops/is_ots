@@ -88,7 +88,7 @@ export const useFileStorageForm = () => {
 
   useEffect(() => {
     editRow &&
-      editRow.stageId &&
+      editRow.stageId === 5 &&
       getNSIList("counterparty").then((data) => setSuppliersList(data));
   }, [editRow?.stageId]);
 

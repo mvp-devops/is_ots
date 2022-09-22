@@ -16,15 +16,15 @@ import { ActionTypes, EssenceAction } from "../types";
 export const createComment = (item: DesignDocumentCommentCreationAttrs) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.POST_ONE_ITEM });
+      dispatch({ type: ActionTypes.POST_ONE_COMMENT });
       const data = await createOneEssence(item);
       dispatch({
-        type: ActionTypes.POST_ONE_ITEM_SUCCESS,
+        type: ActionTypes.POST_ONE_COMMENT_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.POST_ONE_ITEM_ERROR,
+        type: ActionTypes.POST_ONE_COMMENT_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -36,15 +36,15 @@ export const createManyComments = (
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.POST_MANY_ITEMS });
+      dispatch({ type: ActionTypes.POST_MANY_COMMENTS });
       const data = await createManyEssences(items);
       dispatch({
-        type: ActionTypes.POST_MANY_ITEMS_SUCCESS,
+        type: ActionTypes.POST_MANY_COMMENTS_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.POST_MANY_ITEMS_ERROR,
+        type: ActionTypes.POST_MANY_COMMENTS_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -57,15 +57,15 @@ export const updateComment = (
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.UPDATE_ONE_ITEM });
+      dispatch({ type: ActionTypes.UPDATE_ONE_COMMENT });
       const data = await updateOneEssence(id, item);
       dispatch({
-        type: ActionTypes.UPDATE_ONE_ITEM_SUCCESS,
+        type: ActionTypes.UPDATE_ONE_COMMENT_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.UPDATE_ONE_ITEM_ERROR,
+        type: ActionTypes.UPDATE_ONE_COMMENT_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -75,15 +75,15 @@ export const updateComment = (
 export const deleteComment = (id: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.DELETE_ONE_ITEM });
+      dispatch({ type: ActionTypes.DELETE_ONE_COMMENT });
       const data = await deleteOneEssence(id);
       dispatch({
-        type: ActionTypes.DELETE_ONE_ITEM_SUCCESS,
+        type: ActionTypes.DELETE_ONE_COMMENT_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.DELETE_ONE_ITEM_ERROR,
+        type: ActionTypes.DELETE_ONE_COMMENT_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -93,15 +93,15 @@ export const deleteComment = (id: string) => {
 export const getOneComment = (target: string, id: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.GET_ONE_ITEM });
+      dispatch({ type: ActionTypes.GET_ONE_COMMENT });
       const data = await getOneItem(target, id);
       dispatch({
-        type: ActionTypes.GET_ONE_ITEM_SUCCESS,
+        type: ActionTypes.GET_ONE_COMMENT_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.GET_ONE_ITEM_ERROR,
+        type: ActionTypes.GET_ONE_COMMENT_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -115,15 +115,15 @@ export const getManyComments = (
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
-      dispatch({ type: ActionTypes.GET_MANY_ITEMS });
+      dispatch({ type: ActionTypes.GET_MANY_COMMENTS });
       const data = await getAllItems(parrentTarget, parrentId, parrentIds);
       dispatch({
-        type: ActionTypes.GET_MANY_ITEMS_SUCCESS,
+        type: ActionTypes.GET_MANY_COMMENTS_SUCCESS,
         payload: data,
       });
     } catch (error) {
       dispatch({
-        type: ActionTypes.GET_MANY_ITEMS_ERROR,
+        type: ActionTypes.GET_MANY_COMMENTS_ERROR,
         payload: "Ошибка получения данных",
       });
     }
@@ -132,7 +132,7 @@ export const getManyComments = (
 
 export const setCurrentComment = (item: DesignDocumentCommentView) => {
   return {
-    type: ActionTypes.SET_CURRENT_ITEM,
+    type: ActionTypes.SET_CURRENT_COMMENT,
     payload: item,
   };
 };

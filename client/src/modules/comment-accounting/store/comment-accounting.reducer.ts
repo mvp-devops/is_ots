@@ -16,84 +16,84 @@ export const commentAccountingReducer = (
   action: EssenceAction
 ): EssenceState => {
   switch (action.type) {
-    case ActionTypes.SET_CURRENT_ITEM:
+    case ActionTypes.SET_CURRENT_COMMENT:
       return {
         ...state,
         currentComment: action.payload,
       };
 
-    case ActionTypes.GET_MANY_ITEMS:
+    case ActionTypes.GET_MANY_COMMENTS:
       return state;
 
-    case ActionTypes.GET_MANY_ITEMS_SUCCESS:
+    case ActionTypes.GET_MANY_COMMENTS_SUCCESS:
       return {
         ...state,
         loading: false,
         renderComments: action.payload,
       };
 
-    case ActionTypes.GET_MANY_ITEMS_ERROR:
+    case ActionTypes.GET_MANY_COMMENTS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case ActionTypes.GET_ONE_ITEM:
+    case ActionTypes.GET_ONE_COMMENT:
       return state;
 
-    case ActionTypes.GET_ONE_ITEM_SUCCESS:
+    case ActionTypes.GET_ONE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
         currentComment: action.payload,
       };
 
-    case ActionTypes.GET_ONE_ITEM_ERROR:
+    case ActionTypes.GET_ONE_COMMENT_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case ActionTypes.POST_ONE_ITEM:
+    case ActionTypes.POST_ONE_COMMENT:
       return state;
 
-    case ActionTypes.POST_ONE_ITEM_SUCCESS:
+    case ActionTypes.POST_ONE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
         renderComments: [...state.renderComments, action.payload],
       };
 
-    case ActionTypes.POST_ONE_ITEM_ERROR:
+    case ActionTypes.POST_ONE_COMMENT_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case ActionTypes.POST_MANY_ITEMS:
+    case ActionTypes.POST_MANY_COMMENTS:
       return state;
 
-    case ActionTypes.POST_MANY_ITEMS_SUCCESS:
+    case ActionTypes.POST_MANY_COMMENTS_SUCCESS:
       return {
         ...state,
         loading: false,
         renderComments: [...state.renderComments, ...action.payload],
       };
 
-    case ActionTypes.POST_MANY_ITEMS_ERROR:
+    case ActionTypes.POST_MANY_COMMENTS_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case ActionTypes.UPDATE_ONE_ITEM:
+    case ActionTypes.UPDATE_ONE_COMMENT:
       return state;
 
-    case ActionTypes.UPDATE_ONE_ITEM_SUCCESS:
+    case ActionTypes.UPDATE_ONE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -105,17 +105,17 @@ export const commentAccountingReducer = (
         ],
       };
 
-    case ActionTypes.UPDATE_ONE_ITEM_ERROR:
+    case ActionTypes.UPDATE_ONE_COMMENT_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       };
 
-    case ActionTypes.DELETE_ONE_ITEM:
+    case ActionTypes.DELETE_ONE_COMMENT:
       return state;
 
-    case ActionTypes.DELETE_ONE_ITEM_SUCCESS:
+    case ActionTypes.DELETE_ONE_COMMENT_SUCCESS:
       return {
         ...state,
         loading: false,
@@ -124,7 +124,7 @@ export const commentAccountingReducer = (
         ),
       };
 
-    case ActionTypes.DELETE_ONE_ITEM_ERROR:
+    case ActionTypes.DELETE_ONE_COMMENT_ERROR:
       return {
         ...state,
         loading: false,

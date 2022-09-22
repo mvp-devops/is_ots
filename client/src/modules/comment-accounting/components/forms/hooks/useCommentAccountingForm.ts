@@ -4,14 +4,11 @@ import {
   DesignDocumentCommentSolutionCreationAttrs,
 } from "../../../../../../../server/common/types/comments-accounting";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
-import { usePositionTree } from "../../../../position-tree";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
-import { useCommentAccounting } from "../../..";
 import { FormActions } from "../../../../main";
 import { useFileStorage } from "../../../../file-storage";
 import { initFormData, solutionItem } from "../form.settings";
 import { useActions, useTypedSelector } from "../../../../../hooks";
-import { useCommentAccountingTable } from "../../tables/hooks/useCommentAccountingTable";
 
 export const useCommentAccountingForm = () => {
   const [editRow, setEditRow] =
@@ -23,19 +20,26 @@ export const useCommentAccountingForm = () => {
     DesignDocumentCommentSolutionCreationAttrs[]
   >([]);
 
-  const { currentUser } = useTypedSelector((state) => state.main);
+  const { currentUser, actionType, formVisible } = useTypedSelector(
+    (state) => state.main
+  );
+
+  const { currentComment } = useTypedSelector(
+    (state) => state.commentAccounting
+  );
 
   const { currentDesignDocument } = useFileStorage();
 
-  const { currentItem, renderOneItem, target } = usePositionTree();
-
   const { getAllItems: getNSIList } = useRegulatoryReferenceInformation();
-  const { actionType } = useCommentAccounting();
-
-  const { selectedRow } = useCommentAccountingTable();
 
   const { createComment, updateComment, deleteComment, setFormVisible } =
     useActions();
+
+  const renderCommentAccountingFormFlag =
+    formVisible &&
+    (actionType === FormActions.ADD_COMMENT ||
+      actionType === FormActions.EDIT_COMMENT ||
+      actionType === FormActions.REMOVE_COMMENT);
 
   useEffect(() => {
     if (currentDesignDocument && currentUser) {
@@ -45,12 +49,12 @@ export const useCommentAccountingForm = () => {
         );
 
       actionType === FormActions.EDIT_COMMENT &&
-        selectedRow &&
+        currentComment &&
         setEditRow(
           initFormData(
             currentDesignDocument,
             currentUser.id as string,
-            selectedRow
+            currentComment
           )
         );
     }
@@ -91,7 +95,11 @@ export const useCommentAccountingForm = () => {
     //   getItems("normative").then((data) =>
     //   setCriticalities(data)
     // );
-  }, []);
+  }, [
+    currentDesignDocument,
+    actionType === FormActions.ADD_COMMENT,
+    actionType === FormActions.EDIT_COMMENT,
+  ]);
 
   useEffect(() => {
     editRow && setEditRow({ ...editRow, solutions });
@@ -152,7 +160,7 @@ export const useCommentAccountingForm = () => {
     editRow && editRow.id && deleteComment(editRow.id as string);
   };
 
-  useEffect(() => console.log(selectedRow), [selectedRow]);
+  useEffect(() => console.log(editRow), [editRow]);
 
   return {
     actionType,
@@ -168,5 +176,6 @@ export const useCommentAccountingForm = () => {
     addNewItem,
     updateItem,
     deleteItem,
+    renderCommentAccountingFormFlag,
   };
 };

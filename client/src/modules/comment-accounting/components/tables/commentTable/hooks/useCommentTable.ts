@@ -75,10 +75,13 @@ export const useCommentTable = () => {
           ]);
       });
     }
-  }, []);
+  }, [
+    currentDesignDocument,
+    actionType === FormActions.COLLECTIVE_CHECK_SHEET,
+  ]);
 
   return {
-    renderComments,
+    dataSource,
     currentDesignDocument,
     setActionType,
     setFormVisible,
