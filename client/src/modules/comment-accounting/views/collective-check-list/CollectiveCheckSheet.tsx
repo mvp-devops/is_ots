@@ -77,7 +77,7 @@ const CollectiveCheckSheet = () => {
 
       {/* <CommentTable data={dataSource} /> */}
       <CommentTable />
-      {/* {renderForm} */}
+      {renderForm}
     </Space>
   );
 };

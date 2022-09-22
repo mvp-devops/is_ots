@@ -53,8 +53,8 @@ const CommentTable = () => {
           expandedRowRender: (record: DesignDocumentCommentView) => (
             <SolutionTable record={record} />
           ),
-          rowExpandable: (record: DesignDocumentCommentView) =>
-            record.solutions.length > 0 ? true : false,
+          // rowExpandable: (record: DesignDocumentCommentView) =>
+          //   record.solutions.length > 0 ? true : false,
         }}
         onRow={(record) => {
           return {

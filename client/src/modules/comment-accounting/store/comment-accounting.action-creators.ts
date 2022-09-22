@@ -72,11 +72,11 @@ export const updateComment = (
   };
 };
 
-export const deleteComment = (id: string) => {
+export const deleteComment = (target: string, id: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.DELETE_ONE_COMMENT });
-      const data = await deleteOneEssence(id);
+      const data = await deleteOneEssence(target, id);
       dispatch({
         type: ActionTypes.DELETE_ONE_COMMENT_SUCCESS,
         payload: data,

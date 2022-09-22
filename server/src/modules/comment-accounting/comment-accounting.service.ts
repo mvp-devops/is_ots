@@ -585,7 +585,7 @@ export class CommentAccountingService {
     target: string,
     id: string
   ): Promise<DesignDocumentCommentView> => {
-    const item = this.findOne(target, id);
+    const item = await this.findOne(target, id);
 
     await this.commentRepository.destroy({ where: { id } });
 

@@ -9,6 +9,7 @@ import { FormActions } from "../../../../main";
 import { useFileStorage } from "../../../../file-storage";
 import { initFormData, solutionItem } from "../form.settings";
 import { useActions, useTypedSelector } from "../../../../../hooks";
+import { usePositionTree } from "../../../../position-tree";
 
 export const useCommentAccountingForm = () => {
   const [editRow, setEditRow] =
@@ -29,6 +30,8 @@ export const useCommentAccountingForm = () => {
   );
 
   const { currentDesignDocument } = useFileStorage();
+
+  const { target } = usePositionTree();
 
   const { getAllItems: getNSIList } = useRegulatoryReferenceInformation();
 
@@ -153,11 +156,14 @@ export const useCommentAccountingForm = () => {
   };
 
   const updateItem = () => {
-    editRow && editRow.id && updateComment(editRow.id as string, editRow);
+    editRow &&
+      currentComment &&
+      updateComment(currentComment.id as string, editRow);
   };
 
   const deleteItem = () => {
-    editRow && editRow.id && deleteComment(editRow.id as string);
+    console.log(currentComment);
+    currentComment && deleteComment(target, currentComment.id as string);
   };
 
   useEffect(() => console.log(editRow), [editRow]);

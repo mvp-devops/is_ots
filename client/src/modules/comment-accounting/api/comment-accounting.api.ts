@@ -38,10 +38,13 @@ export const updateOneEssence = async (
 };
 
 export const deleteOneEssence = async (
+  target: string,
   id: string
 ): Promise<DesignDocumentCommentView> => {
   const url = setUrl(`${baseUrl}/remove/${id}`);
-  const { data } = await axios.delete<DesignDocumentCommentView>(url);
+  const { data } = await axios.delete<DesignDocumentCommentView>(url, {
+    params: { target },
+  });
 
   return data;
 };

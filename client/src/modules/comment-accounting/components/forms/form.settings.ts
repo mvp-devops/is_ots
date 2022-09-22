@@ -34,58 +34,31 @@ export const solutionItem = {
 export const initFormData = (
   document: DesignDocumentView,
   userId: string,
-  data?: DesignDocumentCommentView | null
+  row?: DesignDocumentCommentView
 ): DesignDocumentCommentCreationAttrs => {
-  const item = commentItem;
-  item.id = data && data.id ? data.id : null;
-  item.pdcId = data && data.pdcId ? data.pdcId : document.id;
-  item.udcId = data && data.udcId ? data.udcId : document.id;
-  item.sudcId = data && data.sudcId ? data.sudcId : document.id;
-  item.sdcId = data && data.sdcId ? data.sdcId : document.id;
-  item.directionId =
-    data && data.directionId ? data.directionId : item.directionId;
-  item.criticalityId =
-    data && data.criticalityId ? data.criticalityId : item.criticalityId;
-  item.normativeId =
-    data && data.normativeId ? data.normativeId : item.normativeId;
-  item.userId = data && data.userId ? data.userId : userId;
-  item.comment = data && data.comment ? data.comment : item.comment;
+  let item: DesignDocumentCommentCreationAttrs | null = null;
+
+  const pdcId = document.projectId !== null ? document.id : null;
+  const udcId = document.unitId !== null ? document.id : null;
+  const sudcId = document.subUnitId !== null ? document.id : null;
+  const sdcId = document.supplierId !== null ? document.id : null;
+
+  item = row
+    ? {
+        pdcId: row.pdcId,
+        udcId: row.udcId,
+        sudcId: row.sudcId,
+        sdcId: row.sdcId,
+        directionId: row.directionId,
+        criticalityId: row.criticalityId,
+        normativeId: row.normativeId,
+        userId: row.userId,
+        comment: row.comment,
+        solutions: [],
+      }
+    : { ...commentItem, pdcId, udcId, sudcId, sdcId, userId };
 
   return item;
-};
-
-export const initCommentFormData = (
-  target: string,
-  currentId: string,
-  data?: DesignDocumentCommentCreationAttrs | null
-): DesignDocumentCommentCreationAttrs => {
-  return {
-    pdcId:
-      data && data.pdcId
-        ? data.pdcId
-        : !data && target === "project"
-        ? currentId
-        : null,
-    udcId:
-      data && data.udcId
-        ? data.udcId
-        : !data && target === "unit"
-        ? currentId
-        : null,
-    sudcId:
-      data && data.sudcId
-        ? data.sudcId
-        : !data && target === "sub-unit"
-        ? currentId
-        : null,
-    sdcId: data && data.sdcId ? data.sdcId : null,
-    directionId: data && data.directionId ? data.directionId : null,
-    normativeId: data && data.normativeId ? data.normativeId : null,
-    userId: data && data.userId ? data.userId : null,
-    criticalityId: data && data.criticalityId ? data.criticalityId : null,
-    comment: data && data.comment ? data.comment : "",
-    solutions: data && data.solutions ? data.solutions : [],
-  };
 };
 
 export const initCheckListSets: CheckListSets = {

@@ -13,9 +13,7 @@ export const useCommentTable = () => {
     CommentAccountingNSIView[]
   >([]);
 
-  const { actionType, collectiveCheckSheetView } = useTypedSelector(
-    (state) => state.main
-  );
+  const { actionType, formVisible } = useTypedSelector((state) => state.main);
 
   const { target } = useTypedSelector((state) => state.positionTree);
   const { checkedDesignDocuments, currentDesignDocument } = useTypedSelector(
@@ -39,18 +37,21 @@ export const useCommentTable = () => {
       currentDesignDocument &&
         getManyComments(target, currentDesignDocument.id);
     }
-  }, [checkedDesignDocuments, currentDesignDocument]);
+  }, [
+    checkedDesignDocuments,
+    currentDesignDocument,
+    formVisible &&
+      (actionType === FormActions.COLLECTIVE_CHECK_SHEET ||
+        actionType === FormActions.ADD_COMMENT ||
+        actionType === FormActions.EDIT_COMMENT),
+  ]);
 
   useEffect(() => {
     setDataSource(renderComments);
   }, [renderComments]);
 
   useEffect(() => {
-    if (
-      currentDesignDocument &&
-      collectiveCheckSheetView &&
-      actionType === FormActions.COLLECTIVE_CHECK_SHEET
-    ) {
+    if (currentDesignDocument) {
       getNsiItems("criticality").then((data) => {
         currentDesignDocument.stageId !== 7 &&
           currentDesignDocument.stageId !== 8 &&
