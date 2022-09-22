@@ -90,7 +90,7 @@ export const fileStorageReducer = (
         ...state,
         loading: false,
         designDocuments: state.designDocuments.filter(
-          (item) => item.id !== action.payload.id
+          (item) => (item.id as string) !== (action.payload.id as string)
         ),
       };
     case ActionTypes.DELETE_ONE_ITEM_ERROR:

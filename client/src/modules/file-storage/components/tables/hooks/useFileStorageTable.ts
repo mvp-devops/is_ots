@@ -34,7 +34,7 @@ export const useFileStorageTable = () => {
     documentationView &&
       currentItem &&
       getAllDesignDocuments(currentItem.target, currentItem.id);
-  }, [documentationView, currentItem]);
+  }, [documentationView, currentItem, formVisible]);
 
   useEffect(() => setDataSource(designDocuments), [designDocuments]);
 

@@ -131,12 +131,6 @@ export const useFileStorageForm = () => {
     currentDesignDocument && deleteOneDesignDocument(currentDesignDocument.id);
   };
 
-  useEffect(() => console.log("EdirDocument: ", editRow), [editRow]);
-  useEffect(
-    () => console.log("currentItemFolderPath: ", currentItemFolderPath),
-    [currentItemFolderPath]
-  );
-
   return {
     actionType,
     editRow,

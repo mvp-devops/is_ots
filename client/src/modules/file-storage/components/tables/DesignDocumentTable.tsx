@@ -18,6 +18,7 @@ import {
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
 } from "../../../comment-accounting";
+import { memo } from "react";
 
 const { Text } = Typography;
 const { Content } = Layout;
