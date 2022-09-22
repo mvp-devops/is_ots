@@ -177,7 +177,8 @@ const MainPage: FC = () => {
           )}
           <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
             {currentItem && baseTarget === "POSITION_TREE" && <ItemPage />}
-            {baseTarget === "REGULATORY_REFERENCE_INFORMATION" && <NsiPage />}
+            {renderNsiItems.length > 0 &&
+              baseTarget === "REGULATORY_REFERENCE_INFORMATION" && <NsiPage />}
           </Content>
         </Layout>
 

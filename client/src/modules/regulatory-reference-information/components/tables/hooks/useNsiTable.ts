@@ -12,54 +12,58 @@ export const useNsiTable = () => {
   const { loading, renderNsiItems, dictionaryTarget } = useTypedSelector(
     (state) => state.nsi
   );
-  const { actionType, formVisible } = useTypedSelector((state) => state.main);
+  const { actionType, formVisible, baseTarget } = useTypedSelector(
+    (state) => state.main
+  );
 
   const { setActionType, setFormVisible, setCurrentNsiItem } = useActions();
 
   useEffect(() => {
-    switch (dictionaryTarget) {
-      case "equipment": {
-        setTableTitle("Группы оборудования");
-        break;
-      }
-      case "counterparty": {
-        setTableTitle("Контрагенты");
-        break;
-      }
-      case "criticality": {
-        setTableTitle("Критерии критичности");
-        break;
-      }
-      case "section": {
-        setTableTitle("Марки/разделы документации");
-        break;
-      }
-      case "facility": {
-        setTableTitle("Оборудование");
-        break;
-      }
+    if (baseTarget === "REGULATORY_REFERENCE_INFORMATION") {
+      switch (dictionaryTarget) {
+        case "equipment": {
+          setTableTitle("Группы оборудования");
+          break;
+        }
+        case "counterparty": {
+          setTableTitle("Контрагенты");
+          break;
+        }
+        case "criticality": {
+          setTableTitle("Критерии критичности");
+          break;
+        }
+        case "section": {
+          setTableTitle("Марки/разделы документации");
+          break;
+        }
+        case "facility": {
+          setTableTitle("Оборудование");
+          break;
+        }
 
-      case "user": {
-        setTableTitle("Пользователи");
-        break;
-      }
-      case "design": {
-        setTableTitle("Проектные институты");
-        break;
-      }
+        case "user": {
+          setTableTitle("Пользователи");
+          break;
+        }
+        case "design": {
+          setTableTitle("Проектные институты");
+          break;
+        }
 
-      case "stage": {
-        setTableTitle("Стадии проектирования");
-        break;
+        case "stage": {
+          setTableTitle("Стадии проектирования");
+          break;
+        }
+        case "direction": {
+          setTableTitle("Функциональные направления");
+          break;
+        }
+        default:
+          break;
       }
-      case "direction": {
-        setTableTitle("Функциональные направления");
-        break;
-      }
-      default:
-        break;
     }
-  }, [dictionaryTarget]);
+  }, [dictionaryTarget, baseTarget]);
 
   const renderNsiFormFlag =
     actionType === FormActions.ADD_DICTIONARY_ITEM ||
