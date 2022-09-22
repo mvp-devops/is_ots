@@ -29,14 +29,14 @@ const CommentTable = () => {
 
   const columns = CommentTableColumns();
 
-  const renderForm = renderCommentAccountingFormFlag && (
-    <ModalContainer
-      // show={formVisible}
-      // onCancel={() => setFormVisible(false)}
-      // action={actionType}
-      child={<CommentForm />}
-    />
-  );
+  // const renderForm = renderCommentAccountingFormFlag && (
+  //   <ModalContainer
+  //     // show={formVisible}
+  //     // onCancel={() => setFormVisible(false)}
+  //     // action={actionType}
+  //     child={<CommentForm />}
+  //   />
+  // );
 
   return (
     <>
@@ -64,7 +64,7 @@ const CommentTable = () => {
         summary={() => <CommentTableSummary />}
         footer={() => <CommentTableFooter />}
       />
-      {renderForm}
+      {/* {renderForm} */}
     </>
   );
 };
