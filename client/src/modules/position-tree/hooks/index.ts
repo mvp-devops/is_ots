@@ -13,6 +13,7 @@ export const usePositionTree = () => {
     checkedItem,
     currentItemFolderPath,
     renderOneItem,
+    checkedItems,
   } = useTypedSelector((state) => state.positionTree);
 
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
@@ -26,6 +27,7 @@ export const usePositionTree = () => {
     setChildTarget,
     setFolderPath,
     getPositionTreeItem,
+    setSummaryListOfEquipmentView,
   } = useActions();
 
   useEffect(() => {
@@ -73,5 +75,7 @@ export const usePositionTree = () => {
     getOneItem,
     renderFormFlag,
     renderOneItem,
+    setSummaryListOfEquipmentView,
+    checkedItems,
   };
 };

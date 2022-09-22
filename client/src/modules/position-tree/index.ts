@@ -8,6 +8,7 @@ import ItemPageMenu from "./views/ItemPageMenu";
 import TabsView from "./views/tabs/TabsView";
 import { usePositionTree } from "./hooks";
 import { PositionTreeForm } from "./components/forms";
+import StatisticView from "./views/StatisticView";
 
 export {
   PositionTreeForm,
@@ -22,4 +23,5 @@ export {
   getMenuItems,
   TabsView,
   usePositionTree,
+  StatisticView,
 };

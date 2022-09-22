@@ -1,38 +1,25 @@
-import { Input, Layout, Space, Table, Typography } from "antd";
+import { Input, Space, Typography } from "antd";
 import {
   PlusOutlined,
   SearchOutlined,
   FileExcelOutlined,
 } from "@ant-design/icons";
 
-import { ModalContainer } from "../../../../components";
-import { FormActions, tableLocale } from "../../../main";
-import { RegulatoryReferenceInformationForm } from "../forms";
-import { useNsiTable } from "./hooks";
-import NsiTableColumns from "./NsiTableColumns";
-import NsiTableFooter from "./nsiTable/NsiTableFooter";
+import { useNsiTable } from "../hooks";
+import { FormActions } from "../../../../main";
 
 const { Text } = Typography;
 
-const NsiTable = () => {
+const NsiTableTitle = () => {
   const {
     dictionaryTarget,
-    renderNsiFormFlag,
-    renderNsiItems,
     tableTitle,
-    loading,
-    actionType,
-    setActionType,
-    formVisible,
-    setFormVisible,
-    dataSource,
-    setCurrentNsiItem,
     searchValue,
     onSearch,
+    setActionType,
+    setFormVisible,
     exportData,
   } = useNsiTable();
-
-  const columns = NsiTableColumns();
 
   const menuItems = (
     <>
@@ -58,7 +45,7 @@ const NsiTable = () => {
     </>
   );
 
-  const title = (
+  return (
     <Space className="d-flex align-items-center justify-content-between">
       <Text strong type="secondary">
         {tableTitle}
@@ -81,39 +68,6 @@ const NsiTable = () => {
       </Space>
     </Space>
   );
-
-  const renderForm = renderNsiFormFlag && (
-    <ModalContainer
-      show={formVisible}
-      onCancel={() => setFormVisible(false)}
-      action={actionType}
-      child={<RegulatoryReferenceInformationForm />}
-    />
-  );
-
-  return (
-    <Layout>
-      <Table
-        className="border p-1 m-0"
-        style={{ fontSize: 12 }}
-        size="small"
-        locale={tableLocale}
-        loading={loading}
-        onRow={(record, rowIndex) => {
-          return {
-            onMouseEnter: (event) => setCurrentNsiItem(record),
-          };
-        }}
-        title={() => title}
-        rowKey={(record) => record.id}
-        columns={columns}
-        dataSource={dataSource}
-        footer={() => NsiTableFooter()}
-      />
-
-      {renderForm}
-    </Layout>
-  );
 };
 
-export default NsiTable;
+export default NsiTableTitle;

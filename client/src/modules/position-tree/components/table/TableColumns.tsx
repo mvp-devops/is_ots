@@ -3,6 +3,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   FileSearchOutlined,
+  AppstoreOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
@@ -19,6 +20,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     setFormVisible,
     setActionType,
     dataSource,
+    setSummaryListOfEquipmentView,
   } = usePositionTreeTable();
 
   const numberColumn: ColumnType<PositionTreeView> = {
@@ -206,6 +208,19 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
               title={`${record.unitQuestionare.code}. ${record.unitQuestionare.title}`}
             />
           </a>
+        )}
+        {(childTarget === "project" ||
+          childTarget === "unit" ||
+          childTarget === "sub-unit") && (
+          <AppstoreOutlined
+            key="SUMMARY_LIST_OF_EQUIPMENT"
+            className="text-info"
+            title="Перечень оборудования"
+            onClick={() => {
+              setSummaryListOfEquipmentView(true);
+              setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
+            }}
+          />
         )}
         {"subUnitQuestionare" in record && record.subUnitQuestionare && (
           <a

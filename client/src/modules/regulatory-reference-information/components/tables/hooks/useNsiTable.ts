@@ -2,7 +2,6 @@ import { ChangeEventHandler, useEffect, useState } from "react";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 import { useActions, useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
-import { useRegulatoryReferenceInformationList } from "../../../views/hooks";
 import { exportData } from "./../../../api";
 
 export const useNsiTable = () => {

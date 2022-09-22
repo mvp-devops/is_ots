@@ -84,125 +84,125 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
         },
       ],
     },
-    {
-      label: (
-        <Space>
-          <SisternodeOutlined style={{ marginBottom: 20, padding: 0 }} />
-          {childTarget === "field"
-            ? "Месторождения"
-            : childTarget === "project"
-            ? "Проекты"
-            : childTarget === "unit"
-            ? "Объекты строительства"
-            : "Объекты/установки"}
-        </Space>
-      ),
-      key: "CHILDREN",
-      children: [
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setDocumentationView(false);
-                setStatisticView(false);
-                setListItemsView(true);
-              }}
-            >
-              <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Просмотр списка
-            </Space>
-          ),
-          key: "CHILDREN-VIEW",
-        },
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setActionType(FormActions.ADD);
-                setFormVisible(true);
-              }}
-            >
-              <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Добавить
-            </Space>
-          ),
-          key: "CHILDREN-ADD",
-        },
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setSummaryListOfEquipmentView(true);
-                setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
-              }}
-            >
-              <AppstoreOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Перечень оборудования
-            </Space>
-          ),
-          key: "SUMMARY_LIST_OF_EQUIPMENT",
-        },
-      ],
-    },
+    // {
+    //   label: (
+    //     <Space>
+    //       <SisternodeOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //       {childTarget === "field"
+    //         ? "Месторождения"
+    //         : childTarget === "project"
+    //         ? "Проекты"
+    //         : childTarget === "unit"
+    //         ? "Объекты строительства"
+    //         : "Объекты/установки"}
+    //     </Space>
+    //   ),
+    //   key: "CHILDREN",
+    //   children: [
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setDocumentationView(false);
+    //             setStatisticView(false);
+    //             setListItemsView(true);
+    //           }}
+    //         >
+    //           <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Просмотр списка
+    //         </Space>
+    //       ),
+    //       key: "CHILDREN-VIEW",
+    //     },
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setActionType(FormActions.ADD);
+    //             setFormVisible(true);
+    //           }}
+    //         >
+    //           <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Добавить
+    //         </Space>
+    //       ),
+    //       key: "CHILDREN-ADD",
+    //     },
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setSummaryListOfEquipmentView(true);
+    //             setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
+    //           }}
+    //         >
+    //           <AppstoreOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Перечень оборудования
+    //         </Space>
+    //       ),
+    //       key: "SUMMARY_LIST_OF_EQUIPMENT",
+    //     },
+    //   ],
+    // },
 
-    {
-      label: (
-        <Space>
-          <DatabaseOutlined style={{ marginBottom: 20, padding: 0 }} />
-          Документация
-        </Space>
-      ),
-      key: "DOCUMENTATION",
-      children: [
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setListItemsView(false);
-                setStatisticView(false);
-                setDocumentationView(true);
-              }}
-            >
-              <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Просмотр
-            </Space>
-          ),
-          key: "DOCUMENTATION-VIEW",
-        },
-        {
-          label: (
-            <Space>
-              <FileAddOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Добавить новый документ
-            </Space>
-          ),
-          key: "DOCUMENTATION-ADD",
-        },
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setCollectiveCheckSheetView(true);
-                setActionType(FormActions.COLLECTIVE_CHECK_SHEET);
-              }}
-            >
-              <FileDoneOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Сформировать ЛКП
-            </Space>
-          ),
-          key: "COLLECTIVE_CHECK_SHEET",
-        },
-        {
-          label: (
-            <Space>
-              <ContainerOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Отчет
-            </Space>
-          ),
-          key: "REPORT",
-        },
-      ],
-    },
+    // {
+    //   label: (
+    //     <Space>
+    //       <DatabaseOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //       Документация
+    //     </Space>
+    //   ),
+    //   key: "DOCUMENTATION",
+    //   children: [
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setListItemsView(false);
+    //             setStatisticView(false);
+    //             setDocumentationView(true);
+    //           }}
+    //         >
+    //           <SearchOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Просмотр
+    //         </Space>
+    //       ),
+    //       key: "DOCUMENTATION-VIEW",
+    //     },
+    //     {
+    //       label: (
+    //         <Space>
+    //           <FileAddOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Добавить новый документ
+    //         </Space>
+    //       ),
+    //       key: "DOCUMENTATION-ADD",
+    //     },
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setCollectiveCheckSheetView(true);
+    //             setActionType(FormActions.COLLECTIVE_CHECK_SHEET);
+    //           }}
+    //         >
+    //           <FileDoneOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Сформировать ЛКП
+    //         </Space>
+    //       ),
+    //       key: "COLLECTIVE_CHECK_SHEET",
+    //     },
+    //     {
+    //       label: (
+    //         <Space>
+    //           <ContainerOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Отчет
+    //         </Space>
+    //       ),
+    //       key: "REPORT",
+    //     },
+    //   ],
+    // },
 
     {
       label: (
@@ -258,59 +258,59 @@ const ItemPageMenu: FC<ItemPageMenuProps> = ({ childTarget }) => {
       ),
       key: "USER",
     },
-    {
-      label: (
-        <Space>
-          <BookOutlined style={{ marginBottom: 20, padding: 0 }} />
-          Справочники
-        </Space>
-      ),
-      key: "DICTIONARIES",
-      children: [
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setActionType(FormActions.ADD);
-                setFormVisible(true);
-              }}
-            >
-              <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Добавить
-            </Space>
-          ),
-          key: `ADD_DICTIONARY`,
-        },
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setActionType(FormActions.EDIT);
-                setFormVisible(true);
-              }}
-            >
-              <EditOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Редактировать
-            </Space>
-          ),
-          key: `EDIT_DICTIONARY`,
-        },
-        {
-          label: (
-            <Space
-              onClick={() => {
-                setActionType(FormActions.REMOVE);
-                setFormVisible(true);
-              }}
-            >
-              <DeleteOutlined style={{ marginBottom: 20, padding: 0 }} />
-              Удалить
-            </Space>
-          ),
-          key: `REMOVE_DICTIONARY`,
-        },
-      ],
-    },
+    // {
+    //   label: (
+    //     <Space>
+    //       <BookOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //       Справочники
+    //     </Space>
+    //   ),
+    //   key: "DICTIONARIES",
+    //   children: [
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setActionType(FormActions.ADD);
+    //             setFormVisible(true);
+    //           }}
+    //         >
+    //           <PlusOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Добавить
+    //         </Space>
+    //       ),
+    //       key: `ADD_DICTIONARY`,
+    //     },
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setActionType(FormActions.EDIT);
+    //             setFormVisible(true);
+    //           }}
+    //         >
+    //           <EditOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Редактировать
+    //         </Space>
+    //       ),
+    //       key: `EDIT_DICTIONARY`,
+    //     },
+    //     {
+    //       label: (
+    //         <Space
+    //           onClick={() => {
+    //             setActionType(FormActions.REMOVE);
+    //             setFormVisible(true);
+    //           }}
+    //         >
+    //           <DeleteOutlined style={{ marginBottom: 20, padding: 0 }} />
+    //           Удалить
+    //         </Space>
+    //       ),
+    //       key: `REMOVE_DICTIONARY`,
+    //     },
+    //   ],
+    // },
   ];
 
   const {

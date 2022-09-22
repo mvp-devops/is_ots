@@ -45,59 +45,59 @@ export const useItemPage = (items?: MenuItem[]) => {
 
   const renderMenuItems = (items: MenuItem[]): MenuItem[] => {
     const menuItems: MenuItem[] = [];
-    const docMark =
-      currentItem?.target === "project" ||
-      currentItem?.target === "unit" ||
-      currentItem?.target === "sub-unit"
-        ? true
-        : false;
+    // const docMark =
+    //   currentItem?.target === "project" ||
+    //   currentItem?.target === "unit" ||
+    //   currentItem?.target === "sub-unit"
+    //     ? true
+    //     : false;
 
-    const facilityMark =
-      currentItem?.target === "subsidiary" || currentItem?.target === "field"
-        ? false
-        : true;
+    // const facilityMark =
+    //   currentItem?.target === "subsidiary" || currentItem?.target === "field"
+    //     ? false
+    //     : true;
 
-    const checkListMark =
-      currentItem?.target === "subsidiary" || currentItem?.target === "field"
-        ? false
-        : true;
+    // const checkListMark =
+    //   currentItem?.target === "subsidiary" || currentItem?.target === "field"
+    //     ? false
+    //     : true;
 
-    const children = facilityMark
-      ? items[1].children
-      : items[1].children?.filter(
-          (item) => item.key !== "SUMMARY_LIST_OF_EQUIPMENT"
-        );
-    const firstItem = {
-      ...items[1],
-      children,
-    };
+    // const children = facilityMark
+    //   ? items[1].children
+    //   : items[1].children?.filter(
+    //       (item) => item.key !== "SUMMARY_LIST_OF_EQUIPMENT"
+    //     );
+    // const firstItem = {
+    //   ...items[1],
+    //   children,
+    // };
 
-    const statChildren = checkListMark
-      ? items[3].children
-      : items[3].children?.filter((item) => item.key !== "CHECK_LIST");
+    // const statChildren = checkListMark
+    //   ? items[3].children
+    //   : items[3].children?.filter((item) => item.key !== "CHECK_LIST");
 
-    const thirdItem = { ...items[3], children: statChildren };
+    // const thirdItem = { ...items[3], children: statChildren };
 
     if (currentUser?.roles.includes(Roles.ADMINISTRATOR)) {
       menuItems.push(items[0]);
-      menuItems.push(firstItem);
-      docMark && menuItems.push(items[2]);
-      menuItems.push(thirdItem);
-      menuItems.push(items[5]);
-      menuItems.push(items[4]);
+      // menuItems.push(firstItem);
+      // docMark && menuItems.push(items[2]);
+      // menuItems.push(thirdItem);
+      // menuItems.push(items[5]);
+      // menuItems.push(items[4]);
       return menuItems;
     }
 
-    if (
-      currentUser?.roles.includes(Roles.EXPERT) ||
-      currentUser?.roles.includes(Roles.CUSTOMER) ||
-      currentUser?.roles.includes(Roles.OTS)
-    ) {
-      menuItems.push(firstItem);
-      docMark && menuItems.push(items[2]);
-      menuItems.push(thirdItem);
-      return menuItems;
-    }
+    // if (
+    //   currentUser?.roles.includes(Roles.EXPERT) ||
+    //   currentUser?.roles.includes(Roles.CUSTOMER) ||
+    //   currentUser?.roles.includes(Roles.OTS)
+    // ) {
+    //   menuItems.push(firstItem);
+    //   docMark && menuItems.push(items[2]);
+    //   menuItems.push(thirdItem);
+    //   return menuItems;
+    // }
 
     return menuItems;
   };

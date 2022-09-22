@@ -24,6 +24,8 @@ export const usePositionTreeTable = () => {
     setPositionTreeItem,
     setPositionTreeItems,
     renderFormFlag,
+    setSummaryListOfEquipmentView,
+    checkedItems,
   } = usePositionTree();
 
   useEffect(() => {
@@ -128,5 +130,7 @@ export const usePositionTreeTable = () => {
     onSearch,
     searchValue,
     renderFormFlag,
+    setSummaryListOfEquipmentView,
+    checkedItems,
   };
 };

@@ -1,13 +1,3 @@
-import { useEffect, useState } from "react";
-import { useActions, useTypedSelector } from "../../../hooks";
-import { getAllItems, getOneItem } from "..";
+import { useRegulatoryReferenceInformation } from "./useRegulatoryReferenceInformation";
 
-export const useRegulatoryReferenceInformation = () => {
-  const [target, setTarget] = useState("");
-  const [childTarget, setChildTarget] = useState("");
-
-  return {
-    getAllItems,
-    getOneItem,
-  };
-};
+export { useRegulatoryReferenceInformation };

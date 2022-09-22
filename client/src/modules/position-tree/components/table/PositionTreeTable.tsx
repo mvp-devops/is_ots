@@ -1,5 +1,9 @@
 import { Input, Layout, Space, Table, Typography } from "antd";
-import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  SearchOutlined,
+  AppstoreOutlined,
+} from "@ant-design/icons";
 import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
 import { FormActions, tableLocale } from "../../../main";
 import TableColumns from "./TableColumns";
@@ -27,9 +31,45 @@ const PositionTreeTable = () => {
     searchValue,
     onSearch,
     renderFormFlag,
+    setSummaryListOfEquipmentView,
+    checkedItems,
   } = usePositionTreeTable();
 
   const columns = TableColumns();
+
+  const menuItems = (
+    <>
+      <Space>
+        <PlusOutlined
+          key="ADD_CHILD"
+          className="text-success mr-3 mb-2"
+          style={{ fontSize: 16, cursor: "pointer" }}
+          title={`Добавить ${addChildButtonTitle}`}
+          onClick={() => {
+            setActionType(FormActions.ADD_CHILD);
+            setFormVisible(true);
+          }}
+        />
+      </Space>
+      {(childTarget === "project" ||
+        childTarget === "unit" ||
+        childTarget === "sub-unit") &&
+        checkedItems.length > 0 && (
+          <Space>
+            <AppstoreOutlined
+              key="SUMMARY_LIST_OF_EQUIPMENT"
+              className="text-info mr-3 mb-2"
+              style={{ fontSize: 16, cursor: "pointer" }}
+              title="Перечень оборудования"
+              onClick={() => {
+                setSummaryListOfEquipmentView(true);
+                setActionType(FormActions.SUMMARY_LIST_OF_EQUIPMENT);
+              }}
+            />
+          </Space>
+        )}
+    </>
+  );
 
   return (
     <Layout>
@@ -73,18 +113,7 @@ const PositionTreeTable = () => {
                   suffix={<SearchOutlined className="text-secondary" />}
                   onChange={onSearch}
                 />
-                <Space>
-                  <PlusOutlined
-                    key="ADD_CHILD"
-                    className="text-success mr-3 mb-2"
-                    style={{ fontSize: 16, cursor: "pointer" }}
-                    title={`Добавить ${addChildButtonTitle}`}
-                    onClick={() => {
-                      setActionType(FormActions.ADD_CHILD);
-                      setFormVisible(true);
-                    }}
-                  />
-                </Space>
+                {menuItems}
               </Space>
             </Space>
           )}

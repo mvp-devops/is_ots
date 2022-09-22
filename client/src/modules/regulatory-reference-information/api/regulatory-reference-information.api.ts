@@ -119,6 +119,15 @@ export const getAllItems = async (target: string): Promise<NSIView[]> => {
   return data;
 };
 
+export const getOneItem = async (
+  target: string,
+  id: string
+): Promise<NSIView> => {
+  const url = setUrl(`${baseUrl}/find${id}`);
+  const { data } = await axios.get<NSIView>(url, { params: { target } });
+  return data;
+};
+
 export const createOneEssence = async (
   target: string,
   item: NsiCreateOrUpdateAttrs
@@ -152,15 +161,6 @@ export const deleteOneEssense = async (
   const { data } = await axios.delete<NSIView>(url, {
     params: { target },
   });
-  return data;
-};
-
-export const getOneItem = async (
-  target: string,
-  id: string
-): Promise<NSIView> => {
-  const url = setUrl(`${baseUrl}/find${id}`);
-  const { data } = await axios.get<NSIView>(url, { params: { target } });
   return data;
 };
 
@@ -199,21 +199,3 @@ export const exportData = async (target: string) => {
       download(resp.data, `${target}.xlsx`);
     });
 };
-
-// export const getOneItem = async (
-//   target: string,
-//   id: string
-// ): Promise<PositionTreeView | null> => {
-//   const url = setUrl(`${baseUrl}find/${id}`);
-//   let data: PositionTreeView | null = null;
-
-//   try {
-//     data = await (await axios.get<any>(url, { params: { target } })).data;
-
-//     return data;
-//   } catch (error) {
-//     alert(error);
-//   }
-
-//   return data;
-// };

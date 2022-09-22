@@ -114,11 +114,13 @@ export const nsiReducer = (
         ...state,
         loading: false,
       };
+
     case ActionTypes.SET_CURRENT_ITEM:
       return {
         ...state,
         currentNsiItem: action.payload,
       };
+
     case ActionTypes.SET_DICTIONARY_TARGET:
       return {
         ...state,

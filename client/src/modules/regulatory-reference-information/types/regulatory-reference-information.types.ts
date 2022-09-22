@@ -50,10 +50,12 @@ interface UserRegistrationAction {
   type: ActionTypes.USER_REGISTRATION;
   payload: UserView | null;
 }
+
 interface SetCurrentItemAction {
   type: ActionTypes.SET_CURRENT_ITEM;
   payload: NSIView;
 }
+
 interface SetDictionaryTargetAction {
   type: ActionTypes.SET_DICTIONARY_TARGET;
   payload: string;

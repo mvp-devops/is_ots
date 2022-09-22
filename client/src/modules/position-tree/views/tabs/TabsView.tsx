@@ -8,8 +8,8 @@ import {
 import React, { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { DesignDocumentTable } from "../../../file-storage";
-import { StatisticView } from "../../../comment-accounting";
 import PositionTreeTable from "../../components/table/PositionTreeTable";
+import StatisticView from "../StatisticView";
 
 const { TabPane } = Tabs;
 

@@ -1,19 +1,23 @@
 import {
+  getItems,
   getAllItems,
   getOneItem,
   createOneEssence,
   updateOneEssence,
   deleteOneEssense,
   userRegistration,
+  userLogin,
   exportData,
 } from "./regulatory-reference-information.api";
 
 export {
-  userRegistration,
+  getItems,
   getAllItems,
   getOneItem,
   createOneEssence,
   updateOneEssence,
   deleteOneEssense,
+  userRegistration,
+  userLogin,
   exportData,
 };

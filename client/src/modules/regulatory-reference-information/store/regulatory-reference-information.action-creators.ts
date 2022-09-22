@@ -8,15 +8,11 @@ import {
 import {
   userRegistration,
   getAllItems,
-  getOneItem,
   createOneEssence,
   updateOneEssence,
   deleteOneEssense,
 } from "../api";
-import {
-  ActionTypes,
-  EssenceAction,
-} from "../types/regulatory-reference-information.types";
+import { ActionTypes, EssenceAction } from "../types";
 
 export const setNsiItems = (target: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {

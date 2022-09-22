@@ -12,13 +12,13 @@ const RegulatoryReferenceInformationList = () => {
     <List
       className="mt-0 m-3"
       dataSource={dictionariesList}
-      renderItem={(item) => (
+      renderItem={({ id, title }) => (
         <Item
-          key={item.id}
-          onClick={() => onItemSelected(item.id)}
+          key={id}
+          onClick={() => onItemSelected(id)}
           style={{ cursor: "pointer" }}
         >
-          <Text type="secondary">{item.title}</Text>
+          <Text type="secondary">{title}</Text>
         </Item>
       )}
     />
