@@ -5,8 +5,8 @@ import {
 } from "../types/comment-accounting.types";
 
 const initialState: EssenceState = {
-  currentItem: null,
-  renderItems: [],
+  currentComment: null,
+  renderComments: [],
   error: null,
   loading: true,
 };
@@ -19,7 +19,7 @@ export const commentAccountingReducer = (
     case ActionTypes.SET_CURRENT_ITEM:
       return {
         ...state,
-        currentItem: action.payload,
+        currentComment: action.payload,
       };
 
     case ActionTypes.GET_MANY_ITEMS:
@@ -29,7 +29,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: action.payload,
+        renderComments: action.payload,
       };
 
     case ActionTypes.GET_MANY_ITEMS_ERROR:
@@ -46,7 +46,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        currentItem: action.payload,
+        currentComment: action.payload,
       };
 
     case ActionTypes.GET_ONE_ITEM_ERROR:
@@ -63,7 +63,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: [...state.renderItems, action.payload],
+        renderComments: [...state.renderComments, action.payload],
       };
 
     case ActionTypes.POST_ONE_ITEM_ERROR:
@@ -80,7 +80,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: [...state.renderItems, ...action.payload],
+        renderComments: [...state.renderComments, ...action.payload],
       };
 
     case ActionTypes.POST_MANY_ITEMS_ERROR:
@@ -97,8 +97,10 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: [
-          ...state.renderItems.filter((item) => item.id !== action.payload.id),
+        renderComments: [
+          ...state.renderComments.filter(
+            (item) => item.id !== action.payload.id
+          ),
           action.payload,
         ],
       };
@@ -117,7 +119,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderItems: state.renderItems.filter(
+        renderComments: state.renderComments.filter(
           (item) => item.id !== action.payload.id
         ),
       };

@@ -2,12 +2,12 @@ import { Space, Typography } from "antd";
 import { FileExcelOutlined, PlusOutlined } from "@ant-design/icons";
 import { setCurrentDate } from "../../../../utils/main.utils";
 import Header from "./Header";
-import CommentTable from "../../components/tables/CommentTable";
 import { useCollectiveCheckSheet } from "./hooks/useCollectiveCheckSheet";
 import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
 import { CommentForm } from "../../components";
 import { ModalContainer } from "../../../../components";
+import CommentTable from "../../components/tables/CommentTable";
 
 const { Text } = Typography;
 
@@ -75,7 +75,7 @@ const CollectiveCheckSheet = () => {
       </Space>
       <Header />
 
-      {<CommentTable data={dataSource} />}
+      <CommentTable data={dataSource} />
       {renderForm}
     </Space>
   );

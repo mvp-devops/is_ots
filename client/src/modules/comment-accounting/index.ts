@@ -13,7 +13,6 @@ import {
   CheckList,
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
-  StatisticView,
 } from "./views";
 import {
   CommentForm,
@@ -37,7 +36,6 @@ export {
   CheckList,
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
-  StatisticView,
   CommentForm,
   SolutionForm,
   useCommentAccountingFormData,

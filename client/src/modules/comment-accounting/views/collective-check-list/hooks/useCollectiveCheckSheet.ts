@@ -23,7 +23,9 @@ export const useCollectiveCheckSheet = () => {
 
   const { checkedDesignDocuments, currentDesignDocument } = useFileStorage();
 
-  const { renderItems } = useTypedSelector((state) => state.commentAccounting);
+  const { renderComments } = useTypedSelector(
+    (state) => state.commentAccounting
+  );
 
   const { getManyComments } = useActions();
 
@@ -42,8 +44,8 @@ export const useCollectiveCheckSheet = () => {
   }, [checkedDesignDocuments, currentDesignDocument]);
 
   useEffect(() => {
-    setDataSource(renderItems);
-  }, [renderItems]);
+    setDataSource(renderComments);
+  }, [renderComments]);
 
   useEffect(() => {
     if (currentItem && renderOneItem) {

@@ -3,8 +3,8 @@ import { DesignDocumentCommentView } from "../../../../../server/common/types/co
 export interface EssenceState {
   error: string | null;
   loading: boolean;
-  currentItem: DesignDocumentCommentView | null;
-  renderItems: DesignDocumentCommentView[];
+  currentComment: DesignDocumentCommentView | null;
+  renderComments: DesignDocumentCommentView[];
 }
 
 export enum ActionTypes {

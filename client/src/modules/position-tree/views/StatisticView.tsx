@@ -55,7 +55,7 @@ const StatisticView = () => {
           Отчет
         </Button>
       </Space>
-      {formVisible && (
+      {formVisible && actionType === FormActions.CHECKLIST && (
         <ModalContainer
           show={formVisible}
           onCancel={() => setFormVisible(false)}
