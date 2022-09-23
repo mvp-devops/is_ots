@@ -139,6 +139,7 @@ export class UnitEntity extends Model<UnitEntity, UnitCreateOrUpdateAttrs> {
     // onUpdate: "CASCADE",
     // onDelete: "SET NULL",
     as: "unitQuestionare",
+    foreignKey: "uqstId",
   })
   unitQuestionare: DesignDocumentEntity;
 

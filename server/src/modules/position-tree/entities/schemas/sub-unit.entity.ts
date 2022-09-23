@@ -135,6 +135,7 @@ export class SubUnitEntity extends Model<
     // onUpdate: "CASCADE",
     // onDelete: "SET NULL",
     as: "subUnitQuestionare",
+    foreignKey: "suqstId",
   })
   questionare: DesignDocumentEntity;
 

@@ -303,14 +303,6 @@ export class CommentAccountingService {
                   {
                     model: SectionEntity,
                   },
-                  {
-                    model: UnitEntity,
-                    include: [
-                      {
-                        model: ProjectEntity,
-                      },
-                    ],
-                  },
                 ],
               },
               {
@@ -361,19 +353,6 @@ export class CommentAccountingService {
                   },
                   {
                     model: SectionEntity,
-                  },
-                  {
-                    model: SubUnitEntity,
-                    include: [
-                      {
-                        model: UnitEntity,
-                        include: [
-                          {
-                            model: ProjectEntity,
-                          },
-                        ],
-                      },
-                    ],
                   },
                 ],
               },

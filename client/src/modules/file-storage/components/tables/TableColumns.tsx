@@ -192,8 +192,8 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
           title="Добавить замечание"
           className="text-info"
           onClick={() => {
-            setActionType(FormActions.ADD_COMMENT);
-            setFormVisible(true);
+            setActionType(FormActions.VIEW_COMMENT);
+            setCollectiveCheckSheetView(true);
           }}
         />
         <EditOutlined
