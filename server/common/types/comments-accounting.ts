@@ -193,12 +193,11 @@ export interface CommentStatistic {
 }
 
 export interface DesignDocumentStatistic extends CommentStatistic {
+  documents: number;
   comments: number;
 }
 
-export interface SubUnitStatistic extends DesignDocumentStatistic {
-  documents: number;
-}
+export interface SubUnitStatistic extends DesignDocumentStatistic {}
 
 export interface UnitStatistic extends SubUnitStatistic {
   subUnits: number;

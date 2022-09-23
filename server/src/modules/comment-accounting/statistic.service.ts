@@ -1,4 +1,5 @@
-import { Injectable } from "@nestjs/common";
+import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import { InjectModel } from "@nestjs/sequelize";
 import {
   CommentStatistic,
   DesignDocumentStatistic,
@@ -8,7 +9,7 @@ import {
   SubUnitStatistic,
   UnitStatistic,
 } from "../../../common/types/comments-accounting";
-import { DesignDocumentEntity } from "../file-storage";
+import { DesignDocumentEntity, FileStorageService } from "../file-storage";
 import {
   ProjectEntity,
   SubUnitEntity,
@@ -23,7 +24,12 @@ import {
 
 @Injectable()
 export class StatisticService {
-  constructor() {}
+  constructor(
+    @InjectModel(DesignDocumentCommentEntity)
+    private commentRepository: typeof DesignDocumentCommentEntity,
+    @Inject(forwardRef(() => FileStorageService))
+    private fileService: FileStorageService
+  ) {}
 
   getSolutionStatistic = (
     item: DesignDocumentSolutionEntity
@@ -73,10 +79,12 @@ export class StatisticService {
     return commentStatistic;
   };
 
-  getDesignDocumentStatistic = (
-    item: DesignDocumentEntity
-  ): DesignDocumentStatistic => {
-    let comments = 0,
+  getDesignDocumentStatistic = async (
+    parrentTarget: string,
+    parrentId: string
+  ): Promise<DesignDocumentStatistic> => {
+    let documents = 0,
+      comments = 0,
       docAccepted = 0,
       docNotAccepted = 0,
       docDiscretionOfTheCustomer = 0,
@@ -86,109 +94,129 @@ export class StatisticService {
       docNotEliminated = 0,
       docPullOffByCustomer = 0;
 
-    if (item) {
-      if (item?.pdc && item?.pdc.length > 0) {
-        comments += item.pdc?.length;
-        item?.pdc.map((comment) => {
-          const {
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getCommentStatistic(comment);
+    let items = await this.fileService.findDesignDocumentsForStatistic(
+      parrentTarget,
+      parrentId
+    );
 
-          docAccepted += accepted;
-          docNotAccepted += notAccepted;
-          docDiscretionOfTheCustomer += discretionOfTheCustomer;
-          docPullOff += pullOff;
-          docNotPullOff += notPullOff;
-          docEliminated += eliminated;
-          docNotEliminated += notEliminated;
-          docPullOffByCustomer += pullOffByCustomer;
-        });
-      }
+    if (items && items.length > 0) {
+      documents += items.length;
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        if (item.pdc && item.pdc.length > 0) {
+          comments += item.pdc.length;
 
-      if (item?.udc && item?.udc.length > 0) {
-        comments += item?.udc.length;
-        item?.udc.map((comment) => {
-          const {
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getCommentStatistic(comment);
+          for (let i = 0; i < item.pdc.length; i++) {
+            const comment = item.pdc[i];
 
-          docAccepted += accepted;
-          docNotAccepted += notAccepted;
-          docDiscretionOfTheCustomer += discretionOfTheCustomer;
-          docPullOff += pullOff;
-          docNotPullOff += notPullOff;
-          docEliminated += eliminated;
-          docNotEliminated += notEliminated;
-          docPullOffByCustomer += pullOffByCustomer;
-        });
-      }
+            const {
+              accepted,
+              notAccepted,
+              discretionOfTheCustomer,
+              pullOff,
+              notPullOff,
+              eliminated,
+              notEliminated,
+              pullOffByCustomer,
+            } = this.getCommentStatistic(comment);
 
-      if (item?.sudc && item?.sudc.length > 0) {
-        comments += item?.sudc.length;
-        item?.sudc.map((comment) => {
-          const {
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getCommentStatistic(comment);
+            docAccepted += accepted;
+            docNotAccepted += notAccepted;
+            docDiscretionOfTheCustomer += discretionOfTheCustomer;
+            docPullOff += pullOff;
+            docNotPullOff += notPullOff;
+            docEliminated += eliminated;
+            docNotEliminated += notEliminated;
+            docPullOffByCustomer += pullOffByCustomer;
+          }
+        }
 
-          docAccepted += accepted;
-          docNotAccepted += notAccepted;
-          docDiscretionOfTheCustomer += discretionOfTheCustomer;
-          docPullOff += pullOff;
-          docNotPullOff += notPullOff;
-          docEliminated += eliminated;
-          docNotEliminated += notEliminated;
-          docPullOffByCustomer += pullOffByCustomer;
-        });
-      }
+        if (item.udc && item.udc.length > 0) {
+          comments += item?.udc.length;
 
-      if (item?.sdc && item?.sdc.length > 0) {
-        comments += item?.sdc.length;
-        item?.sdc.map((comment) => {
-          const {
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getCommentStatistic(comment);
+          for (let i = 0; i < item.udc.length; i++) {
+            const comment = item.udc[i];
 
-          docAccepted += accepted;
-          docNotAccepted += notAccepted;
-          docDiscretionOfTheCustomer += discretionOfTheCustomer;
-          docPullOff += pullOff;
-          docNotPullOff += notPullOff;
-          docEliminated += eliminated;
-          docNotEliminated += notEliminated;
-          docPullOffByCustomer += pullOffByCustomer;
-        });
+            const {
+              accepted,
+              notAccepted,
+              discretionOfTheCustomer,
+              pullOff,
+              notPullOff,
+              eliminated,
+              notEliminated,
+              pullOffByCustomer,
+            } = this.getCommentStatistic(comment);
+
+            docAccepted += accepted;
+            docNotAccepted += notAccepted;
+            docDiscretionOfTheCustomer += discretionOfTheCustomer;
+            docPullOff += pullOff;
+            docNotPullOff += notPullOff;
+            docEliminated += eliminated;
+            docNotEliminated += notEliminated;
+            docPullOffByCustomer += pullOffByCustomer;
+          }
+        }
+
+        if (item.sudc && item.sudc.length > 0) {
+          comments += item?.sudc.length;
+          for (let i = 0; i < item.sudc.length; i++) {
+            const comment = item.sudc[i];
+
+            const {
+              accepted,
+              notAccepted,
+              discretionOfTheCustomer,
+              pullOff,
+              notPullOff,
+              eliminated,
+              notEliminated,
+              pullOffByCustomer,
+            } = this.getCommentStatistic(comment);
+
+            docAccepted += accepted;
+            docNotAccepted += notAccepted;
+            docDiscretionOfTheCustomer += discretionOfTheCustomer;
+            docPullOff += pullOff;
+            docNotPullOff += notPullOff;
+            docEliminated += eliminated;
+            docNotEliminated += notEliminated;
+            docPullOffByCustomer += pullOffByCustomer;
+          }
+        }
+
+        if (item.sdc && item.sdc.length > 0) {
+          comments += item.sdc.length;
+          for (let i = 0; i < item.sdc.length; i++) {
+            const comment = item.sdc[i];
+
+            const {
+              accepted,
+              notAccepted,
+              discretionOfTheCustomer,
+              pullOff,
+              notPullOff,
+              eliminated,
+              notEliminated,
+              pullOffByCustomer,
+            } = this.getCommentStatistic(comment);
+
+            docAccepted += accepted;
+            docNotAccepted += notAccepted;
+            docDiscretionOfTheCustomer += discretionOfTheCustomer;
+            docPullOff += pullOff;
+            docNotPullOff += notPullOff;
+            docEliminated += eliminated;
+            docNotEliminated += notEliminated;
+            docPullOffByCustomer += pullOffByCustomer;
+          }
+        }
       }
     }
 
     return {
+      documents,
       comments,
       accepted: docAccepted,
       notAccepted: docNotAccepted,
@@ -201,7 +229,9 @@ export class StatisticService {
     };
   };
 
-  getSubUnitStatistic = (item: SubUnitEntity): SubUnitStatistic => {
+  getSubUnitStatistic = async (
+    item: SubUnitEntity
+  ): Promise<SubUnitStatistic> => {
     let documentsCount = 0,
       commentsCount = 0,
       acceptedCount = 0,
@@ -214,60 +244,56 @@ export class StatisticService {
       pullOffByCustomerCount = 0;
 
     if (item) {
-      if (item.subUnitDocuments && item.subUnitDocuments.length > 0) {
-        documentsCount += item.subUnitDocuments.length;
-        item.subUnitDocuments.map((doc) => {
-          const {
-            comments,
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getDesignDocumentStatistic(doc);
-          commentsCount += comments;
-          acceptedCount += accepted;
-          notAcceptedCount += notAccepted;
-          discretionOfTheCustomerCount += discretionOfTheCustomer;
-          pullOffCount += pullOff;
-          notPullOffCount += notPullOff;
-          eliminatedCount += eliminated;
-          notEliminatedCount += notEliminated;
-          pullOffByCustomerCount += pullOffByCustomer;
-        });
-      }
-      if (
-        item.supplier &&
-        item.supplier.supplierDocuments &&
-        item.supplier.supplierDocuments.length > 0
-      ) {
-        documentsCount += item.supplier.supplierDocuments.length;
-        item.supplier.supplierDocuments.map((doc) => {
-          const {
-            comments,
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getDesignDocumentStatistic(doc);
-          commentsCount += comments;
-          acceptedCount += accepted;
-          notAcceptedCount += notAccepted;
-          discretionOfTheCustomerCount += discretionOfTheCustomer;
-          pullOffCount += pullOff;
-          notPullOffCount += notPullOff;
-          eliminatedCount += eliminated;
-          notEliminatedCount += notEliminated;
-          pullOffByCustomerCount += pullOffByCustomer;
-        });
-      }
+      const {
+        documents,
+        comments,
+        accepted,
+        notAccepted,
+        discretionOfTheCustomer,
+        pullOff,
+        notPullOff,
+        eliminated,
+        notEliminated,
+        pullOffByCustomer,
+      } = await this.getDesignDocumentStatistic("sub-unit", item.id.toString());
+      documentsCount += documents;
+      commentsCount += comments;
+      acceptedCount += accepted;
+      notAcceptedCount += notAccepted;
+      discretionOfTheCustomerCount += discretionOfTheCustomer;
+      pullOffCount += pullOff;
+      notPullOffCount += notPullOff;
+      eliminatedCount += eliminated;
+      notEliminatedCount += notEliminated;
+      pullOffByCustomerCount += pullOffByCustomer;
+    }
+
+    if (item.supplier) {
+      const {
+        documents,
+        comments,
+        accepted,
+        notAccepted,
+        discretionOfTheCustomer,
+        pullOff,
+        notPullOff,
+        eliminated,
+        notEliminated,
+        pullOffByCustomer,
+      } = await this.getDesignDocumentStatistic(
+        "supplier",
+        item.supplier.id.toString()
+      );
+      documentsCount += documents;
+      commentsCount += comments;
+      acceptedCount += accepted;
+      notAcceptedCount += notAccepted;
+      discretionOfTheCustomerCount += discretionOfTheCustomer;
+      pullOffCount += pullOff;
+      notPullOffCount += notPullOff;
+      eliminatedCount += eliminated;
+      notEliminatedCount += notEliminated;
+      pullOffByCustomerCount += pullOffByCustomer;
     }
 
     return {
@@ -284,7 +310,7 @@ export class StatisticService {
     };
   };
 
-  getUnitStatistic = (item: UnitEntity): UnitStatistic => {
+  getUnitStatistic = async (item: UnitEntity): Promise<UnitStatistic> => {
     let subUnitsCount = 0,
       documentsCount = 0,
       commentsCount = 0,
@@ -298,9 +324,34 @@ export class StatisticService {
       pullOffByCustomerCount = 0;
 
     if (item) {
+      const {
+        documents,
+        comments,
+        accepted,
+        notAccepted,
+        discretionOfTheCustomer,
+        pullOff,
+        notPullOff,
+        eliminated,
+        notEliminated,
+        pullOffByCustomer,
+      } = await this.getDesignDocumentStatistic("unit", item.id.toString());
+      documentsCount += documents;
+      commentsCount += comments;
+      acceptedCount += accepted;
+      notAcceptedCount += notAccepted;
+      discretionOfTheCustomerCount += discretionOfTheCustomer;
+      pullOffCount += pullOff;
+      notPullOffCount += notPullOff;
+      eliminatedCount += eliminated;
+      notEliminatedCount += notEliminated;
+      pullOffByCustomerCount += pullOffByCustomer;
+
       if (item.subUnits && item.subUnits.length > 0) {
         subUnitsCount += item.subUnits.length;
-        item.subUnits.map((subUnit) => {
+
+        for (let i = 0; i < item.subUnits.length; i++) {
+          const subUnit = item.subUnits[i];
           const {
             documents,
             comments,
@@ -312,7 +363,7 @@ export class StatisticService {
             eliminated,
             notEliminated,
             pullOffByCustomer,
-          } = this.getSubUnitStatistic(subUnit);
+          } = await this.getSubUnitStatistic(subUnit);
           documentsCount += documents;
           commentsCount += comments;
           acceptedCount += accepted;
@@ -323,63 +374,35 @@ export class StatisticService {
           eliminatedCount += eliminated;
           notEliminatedCount += notEliminated;
           pullOffByCustomerCount += pullOffByCustomer;
-        });
+        }
       }
 
-      if (item.unitDocuments && item.unitDocuments.length > 0) {
-        documentsCount += item.unitDocuments.length;
-        item.unitDocuments.map((doc) => {
-          const {
-            comments,
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getDesignDocumentStatistic(doc);
-          commentsCount += comments;
-          acceptedCount += accepted;
-          notAcceptedCount += notAccepted;
-          discretionOfTheCustomerCount += discretionOfTheCustomer;
-          pullOffCount += pullOff;
-          notPullOffCount += notPullOff;
-          eliminatedCount += eliminated;
-          notEliminatedCount += notEliminated;
-          pullOffByCustomerCount += pullOffByCustomer;
-        });
-      }
-
-      if (
-        item.supplier &&
-        item.supplier.supplierDocuments &&
-        item.supplier.supplierDocuments.length > 0
-      ) {
-        documentsCount += item.supplier.supplierDocuments.length;
-        item.supplier.supplierDocuments.map((doc) => {
-          const {
-            comments,
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getDesignDocumentStatistic(doc);
-          commentsCount += comments;
-          acceptedCount += accepted;
-          notAcceptedCount += notAccepted;
-          discretionOfTheCustomerCount += discretionOfTheCustomer;
-          pullOffCount += pullOff;
-          notPullOffCount += notPullOff;
-          eliminatedCount += eliminated;
-          notEliminatedCount += notEliminated;
-          pullOffByCustomerCount += pullOffByCustomer;
-        });
+      if (item.supplier) {
+        const {
+          documents,
+          comments,
+          accepted,
+          notAccepted,
+          discretionOfTheCustomer,
+          pullOff,
+          notPullOff,
+          eliminated,
+          notEliminated,
+          pullOffByCustomer,
+        } = await this.getDesignDocumentStatistic(
+          "supplier",
+          item.supplier.id.toString()
+        );
+        documentsCount += documents;
+        commentsCount += comments;
+        acceptedCount += accepted;
+        notAcceptedCount += notAccepted;
+        discretionOfTheCustomerCount += discretionOfTheCustomer;
+        pullOffCount += pullOff;
+        notPullOffCount += notPullOff;
+        eliminatedCount += eliminated;
+        notEliminatedCount += notEliminated;
+        pullOffByCustomerCount += pullOffByCustomer;
       }
     }
 
@@ -398,7 +421,9 @@ export class StatisticService {
     };
   };
 
-  getProjectStatistic = (item: ProjectEntity): ProjectStatistic => {
+  getProjectStatistic = async (
+    item: ProjectEntity
+  ): Promise<ProjectStatistic> => {
     let unitsCount = 0,
       subUnitsCount = 0,
       documentsCount = 0,
@@ -413,10 +438,34 @@ export class StatisticService {
       pullOffByCustomerCount = 0;
 
     if (item) {
+      const {
+        documents,
+        comments,
+        accepted,
+        notAccepted,
+        discretionOfTheCustomer,
+        pullOff,
+        notPullOff,
+        eliminated,
+        notEliminated,
+        pullOffByCustomer,
+      } = await this.getDesignDocumentStatistic("project", item.id.toString());
+      documentsCount += documents;
+      commentsCount += comments;
+      acceptedCount += accepted;
+      notAcceptedCount += notAccepted;
+      discretionOfTheCustomerCount += discretionOfTheCustomer;
+      pullOffCount += pullOff;
+      notPullOffCount += notPullOff;
+      eliminatedCount += eliminated;
+      notEliminatedCount += notEliminated;
+      pullOffByCustomerCount += pullOffByCustomer;
+
       if (item.units && item.units.length > 0) {
         unitsCount += item.units.length;
 
-        item.units.map((unit) => {
+        for (let i = 0; i < item.units.length; i++) {
+          const unit = item.units[i];
           const {
             subUnits,
             documents,
@@ -429,7 +478,7 @@ export class StatisticService {
             eliminated,
             notEliminated,
             pullOffByCustomer,
-          } = this.getUnitStatistic(unit);
+          } = await this.getUnitStatistic(unit);
           subUnitsCount += subUnits;
           documentsCount += documents;
           commentsCount += comments;
@@ -441,33 +490,7 @@ export class StatisticService {
           eliminatedCount += eliminated;
           notEliminatedCount += notEliminated;
           pullOffByCustomerCount += pullOffByCustomer;
-        });
-      }
-
-      if (item.projectDocuments && item.projectDocuments.length > 0) {
-        documentsCount += item.projectDocuments.length;
-        item.projectDocuments.map((doc) => {
-          const {
-            comments,
-            accepted,
-            notAccepted,
-            discretionOfTheCustomer,
-            pullOff,
-            notPullOff,
-            eliminated,
-            notEliminated,
-            pullOffByCustomer,
-          } = this.getDesignDocumentStatistic(doc);
-          commentsCount += comments;
-          acceptedCount += accepted;
-          notAcceptedCount += notAccepted;
-          discretionOfTheCustomerCount += discretionOfTheCustomer;
-          pullOffCount += pullOff;
-          notPullOffCount += notPullOff;
-          eliminatedCount += eliminated;
-          notEliminatedCount += notEliminated;
-          pullOffByCustomerCount += pullOffByCustomer;
-        });
+        }
       }
     }
     return {
@@ -486,7 +509,7 @@ export class StatisticService {
     };
   };
 
-  getFieldStatistic = (item: FieldEntity): FieldStatistic => {
+  getFieldStatistic = async (item: FieldEntity): Promise<FieldStatistic> => {
     let projectsCount = 0,
       unitsCount = 0,
       subUnitsCount = 0,
@@ -503,7 +526,8 @@ export class StatisticService {
 
     if (item && item.projects && item.projects.length > 0) {
       projectsCount += item.projects.length;
-      item.projects.map((project) => {
+      for (let i = 0; i < item.projects.length; i++) {
+        const project = item.projects[i];
         const {
           units,
           subUnits,
@@ -517,7 +541,7 @@ export class StatisticService {
           eliminated,
           notEliminated,
           pullOffByCustomer,
-        } = this.getProjectStatistic(project);
+        } = await this.getProjectStatistic(project);
         unitsCount += units;
         subUnitsCount += subUnits;
         documentsCount += documents;
@@ -530,7 +554,7 @@ export class StatisticService {
         eliminatedCount += eliminated;
         notEliminatedCount += notEliminated;
         pullOffByCustomerCount += pullOffByCustomer;
-      });
+      }
     }
 
     return {
@@ -550,7 +574,9 @@ export class StatisticService {
     };
   };
 
-  getSubsidiaryStatistic = (item: SubsidiaryEntity): SubsidiaryStatistic => {
+  getSubsidiaryStatistic = async (
+    item: SubsidiaryEntity
+  ): Promise<SubsidiaryStatistic> => {
     let fieldsCount = 0,
       projectsCount = 0,
       unitsCount = 0,
@@ -568,7 +594,8 @@ export class StatisticService {
 
     if (item && item.fields && item.fields.length > 0) {
       fieldsCount += item.fields.length;
-      item.fields.map((field) => {
+      for (let i = 0; i < item.fields.length; i++) {
+        const field = item.fields[i];
         const {
           projects,
           units,
@@ -583,7 +610,7 @@ export class StatisticService {
           eliminated,
           notEliminated,
           pullOffByCustomer,
-        } = this.getFieldStatistic(field);
+        } = await this.getFieldStatistic(field);
         projectsCount += projects;
         unitsCount += units;
         subUnitsCount += subUnits;
@@ -597,7 +624,7 @@ export class StatisticService {
         eliminatedCount += eliminated;
         notEliminatedCount += notEliminated;
         pullOffByCustomerCount += pullOffByCustomer;
-      });
+      }
     }
 
     return {

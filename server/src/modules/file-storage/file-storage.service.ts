@@ -499,10 +499,6 @@ export class FileStorageService {
               },
             ],
           });
-
-          console.log(
-            this.statisticService.getDesignDocumentStatistic(data[0])
-          );
           break;
         }
         case "unit": {
@@ -696,6 +692,97 @@ export class FileStorageService {
     }
 
     return items;
+  };
+
+  findDesignDocumentsForStatistic = async (
+    parrentTarget: string,
+    parrentId: string
+  ): Promise<DesignDocumentEntity[]> => {
+    let data: DesignDocumentEntity[] = [];
+
+    try {
+      switch (parrentTarget) {
+        case "project": {
+          data = await this.designDocumentRepository.findAll({
+            where: { projectId: parrentId },
+            include: [
+              {
+                model: DesignDocumentCommentEntity,
+                as: "pdc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "unit": {
+          data = await this.designDocumentRepository.findAll({
+            where: { unitId: parrentId },
+            include: [
+              {
+                model: UnitEntity,
+                as: "unit",
+              },
+              {
+                model: DesignDocumentCommentEntity,
+                as: "udc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "sub-unit": {
+          data = await this.designDocumentRepository.findAll({
+            where: { subUnitId: parrentId },
+            include: [
+              {
+                model: DesignDocumentCommentEntity,
+                as: "sudc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                    include: [],
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        case "supplier": {
+          data = await this.designDocumentRepository.findAll({
+            where: { supplierId: parrentId },
+            include: [
+              {
+                model: DesignDocumentCommentEntity,
+                as: "sudc",
+                include: [
+                  {
+                    model: DesignDocumentSolutionEntity,
+                  },
+                ],
+              },
+            ],
+          });
+          break;
+        }
+        default:
+          break;
+      }
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    return data;
   };
 
   findOneDesignDocument = async (

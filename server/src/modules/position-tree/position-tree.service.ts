@@ -2227,11 +2227,6 @@ export class PositionTreeService {
                         {
                           model: DesignDocumentCommentEntity,
                           as: "pdc",
-                          include: [
-                            {
-                              model: DesignDocumentSolutionEntity,
-                            },
-                          ],
                         },
                       ],
                     },
@@ -2248,11 +2243,6 @@ export class PositionTreeService {
                                 {
                                   model: DesignDocumentCommentEntity,
                                   as: "sdc",
-                                  include: [
-                                    {
-                                      model: DesignDocumentSolutionEntity,
-                                    },
-                                  ],
                                 },
                               ],
                             },
@@ -2265,11 +2255,6 @@ export class PositionTreeService {
                             {
                               model: DesignDocumentCommentEntity,
                               as: "udc",
-                              include: [
-                                {
-                                  model: DesignDocumentSolutionEntity,
-                                },
-                              ],
                             },
                           ],
                         },
@@ -2303,11 +2288,6 @@ export class PositionTreeService {
                                 {
                                   model: DesignDocumentCommentEntity,
                                   as: "sudc",
-                                  include: [
-                                    {
-                                      model: DesignDocumentSolutionEntity,
-                                    },
-                                  ],
                                 },
                               ],
                             },
