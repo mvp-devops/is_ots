@@ -39,6 +39,7 @@ import {
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
   CommentAccountingService,
+  StatisticService,
 } from "../comment-accounting";
 
 export enum FileType {
@@ -58,7 +59,9 @@ export class FileStorageService {
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
     private nsiService: RegulatoryReferenceInformationService,
     @Inject(forwardRef(() => CommentAccountingService))
-    private commentService: CommentAccountingService
+    private commentService: CommentAccountingService,
+    @Inject(forwardRef(() => StatisticService))
+    private statisticService: StatisticService
   ) {}
 
   createLogo = async (
@@ -496,6 +499,10 @@ export class FileStorageService {
               },
             ],
           });
+
+          console.log(
+            this.statisticService.getDesignDocumentStatistic(data[0])
+          );
           break;
         }
         case "unit": {

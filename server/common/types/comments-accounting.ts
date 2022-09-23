@@ -180,3 +180,46 @@ export interface CollectiveCheckSheetHeaders {
   subUnitTitleRender: string;
   subUnitQuestionareRender: DesignDocumentView | null;
 }
+
+export interface CommentStatistic {
+  accepted: number; //принято
+  notAccepted: number; //не принято
+  discretionOfTheCustomer: number; // на усмотрение заказчика
+  pullOff: number; //снято
+  notPullOff: number; //не снято
+  eliminated: number; //устранено
+  notEliminated: number; //не устранено
+  pullOffByCustomer: number; //снято по решению заказчика
+}
+
+export interface DesignDocumentStatistic extends CommentStatistic {
+  comments: number;
+}
+
+export interface SubUnitStatistic extends DesignDocumentStatistic {
+  documents: number;
+}
+
+export interface UnitStatistic extends SubUnitStatistic {
+  subUnits: number;
+}
+
+export interface ProjectStatistic extends UnitStatistic {
+  units: number;
+}
+
+export interface FieldStatistic extends ProjectStatistic {
+  projects: number;
+}
+
+export interface SubsidiaryStatistic extends FieldStatistic {
+  fields: number;
+}
+
+export type StatisticView =
+  | SubsidiaryStatistic
+  | FieldStatistic
+  | ProjectStatistic
+  | UnitStatistic
+  | SubUnitStatistic
+  | null;

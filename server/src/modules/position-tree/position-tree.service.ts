@@ -6,12 +6,16 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { CheckListSets } from "../../../common/types/comments-accounting";
+import {
+  CheckListSets,
+  StatisticView,
+} from "../../../common/types/comments-accounting";
 import { PositionTreeItem } from "../../../common/types/position-tree";
 import {
   CheckListService,
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
+  StatisticService,
 } from "../comment-accounting";
 import {
   DesignDocumentEntity,
@@ -67,7 +71,10 @@ export class PositionTreeService {
     private fileService: FileStorageService,
 
     @Inject(forwardRef(() => CheckListService))
-    private readonly checkListService: CheckListService
+    private readonly checkListService: CheckListService,
+
+    @Inject(forwardRef(() => StatisticService))
+    private readonly statisticService: StatisticService
   ) {}
 
   getPositionTree = async (): Promise<PositionTreeItem[]> => {
@@ -2197,5 +2204,477 @@ export class PositionTreeService {
     }
 
     return folderPath;
+  };
+
+  getStatistic = async (target: string, id: string): Promise<StatisticView> => {
+    let statistic = null;
+
+    switch (target) {
+      case "subsidiary": {
+        const item = await this.subsidiaryRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: FieldEntity,
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: DesignDocumentEntity,
+                      as: "projectDocuments",
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "pdc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      model: UnitEntity,
+                      include: [
+                        {
+                          model: CounterpartyEntity,
+                          include: [
+                            {
+                              model: DesignDocumentEntity,
+                              as: "supplierDocuments",
+                              include: [
+                                {
+                                  model: DesignDocumentCommentEntity,
+                                  as: "sdc",
+                                  include: [
+                                    {
+                                      model: DesignDocumentSolutionEntity,
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        {
+                          model: DesignDocumentEntity,
+                          as: "unitDocuments",
+                          include: [
+                            {
+                              model: DesignDocumentCommentEntity,
+                              as: "udc",
+                              include: [
+                                {
+                                  model: DesignDocumentSolutionEntity,
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        {
+                          model: SubUnitEntity,
+                          include: [
+                            // {
+                            //   model: CounterpartyEntity,
+                            //   include: [
+                            //     {
+                            //       model: DesignDocumentEntity,
+                            //       as: "supplierDocuments",
+                            //       include: [
+                            //         {
+                            //           model: DesignDocumentCommentEntity,
+                            //           as: "sdc",
+                            //           include: [
+                            //             {
+                            //               model: DesignDocumentSolutionEntity,
+                            //             },
+                            //           ],
+                            //         },
+                            //       ],
+                            //     },
+                            //   ],
+                            // },
+                            {
+                              model: DesignDocumentEntity,
+                              as: "subUnitDocuments",
+                              include: [
+                                {
+                                  model: DesignDocumentCommentEntity,
+                                  as: "sudc",
+                                  include: [
+                                    {
+                                      model: DesignDocumentSolutionEntity,
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+
+        statistic = this.statisticService.getSubsidiaryStatistic(item);
+        break;
+      }
+      case "field": {
+        const item = await this.fieldRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: ProjectEntity,
+              include: [
+                {
+                  model: DesignDocumentEntity,
+                  as: "projectDocuments",
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "pdc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: CounterpartyEntity,
+                      include: [
+                        {
+                          model: DesignDocumentEntity,
+                          as: "supplierDocuments",
+                          include: [
+                            {
+                              model: DesignDocumentCommentEntity,
+                              as: "sdc",
+                              include: [
+                                {
+                                  model: DesignDocumentSolutionEntity,
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      model: DesignDocumentEntity,
+                      as: "unitDocuments",
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "udc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      model: SubUnitEntity,
+                      include: [
+                        {
+                          model: CounterpartyEntity,
+                          include: [
+                            {
+                              model: DesignDocumentEntity,
+                              as: "supplierDocuments",
+                              include: [
+                                {
+                                  model: DesignDocumentCommentEntity,
+                                  as: "sdc",
+                                  include: [
+                                    {
+                                      model: DesignDocumentSolutionEntity,
+                                    },
+                                  ],
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                        {
+                          model: DesignDocumentEntity,
+                          as: "subUnitDocuments",
+                          include: [
+                            {
+                              model: DesignDocumentCommentEntity,
+                              as: "sudc",
+                              include: [
+                                {
+                                  model: DesignDocumentSolutionEntity,
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+
+        statistic = this.statisticService.getFieldStatistic(item);
+        break;
+      }
+      case "project": {
+        const item = await this.projectRepository.findOne({
+          where: { id },
+
+          include: [
+            {
+              model: DesignDocumentEntity,
+              as: "projectDocuments",
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "pdc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: UnitEntity,
+              include: [
+                {
+                  model: CounterpartyEntity,
+                  include: [
+                    {
+                      model: DesignDocumentEntity,
+                      as: "supplierDocuments",
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "sdc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "udc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: SubUnitEntity,
+                  include: [
+                    {
+                      model: CounterpartyEntity,
+                      include: [
+                        {
+                          model: DesignDocumentEntity,
+                          as: "supplierDocuments",
+                          include: [
+                            {
+                              model: DesignDocumentCommentEntity,
+                              as: "sdc",
+                              include: [
+                                {
+                                  model: DesignDocumentSolutionEntity,
+                                },
+                              ],
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                    {
+                      model: DesignDocumentEntity,
+                      as: "subUnitDocuments",
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "sudc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+
+        statistic = this.statisticService.getProjectStatistic(item);
+        break;
+      }
+      case "unit": {
+        const item = await this.unitRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: CounterpartyEntity,
+              include: [
+                {
+                  model: DesignDocumentEntity,
+                  as: "supplierDocuments",
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "sdc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "unitDocuments",
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "udc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: SubUnitEntity,
+              include: [
+                {
+                  model: CounterpartyEntity,
+                  include: [
+                    {
+                      model: DesignDocumentEntity,
+                      as: "supplierDocuments",
+                      include: [
+                        {
+                          model: DesignDocumentCommentEntity,
+                          as: "sdc",
+                          include: [
+                            {
+                              model: DesignDocumentSolutionEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "sudc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+
+        statistic = this.statisticService.getUnitStatistic(item);
+        break;
+      }
+      case "sub-unit": {
+        const item = await this.subUnitRepository.findOne({
+          where: { id },
+          include: [
+            {
+              model: CounterpartyEntity,
+              include: [
+                {
+                  model: DesignDocumentEntity,
+                  as: "supplierDocuments",
+                  include: [
+                    {
+                      model: DesignDocumentCommentEntity,
+                      as: "sdc",
+                      include: [
+                        {
+                          model: DesignDocumentSolutionEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+            {
+              model: DesignDocumentEntity,
+              as: "subUnitDocuments",
+              include: [
+                {
+                  model: DesignDocumentCommentEntity,
+                  as: "sudc",
+                  include: [
+                    {
+                      model: DesignDocumentSolutionEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        });
+
+        statistic = this.statisticService.getSubUnitStatistic(item);
+        break;
+      }
+      default:
+        break;
+    }
+
+    return statistic;
   };
 }

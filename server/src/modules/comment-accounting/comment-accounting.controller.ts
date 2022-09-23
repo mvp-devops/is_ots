@@ -10,11 +10,6 @@ import {
   Res,
 } from "@nestjs/common";
 import { setCurrentDate } from "../../../common/utils";
-import {
-  CheckListSets,
-  CollectiveCheckSheetHeaders,
-  DesignDocumentCommentView,
-} from "../../../common/types/comments-accounting";
 import { CommentAccountingService } from "./comment-accounting.service";
 import {
   CreateDesignDocumentCommentDto,

@@ -2,6 +2,7 @@ import { SequelizeModule } from "@nestjs/sequelize";
 import { forwardRef, Module } from "@nestjs/common";
 import { CommentAccountingService } from "./comment-accounting.service";
 import { CheckListService } from "./check-list.service";
+import { StatisticService } from "./statistic.service";
 
 import { CommentAccountingController } from "./comment-accounting.controller";
 import {
@@ -13,7 +14,7 @@ import { FileStorageModule } from "../file-storage";
 
 @Module({
   controllers: [CommentAccountingController],
-  providers: [CommentAccountingService, CheckListService],
+  providers: [CommentAccountingService, CheckListService, StatisticService],
   imports: [
     SequelizeModule.forFeature([
       DesignDocumentCommentEntity,
@@ -22,6 +23,6 @@ import { FileStorageModule } from "../file-storage";
     ]),
     forwardRef(() => FileStorageModule),
   ],
-  exports: [CheckListService, CommentAccountingService],
+  exports: [CheckListService, CommentAccountingService, StatisticService],
 })
 export class CommentAccountingModule {}

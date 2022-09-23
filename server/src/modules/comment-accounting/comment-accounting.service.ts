@@ -32,6 +32,7 @@ import {
   UnitEntity,
 } from "../position-tree";
 import { ExcelService } from "../file-storage/excel.service";
+import { StatisticService } from "./statistic.service";
 
 @Injectable()
 export class CommentAccountingService {
@@ -41,7 +42,9 @@ export class CommentAccountingService {
     @InjectModel(DesignDocumentSolutionEntity)
     private solutionRepository: typeof DesignDocumentSolutionEntity,
     @Inject(forwardRef(() => ExcelService))
-    private excelService: ExcelService
+    private excelService: ExcelService,
+    @Inject(forwardRef(() => StatisticService))
+    private statisticService: StatisticService
   ) {}
 
   async createOne(
@@ -170,7 +173,7 @@ export class CommentAccountingService {
         },
       ],
     });
-
+    console.log(this.statisticService.getCommentStatistic(item));
     let render: DesignDocumentCommentView[] = [];
     let documentSection = "",
       documentCode = "",

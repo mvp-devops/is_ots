@@ -90,4 +90,10 @@ export class PositionTreeController {
   ) {
     return this.service.getCheckList(target, id, settings);
   }
+
+  @Get("/statistic/:id")
+  statistic(@Param("id") id: string, @Query() query: { target: string }) {
+    const { target } = query;
+    return this.service.getStatistic(target, id);
+  }
 }
