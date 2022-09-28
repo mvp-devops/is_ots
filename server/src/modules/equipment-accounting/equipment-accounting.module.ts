@@ -1,5 +1,5 @@
 import { SequelizeModule } from "@nestjs/sequelize";
-import { Module } from "@nestjs/common";
+import { forwardRef, Module } from "@nestjs/common";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
 import { EquipmentAccountingController } from "./equipment-accounting.controller";
 import {
@@ -11,6 +11,7 @@ import {
   MetrologyEntity,
   MonitoringEntity,
 } from "./entities";
+import { FileStorageModule } from "../file-storage";
 
 @Module({
   controllers: [EquipmentAccountingController],
@@ -25,6 +26,7 @@ import {
       MetrologyEntity,
       MonitoringEntity,
     ]),
+    forwardRef(() => FileStorageModule),
   ],
 })
 export class EquipmentAccountingModule {}

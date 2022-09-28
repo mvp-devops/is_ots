@@ -223,6 +223,8 @@ export class SummaryListOfEquipmentEntity extends Model<
   monitoring: MonitoringEntity;
 
   @HasOne(() => DesignDocumentEntity, {
+    as: "equipmentQuestionare",
+    foreignKey: "sloeId",
     // onUpdate: "CASCADE",
     // onDelete: "SET NULL",
   })

@@ -140,6 +140,8 @@ export class MonitoringEntity extends Model<
   comments: CapitalConstructionUnitSupervisionCommentEntity;
 
   @HasOne(() => DesignDocumentEntity, {
+    as: "functionalDiagram",
+    foreignKey: "monitoringId",
     // onUpdate: "CASCADE",
     // onDelete: "SET NULL",
   })

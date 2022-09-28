@@ -1,12 +1,12 @@
 import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
-import { FacilityCreateOrUpdateAtts } from "../../../../../common/types/equipment-accounting";
+import { FacilityCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 import { SummaryListOfEquipmentEntity } from "./summary-list-of-facility.entity";
 
 @Table({ tableName: "facilities" })
 export class FacilityEntity extends Model<
   FacilityEntity,
-  FacilityCreateOrUpdateAtts
+  FacilityCreateOrUpdateAttrs
 > {
   @ApiProperty({
     example: 1,

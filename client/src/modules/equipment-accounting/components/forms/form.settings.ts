@@ -25,6 +25,7 @@ export const facilityItem = {
 export const generalInformationItem: GeneralInformationCreateOrUpdateAttrs = {
   id: null,
   sloeId: null,
+  projectId: null,
   unitId: null,
   subUnitId: null,
   installationLocation: "",
@@ -91,7 +92,7 @@ export const signalItem: SignalCreateOrUpdateAttrs = {
   l: "",
   h: "",
   hh: "",
-  emergenceProtocol: "",
+  emergencyProtocol: "",
 };
 
 export const monitoringItem: MonitoringCreateOrUpdateAttrs = {
@@ -107,7 +108,6 @@ export const monitoringItem: MonitoringCreateOrUpdateAttrs = {
   awpDocument: null,
   commisionDate: null,
   commisionDocument: null,
-  description: "",
 };
 
 export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
@@ -125,7 +125,7 @@ export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
   documentNumber: "",
   fromDate: null,
   toDate: null,
-  counterparty: "",
+  counterpartyId: null,
   document: null,
   status: "",
   arshin: "",

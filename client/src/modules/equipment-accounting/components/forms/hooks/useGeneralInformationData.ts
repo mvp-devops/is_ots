@@ -2,7 +2,7 @@ import { InputRef } from "antd";
 import { RcFile } from "antd/lib/upload";
 import React, { useEffect, useRef, useState } from "react";
 import {
-  FacilityCreateOrUpdateAtts,
+  FacilityCreateOrUpdateAttrs,
   FacilityView,
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
@@ -26,7 +26,7 @@ export const useGeneralInformationData = (
   );
 
   const [newFacility, setNewFacility] =
-    useState<FacilityCreateOrUpdateAtts>(facilityItem);
+    useState<FacilityCreateOrUpdateAttrs>(facilityItem);
   const [facilities, setFacilities] = useState<FacilityView[]>(facilitiesList);
 
   const { getFacilitiesList } = useActions();
@@ -44,7 +44,7 @@ export const useGeneralInformationData = (
       | string[]
       | number
       | RcFile
-      | FacilityCreateOrUpdateAtts
+      | FacilityCreateOrUpdateAttrs
       | null
   ) => {
     data && setData && setData({ ...data, [key]: value });
@@ -68,7 +68,7 @@ export const useGeneralInformationData = (
       | string[]
       | number
       | RcFile
-      | FacilityCreateOrUpdateAtts
+      | FacilityCreateOrUpdateAttrs
       | null
   ) => {
     editRow
@@ -89,6 +89,7 @@ export const useGeneralInformationData = (
       setEditRow({
         id: row.id,
         sloeId: row.sloeId,
+        projectId: row.projectId,
         unitId: row.unitId,
         subUnitId: row.subUnitId,
         installationLocation: row.installationLocation,

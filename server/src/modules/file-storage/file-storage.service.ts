@@ -382,9 +382,12 @@ export class FileStorageService {
         }
         case "cable-log": {
           document.cableLogId = +parrentId;
-          this.createDirectory(`${parrentFolderPath}/Оборудование`);
-          const pathToFile = `${parrentFolderPath}/Оборудование/Схемы`;
-          this.createDirectory(pathToFile);
+          // this.createDirectory(`${parrentFolderPath}/Оборудование`);
+          // const pathToFile = `${parrentFolderPath}/Оборудование/Схемы`;
+          // this.createDirectory(pathToFile);
+
+          const pathToFile = parrentFolderPath;
+
           fileName = this.fileUpload(pathToFile, file);
           document.filePath = pathToFile;
           document.fileName = fileName;
@@ -1230,6 +1233,22 @@ export class FileStorageService {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
     return fileName;
+  };
+
+  createJsonFile = (
+    data: any,
+    parrentFolder: string,
+    parrentTitle: string
+  ): string => {
+    const fileFolder = this.getFilePath(`${parrentFolder}/imports`);
+    this.createDirectory(fileFolder);
+    const fileName = `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`;
+    const filePath = this.getPath([fileFolder, fileName]);
+    fse.writeJson(filePath, data, (err) => {
+      if (err) return console.error(err);
+    });
+
+    return filePath;
   };
 
   fileDownload = async (

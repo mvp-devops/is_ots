@@ -52,6 +52,8 @@ export const getAllGeneralInformation = (
     const {
       id,
       unit,
+      projectId,
+      project,
       unitId,
       subUnit,
       subUnitId,
@@ -73,6 +75,8 @@ export const getAllGeneralInformation = (
     const item: GeneralInformationView = {
       id,
       sloeId: id,
+      projectId,
+      project,
       unit,
       unitId,
       subUnit,
@@ -149,19 +153,21 @@ export const getAllSignal = (
 };
 
 export const getAllEssences = async (
-  target: string,
+  parrentTarget: string,
   parrentId: string
 ): Promise<SummaryListOfEquipmentView[]> => {
-  const url = setUrl(equipmentAccountingUrl);
+  const url = setUrl(
+    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/find`
+  );
 
   const { data } = await axios.get<SummaryListOfEquipmentView[]>(url, {
-    params: { target, parrentId },
+    params: { parrentTarget, parrentId },
   });
   return data;
 };
 
 export const getAllFacilities = async (): Promise<FacilityView[]> => {
-  const url = setUrl(`${equipmentAccountingUrl}/facilities`);
+  const url = setUrl(`${equipmentAccountingUrl}/facilities/find`);
 
   const { data } = await axios.get<FacilityView[]>(url);
   return data;

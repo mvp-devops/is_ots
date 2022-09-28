@@ -1,3 +1,6 @@
+import { DesignDocumentEntity } from "../../src/modules/file-storage";
+import { DesignDocumentView } from "./file-storage";
+
 export interface SummaryListOfEquipmentView {
   id: string;
   project: string;
@@ -10,16 +13,7 @@ export interface SummaryListOfEquipmentView {
   installationLocation: string;
   facility: FacilityView;
   facilityModification: string;
-  questionare?: {
-    questionareType: string;
-    questionareName: string;
-    questionarePath: string;
-  };
-  functionalDiagram?: {
-    functionalDiagramType: string;
-    functionalDiagramName: string;
-    functionalDiagramPath: string;
-  };
+  questionare?: DesignDocumentEntity | null;
   systemType: string[];
   tag: string;
   controlledParameter: string;
@@ -42,7 +36,7 @@ export interface SummaryListOfEquipmentCreateOrUpdateAttrs {
   subUnitId: string | number;
   facilityId: string | number | null;
   installationLocation: string;
-  questionare: any;
+  questionare?: any;
   systemType: string[];
   tag: string;
   controlledParameter: string;
@@ -53,18 +47,12 @@ export interface SummaryListOfEquipmentCreateOrUpdateAttrs {
   period: string;
   specification: string;
   description: string;
-  facility?: FacilityCreateOrUpdateAtts;
-  cableLog?: CableLogCreateOrUpdateAttrs[] | null;
-  impulseLineLog?: ImpulseLineLogCreateOrUpdateAttrs[] | null;
-  metrology?: MetrologyCreateOrUpdateAttrs | null;
-  signals?: SignalCreateOrUpdateAttrs[] | null;
-  monitoring?: MonitoringCreateOrUpdateAttrs | null;
 }
 
 export interface SummaryListOfEquipmentFormData {
   generalInformation: GeneralInformationCreateOrUpdateAttrs;
-  metrology?: MetrologyCreateOrUpdateAttrs;
-  monitoring?: MonitoringCreateOrUpdateAttrs;
+  metrology?: MetrologyCreateOrUpdateAttrs | null;
+  monitoring?: MonitoringCreateOrUpdateAttrs | null;
   cableLog: CableLogCreateOrUpdateAttrs[];
   impulseLineLog: ImpulseLineLogCreateOrUpdateAttrs[];
   signals: SignalCreateOrUpdateAttrs[];
@@ -78,7 +66,7 @@ export interface CableLogView {
   subUnit: string;
   subUnitId: string;
   tag: string;
-  wiringDiagramTitle: string;
+  wiringDiagram: DesignDocumentEntity | null;
   numberOfTrace: string;
   cableMark: string;
   cableSection: string;
@@ -92,9 +80,9 @@ export interface CableLogView {
 }
 
 export interface CableLogCreateOrUpdateAttrs {
-  id: string | number | null;
+  id?: string | number | null;
   sloeId: string | number | null;
-  wiringDiagram: any;
+  wiringDiagram?: any;
   numberOfTrace: string;
   cableMark: string;
   cableSection: string;
@@ -103,7 +91,6 @@ export interface CableLogCreateOrUpdateAttrs {
   toUnit: string;
   toPlace: string;
   cableLenght: string;
-
   range: string;
   description: string;
 }
@@ -126,7 +113,7 @@ export interface ImpulseLineLogView {
 }
 
 export interface ImpulseLineLogCreateOrUpdateAttrs {
-  id: string | number | null;
+  id?: string | number | null;
   sloeId: string | number | null;
   numberOfTrace: string;
   impulseLineType: string;
@@ -152,11 +139,11 @@ export interface SignalView {
   l: string;
   h: string;
   hh: string;
-  emergenceProtocol: string;
+  emergencyProtocol: string;
 }
 
 export interface SignalCreateOrUpdateAttrs {
-  id: string | number | null;
+  id?: string | number | null;
   sloeId: string | number | null;
   signalType: string;
   signalProtocol: string;
@@ -165,11 +152,11 @@ export interface SignalCreateOrUpdateAttrs {
   l: string;
   h: string;
   hh: string;
-  emergenceProtocol: string;
+  emergencyProtocol: string;
 }
 
 export interface MetrologyView {
-  id: string | number;
+  id: string | number | null;
   sloeId: string | number | null;
   unit: string;
   unitId: string;
@@ -200,8 +187,9 @@ export interface MetrologyView {
 }
 
 export interface MetrologyCreateOrUpdateAttrs {
-  id: string | number | null;
-  sloeId: string | number | null;
+  id?: string | number | null;
+  sloeId: number | null;
+  counterpartyId: number | null;
   sgroei: string;
   grsi: string;
   min: string;
@@ -211,15 +199,14 @@ export interface MetrologyCreateOrUpdateAttrs {
   mpi: string;
   metrologyType: string;
   documentType: string;
-  counterparty: string;
   documentNumber: string;
-  fromDate: Date | null | string;
-  toDate: Date | null | string;
-  document: any;
+  fromDate: string | null;
+  toDate: string | null;
+  document?: any;
   status: string;
   arshin: string;
-  verificationProcedure: any;
-  typeApprovalCertificate: any;
+  verificationProcedure?: any;
+  typeApprovalCertificate?: any;
 }
 
 export interface MonitoringView {
@@ -230,11 +217,7 @@ export interface MonitoringView {
   subUnit: string;
   subUnitId: string;
   tag: string;
-  functionalDiagram?: {
-    functionalDiagramType: string;
-    functionalDiagramName: string;
-    functionalDiagramPath: string;
-  };
+  functionalDiagram: DesignDocumentEntity | null;
   mountDate: string;
   mountDocument: string;
   connectDate: string;
@@ -245,40 +228,36 @@ export interface MonitoringView {
   awpDocument: string;
   commisionDate: string;
   commisionDocument: string;
-  description: string;
 }
 
 export interface MonitoringCreateOrUpdateAttrs {
-  id: string | number | null;
+  id?: string | number | null;
+  functionalDiagram?: any;
   sloeId: string | number | null;
-  mountDate: Date | null | string;
-  mountDocument: any;
-  connectDate: Date | null | string;
-  connectDocument: any;
-  testDate: Date | null | string;
-  testDocument: any;
-  awpDate: Date | null | string;
-  awpDocument: any;
-  commisionDate: Date | null | string;
-  commisionDocument: any;
-  description: string;
+  mountDate: string | null;
+  mountDocument?: any;
+  connectDate: string | null;
+  connectDocument?: any;
+  testDate: string | null;
+  testDocument?: any;
+  awpDate: string | null;
+  awpDocument?: any;
+  commisionDate: string | null;
+  commisionDocument?: any;
 }
 
 export interface GeneralInformationView {
   id: string | number;
   sloeId: string | number | null;
+  projectId: string;
+  project: string;
   unit: string;
   unitId: string;
   subUnit: string;
   subUnitId: string;
   facility: FacilityView;
   installationLocation: string;
-  questionare?: {
-    questionareType: string;
-    questionareName: string;
-    questionarePath: string;
-  };
-
+  questionare?: DesignDocumentEntity | null;
   systemType: string[];
   tag: string;
   controlledParameter: string;
@@ -293,17 +272,18 @@ export interface GeneralInformationView {
 }
 
 export interface GeneralInformationCreateOrUpdateAttrs {
-  id: string | number | null;
-  sloeId: string | number | null;
+  id?: string | number | null;
+  sloeId?: string | number | null;
+  projectId: string | number | null;
   unitId: string | number | null;
   subUnitId: string | number | null;
+  facilityId: string | number | null;
   installationLocation: string;
-  questionare: any;
+  questionare?: any;
   systemType: string[];
   tag: string;
   controlledParameter: string;
-  facilityId: string | number | null;
-  facility?: FacilityCreateOrUpdateAtts | null;
+  facility?: FacilityCreateOrUpdateAttrs | null;
   facilityModification: string | null;
   factoryNumber: string;
   year: string;
@@ -314,7 +294,7 @@ export interface GeneralInformationCreateOrUpdateAttrs {
 }
 
 export interface FacilityView {
-  id: string | number | null;
+  id?: string | number | null;
   country: string;
   vendor: string;
   title: string;
@@ -325,4 +305,46 @@ export interface FacilityView {
   modifications: string[];
 }
 
-export interface FacilityCreateOrUpdateAtts extends FacilityView {}
+export interface FacilityCreateOrUpdateAttrs extends FacilityView {}
+
+export interface ExportEquipmentToAtlas {
+  company: string; //subsidiary.title
+  subdivision: string; //у нас нет н/д
+  field: string; //field.title
+  prod_area: string; //sub-unit.title
+  place_install: string; //summaryListOfEquipment.installationPlace
+  position_tag: string; //summaryListOfEquipment.tag
+  partic_sbpaz: string; //summaryListOfEquipment.systemType.includes("ПАЗ")
+  phys_quantity: string; //у нас нет н/д
+  clarification: string; //summaryListOfEquipment.controlledParameter
+  category: string; //facility.equipmentType
+  name: string; //у нас нет н/д
+  type_eq: string; //facility.title
+  model_eq: string; //summaryListOfEquipment.facilityModification
+  country: string; //facility.country
+  factory: string; //facility.vendor.title
+  sn: string; //summaryListOfEquipment.factoryNumber
+  prod_dt: Date; //summaryListOfEquipment.month . summaryListOfEquipment.year MySQL date
+  life_time: string; //summaryListOfEquipment.period
+  set_type: string; //у нас нет н/д
+  set_sn: string; //у нас нет н/д
+  type_control: string; //summaryListOfEquipment.metrology.metrologyType
+  dt: Date; //summaryListOfEquipment.metrology.fromDate MySQL datetimeoffset
+  m_range: string; ////summaryListOfEquipment.metrology.mpi MySQL datetimeoffset
+  dt_next: Date; //summaryListOfEquipment.metrology.toDate
+  type_doc: string; //summaryListOfEquipment.metrology.documentType
+  number_doc: string; //summaryListOfEquipment.metrology.documentNumber
+  organization: string; //summaryListOfEquipment.metrology.counterparty.title
+  low_limit: string; //summaryListOfEquipment.metrology.min
+  upper_limit: string; //summaryListOfEquipment.metrology.max
+  units: string; //summaryListOfEquipment.metrology.range
+  acc: string; //summaryListOfEquipment.metrology.accuracy
+  num_registry: string; //summaryListOfEquipment.metrology.grsi
+  method_mc: string; //summaryListOfEquipment.metrology.verificationProcedure.title
+  meansur_area: string; //facility.meansurementArea
+  type_meansur: string; //facility.meansurementType
+  group_eq: string; //facility.meansurementGroup
+  sgroei: string; //summaryListOfEquipment.metrology.sgroei
+  remark: string; //summaryListOfEquipment.metrology.status
+  actual_tech_condition: string; //summaryListOfEquipment.description
+}

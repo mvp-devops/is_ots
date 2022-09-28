@@ -133,6 +133,8 @@ export class CableLogEntity extends Model<
   sloe: SummaryListOfEquipmentEntity;
 
   @HasOne(() => DesignDocumentEntity, {
+    as: "wiringDiagram",
+    foreignKey: "cableLogId",
     // onUpdate: "CASCADE",
     // onDelete: "SET NULL",
   })
