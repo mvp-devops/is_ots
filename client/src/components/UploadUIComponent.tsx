@@ -8,6 +8,7 @@ interface UploadUIComponentProps extends UploadProps {
   className?: string;
   id: string;
   changeValue: Function;
+  itemId?: any;
   props?: UploadProps;
 }
 
@@ -15,6 +16,7 @@ const UploadUIComponent: FC<UploadUIComponentProps> = ({
   id,
   className,
   changeValue,
+  itemId,
   ...props
 }) => {
   return (
@@ -22,10 +24,10 @@ const UploadUIComponent: FC<UploadUIComponentProps> = ({
       className={className ? `mb-1 ${className}` : "mb-1"}
       id={id}
       onRemove={(file) => {
-        changeValue(id, null);
+        changeValue(id, null, itemId);
       }}
       beforeUpload={(file) => {
-        changeValue(id, file);
+        changeValue(id, file, itemId);
         return false;
       }}
       {...props}

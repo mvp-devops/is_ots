@@ -240,19 +240,6 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
           "Акт ввода в эксплуатацию"
         )}
       </> */}
-      <Item
-        label={<Text type="secondary">Примечание</Text>}
-        className="m-0 mx-2"
-      >
-        <Input
-          placeholder="Примечание"
-          className="text-secondary"
-          value={item.description}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            changeData("description", e.target.value)
-          }
-        />
-      </Item>
 
       {row && (
         <>

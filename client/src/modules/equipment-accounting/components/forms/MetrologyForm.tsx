@@ -23,12 +23,19 @@ import {
 import {
   counterpartyView,
   metrologyDocumentType,
+  metrologyStatus,
   sgroei,
 } from "../../utils/equipment-accounting.consts";
 import "moment/locale/ru";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import { useMetrologyData } from "./hooks/useMetrologyData";
 import { metrologyItem } from "./form.settings";
+import { useMetrologyForm } from "./hooks";
+import {
+  InputUIComponent,
+  SelectUIComponent,
+  UploadUIComponent,
+} from "../../../../components";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -41,11 +48,8 @@ interface FormProps {
 }
 
 const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
-  const { editRow, onHandlerChange, changeDate } = useMetrologyData(
-    row,
-    data,
-    setData
-  );
+  const { counterpartiesList, editRow, onHandlerChange, changeDate } =
+    useMetrologyForm(row, data, setData);
 
   const formItems = (item: MetrologyCreateOrUpdateAttrs): ReactNode => (
     <>
@@ -60,42 +64,11 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
           label={<Text type="secondary">Сфера гос. регулирования ЕИ</Text>}
           className="m-0"
         >
-          <Select
-            size="small"
-            className="text-secondary"
-            showSearch
-            notFoundContent={
-              <Space className="d-flex justify-content-center p-3">
-                <Text type="warning">
-                  <ExclamationCircleOutlined
-                    style={{ fontSize: 20, marginBottom: 2 }}
-                  />
-                </Text>
-
-                <Text type="secondary">
-                  Нет данных для отображения. Уточнить поиск
-                </Text>
-              </Space>
-            }
-            optionFilterProp="children"
-            filterOption={(input, option) =>
-              (option!.children as unknown as string).includes(input)
-            }
-            filterSort={(optionA, optionB) =>
-              (optionA!.children as unknown as string)
-                .toLowerCase()
-                .localeCompare(
-                  (optionB!.children as unknown as string).toLowerCase()
-                )
-            }
-            onChange={(value: string) => onHandlerChange("sgroei", value)}
-          >
-            {sgroei.map((item) => (
-              <Option key={item.id} value={item.title}>
-                {item.title}
-              </Option>
-            ))}
-          </Select>
+          <SelectUIComponent
+            id="sgroei"
+            items={sgroei}
+            changeValue={onHandlerChange}
+          />
         </Item>
         <Divider className="m-1 p-0" />
         <Item
@@ -111,18 +84,13 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0 justify-content-end row"
           >
-            <Input
-              size="small"
-              type={"number"}
+            <InputUIComponent
+              type="number"
               style={{ maxWidth: 150 }}
-              addonAfter={
-                editRow ? <Text type="secondary">{editRow.range}</Text> : null
-              }
-              className="text-secondary"
-              value={item.min}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onHandlerChange("min", e.target.value)
-              }
+              addonAfter={editRow ? editRow.range : null}
+              value={editRow && editRow.min}
+              id="min"
+              changeValue={onHandlerChange}
             />
           </Item>
           <Item
@@ -134,18 +102,13 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0"
           >
-            <Input
-              size="small"
-              type={"number"}
+            <InputUIComponent
+              type="number"
               style={{ maxWidth: 150 }}
-              addonAfter={
-                editRow ? <Text type="secondary">{editRow.range}</Text> : null
-              }
-              className="text-secondary"
-              value={item.max}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onHandlerChange("max", e.target.value)
-              }
+              addonAfter={editRow ? editRow.range : null}
+              value={editRow && editRow.max}
+              id="max"
+              changeValue={onHandlerChange}
             />
           </Item>
           <Item
@@ -153,15 +116,12 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             label={<Text type="secondary">Погрешность/класс точности</Text>}
             className="m-0"
           >
-            <Input
-              size="small"
-              style={{ maxWidth: 150 }}
-              addonAfter={<Text type="secondary">%</Text>}
-              className="text-secondary"
-              value={item.accuracy}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onHandlerChange("accuracy", e.target.value)
-              }
+            <InputUIComponent
+              style={{ maxWidth: 150, fontColor: "#999" }}
+              addonAfter="%"
+              value={editRow && editRow.accuracy}
+              id="accuracy"
+              changeValue={onHandlerChange}
             />
           </Item>
 
@@ -174,16 +134,13 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0 justify-content-end row"
           >
-            <Input
-              size="small"
-              type={"number"}
+            <InputUIComponent
+              type="number"
               style={{ maxWidth: 150 }}
-              addonAfter={<Text type="secondary">мес.</Text>}
-              className="text-secondary"
-              value={item.mpi}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onHandlerChange("mpi", e.target.value)
-              }
+              addonAfter="мес."
+              value={editRow && editRow.mpi}
+              id="mpi"
+              changeValue={onHandlerChange}
             />
           </Item>
           {!editRow && (
@@ -196,14 +153,11 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               }
               className="m-0"
             >
-              <Input
-                size="small"
+              <InputUIComponent
                 style={{ maxWidth: 150 }}
-                className="text-secondary"
-                value={item.range}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  onHandlerChange("range", e.target.value)
-                }
+                // value={editRow ? editRow.range }
+                id="range"
+                changeValue={onHandlerChange}
               />
             </Item>
           )}
@@ -226,7 +180,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               onChange={(e: RadioChangeEvent) =>
                 onHandlerChange("metrologyType", e.target.value)
               }
-              value={item.metrologyType}
+              // value={editRow && editRow.metrologyType}
             >
               <Radio value={"Калибровка"} className="text-secondary">
                 Калибровка
@@ -244,45 +198,12 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0"
           >
-            <Select
-              size="small"
-              className="text-secondary"
-              showSearch
-              defaultValue={item.counterparty}
-              optionFilterProp="children"
-              notFoundContent={
-                <Space className="d-flex justify-content-center p-3">
-                  <Text type="warning">
-                    <ExclamationCircleOutlined
-                      style={{ fontSize: 20, marginBottom: 2 }}
-                    />
-                  </Text>
-
-                  <Text type="secondary">
-                    Нет данных для отображения. Уточнить поиск
-                  </Text>
-                </Space>
-              }
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA!.children as unknown as string)
-                  .toLowerCase()
-                  .localeCompare(
-                    (optionB!.children as unknown as string).toLowerCase()
-                  )
-              }
-              onChange={(value: string) =>
-                onHandlerChange("counterparty", value)
-              }
-            >
-              {counterpartyView.map((item) => (
-                <Option key={item.id} value={item.title}>
-                  {item.title}
-                </Option>
-              ))}
-            </Select>
+            <SelectUIComponent
+              id="counterpartyId"
+              items={counterpartiesList}
+              changeValue={onHandlerChange}
+              defaultValue={item.counterpartyId?.toString()}
+            />
           </Item>
 
           <Item
@@ -294,45 +215,12 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0"
           >
-            <Select
-              size="small"
-              className="text-secondary"
-              showSearch
-              notFoundContent={
-                <Space className="d-flex justify-content-center p-3">
-                  <Text type="warning">
-                    <ExclamationCircleOutlined
-                      style={{ fontSize: 20, marginBottom: 2 }}
-                    />
-                  </Text>
-
-                  <Text type="secondary">
-                    Нет данных для отображения. Уточнить поиск
-                  </Text>
-                </Space>
-              }
+            <SelectUIComponent
+              id="documentType"
+              items={metrologyDocumentType}
+              changeValue={onHandlerChange}
               defaultValue={item.documentType}
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA!.children as unknown as string)
-                  .toLowerCase()
-                  .localeCompare(
-                    (optionB!.children as unknown as string).toLowerCase()
-                  )
-              }
-              onChange={(value: string) =>
-                onHandlerChange("documentType", value)
-              }
-            >
-              {metrologyDocumentType.map((item) => (
-                <Option key={item.id} value={item.title}>
-                  {item.title}
-                </Option>
-              ))}
-            </Select>
+            />
           </Item>
           <Item
             style={{ maxWidth: 430 }}
@@ -343,14 +231,10 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0"
           >
-            <Input
-              size="small"
-              className="text-secondary"
-              // style={{ width: "100px" }}
-              value={item.documentNumber}
-              onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                onHandlerChange("documentNumber", e.target.value)
-              }
+            <InputUIComponent
+              value={editRow && editRow.documentNumber}
+              id="documentNumber"
+              changeValue={onHandlerChange}
             />
           </Item>
           <Item
@@ -379,6 +263,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             className="m-0 me-2"
           >
             <DatePicker
+              locale={locale}
               size="small"
               className="text-secondary"
               onChange={(date, dateString) => changeDate("toDate", dateString)}
@@ -392,70 +277,67 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             }
             className="m-0"
           >
-            <Upload
-              className="mb-1"
-              onRemove={(file) => {
-                onHandlerChange("document", null);
-              }}
-              beforeUpload={(file) => {
-                onHandlerChange("document", file);
-
-                return false;
-              }}
-            >
-              <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-                <Text type="secondary">Выбрать файл</Text>
-              </Button>
-            </Upload>
+            <UploadUIComponent id="document" changeValue={onHandlerChange} />
+          </Item>
+          <Item
+            style={{ maxWidth: 432 }}
+            label={
+              <Text type="secondary" style={{ marginLeft: 146 }}>
+                Статус
+              </Text>
+            }
+            className="m-0"
+          >
+            <SelectUIComponent
+              id="status"
+              items={metrologyStatus}
+              changeValue={onHandlerChange}
+              defaultValue={item.status}
+            />
           </Item>
         </Item>
         <Divider className="m-1 p-0" />
         <Item style={{ marginLeft: 234, marginBottom: 0 }}>
           <Item
+            style={{ maxWidth: 444 }}
             label={
-              <Text type="secondary" style={{ marginLeft: 12 }}>
+              <Text type="secondary" style={{ marginLeft: 144 }}>
+                № ГРСИ
+              </Text>
+            }
+            className="m-0"
+          >
+            <InputUIComponent
+              value={editRow && editRow.grsi}
+              id="grsi"
+              changeValue={onHandlerChange}
+            />
+          </Item>
+          <Item
+            label={
+              <Text type="secondary" style={{ marginLeft: 24 }}>
                 Свидетельство об утв. типа
               </Text>
             }
             className="m-0"
           >
-            <Upload
-              onRemove={(file) => {
-                onHandlerChange("verificationProcedure", null);
-              }}
-              beforeUpload={(file) => {
-                onHandlerChange("verificationProcedure", file);
-
-                return false;
-              }}
-            >
-              <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-                <Text type="secondary">Выбрать файл</Text>
-              </Button>
-            </Upload>
+            <UploadUIComponent
+              id="verificationProcedure"
+              changeValue={onHandlerChange}
+            />
           </Item>
           <Item
             label={
-              <Text type="secondary" style={{ marginLeft: 64 }}>
+              <Text type="secondary" style={{ marginLeft: 78 }}>
                 Методика поверки
               </Text>
             }
             className="mt-1"
           >
-            <Upload
-              onRemove={(file) => {
-                onHandlerChange("typeApprovalCertificate", null);
-              }}
-              beforeUpload={(file) => {
-                onHandlerChange("typeApprovalCertificate", file);
-
-                return false;
-              }}
-            >
-              <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-                <Text type="secondary">Выбрать файл</Text>
-              </Button>
-            </Upload>
+            <UploadUIComponent
+              id="typeApprovalCertificate"
+              changeValue={onHandlerChange}
+            />
           </Item>
         </Item>
       </Form>
@@ -467,10 +349,6 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Button type="primary" className="me-1">
               Обновить
             </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
-            </Button>
           </Space>
         </>
       )}
@@ -480,7 +358,9 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
   const editItem = editRow && formItems(editRow);
   const newRow = data && formItems(metrologyItem);
 
-  return row ? <>{editItem}</> : <>{newRow}</>;
+  const render = row ? editItem : newRow;
+
+  return <>{render}</>;
 };
 
 export default MetrologyForm;

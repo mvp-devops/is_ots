@@ -16,6 +16,7 @@ interface SelectUIComponentProps {
   changeValue: Function;
   items: any[];
   itemId?: any;
+  style?: Object;
   props?: SelectProps;
 }
 
@@ -29,11 +30,13 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   changeValue,
   items,
   itemId,
+  style,
   props,
 }) => {
   return (
     <Select
       {...props}
+      style={style}
       size={size ? size : "small"}
       className={className ? `text-secondary ${className}` : "text-secondary"}
       defaultValue={defaultValue}

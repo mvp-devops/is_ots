@@ -1,10 +1,11 @@
-import { Button, Divider, Form, Input, Space, Typography } from "antd";
-import { ChangeEvent, FC, ReactNode } from "react";
+import { Button, Divider, Form, Space, Typography } from "antd";
+import { FC } from "react";
 import {
   CableLogCreateOrUpdateAttrs,
   CableLogView,
 } from "../../../../../../server/common/types/equipment-accounting";
-import { useCableLogData } from "./hooks/useCableLogData";
+import { InputUIComponent, UploadUIComponent } from "../../../../components";
+import { useCableLogForm } from "./hooks";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -16,13 +17,13 @@ interface FormProps {
 }
 
 const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
-  const { addItem, removeItem, onHandlerChange, editRow } = useCableLogData(
+  const { addItem, removeItem, onHandlerChange, editRow } = useCableLogForm(
     row,
     data,
     setData
   );
 
-  const formItems = (item: CableLogCreateOrUpdateAttrs): ReactNode => (
+  const formItems = (item: CableLogCreateOrUpdateAttrs) => (
     <Form
       key={item.id}
       labelCol={{ span: 8 }}
@@ -35,38 +36,30 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         label={<Text type="secondary">Номер кабельной линии</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Номер кабельной линии"
-          className="text-secondary"
+        <InputUIComponent
           value={item.numberOfTrace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("numberOfTrace", e.target.value, item.id)
-          }
+          id="numberOfTrace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">Марка кабеля</Text>} className="m-0">
-        <Input
-          size="small"
-          placeholder="Марка кабеля"
-          className="text-secondary"
+        <InputUIComponent
           value={item.cableMark}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableMark", e.target.value, item.id)
-          }
+          id="cableMark"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Сечение кабеля</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Сечение кабеля"
-          className="text-secondary"
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableSection", e.target.value, item.id)
-          }
+        <InputUIComponent
+          value={item.cableSection}
+          id="cableSection"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
 
@@ -74,83 +67,77 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         label={<Text type="secondary">Место монтажа, от</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Место монтажа, от"
-          className="text-secondary"
+        <InputUIComponent
           value={item.fromUnit}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("fromUnit", e.target.value, item.id)
-          }
+          id="fromUnit"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Точка подключения, от</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Точка подключения, от"
-          className="text-secondary"
+        <InputUIComponent
           value={item.fromPlace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("fromPlace", e.target.value, item.id)
-          }
+          id="fromPlace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Место монтажа, до</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Место монтажа, до"
-          className="text-secondary"
+        <InputUIComponent
           value={item.toUnit}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("toUnit", e.target.value, item.id)
-          }
+          id="toUnit"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Точка подключения, до</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Точка подключения, до"
-          className="text-secondary"
+        <InputUIComponent
           value={item.toPlace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("toPlace", e.target.value, item.id)
-          }
+          id="toPlace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Длина кабельной линии</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          type={"number"}
-          placeholder="Длина кабельной линии"
-          addonAfter="м"
-          className="text-secondary"
+        <InputUIComponent
           value={item.cableLenght}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("cableLenght", e.target.value, item.id)
-          }
+          id="cableLenght"
+          itemId={item.id}
+          type="number"
+          addonAfter="м"
+          changeValue={onHandlerChange}
         />
       </Item>
+
+      <Item
+        label={<Text type="secondary">схема подключения:</Text>}
+        className="m-0"
+      >
+        <UploadUIComponent
+          id="wiringDiagram"
+          itemId={item.id}
+          changeValue={onHandlerChange}
+        />
+      </Item>
+
       <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
-        <Input
-          size="small"
-          placeholder="Длина кабельной линии"
-          className="text-secondary"
+        <InputUIComponent
           value={item.description}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("description", e.target.value, item.id)
-          }
+          id="description"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
 
@@ -161,10 +148,6 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
             <Button type="primary" className="me-1">
               Обновить
             </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
-            </Button>
           </Space>
         </>
       ) : (
@@ -172,7 +155,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           <Button
             type="default"
             className="me-1"
-            onClick={() => removeItem(item.id)}
+            onClick={() => removeItem(item.id as number)}
           >
             <Text type="danger">Удалить</Text>
           </Button>

@@ -60,7 +60,7 @@ const SignalTable: FC<SignalTableProps> = ({
               ?.toUpperCase()
               ?.includes(searchValue.toUpperCase()) ||
             item?.signalTag?.includes(searchValue.toUpperCase()) ||
-            item?.emergenceProtocol
+            item?.emergencyProtocol
               ?.toUpperCase()
               ?.includes(searchValue.toUpperCase())
         )

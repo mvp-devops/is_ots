@@ -51,17 +51,16 @@ export const useMonitoringData = (
       setEditRow({
         id: row.id,
         sloeId: row.sloeId,
-        mountDate: new Date(row.mountDate),
+        mountDate: row.mountDate,
         mountDocument: null,
-        connectDate: new Date(row.connectDate),
+        connectDate: row.connectDate,
         connectDocument: null,
-        testDate: new Date(row.testDate),
+        testDate: row.testDate,
         testDocument: null,
-        awpDate: new Date(row.awpDate),
+        awpDate: row.awpDate,
         awpDocument: null,
-        commisionDate: new Date(row.commisionDate),
+        commisionDate: row.commisionDate,
         commisionDocument: null,
-        description: row.description,
       }),
     [row]
   );

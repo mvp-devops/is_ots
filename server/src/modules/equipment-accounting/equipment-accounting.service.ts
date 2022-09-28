@@ -707,6 +707,7 @@ export class EquipmentAccountingService {
           unit: data.sloe.subUnit.unit.title,
           subUnitId: data.sloe.subUnit.id.toString(),
           subUnit: data.sloe.subUnit.title,
+          counterpartyId: data.counterpartyId,
           tag: data.sloe.tag,
           sgroei: data.sgroei,
           measurementArea: data.sloe.facility.measurementArea,

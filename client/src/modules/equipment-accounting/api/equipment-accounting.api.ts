@@ -205,7 +205,7 @@ export const updateOneEssence = async (
   id: string | number,
   item: GeneralInformationCreateOrUpdateAttrs
 ): Promise<GeneralInformationView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<GeneralInformationView>(url, item, {
     params: { target, id },
   });
@@ -217,7 +217,7 @@ export const deleteOneEssence = async (
   target: string,
   id: string | number
 ): Promise<GeneralInformationView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<GeneralInformationView>(url, {
     params: { target, id },
   });
@@ -230,7 +230,7 @@ export const updateOneMetrologyEssence = async (
   id: string | number,
   item: MetrologyCreateOrUpdateAttrs
 ): Promise<MetrologyView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<MetrologyView>(url, item, {
     params: { target, id },
   });
@@ -242,7 +242,7 @@ export const deleteOneMetrologyEssence = async (
   target: string,
   id: string | number
 ): Promise<MetrologyView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<MetrologyView>(url, {
     params: { target, id },
   });
@@ -255,7 +255,7 @@ export const updateOneMonitoringEssence = async (
   id: string | number,
   item: MonitoringCreateOrUpdateAttrs
 ): Promise<MonitoringView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<MonitoringView>(url, item, {
     params: { target, id },
   });
@@ -267,7 +267,7 @@ export const deleteOneMonitoringEssence = async (
   target: string,
   id: string | number
 ): Promise<MonitoringView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<MonitoringView>(url, {
     params: { target, id },
   });
@@ -280,7 +280,7 @@ export const updateOneCableLogEssence = async (
   id: string | number,
   item: CableLogCreateOrUpdateAttrs
 ): Promise<CableLogView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<CableLogView>(url, item, {
     params: { target, id },
   });
@@ -292,7 +292,7 @@ export const deleteOneCableLogEssence = async (
   target: string,
   id: string | number
 ): Promise<CableLogView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<CableLogView>(url, {
     params: { target, id },
   });
@@ -305,7 +305,7 @@ export const updateOneImpulseLineLogEssence = async (
   id: string | number,
   item: ImpulseLineLogCreateOrUpdateAttrs
 ): Promise<ImpulseLineLogView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<ImpulseLineLogView>(url, item, {
     params: { target, id },
   });
@@ -317,7 +317,7 @@ export const deleteOneImpulseLineLogEssence = async (
   target: string,
   id: string | number
 ): Promise<ImpulseLineLogView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<ImpulseLineLogView>(url, {
     params: { target, id },
   });
@@ -330,7 +330,7 @@ export const updateOneSignalEssence = async (
   id: string | number,
   item: SignalCreateOrUpdateAttrs
 ): Promise<SignalView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.put<SignalView>(url, item, {
     params: { target, id },
   });
@@ -342,7 +342,7 @@ export const deleteOneSignalEssence = async (
   target: string,
   id: string | number
 ): Promise<SignalView> => {
-  const url = setUrl(`${equipmentAccountingUrl}:${id}`);
+  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
   const { data } = await axios.delete<SignalView>(url, {
     params: { target, id },
   });

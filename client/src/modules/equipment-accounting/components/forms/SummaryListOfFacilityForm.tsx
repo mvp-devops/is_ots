@@ -178,7 +178,10 @@ const SummaryListOfFacilityForm: React.FC = () => {
       title: "Метрология",
       content: (
         <Space className="d-flex justify-content-center">
-          <MetrologyForm data={data.metrology} setData={setMetrology} />
+          <MetrologyForm
+            data={data.metrology as MetrologyCreateOrUpdateAttrs}
+            setData={setMetrology}
+          />
         </Space>
       ),
     },
@@ -213,7 +216,10 @@ const SummaryListOfFacilityForm: React.FC = () => {
       title: "Мониторинг СМР/ПНР",
       content: (
         <Space className="d-flex justify-content-center">
-          <MonitoringForm data={data.monitoring} setData={setMonitoring} />
+          <MonitoringForm
+            data={data.monitoring as MonitoringCreateOrUpdateAttrs}
+            setData={setMonitoring}
+          />
         </Space>
       ),
     },

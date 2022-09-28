@@ -162,6 +162,7 @@ export interface MetrologyView {
   unitId: string;
   subUnit: string;
   subUnitId: string;
+  counterpartyId: string | number | null;
   tag: string;
   sgroei: string;
   measurementArea: string;

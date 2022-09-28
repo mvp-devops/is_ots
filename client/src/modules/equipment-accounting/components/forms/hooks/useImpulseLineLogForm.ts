@@ -4,10 +4,10 @@ import {
 } from "../../../../../../../server/common/types/equipment-accounting";
 
 import { useEffect, useState } from "react";
-
+import { useEquipmentAccountingForm } from ".";
 import { ImpulseLineLogItem } from "../form.settings";
 
-export const useImpulseLineLogData = (
+export const useImpulseLineLogForm = (
   row?: ImpulseLineLogView,
   data?: ImpulseLineLogCreateOrUpdateAttrs[],
   setData?: Function
@@ -31,39 +31,13 @@ export const useImpulseLineLogData = (
     [row]
   );
 
-  const addItem = () => {
-    data &&
-      setData &&
-      setData([...data, { ...ImpulseLineLogItem, id: Math.random() }]);
-    console.log(data);
-  };
-
-  const removeItem = (index: string | number | null) => {
-    data && setData && setData(data.filter((i) => i.id !== index));
-  };
-
-  const changeItems = (
-    key: string,
-    value: string | number,
-    id: string | number | null
-  ) => {
-    data &&
-      setData &&
-      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-  };
-
-  const onHandlerChange = (
-    key: string,
-    value: string | number,
-    id: string | number | null
-  ) => {
-    editRow
-      ? setEditRow({
-          ...editRow,
-          [key]: value,
-        })
-      : changeItems(key, value, id);
-  };
+  const { addItem, removeItem, onHandlerChange } = useEquipmentAccountingForm(
+    ImpulseLineLogItem,
+    editRow,
+    setEditRow,
+    data,
+    setData
+  );
 
   return {
     addItem,

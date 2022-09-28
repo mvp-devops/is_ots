@@ -4,7 +4,8 @@ import {
   SignalCreateOrUpdateAttrs,
   SignalView,
 } from "../../../../../../server/common/types/equipment-accounting";
-import { useSignalData } from "./hooks/useSignalData";
+import { InputUIComponent } from "../../../../components";
+import { useSignalForm } from "./hooks";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -16,7 +17,7 @@ interface FormProps {
 }
 
 const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
-  const { addItem, removeItem, onHandlerChange, editRow } = useSignalData(
+  const { addItem, removeItem, onHandlerChange, editRow } = useSignalForm(
     row,
     data,
     setData
@@ -32,65 +33,48 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
       style={{ maxWidth: 1200 }}
     >
       <Item label={<Text type="secondary">Тип сигнала</Text>} className="m-0">
-        <Input
-          size="small"
-          placeholder="Тип сигнала"
-          className="text-secondary"
+        <InputUIComponent
           value={item.signalType}
-          onChange={
-            (e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("signalType", e.target.value, item.id)
-            // console.log(e.target.value)
-          }
+          id="signalType"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">Протокол</Text>} className="m-0">
-        <Input
-          size="small"
-          placeholder="Протокол"
-          className="text-secondary"
+        <InputUIComponent
           value={item.signalProtocol}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("signalProtocol", e.target.value, item.id)
-          }
+          id="signalProtocol"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">TAG сигнала</Text>} className="m-0">
-        <Input
-          size="small"
-          placeholder="TAG сигнала"
-          className="text-secondary"
+        <InputUIComponent
           value={item.signalTag}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("signalTag", e.target.value, item.id)
-          }
+          id="signalTag"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">Авария, min</Text>} className="m-0">
-        <Input
-          size="small"
+        <InputUIComponent
           type="number"
-          placeholder="Авария, min"
-          className="text-secondary"
           value={item.h}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("h", e.target.value, item.id)
-          }
+          id="h"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Сигнализация, min</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
+        <InputUIComponent
           type="number"
-          placeholder="Сигнализация, min"
-          className="text-secondary"
           value={item.l}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("l", e.target.value, item.id)
-          }
+          id="l"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
 
@@ -98,41 +82,32 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         label={<Text type="secondary">Сигнализация, max</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
+        <InputUIComponent
           type="number"
-          placeholder="Сигнализация, max"
-          className="text-secondary"
           value={item.ll}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("ll", e.target.value, item.id)
-          }
+          id="ll"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">Авария, max</Text>} className="m-0">
-        <Input
-          size="small"
+        <InputUIComponent
           type="number"
-          placeholder="Авария, max"
-          className="text-secondary"
           value={item.hh}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("hh", e.target.value, item.id)
-          }
+          id="hh"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Аварийны протокол</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Аварийны протокол"
-          className="text-secondary"
-          value={item.emergenceProtocol}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("emergenceProtocol", e.target.value, item.id)
-          }
+        <InputUIComponent
+          value={item.emergencyProtocol}
+          id="emergencyProtocol"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
 
@@ -150,7 +125,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           <Button
             type="default"
             className="me-1"
-            onClick={() => removeItem(item.id)}
+            onClick={() => removeItem(item.id as number)}
           >
             <Text type="danger">Удалить</Text>
           </Button>

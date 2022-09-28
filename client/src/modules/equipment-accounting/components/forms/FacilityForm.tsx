@@ -11,7 +11,7 @@ import {
 } from "antd";
 import { ChangeEvent, FC, useState } from "react";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { FacilityCreateOrUpdateAtts } from "../../../../../../server/common/types/equipment-accounting";
+import { FacilityCreateOrUpdateAttrs } from "../../../../../../server/common/types/equipment-accounting";
 import {
   countries,
   meansureGroup,
@@ -24,7 +24,7 @@ const { Text } = Typography;
 const { Option } = Select;
 
 interface FormProps {
-  data: FacilityCreateOrUpdateAtts;
+  data: FacilityCreateOrUpdateAttrs;
   setData: Function;
 }
 

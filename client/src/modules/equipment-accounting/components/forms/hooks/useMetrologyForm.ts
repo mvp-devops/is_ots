@@ -1,42 +1,18 @@
+import { metrologyItem } from "./../form.settings";
 import {
   MetrologyCreateOrUpdateAttrs,
   MetrologyView,
 } from "../../../../../../../server/common/types/equipment-accounting";
 
 import { useEffect, useState } from "react";
-import { RcFile } from "antd/lib/upload";
-import { setDate } from "../../../../../utils/main.utils";
+import { useEquipmentAccountingForm } from ".";
 
-export const useMetrologyData = (
+export const useMetrologyForm = (
   row?: MetrologyView,
   data?: MetrologyCreateOrUpdateAttrs,
   setData?: Function
 ) => {
   const [editRow, setEditRow] = useState<MetrologyCreateOrUpdateAttrs>();
-
-  const changeItems = (key: string, value: string | Date | null | RcFile) => {
-    data && setData && setData({ ...data, [key]: value });
-  };
-
-  const changeEditRowItems = (
-    key: string,
-    value: string | Date | null | RcFile
-  ) => {
-    row && editRow && setEditRow({ ...editRow, [key]: value });
-  };
-
-  const changeDate = (key: string, value: string) => {
-    editRow
-      ? changeEditRowItems(key, setDate(value))
-      : changeItems(key, setDate(value));
-  };
-
-  const onHandlerChange = (
-    key: string,
-    value: string | Date | null | RcFile
-  ) => {
-    editRow ? changeEditRowItems(key, value) : changeItems(key, value);
-  };
 
   useEffect(
     () =>
@@ -63,10 +39,21 @@ export const useMetrologyData = (
         verificationProcedure: null,
         typeApprovalCertificate: null,
       }),
+
     [row]
   );
 
+  const { counterpartiesList, onHandlerChange, changeDate } =
+    useEquipmentAccountingForm(
+      metrologyItem,
+      editRow,
+      setEditRow,
+      data,
+      setData
+    );
+
   return {
+    counterpartiesList,
     editRow,
     onHandlerChange,
     changeDate,

@@ -4,7 +4,8 @@ import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,
 } from "../../../../../../server/common/types/equipment-accounting";
-import { useImpulseLineLogData } from "./hooks/useImpulseLineLogData";
+import { InputUIComponent } from "../../../../components";
+import { useImpulseLineLogForm } from "./hooks";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -17,7 +18,7 @@ interface FormProps {
 
 const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
   const { addItem, removeItem, onHandlerChange, editRow } =
-    useImpulseLineLogData(row, data, setData);
+    useImpulseLineLogForm(row, data, setData);
 
   const formItems = (item: ImpulseLineLogCreateOrUpdateAttrs): ReactNode => (
     <Form
@@ -28,85 +29,69 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
       className="m-1 p-1 border"
     >
       <Item
-        label={<Text type="secondary">Номер импульсной линии</Text>}
+        label={<Text type="secondary">Номер кабельной линии</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Номер импульсной линии"
-          className="text-secondary"
+        <InputUIComponent
           value={item.numberOfTrace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("numberOfTrace", e.target.value, item.id)
-          }
+          id="numberOfTrace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
+
       <Item
         label={<Text type="secondary">Тип импульсной линии</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Тип импульсной линии"
-          className="text-secondary"
+        <InputUIComponent
           value={item.impulseLineType}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("impulseLineType", e.target.value, item.id)
-          }
+          id="impulseLineType"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Точка подключения, от</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Точка подключения, от"
-          className="text-secondary"
+        <InputUIComponent
           value={item.fromPlace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("fromPlace", e.target.value, item.id)
-          }
+          id="fromPlace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Точка подключения, до</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          placeholder="Точка подключения, до"
-          className="text-secondary"
+        <InputUIComponent
           value={item.toPlace}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("toPlace", e.target.value, item.id)
-          }
+          id="toPlace"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item
         label={<Text type="secondary">Длина импульсной линии</Text>}
         className="m-0"
       >
-        <Input
-          size="small"
-          type={"number"}
-          placeholder="Длина импульсной линии"
-          addonAfter="м"
-          className="text-secondary"
+        <InputUIComponent
           value={item.impulseLineLenght}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("impulseLineLenght", e.target.value, item.id)
-          }
+          id="impulseLineLenght"
+          itemId={item.id}
+          type="number"
+          addonAfter="м"
+          changeValue={onHandlerChange}
         />
       </Item>
       <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
-        <Input
-          size="small"
-          className="text-secondary"
+        <InputUIComponent
           value={item.description}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onHandlerChange("description", e.target.value, item.id)
-          }
+          id="description"
+          itemId={item.id}
+          changeValue={onHandlerChange}
         />
       </Item>
 
@@ -124,10 +109,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           <Button
             type="default"
             className="me-1"
-            onClick={() => {
-              console.log(item.id);
-              removeItem(item.id);
-            }}
+            onClick={() => removeItem(item.id as number)}
           >
             <Text type="danger">Удалить</Text>
           </Button>

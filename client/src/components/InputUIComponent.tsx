@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { Input, InputProps, Typography } from "antd";
 import {
   EyeInvisibleOutlined,
@@ -14,9 +14,14 @@ interface InputUIComponentProps extends InputProps {
   className?: string;
   type?: string;
   id: string;
-  value: string;
+  value?: string | number;
+
   changeValue: Function;
   status?: "warning" | "error" | undefined;
+  itemId?: string | number | null;
+  addonAfter?: string | null;
+  props?: InputProps;
+  style?: Object;
 }
 
 const InputUIComponent: FC<InputUIComponentProps> = ({
@@ -27,26 +32,37 @@ const InputUIComponent: FC<InputUIComponentProps> = ({
   value,
   changeValue,
   status,
+  itemId,
+  addonAfter,
+  style,
+  props,
 }) => {
-  const props = {
+  const prop = {
     size: size ? size : "small",
-    className: className ? className : "text-secondary",
+    className: className ? className + " text-secondary" : "text-secondary",
     value,
     onChange: (e: ChangeEvent<HTMLInputElement>) =>
-      changeValue(id, e.target.value),
+      changeValue(id, e.target.value, itemId),
     status,
     postfix: status === "error" ? <ClockCircleOutlined /> : null,
+    type,
+    addonAfter:
+      addonAfter !== undefined ? (
+        <Text type="secondary">{addonAfter}</Text>
+      ) : null,
+    style,
+    ...props,
   };
   return type === "password" ? (
     <Input.Password
-      {...props}
+      {...prop}
       className={className ? className : "text-secondary"}
       iconRender={(visible) =>
         visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
       }
     />
   ) : (
-    <Input {...props} />
+    <Input {...prop} />
   );
 };
 

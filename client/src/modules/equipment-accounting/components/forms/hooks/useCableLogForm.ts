@@ -6,8 +6,9 @@ import {
 import { useEffect, useState } from "react";
 
 import { cableLogItem } from "../form.settings";
+import { useEquipmentAccountingForm } from ".";
 
-export const useCableLogData = (
+export const useCableLogForm = (
   row?: CableLogView,
   data?: CableLogCreateOrUpdateAttrs[],
   setData?: Function
@@ -20,7 +21,7 @@ export const useCableLogData = (
       setEditRow({
         id: row.id,
         sloeId: row.sloeId,
-        wiringDiagram: row.wiringDiagramTitle,
+        wiringDiagram: row.wiringDiagram,
         numberOfTrace: row.numberOfTrace,
         cableMark: row.cableMark,
         cableSection: row.cableSection,
@@ -35,38 +36,13 @@ export const useCableLogData = (
     [row]
   );
 
-  const addItem = () => {
-    data &&
-      setData &&
-      setData([...data, { ...cableLogItem, id: Math.random() }]);
-  };
-
-  const removeItem = (index: string | number | null) => {
-    data && setData && setData(data.filter((i) => i.id !== index));
-  };
-
-  const changeItems = (
-    key: string,
-    value: string | number,
-    id: string | number | null
-  ) => {
-    data &&
-      setData &&
-      setData(data.map((i) => (i.id === id ? { ...i, [key]: value } : i)));
-  };
-
-  const onHandlerChange = (
-    key: string,
-    value: string | number,
-    id: string | number | null
-  ) => {
-    editRow
-      ? setEditRow({
-          ...editRow,
-          [key]: value,
-        })
-      : changeItems(key, value, id);
-  };
+  const { addItem, removeItem, onHandlerChange } = useEquipmentAccountingForm(
+    cableLogItem,
+    editRow,
+    setEditRow,
+    data,
+    setData
+  );
 
   return {
     addItem,
