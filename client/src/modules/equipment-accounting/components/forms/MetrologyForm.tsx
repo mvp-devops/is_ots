@@ -3,17 +3,12 @@ import {
   DatePicker,
   Divider,
   Form,
-  Input,
   Radio,
   RadioChangeEvent,
-  Select,
   Space,
   Typography,
-  Upload,
 } from "antd";
-import { ChangeEvent, FC, ReactNode } from "react";
-import { UploadOutlined } from "@ant-design/icons";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { FC, ReactNode } from "react";
 
 import {
   MetrologyCreateOrUpdateAttrs,
@@ -21,14 +16,12 @@ import {
 } from "../../../../../../server/common/types/equipment-accounting";
 
 import {
-  counterpartyView,
   metrologyDocumentType,
   metrologyStatus,
   sgroei,
 } from "../../utils/equipment-accounting.consts";
 import "moment/locale/ru";
 import locale from "antd/es/date-picker/locale/ru_RU";
-import { useMetrologyData } from "./hooks/useMetrologyData";
 import { metrologyItem } from "./form.settings";
 import { useMetrologyForm } from "./hooks";
 import {
@@ -39,7 +32,6 @@ import {
 
 const { Item } = Form;
 const { Text } = Typography;
-const { Option } = Select;
 
 interface FormProps {
   row?: MetrologyView;

@@ -11,7 +11,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { DesignOrCounterpartyCreationAttrs } from "../../../../../common/types/regulatory-reference-information";
 import { UnitEntity, SubUnitEntity } from "../../../position-tree";
 import { DesignDocumentEntity, LogoEntity } from "../../../file-storage";
-import { MetrologyEntity } from "../../../equipment-accounting";
+import { FacilityEntity, MetrologyEntity } from "../../../equipment-accounting";
 
 @Table({ tableName: "counterparties" })
 export class CounterpartyEntity extends Model<

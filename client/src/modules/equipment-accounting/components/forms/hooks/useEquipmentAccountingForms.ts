@@ -6,6 +6,7 @@ import {
   SignalCreateOrUpdateAttrs,
   MetrologyCreateOrUpdateAttrs,
   MonitoringCreateOrUpdateAttrs,
+  FacilityCreateOrUpdateAttrs,
 } from "../../../../../../../server/common/types/equipment-accounting";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 import { setDate } from "../../../../../utils/main.utils";
@@ -16,7 +17,8 @@ type EquipmentAccountingSubFormData =
   | ImpulseLineLogCreateOrUpdateAttrs
   | SignalCreateOrUpdateAttrs
   | MetrologyCreateOrUpdateAttrs
-  | MonitoringCreateOrUpdateAttrs;
+  | MonitoringCreateOrUpdateAttrs
+  | FacilityCreateOrUpdateAttrs;
 
 export const useEquipmentAccountingForm = (
   item: EquipmentAccountingSubFormData,
@@ -28,6 +30,25 @@ export const useEquipmentAccountingForm = (
   const { getAllItems: getNSIList } = useRegulatoryReferenceInformation();
 
   const [counterpartiesList, setCounterpartiesList] = useState<NSIView[]>([]);
+  const [vendorsList, setVendorsList] = useState<any[]>([]);
+  const [modifications] = useState<string[]>([]);
+  const [itemMeansureGroup] = useState("");
+
+  const renderNSIList = (items: NSIView[]): any[] => {
+    const arr: any[] = [];
+    for (let i = 0; i < items.length; i++) {
+      const { id, title, code, description } = items[i];
+      const item = {
+        id,
+        title,
+        code,
+        value: title,
+        description,
+      };
+      arr.push(item);
+    }
+    return arr;
+  };
 
   const addItem = () => {
     data &&
@@ -39,7 +60,10 @@ export const useEquipmentAccountingForm = (
   };
 
   useEffect(() => {
-    getNSIList("counterparty").then((data) => setCounterpartiesList(data));
+    getNSIList("counterparty").then((data) => {
+      setCounterpartiesList(data);
+      setVendorsList(renderNSIList(data));
+    });
   }, []);
 
   const removeItem = (index: string | number | null) => {
@@ -52,7 +76,7 @@ export const useEquipmentAccountingForm = (
 
   const changeItems = (
     key: string,
-    value: string | number | Date | RcFile | null,
+    value: string | string[] | number | Date | RcFile | null,
     id?: string | number | null
   ) => {
     if (data && setData) {
@@ -71,7 +95,7 @@ export const useEquipmentAccountingForm = (
 
   const changeEditRowItems = (
     key: string,
-    value: string | number | Date | RcFile | null
+    value: string | string[] | number | Date | RcFile | null
   ) => {
     editRow &&
       setEditRow &&
@@ -83,7 +107,7 @@ export const useEquipmentAccountingForm = (
 
   const onHandlerChange = (
     key: string,
-    value: string | number | Date | RcFile | null,
+    value: string | string[] | number | Date | RcFile | null,
     id?: string | number | null
   ) => {
     editRow
@@ -102,6 +126,9 @@ export const useEquipmentAccountingForm = (
   // useEffect(() => console.log("Data: ", data), [data]);
 
   return {
+    itemMeansureGroup,
+    modifications,
+    vendorsList,
     counterpartiesList,
     onHandlerChange,
     addItem,

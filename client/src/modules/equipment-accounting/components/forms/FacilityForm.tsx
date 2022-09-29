@@ -4,159 +4,115 @@ import {
   Input,
   Radio,
   RadioChangeEvent,
-  Select,
-  Space,
-  TreeSelect,
   Typography,
 } from "antd";
-import { ChangeEvent, FC, useState } from "react";
-import { ExclamationCircleOutlined } from "@ant-design/icons";
-import { FacilityCreateOrUpdateAttrs } from "../../../../../../server/common/types/equipment-accounting";
+import { ChangeEvent, FC } from "react";
+import {
+  FacilityCreateOrUpdateAttrs,
+  FacilityView,
+} from "../../../../../../server/common/types/equipment-accounting";
 import {
   countries,
   meansureGroup,
   meansurementArea,
   meansurementType,
 } from "../../utils/equipment-accounting.consts";
+import {
+  FormItemUIComponent,
+  InputUIComponent,
+  SelectUIComponent,
+  TreeSelectUIComponent,
+} from "../../../../components";
+import { useFacilityForm } from "./hooks";
 
 const { Item } = Form;
 const { Text } = Typography;
-const { Option } = Select;
 
 interface FormProps {
   data: FacilityCreateOrUpdateAttrs;
   setData: Function;
+  row?: FacilityView;
 }
 
-const FacilityForm: FC<FormProps> = ({ data, setData }) => {
-  const [modifications] = useState<string[]>([]);
-  const [itemMeansureGroup] = useState<string>();
-
-  const onChangeHandler = (key: string, value: string | string[]) => {
-    setData({ ...data, [key]: value });
-  };
+const FacilityForm: FC<FormProps> = ({ row, data, setData }) => {
+  const {
+    editRow,
+    vendorsList,
+    onHandlerChange,
+    modifications,
+    itemMeansureGroup,
+  } = useFacilityForm(row, data, setData);
 
   return (
     <>
       <Divider className="m-1 p-0" />
-      <Item
-        label={<Text type="secondary">Страна-производитель</Text>}
+      <FormItemUIComponent
+        title="Страна-производитель"
         className="m-0"
-      >
-        <Select
-          size="small"
-          className="text-secondary"
-          showSearch
-          optionFilterProp="children"
-          notFoundContent={
-            <Space className="d-flex justify-content-center p-3">
-              <Text type="warning">
-                <ExclamationCircleOutlined
-                  style={{ fontSize: 20, marginBottom: 2 }}
-                />
-              </Text>
-
-              <Text type="secondary">
-                Нет данных для отображения. Уточнить поиск
-              </Text>
-            </Space>
-          }
-          filterOption={(input, option) =>
-            (option!.children as unknown as string).includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA!.children as unknown as string)
-              .toLowerCase()
-              .localeCompare(
-                (optionB!.children as unknown as string).toLowerCase()
-              )
-          }
-          onChange={(value: string) => onChangeHandler("country", value)}
-        >
-          {countries.map((item) => (
-            <Option key={item.id} value={item.title}>
-              {item.title}
-            </Option>
-          ))}
-        </Select>
-      </Item>
-      <Item label={<Text type="secondary">Производитель</Text>} className="m-0">
-        <Select
-          size="small"
-          className="text-secondary"
-          showSearch
-          optionFilterProp="children"
-          notFoundContent={
-            <Space className="d-flex justify-content-center p-3">
-              <Text type="warning">
-                <ExclamationCircleOutlined
-                  style={{ fontSize: 20, marginBottom: 2 }}
-                />
-              </Text>
-
-              <Text type="secondary">
-                Нет данных для отображения. Уточнить поиск
-              </Text>
-            </Space>
-          }
-          filterOption={(input, option) =>
-            (option!.children as unknown as string).includes(input)
-          }
-          filterSort={(optionA, optionB) =>
-            (optionA!.children as unknown as string)
-              .toLowerCase()
-              .localeCompare(
-                (optionB!.children as unknown as string).toLowerCase()
-              )
-          }
-          onChange={(value: string) => onChangeHandler("vendor", value)}
-        >
-          {countries.map((item) => (
-            <Option key={item.id} value={item.title}>
-              {item.title}
-            </Option>
-          ))}
-        </Select>
-      </Item>
-      <Item label={<Text type="secondary">Наименование</Text>} className="m-0">
-        <Input
-          size="small"
-          className="text-secondary"
-          value={data.title}
-          onChange={(e: ChangeEvent<HTMLInputElement>) =>
-            onChangeHandler("title", e.target.value)
-          }
-        />
-      </Item>
-      <Item label={<Text type="secondary">Тип</Text>} className="m-0">
-        <Radio.Group
-          className="text-secondary"
-          onChange={(e: RadioChangeEvent) =>
-            onChangeHandler("equipmentType", e.target.value)
-          }
-          value={data.equipmentType}
-        >
-          <Radio value={"ИНОЕ"} className="text-secondary">
-            ИНОЕ
-          </Radio>
-          <Radio value={"КИТСО"} className="text-secondary">
-            КИТСО
-          </Radio>
-          <Radio value={"СА"} className="text-secondary">
-            СА
-          </Radio>
-          <Radio value={"СИ"} className="text-secondary">
-            СИ
-          </Radio>
-        </Radio.Group>
-      </Item>
+        children={
+          <SelectUIComponent
+            id="country"
+            items={countries}
+            changeValue={onHandlerChange}
+            defaultValue={editRow ? editRow.country : ""}
+          />
+        }
+      />
+      <FormItemUIComponent
+        title="Страна-производитель"
+        className="m-0"
+        children={
+          <SelectUIComponent
+            id="vendor"
+            items={vendorsList}
+            changeValue={onHandlerChange}
+            defaultValue={editRow ? editRow.vendor : ""}
+          />
+        }
+      />
+      <FormItemUIComponent
+        title="Наименование"
+        className="m-0"
+        children={
+          <InputUIComponent
+            id="title"
+            value={editRow ? editRow.title : data.title}
+            changeValue={onHandlerChange}
+          />
+        }
+      />
+      <FormItemUIComponent
+        title="Тип"
+        className="m-0"
+        children={
+          <Radio.Group
+            className="text-secondary"
+            onChange={(e: RadioChangeEvent) =>
+              onHandlerChange("equipmentType", e.target.value)
+            }
+            value={editRow ? editRow.equipmentType : data.equipmentType}
+          >
+            <Radio value={"ИНОЕ"} className="text-secondary">
+              ИНОЕ
+            </Radio>
+            <Radio value={"КИТСО"} className="text-secondary">
+              КИТСО
+            </Radio>
+            <Radio value={"СА"} className="text-secondary">
+              СА
+            </Radio>
+            <Radio value={"СИ"} className="text-secondary">
+              СИ
+            </Radio>
+          </Radio.Group>
+        }
+      />
       <Item label={<Text type="secondary">Модификация</Text>} className="m-0">
         <Input
           size="small"
           className="text-secondary"
-          // value={}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            onChangeHandler("modifications", [
+            onHandlerChange("modifications", [
               ...modifications,
               e.target.value,
             ]);
@@ -165,118 +121,50 @@ const FacilityForm: FC<FormProps> = ({ data, setData }) => {
       </Item>
       {data.equipmentType === "СИ" && (
         <>
-          <Item
-            label={<Text type="secondary">Область измерений</Text>}
+          <FormItemUIComponent
+            title="Область измерений"
             className="m-0"
-          >
-            <Select
-              notFoundContent={
-                <Space className="d-flex justify-content-center p-3">
-                  <Text type="warning">
-                    <ExclamationCircleOutlined
-                      style={{ fontSize: 20, marginBottom: 2 }}
-                    />
-                  </Text>
-
-                  <Text type="secondary">
-                    Нет данных для отображения. Уточнить поиск
-                  </Text>
-                </Space>
-              }
-              size="small"
-              className="text-secondary"
-              showSearch
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA!.children as unknown as string)
-                  .toLowerCase()
-                  .localeCompare(
-                    (optionB!.children as unknown as string).toLowerCase()
-                  )
-              }
-              onChange={(value: string) =>
-                onChangeHandler("meansurementArea", value)
-              }
-            >
-              {meansurementArea.map((item) => (
-                <Option key={item.id} value={item.title}>
-                  {item.title}
-                </Option>
-              ))}
-            </Select>
-          </Item>
-          <Item
-            label={<Text type="secondary">Вид измерений</Text>}
+            children={
+              <SelectUIComponent
+                id="meansurementArea"
+                items={meansurementArea}
+                changeValue={onHandlerChange}
+                defaultValue={
+                  editRow ? (editRow.meansurementArea as string) : ""
+                }
+              />
+            }
+          />
+          <FormItemUIComponent
+            title="Вид измерений"
             className="m-0"
-          >
-            <Select
-              notFoundContent={
-                <Space className="d-flex justify-content-center p-3">
-                  <Text type="warning">
-                    <ExclamationCircleOutlined
-                      style={{ fontSize: 20, marginBottom: 2 }}
-                    />
-                  </Text>
-
-                  <Text type="secondary">
-                    Нет данных для отображения. Уточнить поиск
-                  </Text>
-                </Space>
-              }
-              size="small"
-              className="text-secondary"
-              showSearch
-              optionFilterProp="children"
-              filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
-              }
-              filterSort={(optionA, optionB) =>
-                (optionA!.children as unknown as string)
-                  .toLowerCase()
-                  .localeCompare(
-                    (optionB!.children as unknown as string).toLowerCase()
-                  )
-              }
-              onChange={(value: string) =>
-                onChangeHandler("meansurementType", value)
-              }
-            >
-              {meansurementType.map((item) => (
-                <Option key={item.id} value={item.title}>
-                  {item.title}
-                </Option>
-              ))}
-            </Select>
-          </Item>
-          <Item label={<Text type="secondary">Группа СИ</Text>} className="m-0">
-            <TreeSelect
-              size="small"
-              notFoundContent={
-                <Space className="d-flex justify-content-center p-3">
-                  <Text type="warning">
-                    <ExclamationCircleOutlined
-                      style={{ fontSize: 20, marginBottom: 2 }}
-                    />
-                  </Text>
-
-                  <Text type="secondary">
-                    Нет данных для отображения. Уточнить поиск
-                  </Text>
-                </Space>
-              }
-              style={{ width: "100%" }}
-              value={itemMeansureGroup}
-              dropdownStyle={{ maxHeight: 400, overflow: "auto" }}
-              treeData={meansureGroup}
-              treeDefaultExpandAll
-              onChange={(value: string, label) => {
-                onChangeHandler("meansureGroup", value);
-              }}
-            />
-          </Item>
+            children={
+              <SelectUIComponent
+                id="meansurementType"
+                items={meansurementType}
+                changeValue={onHandlerChange}
+                defaultValue={
+                  editRow ? (editRow.meansurementType as string) : ""
+                }
+              />
+            }
+          />
+          <FormItemUIComponent
+            title="Группа СИ"
+            className="m-0"
+            children={
+              <TreeSelectUIComponent
+                id="meansureGroup"
+                treeData={meansureGroup}
+                changeValue={onHandlerChange}
+                value={
+                  editRow
+                    ? (editRow.meansureGroup as string)
+                    : itemMeansureGroup
+                }
+              />
+            }
+          />
         </>
       )}
       <Divider className="m-1 p-0" />

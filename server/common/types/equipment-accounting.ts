@@ -300,7 +300,7 @@ export interface FacilityView {
   vendor: string;
   title: string;
   equipmentType: string;
-  measurementArea?: string | null;
+  meansurementArea?: string | null;
   meansurementType?: string | null;
   meansureGroup?: string | null;
   modifications: string[];
