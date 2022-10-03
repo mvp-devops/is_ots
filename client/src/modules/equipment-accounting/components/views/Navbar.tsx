@@ -1,6 +1,8 @@
-import { ChangeEvent, FC } from "react";
+import { FC } from "react";
 
-import { Input, Select, Space, Tabs, Typography } from "antd";
+import { Input, Select, Space } from "antd";
+import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
+import { SelectUIComponent } from "../../../../components";
 
 interface NavbarProps {
   searchValue: string;
@@ -12,31 +14,29 @@ interface NavbarProps {
 }
 
 const Navbar: FC<NavbarProps> = ({
-  searchValue,
   setSearchValue,
   unitId,
   setUnitId,
   subUnitId,
   setSubUnitId,
 }) => {
+  const { searchValue, onSearch } = useEquipmentAccountingVeiw();
   return (
     <Space className="d-flex justify-content-between">
       <Input
         placeholder="Поиск..."
         className="text-secondary"
         value={searchValue}
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          setSearchValue(e.target.value)
-        }
+        onChange={onSearch}
         style={{
           width: "600px",
           padding: "12px",
           height: "32px",
-
           gap: "10px",
           marginTop: "4px",
         }}
-      ></Input>
+      />
+
       <Select
         placeholder="Выбрать объект строительства"
         className="text-secondary"

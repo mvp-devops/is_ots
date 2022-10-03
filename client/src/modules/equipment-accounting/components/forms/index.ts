@@ -5,10 +5,8 @@ import ImpulseLineLogForm from "./ImpulseLineLogForm";
 import MetrologyForm from "./MetrologyForm";
 import MonitoringForm from "./MonitoringForm";
 import SignalForm from "./SignalForm";
-import ModalContainer from "./ModalContainer";
 
 export {
-  ModalContainer,
   CableLogForm,
   FacilityForm,
   GeneralInformationForm,

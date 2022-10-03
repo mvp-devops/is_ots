@@ -9,6 +9,15 @@ import {
   SummaryListOfEquipmentView,
 } from "../../../../../server/common/types/equipment-accounting";
 
+export type Views =
+  | GeneralInformationView
+  | MetrologyView
+  | SignalView
+  | CableLogView
+  | ImpulseLineLogView
+  | MonitoringView
+  | SummaryListOfEquipmentView;
+
 export interface EssenceState {
   loading: boolean;
   error: string | null;

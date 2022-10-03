@@ -7,8 +7,10 @@ import {
   MetrologyCreateOrUpdateAttrs,
   MonitoringCreateOrUpdateAttrs,
   FacilityCreateOrUpdateAttrs,
+  GeneralInformationCreateOrUpdateAttrs,
 } from "../../../../../../../server/common/types/equipment-accounting";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
+import { useTypedSelector } from "../../../../../hooks";
 import { setDate } from "../../../../../utils/main.utils";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
 
@@ -18,10 +20,11 @@ type EquipmentAccountingSubFormData =
   | SignalCreateOrUpdateAttrs
   | MetrologyCreateOrUpdateAttrs
   | MonitoringCreateOrUpdateAttrs
-  | FacilityCreateOrUpdateAttrs;
+  | FacilityCreateOrUpdateAttrs
+  | GeneralInformationCreateOrUpdateAttrs;
 
 export const useEquipmentAccountingForm = (
-  item: EquipmentAccountingSubFormData,
+  item?: EquipmentAccountingSubFormData,
   editRow?: EquipmentAccountingSubFormData,
   setEditRow?: Function,
   data?: EquipmentAccountingSubFormData[] | EquipmentAccountingSubFormData,
@@ -33,6 +36,15 @@ export const useEquipmentAccountingForm = (
   const [vendorsList, setVendorsList] = useState<any[]>([]);
   const [modifications] = useState<string[]>([]);
   const [itemMeansureGroup] = useState("");
+
+  const [currentId, setCurrentId] = useState("");
+  const { currentItem, target } = useTypedSelector(
+    (state) => state.positionTree
+  );
+  useEffect(() => {
+    currentItem && setCurrentId(currentItem.id);
+    console.log("currentItem: ", currentItem);
+  }, [currentItem]);
 
   const renderNSIList = (items: NSIView[]): any[] => {
     const arr: any[] = [];
@@ -126,6 +138,8 @@ export const useEquipmentAccountingForm = (
   // useEffect(() => console.log("Data: ", data), [data]);
 
   return {
+    currentId,
+    target,
     itemMeansureGroup,
     modifications,
     vendorsList,

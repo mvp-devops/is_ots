@@ -16,18 +16,23 @@ import Header from "./Header";
 import Navbar from "./Navbar";
 import Items from "./Items";
 import { summaryListOfEquipmentRequestData } from "../../utils/equipment-accounting.consts";
+import { ModalContainer } from "../../../../components";
+import SummaryListOfFacilityForm from "../forms/SummaryListOfFacilityForm";
+import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
 
 interface SummaryListOfEquipmentProps {
   data: any[] | null;
 }
 
 const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
+  const { formVisible } = useEquipmentAccountingVeiw();
+
   const [searchValue, setSearchValue] = useState("");
   const [unitId, setUnitId] = useState("");
   const [subUnitId, setSubUnitId] = useState("");
 
   return (
-    <Skeleton active loading={false}>
+    <>
       <Space
         direction="vertical"
         className="p-1 m-1 border"
@@ -51,7 +56,13 @@ const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
           subUnitId={subUnitId}
         />
       </Space>
-    </Skeleton>
+      {formVisible && (
+        <ModalContainer
+          target="summary-list-of-equipment"
+          child={<SummaryListOfFacilityForm />}
+        />
+      )}
+    </>
   );
 };
 

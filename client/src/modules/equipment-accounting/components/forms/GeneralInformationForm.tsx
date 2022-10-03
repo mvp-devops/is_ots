@@ -18,8 +18,9 @@ import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { sgroei } from "../../utils/equipment-accounting.consts";
 import FacilityForm from "./FacilityForm";
-import { useGeneralInformationData } from "./hooks/useGeneralInformationData";
 import { generalInformationItem } from "./form.settings";
+import { useGeneralInformationForm } from "./hooks";
+import { FormItemUIComponent, SelectUIComponent } from "../../../../components";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -45,9 +46,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     onHandlerChange,
     onModificationChange,
     setNewFacility,
-  } = useGeneralInformationData(row, data, setData);
-
-  console.log(editRow);
+  } = useGeneralInformationForm(row, data, setData);
 
   const formItems = (
     item: GeneralInformationCreateOrUpdateAttrs
@@ -62,10 +61,18 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
       >
         {row && (
           <>
-            <Item
-              label={<Text type="secondary">Объект строительства</Text>}
+            <FormItemUIComponent
               className="m-0"
-            >
+              title="Объект строительства"
+              children={
+                <SelectUIComponent
+                  id="unitId"
+                  items={[]}
+                  changeValue={onHandlerChange}
+                />
+              }
+            />
+            <Item label={<Text type="secondary"></Text>}>
               <Select
                 size="small"
                 className="text-secondary"

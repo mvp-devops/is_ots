@@ -8,17 +8,10 @@ const { Text } = Typography;
 
 interface ModalContainerProps {
   child: ReactNode;
-  show?: boolean;
-  onCancel?: () => void;
-  action?: string;
+  target?: string;
 }
 
-const ModalContainer: FC<ModalContainerProps> = ({
-  show,
-  action,
-  child,
-  onCancel,
-}) => {
+const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
   const { setFormVisible } = useActions();
 
@@ -27,26 +20,40 @@ const ModalContainer: FC<ModalContainerProps> = ({
     actionType === FormActions.ADD_CHILD ||
     actionType === FormActions.ADD_DOCUMENT ||
     actionType === FormActions.ADD_COMMENT ||
-    actionType === FormActions.ADD_DICTIONARY_ITEM;
+    actionType === FormActions.ADD_DICTIONARY_ITEM ||
+    actionType === FormActions.ADD_EQUIPMENT;
 
   const editActionsFlag =
     actionType === FormActions.EDIT ||
     actionType === FormActions.EDIT_CHILD ||
     actionType === FormActions.EDIT_DOCUMENT ||
     actionType === FormActions.EDIT_COMMENT ||
-    actionType === FormActions.EDIT_DICTIONARY_ITEM;
+    actionType === FormActions.EDIT_DICTIONARY_ITEM ||
+    actionType === FormActions.EDIT_EQUIPMENT;
 
   const removeActionsFlag =
     actionType === FormActions.REMOVE ||
     actionType === FormActions.REMOVE_CHILD ||
     actionType === FormActions.REMOVE_DOCUMENT ||
     actionType === FormActions.REMOVE_COMMENT ||
-    actionType === FormActions.REMOVE_DICTIONARY_ITEM;
+    actionType === FormActions.REMOVE_DICTIONARY_ITEM ||
+    actionType === FormActions.REMOVE_EQUIPMENT;
 
   const containerWidth =
     actionType === FormActions.ADD_COMMENT ||
     actionType === FormActions.EDIT_COMMENT
       ? 900
+      : actionType === FormActions.ADD_EQUIPMENT &&
+        (target === "cable-log" ||
+          target === "impulse-line-log" ||
+          target === "signal" ||
+          target === "monitoring" ||
+          target === "summary-list-of-equipment")
+      ? 1200
+      : target === "metrology" || target === "general-information"
+      ? 1000
+      : target === "monitoring"
+      ? 1200
       : 600;
 
   return (

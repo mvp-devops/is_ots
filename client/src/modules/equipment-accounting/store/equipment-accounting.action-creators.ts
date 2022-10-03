@@ -39,13 +39,13 @@ import {
 } from "../types/equipment-accounting.types";
 
 export const getSummaryListOfEquipment = (
-  target: string,
+  parrentTarget: string,
   parrentId: string
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.GET_ALL_ITEMS });
-      const data = await getAllEssences(target, parrentId);
+      const data = await getAllEssences(parrentTarget, parrentId);
       const metrologiesList = getAllMetrology(data);
       const monitoringsList = getAllMonitoring(data);
       const cableLogList = getAllCableLog(data);

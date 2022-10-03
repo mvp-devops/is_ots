@@ -1,23 +1,19 @@
-import { FC, useState } from "react";
-
 import { Dropdown, Menu, Space, Typography } from "antd";
 import {
   FileExcelOutlined,
   DownloadOutlined,
-  PrinterOutlined,
   AppstoreOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { setCurrentDate } from "../../../../utils/main.utils";
-import { ModalContainer } from "../forms";
-import SummaryListOfFacilityForm from "../forms/SummaryListOfFacilityForm";
 import { FormActions } from "../../../main";
+import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
 
 const { Text } = Typography;
 
 const Header = () => {
-  const [actionType, setActionType] = useState<string>("");
-  const [formVisible, setFormVisible] = useState(false);
+  const { setFormVisible, setActionType } = useEquipmentAccountingVeiw();
+
   return (
     <>
       <Space className="d-flex justify-content-between m-2">
@@ -30,17 +26,8 @@ const Header = () => {
             className="text-success"
             style={{ fontSize: "20px", cursor: "pointer" }}
             onClick={() => {
-              setActionType(FormActions.ADD);
+              setActionType(FormActions.ADD_EQUIPMENT);
               setFormVisible(true);
-            }}
-          />
-          <PrinterOutlined
-            style={{ fontSize: "20px", cursor: "pointer" }}
-            title="Печать"
-            className="text-primary"
-            onClick={() => {
-              //  setActionType(FormActions.UPDATE);
-              //  setAddCommentsVisible(true);
             }}
           />
 
@@ -109,15 +96,6 @@ const Header = () => {
           </Dropdown>
         </Space>
       </Space>
-      {formVisible && (
-        <ModalContainer
-          target="summary-list-of-equipment"
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<SummaryListOfFacilityForm />}
-        />
-      )}
     </>
   );
 };

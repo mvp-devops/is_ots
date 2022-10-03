@@ -5,6 +5,7 @@ import { useSignalForm } from "./useSignalForm";
 import { useMetrologyForm } from "./useMetrologyForm";
 import { useMonitoringForm } from "./useMonitoringForm";
 import { useFacilityForm } from "./useFacilityForm";
+import { useGeneralInformationForm } from "./useGeneralInformationForm";
 
 export {
   useEquipmentAccountingForm,
@@ -14,4 +15,5 @@ export {
   useMetrologyForm,
   useMonitoringForm,
   useFacilityForm,
+  useGeneralInformationForm,
 };
