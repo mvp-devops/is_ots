@@ -3,13 +3,16 @@ import { GeneralInformationView } from "../../types";
 import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
 import { TableColumns, useGeneralInformationTable } from ".";
+import { tableLocale } from "../../../main";
+import { FC } from "react";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
 const GeneralInformationTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
+  const { loading, renderForm, dataSource, currentRow, setCurrentRow } =
     useGeneralInformationTable();
+
   const columns = TableColumns("general-information", dataSource, currentRow);
 
   const summary = () => (
@@ -23,19 +26,29 @@ const GeneralInformationTable = () => {
     </Row>
   );
 
+  const formRender = renderForm && (
+    <ModalContainer
+      target="general-information"
+      child={
+        <GeneralInformationForm row={currentRow as GeneralInformationView} />
+      }
+    />
+  );
+
   return (
     <>
       <Table
         size="small"
         bordered
         loading={loading}
+        locale={tableLocale}
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
         dataSource={dataSource}
         onRow={(record) => {
           return {
             onMouseEnter: () => {
-              setCurrentRow(record);
+              setCurrentRow(record as GeneralInformationView);
             },
           };
         }}
@@ -43,16 +56,7 @@ const GeneralInformationTable = () => {
         rowKey={(record) => record.id as string}
         summary={() => summary()}
       />
-      {formVisible && (
-        <ModalContainer
-          target="general-information"
-          child={
-            <GeneralInformationForm
-              row={currentRow as GeneralInformationView}
-            />
-          }
-        />
-      )}
+      {formRender}
     </>
   );
 };

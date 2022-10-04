@@ -12,32 +12,71 @@ import {
   Views,
 } from "../../../types";
 
+import {
+  getAllMetrology,
+  getAllGeneralInformation,
+  // getAllMetrology,
+  getAllCableLog,
+  getAllImpulseLineLog,
+  getAllSignal,
+  getAllMonitoring,
+} from "../../../api/equipment-accounting.api";
+
 export const useEquipmentAccountingTable = (target?: string) => {
   const [currentRow, setCurrentRow] = useState<Views>();
   const [dataSource, setDataSource] = useState<Views[]>([]);
 
   const { unitId, subUnitId, searchValue } = useEquipmentAccountingVeiw();
-  const { setActionType, setFormVisible, getSummaryListOfEquipment } =
-    useActions();
+  const { setActionType, setFormVisible } = useActions();
 
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
-  const { target: parrentTarget, currentItem } = useTypedSelector(
-    (state) => state.positionTree
-  );
+
   const { loading, summaryListOfEquipment } = useTypedSelector(
     (state) => state.equipmentAccounting
   );
 
-  useEffect(() => {
-    currentItem && getSummaryListOfEquipment(parrentTarget, currentItem.id);
-  }, [target]);
+  // useEffect(() => {
+  //   console.log("dataSource: ", dataSource);
+  //   console.log("target: ", target);
+  //   console.log("currentRow: ", currentRow);
+  // }, [target, currentRow]);
 
   useEffect(() => {
-    setDataSource(summaryListOfEquipment);
-  }, [summaryListOfEquipment]);
+    switch (target) {
+      // case "general-information": {
+      //   setDataSource(getAllGeneralInformation(summaryListOfEquipment));
+
+      //   break;
+      // }
+      case "signal": {
+        setDataSource(getAllSignal(summaryListOfEquipment));
+        // console.log("signalList: ", dataSource);
+        break;
+      }
+      case "cable-log": {
+        setDataSource(getAllCableLog(summaryListOfEquipment));
+        // console.log("cableLogList: ", dataSource);
+        break;
+      }
+      case "impulse-line-log": {
+        setDataSource(getAllImpulseLineLog(summaryListOfEquipment));
+        // console.log("impulseLineLogList: ", dataSource);
+
+        break;
+      }
+      case "monitoring": {
+        setDataSource(getAllMonitoring(summaryListOfEquipment));
+        // console.log("monitoringList: ", dataSource);
+
+        break;
+      }
+      default:
+        break;
+    }
+  }, [target, summaryListOfEquipment]);
 
   useEffect(() => {
-    unitId
+    unitId !== "0"
       ? setDataSource(
           (summaryListOfEquipment as SummaryListOfEquipmentView[]).filter(
             (item) => item?.unitId === unitId
@@ -47,7 +86,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
   }, [unitId]);
 
   useEffect(() => {
-    subUnitId
+    subUnitId !== "0"
       ? setDataSource(
           (summaryListOfEquipment as SummaryListOfEquipmentView[]).filter(
             (item) => item?.subUnitId === subUnitId

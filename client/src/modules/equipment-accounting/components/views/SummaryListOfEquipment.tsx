@@ -1,35 +1,14 @@
-import { FC, useEffect, useState } from "react";
-
-import {
-  Divider,
-  Dropdown,
-  Input,
-  Menu,
-  Select,
-  Skeleton,
-  Space,
-  Steps,
-  Tabs,
-  Typography,
-} from "antd";
+import { Divider, Space } from "antd";
 import Header from "./Header";
 import Navbar from "./Navbar";
 import Items from "./Items";
-import { summaryListOfEquipmentRequestData } from "../../utils/equipment-accounting.consts";
 import { ModalContainer } from "../../../../components";
 import SummaryListOfFacilityForm from "../forms/SummaryListOfFacilityForm";
 import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
+import { FormActions } from "../../../main";
 
-interface SummaryListOfEquipmentProps {
-  data: any[] | null;
-}
-
-const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
-  const { formVisible } = useEquipmentAccountingVeiw();
-
-  const [searchValue, setSearchValue] = useState("");
-  const [unitId, setUnitId] = useState("");
-  const [subUnitId, setSubUnitId] = useState("");
+const SummaryListOfEquipment = () => {
+  const { formVisible, actionType } = useEquipmentAccountingVeiw();
 
   return (
     <>
@@ -40,23 +19,11 @@ const SummaryListOfEquipment: FC<SummaryListOfEquipmentProps> = ({ data }) => {
       >
         <Header />
         <Divider style={{ padding: 0, margin: 0 }} />
-        <Navbar
-          searchValue={searchValue}
-          setSearchValue={setSearchValue}
-          unitId={unitId}
-          setUnitId={setUnitId}
-          subUnitId={subUnitId}
-          setSubUnitId={setSubUnitId}
-        />
+        <Navbar />
         <Divider style={{ padding: 0, margin: 0 }} />
-        <Items
-          data={summaryListOfEquipmentRequestData}
-          searchValue={searchValue}
-          unitId={unitId}
-          subUnitId={subUnitId}
-        />
+        <Items />
       </Space>
-      {formVisible && (
+      {formVisible && actionType === FormActions.ADD_EQUIPMENT && (
         <ModalContainer
           target="summary-list-of-equipment"
           child={<SummaryListOfFacilityForm />}

@@ -1,4 +1,4 @@
-import { Layout, Skeleton, Spin } from "antd";
+import { Layout, Skeleton } from "antd";
 
 import {
   CommentAccountingModalContainer,
@@ -21,8 +21,6 @@ const { Content } = Layout;
 
 const ItemPage = () => {
   const {
-    formVisible,
-    setFormVisible,
     actionType,
     checkListView,
     setCheckListView,
@@ -32,17 +30,6 @@ const ItemPage = () => {
     loading,
     renderFormFlag,
   } = useItemPage();
-
-  // const renderCheckListForm =  formVisible && currentItem && actionType === FormActions.CHECKLIST &&  (
-  //   <ModalContainer
-  //     show={formVisible}
-  //     onCancel={() => setFormVisible(false)}
-  //     action={actionType}
-  //     child={
-  //         <CheckListForm />
-  //     }
-  //   />
-  // )}
 
   return (
     <Layout style={{ padding: 0 }}>
@@ -69,18 +56,11 @@ const ItemPage = () => {
           show={summaryListOfEquipmentView}
           onCancel={() => setSummaryListOfEquipmentView(false)}
           action={actionType}
-          child={<SummaryListOfEquipment data={null} />}
+          child={<SummaryListOfEquipment />}
         />
       )}
 
-      {renderFormFlag && (
-        <ModalContainer
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<PositionTreeForm />}
-        />
-      )}
+      {renderFormFlag && <ModalContainer child={<PositionTreeForm />} />}
 
       {checkListView && (
         <CommentAccountingModalContainer

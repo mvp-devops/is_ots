@@ -1,7 +1,7 @@
 import { Input, Select, Space } from "antd";
 import { ChangeEvent } from "react";
-import { InputUIComponent, SelectUIComponent } from "../../../../components";
-import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
+import { SelectUIComponent } from "../../../../components";
+import { useEquipmentAccountingVeiw } from "../views/hooks/useEquipmentAccountingVeiw";
 
 const Navbar = () => {
   const { searchValue, onSearch } = useEquipmentAccountingVeiw();
@@ -9,7 +9,7 @@ const Navbar = () => {
   const { unitsList, subUnitsList, unitId, setUnitId, setSubUnitId } =
     useEquipmentAccountingVeiw();
 
-  console.log(unitId);
+  console.log("unitId: ", unitId);
   return (
     <Space className="d-flex justify-content-between">
       <Input
@@ -37,7 +37,9 @@ const Navbar = () => {
           marginTop: "4px",
         }}
         className="text-secondary"
-        onChange={(value: string) => setUnitId(value)}
+        onChange={(e: ChangeEvent<HTMLSelectElement>) =>
+          setUnitId(e.target.value)
+        }
       >
         {[{ id: 0, title: "Все" }, ...unitsList].map((item) => (
           <Select.Option key={item.id}>{item.title}</Select.Option>

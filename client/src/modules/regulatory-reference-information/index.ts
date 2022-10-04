@@ -1,17 +1,47 @@
 import { nsiReducer } from "./store/regulatory-reference-information.reducer";
 import * as nsiActionCreators from "./store/regulatory-reference-information.action-creators";
-import { getItems } from "./api/regulatory-reference-information.api";
+import {
+  userRegistration,
+  getAllItems,
+  getItems,
+  createOneEssence,
+  updateOneEssence,
+  deleteOneEssense,
+  getOneItem,
+} from "./api";
 import {
   UserForm,
   useRegulatoryReferenceInformationForm,
 } from "./components/forms";
 import RegulatoryReferenceInformationList from "./views/RegulatoryReferenceInformationList";
 
-import { getAllItems, getOneItem } from "./api";
-
 import { useRegulatoryReferenceInformation } from "./hooks";
 
+import {
+  EssenceState,
+  EssenceAction,
+  ActionTypes,
+  NsiCreateOrUpdateAttrs,
+  NSIView,
+  UserCreateOrUpdateAttrs,
+} from "./types";
+
+export type {
+  EssenceState,
+  EssenceAction,
+  NsiCreateOrUpdateAttrs,
+  NSIView,
+  UserCreateOrUpdateAttrs,
+};
+
 export {
+  userRegistration,
+  getAllItems,
+  createOneEssence,
+  updateOneEssence,
+  deleteOneEssense,
+  getOneItem,
+  ActionTypes,
   nsiReducer,
   nsiActionCreators,
   RegulatoryReferenceInformationList,
@@ -19,6 +49,4 @@ export {
   UserForm,
   useRegulatoryReferenceInformationForm,
   useRegulatoryReferenceInformation,
-  getAllItems,
-  getOneItem,
 };

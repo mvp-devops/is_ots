@@ -56,12 +56,7 @@ const StatisticView = () => {
         </Button>
       </Space>
       {formVisible && actionType === FormActions.CHECKLIST && (
-        <ModalContainer
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<CheckListForm />}
-        />
+        <ModalContainer child={<CheckListForm />} />
       )}
     </Space>
   );

@@ -1,4 +1,11 @@
-import { Dropdown, Menu, Space, TableColumnsType, Typography } from "antd";
+import {
+  Badge,
+  Dropdown,
+  Menu,
+  Space,
+  TableColumnsType,
+  Typography,
+} from "antd";
 import {
   EllipsisOutlined,
   SearchOutlined,
@@ -70,7 +77,7 @@ const TableColumns = (
           setFormVisible(false);
           setActionType("");
         }}
-        onConfirm={() => console.log(currentRow?.id)}
+        onConfirm={() => console.log("currentRow?.id: ", currentRow?.id)}
         children={
           <Space className="text-secondary">
             <DeleteOutlined
@@ -462,10 +469,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const installationLocationFilters = setTableColumnFilters(
-    "installation-location",
-    dataSource
-  );
+  const installationLocationFilters =
+    target === "general-information"
+      ? setTableColumnFilters("installation-location", dataSource)
+      : undefined;
 
   const installationLocationColumn: ColumnType<Views> = {
     title: "Место установки",
@@ -473,7 +480,10 @@ const TableColumns = (
     key: "installationLocation",
     align: "center",
     width: 150,
-    filterSearch: installationLocationFilters.length > 5 ? true : false,
+    filterSearch:
+      installationLocationFilters && installationLocationFilters.length > 5
+        ? true
+        : false,
     filters: installationLocationFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).installationLocation
@@ -484,10 +494,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const controlledParameterFilters = setTableColumnFilters(
-    "controlled-parameter",
-    dataSource
-  );
+  const controlledParameterFilters =
+    target === "general-information"
+      ? setTableColumnFilters("controlled-parameter", dataSource)
+      : undefined;
 
   const controlledParameterColumn: ColumnType<Views> = {
     title: "Параметр",
@@ -495,7 +505,10 @@ const TableColumns = (
     key: "controlledParameter",
     align: "center",
     width: 100,
-    filterSearch: controlledParameterFilters.length > 5 ? true : false,
+    filterSearch:
+      controlledParameterFilters && controlledParameterFilters.length > 5
+        ? true
+        : false,
     filters: controlledParameterFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).controlledParameter
@@ -506,10 +519,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const equipmentTypeFilters = setTableColumnFilters(
-    "equipment-type",
-    dataSource
-  );
+  const equipmentTypeFilters =
+    target === "general-information"
+      ? setTableColumnFilters("equipment-type", dataSource)
+      : undefined;
 
   const equipmentTypeColumn: ColumnType<Views> = {
     title: "Тип",
@@ -517,7 +530,8 @@ const TableColumns = (
     key: "equipmentType",
     align: "center",
     width: 80,
-    filterSearch: equipmentTypeFilters.length > 5 ? true : false,
+    filterSearch:
+      equipmentTypeFilters && equipmentTypeFilters.length > 5 ? true : false,
     filters: equipmentTypeFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).facility.equipmentType
@@ -536,9 +550,11 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("РСУ")
-        ? "Да"
-        : "Нет",
+      (record as GeneralInformationView).systemType.includes("РСУ") ? (
+        <Badge status="success" />
+      ) : (
+        <Badge status="error" />
+      ),
     filters: [
       {
         value: "Да",
@@ -558,9 +574,11 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("ПАЗ")
-        ? "Да"
-        : "Нет",
+      (record as GeneralInformationView).systemType.includes("ПАЗ") ? (
+        <Badge status="success" />
+      ) : (
+        <Badge status="error" />
+      ),
     filters: [
       {
         value: "Да",
@@ -580,9 +598,11 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("КИТСО")
-        ? "Да"
-        : "Нет",
+      (record as GeneralInformationView).systemType.includes("КИТСО") ? (
+        <Badge status="success" />
+      ) : (
+        <Badge status="error" />
+      ),
     filters: [
       {
         value: "Да",
@@ -596,14 +616,17 @@ const TableColumns = (
     width: 80,
   };
 
-  const countryFilters = setTableColumnFilters("country", dataSource);
+  const countryFilters =
+    target === "general-information"
+      ? setTableColumnFilters("country", dataSource)
+      : undefined;
 
   const countryColumn: ColumnType<Views> = {
     title: "Страна",
     dataIndex: "facility",
     key: "country",
     align: "center",
-    filterSearch: countryFilters.length > 5 ? true : false,
+    filterSearch: countryFilters && countryFilters.length > 5 ? true : false,
     filters: countryFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).facility.country
@@ -614,14 +637,17 @@ const TableColumns = (
     render: (facility) => <Text type="secondary">{facility.country}</Text>,
   };
 
-  const vendorFilters = setTableColumnFilters("vendor", dataSource);
+  const vendorFilters =
+    target === "general-information"
+      ? setTableColumnFilters("vendor", dataSource)
+      : undefined;
 
   const vendorColumn: ColumnType<Views> = {
     title: "Произв.",
     dataIndex: "facility",
     key: "vendor",
     align: "center",
-    filterSearch: vendorFilters.length > 5 ? true : false,
+    filterSearch: vendorFilters && vendorFilters.length > 5 ? true : false,
     filters: vendorFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).facility.vendor
@@ -632,17 +658,18 @@ const TableColumns = (
     render: (facility) => <Text type="secondary">{facility.vendor}</Text>,
   };
 
-  const facilityTitleFilters = setTableColumnFilters(
-    "facility-title",
-    dataSource
-  );
+  const facilityTitleFilters =
+    target === "general-information"
+      ? setTableColumnFilters("facility-title", dataSource)
+      : undefined;
 
   const facilityTitleColumn: ColumnType<Views> = {
     title: "Наим-е",
     dataIndex: "facility",
     key: "facilityTitle",
     align: "center",
-    filterSearch: facilityTitleFilters.length > 5 ? true : false,
+    filterSearch:
+      facilityTitleFilters && facilityTitleFilters.length > 5 ? true : false,
     filters: facilityTitleFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).facility.title
@@ -653,17 +680,20 @@ const TableColumns = (
     render: (facility) => <Text type="secondary">{facility.title}</Text>,
   };
 
-  const facilityModificationFilters = setTableColumnFilters(
-    "facility-modification",
-    dataSource
-  );
+  const facilityModificationFilters =
+    target === "general-information"
+      ? setTableColumnFilters("facility-modification", dataSource)
+      : undefined;
 
   const facilityModificationColumn: ColumnType<Views> = {
     title: "Модиф.",
     dataIndex: "facilityModification",
     key: "facilityModification",
     align: "center",
-    filterSearch: facilityModificationFilters.length > 5 ? true : false,
+    filterSearch:
+      facilityModificationFilters && facilityModificationFilters.length > 5
+        ? true
+        : false,
     filters: facilityModificationFilters,
     onFilter: (value: any, record) =>
       (record as GeneralInformationView).facilityModification
@@ -709,14 +739,17 @@ const TableColumns = (
     width: 50,
   };
 
-  const sgroeiFilters = setTableColumnFilters("sgroei", dataSource);
+  const sgroeiFilters =
+    target === "metrology"
+      ? setTableColumnFilters("sgroei", dataSource)
+      : undefined;
 
   const sgroeiColumn: ColumnType<Views> = {
     title: "СГРОЕИ",
     dataIndex: "sgroei",
     key: "sgroei",
     align: "center",
-    filterSearch: sgroeiFilters.length > 5 ? true : false,
+    filterSearch: sgroeiFilters && sgroeiFilters.length > 5 ? true : false,
     filters: sgroeiFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).sgroei
@@ -727,10 +760,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const measurementAreaFilters = setTableColumnFilters(
-    "measurement-area",
-    dataSource
-  );
+  const measurementAreaFilters =
+    target === "metrology"
+      ? setTableColumnFilters("measurement-area", dataSource)
+      : undefined;
 
   const measurementAreaColumn: ColumnType<Views> = {
     title: "Область измерений",
@@ -738,7 +771,10 @@ const TableColumns = (
     key: "measurementArea",
     align: "center",
     width: 120,
-    filterSearch: measurementAreaFilters.length > 5 ? true : false,
+    filterSearch:
+      measurementAreaFilters && measurementAreaFilters.length > 5
+        ? true
+        : false,
     filters: measurementAreaFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).measurementArea
@@ -749,10 +785,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const measurementTypeFilters = setTableColumnFilters(
-    "measurement-type",
-    dataSource
-  );
+  const measurementTypeFilters =
+    target === "metrology"
+      ? setTableColumnFilters("measurement-type", dataSource)
+      : undefined;
 
   const measurementTypeColumn: ColumnType<Views> = {
     title: "Вид измерений",
@@ -760,7 +796,10 @@ const TableColumns = (
     key: "meansurementType",
     align: "center",
     width: 120,
-    filterSearch: measurementTypeFilters.length > 5 ? true : false,
+    filterSearch:
+      measurementTypeFilters && measurementTypeFilters.length > 5
+        ? true
+        : false,
     filters: measurementTypeFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).meansurementType
@@ -771,10 +810,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const measurementGroupFilters = setTableColumnFilters(
-    "measurement-group",
-    dataSource
-  );
+  const measurementGroupFilters =
+    target === "metrology"
+      ? setTableColumnFilters("measurement-group", dataSource)
+      : undefined;
 
   const measurementGroupColumn: ColumnType<Views> = {
     title: "Группа СИ",
@@ -782,7 +821,10 @@ const TableColumns = (
     key: "meansureGroup",
     align: "center",
     width: 120,
-    filterSearch: measurementGroupFilters.length > 5 ? true : false,
+    filterSearch:
+      measurementGroupFilters && measurementGroupFilters.length > 5
+        ? true
+        : false,
     filters: measurementGroupFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).meansureGroup
@@ -793,14 +835,17 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const grsiFilters = setTableColumnFilters("grsi", dataSource);
+  const grsiFilters =
+    target === "metrology"
+      ? setTableColumnFilters("grsi", dataSource)
+      : undefined;
 
   const grsiColumn: ColumnType<Views> = {
     title: "№ ГРСИ",
     dataIndex: "grsi",
     key: "grsi",
     align: "center",
-    filterSearch: grsiFilters.length > 5 ? true : false,
+    filterSearch: grsiFilters && grsiFilters.length > 5 ? true : false,
     filters: grsiFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).grsi
@@ -877,10 +922,10 @@ const TableColumns = (
     ),
   };
 
-  const toDateFilters = setTableColumnFilters(
-    "date-to-verification",
-    dataSource
-  );
+  const toDateFilters =
+    target === "metrology"
+      ? setTableColumnFilters("date-to-verification", dataSource)
+      : undefined;
 
   const toDateColumn: ColumnType<Views> = {
     title: "Дата след. поверки/калибровки",
@@ -888,7 +933,7 @@ const TableColumns = (
     // key: "toDate",
     align: "center",
     width: 120,
-    filterSearch: toDateFilters.length > 5 ? true : false,
+    filterSearch: toDateFilters && toDateFilters.length > 5 ? true : false,
     filters: toDateFilters,
     onFilter: (value: any, record) =>
       (record as MetrologyView).toDate
@@ -942,14 +987,18 @@ const TableColumns = (
     render: (value, record) => <Text type="secondary">{value}</Text>,
   };
 
-  const signalTypeFilters = setTableColumnFilters("signal-type", dataSource);
+  const signalTypeFilters =
+    target === "signal"
+      ? setTableColumnFilters("signal-type", dataSource)
+      : undefined;
 
   const signalTypeColumn: ColumnType<Views> = {
     title: "Тип",
     dataIndex: "signalType",
     key: "signalType",
     align: "center",
-    filterSearch: signalTypeFilters.length > 5 ? true : false,
+    filterSearch:
+      signalTypeFilters && signalTypeFilters.length > 5 ? true : false,
     filters: signalTypeFilters,
     onFilter: (value: any, record) =>
       (record as SignalView).signalType
@@ -960,17 +1009,18 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const signalProtocolFilters = setTableColumnFilters(
-    "signal-protocol",
-    dataSource
-  );
+  const signalProtocolFilters =
+    target === "signal"
+      ? setTableColumnFilters("signal-protocol", dataSource)
+      : undefined;
 
   const signalProtocolColumn: ColumnType<Views> = {
     title: "Тип",
     dataIndex: "signalProtocol",
     key: "signalProtocol",
     align: "center",
-    filterSearch: signalProtocolFilters.length > 5 ? true : false,
+    filterSearch:
+      signalProtocolFilters && signalProtocolFilters.length > 5 ? true : false,
     filters: signalProtocolFilters,
     onFilter: (value: any, record) =>
       (record as SignalView).signalProtocol
@@ -1043,7 +1093,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const cableMarkFilters = setTableColumnFilters("cable-mark", dataSource);
+  const cableMarkFilters =
+    target === "cable-log"
+      ? setTableColumnFilters("cable-mark", dataSource)
+      : undefined;
 
   const cableMarkColumn: ColumnType<Views> = {
     title: "Марка кабеля",
@@ -1051,7 +1104,8 @@ const TableColumns = (
     key: "cableMark",
     align: "center",
     // width: 200,
-    filterSearch: cableMarkFilters.length > 5 ? true : false,
+    filterSearch:
+      cableMarkFilters && cableMarkFilters.length > 5 ? true : false,
     filters: cableMarkFilters,
     onFilter: (value: any, record) =>
       (record as CableLogView)
@@ -1134,10 +1188,10 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
-  const impulseLineTypeFilters = setTableColumnFilters(
-    "impulse-line-type",
-    dataSource
-  );
+  const impulseLineTypeFilters =
+    target === "impulse-line-log"
+      ? setTableColumnFilters("impulse-line-type", dataSource)
+      : undefined;
 
   const impulseLineTypeColumn: ColumnType<Views> = {
     title: "Тип импульсной линии",
@@ -1145,7 +1199,10 @@ const TableColumns = (
     key: "impulseLineType",
     align: "center",
     width: 200,
-    filterSearch: impulseLineTypeFilters.length > 5 ? true : false,
+    filterSearch:
+      impulseLineTypeFilters && impulseLineTypeFilters.length > 5
+        ? true
+        : false,
     filters: impulseLineTypeFilters,
     onFilter: (value: any, record) =>
       (record as ImpulseLineLogView)
@@ -1332,6 +1389,7 @@ const TableColumns = (
           metrologyStatusColumn,
         ],
       });
+      columns.push(actionsColumn);
 
       menuItems.push(
         metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
@@ -1420,6 +1478,7 @@ const TableColumns = (
       columns.push(testDateColumn);
       columns.push(awpDateColumn);
       columns.push(commisionDateColumn);
+      columns.push(actionsColumn);
 
       menuItems.push(monitoringDocumentsViewMenuItem);
       menuItems.push(editAssetMenuItem);

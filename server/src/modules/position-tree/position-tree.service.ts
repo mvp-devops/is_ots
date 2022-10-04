@@ -507,6 +507,11 @@ export class PositionTreeService {
               },
               {
                 model: UnitEntity,
+                include: [
+                  {
+                    model: SubUnitEntity,
+                  },
+                ],
               },
               {
                 model: DesignEntity,
@@ -559,18 +564,6 @@ export class PositionTreeService {
               },
               {
                 model: SubUnitEntity,
-                attributes: [
-                  "unitId",
-                  "equipmentId",
-                  "supplierId",
-
-                  "id",
-                  "title",
-                  "code",
-                  "position",
-                  "contract",
-                  "description",
-                ],
               },
               {
                 model: EquipmentEntity,
@@ -792,6 +785,11 @@ export class PositionTreeService {
                   },
                   {
                     model: UnitEntity,
+                    include: [
+                      {
+                        model: SubUnitEntity,
+                      },
+                    ],
                   },
                   {
                     model: DesignEntity,
@@ -832,6 +830,11 @@ export class PositionTreeService {
                   },
                   {
                     model: UnitEntity,
+                    include: [
+                      {
+                        model: SubUnitEntity,
+                      },
+                    ],
                   },
                   {
                     model: DesignEntity,

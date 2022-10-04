@@ -1,36 +1,21 @@
-import { FC } from "react";
-
 import { Tabs, Typography } from "antd";
 import { DownloadOutlined } from "@ant-design/icons";
-import CableLogTable from "../tables/CableLogTable";
 import {
+  CableLogTable,
   GeneralInformationTable,
   ImpulseLineLogTable,
   MetrologyTable,
   MonitoringTable,
   SignalTable,
 } from "../tables";
-import { SummaryListOfEquipmentView } from "../../../../../../server/common/types/equipment-accounting";
-import {
-  getAllCableLog,
-  getAllGeneralInformation,
-  getAllImpulseLineLog,
-  getAllMetrology,
-  getAllMonitoring,
-  getAllSignal,
-} from "../tables/table.setting";
+import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
 
-interface ItemsProps {
-  data: SummaryListOfEquipmentView[];
-  searchValue: string;
-  unitId: string;
-  subUnitId: string;
-}
-
-const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
+const Items = () => {
+  const { formVisible, actionType, unitId, subUnitId, searchValue } =
+    useEquipmentAccountingVeiw();
   return (
     <Tabs
       onChange={(activeKey) => console.log(activeKey)}
@@ -51,14 +36,7 @@ const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
         key="general-information"
         className="p-1 text-secondary"
       >
-        {
-          <GeneralInformationTable
-            data={getAllGeneralInformation(data)}
-            searchValue={searchValue}
-            unitId={unitId}
-            subUnitId={subUnitId}
-          />
-        }
+        {<GeneralInformationTable />}
       </TabPane>
 
       <TabPane
@@ -66,14 +44,7 @@ const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
         key="metrology"
         className="text-secondary"
       >
-        {
-          <MetrologyTable
-            data={getAllMetrology(data)}
-            searchValue={searchValue}
-            unitId={unitId}
-            subUnitId={subUnitId}
-          />
-        }
+        {<MetrologyTable />}
       </TabPane>
 
       <TabPane
@@ -81,28 +52,14 @@ const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
         key="signals"
         className="p-1 text-secondary"
       >
-        {
-          <SignalTable
-            data={getAllSignal(data)}
-            searchValue={searchValue}
-            unitId={unitId}
-            subUnitId={subUnitId}
-          />
-        }
+        {<SignalTable />}
       </TabPane>
       <TabPane
         tab={<Text type="secondary">Журнал импульсных линий</Text>}
         key="impulse-line-log"
         className="p-1 text-secondary"
       >
-        {
-          <ImpulseLineLogTable
-            data={getAllImpulseLineLog(data)}
-            searchValue={searchValue}
-            unitId={unitId}
-            subUnitId={subUnitId}
-          />
-        }
+        {<ImpulseLineLogTable />}
       </TabPane>
 
       <TabPane
@@ -110,12 +67,7 @@ const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
         key="cable-log"
         className="p-1 text-secondary"
       >
-        <CableLogTable
-          data={getAllCableLog(data)}
-          searchValue={searchValue}
-          unitId={unitId}
-          subUnitId={subUnitId}
-        />
+        <CableLogTable />
       </TabPane>
 
       <TabPane
@@ -123,22 +75,13 @@ const Items: FC<ItemsProps> = ({ data, searchValue, unitId, subUnitId }) => {
         key="monitoring"
         className="p-1 text-secondary"
       >
-        {
-          <MonitoringTable
-            data={getAllMonitoring(data)}
-            searchValue={searchValue}
-            unitId={unitId}
-            subUnitId={subUnitId}
-          />
-        }
+        {<MonitoringTable />}
       </TabPane>
       <TabPane
         tab={<Text type="secondary">Технологические карты</Text>}
         key="technology-cards"
         className="p-1 text-secondary"
-      >
-        {/* {stepsRender} */}
-      </TabPane>
+      ></TabPane>
     </Tabs>
   );
 };

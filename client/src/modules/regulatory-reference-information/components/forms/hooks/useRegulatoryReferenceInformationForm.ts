@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { RcFile } from "antd/lib/upload";
 
-import { NsiCreateOrUpdateAttrs } from "../../../../../../../server/common/types/regulatory-reference-information";
+import { NsiCreateOrUpdateAttrs } from "../../..";
 import { useActions, useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
 import { initFormData } from "../form.settings";

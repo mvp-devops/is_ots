@@ -4,6 +4,7 @@ import { ModalContainer } from "../../../../components";
 import { ImpulseLineLogForm } from "../forms";
 import { Views } from "../../types";
 import { TableColumns, sum, useImpulseLineLogTable } from ".";
+import { tableLocale } from "../../../main";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -35,6 +36,7 @@ const ImpulseLineLogTable = () => {
         size="small"
         bordered
         loading={loading}
+        locale={tableLocale}
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
         dataSource={dataSource}

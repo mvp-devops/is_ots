@@ -1,5 +1,5 @@
 import { Space, Typography } from "antd";
-import { useNsiTable } from "../hooks";
+import { useNsiTable } from ".";
 
 const { Text } = Typography;
 

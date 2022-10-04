@@ -131,14 +131,7 @@ const PositionTreeTable = () => {
         />
       </Content>
 
-      {renderFormFlag && (
-        <ModalContainer
-          show={formVisible}
-          onCancel={() => setFormVisible(false)}
-          action={actionType}
-          child={<PositionTreeForm />}
-        />
-      )}
+      {renderFormFlag && <ModalContainer child={<PositionTreeForm />} />}
     </Layout>
   );
 };

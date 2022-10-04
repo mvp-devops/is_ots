@@ -77,7 +77,7 @@ export const usePositionTreeTable = () => {
       : "объект/установку";
 
   useEffect(() => {
-    if (currentItem) {
+    if (currentItem && target) {
       switch (target) {
         case "subsidiary": {
           getPositionTreeItems("field", currentItem.id);

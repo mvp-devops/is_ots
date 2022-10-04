@@ -1,8 +1,9 @@
-import { Button, Divider, Form, Input, Space, Typography } from "antd";
+import { Layout, Button, Divider, Form, Input, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputUIComponent } from "../components";
 import { useActions, useTypedSelector } from "../hooks";
+import { PageFooter } from ".";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -84,15 +85,17 @@ function AuthPage() {
   );
 
   return (
-    <Space
-      className="d-flex justify-content-center align-items-center"
-      style={{
-        height: window.innerHeight - 40,
-        width: window.innerWidth - 200,
-      }}
-    >
-      {authForm}
-    </Space>
+    <Layout className="d-flex justify-content-center align-items-center">
+      <Space
+        style={{
+          height: window.innerHeight - 40,
+          // width: window.innerWidth - 400,
+        }}
+      >
+        {authForm}
+      </Space>
+      <PageFooter />
+    </Layout>
   );
 }
 

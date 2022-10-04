@@ -1,5 +1,5 @@
 import { ColumnFilterItem } from "antd/lib/table/interface";
-import { NSIView } from "../../../../../../server/common/types/regulatory-reference-information";
+import { NSIView } from "../..";
 
 export const setTableColumnFilters = (
   target: string,

@@ -25,13 +25,8 @@ const CollectiveCheckSheet = () => {
     ids,
     dataSource,
   } = useCollectiveCheckSheet();
-  const {
-    formVisible,
-    setFormVisible,
-    actionType,
-    setActionType,
-    renderCommentAccountingFormFlag,
-  } = useCommentAccounting();
+  const { setFormVisible, setActionType, renderCommentAccountingFormFlag } =
+    useCommentAccounting();
 
   const onCollectiveCheckSheetDownload = () => {
     if (checkedDesignDocuments.length > 0) {
@@ -42,12 +37,7 @@ const CollectiveCheckSheet = () => {
   };
 
   const renderForm = renderCommentAccountingFormFlag && (
-    <ModalContainer
-      show={formVisible}
-      onCancel={() => setFormVisible(false)}
-      action={actionType}
-      child={<CommentForm />}
-    />
+    <ModalContainer child={<CommentForm />} />
   );
 
   return (
@@ -74,8 +64,6 @@ const CollectiveCheckSheet = () => {
         </Space>
       </Space>
       <Header />
-
-      {/* <CommentTable data={dataSource} /> */}
       <CommentTable />
       {renderForm}
     </Space>

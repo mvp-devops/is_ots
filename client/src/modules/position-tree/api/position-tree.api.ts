@@ -105,22 +105,18 @@ export const getMenuItems = async (
 
   let items: PositionTreeItem[] = [];
 
-  try {
-    const { data } = await axios.get<PositionTreeItem[]>(url);
+  const { data } = await axios.get<PositionTreeItem[]>(url);
 
-    items =
-      roles.includes(Roles.ADMINISTRATOR) || roles.includes(Roles.EXPERT)
-        ? data
-        : (!roles.includes(Roles.ADMINISTRATOR) ||
-            !roles.includes(Roles.EXPERT)) &&
-          roles.includes(Roles.OTS)
-        ? data.filter((item) => item.id === id)
-        : roles.includes(Roles.CUSTOMER)
-        ? data.filter((item) => item.id === id)
-        : [];
-  } catch (error) {
-    alert(error);
-  }
+  items =
+    roles.includes(Roles.ADMINISTRATOR) || roles.includes(Roles.EXPERT)
+      ? data
+      : (!roles.includes(Roles.ADMINISTRATOR) ||
+          !roles.includes(Roles.EXPERT)) &&
+        roles.includes(Roles.OTS)
+      ? data.filter((item) => item.id === id)
+      : roles.includes(Roles.CUSTOMER)
+      ? data.filter((item) => item.id === id)
+      : [];
 
   return items;
 };

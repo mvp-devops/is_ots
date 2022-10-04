@@ -72,44 +72,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 />
               }
             />
-            <Item label={<Text type="secondary"></Text>}>
-              <Select
-                size="small"
-                className="text-secondary"
-                showSearch
-                notFoundContent={
-                  <Space className="d-flex justify-content-center p-3">
-                    <Text type="warning">
-                      <ExclamationCircleOutlined
-                        style={{ fontSize: 20, marginBottom: 2 }}
-                      />
-                    </Text>
 
-                    <Text type="secondary">
-                      Нет данных для отображения. Уточнить поиск
-                    </Text>
-                  </Space>
-                }
-                optionFilterProp="children"
-                filterOption={(input, option) =>
-                  (option!.children as unknown as string).includes(input)
-                }
-                filterSort={(optionA, optionB) =>
-                  (optionA!.children as unknown as string)
-                    .toLowerCase()
-                    .localeCompare(
-                      (optionB!.children as unknown as string).toLowerCase()
-                    )
-                }
-                onChange={(value: string) => onHandlerChange("unitId", value)}
-              >
-                {sgroei.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                    {item.title}
-                  </Option>
-                ))}
-              </Select>
-            </Item>
             <Item
               label={<Text type="secondary">Установка/объект</Text>}
               className="m-0"

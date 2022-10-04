@@ -3,9 +3,8 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 
 import { FormActions } from "../../../main";
-import { NSIView } from "../../../../../../server/common/types/regulatory-reference-information";
-import { useNsiTable } from "./hooks";
-import { setTableColumnFilters } from "./table.settings";
+import { NSIView } from "../..";
+import { useNsiTable, setTableColumnFilters } from ".";
 
 const { Text } = Typography;
 

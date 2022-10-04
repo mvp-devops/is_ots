@@ -1,7 +1,4 @@
 import { Provider } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { RequireAuth } from "./hoc/RequireAuth";
-import { AuthPage, MainPage } from "./pages";
 import AppRouter from "./routes/AppRouter";
 import { appStore } from "./store";
 
@@ -11,12 +8,6 @@ import { appStore } from "./store";
 function App() {
   return (
     <Provider store={appStore}>
-      {/* <BrowserRouter basename={"/"}>
-        <Routes>
-          <Route path="/" element={<AuthPage />} />
-          <Route path="/main" element={<MainPage />} />
-        </Routes>
-      </BrowserRouter> */}
       <AppRouter />
     </Provider>
   );

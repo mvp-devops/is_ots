@@ -4,6 +4,7 @@ import { ModalContainer } from "../../../../components";
 import { SignalView } from "../../types";
 import { SignalForm } from "../forms";
 import { TableColumns, useSignalTable } from ".";
+import { tableLocale } from "../../../main";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -42,6 +43,7 @@ const SignalTable = () => {
         size="small"
         bordered
         loading={loading}
+        locale={tableLocale}
         scroll={{ y: 500, x: "100%" }}
         pagination={dataSource.length < 5 && false}
         dataSource={dataSource}

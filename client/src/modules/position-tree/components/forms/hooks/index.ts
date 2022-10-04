@@ -91,36 +91,44 @@ export const usePositionTreeForm = () => {
   }, [actionType]);
 
   useEffect(() => {
-    switch (formTarget) {
-      case "field": {
-        getParrentsList("subsidiary").then((data) => setParrentsList(data));
+    if (
+      formVisible &&
+      (actionType === FormActions.ADD ||
+        actionType === FormActions.ADD_CHILD ||
+        actionType === FormActions.EDIT ||
+        actionType === FormActions.EDIT_CHILD)
+    ) {
+      switch (formTarget) {
+        case "field": {
+          getParrentsList("subsidiary").then((data) => setParrentsList(data));
 
-        break;
-      }
-      case "project": {
-        getParrentsList("field").then((data) => setParrentsList(data));
-        getNSIList("design").then((data) => setDesignsList(data));
+          break;
+        }
+        case "project": {
+          getParrentsList("field").then((data) => setParrentsList(data));
+          getNSIList("design").then((data) => setDesignsList(data));
 
-        break;
-      }
-      case "unit": {
-        getParrentsList("project").then((data) => setParrentsList(data));
-        getNSIList("counterparty").then((data) => setSuppliersList(data));
-        getNSIList("equipment").then((data) => setEquipmentsList(data));
-        break;
-      }
-      case "sub-unit": {
-        getParrentsList("unit").then((data) => setParrentsList(data));
-        getNSIList("counterparty").then((data) => setSuppliersList(data));
-        getNSIList("equipment").then((data) => setEquipmentsList(data));
+          break;
+        }
+        case "unit": {
+          getParrentsList("project").then((data) => setParrentsList(data));
+          getNSIList("counterparty").then((data) => setSuppliersList(data));
+          getNSIList("equipment").then((data) => setEquipmentsList(data));
+          break;
+        }
+        case "sub-unit": {
+          getParrentsList("unit").then((data) => setParrentsList(data));
+          getNSIList("counterparty").then((data) => setSuppliersList(data));
+          getNSIList("equipment").then((data) => setEquipmentsList(data));
 
-        break;
-      }
+          break;
+        }
 
-      default:
-        break;
+        default:
+          break;
+      }
     }
-  }, [formTarget]);
+  }, [actionType, formTarget]);
 
   //Обновление данных полей формы
   const onHandlerChange = (

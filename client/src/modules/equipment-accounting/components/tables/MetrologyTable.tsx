@@ -6,10 +6,13 @@ import { MetrologyForm } from "../forms";
 
 import { TableColumns, useMetrologyTable } from ".";
 import { ModalContainer } from "../../../../components";
+import { tableLocale } from "../../../main";
 
 const MetrologyTable = () => {
   const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
     useMetrologyTable();
+
+  // console.log("Metrologies: ", dataSource);
 
   const renderForm = formVisible && (
     <ModalContainer
@@ -26,6 +29,7 @@ const MetrologyTable = () => {
         size="small"
         bordered
         loading={loading}
+        locale={tableLocale}
         scroll={{ y: 500, x: "100%" }}
         pagination={dataSource.length < 5 && false}
         dataSource={dataSource}
@@ -33,7 +37,7 @@ const MetrologyTable = () => {
         onRow={(record) => {
           return {
             onMouseEnter: () => {
-              setCurrentRow(record);
+              setCurrentRow(record as MetrologyView);
             },
           };
         }}

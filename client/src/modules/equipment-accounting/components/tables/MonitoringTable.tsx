@@ -5,6 +5,7 @@ import { ModalContainer } from "../../../../components";
 import { MonitoringForm } from "../forms";
 
 import { useMonitoringTable, TableColumns } from ".";
+import { tableLocale } from "../../../main";
 
 const MonitoringTable = () => {
   const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
@@ -18,6 +19,7 @@ const MonitoringTable = () => {
         size="small"
         bordered
         loading={loading}
+        locale={tableLocale}
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
         dataSource={dataSource}

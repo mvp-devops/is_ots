@@ -48,12 +48,7 @@ const DesignDocumentTable = () => {
   const columns = TableColumns();
 
   const formRender = renderFileStorageFormFlag && (
-    <ModalContainer
-      show={formVisible}
-      onCancel={() => setFormVisible(false)}
-      action={actionType}
-      child={<DesignDocumentForm />}
-    />
+    <ModalContainer child={<DesignDocumentForm />} />
   );
 
   const addCommentForm = renderCommentAccountingFormFlag && (

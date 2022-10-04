@@ -8,9 +8,7 @@ import {
 import { ModalContainer } from "../../../../components";
 import { FormActions, tableLocale } from "../../../main";
 import { RegulatoryReferenceInformationForm } from "../forms";
-import { useNsiTable } from "./hooks";
-import NsiTableColumns from "./NsiTableColumns";
-import NsiTableFooter from "./nsiTable/NsiTableFooter";
+import { useNsiTable, NsiTableColumns, NsiTableFooter } from ".";
 
 const { Text } = Typography;
 
@@ -18,12 +16,9 @@ const NsiTable = () => {
   const {
     dictionaryTarget,
     renderNsiFormFlag,
-    renderNsiItems,
     tableTitle,
     loading,
-    actionType,
     setActionType,
-    formVisible,
     setFormVisible,
     dataSource,
     setCurrentNsiItem,
@@ -83,12 +78,7 @@ const NsiTable = () => {
   );
 
   const renderForm = renderNsiFormFlag && (
-    <ModalContainer
-      show={formVisible}
-      onCancel={() => setFormVisible(false)}
-      action={actionType}
-      child={<RegulatoryReferenceInformationForm />}
-    />
+    <ModalContainer child={<RegulatoryReferenceInformationForm />} />
   );
 
   return (

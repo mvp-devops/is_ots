@@ -1,6 +1,8 @@
-import { usePositionTree } from "./../../hooks/index";
 import { useEffect, useState } from "react";
-import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
+
+import { usePositionTree } from "./../../hooks";
+
+import { PositionTreeView } from "../..";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { ListItem, MenuItem, Roles } from "../../../main";
 import { getAllItems } from "../..";
@@ -8,7 +10,6 @@ import { getAllItems } from "../..";
 export const useItemPage = (items?: MenuItem[]) => {
   const { currentItem } = useTypedSelector((state) => state.positionTree);
   const [childrenList, setChildrenList] = useState<PositionTreeView[]>([]);
-  const [listItems, setListItems] = useState<ListItem[]>([]);
 
   const [menuItems, setMenuItems] = useState<MenuItem[]>([]);
   const [childrenListHeader, setChidrenListHeader] = useState("");
@@ -23,9 +24,10 @@ export const useItemPage = (items?: MenuItem[]) => {
     listItemsView,
     documentationView,
     currentUser,
+    baseTarget,
   } = useTypedSelector((state) => state.main);
 
-  const { checkListData, loading, renderItems } = useTypedSelector(
+  const { checkListData, loading } = useTypedSelector(
     (state) => state.positionTree
   );
 
@@ -102,44 +104,16 @@ export const useItemPage = (items?: MenuItem[]) => {
     return menuItems;
   };
 
-  const renderListItems = (items: PositionTreeView[]): ListItem[] => {
-    const arr: any[] = [];
-    if (items.length > 0) {
-      for (let i = 0; i < items.length; i++) {
-        const elem = items[i];
-        const { id, title, code, description } = elem;
-        const file =
-          "logo" in elem
-            ? elem.logo
-            : "unitQuestionare" in elem
-            ? elem.unitQuestionare
-            : "subUnitQuestionare" in elem
-            ? elem.subUnitQuestionare
-            : null;
-        const item = {
-          href: id,
-          title,
-          avatar: file ? file : null,
-          description,
-          content: code,
-        };
-
-        arr.push(item);
-      }
-    }
-    return arr;
-  };
-
   useEffect(() => {
-    if (currentItem) {
+    if (currentItem && baseTarget === "POSITION_TREE") {
       switch (currentItem.target) {
         case "subsidiary": {
-          getPositionTreeItems("field", currentItem.id);
-          setChildrenList(renderItems);
+          // getPositionTreeItems("field", currentItem.id);
+          // setChildrenList(renderItems);
 
-          // getAllItems("field", currentItem.id).then((data) =>
-          //   setChildrenList(data)
-          // );
+          getAllItems("field", currentItem.id).then((data) =>
+            setChildrenList(data)
+          );
           setChidrenListHeader("месторождений");
 
           break;
@@ -171,15 +145,11 @@ export const useItemPage = (items?: MenuItem[]) => {
           break;
       }
     }
-  }, [currentItem, formVisible]);
+  }, []);
 
   useEffect(() => {
     items && setMenuItems(renderMenuItems(items));
   }, [currentItem]);
-
-  useEffect(() => {
-    setListItems(renderListItems(childrenList));
-  }, [childrenList]);
 
   return {
     formVisible,
@@ -191,7 +161,6 @@ export const useItemPage = (items?: MenuItem[]) => {
     childrenList,
     childrenListHeader,
     menuItems,
-    listItems,
     currentItem,
     loading,
 

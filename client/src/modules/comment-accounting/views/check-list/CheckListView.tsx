@@ -1,5 +1,5 @@
 import { Divider, Space, Typography } from "antd";
-import { FileExcelOutlined, PrinterOutlined } from "@ant-design/icons";
+import { FileExcelOutlined } from "@ant-design/icons";
 import { setCurrentDate } from "../../../../utils/main.utils";
 import Header from "./Header";
 import { CheckListTable } from "../../components";
@@ -23,15 +23,6 @@ const CheckList = () => {
             <Text strong>{setCurrentDate()}</Text>
             <Text strong>ОЦЕНОЧНЫЙ ЛИСТ КОНТРАГЕНТА</Text>
             <Space className="d-flex justify-content-between mx-3">
-              <PrinterOutlined
-                style={{ fontSize: "20px", cursor: "pointer" }}
-                title="Печать"
-                className="text-primary"
-                //  onClick={() => {
-                //    setActionType(FormActions.UPDATE);
-                //    setAddCommentsVisible(true);
-                //  }}
-              />
               <FileExcelOutlined
                 style={{ fontSize: "20px", cursor: "pointer" }}
                 title="Выгрузить"
@@ -46,10 +37,6 @@ const CheckList = () => {
           <Divider className="m-1" />
 
           <CheckListTable />
-
-          {/* <Divider className="m-1" /> */}
-
-          {/* <Footer /> */}
         </>
       )}
     </Space>

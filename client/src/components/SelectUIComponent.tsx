@@ -17,6 +17,7 @@ interface SelectUIComponentProps {
   items: any[];
   itemId?: any;
   style?: Object;
+  placeholder?: string;
   props?: SelectProps;
 }
 
@@ -31,11 +32,13 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   items,
   itemId,
   style,
+  placeholder,
   props,
 }) => {
   return (
     <Select
       {...props}
+      placeholder={placeholder}
       style={style}
       size={size ? size : "small"}
       className={className ? `text-secondary ${className}` : "text-secondary"}

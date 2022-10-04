@@ -1,7 +1,4 @@
-import {
-  NsiCreateOrUpdateAttrs,
-  NSIView,
-} from "../../../../../../server/common/types/regulatory-reference-information";
+import { NsiCreateOrUpdateAttrs, NSIView } from "../..";
 
 export const userItem = {
   subsidiaryId: null,

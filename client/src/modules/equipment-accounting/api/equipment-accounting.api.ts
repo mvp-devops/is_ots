@@ -157,7 +157,7 @@ export const getAllEssences = async (
   parrentId: string
 ): Promise<SummaryListOfEquipmentView[]> => {
   const url = setUrl(
-    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/find`
+    `${equipmentAccountingUrl}/summary-list-of-equipment-assets/find`
   );
 
   const { data } = await axios.get<SummaryListOfEquipmentView[]>(url, {

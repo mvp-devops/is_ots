@@ -1,8 +1,4 @@
-import {
-  ActionTypes,
-  EssenceAction,
-  EssenceState,
-} from "../types/regulatory-reference-information.types";
+import { ActionTypes, EssenceAction, EssenceState } from "..";
 
 const initialState: EssenceState = {
   error: null,

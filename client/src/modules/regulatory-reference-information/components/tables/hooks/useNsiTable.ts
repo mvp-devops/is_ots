@@ -19,7 +19,10 @@ export const useNsiTable = () => {
   const { setActionType, setFormVisible, setCurrentNsiItem } = useActions();
 
   useEffect(() => {
-    if (baseTarget === "REGULATORY_REFERENCE_INFORMATION") {
+    if (
+      baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
+      dictionaryTarget !== ""
+    ) {
       switch (dictionaryTarget) {
         case "equipment": {
           setTableTitle("Группы оборудования");
