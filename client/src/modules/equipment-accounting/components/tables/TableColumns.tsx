@@ -565,6 +565,7 @@ const TableColumns = (
         text: "Нет",
       },
     ],
+
     width: 80,
   };
 
@@ -1015,7 +1016,7 @@ const TableColumns = (
       : undefined;
 
   const signalProtocolColumn: ColumnType<Views> = {
-    title: "Тип",
+    title: "Протокол",
     dataIndex: "signalProtocol",
     key: "signalProtocol",
     align: "center",
@@ -1184,7 +1185,7 @@ const TableColumns = (
     dataIndex: "numberOfTrace",
     key: "numberOfTrace",
     align: "center",
-    width: 200,
+    // width: 200,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1198,7 +1199,7 @@ const TableColumns = (
     dataIndex: "impulseLineType",
     key: "impulseLineType",
     align: "center",
-    width: 200,
+    // width: 200,
     filterSearch:
       impulseLineTypeFilters && impulseLineTypeFilters.length > 5
         ? true
@@ -1455,7 +1456,9 @@ const TableColumns = (
       });
       columns.push(numberOfImpulseLineTraceColumn);
       columns.push(impulseLineTypeColumn);
+      columns.push(fromUnitColumn);
       columns.push(fromPlaceColumn);
+      columns.push(toUnitColumn);
       columns.push(toPlaceColumn);
       columns.push(impulseLineLenghtColumn);
       columns.push(rangeColumn);

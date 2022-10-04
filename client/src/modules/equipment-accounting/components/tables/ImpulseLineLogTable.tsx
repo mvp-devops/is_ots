@@ -15,7 +15,7 @@ const ImpulseLineLogTable = () => {
 
   const summary = (data: Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
-      <Cell index={0} colSpan={8} align="right">
+      <Cell index={0} colSpan={10} align="right">
         <Text strong>Длина:</Text>
       </Cell>
       <Cell index={1} align="center">
@@ -24,7 +24,7 @@ const ImpulseLineLogTable = () => {
       <Cell index={2} align="center">
         <Text strong>м</Text>
       </Cell>
-      <Cell index={3} colSpan={2} />
+      <Cell index={3} />
     </Row>
   );
 
