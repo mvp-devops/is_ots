@@ -1,4 +1,4 @@
-import { Table, Typography } from "antd";
+import { Input, Space, Table, Typography } from "antd";
 import { ImpulseLineLogView } from "../../../../../../server/common/types/equipment-accounting";
 import { ModalContainer } from "../../../../components";
 import { ImpulseLineLogForm } from "../forms";
@@ -10,8 +10,15 @@ const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
 const ImpulseLineLogTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
-    useImpulseLineLogTable();
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    renderFormFormEditFlag,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  } = useImpulseLineLogTable();
 
   const summary = (data: Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
@@ -28,10 +35,36 @@ const ImpulseLineLogTable = () => {
     </Row>
   );
 
+  const renderForm = renderFormFormEditFlag && (
+    <ModalContainer
+      target="impulse-line-log"
+      child={<ImpulseLineLogForm row={currentRow as ImpulseLineLogView} />}
+    />
+  );
+
+  const searchPanel = (
+    <Space className="d-flex justify-content-end mb-4">
+      <Input
+        placeholder="Поиск..."
+        className="text-secondary"
+        value={searchValue}
+        onChange={onSearch}
+        style={{
+          width: 600,
+          padding: 12,
+          height: 32,
+          gap: 10,
+          marginTop: 4,
+        }}
+      />
+    </Space>
+  );
+
   const columns = TableColumns("impulse-line-log", dataSource, currentRow);
 
   return (
     <>
+      {searchPanel}
       <Table
         size="small"
         bordered
@@ -51,12 +84,7 @@ const ImpulseLineLogTable = () => {
         rowKey={(record) => record.id as string}
         summary={(data) => summary(data as Views[])}
       />
-      {formVisible && (
-        <ModalContainer
-          target="impulse-line-log"
-          child={<ImpulseLineLogForm row={currentRow as ImpulseLineLogView} />}
-        />
-      )}
+      {renderForm}
     </>
   );
 };

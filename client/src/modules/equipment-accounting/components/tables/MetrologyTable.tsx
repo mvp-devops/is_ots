@@ -1,4 +1,4 @@
-import { Table } from "antd";
+import { Input, Space, Table } from "antd";
 
 import { MetrologyView } from "../../types";
 
@@ -9,12 +9,17 @@ import { ModalContainer } from "../../../../components";
 import { tableLocale } from "../../../main";
 
 const MetrologyTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
-    useMetrologyTable();
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    dataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useMetrologyTable();
 
-  // console.log("Metrologies: ", dataSource);
-
-  const renderForm = formVisible && (
+  const renderForm = renderFormFormEditFlag && (
     <ModalContainer
       target="metrology"
       child={<MetrologyForm row={currentRow as MetrologyView} />}
@@ -23,8 +28,27 @@ const MetrologyTable = () => {
 
   const columns = TableColumns("metrology", dataSource, currentRow);
 
+  const searchPanel = (
+    <Space className="d-flex justify-content-end mb-4">
+      <Input
+        placeholder="Поиск..."
+        className="text-secondary"
+        value={searchValue}
+        onChange={onSearch}
+        style={{
+          width: 600,
+          padding: 12,
+          height: 32,
+          gap: 10,
+          marginTop: 4,
+        }}
+      />
+    </Space>
+  );
+
   return (
     <>
+      {searchPanel}
       <Table
         size="small"
         bordered

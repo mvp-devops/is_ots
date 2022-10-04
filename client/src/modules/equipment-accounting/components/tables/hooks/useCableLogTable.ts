@@ -1,16 +1,51 @@
+import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { useTypedSelector } from "../../../../../hooks";
-import { FormActions } from "../../../../main";
+import { CableLogView } from "../../..";
 
 export const useCableLogTable = () => {
-  const { actionType, formVisible } = useTypedSelector((state) => state.main);
-  const { loading, dataSource, currentRow, setCurrentRow } =
-    useEquipmentAccountingTable("cable-log");
+  const [dataSource, setDataSource] = useState<CableLogView[]>([]);
 
-  const renderForm =
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    renderDataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useEquipmentAccountingTable("cable-log");
 
-  return { renderForm, loading, dataSource, currentRow, setCurrentRow };
+  useEffect(() => {
+    setDataSource(renderDataSource as CableLogView[]);
+  }, [renderDataSource]);
+
+  useEffect(() => {
+    setDataSource(
+      (renderDataSource as CableLogView[]).filter(
+        (item) =>
+          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.numberOfTrace
+            .toUpperCase()
+            .includes(searchValue.toUpperCase()) ||
+          item.cableMark.includes(searchValue.toUpperCase()) ||
+          item.cableSection.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.fromUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.fromPlace.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.toUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.toPlace.toUpperCase().includes(searchValue.toUpperCase())
+      )
+    );
+  }, [searchValue]);
+
+  return {
+    searchValue,
+    onSearch,
+    renderFormFormEditFlag,
+    loading,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  };
 };

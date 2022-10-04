@@ -7,12 +7,12 @@ import {
 } from "@ant-design/icons";
 import { setCurrentDate } from "../../../../utils/main.utils";
 import { FormActions } from "../../../main";
-import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
+import { useActions } from "../../../../hooks";
 
 const { Text } = Typography;
 
 const Header = () => {
-  const { setFormVisible, setActionType } = useEquipmentAccountingVeiw();
+  const { setFormVisible, setActionType } = useActions();
 
   return (
     <>

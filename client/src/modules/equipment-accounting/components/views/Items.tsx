@@ -8,14 +8,11 @@ import {
   MonitoringTable,
   SignalTable,
 } from "../tables";
-import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
 
 const { TabPane } = Tabs;
 const { Text } = Typography;
 
 const Items = () => {
-  const { formVisible, actionType, unitId, subUnitId, searchValue } =
-    useEquipmentAccountingVeiw();
   return (
     <Tabs
       onChange={(activeKey) => console.log(activeKey)}
@@ -77,11 +74,6 @@ const Items = () => {
       >
         {<MonitoringTable />}
       </TabPane>
-      {/* <TabPane
-        tab={<Text type="secondary">Технологические карты</Text>}
-        key="technology-cards"
-        className="p-1 text-secondary"
-      ></TabPane> */}
     </Tabs>
   );
 };

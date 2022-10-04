@@ -1,4 +1,4 @@
-import { Table, Typography } from "antd";
+import { Input, Space, Table, Typography } from "antd";
 import { ModalContainer } from "../../../../components";
 
 import { SignalView } from "../../types";
@@ -10,8 +10,15 @@ const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
 const SignalTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
-    useSignalTable();
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    dataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useSignalTable();
 
   const summary = () => (
     <Row style={{ margin: 0, padding: 0 }}>
@@ -28,17 +35,36 @@ const SignalTable = () => {
     </Row>
   );
 
-  const formRender = formVisible && (
+  const columns = TableColumns("signal", dataSource, currentRow);
+
+  const renderForm = renderFormFormEditFlag && (
     <ModalContainer
       target="signal"
       child={<SignalForm row={currentRow as SignalView} />}
     />
   );
 
-  const columns = TableColumns("signal", dataSource, currentRow);
+  const searchPanel = (
+    <Space className="d-flex justify-content-end mb-4">
+      <Input
+        placeholder="Поиск..."
+        className="text-secondary"
+        value={searchValue}
+        onChange={onSearch}
+        style={{
+          width: 600,
+          padding: 12,
+          height: 32,
+          gap: 10,
+          marginTop: 4,
+        }}
+      />
+    </Space>
+  );
 
   return (
     <>
+      {searchPanel}
       <Table
         size="small"
         bordered
@@ -58,7 +84,7 @@ const SignalTable = () => {
         rowKey={(record) => record.id as string}
         summary={() => summary()}
       />
-      {formRender}
+      {renderForm}
     </>
   );
 };

@@ -1,8 +1,19 @@
 import { useEquipmentAccountingTable } from ".";
 
 export const useMonitoringTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
-    useEquipmentAccountingTable("monitoring");
+  const {
+    loading,
+    renderDataSource: dataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useEquipmentAccountingTable("monitoring");
 
-  return { loading, formVisible, dataSource, currentRow, setCurrentRow };
+  return {
+    loading,
+    renderFormFormEditFlag,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  };
 };

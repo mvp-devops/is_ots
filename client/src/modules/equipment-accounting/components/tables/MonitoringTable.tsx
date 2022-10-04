@@ -8,10 +8,22 @@ import { useMonitoringTable, TableColumns } from ".";
 import { tableLocale } from "../../../main";
 
 const MonitoringTable = () => {
-  const { loading, formVisible, dataSource, currentRow, setCurrentRow } =
-    useMonitoringTable();
+  const {
+    loading,
+    dataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useMonitoringTable();
 
   const columns = TableColumns("monitoring", dataSource, currentRow);
+
+  const renderForm = renderFormFormEditFlag && (
+    <ModalContainer
+      target="monitoring"
+      child={<MonitoringForm row={currentRow as MonitoringView} />}
+    />
+  );
 
   return (
     <>
@@ -33,12 +45,7 @@ const MonitoringTable = () => {
         }}
         rowKey={(record) => record.id as string}
       />
-      {formVisible && (
-        <ModalContainer
-          target="monitoring"
-          child={<MonitoringForm row={currentRow as MonitoringView} />}
-        />
-      )}
+      {renderForm}
     </>
   );
 };

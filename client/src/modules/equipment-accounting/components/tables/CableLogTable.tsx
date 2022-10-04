@@ -1,4 +1,4 @@
-import { Table, Typography } from "antd";
+import { Input, Space, Table, Typography } from "antd";
 
 import { CableLogForm } from "../forms";
 
@@ -11,8 +11,15 @@ const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
 const CableLogTable = () => {
-  const { loading, renderForm, dataSource, currentRow, setCurrentRow } =
-    useCableLogTable();
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    renderFormFormEditFlag,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  } = useCableLogTable();
 
   const summary = (data: Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
@@ -29,17 +36,37 @@ const CableLogTable = () => {
     </Row>
   );
 
-  const formRender = renderForm && (
+  const renderForm = renderFormFormEditFlag && (
     <ModalContainer
       target="cable-log"
       child={<CableLogForm row={currentRow as CableLogView} />}
     />
   );
 
+  const searchPanel = (
+    <Space className="d-flex justify-content-end mb-4">
+      <Input
+        placeholder="Поиск..."
+        className="text-secondary"
+        value={searchValue}
+        onChange={onSearch}
+        style={{
+          width: 600,
+          padding: 12,
+          height: 32,
+          gap: 10,
+          marginTop: 4,
+        }}
+      />
+    </Space>
+  );
+
   const columns = TableColumns("cable-log", dataSource, currentRow);
 
   return (
     <>
+      {searchPanel}
+
       <Table
         size="small"
         loading={loading}
@@ -60,7 +87,7 @@ const CableLogTable = () => {
         summary={(data) => summary(data as Views[])}
       />
 
-      {formRender}
+      {renderForm}
     </>
   );
 };

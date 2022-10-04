@@ -1,17 +1,23 @@
-import { Table, Typography } from "antd";
+import { Input, Space, Table, Typography } from "antd";
 import { GeneralInformationView } from "../../types";
 import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
-import { TableColumns, useGeneralInformationTable } from ".";
+import { TableColumns, useGeneralInformationTable, Navbar } from ".";
 import { tableLocale } from "../../../main";
-import { FC } from "react";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
 
 const GeneralInformationTable = () => {
-  const { loading, renderForm, dataSource, currentRow, setCurrentRow } =
-    useGeneralInformationTable();
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    renderFormFormEditFlag,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  } = useGeneralInformationTable();
 
   const columns = TableColumns("general-information", dataSource, currentRow);
 
@@ -26,7 +32,7 @@ const GeneralInformationTable = () => {
     </Row>
   );
 
-  const formRender = renderForm && (
+  const formRender = renderFormFormEditFlag && (
     <ModalContainer
       target="general-information"
       child={
@@ -35,8 +41,29 @@ const GeneralInformationTable = () => {
     />
   );
 
+  const searchPanel = (
+    <Space className="d-flex justify-content-end mb-4">
+      <Input
+        placeholder="Поиск..."
+        className="text-secondary"
+        value={searchValue}
+        onChange={onSearch}
+        style={{
+          width: 600,
+          padding: 12,
+          height: 32,
+          gap: 10,
+          marginTop: 4,
+        }}
+      />
+    </Space>
+  );
+
+  console.log(searchValue);
+
   return (
     <>
+      {searchPanel}
       <Table
         size="small"
         bordered

@@ -1,15 +1,16 @@
 import { Input, Select, Space } from "antd";
-import { ChangeEvent } from "react";
-import { InputUIComponent, SelectUIComponent } from "../../../../components";
-import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
+import { useEquipmentAccountingTable } from "../tables";
 
 const Navbar = () => {
-  const { searchValue, onSearch } = useEquipmentAccountingVeiw();
+  const {
+    searchValue,
+    onSearch,
+    unitsList,
+    subUnitsList,
+    setUnitId,
+    setSubUnitId,
+  } = useEquipmentAccountingTable();
 
-  const { unitsList, subUnitsList, unitId, setUnitId, setSubUnitId } =
-    useEquipmentAccountingVeiw();
-
-  console.log(unitId);
   return (
     <Space className="d-flex justify-content-between">
       <Input
@@ -44,37 +45,24 @@ const Navbar = () => {
         ))}
       </Select>
 
-      {/* <SelectUIComponent
+      <Select
         size="middle"
-        id="unitId"
-        changeValue={setUnitId}
-        items={[{ id: 0, title: "Все" }, ...unitsList]}
-        style={{
-          width: "600px",
-          padding: 0,
-          height: "32px",
-          borderRadius: "4px",
-          gap: "10px",
-          marginTop: "4px",
-        }}
-        placeholder="Выбрать объект строительства"
-      /> */}
-
-      <SelectUIComponent
-        size="middle"
-        id="unitId"
-        changeValue={setSubUnitId}
-        items={[{ id: 0, title: "Все" }, ...subUnitsList]}
-        style={{
-          width: "600px",
-          padding: 0,
-          height: "32px",
-          borderRadius: "4px",
-          gap: "10px",
-          marginTop: "4px",
-        }}
         placeholder="Выбрать установку/объект"
-      />
+        style={{
+          width: "600px",
+          padding: 0,
+          height: "32px",
+          borderRadius: "4px",
+          gap: "10px",
+          marginTop: "4px",
+        }}
+        className="text-secondary"
+        onChange={(value: string) => setSubUnitId(value)}
+      >
+        {[{ id: 0, title: "Все" }, ...subUnitsList].map((item) => (
+          <Select.Option key={item.id}>{item.title}</Select.Option>
+        ))}
+      </Select>
     </Space>
   );
 };

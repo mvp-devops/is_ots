@@ -1,22 +1,61 @@
 import { useEffect, useState } from "react";
-import { useTypedSelector } from "../../../../../hooks";
-import { getAllMetrology } from "../../../api/equipment-accounting.api";
-import { MetrologyView } from "../../../types";
+import { useEquipmentAccountingTable } from ".";
+import { MetrologyView } from "../../..";
 
 export const useMetrologyTable = () => {
-  const [currentRow, setCurrentRow] = useState<MetrologyView>();
   const [dataSource, setDataSource] = useState<MetrologyView[]>([]);
+  const {
+    searchValue,
+    onSearch,
+    loading,
+    renderDataSource,
+    renderFormFormEditFlag,
+    currentRow,
+    setCurrentRow,
+  } = useEquipmentAccountingTable("metrology");
 
-  const { loading, summaryListOfEquipment } = useTypedSelector(
-    (state) => state.equipmentAccounting
-  );
+  useEffect(() => {
+    setDataSource(renderDataSource as MetrologyView[]);
+  }, [renderDataSource]);
 
-  const { formVisible } = useTypedSelector((state) => state.main);
+  useEffect(() => {
+    setDataSource(
+      (renderDataSource as MetrologyView[]).filter(
+        (item) =>
+          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.sgroei.includes(searchValue.toUpperCase()) ||
+          item.measurementArea
+            .toUpperCase()
+            .includes(searchValue.toUpperCase()) ||
+          item.meansurementType
+            .toUpperCase()
+            .includes(searchValue.toUpperCase()) ||
+          item.meansureGroup
+            .toUpperCase()
+            .includes(searchValue.toUpperCase()) ||
+          item.grsi.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.documentType.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.documentNumber
+            .toUpperCase()
+            .includes(searchValue.toUpperCase()) ||
+          item.counterparty.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.fromDate.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.toDate.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.status.toUpperCase().includes(searchValue.toUpperCase()) ||
+          item.mpi.toUpperCase().includes(searchValue.toUpperCase())
+      )
+    );
+  }, [searchValue]);
 
-  useEffect(
-    () => setDataSource(getAllMetrology(summaryListOfEquipment)),
-    [summaryListOfEquipment]
-  );
-
-  return { loading, formVisible, dataSource, currentRow, setCurrentRow };
+  return {
+    searchValue,
+    onSearch,
+    loading,
+    renderFormFormEditFlag,
+    dataSource,
+    currentRow,
+    setCurrentRow,
+  };
 };

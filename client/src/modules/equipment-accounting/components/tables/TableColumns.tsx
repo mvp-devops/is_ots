@@ -24,7 +24,6 @@ import {
   Views,
 } from "../../types";
 import { setTableColumnFilters } from ".";
-import { useEquipmentAccountingTable } from "./hooks";
 import { Link } from "react-router-dom";
 import { FormActions } from "../../../main";
 import { DeleteDialog } from "../../../../components";
@@ -34,6 +33,7 @@ import {
   setDateToVerification,
   verificateDates,
 } from "../../../../utils/main.utils";
+import { useActions } from "../../../../hooks";
 
 const { Text } = Typography;
 
@@ -42,7 +42,7 @@ const TableColumns = (
   dataSource: Views[],
   currentRow?: Views
 ): TableColumnsType<Views> => {
-  const { setFormVisible, setActionType } = useEquipmentAccountingTable();
+  const { setFormVisible, setActionType } = useActions();
   const columns: TableColumnsType<Views> = [];
   const menuItems: MenuItemType[] = [];
 
