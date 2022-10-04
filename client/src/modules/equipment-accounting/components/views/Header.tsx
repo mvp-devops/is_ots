@@ -50,7 +50,7 @@ const Header = () => {
                       </Space>
                     ),
 
-                    key: "atlas",
+                    key: "EXPORT_TO_ATLAS",
                   },
                   {
                     label: (
@@ -66,7 +66,7 @@ const Header = () => {
                       </Space>
                     ),
 
-                    key: "toro",
+                    key: "EXPORT_TO_TORO",
                   },
                   {
                     label: (
@@ -82,7 +82,7 @@ const Header = () => {
                       </Space>
                     ),
 
-                    key: "excel",
+                    key: "EXPORT_TO_EXCEL",
                   },
                 ]}
               />

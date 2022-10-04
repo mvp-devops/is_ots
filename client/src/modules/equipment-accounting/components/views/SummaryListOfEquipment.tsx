@@ -8,7 +8,14 @@ import { useEquipmentAccountingVeiw } from "./hooks/useEquipmentAccountingVeiw";
 import { FormActions } from "../../../main";
 
 const SummaryListOfEquipment = () => {
-  const { formVisible, actionType } = useEquipmentAccountingVeiw();
+  const { renderFormFlag } = useEquipmentAccountingVeiw();
+
+  const renderForm = renderFormFlag && (
+    <ModalContainer
+      target="summary-list-of-equipment"
+      child={<SummaryListOfFacilityForm />}
+    />
+  );
 
   return (
     <>
@@ -23,12 +30,7 @@ const SummaryListOfEquipment = () => {
         <Divider style={{ padding: 0, margin: 0 }} />
         <Items />
       </Space>
-      {formVisible && actionType === FormActions.ADD_EQUIPMENT && (
-        <ModalContainer
-          target="summary-list-of-equipment"
-          child={<SummaryListOfFacilityForm />}
-        />
-      )}
+      {renderForm}
     </>
   );
 };

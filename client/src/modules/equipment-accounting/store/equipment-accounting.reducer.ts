@@ -21,7 +21,7 @@ const initialState: EssenceState = {
 export const equipmentAccountingReducer = (
   state = initialState,
   action: EssenceAction
-) => {
+): EssenceState => {
   switch (action.type) {
     case ActionTypes.GET_ALL_ITEMS:
       return state;

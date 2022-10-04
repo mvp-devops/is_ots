@@ -7,7 +7,7 @@ import {
   MonitoringView,
   SignalView,
   SummaryListOfEquipmentView,
-} from "../../../../../server/common/types/equipment-accounting";
+} from "../types";
 
 export type Views =
   | GeneralInformationView
@@ -239,7 +239,7 @@ interface PostOneFacilityAction {
 }
 interface PostOneFacilitySuccessAction {
   type: ActionTypes.POST_ONE_FACILITY_SUCCESS;
-  payload: SummaryListOfEquipmentView;
+  payload: FacilityView;
 }
 interface PostOneFacilityErrorAction {
   type: ActionTypes.POST_ONE_FACILITY_ERROR;

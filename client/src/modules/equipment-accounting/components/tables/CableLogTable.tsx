@@ -40,27 +40,26 @@ const CableLogTable = () => {
 
   return (
     <>
-      {dataSource.length > 0 && (
-        <Table
-          size="small"
-          loading={loading}
-          locale={tableLocale}
-          bordered
-          pagination={dataSource.length < 5 && false}
-          scroll={{ y: 500, x: "100%" }}
-          dataSource={dataSource}
-          onRow={(record, rowIndex) => {
-            return {
-              onMouseEnter: () => {
-                setCurrentRow(record);
-              },
-            };
-          }}
-          columns={columns}
-          rowKey={(record) => record.id as string}
-          summary={(data) => summary(data as Views[])}
-        />
-      )}
+      <Table
+        size="small"
+        loading={loading}
+        locale={tableLocale}
+        bordered
+        pagination={dataSource.length < 5 && false}
+        scroll={{ y: 500, x: "100%" }}
+        dataSource={dataSource}
+        onRow={(record, rowIndex) => {
+          return {
+            onMouseEnter: () => {
+              setCurrentRow(record);
+            },
+          };
+        }}
+        columns={columns}
+        rowKey={(record) => record.id as string}
+        summary={(data) => summary(data as Views[])}
+      />
+
       {formRender}
     </>
   );

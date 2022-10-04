@@ -77,11 +77,11 @@ const Items = () => {
       >
         {<MonitoringTable />}
       </TabPane>
-      <TabPane
+      {/* <TabPane
         tab={<Text type="secondary">Технологические карты</Text>}
         key="technology-cards"
         className="p-1 text-secondary"
-      ></TabPane>
+      ></TabPane> */}
     </Tabs>
   );
 };

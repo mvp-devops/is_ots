@@ -4,6 +4,8 @@ import { mainReducer } from "./store/main.reducer";
 import * as mainActionCreators from "./store/main.action-creators";
 import { tableLocale, userRoles } from "./utils/main.consts";
 
+import { getUniqueAssetsOfArrayOfTheObjects } from "./utils";
+
 export type { MenuItem, ListItem };
 
 export {
@@ -15,4 +17,5 @@ export {
   tableLocale,
   userRoles,
   setFilePath,
+  getUniqueAssetsOfArrayOfTheObjects,
 };
