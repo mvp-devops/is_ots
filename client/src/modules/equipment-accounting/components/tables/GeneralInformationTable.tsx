@@ -2,7 +2,7 @@ import { Input, Space, Table, Typography } from "antd";
 import { GeneralInformationView } from "../../types";
 import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
-import { TableColumns, useGeneralInformationTable, Navbar } from ".";
+import { TableColumns, useGeneralInformationTable } from ".";
 import { tableLocale } from "../../../main";
 
 const { Row, Cell } = Table.Summary;

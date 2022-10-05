@@ -1,21 +1,10 @@
-import { useEquipmentAccountingVeiw } from "../../views/hooks/useEquipmentAccountingVeiw_old";
 import { ChangeEventHandler, useEffect, useState } from "react";
 import { useActions, useTypedSelector } from "../../../../../hooks";
-import {
-  SummaryListOfEquipmentView,
-  CableLogView,
-  GeneralInformationView,
-  ImpulseLineLogView,
-  MetrologyView,
-  MonitoringView,
-  SignalView,
-  Views,
-} from "../../../types";
+import { SummaryListOfEquipmentView, Views } from "../../../types";
 
 import {
   getAllMetrology,
   getAllGeneralInformation,
-  // getAllMetrology,
   getAllCableLog,
   getAllImpulseLineLog,
   getAllSignal,
@@ -121,6 +110,11 @@ export const useEquipmentAccountingTable = (target?: string) => {
 
         break;
       }
+      case "metrology": {
+        setRenderDataSource(getAllMetrology(requestedData));
+
+        break;
+      }
       case "signal": {
         setRenderDataSource(getAllSignal(requestedData));
         break;
@@ -142,38 +136,9 @@ export const useEquipmentAccountingTable = (target?: string) => {
     }
   }, [target, requestedData]);
 
-  //Поиск по таблицам
-
   const [searchValue, setSearchValue] = useState("");
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) =>
     setSearchValue(e.target.value);
-
-  // добавить фильтры для всех подтаблиц
-  // useEffect(() => {
-  //   setRenderDataSource(
-  //     renderDataSource.filter(
-  //       (item) =>
-
-  //
-  //
-  //         (item as MonitoringView).mountDate.includes(
-  //           searchValue.toUpperCase()
-  //         ) ||
-  //         (item as MonitoringView).connectDate
-  //           .toUpperCase()
-  //           .includes(searchValue.toUpperCase()) ||
-  //         (item as MonitoringView).testDate
-  //           .toUpperCase()
-  //           .includes(searchValue.toUpperCase()) ||
-  //         (item as MonitoringView).awpDate
-  //           .toUpperCase()
-  //           .includes(searchValue.toUpperCase()) ||
-  //         (item as MonitoringView).commisionDate
-  //           .toUpperCase()
-  //           .includes(searchValue.toUpperCase())
-  //     )
-  //   );
-  // }, [searchValue]);
 
   const renderFormFormEditFlag =
     formVisible && actionType === FormActions.EDIT_EQUIPMENT;

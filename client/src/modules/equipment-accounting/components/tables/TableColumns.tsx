@@ -12,6 +12,7 @@ import {
   EditOutlined,
   DeleteOutlined,
   AppstoreAddOutlined,
+  FileSearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import {
@@ -25,7 +26,7 @@ import {
 } from "../../types";
 import { setTableColumnFilters } from ".";
 import { Link } from "react-router-dom";
-import { FormActions } from "../../../main";
+import { FormActions, setFilePath } from "../../../main";
 import { DeleteDialog } from "../../../../components";
 import { MenuItemType } from "rc-menu/lib/interface";
 import {
@@ -34,6 +35,7 @@ import {
   verificateDates,
 } from "../../../../utils/main.utils";
 import { useActions } from "../../../../hooks";
+import { ReactNode } from "react";
 
 const { Text } = Typography;
 
@@ -92,319 +94,418 @@ const TableColumns = (
     key: "REMOVE_EQUIPMENT_ASSET",
   };
 
-  const questionareViewMenuItem = {
-    label: (
-      <Space className="text-secondary">
-        <Link
-          to="../../../../GPN-A.PNG"
-          target="_blank"
-          style={{ textDecoration: "none" }}
-        >
-          <SearchOutlined
-            style={{
-              marginRight: "6px",
-              marginBottom: "6px",
-              padding: 0,
-            }}
-            className="text-primary"
-          />
-          <Text type="secondary">Опросный лист</Text>
-        </Link>
-      </Space>
-    ),
-
-    key: "QUESTIONARE_VIEW",
-  };
-
-  const technologyCardsViewMenuItem = {
-    label: (
-      <Space className="text-secondary">
-        <SearchOutlined
-          style={{ marginBottom: "6px", padding: 0 }}
-          className="text-success"
-        />
-        Тех. карты
-      </Space>
-    ),
-
-    key: "COMMISION_WORK_CARD_VIEW",
-    children: [
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link
-              to="../../../../GPN-A.PNG"
-              target="_blank"
-              style={{ textDecoration: "none" }}
-            >
-              <AppstoreAddOutlined
-                style={{
-                  marginRight: "6px",
-                  marginBottom: "6px",
-                  padding: 0,
-                }}
-                className="text-primary"
-              />
-              <Text type="secondary">ПНР</Text>
-            </Link>
-          </Space>
-        ),
-
-        key: "VIEW-1-1",
-      },
-      {
-        label: (
-          <Space
-            className="text-secondary"
-            // onClick={() => {
-            //   setActionType("POST");
-            //   setFormVisible(true);
-            // }}
-          >
-            <AppstoreAddOutlined
-              style={{ marginBottom: "6px", padding: 0 }}
-              className="text-primary"
-            />
-            ТО
-          </Space>
-        ),
-
-        key: "TECHNICAL_SERVICE_VIEW",
-      },
-      {
-        label: (
-          <Space
-            className="text-secondary"
-            // onClick={() => {
-            //   setActionType("POST");
-            //   setFormVisible(true);
-            // }}
-          >
-            <AppstoreAddOutlined
-              style={{ marginBottom: "6px", padding: 0 }}
-              className="text-primary"
-            />
-            МО
-          </Space>
-        ),
-
-        key: "METROLOGY_SERVICE_VIEW",
-      },
-    ],
-  };
-
-  const metrologyDocumentsViewMenuItem = (currentRow: MetrologyView) => {
-    return {
+  const questionareViewMenuItem = (record: GeneralInformationView) => {
+    const render = {
       label: (
         <Space className="text-secondary">
-          <SearchOutlined
-            style={{ marginBottom: "6px", padding: 0 }}
-            className="text-primary"
-          />
-          Документы
+          <a
+            href={
+              record && record.questionare
+                ? setFilePath(
+                    `${record.questionare.filePath}/${record.questionare.fileName}`
+                  )
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Опросный лист"
+            />
+            <Text type="secondary">Опросный лист</Text>
+          </a>
+        </Space>
+      ),
+      key: "QUESTIONARE_VIEW",
+    };
+
+    return render;
+  };
+
+  // const technologyCardsViewMenuItem = (record: GeneralInformationView) => {
+  //   const children: MenuItemType[] = [];
+
+  //   const commisionCardView = {
+  //     label: (
+  //       <Space className="text-secondary">
+  //         <a
+  //           // href={
+  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           // }
+  //           href="#"
+  //           target="_blank"
+  //           rel="noreferrer"
+  //           style={{ textDecoration: "none" }}
+  //         >
+  //           <AppstoreAddOutlined
+  //             className="text-primary"
+  //             style={{ marginBottom: 12, marginRight: 10 }}
+  //             title="ПНР"
+  //           />
+  //           <Text type="secondary">
+  //           ПНР
+  //           </Text>
+  //         </a>
+
+  //       </Space>
+  //     ),
+
+  //     key: "COMMISION_CARD_VIEW"
+  //   }
+  //   const technicalServiceCardView = {
+  //     label: (
+  //       <Space className="text-secondary">
+  //         <a
+  //           // href={
+  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           // }
+  //           href="#"
+  //           target="_blank"
+  //           rel="noreferrer"
+  //           style={{ textDecoration: "none" }}
+  //         >
+  //           <AppstoreAddOutlined
+  //             className="text-primary"
+  //             style={{ marginBottom: 12, marginRight: 10 }}
+  //             title="ТО"
+  //           />
+  //           <Text type="secondary">
+  //           ТО
+  //           </Text>
+  //         </a>
+
+  //       </Space>
+  //     ),
+
+  //     key: "TECHNICAL_SERVICE_CARD_VIEW"
+  //   }
+
+  //   const metrologyServiceCardView = {
+  //     label: (
+  //       <Space className="text-secondary">
+  //         <a
+  //           // href={
+  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           // }
+  //           href="#"
+  //           target="_blank"
+  //           rel="noreferrer"
+  //           style={{ textDecoration: "none" }}
+  //         >
+  //           <AppstoreAddOutlined
+  //             className="text-primary"
+  //             style={{ marginBottom: 12, marginRight: 10 }}
+  //             title="МО"
+  //           />
+  //           <Text type="secondary">
+  //           МО
+  //           </Text>
+  //         </a>
+
+  //       </Space>
+  //     ),
+
+  //     key: "METROLOGY_SERVICE_CARD_VIEW"
+  //   }
+
+  //   const render =
+  //   record &&
+  //     (record.technicalServiceCard ||
+  //       record.metrologyServiceCard ||
+  //       record.commisionCard )
+  //     ? {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <SearchOutlined
+  //             style={{ marginBottom: "6px", padding: 0 }}
+  //             className="text-success"
+  //           />
+  //           Тех. карты
+  //         </Space>
+  //       ),
+
+  //       key: "TECHNICAL_CARDS_VIEW",
+  //       children,
+  //     }
+  //     : {
+  //       label: "",
+  //       key: "",
+  //     };
+
+  //   return render
+  // }
+
+  const metrologyDocumentsViewMenuItem = (record: MetrologyView) => {
+    const children: MenuItemType[] = [];
+
+    const typeApprovalCertificateView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.typeApprovalCertificate
+                ? setFilePath(record.typeApprovalCertificate)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Свидетельство об утверждении типа СИ"
+            />
+            <Text type="secondary">Свидетельство об утверждении типа СИ</Text>
+          </a>
+        </Space>
+      ),
+      key: "TYPE_APPROVAL_CERTIFICATE_VIEW",
+    };
+
+    const verificationProcedureView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.verificationProcedure
+                ? setFilePath(record.verificationProcedure)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Методика поверки"
+            />
+            <Text type="secondary">Методика поверки</Text>
+          </a>
+        </Space>
+      ),
+      key: "VERIFICATION_PROCEDURE_VIEW",
+    };
+
+    const documentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.document ? setFilePath(record.document) : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Документ со сведениями о поверке/калибровке"
+            />
+            <Text type="secondary">
+              Документ со сведениями о поверке/калибровке
+            </Text>
+          </a>
+        </Space>
+      ),
+      key: "DOCUMENT_VIEW",
+    };
+
+    const arshinView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={record && record.arshin ? record.arshin : "#"}
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="ФГИС «АРШИН»"
+            />
+            <Text type="secondary">ФГИС «АРШИН»</Text>
+          </a>
+        </Space>
+      ),
+      key: "ARSHIN_VIEW",
+    };
+
+    if (record && record.typeApprovalCertificate) {
+      children.push(typeApprovalCertificateView);
+    }
+
+    if (record && record.verificationProcedure) {
+      children.push(verificationProcedureView);
+    }
+
+    if (record && record.document) {
+      children.push(documentView);
+    }
+
+    if (record && record.arshin) {
+      children.push(arshinView);
+    }
+
+    const render =
+      record &&
+      (record.typeApprovalCertificate ||
+        record.verificationProcedure ||
+        record.document ||
+        record.arshin)
+        ? {
+            label: (
+              <Space className="text-secondary">
+                <SearchOutlined
+                  style={{ marginBottom: "6px", padding: 0 }}
+                  className="text-primary"
+                />
+                Документы
+              </Space>
+            ),
+
+            key: "METROLOGY_DOCUMENTS_VIEW",
+            children,
+          }
+        : {
+            label: "",
+            key: "",
+          };
+
+    return render;
+  };
+
+  const wiringDiagramViewMenuItem = (record: CableLogView) => {
+    const render = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.wiringDiagram
+                ? setFilePath(
+                    `${record.wiringDiagram.filePath}/${record.wiringDiagram.fileName}`
+                  )
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Схема внешних электрических проводок (С5)"
+            />
+            <Text type="secondary">
+              Схема внешних электрических проводок (С5)
+            </Text>
+          </a>
         </Space>
       ),
 
-      key: "VIEW",
-      children: [
-        {
-          label: (
-            <Space className="text-secondary">
-              <Link
-                to={currentRow ? currentRow.typeApprovalCertificate : "#"}
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
-                <SearchOutlined
-                  style={{ marginRight: "6px", padding: 0 }}
-                  className="text-primary"
-                />
-                <Text type="secondary">
-                  Свидетельство об утверждении типа СИ
-                </Text>
-              </Link>
-            </Space>
-          ),
-          key: "VIEW-1",
-        },
-        {
-          label: (
-            <Space className="text-secondary">
-              <Link
-                to={currentRow ? currentRow.verificationProcedure : "#"}
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
-                <SearchOutlined
-                  style={{ marginRight: "6px", padding: 0 }}
-                  className="text-primary"
-                />
-                <Text type="secondary">Методика поверки</Text>
-              </Link>
-            </Space>
-          ),
-          key: "VIEW-2",
-        },
-        {
-          label: (
-            <Space className="text-secondary">
-              <Link
-                to={currentRow ? currentRow.document : "#"}
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
-                <SearchOutlined
-                  style={{ marginRight: "6px", padding: 0 }}
-                  className="text-primary"
-                />
-                <Text type="secondary">
-                  Документ со сведениями о поверке/калибровке
-                </Text>
-              </Link>
-            </Space>
-          ),
-          key: "VIEW-3",
-        },
-        {
-          label: (
-            <Space className="text-secondary">
-              <a
-                rel="noreferrer"
-                href={currentRow ? currentRow.arshin : "#"}
-                target="_blank"
-                style={{ textDecoration: "none" }}
-              >
-                <SearchOutlined
-                  style={{ marginRight: "6px", padding: 0 }}
-                  className="text-primary"
-                />
-                <Text type="secondary">"ФГИС «АРШИН»</Text>
-              </a>
-            </Space>
-          ),
-          key: "VIEW-4",
-        },
-      ],
+      key: "WIRING_DIAGRAM_VIEW",
     };
+
+    return render;
   };
 
-  const wiringDiagramViewMenuItem = {
-    label: (
-      <Space className="text-secondary">
-        <Link
-          to="../../../../GPN-A.PNG"
-          target="_blank"
-          style={{ textDecoration: "none" }}
-        >
-          <SearchOutlined
-            style={{
-              marginRight: "6px",
-              marginBottom: "6px",
-              padding: 0,
-            }}
-            className="text-primary"
-          />
-          <Text type="secondary">
-            Схема внешних электрических проводок (С5)
-          </Text>
-        </Link>
-      </Space>
-    ),
+  // const monitoringDocumentsViewMenuItem = {
+  //   label: (
+  //     <Space className="text-secondary">
+  //       <SearchOutlined
+  //         style={{ marginBottom: "6px", padding: 0 }}
+  //         className="text-primary"
+  //       />
+  //       Документы
+  //     </Space>
+  //   ),
 
-    key: "WIRING_DIAGRAM_VIEW",
-  };
+  //   key: "MONITORING_DOCUMENTS_VIEW",
+  //   children: [
+  //     {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
+  //             <SearchOutlined
+  //               style={{
+  //                 marginRight: "6px",
 
-  const monitoringDocumentsViewMenuItem = {
-    label: (
-      <Space className="text-secondary">
-        <SearchOutlined
-          style={{ marginBottom: "6px", padding: 0 }}
-          className="text-primary"
-        />
-        Документы
-      </Space>
-    ),
-
-    key: "MONITORING_DOCUMENTS_VIEW",
-    children: [
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-              <SearchOutlined
-                style={{
-                  marginRight: "6px",
-
-                  padding: 0,
-                }}
-                className="text-primary"
-              />
-              <Text type="secondary">
-                Ведомость смонтированного оборудования
-              </Text>
-            </Link>
-          </Space>
-        ),
-        key: "LIST_OF_INSTALLED_EQUIPMENT_VIEW",
-      },
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-              <SearchOutlined
-                style={{ marginRight: "6px", padding: 0 }}
-                className="text-primary"
-              />
-              <Text type="secondary">Акт о подключении</Text>
-            </Link>
-          </Space>
-        ),
-        key: "CONNECTION_ACT_VIEW",
-      },
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-              <SearchOutlined
-                style={{ marginRight: "6px", padding: 0 }}
-                className="text-primary"
-              />
-              <Text type="secondary">Акт об окончии ПНР</Text>
-            </Link>
-          </Space>
-        ),
-        key: "ACT_OF_COMPLETION_OOF_THE_COMMISION_WORS_VIEW",
-      },
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-              <SearchOutlined
-                style={{ marginRight: "6px", padding: 0 }}
-                className="text-primary"
-              />
-              <Text type="secondary">Протокол проверки сигналов</Text>
-            </Link>
-          </Space>
-        ),
-        key: "SIGNAL_TEST_PROTOCOL_VIEW",
-      },
-      {
-        label: (
-          <Space className="text-secondary">
-            <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-              <SearchOutlined
-                style={{ marginRight: "6px", padding: 0 }}
-                className="text-primary"
-              />
-              <Text type="secondary">Акт ввода в эксплуатацию</Text>
-            </Link>
-          </Space>
-        ),
-        key: "COMMISIONING_ACT_VIEW",
-      },
-    ],
-  };
+  //                 padding: 0,
+  //               }}
+  //               className="text-primary"
+  //             />
+  //             <Text type="secondary">
+  //               Ведомость смонтированного оборудования
+  //             </Text>
+  //           </Link>
+  //         </Space>
+  //       ),
+  //       key: "LIST_OF_INSTALLED_EQUIPMENT_VIEW",
+  //     },
+  //     {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
+  //             <SearchOutlined
+  //               style={{ marginRight: "6px", padding: 0 }}
+  //               className="text-primary"
+  //             />
+  //             <Text type="secondary">Акт о подключении</Text>
+  //           </Link>
+  //         </Space>
+  //       ),
+  //       key: "CONNECTION_ACT_VIEW",
+  //     },
+  //     {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
+  //             <SearchOutlined
+  //               style={{ marginRight: "6px", padding: 0 }}
+  //               className="text-primary"
+  //             />
+  //             <Text type="secondary">Акт об окончии ПНР</Text>
+  //           </Link>
+  //         </Space>
+  //       ),
+  //       key: "ACT_OF_COMPLETION_OOF_THE_COMMISION_WORS_VIEW",
+  //     },
+  //     {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
+  //             <SearchOutlined
+  //               style={{ marginRight: "6px", padding: 0 }}
+  //               className="text-primary"
+  //             />
+  //             <Text type="secondary">Протокол проверки сигналов</Text>
+  //           </Link>
+  //         </Space>
+  //       ),
+  //       key: "SIGNAL_TEST_PROTOCOL_VIEW",
+  //     },
+  //     {
+  //       label: (
+  //         <Space className="text-secondary">
+  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
+  //             <SearchOutlined
+  //               style={{ marginRight: "6px", padding: 0 }}
+  //               className="text-primary"
+  //             />
+  //             <Text type="secondary">Акт ввода в эксплуатацию</Text>
+  //           </Link>
+  //         </Space>
+  //       ),
+  //       key: "COMMISIONING_ACT_VIEW",
+  //     },
+  //   ],
+  // };
 
   const numberColumn: ColumnType<Views> = {
     title: "№ п/п",
@@ -1344,8 +1445,12 @@ const TableColumns = (
       columns.push(descriptionColumn);
       columns.push(actionsColumn);
 
-      menuItems.push(questionareViewMenuItem);
-      menuItems.push(technologyCardsViewMenuItem);
+      currentRow &&
+        (currentRow as GeneralInformationView).questionare &&
+        menuItems.push(
+          questionareViewMenuItem(currentRow as GeneralInformationView)
+        );
+      // menuItems.push(technologyCardsViewMenuItem);
       menuItems.push(editAssetMenuItem);
       menuItems.push(deleteAssetMenuItem);
 
@@ -1392,9 +1497,14 @@ const TableColumns = (
       });
       columns.push(actionsColumn);
 
-      menuItems.push(
-        metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
-      );
+      currentRow &&
+        ((currentRow as MetrologyView).typeApprovalCertificate ||
+          (currentRow as MetrologyView).verificationProcedure ||
+          (currentRow as MetrologyView).document ||
+          (currentRow as MetrologyView).arshin) &&
+        menuItems.push(
+          metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
+        );
       menuItems.push(editAssetMenuItem);
       menuItems.push(deleteAssetMenuItem);
 
@@ -1441,7 +1551,9 @@ const TableColumns = (
       columns.push(descriptionColumn);
       columns.push(actionsColumn);
 
-      menuItems.push(wiringDiagramViewMenuItem);
+      currentRow &&
+        (currentRow as CableLogView).wiringDiagram &&
+        menuItems.push(wiringDiagramViewMenuItem(currentRow as CableLogView));
       menuItems.push(editAssetMenuItem);
       menuItems.push(deleteAssetMenuItem);
 
@@ -1483,7 +1595,7 @@ const TableColumns = (
       columns.push(commisionDateColumn);
       columns.push(actionsColumn);
 
-      menuItems.push(monitoringDocumentsViewMenuItem);
+      // menuItems.push(monitoringDocumentsViewMenuItem);
       menuItems.push(editAssetMenuItem);
       menuItems.push(deleteAssetMenuItem);
 
