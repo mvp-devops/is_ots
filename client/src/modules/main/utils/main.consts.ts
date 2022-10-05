@@ -51,3 +51,54 @@ export const userRoles = [
     value: "EXPERT",
   },
 ];
+
+export const months = [
+  {
+    id: "01",
+    title: "Январь",
+  },
+  {
+    id: "02",
+    title: "Февраль",
+  },
+  {
+    id: "03",
+    title: "Март",
+  },
+  {
+    id: "04",
+    title: "Апрель",
+  },
+  {
+    id: "05",
+    title: "Май",
+  },
+  {
+    id: "06",
+    title: "Июнь",
+  },
+  {
+    id: "07",
+    title: "Июль",
+  },
+  {
+    id: "08",
+    title: "Август",
+  },
+  {
+    id: "09",
+    title: "Сентябрь",
+  },
+  {
+    id: "10",
+    title: "Октябрь",
+  },
+  {
+    id: "11",
+    title: "Ноябрь",
+  },
+  {
+    id: "12",
+    title: "Декабрь",
+  },
+];

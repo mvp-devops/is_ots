@@ -9,7 +9,7 @@ export const useMonitoringTable = () => {
     onSearch,
     loading,
     renderDataSource,
-    renderFormFormEditFlag,
+    renderMonitoringFormFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("monitoring");
@@ -38,7 +38,7 @@ export const useMonitoringTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderFormFormEditFlag,
+    renderMonitoringFormFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,

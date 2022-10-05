@@ -9,7 +9,7 @@ export const useGeneralInformationTable = () => {
     onSearch,
     loading,
     renderDataSource,
-    renderFormFormEditFlag,
+    renderGeneralInformationFormFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("general-information");
@@ -53,7 +53,7 @@ export const useGeneralInformationTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderFormFormEditFlag,
+    renderGeneralInformationFormFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,

@@ -140,8 +140,35 @@ export const useEquipmentAccountingTable = (target?: string) => {
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) =>
     setSearchValue(e.target.value);
 
-  const renderFormFormEditFlag =
-    formVisible && actionType === FormActions.EDIT_EQUIPMENT;
+  const renderGeneralInformationFormFormEditFlag =
+    target === "general-information" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
+
+  const renderMetrologyFormFormEditFlag =
+    target === "gmetrology" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
+
+  const renderSignalFormFormEditFlag =
+    target === "signal" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
+
+  const renderCableLogFormFormEditFlag =
+    target === "cable-log" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
+
+  const renderImpulseLineLogFormFormEditFlag =
+    target === "impulse-line-log" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
+
+  const renderMonitoringFormFormEditFlag =
+    target === "monitoring" &&
+    formVisible &&
+    actionType === FormActions.EDIT_EQUIPMENT;
 
   return {
     loading,
@@ -153,7 +180,12 @@ export const useEquipmentAccountingTable = (target?: string) => {
     subUnitsList,
     subUnitId,
     setSubUnitId,
-    renderFormFormEditFlag,
+    renderGeneralInformationFormFormEditFlag,
+    renderMetrologyFormFormEditFlag,
+    renderSignalFormFormEditFlag,
+    renderCableLogFormFormEditFlag,
+    renderImpulseLineLogFormFormEditFlag,
+    renderMonitoringFormFormEditFlag,
     currentRow,
     setCurrentRow,
     renderDataSource,

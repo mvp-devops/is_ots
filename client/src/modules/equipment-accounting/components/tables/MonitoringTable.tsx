@@ -13,14 +13,14 @@ const MonitoringTable = () => {
     onSearch,
     loading,
     dataSource,
-    renderFormFormEditFlag,
+    renderMonitoringFormFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useMonitoringTable();
 
   const columns = TableColumns("monitoring", dataSource, currentRow);
 
-  const renderForm = renderFormFormEditFlag && (
+  const renderForm = renderMonitoringFormFormEditFlag && (
     <ModalContainer
       target="monitoring"
       child={<MonitoringForm row={currentRow as MonitoringView} />}

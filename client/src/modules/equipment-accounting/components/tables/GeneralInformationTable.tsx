@@ -13,7 +13,7 @@ const GeneralInformationTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderFormFormEditFlag,
+    renderGeneralInformationFormFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,
@@ -32,7 +32,7 @@ const GeneralInformationTable = () => {
     </Row>
   );
 
-  const formRender = renderFormFormEditFlag && (
+  const formRender = renderGeneralInformationFormFormEditFlag && (
     <ModalContainer
       target="general-information"
       child={
@@ -58,8 +58,6 @@ const GeneralInformationTable = () => {
       />
     </Space>
   );
-
-  console.log(searchValue);
 
   return (
     <>

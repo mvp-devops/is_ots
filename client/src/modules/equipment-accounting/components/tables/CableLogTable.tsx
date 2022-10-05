@@ -15,7 +15,7 @@ const CableLogTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderFormFormEditFlag,
+    renderCableLogFormFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,
@@ -36,7 +36,7 @@ const CableLogTable = () => {
     </Row>
   );
 
-  const renderForm = renderFormFormEditFlag && (
+  const renderForm = renderCableLogFormFormEditFlag && (
     <ModalContainer
       target="cable-log"
       child={<CableLogForm row={currentRow as CableLogView} />}

@@ -8,7 +8,7 @@ export const useSignalTable = () => {
     onSearch,
     loading,
     renderDataSource,
-    renderFormFormEditFlag,
+    renderSignalFormFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("signal");
@@ -39,7 +39,7 @@ export const useSignalTable = () => {
   return {
     searchValue,
     onSearch,
-    renderFormFormEditFlag,
+    renderSignalFormFormEditFlag,
     loading,
     dataSource,
     currentRow,
