@@ -3,9 +3,10 @@ export const dictionariesList = [
   { id: "counterparty", title: "Контрагенты" },
   { id: "criticality", title: "Критерии критичности" },
   { id: "section", title: "Марки/разделы документации" },
-  { id: "facility", title: "Оборудование" },
-  { id: "user", title: "Пользователи" },
+  // { id: "facility", title: "Оборудование" },
+  // { id: "user", title: "Пользователи" },
   { id: "design", title: "Проектные институты" },
   { id: "stage", title: "Стадии проектирования" },
   { id: "direction", title: "Функциональные направления" },
+  { id: "technical-card", title: "Тех. карты ПНР" },
 ];

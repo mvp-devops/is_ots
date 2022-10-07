@@ -23,7 +23,9 @@ export const usePage = () => {
     (state) => state.main
   );
 
-  const { renderNsiItems } = useTypedSelector((state) => state.nsi);
+  const { renderNsiItems, dictionaryTarget } = useTypedSelector(
+    (state) => state.nsi
+  );
 
   useEffect(() => {
     currentUser &&
@@ -53,6 +55,7 @@ export const usePage = () => {
   };
 
   return {
+    dictionaryTarget,
     currentItem,
     renderNsiItems,
     setBaseTarget,

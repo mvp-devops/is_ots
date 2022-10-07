@@ -102,3 +102,5 @@ export const months = [
     title: "Декабрь",
   },
 ];
+
+export const systemType: string[] = ["КИТСО", "ПАЗ", "РСУ"];

@@ -9,14 +9,12 @@ import {
   MonitoringCreateOrUpdateAttrs,
   FacilityCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
-  FacilityView,
 } from "../../../../../../../server/common/types/equipment-accounting";
 import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
-import { useActions, useTypedSelector } from "../../../../../hooks";
+import { useTypedSelector } from "../../../../../hooks";
 import { setDate } from "../../../../../utils/main.utils";
 import { PositionTreeItem } from "../../../../position-tree";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
-import { facilityItem } from "../form.settings";
 
 type EquipmentAccountingSubFormData =
   | CableLogCreateOrUpdateAttrs
@@ -104,7 +102,6 @@ export const useEquipmentAccountingForm = (
       | Date
       | RcFile
       | CheckboxValueType[]
-      | FacilityCreateOrUpdateAttrs
       | null,
     id?: string | number | null
   ) => {
@@ -131,7 +128,6 @@ export const useEquipmentAccountingForm = (
       | Date
       | RcFile
       | CheckboxValueType[]
-      | FacilityCreateOrUpdateAttrs
       | null
   ) => {
     editRow &&
@@ -151,7 +147,6 @@ export const useEquipmentAccountingForm = (
       | Date
       | RcFile
       | CheckboxValueType[]
-      | FacilityCreateOrUpdateAttrs
       | null,
     id?: string | number | null
   ) => {
@@ -177,28 +172,15 @@ export const useEquipmentAccountingForm = (
               (item) => item.id === checkedItem?.id.toString()
             )[0]?.children || []
           );
-          unitId
-            ? setSubUnitsList(
-                currentItem?.children
-                  ?.filter((item) => item.id === checkedItem?.id.toString())[0]
-                  ?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
           break;
         }
         case "project": {
           setUnitsList(currentItem?.children || []);
-          unitId
-            ? setUnitsList(
-                currentItem?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
+
           break;
         }
         case "unit": {
-          setUnitsList([currentItem]);
+          setSubUnitsList(currentItem?.children || []);
           break;
         }
         default:
@@ -208,70 +190,18 @@ export const useEquipmentAccountingForm = (
   }, [currentItem, checkedItem, target]);
 
   useEffect(() => {
-    if (currentItem && checkedItem) {
-      switch (target) {
-        case "field": {
-          console.log("this!!!");
-          unitId
-            ? setSubUnitsList(
-                currentItem?.children
-                  ?.filter((item) => item.id === checkedItem?.id.toString())[0]
-                  ?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
-          break;
-        }
-        case "project": {
-          unitId
-            ? setUnitsList(
-                currentItem?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
-          break;
-        }
-        case "unit": {
-          setUnitsList([currentItem]);
-          break;
-        }
-        default:
-          break;
-      }
+    if (unitId) {
+      unitsList.length > 0 &&
+        setSubUnitsList(
+          unitsList.filter((item) => item.id === unitId)[0].children || []
+        );
+      unitsList.length <= 0 && setSubUnitsList(currentItem?.children || []);
     }
-  }, [unitId]);
-
-  useEffect(() => console.log("SubUnits: ", subUnitsList), [unitId]);
-
-  const { facilitiesList } = useTypedSelector(
-    (state) => state.equipmentAccounting
-  );
-
-  const [newFacility, setNewFacility] =
-    useState<FacilityCreateOrUpdateAttrs>(facilityItem);
-  const [facilities, setFacilities] = useState<FacilityView[]>(facilitiesList);
-
-  const { getFacilitiesList } = useActions();
-
-  useEffect(() => {
-    getFacilitiesList();
-  }, []);
-
-  useEffect(() => setFacilities(facilitiesList), [facilitiesList]);
-
-  const onChangeTargetId = (key: string, value: string) => {
-    onHandlerChange(key, value);
-    key === "unitId" && setUnitId(value);
-    key === "subUnitId" && setSubUnitId(value);
-  };
+  }, [unitsList, unitId]);
 
   // useEffect(() => console.log("Data: ", data), [data]);
 
   return {
-    onChangeTargetId,
-    facilities,
-    newFacility,
-    setNewFacility,
     currentId,
     target,
     itemMeansureGroup,

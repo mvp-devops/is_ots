@@ -1,5 +1,6 @@
 import {
   Button,
+  Checkbox,
   Divider,
   Form,
   Input,
@@ -16,11 +17,16 @@ import {
 } from "../../../../../../server/common/types/equipment-accounting";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
-import { sgroei } from "../../utils/equipment-accounting.consts";
 import FacilityForm from "./FacilityForm";
 import { generalInformationItem } from "./form.settings";
 import { useGeneralInformationForm } from "./hooks";
-import { FormItemUIComponent, SelectUIComponent } from "../../../../components";
+import {
+  FormItemUIComponent,
+  InputUIComponent,
+  SelectUIComponent,
+} from "../../../../components";
+import { months, systemType } from "../../../main";
+import { CheckboxValueType } from "antd/lib/checkbox/Group";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -36,6 +42,9 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
   const [addFacilityVisible, setAddFacilityVisible] = useState(false);
 
   const {
+    unitId,
+    onChangeTargetId,
+    target,
     addNewFacilityModification,
     editRow,
     facilities,
@@ -46,6 +55,10 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     onHandlerChange,
     onModificationChange,
     setNewFacility,
+    unitsList,
+    setUnitId,
+    subUnitsList,
+    setSubUnitId,
   } = useGeneralInformationForm(row, data, setData);
 
   const formItems = (
@@ -57,109 +70,74 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
         wrapperCol={{ span: 18 }}
         layout="horizontal"
         className="m-1 p-1 border"
-        style={{ width: 1000 }}
+        style={{ width: 950 }}
       >
-        {row && (
-          <>
-            <FormItemUIComponent
-              className="m-0"
-              title="Объект строительства"
-              children={
-                <SelectUIComponent
-                  id="unitId"
-                  items={[]}
-                  changeValue={onHandlerChange}
-                />
-              }
-            />
-
-            <Item
-              label={<Text type="secondary">Установка/объект</Text>}
-              className="m-0"
-            >
-              <Select
-                size="small"
-                className="text-secondary"
-                showSearch
-                optionFilterProp="children"
-                notFoundContent={
-                  <Space className="d-flex justify-content-center p-3">
-                    <Text type="warning">
-                      <ExclamationCircleOutlined
-                        style={{ fontSize: 20, marginBottom: 2 }}
-                      />
-                    </Text>
-
-                    <Text type="secondary">
-                      Нет данных для отображения. Уточнить поиск
-                    </Text>
-                  </Space>
-                }
-                filterOption={(input, option) =>
-                  (option!.children as unknown as string).includes(input)
-                }
-                filterSort={(optionA, optionB) =>
-                  (optionA!.children as unknown as string)
-                    .toLowerCase()
-                    .localeCompare(
-                      (optionB!.children as unknown as string).toLowerCase()
-                    )
-                }
-                onChange={(value: string) =>
-                  onHandlerChange("subUnitId", value)
-                }
-              >
-                {sgroei.map((item) => (
-                  <Option key={item.id} value={item.id}>
-                    {item.title}
-                  </Option>
-                ))}
-              </Select>
-            </Item>
-            <Divider className="m-1 p-0" />
-          </>
+        {target !== "unit" && target !== "sub-unit" && (
+          <FormItemUIComponent
+            className="m-0"
+            title="Объект строительства"
+            children={
+              <SelectUIComponent
+                defaultValue={row && row.unitId}
+                id="unitId"
+                items={unitsList}
+                changeValue={onChangeTargetId}
+              />
+            }
+          />
         )}
-        <Item
-          label={<Text type="secondary">Место установки</Text>}
+        {subUnitsList.length > 0 && (
+          <FormItemUIComponent
+            className="m-0"
+            title="Установка/объект"
+            children={
+              <SelectUIComponent
+                defaultValue={row && row.subUnitId}
+                id="subUnitId"
+                items={subUnitsList}
+                changeValue={onChangeTargetId}
+              />
+            }
+          />
+        )}
+        <FormItemUIComponent
           className="m-0"
-        >
-          <Input
-            size="small"
-            className="text-secondary"
-            value={row && item.installationLocation}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("installationLocation", e.target.value)
-            }
-          />
-        </Item>
-        <Item label={<Text type="secondary">TAG</Text>} className="m-0">
-          <Input
-            size="small"
-            style={{ maxWidth: 150 }}
-            className="text-secondary"
-            value={row && item.tag}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("tag", e.target.value)
-            }
-          />
-        </Item>
-        <Item
-          label={<Text type="secondary">Контролируемый параметр</Text>}
+          title="Место установки"
+          children={
+            <InputUIComponent
+              value={item.installationLocation}
+              id="installationLocation"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
           className="m-0"
-        >
-          <Input
-            size="small"
-            className="text-secondary"
-            value={row && item.controlledParameter}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("controlledParameter", e.target.value)
-            }
-          />
-        </Item>
+          title="TAG"
+          children={
+            <InputUIComponent
+              value={item.tag}
+              id="tag"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
+          className="m-0"
+          title="Контролируемый параметр"
+          children={
+            <InputUIComponent
+              value={item.controlledParameter}
+              id="controlledParameter"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
         <Divider className="m-1 p-0" />
+
         <Item
-          label={<Text type="secondary">Наименование</Text>}
           className="m-0"
+          label={<Text type="secondary">Наименование</Text>}
         >
           <Select
             size="small"
@@ -248,6 +226,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                     <Input
                       size="small"
                       style={{ minWidth: 500 }}
+                      className="text-secondary"
                       placeholder="Добавить новую модификацию"
                       ref={inputRef}
                       value={newModification}
@@ -255,6 +234,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                     />
                     <Button
                       type="text"
+                      className="text-secondary"
                       icon={<PlusOutlined style={{ marginBottom: 14 }} />}
                       onClick={addNewFacilityModification}
                     >
@@ -269,18 +249,32 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             </Select>
           </Item>
         )}
-        <Item label={<Text type="secondary">Зав. №</Text>} className="m-0">
-          <Input
-            size="small"
-            style={{ maxWidth: 150 }}
-            className="text-secondary"
-            value={row && item.factoryNumber}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("factoryNumber", e.target.value)
-            }
-          />
-        </Item>
 
+        <FormItemUIComponent
+          className="m-0"
+          title="Принадлежность к системам"
+          children={
+            <Checkbox.Group
+              defaultValue={row && row.systemType}
+              options={systemType}
+              onChange={(checkedValues: CheckboxValueType[]) =>
+                onHandlerChange("systemType", checkedValues)
+              }
+            />
+          }
+        />
+        <FormItemUIComponent
+          className="m-0"
+          title="Зав. №"
+          children={
+            <InputUIComponent
+              value={item.factoryNumber}
+              id="factoryNumber"
+              style={{ maxWidth: 150 }}
+              changeValue={onHandlerChange}
+            />
+          }
+        />
         <Item
           label={<Text type="secondary">Опросный лист</Text>}
           className="m-0"
@@ -302,72 +296,68 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           </Upload>
         </Item>
 
-        <Item
-          label={<Text type="secondary">Спецификация поставки</Text>}
+        <FormItemUIComponent
           className="m-0"
-        >
-          <Input
-            size="small"
-            className="text-secondary"
-            value={row && item.specification}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("specification", e.target.value)
-            }
-          />
-        </Item>
-
-        <Item label={<Text type="secondary">Год выпуска</Text>} className="m-0">
-          <Input
-            size="small"
-            type={"number"}
-            style={{ maxWidth: 150 }}
-            className="text-secondary"
-            value={row && item.year}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("year", e.target.value)
-            }
-          />
-        </Item>
-        <Item
-          label={<Text type="secondary">Месяц выпуска</Text>}
+          title="Спецификация поставки"
+          children={
+            <InputUIComponent
+              value={item.specification}
+              id="specification"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
           className="m-0"
-        >
-          <Input
-            size="small"
-            type={"number"}
-            style={{ maxWidth: 150 }}
-            className="text-secondary"
-            value={row && item.month}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("month", e.target.value)
-            }
-          />
-        </Item>
-        <Item
-          label={<Text type="secondary">Срок эксплуатации, мес.</Text>}
+          title="Год выпуска"
+          children={
+            <InputUIComponent
+              type="number"
+              style={{ maxWidth: 150 }}
+              value={item.year}
+              id="year"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
           className="m-0"
-        >
-          <Input
-            size="small"
-            type={"number"}
-            style={{ maxWidth: 150 }}
-            className="text-secondary"
-            value={row && item.period}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("period", e.target.value)
-            }
-          />
-        </Item>
-        <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
-          <Input
-            size="small"
-            className="text-secondary"
-            value={row && item.description}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              onHandlerChange("description", e.target.value)
-            }
-          />
-        </Item>
+          title="Месяц выпуска"
+          children={
+            <SelectUIComponent
+              sortKey="id"
+              style={{ maxWidth: 150 }}
+              defaultValue={row && row.month}
+              id="month"
+              items={months}
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
+          className="m-0"
+          title="Срок эксплуатации, мес."
+          children={
+            <InputUIComponent
+              style={{ maxWidth: 150 }}
+              type="number"
+              value={item.period}
+              id="period"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
+        <FormItemUIComponent
+          className="m-0"
+          title="Примечание"
+          children={
+            <InputUIComponent
+              value={item.description}
+              id="description"
+              changeValue={onHandlerChange}
+            />
+          }
+        />
       </Form>
 
       {row && (
@@ -376,10 +366,6 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           <Space className="d-flex justify-content-end mb-2">
             <Button type="primary" className="me-1">
               Обновить
-            </Button>
-
-            <Button type="default" className="me-2">
-              Отмена
             </Button>
           </Space>
         </>

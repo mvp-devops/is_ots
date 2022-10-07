@@ -19,6 +19,7 @@ interface SelectUIComponentProps {
   style?: Object;
   placeholder?: string;
   props?: SelectProps;
+  sortKey?: string;
 }
 
 const SelectUIComponent: FC<SelectUIComponentProps> = ({
@@ -33,8 +34,23 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   itemId,
   style,
   placeholder,
+  sortKey,
   props,
 }) => {
+  const dataSourse = sortKey
+    ? items.map((item) => (
+        <Option key={item.id} value={item.value ? item.value : item.id}>
+          {item.title}
+        </Option>
+      ))
+    : items
+        .sort((a, b) => (a.title < b.title ? -1 : 0))
+        .map((item) => (
+          <Option key={item.id} value={item.value ? item.value : item.id}>
+            {item.title}
+          </Option>
+        ));
+
   return (
     <Select
       {...props}
@@ -65,18 +81,12 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
       }
       filterSort={(optionA, optionB) =>
         (optionA!.children as unknown as string)
-          .toLowerCase()
-          .localeCompare((optionB!.children as unknown as string).toLowerCase())
+          .toUpperCase()
+          .localeCompare((optionB!.children as unknown as string).toUpperCase())
       }
       onChange={(value: string) => changeValue(id, value, itemId)}
     >
-      {items
-        .sort((a, b) => (a.title < b.title ? -1 : 0))
-        .map((item) => (
-          <Option key={item.id} value={item.value ? item.value : item.id}>
-            {item.title}
-          </Option>
-        ))}
+      {dataSourse}
     </Select>
   );
 };
