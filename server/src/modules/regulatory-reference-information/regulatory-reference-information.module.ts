@@ -10,6 +10,8 @@ import {
   UserEntity,
   StageEntity,
   SectionEntity,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 } from "./entities";
 import { RegulatoryReferenceInformationController } from "./regulatory-reference-information.controller";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
@@ -27,6 +29,8 @@ import { RegulatoryReferenceInformationService } from "./regulatory-reference-in
       UserEntity,
       StageEntity,
       SectionEntity,
+      TechnicalCardEntity,
+      TechnicalCardOperationEntity,
     ]),
 
     forwardRef(() => FileStorageModule),

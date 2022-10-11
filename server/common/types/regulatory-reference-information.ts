@@ -86,6 +86,19 @@ export interface UserView {
   avatar?: string | null;
 }
 
+export interface TechnicalCardOperationCreateOrUpdateAttrs {
+  technicalCardId: string | number | null;
+  workType: "" | "" | "";
+  operationTitle: string;
+  categoryExecutor: string;
+  laborCosts: number;
+}
+
+export interface TechnicalCardCreateOrUpdateAttrs
+  extends RegulatoryReferenceInformationCreationAttrs {
+  operations?: TechnicalCardOperationCreateOrUpdateAttrs[];
+}
+
 export type NsiEntries =
   | CounterpartyEntity
   | CriticalityEntity

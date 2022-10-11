@@ -6,7 +6,10 @@ import {
   Injectable,
 } from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
-import { UserView } from "../../../common/types/regulatory-reference-information";
+import {
+  TechnicalCardCreateOrUpdateAttrs,
+  UserView,
+} from "../../../common/types/regulatory-reference-information";
 import { FileStorageService, LogoEntity } from "../file-storage";
 import { SubsidiaryEntity, FieldEntity } from "../position-tree";
 import {
@@ -18,6 +21,8 @@ import {
   UserEntity,
   StageEntity,
   SectionEntity,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 } from "./entities";
 import {
   CreateRegulatoryReferenceInformationDto,
@@ -48,6 +53,7 @@ type RegulatoryReferenceInformationView =
   | EquipmentEntity
   | StageEntity
   | SectionEntity
+  | TechnicalCardEntity
   | null;
 
 @Injectable()
@@ -67,6 +73,10 @@ export class RegulatoryReferenceInformationService {
     private stageRepository: typeof StageEntity,
     @InjectModel(SectionEntity)
     private sectionRepository: typeof SectionEntity,
+    @InjectModel(TechnicalCardEntity)
+    private technicalCardRepository: typeof TechnicalCardEntity,
+    @InjectModel(TechnicalCardOperationEntity)
+    private TechnicalCardOperationRepository: typeof TechnicalCardOperationEntity,
 
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
@@ -224,6 +234,13 @@ export class RegulatoryReferenceInformationService {
         item = await this.sectionRepository.create(dto);
         break;
       }
+      case "technical-card": {
+        item = await this.technicalCardRepository.create(
+          dto as TechnicalCardCreateOrUpdateAttrs
+        );
+        const { operations } = dto<TechnicalCardCreateOrUpdateAttrs>;
+        break;
+      }
     }
 
     file &&
@@ -302,6 +319,13 @@ export class RegulatoryReferenceInformationService {
         item = await this.sectionRepository.findOne({ where: { id } });
         break;
       }
+      case "technical-card": {
+        await this.technicalCardRepository.update(<UpdateNSIDto>dto, {
+          where: { id },
+        });
+        item = await this.technicalCardRepository.findOne({ where: { id } });
+        break;
+      }
 
       // case "user": {
 
@@ -362,6 +386,11 @@ export class RegulatoryReferenceInformationService {
       case "section": {
         item = await this.sectionRepository.findOne({ where: { id } });
         await this.sectionRepository.destroy({ where: { id } });
+        break;
+      }
+      case "technical-card": {
+        item = await this.technicalCardRepository.findOne({ where: { id } });
+        await this.technicalCardRepository.destroy({ where: { id } });
         break;
       }
       // case "user": {
@@ -453,6 +482,13 @@ export class RegulatoryReferenceInformationService {
         });
         break;
       }
+      case "technical-card": {
+        item = await this.technicalCardRepository.findOne({
+          where: { id },
+          include: [],
+        });
+        break;
+      }
       default:
         break;
     }
@@ -500,6 +536,7 @@ export class RegulatoryReferenceInformationService {
         });
         break;
       }
+
       // case "user": {
       //   items = await this.userRepository.findAll({
       //     include: [
@@ -523,6 +560,15 @@ export class RegulatoryReferenceInformationService {
         items = await this.sectionRepository.findAll({
           include: [],
         });
+
+        break;
+      }
+
+      case "technical-card": {
+        items = await this.technicalCardRepository.findAll({
+          include: [],
+        });
+
         break;
       }
       default:

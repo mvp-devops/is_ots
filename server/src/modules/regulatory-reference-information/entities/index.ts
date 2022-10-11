@@ -6,6 +6,8 @@ import { CriticalityEntity } from "./schemas/criticality-entity";
 import { UserEntity } from "./schemas/user-entity";
 import { StageEntity } from "./schemas/stage.entity";
 import { SectionEntity } from "./schemas/section.entity";
+import { TechnicalCardEntity } from "./schemas/technical-card.entity";
+import { TechnicalCardOperationEntity } from "./schemas/technical-card-operation.entity";
 
 export {
   CounterpartyEntity,
@@ -16,4 +18,6 @@ export {
   UserEntity,
   StageEntity,
   SectionEntity,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 };

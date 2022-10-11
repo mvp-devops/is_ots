@@ -5,6 +5,7 @@ import {
   DesignOrCounterpartyCreationAttrs,
   CriticalityCreationAttrs,
   UserCreateOrUpdateAttrs,
+  TechnicalCardCreateOrUpdateAttrs,
 } from "../../../../common/types/regulatory-reference-information";
 
 export class CreateDesignOrCounterpartyDto
@@ -173,4 +174,26 @@ export class CreateUserDto implements UserCreateOrUpdateAttrs {
     description: "Роли доступа",
   })
   readonly roles: string[];
+}
+
+export class CreateTechnicalCardDto
+  implements TechnicalCardCreateOrUpdateAttrs
+{
+  @ApiProperty({
+    example: "Наименование критерия критичности",
+    description: "Наименование критерия критичности",
+  })
+  readonly title: string;
+
+  @ApiProperty({
+    example: "20",
+    description: "Вес критерия критичности",
+  })
+  readonly code: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  readonly description: string;
 }

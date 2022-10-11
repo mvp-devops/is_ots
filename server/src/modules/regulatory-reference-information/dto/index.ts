@@ -2,6 +2,7 @@ import {
   CreateCriticalityDto,
   CreateDesignOrCounterpartyDto,
   CreateNSIDto,
+  CreateTechnicalCardDto,
   CreateUserDto,
 } from "./create-regulatory-reference-information.dto";
 import {
@@ -15,7 +16,8 @@ type CreateRegulatoryReferenceInformationDto =
   | CreateDesignOrCounterpartyDto
   | CreateNSIDto
   | CreateCriticalityDto
-  | CreateUserDto;
+  | CreateUserDto
+  | CreateTechnicalCardDto;
 
 type UpdateRegulatoryReferenceInformationDto =
   | UpdateDesignOrCounterpartyDto
