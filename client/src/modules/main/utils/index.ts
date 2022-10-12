@@ -1,3 +1,6 @@
-import { getUniqueAssetsOfArrayOfTheObjects } from "./main.utils";
+import {
+  getUniqueAssetsOfArrayOfTheObjects,
+  setCurrentDate,
+} from "./main.utils";
 
-export { getUniqueAssetsOfArrayOfTheObjects };
+export { getUniqueAssetsOfArrayOfTheObjects, setCurrentDate };

@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import {
   CommentAccountingNSIView,
   DesignDocumentCommentView,
-} from "../../../../../../../../server/common/types/comments-accounting";
-import { useActions, useTypedSelector } from "../../../../../../hooks";
+} from "../../../..";
+import { useActions, useTypedSelector } from "../../../../../..";
 import { FormActions } from "../../../../../main";
 import { getAllItems as getNsiItems } from "../../../../../regulatory-reference-information";
 

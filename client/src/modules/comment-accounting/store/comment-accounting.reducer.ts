@@ -1,8 +1,4 @@
-import {
-  ActionTypes,
-  EssenceAction,
-  EssenceState,
-} from "../types/comment-accounting.types";
+import { ActionTypes, EssenceAction, EssenceState } from "..";
 
 const initialState: EssenceState = {
   currentComment: null,

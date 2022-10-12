@@ -1,12 +1,10 @@
 import axios from "axios";
 import { setUrl } from "../../main";
 import {
-  CollectiveCheckSheetHeaders,
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentView,
-} from "./../../../../../server/common/types/comments-accounting";
+} from "./../types";
 import download from "js-file-download";
-import { URLSearchParams } from "url";
 
 const baseUrl = "api/comment-accounting";
 

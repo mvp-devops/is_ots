@@ -9,7 +9,7 @@ import {
   systemType,
 } from "./utils/main.consts";
 
-import { getUniqueAssetsOfArrayOfTheObjects } from "./utils";
+import { getUniqueAssetsOfArrayOfTheObjects, setCurrentDate } from "./utils";
 
 export type { MenuItem, ListItem };
 
@@ -24,5 +24,6 @@ export {
   tableLocale,
   userRoles,
   setFilePath,
+  setCurrentDate,
   getUniqueAssetsOfArrayOfTheObjects,
 };

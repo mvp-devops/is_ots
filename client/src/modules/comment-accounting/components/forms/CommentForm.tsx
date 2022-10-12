@@ -1,5 +1,5 @@
 import { Button, Divider, Form, Space, Typography } from "antd";
-import { DesignDocumentCommentCreationAttrs } from "../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentCreationAttrs } from "../../types";
 import SolutionForm from "./SolutionForm";
 import { useCommentAccountingForm } from "./hooks/useCommentAccountingForm";
 import {

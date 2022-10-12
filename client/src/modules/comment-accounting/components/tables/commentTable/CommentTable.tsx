@@ -1,6 +1,6 @@
 import { Table } from "antd";
 
-import { DesignDocumentCommentView } from "../../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from "../../..";
 import { tableLocale } from "../../../../main";
 
 import { useCommentTable } from "./hooks/useCommentTable";
@@ -9,8 +9,6 @@ import CommentTableColumns from "./CommentTableColumns";
 import CommentTableSummary from "./CommentTableSummary";
 import CommentTableFooter from "./CommentTableFooter";
 import SolutionTable from "../solutionTable/";
-import { ModalContainer } from "../../../../../components";
-import { CommentForm } from "../../forms";
 import { useCommentAccounting } from "../../../hooks";
 
 const CommentTable = () => {
@@ -20,23 +18,7 @@ const CommentTable = () => {
     setCurrentComment,
   } = useCommentTable();
 
-  const {
-    renderCommentAccountingFormFlag,
-    formVisible,
-    setFormVisible,
-    actionType,
-  } = useCommentAccounting();
-
   const columns = CommentTableColumns();
-
-  // const renderForm = renderCommentAccountingFormFlag && (
-  //   <ModalContainer
-  //     // show={formVisible}
-  //     // onCancel={() => setFormVisible(false)}
-  //     // action={actionType}
-  //     child={<CommentForm />}
-  //   />
-  // );
 
   return (
     <>

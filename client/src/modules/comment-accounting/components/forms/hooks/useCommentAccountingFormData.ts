@@ -1,13 +1,7 @@
-import { useActions } from "./../../../../../hooks/useActions";
-import { useCallback, useEffect, useState } from "react";
-import {
-  CheckListSets,
-  CheckListSettings,
-  CheckListView,
-} from "../../../../../../../server/common/types/comments-accounting";
-import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
-import { useTypedSelector } from "../../../../../hooks";
-import { getCheckList } from "../../../../position-tree/api/position-tree.api";
+import { useEffect, useState } from "react";
+import { CheckListSets, CheckListSettings } from "../../../types";
+import { NSIView } from "../../../types";
+import { useTypedSelector, useActions } from "../../../../../hooks";
 import { getItems } from "../../../../regulatory-reference-information";
 import { initCheckListSets, initCheckListSettingsItem } from "../form.settings";
 

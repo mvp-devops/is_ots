@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useActions, useTypedSelector } from "../../../hooks";
+import { useActions, useTypedSelector } from "../../..";
 import { FormActions } from "../../main";
 
 export const useCommentAccounting = () => {
@@ -14,11 +14,6 @@ export const useCommentAccounting = () => {
         (actionType === FormActions.ADD_COMMENT ||
           actionType === FormActions.EDIT_COMMENT ||
           actionType === FormActions.REMOVE_COMMENT)
-    );
-
-    console.log(
-      "renderCommentAccountingFormFlag: ",
-      renderCommentAccountingFormFlag
     );
   }, [actionType, formVisible]);
 

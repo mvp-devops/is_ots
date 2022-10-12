@@ -1,5 +1,5 @@
 import { ColumnFilterItem } from "antd/lib/table/interface";
-import { DesignDocumentCommentView } from "../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from "../..";
 
 export const setCommentFilters = (
   target: string,

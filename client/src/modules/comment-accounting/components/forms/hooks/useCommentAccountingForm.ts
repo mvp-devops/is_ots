@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import {
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentSolutionCreationAttrs,
-} from "../../../../../../../server/common/types/comments-accounting";
-import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
+  NSIView,
+} from "../../../types";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
 import { FormActions } from "../../../../main";
 import { useFileStorage } from "../../../../file-storage";

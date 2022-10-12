@@ -16,20 +16,18 @@ import {
   FileUnknownOutlined,
 } from "@ant-design/icons";
 import { FC, ReactNode } from "react";
-import { DesignDocumentCommentView } from "../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from "../..";
 import {
   criticalityRequestData,
   solutionRequestData,
   statusRequestData,
 } from "../../utils/comment-accounting.consts";
 import SolutionTable from "./SolutionTable";
-import { useNavigate } from "react-router-dom";
 import { setCommentFilters } from "./table.settings";
 import { FormActions, setFilePath, tableLocale } from "../../../main";
 import { useCommentAccounting } from "../../hooks";
-import { useCommentAccountingTable } from "./hooks/useCommentAccountingTable";
 import { useCollectiveCheckSheet } from "../../views/collective-check-list/hooks/useCollectiveCheckSheet";
-import { useActions, useTypedSelector } from "../../../../hooks";
+import { useTypedSelector } from "../../../../hooks";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -43,18 +41,11 @@ const { Row, Cell } = Table.Summary;
 const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const { setFormVisible, setActionType } = useCommentAccounting();
 
-  // const { setCurrentComment } = useActions();
-
   const { currentDesignDocument } = useTypedSelector(
     (state) => state.fileStorage
   );
 
   const { dataSource } = useCollectiveCheckSheet();
-
-  const navigate = useNavigate();
-
-  const openDocument = (baseUrl: string, documentPath: string) =>
-    navigate(`${baseUrl}/${documentPath}`, { replace: true });
 
   const menu = (
     <Menu

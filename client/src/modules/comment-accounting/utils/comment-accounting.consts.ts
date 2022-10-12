@@ -1,4 +1,4 @@
-import { CommentAccountingNSIView } from "../../../../../server/common/types/comments-accounting";
+import { CommentAccountingNSIView } from "..";
 
 export const statusRequestData: CommentAccountingNSIView[] = [
   {

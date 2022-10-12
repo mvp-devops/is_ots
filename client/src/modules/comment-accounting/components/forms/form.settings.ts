@@ -3,8 +3,8 @@ import {
   CheckListSettings,
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentView,
-} from "../../../../../../server/common/types/comments-accounting";
-import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
+  DesignDocumentView,
+} from "../../types";
 
 export const commentItem: DesignDocumentCommentCreationAttrs = {
   id: null,

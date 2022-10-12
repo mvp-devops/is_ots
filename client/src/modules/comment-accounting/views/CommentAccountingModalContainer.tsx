@@ -1,5 +1,5 @@
+import { FC, ReactNode } from "react";
 import { Modal, Space, Typography } from "antd";
-import React, { FC, ReactNode } from "react";
 import { CloseOutlined } from "@ant-design/icons";
 import { FormActions } from "../../main";
 

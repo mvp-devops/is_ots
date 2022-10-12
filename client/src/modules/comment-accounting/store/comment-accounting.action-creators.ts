@@ -1,17 +1,16 @@
 import { Dispatch } from "redux";
 import {
+  ActionTypes,
+  EssenceAction,
   DesignDocumentCommentCreationAttrs,
   DesignDocumentCommentView,
-} from "../../../../../server/common/types/comments-accounting";
-import {
   getAllItems,
   getOneItem,
   createOneEssence,
   createManyEssences,
   updateOneEssence,
   deleteOneEssence,
-} from "../api";
-import { ActionTypes, EssenceAction } from "../types";
+} from "..";
 
 export const createComment = (item: DesignDocumentCommentCreationAttrs) => {
   return async (dispatch: Dispatch<EssenceAction>) => {

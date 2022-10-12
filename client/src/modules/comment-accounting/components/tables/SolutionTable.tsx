@@ -4,7 +4,7 @@ import { Table, TableColumnsType, Typography } from "antd";
 import {
   DesignDocumentCommentSolutionView,
   DesignDocumentCommentView,
-} from "../../../../../../server/common/types/comments-accounting";
+} from "../..";
 import { setSolutionFilters } from "./table.settings";
 import { tableLocale } from "../../../main";
 

@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 
-import { DesignDocumentCommentView } from "../../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from "../../..";
 import { FormActions, setFilePath } from "../../../../main";
 import { useCommentTable } from "./hooks/useCommentTable";
 import { setCommentFilters } from "../table.settings";

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DesignDocumentCommentView } from "../../../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from "../../..";
 
 export const useCommentAccountingTable = () => {
   const [selectedRow, setSelectedRow] =

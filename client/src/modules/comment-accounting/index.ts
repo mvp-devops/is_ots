@@ -1,11 +1,30 @@
-// import { CommentFormProps } from "./components/forms/CommentForm";
-// import { SolutionFormProps } from "./components/forms/SolutionForm";
-
-// import { CommentTableProps } from "./components/tables/CommentTable";
-// import { SolutionTableProps } from "./components/tables/SolutionTable";
-
 import { commentAccountingReducer } from "./store/comment-accounting.reducer";
 import * as commentAccountingActionCreators from "./store/comment-accounting.action-creators";
+
+import {
+  ActionTypes,
+  EssenceAction,
+  EssenceState,
+  DesignDocumentCommentView,
+  DesignDocumentCommentCreationAttrs,
+  DesignDocumentCommentSolutionCreationAttrs,
+  CommentAccountingNSIView,
+  DesignDocumentCommentSolutionView,
+  CheckListCriticalityCriterions,
+  CheckListStageCriterions,
+  DesignDocumentView,
+  CheckListSets,
+  CheckListSettings,
+} from "./types";
+
+import {
+  getAllItems,
+  getOneItem,
+  createOneEssence,
+  createManyEssences,
+  updateOneEssence,
+  deleteOneEssence,
+} from "./api";
 
 import { useCommentAccounting } from "./hooks";
 
@@ -14,22 +33,40 @@ import {
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
 } from "./views";
+
 import {
   CommentForm,
   SolutionForm,
   useCommentAccountingFormData,
   CheckListForm,
-  // CommentTable,
-  // SolutionTable,
-  // useCommentAccountingTableData,
 } from "./components";
 
-// export type {
-//   CommentFormProps,
-//   CommentTableProps,
-//   SolutionFormProps,
-//   SolutionTableProps,
-// };
+export { commentAccountingReducer, commentAccountingActionCreators };
+
+export type {
+  EssenceAction,
+  EssenceState,
+  DesignDocumentCommentView,
+  DesignDocumentCommentCreationAttrs,
+  DesignDocumentCommentSolutionCreationAttrs,
+  CommentAccountingNSIView,
+  DesignDocumentCommentSolutionView,
+  CheckListCriticalityCriterions,
+  CheckListStageCriterions,
+  DesignDocumentView,
+  CheckListSets,
+  CheckListSettings,
+};
+export { ActionTypes };
+
+export {
+  getAllItems,
+  getOneItem,
+  createOneEssence,
+  createManyEssences,
+  updateOneEssence,
+  deleteOneEssence,
+};
 
 export {
   CheckListForm,
@@ -39,7 +76,5 @@ export {
   CommentForm,
   SolutionForm,
   useCommentAccountingFormData,
-  commentAccountingReducer,
-  commentAccountingActionCreators,
   useCommentAccounting,
 };

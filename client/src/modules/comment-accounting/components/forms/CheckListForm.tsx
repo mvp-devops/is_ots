@@ -11,7 +11,7 @@ import {
 } from "antd";
 
 import { ChangeEvent } from "react";
-import { CheckListSettings } from "../../../../../../server/common/types/comments-accounting";
+import { CheckListSettings } from "../../types";
 import { DeleteOutlined, ExclamationCircleOutlined } from "@ant-design/icons";
 
 import { useCommentAccountingFormData } from "./hooks/useCommentAccountingFormData";

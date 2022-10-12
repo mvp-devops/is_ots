@@ -1,4 +1,4 @@
-import { DesignDocumentCommentView } from "../../../../../server/common/types/comments-accounting";
+import { DesignDocumentCommentView } from ".";
 
 export interface EssenceState {
   error: string | null;

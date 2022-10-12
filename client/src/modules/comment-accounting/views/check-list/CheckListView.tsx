@@ -1,9 +1,10 @@
 import { Divider, Space, Typography } from "antd";
 import { FileExcelOutlined } from "@ant-design/icons";
-import { setCurrentDate } from "../../../../utils/main.utils";
-import Header from "./Header";
+
+import { useTypedSelector } from "../../../..";
+import { setCurrentDate } from "../../../main";
 import { CheckListTable } from "../../components";
-import { useTypedSelector } from "../../../../hooks";
+import { Header } from ".";
 
 const { Text } = Typography;
 
