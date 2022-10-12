@@ -2,8 +2,6 @@ import { Input, Space, Typography } from "antd";
 import { PlusOutlined, SearchOutlined } from "@ant-design/icons";
 import { FormActions } from "../../../main";
 import { useFileStorageTable } from "./hooks";
-import { FC } from "react";
-import { InputUIComponent } from "../../../../components";
 
 const { Text } = Typography;
 

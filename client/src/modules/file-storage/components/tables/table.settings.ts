@@ -1,5 +1,5 @@
 import { ColumnFilterItem } from "antd/lib/table/interface";
-import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
+import { DesignDocumentView } from "../../types";
 
 export const setTableColumnFilters = (
   target: string,

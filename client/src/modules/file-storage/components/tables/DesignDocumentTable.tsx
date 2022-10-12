@@ -6,21 +6,19 @@ import {
   DownloadOutlined,
 } from "@ant-design/icons";
 
-import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
+import { DesignDocumentView } from "../../types";
 import { FormActions, tableLocale } from "../../../main";
 import { DesignDocumentForm } from "../forms";
 import { ModalContainer } from "../../../../components";
 import { useFileStorageTable } from "./hooks";
 import TableColumns from "./TableColumns";
 import TableFooter from "./TableFooter";
-import TableTitle from "./TableTitle";
 import {
   CollectiveCheckSheet,
   CommentAccountingModalContainer,
   CommentForm,
   useCommentAccounting,
 } from "../../../comment-accounting";
-import { memo } from "react";
 
 const { Text } = Typography;
 const { Content } = Layout;

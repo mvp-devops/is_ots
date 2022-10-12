@@ -1,15 +1,16 @@
 import { notification } from "antd";
 import { Dispatch } from "redux";
 import {
+  ActionTypes,
+  EssenceAction,
   DesignDocumentCreateOrUpdateAttrs,
   DesignDocumentView,
-} from "../../../../../server/common/types/file-storage";
-import { getAllEssences } from "../api";
+} from "../types";
 import {
+  getAllEssences,
   createDesignDocument,
   deleteDesignDocument,
-} from "../api/file-storage.api";
-import { ActionTypes, EssenceAction } from "../types/file-storage.types";
+} from "../api";
 
 export const getAllDesignDocuments = (
   parrentTarget: string,

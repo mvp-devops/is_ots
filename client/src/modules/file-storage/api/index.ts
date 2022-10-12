@@ -1,3 +1,7 @@
-import { getAllEssences } from "./file-storage.api";
+import {
+  getAllEssences,
+  createDesignDocument,
+  deleteDesignDocument,
+} from "./file-storage.api";
 
-export { getAllEssences };
+export { getAllEssences, createDesignDocument, deleteDesignDocument };

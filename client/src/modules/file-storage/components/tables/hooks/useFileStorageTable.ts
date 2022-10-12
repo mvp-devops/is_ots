@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { DesignDocumentView } from "../../../../../../../server/common/types/file-storage";
+import { DesignDocumentView } from "../../../types";
 import { useActions, useTypedSelector } from "../../../../../hooks";
 import { useFileStorage } from "../../../hooks";
 

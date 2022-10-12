@@ -1,7 +1,7 @@
 import {
   DesignDocumentCreateOrUpdateAttrs,
   DesignDocumentView,
-} from "../../../../../../server/common/types/file-storage";
+} from "../../types";
 
 export const designDocumentItem: DesignDocumentCreateOrUpdateAttrs = {
   projectId: null,

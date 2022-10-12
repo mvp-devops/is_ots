@@ -8,7 +8,7 @@ import {
   SearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
-import { DesignDocumentView } from "../../../../../../server/common/types/file-storage";
+import { DesignDocumentView } from "../../types";
 import { FormActions, setFilePath } from "../../../main";
 import { useFileStorage } from "../../hooks";
 import { setTableColumnFilters } from "./table.settings";

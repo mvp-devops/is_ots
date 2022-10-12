@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { RcFile } from "antd/lib/upload";
-import { DesignDocumentCreateOrUpdateAttrs } from "../../../../../../../server/common/types/file-storage";
+import { DesignDocumentCreateOrUpdateAttrs, NSIView } from "../../../types";
 import { useActions } from "../../../../../hooks";
 import { useFileStorage } from "../../..";
 import { usePositionTree } from "../../../../position-tree";
@@ -8,7 +8,6 @@ import { notification } from "antd";
 import { FormActions } from "../../../../main";
 import { initData } from "../form.settings";
 import { useRegulatoryReferenceInformation } from "../../../../regulatory-reference-information";
-import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
 
 export const useFileStorageForm = () => {
   const { setFormVisible, actionType, currentDesignDocument } =
