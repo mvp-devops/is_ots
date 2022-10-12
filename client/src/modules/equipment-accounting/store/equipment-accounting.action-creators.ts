@@ -8,7 +8,10 @@ import {
   SignalCreateOrUpdateAttrs,
   SummaryListOfEquipmentFormData,
   SummaryListOfEquipmentView,
-} from "../../../../../server/common/types/equipment-accounting";
+  ActionTypes,
+  EssenceAction,
+} from "../types";
+
 import {
   createManyEssences,
   createOneEssence,
@@ -32,11 +35,7 @@ import {
   updateOneMetrologyEssence,
   updateOneMonitoringEssence,
   updateOneSignalEssence,
-} from "../api/equipment-accounting.api";
-import {
-  ActionTypes,
-  EssenceAction,
-} from "../types/equipment-accounting.types";
+} from "../api";
 
 export const getSummaryListOfEquipment = (
   parrentTarget: string,

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { MonitoringView } from "../../..";
+import { MonitoringView } from "../../../types";
 export const useMonitoringTable = () => {
   const [dataSource, setDataSource] = useState<MonitoringView[]>([]);
 

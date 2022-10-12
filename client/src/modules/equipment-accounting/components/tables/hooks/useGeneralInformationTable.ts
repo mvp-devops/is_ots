@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { GeneralInformationView } from "../../..";
+import { GeneralInformationView } from "../../../types";
 
 export const useGeneralInformationTable = () => {
   const [dataSource, setDataSource] = useState<GeneralInformationView[]>([]);

@@ -1,8 +1,4 @@
-import {
-  ActionTypes,
-  EssenceAction,
-  EssenceState,
-} from "../types/equipment-accounting.types";
+import { ActionTypes, EssenceAction, EssenceState } from "../types";
 
 const initialState: EssenceState = {
   loading: true,

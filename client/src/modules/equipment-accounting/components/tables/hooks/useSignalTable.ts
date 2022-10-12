@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { SignalView } from "../../..";
+import { SignalView } from "../../../types";
 export const useSignalTable = () => {
   const [dataSource, setDataSource] = useState<SignalView[]>([]);
   const {

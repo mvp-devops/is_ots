@@ -9,12 +9,12 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { ChangeEvent, FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
-} from "../../../../../../server/common/types/equipment-accounting";
+} from "../../types";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 
 import FacilityForm from "./FacilityForm";

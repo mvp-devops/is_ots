@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { ImpulseLineLogView } from "../../..";
+import { ImpulseLineLogView } from "../../../types";
 export const useImpulseLineLogTable = () => {
   const [dataSource, setDataSource] = useState<ImpulseLineLogView[]>([]);
   const {

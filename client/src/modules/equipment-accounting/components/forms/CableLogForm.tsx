@@ -1,9 +1,6 @@
 import { Button, Divider, Form, Space, Typography } from "antd";
 import { FC } from "react";
-import {
-  CableLogCreateOrUpdateAttrs,
-  CableLogView,
-} from "../../../../../../server/common/types/equipment-accounting";
+import { CableLogCreateOrUpdateAttrs, CableLogView } from "../../types";
 import { InputUIComponent, UploadUIComponent } from "../../../../components";
 import { useCableLogForm } from "./hooks";
 

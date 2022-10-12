@@ -10,16 +10,9 @@ import {
 } from "antd";
 import { FC, ReactNode } from "react";
 
-import {
-  MetrologyCreateOrUpdateAttrs,
-  MetrologyView,
-} from "../../../../../../server/common/types/equipment-accounting";
+import { MetrologyCreateOrUpdateAttrs, MetrologyView } from "../../types";
 
-import {
-  metrologyDocumentType,
-  metrologyStatus,
-  sgroei,
-} from "../../utils/equipment-accounting.consts";
+import { metrologyDocumentType, metrologyStatus, sgroei } from "../../utils";
 import "moment/locale/ru";
 import locale from "antd/es/date-picker/locale/ru_RU";
 import { metrologyItem } from "./form.settings";

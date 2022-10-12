@@ -9,7 +9,7 @@ import {
   getAllImpulseLineLog,
   getAllSignal,
   getAllMonitoring,
-} from "../../../api/equipment-accounting.api";
+} from "../../../api";
 import {
   FormActions,
   getUniqueAssetsOfArrayOfTheObjects,

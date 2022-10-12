@@ -15,11 +15,19 @@ import {
   MonitoringCreateOrUpdateAttrs,
   SummaryListOfEquipmentView,
   SummaryListOfEquipmentCreateOrUpdateAttrs,
+  SummaryListOfEquipmentFormData,
 } from "../../../../../server/common/types/equipment-accounting";
 
-import { Views } from "./equipment-accounting.types";
+import {
+  Views,
+  ActionTypes,
+  EssenceAction,
+  EssenceState,
+} from "./equipment-accounting.types";
 
 export type {
+  EssenceAction,
+  EssenceState,
   Views,
   FacilityView,
   FacilityCreateOrUpdateAttrs,
@@ -37,4 +45,7 @@ export type {
   MonitoringCreateOrUpdateAttrs,
   SummaryListOfEquipmentView,
   SummaryListOfEquipmentCreateOrUpdateAttrs,
+  SummaryListOfEquipmentFormData,
 };
+
+export { ActionTypes };

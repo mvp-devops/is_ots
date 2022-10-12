@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { CableLogView } from "../../..";
+import { CableLogView } from "../../../types";
 
 export const useCableLogTable = () => {
   const [dataSource, setDataSource] = useState<CableLogView[]>([]);

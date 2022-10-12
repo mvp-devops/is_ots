@@ -6,7 +6,7 @@ import {
   MonitoringCreateOrUpdateAttrs,
   SignalCreateOrUpdateAttrs,
   SummaryListOfEquipmentFormData,
-} from "../../../../../../server/common/types/equipment-accounting";
+} from "../../types";
 
 export const initData = () => {};
 

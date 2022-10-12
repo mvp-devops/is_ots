@@ -1,7 +1,4 @@
-import {
-  FacilityView,
-  SummaryListOfEquipmentView,
-} from "../../../../../server/common/types/equipment-accounting";
+import { FacilityView, SummaryListOfEquipmentView } from "../types";
 
 export const countries = [
   {

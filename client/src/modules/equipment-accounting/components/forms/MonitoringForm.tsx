@@ -1,10 +1,7 @@
 import { FC } from "react";
 
 import { Button, Divider, Form, Space } from "antd";
-import {
-  MonitoringCreateOrUpdateAttrs,
-  MonitoringView,
-} from "../../../../../../server/common/types/equipment-accounting";
+import { MonitoringCreateOrUpdateAttrs, MonitoringView } from "../../types";
 import { useMonitoringForm } from "./hooks";
 import { monitoringItem } from "./form.settings";
 import {

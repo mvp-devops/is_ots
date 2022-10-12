@@ -1,8 +1,7 @@
 import { Input, Space, Table, Typography } from "antd";
-import { ImpulseLineLogView } from "../../../../../../server/common/types/equipment-accounting";
+import { ImpulseLineLogView, Views } from "../../types";
 import { ModalContainer } from "../../../../components";
 import { ImpulseLineLogForm } from "../forms";
-import { Views } from "../../types";
 import { TableColumns, sum, useImpulseLineLogTable } from ".";
 import { tableLocale } from "../../../main";
 

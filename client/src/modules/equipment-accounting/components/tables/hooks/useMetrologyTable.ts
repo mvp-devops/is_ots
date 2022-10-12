@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
-import { MetrologyView } from "../../..";
+import { MetrologyView } from "../../../types";
 
 export const useMetrologyTable = () => {
   const [dataSource, setDataSource] = useState<MetrologyView[]>([]);

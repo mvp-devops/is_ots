@@ -1,12 +1,6 @@
-import { ChangeEventHandler, useEffect, useState } from "react";
+import { useState } from "react";
 
-import { useActions, useTypedSelector } from "../../../../../hooks";
-import {
-  FormActions,
-  getUniqueAssetsOfArrayOfTheObjects,
-} from "../../../../main";
-import { PositionTreeItem, PositionTreeView } from "../../../../position-tree";
-import { SummaryListOfEquipmentView, Views } from "../../../types";
+import { SummaryListOfEquipmentView } from "../../../types";
 
 interface ListItems {
   parrentId?: string;

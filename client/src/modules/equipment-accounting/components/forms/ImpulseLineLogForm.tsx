@@ -3,7 +3,7 @@ import { ChangeEvent, FC, ReactNode } from "react";
 import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,
-} from "../../../../../../server/common/types/equipment-accounting";
+} from "../../types";
 import { InputUIComponent } from "../../../../components";
 import { useImpulseLineLogForm } from "./hooks";
 

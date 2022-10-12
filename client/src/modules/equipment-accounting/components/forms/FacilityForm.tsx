@@ -7,16 +7,13 @@ import {
   Typography,
 } from "antd";
 import { ChangeEvent, FC } from "react";
-import {
-  FacilityCreateOrUpdateAttrs,
-  FacilityView,
-} from "../../../../../../server/common/types/equipment-accounting";
+import { FacilityCreateOrUpdateAttrs, FacilityView } from "../../types";
 import {
   countries,
   meansureGroup,
   meansurementArea,
   meansurementType,
-} from "../../utils/equipment-accounting.consts";
+} from "../../utils";
 import {
   FormItemUIComponent,
   InputUIComponent,

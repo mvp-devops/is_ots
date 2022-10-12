@@ -15,7 +15,7 @@ import {
   SignalView,
   SummaryListOfEquipmentFormData,
   SummaryListOfEquipmentView,
-} from "../../../../../server/common/types/equipment-accounting";
+} from "../types";
 import { setUrl } from "../../main";
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
