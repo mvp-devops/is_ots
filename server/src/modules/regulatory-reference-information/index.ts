@@ -10,6 +10,8 @@ import {
   UserEntity,
   StageEntity,
   SectionEntity,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 } from "./entities";
 
 export {
@@ -24,4 +26,6 @@ export {
   UserEntity,
   StageEntity,
   SectionEntity,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 };

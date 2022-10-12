@@ -21,7 +21,7 @@ export class TechnicalCardOperationEntity extends Model<
     type: DataType.INTEGER,
     allowNull: false,
   })
-  TechnicalCardId: number;
+  technicalCardId: number;
 
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
@@ -47,7 +47,7 @@ export class TechnicalCardOperationEntity extends Model<
     description: "Наименование оерации",
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     allowNull: false,
   })
   operationTitle: string;

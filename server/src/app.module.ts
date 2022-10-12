@@ -48,6 +48,8 @@ import {
   SectionEntity,
   StageEntity,
   RegulatoryReferenceInformationModule,
+  TechnicalCardEntity,
+  TechnicalCardOperationEntity,
 } from "./modules/regulatory-reference-information";
 
 @Module({
@@ -96,6 +98,8 @@ import {
         EquipmentEntity,
         DirectionEntity,
         CriticalityEntity,
+        TechnicalCardEntity,
+        TechnicalCardOperationEntity,
         UserEntity,
       ],
     }),

@@ -24,6 +24,7 @@ import {
   MonitoringEntity,
 } from "../";
 import { DesignDocumentEntity } from "../../../file-storage";
+import { TechnicalCardEntity } from "../../../regulatory-reference-information";
 
 @Table({ tableName: "summary-list-of-equipments" })
 export class SummaryListOfEquipmentEntity extends Model<
@@ -79,6 +80,13 @@ export class SummaryListOfEquipmentEntity extends Model<
     type: DataType.INTEGER,
   })
   facilityId: number;
+
+  @ForeignKey(() => TechnicalCardEntity)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  technicalCardId: number;
 
   @ApiProperty({
     example: "Кран Г-3",
@@ -191,6 +199,9 @@ export class SummaryListOfEquipmentEntity extends Model<
 
   @BelongsTo(() => SubUnitEntity)
   subUnit: SubUnitEntity;
+
+  @BelongsTo(() => TechnicalCardEntity)
+  technicalCard: TechnicalCardEntity;
 
   @HasMany(() => CableLogEntity, {
     // onUpdate: "CASCADE",

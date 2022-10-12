@@ -8,6 +8,7 @@ import {
 import { InjectModel } from "@nestjs/sequelize";
 import {
   TechnicalCardCreateOrUpdateAttrs,
+  TechnicalCardOperationCreateOrUpdateAttrs,
   UserView,
 } from "../../../common/types/regulatory-reference-information";
 import { FileStorageService, LogoEntity } from "../file-storage";
@@ -76,7 +77,7 @@ export class RegulatoryReferenceInformationService {
     @InjectModel(TechnicalCardEntity)
     private technicalCardRepository: typeof TechnicalCardEntity,
     @InjectModel(TechnicalCardOperationEntity)
-    private TechnicalCardOperationRepository: typeof TechnicalCardOperationEntity,
+    private technicalCardOperationRepository: typeof TechnicalCardOperationEntity,
 
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
@@ -235,10 +236,18 @@ export class RegulatoryReferenceInformationService {
         break;
       }
       case "technical-card": {
-        item = await this.technicalCardRepository.create(
+        const { id } = await this.technicalCardRepository.create(
           dto as TechnicalCardCreateOrUpdateAttrs
         );
-        const { operations } = dto<TechnicalCardCreateOrUpdateAttrs>;
+        const { operations } = dto as TechnicalCardCreateOrUpdateAttrs;
+        if (operations.length > 0) {
+          for (let i = 0; i < operations.length; i++) {
+            const technicalCardId = id;
+            const elem = { ...operations[i], technicalCardId };
+            await this.technicalCardOperationRepository.create(elem);
+          }
+          item = await this.findOne(target, id.toString());
+        }
         break;
       }
     }
@@ -323,7 +332,7 @@ export class RegulatoryReferenceInformationService {
         await this.technicalCardRepository.update(<UpdateNSIDto>dto, {
           where: { id },
         });
-        item = await this.technicalCardRepository.findOne({ where: { id } });
+        item = await this.findOne(target, id);
         break;
       }
 
@@ -391,6 +400,9 @@ export class RegulatoryReferenceInformationService {
       case "technical-card": {
         item = await this.technicalCardRepository.findOne({ where: { id } });
         await this.technicalCardRepository.destroy({ where: { id } });
+        await this.technicalCardOperationRepository.destroy({
+          where: { technicalCardId: id },
+        });
         break;
       }
       // case "user": {
@@ -485,7 +497,11 @@ export class RegulatoryReferenceInformationService {
       case "technical-card": {
         item = await this.technicalCardRepository.findOne({
           where: { id },
-          include: [],
+          include: [
+            {
+              model: TechnicalCardOperationEntity,
+            },
+          ],
         });
         break;
       }
@@ -566,7 +582,11 @@ export class RegulatoryReferenceInformationService {
 
       case "technical-card": {
         items = await this.technicalCardRepository.findAll({
-          include: [],
+          include: [
+            {
+              model: TechnicalCardOperationEntity,
+            },
+          ],
         });
 
         break;

@@ -31,7 +31,7 @@ export class TechnicalCardEntity extends Model<
     description: "наименование и тип единицы оборудования",
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
     unique: true,
     allowNull: false,
   })
