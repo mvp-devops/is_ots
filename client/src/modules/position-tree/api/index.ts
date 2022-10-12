@@ -8,6 +8,7 @@ import {
   deleteOneEssence,
   getCheckList,
   getFolderPath,
+  getStatistic,
 } from "./position-tree.api";
 
 export {
@@ -20,4 +21,5 @@ export {
   deleteOneEssence,
   getCheckList,
   getFolderPath,
+  getStatistic,
 };

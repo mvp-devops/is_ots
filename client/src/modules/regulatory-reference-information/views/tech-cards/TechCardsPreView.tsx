@@ -1,6 +1,10 @@
 import { Layout, Space, Typography, Row, Col, TableColumnsType } from "antd";
 import Table, { ColumnType } from "antd/lib/table";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+
 import { ReactNode } from "react";
+import { useActions, useTypedSelector } from "../../../../hooks";
+import { FormActions } from "../../../main";
 import { NSIView } from "../../types";
 
 const { Text } = Typography;
@@ -157,12 +161,28 @@ const TechCardsPreView = () => {
     </Space>
   );
 
+  const { loading, renderNsiItems, dictionaryTarget } = useTypedSelector(
+    (state) => state.nsi
+  );
+  const { setFormVisible, setActionType, setCurrentNsiItem } = useActions();
+
   const numberColumn: ColumnType<NSIView> = {
-    title: "№ ТК-ПНР",
+    title: "№ п/п",
     key: "number",
     width: 100,
     align: "right",
     render: (_, record) => renderNumber(record.id as string),
+  };
+  const codeColumn: ColumnType<NSIView> = {
+    title: "Шифр",
+    dataIndex: "code",
+    key: "code",
+    width: 300,
+    render: (value) => (
+      <Text type="secondary" style={{ cursor: "pointer" }}>
+        {value}
+      </Text>
+    ),
   };
   const titleColumn: ColumnType<NSIView> = {
     title: "Наименование и тип единицы оборудования",
@@ -174,55 +194,65 @@ const TechCardsPreView = () => {
       </Text>
     ),
   };
+  const descriptionColumn: ColumnType<NSIView> = {
+    title: "Примечание",
+    dataIndex: "description",
+    width: 300,
+    key: "description",
+    render: (value) => (
+      <Text type="secondary" style={{ cursor: "pointer" }}>
+        {value}
+      </Text>
+    ),
+  };
+  const actionsColumn: ColumnType<NSIView> = {
+    title: "Действия",
+    key: "operation",
+    align: "right",
+    width: 50,
+    render: (_blank, record) => (
+      <Space size="middle" className="d-flex justify-content-end">
+        <EditOutlined
+          title="Редактировать информацию"
+          className="text-secondary"
+          onClick={() => {
+            setActionType(FormActions.EDIT_DICTIONARY_ITEM);
+            setFormVisible(true);
+          }}
+        />
 
-  const columns: TableColumnsType<NSIView> = [numberColumn, titleColumn];
+        <DeleteOutlined
+          title="Удалить запись"
+          className="text-danger"
+          onClick={() => {
+            setActionType(FormActions.REMOVE_DICTIONARY_ITEM);
+            setFormVisible(true);
+          }}
+        />
+      </Space>
+    ),
+  };
 
-  const dataSource: NSIView[] = [
-    {
-      id: "1",
-      title: "Термопреобразователь с унифицированным выходным сигналом",
-      code: "",
-      description: "",
-    },
-    {
-      id: "2",
-      title:
-        "Термопреобразователь с унифицированным выходным сигналом интеллектуальный",
-      code: "",
-      description: "",
-    },
-    {
-      id: "3",
-      title: "Термометр сопротивления",
-      code: "",
-      description: "",
-    },
-    {
-      id: "4",
-      title: "Термометр сопротивления интеллектуальный",
-      code: "",
-      description: "",
-    },
-    {
-      id: "5",
-      title: "Преобразователь термоэлектрический",
-      code: "",
-      description: "",
-    },
+  const columns: TableColumnsType<NSIView> = [
+    numberColumn,
+    codeColumn,
+    titleColumn,
+    descriptionColumn,
+    actionsColumn,
   ];
 
   const TechCardsTable = (
     <Table
       className="mt-3"
-      bordered
+      // bordered
       size="small"
-      pagination={dataSource.length < 2 && false}
+      // pagination={renderNsiItems.length < 10 && false}
       columns={columns}
-      dataSource={dataSource}
+      dataSource={renderNsiItems.sort((a, b) => (a.id < b.id ? -1 : 0))}
       rowKey={(record) => record.id as string}
-      onRow={(record) => {
+      onRow={(record, rowIndex) => {
         return {
-          onClick: () => console.log(record),
+          onMouseEnter: (event) => setCurrentNsiItem(record),
         };
       }}
     />

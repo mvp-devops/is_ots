@@ -2,6 +2,7 @@ import axios from "axios";
 import {
   CheckListSets,
   CheckListView,
+  StatisticView,
 } from "../../../../../server/common/types/comments-accounting";
 import {
   PositionTreeCreateOrUpdateAttrs,
@@ -177,5 +178,14 @@ export const getFolderPath = async (
     params: { target },
   });
 
+  return data;
+};
+
+export const getStatistic = async (
+  target: string,
+  id: string
+): Promise<StatisticView> => {
+  const url = setUrl(`${baseUrl}/statistic/${id}`);
+  const { data } = await axios.get(url, { params: { target } });
   return data;
 };

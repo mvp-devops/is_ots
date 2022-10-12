@@ -112,7 +112,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     dataIndex: "stageTitle",
     key: "stageTitle",
     align: "center",
-    filters: codeFilters,
+    filters: stageFilters,
     filterSearch: stageFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.stageTitle.toUpperCase().includes(value.toUpperCase()),
@@ -130,7 +130,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     dataIndex: "sectionTitle",
     key: "sectionTitle",
     align: "center",
-    filters: codeFilters,
+    filters: sectionFilters,
     filterSearch: sectionFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.sectionTitle.toUpperCase().includes(value.toUpperCase()),
@@ -144,11 +144,11 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
   const supplierFilters = setTableColumnFilters("supplier", designDocuments);
 
   const supplierColumn: ColumnType<DesignDocumentView> = {
-    title: "Марка/раздел",
+    title: "Проектировщик",
     dataIndex: "supplierTitle",
     key: "supplierTitle",
     align: "center",
-    filters: codeFilters,
+    filters: supplierFilters,
     filterSearch: supplierFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record.supplierTitle.toUpperCase().includes(value.toUpperCase()),

@@ -9,14 +9,16 @@ import React, { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { DesignDocumentTable } from "../../../file-storage";
 import PositionTreeTable from "../../components/table/PositionTreeTable";
-import StatisticView from "../StatisticView";
+import StatisticPage from "../StatisticPage";
 
 const { TabPane } = Tabs;
 
 const TabsView = () => {
   const { documentationView } = useTypedSelector((state) => state.main);
 
-  const { currentItem } = useTypedSelector((state) => state.positionTree);
+  const { currentItem, statistic } = useTypedSelector(
+    (state) => state.positionTree
+  );
 
   const { setDocumentationView } = useActions();
 
@@ -47,7 +49,7 @@ const TabsView = () => {
           </Space>
         }
       >
-        <StatisticView />
+        {statistic && <StatisticPage />}
       </TabPane>
       {currentItem && currentItem.target !== "sub-unit" && (
         <TabPane

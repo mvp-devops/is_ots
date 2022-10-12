@@ -1,4 +1,7 @@
-import { CheckListView } from "../../../../../server/common/types/comments-accounting";
+import {
+  CheckListView,
+  StatisticView,
+} from "../../../../../server/common/types/comments-accounting";
 import {
   PositionTreeItem,
   PositionTreeView,
@@ -14,6 +17,7 @@ export interface EssenceState {
   checkListData: CheckListView | null;
   checkedItem: PositionTreeView | null;
   checkedItems: PositionTreeView[];
+  statistic: StatisticView | null;
   target: string;
   childTarget: string;
   currentItemFolderPath: string;
@@ -50,6 +54,9 @@ export enum ActionTypes {
   SET_TARGET = "SET_TARGET",
   SET_CHILD_TARGET = "SET_CHILD_TARGET",
   SET_CURRENT_ITEM_FOLDER_PATH = "SET_CURRENT_ITEM_FOLDER_PATH",
+  GET_STATISTIC = "GET_STATISTIC",
+  GET_STATISTIC_SUCCESS = "GET_STATISTIC_SUCCESS",
+  GET_STATISTIC_ERROR = "GET_STATISTIC_ERROR",
 }
 
 interface GetMenuItemsAction {
@@ -193,6 +200,20 @@ interface SetCurrentItemFolderPathAction {
   payload: string;
 }
 
+interface GetStatisticAction {
+  type: ActionTypes.GET_STATISTIC;
+}
+
+interface GetStatisticSuccessAction {
+  type: ActionTypes.GET_STATISTIC_SUCCESS;
+  payload: StatisticView;
+}
+
+interface GetStatisticErrorAction {
+  type: ActionTypes.GET_STATISTIC_ERROR;
+  payload: string;
+}
+
 export type EssenceAction =
   | GetMenuItemsAction
   | GetMenuItemsSuccessAction
@@ -223,4 +244,7 @@ export type EssenceAction =
   | SetPositionTreeItems
   | SetTargetAction
   | SetChildTargetAction
-  | SetCurrentItemFolderPathAction;
+  | SetCurrentItemFolderPathAction
+  | GetStatisticAction
+  | GetStatisticSuccessAction
+  | GetStatisticErrorAction;

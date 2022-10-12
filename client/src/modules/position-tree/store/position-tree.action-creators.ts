@@ -16,6 +16,7 @@ import {
   deleteOneEssence,
   getCheckList,
   getFolderPath,
+  getStatistic,
 } from "../api";
 import { ActionTypes, EssenceAction } from "../types";
 
@@ -187,6 +188,23 @@ export const getPositionTreeItems = (target: string, parrentId?: string) => {
     } catch (error) {
       dispatch({
         type: ActionTypes.GET_MANY_ITEMS_ERROR,
+        payload: "Ошибка получения данных",
+      });
+    }
+  };
+};
+export const getPositionTreeStatistic = (target: string, id: string) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({ type: ActionTypes.GET_STATISTIC });
+      const data = await getStatistic(target, id);
+      dispatch({
+        type: ActionTypes.GET_STATISTIC_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.GET_STATISTIC,
         payload: "Ошибка получения данных",
       });
     }

@@ -17,6 +17,7 @@ const initialState: EssenceState = {
   target: "",
   childTarget: "",
   currentItemFolderPath: "",
+  statistic: null,
 };
 
 export const positionTreeReducer = (
@@ -210,6 +211,23 @@ export const positionTreeReducer = (
         ...state,
 
         currentItemFolderPath: action.payload,
+      };
+
+    case ActionTypes.GET_STATISTIC:
+      return state;
+
+    case ActionTypes.GET_STATISTIC_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        statistic: action.payload,
+      };
+
+    case ActionTypes.GET_STATISTIC_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
       };
 
     default:

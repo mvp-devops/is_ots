@@ -30,7 +30,7 @@ export const setTableColumnFilters = (
     }
     case "stage": {
       for (let i = 0; i < items.length; i++) {
-        const item = "stageTitle" in items[i] ? items[i].stageTitle : "";
+        const item = items[i].stageTitle;
         if (item && !array.includes(item)) {
           array.push(item);
         }
@@ -40,7 +40,7 @@ export const setTableColumnFilters = (
 
     case "supplier": {
       for (let i = 0; i < items.length; i++) {
-        const item = "supplierTitle" in items[i] ? items[i].supplierTitle : "";
+        const item = items[i].supplierTitle;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -50,7 +50,7 @@ export const setTableColumnFilters = (
 
     case "section": {
       for (let i = 0; i < items.length; i++) {
-        const item = "sectionTitle" in items[i] ? items[i].sectionTitle : "";
+        const item = items[i].sectionTitle;
         if (!array.includes(item)) {
           array.push(item);
         }
