@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import {
   NSIView,
   UserCreateOrUpdateAttrs,
-} from "../../../../../../../server/common/types/regulatory-reference-information";
+  PositionTreeView,
+} from "../../../types";
 import { useTypedSelector, useActions } from "./../../../../../hooks";
 import { getItems } from "../../..";
 import { FormActions } from "../../../../main";
 import { userItem } from "../form.settings";
 import { getAllItems, useItemPage } from "../../../../position-tree";
-import { PositionTreeView } from "../../../../../../../server/common/types/position-tree";
 import { RcFile } from "antd/lib/upload";
 
 export const useUserForm = () => {

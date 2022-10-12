@@ -5,7 +5,7 @@ import {
   NSIView,
   UserCreateOrUpdateAttrs,
   UserView,
-} from "../../../../../server/common/types/regulatory-reference-information";
+} from "../types";
 import { setUrl } from "../../main";
 import download from "js-file-download";
 

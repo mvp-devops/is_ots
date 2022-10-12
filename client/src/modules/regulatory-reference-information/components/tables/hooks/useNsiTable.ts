@@ -1,5 +1,5 @@
 import { ChangeEventHandler, useEffect, useState } from "react";
-import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
+import { NSIView } from "../../../types";
 import { useActions, useTypedSelector } from "../../../../../hooks";
 import { FormActions } from "../../../../main";
 import { exportData } from "./../../../api";

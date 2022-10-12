@@ -1,11 +1,13 @@
 import { notification } from "antd";
 import { Dispatch } from "redux";
-import { CheckListSets } from "../../../../../server/common/types/comments-accounting";
 import {
   PositionTreeCreateOrUpdateAttrs,
   PositionTreeItem,
   PositionTreeView,
-} from "../../../../../server/common/types/position-tree";
+  ActionTypes,
+  EssenceAction,
+  CheckListSets,
+} from "../types";
 import {
   getAllItems,
   getOneItem,
@@ -18,7 +20,6 @@ import {
   getFolderPath,
   getStatistic,
 } from "../api";
-import { ActionTypes, EssenceAction } from "../types";
 
 export const setMenuItems = (roles: string[], id?: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {

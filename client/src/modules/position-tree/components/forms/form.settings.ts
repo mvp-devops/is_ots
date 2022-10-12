@@ -10,7 +10,7 @@ import {
   SubUnitView,
   UnitCreateOrUpdateAttrs,
   UnitView,
-} from "../../../../../../server/common/types/position-tree";
+} from "../../types";
 
 export const subsidiaryItem: SubsidiaryCreateOrUpdateAttrs = {
   title: "",

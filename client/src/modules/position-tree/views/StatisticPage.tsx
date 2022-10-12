@@ -24,7 +24,7 @@ import {
   SubsidiaryStatistic,
   SubUnitStatistic,
   UnitStatistic,
-} from "../../../../../server/common/types/comments-accounting";
+} from "../types";
 
 const { Text } = Typography;
 

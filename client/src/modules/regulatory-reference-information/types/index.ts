@@ -5,7 +5,10 @@ import {
   NsiCreateOrUpdateAttrs,
   NSIView,
   UserCreateOrUpdateAttrs,
+  UserView,
 } from "../../../../../server/common/types/regulatory-reference-information";
+
+import { PositionTreeView } from "../../../../../server/common/types/position-tree";
 
 export type {
   EssenceState,
@@ -13,6 +16,8 @@ export type {
   NsiCreateOrUpdateAttrs,
   NSIView,
   UserCreateOrUpdateAttrs,
+  UserView,
+  PositionTreeView,
 };
 
 export { ActionTypes };

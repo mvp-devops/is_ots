@@ -1,5 +1,5 @@
 import { List, Typography } from "antd";
-import { dictionariesList } from "../utils/regulatory-reference-information.consts";
+import { dictionariesList } from "../utils";
 import { useRegulatoryReferenceInformationList } from "./hooks";
 
 const { Item } = List;

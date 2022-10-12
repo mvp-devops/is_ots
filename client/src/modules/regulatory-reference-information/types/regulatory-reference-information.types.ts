@@ -1,7 +1,4 @@
-import {
-  NSIView,
-  UserView,
-} from "../../../../../server/common/types/regulatory-reference-information";
+import { NSIView, UserView } from ".";
 
 export interface EssenceState {
   error: string | null;

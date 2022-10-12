@@ -6,7 +6,7 @@ import {
   AppstoreOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
-import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
+import { PositionTreeView } from "../../types";
 import { FormActions, setFilePath } from "../../../main";
 import { usePositionTreeTable } from "./hooks";
 import { setTableColumnFilters } from "./table.settings";

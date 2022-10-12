@@ -1,4 +1,4 @@
-import { ActionTypes, EssenceAction, EssenceState } from "..";
+import { ActionTypes, EssenceAction, EssenceState } from "../types";
 
 const initialState: EssenceState = {
   error: null,

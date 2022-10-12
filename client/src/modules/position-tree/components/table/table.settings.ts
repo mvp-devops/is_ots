@@ -5,7 +5,7 @@ import {
   ProjectView,
   SubUnitView,
   UnitView,
-} from "../../../../../../server/common/types/position-tree";
+} from "../../types";
 
 export const setTableColumnFilters = (
   target: string,

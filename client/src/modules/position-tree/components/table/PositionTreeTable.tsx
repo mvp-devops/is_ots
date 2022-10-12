@@ -4,7 +4,7 @@ import {
   SearchOutlined,
   AppstoreOutlined,
 } from "@ant-design/icons";
-import { PositionTreeView } from "../../../../../../server/common/types/position-tree";
+import { PositionTreeView } from "../../types";
 import { FormActions, tableLocale } from "../../../main";
 import TableColumns from "./TableColumns";
 import { PositionTreeForm } from "../forms";

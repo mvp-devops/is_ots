@@ -1,4 +1,4 @@
-import { NsiCreateOrUpdateAttrs, NSIView } from "../..";
+import { NsiCreateOrUpdateAttrs, NSIView } from "../../types";
 
 export const userItem = {
   subsidiaryId: null,

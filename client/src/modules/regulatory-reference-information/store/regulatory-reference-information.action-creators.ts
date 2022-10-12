@@ -1,17 +1,20 @@
 import { notification } from "antd";
 import { Dispatch } from "redux";
 import {
-  ActionTypes,
-  EssenceAction,
-  NsiCreateOrUpdateAttrs,
-  NSIView,
-  UserCreateOrUpdateAttrs,
   userRegistration,
   getAllItems,
   createOneEssence,
   updateOneEssence,
   deleteOneEssense,
-} from "..";
+} from "../api";
+
+import {
+  ActionTypes,
+  EssenceAction,
+  NsiCreateOrUpdateAttrs,
+  NSIView,
+  UserCreateOrUpdateAttrs,
+} from "../types";
 
 export const setNsiItems = (target: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {

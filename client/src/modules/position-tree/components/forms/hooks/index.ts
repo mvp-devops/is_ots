@@ -4,8 +4,8 @@ import { RcFile } from "antd/lib/upload";
 import {
   PositionTreeCreateOrUpdateAttrs,
   PositionTreeView,
-} from "../../../../../../../server/common/types/position-tree";
-import { NSIView } from "../../../../../../../server/common/types/regulatory-reference-information";
+  NSIView,
+} from "../../../types";
 import { FormActions } from "../../../../main";
 import { useActions } from "../../../../../hooks";
 import { usePositionTree } from "../../..";
