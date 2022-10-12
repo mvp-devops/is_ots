@@ -1,5 +1,5 @@
 import { MenuItem, FormActions, ListItem, Roles } from "./types/main.types";
-import { setUrl, setFilePath } from "./api/main.api";
+import { setUrl, setFilePath } from "./api";
 import { mainReducer } from "./store/main.reducer";
 import * as mainActionCreators from "./store/main.action-creators";
 import {

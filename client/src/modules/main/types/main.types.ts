@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { UserView } from "../../../../../server/common/types/regulatory-reference-information";
+import { UserView } from "../types";
 
 // export type MenuItem = Required<MenuProps>["items"][number];
 export type MenuItem = {

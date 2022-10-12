@@ -1,6 +1,3 @@
-import axios from "axios";
-import { UserView } from "../../../../../server/common/types/regulatory-reference-information";
-
 // import { Roles } from "../../types/user.types";
 // import {
 //   CheckListSettings,

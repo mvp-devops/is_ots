@@ -1,7 +1,7 @@
 import { notification } from "antd";
 import { Dispatch } from "redux";
-import { userLogin } from "../../regulatory-reference-information/api/regulatory-reference-information.api";
-import { ActionTypes, EssenceAction } from "../types/main.types";
+import { userLogin } from "../../regulatory-reference-information/api";
+import { ActionTypes, EssenceAction } from "../types";
 
 export const setFormVisible = (flag: boolean) => {
   return {
