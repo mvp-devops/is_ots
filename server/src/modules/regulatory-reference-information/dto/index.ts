@@ -25,7 +25,7 @@ type UpdateRegulatoryReferenceInformationDto =
   | UpdateCriticalityDto
   | UpdateUserDto;
 
-export {
+export type {
   CreateRegulatoryReferenceInformationDto,
   UpdateRegulatoryReferenceInformationDto,
 };

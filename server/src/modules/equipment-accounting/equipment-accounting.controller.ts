@@ -14,7 +14,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { setCurrentDate } from "../../../common/utils";
-import { Response } from "express";
+import type { Response } from "express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
 import { CreateSummaryListOfEquipmentDto } from "./dto";
 

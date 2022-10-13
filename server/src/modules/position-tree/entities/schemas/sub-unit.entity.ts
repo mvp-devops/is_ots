@@ -16,8 +16,8 @@ import {
   EquipmentEntity,
   CounterpartyEntity,
 } from "../../../regulatory-reference-information";
-import { DesignDocumentEntity } from "src/modules/file-storage";
-import { SummaryListOfEquipmentEntity } from "src/modules/equipment-accounting";
+import { DesignDocumentEntity } from "../../../file-storage";
+import { SummaryListOfEquipmentEntity } from "../../../equipment-accounting";
 
 @Table({ tableName: "sub-units" })
 export class SubUnitEntity extends Model<

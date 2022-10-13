@@ -15,7 +15,7 @@ import {
   CreateDesignDocumentCommentDto,
   UpdateDesignDocumentCommentDto,
 } from "./dto";
-import { Response } from "express";
+import type { Response } from "express";
 
 @Controller("api/comment-accounting")
 export class CommentAccountingController {

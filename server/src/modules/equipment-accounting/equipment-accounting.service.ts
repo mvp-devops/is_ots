@@ -80,7 +80,7 @@ export class EquipmentAccountingService {
 
       const item = await this.findOneFacilityAsset(id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -100,7 +100,7 @@ export class EquipmentAccountingService {
       };
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -119,7 +119,7 @@ export class EquipmentAccountingService {
       }
 
       return items;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -132,7 +132,7 @@ export class EquipmentAccountingService {
       await this.facilityRepository.update(dto, { where: { id } });
       const item = await this.findOneFacilityAsset(+id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -143,7 +143,7 @@ export class EquipmentAccountingService {
       await this.facilityRepository.destroy({ where: { id } });
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -167,7 +167,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -228,7 +228,7 @@ export class EquipmentAccountingService {
       };
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -382,7 +382,7 @@ export class EquipmentAccountingService {
         : items;
 
       return render;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -405,7 +405,7 @@ export class EquipmentAccountingService {
       }
       const item = await this.findOneCableLogAsset(+id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -422,7 +422,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -435,7 +435,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneImpulseLineLogAsset(id);
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -490,7 +490,7 @@ export class EquipmentAccountingService {
       };
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -564,7 +564,7 @@ export class EquipmentAccountingService {
         : items;
 
       return render;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -577,7 +577,7 @@ export class EquipmentAccountingService {
       await this.impulseLineLogRepository.update(dto, { where: { id } });
       const item = await this.findOneImpulseLineLogAsset(+id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -589,7 +589,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneImpulseLineLogAsset(id);
       await this.impulseLineLogRepository.destroy({ where: { id } });
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -623,7 +623,7 @@ export class EquipmentAccountingService {
       }
       const item = await this.findOneMetrologyAsset(id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -734,7 +734,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -791,7 +791,7 @@ export class EquipmentAccountingService {
         : items;
 
       return render;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -860,7 +860,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -891,7 +891,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -902,7 +902,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneSignalAsset(id);
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -956,7 +956,7 @@ export class EquipmentAccountingService {
       };
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1009,7 +1009,7 @@ export class EquipmentAccountingService {
         : items;
 
       return render;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1022,7 +1022,7 @@ export class EquipmentAccountingService {
       await this.signalRepository.update(dto, { where: { id } });
       const item = await this.findOneSignalAsset(+id);
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1032,7 +1032,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneSignalAsset(id);
       await this.signalRepository.destroy({ where: { id } });
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1096,7 +1096,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1200,7 +1200,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1254,7 +1254,7 @@ export class EquipmentAccountingService {
         : items;
 
       return render;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1369,7 +1369,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1412,7 +1412,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1516,7 +1516,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1617,7 +1617,7 @@ export class EquipmentAccountingService {
       };
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1775,7 +1775,7 @@ export class EquipmentAccountingService {
         items.push(item);
       }
       return items;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1885,7 +1885,7 @@ export class EquipmentAccountingService {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -1930,7 +1930,7 @@ export class EquipmentAccountingService {
       }
 
       return item;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
@@ -2172,7 +2172,7 @@ export class EquipmentAccountingService {
       );
 
       return filePath;
-    } catch (e) {
+    } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };

@@ -10,7 +10,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { MetrologyCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 
 import { SummaryListOfEquipmentEntity } from "../";
-import { CounterpartyEntity } from "src/modules/regulatory-reference-information";
+import { CounterpartyEntity } from "../../../regulatory-reference-information";
 
 // metrologyType: string;
 // documentType: string;

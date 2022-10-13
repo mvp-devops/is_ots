@@ -12,7 +12,7 @@ import { ApiProperty } from "@nestjs/swagger";
 import { CableLogCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 
 import { SummaryListOfEquipmentEntity } from "../";
-import { DesignDocumentEntity } from "src/modules/file-storage";
+import { DesignDocumentEntity } from "../../../file-storage";
 
 @Table({ tableName: "cable-log" })
 export class CableLogEntity extends Model<

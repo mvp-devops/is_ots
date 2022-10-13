@@ -12,10 +12,10 @@ import {
   Put,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
-import { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
+import type { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 
-import { CheckListSets } from "common/types/comments-accounting";
+import type { CheckListSets } from "../../../common/types/comments-accounting";
 
 @Controller("api/position-tree")
 export class PositionTreeController {

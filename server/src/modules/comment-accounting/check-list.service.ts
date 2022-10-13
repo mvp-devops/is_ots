@@ -1,3 +1,4 @@
+import { CriticalityEntity } from "./../regulatory-reference-information/entities/schemas/criticality-entity";
 /*
   
     Чек-лист по одному договору (проекту) по проекнтым институтам
@@ -362,12 +363,14 @@ export class CheckListService {
     for (let i = 0; i < criticalityArr.length; i++) {
       criterion.criticalityTitle = criticalityArr[i].title;
       criterion.weight = +criticalityArr[i].code;
-      criterion.threshold = criticalityArr[i].threshold
-        ? +criticalityArr[i].threshold
+      criterion.threshold = (criticalityArr[i] as CriticalityEntity).threshold
+        ? +(criticalityArr[i] as CriticalityEntity).threshold
         : 0;
-      criterion.goal = criticalityArr[i].goal ? +criticalityArr[i].goal : 0;
-      criterion.tenseGoal = criticalityArr[i].tenseGoal
-        ? +criticalityArr[i].tenseGoal
+      criterion.goal = (criticalityArr[i] as CriticalityEntity).goal
+        ? +(criticalityArr[i] as CriticalityEntity).goal
+        : 0;
+      criterion.tenseGoal = (criticalityArr[i] as CriticalityEntity).tenseGoal
+        ? +(criticalityArr[i] as CriticalityEntity).tenseGoal
         : 0;
 
       newArr = intermediateArr.filter(

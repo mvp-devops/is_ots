@@ -28,7 +28,7 @@ type UpdatePositionTreeDto =
   | UpdateUnitDto
   | UpdateSubUnitDto;
 
-export {
+export type {
   CreateSubsidiaryDto,
   CreateFieldDto,
   CreateProjectDto,

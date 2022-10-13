@@ -14,14 +14,14 @@ import {
   Header,
   Res,
 } from "@nestjs/common";
-import {
+import type {
   CreateRegulatoryReferenceInformationDto,
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
 import { CreateUserDto } from "./dto/create-regulatory-reference-information.dto";
-import { Response } from "express";
-import { setCurrentDate } from "common/utils";
+import type { Response } from "express";
+import { setCurrentDate } from "../../../common/utils";
 
 @Controller("api/regulatory-reference-information")
 export class RegulatoryReferenceInformationController {

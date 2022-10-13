@@ -15,7 +15,9 @@ const Header: FC<HeaderProps> = ({ data }) => {
   const objectTitle =
     data && "position" in data
       ? `поз. ${data.position}. ${data.title}`
-      : `${data.code}. ${data.title}`;
+      : data && "code" in data
+      ? `${data.code}. ${data.title}`
+      : "";
   const subsidiaryTitle = data && data.subsidiary;
   const satisfactorily = data && data.satisfactorily;
   const okay = data && data.okay;
