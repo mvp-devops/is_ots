@@ -16,6 +16,7 @@ import {
   PositionTreeForm,
 } from "../";
 import { ModalContainer } from "../../../components";
+import { UserForm } from "../../regulatory-reference-information";
 
 const { Content } = Layout;
 
@@ -59,6 +60,7 @@ const ItemPage = () => {
       )}
 
       {renderFormFlag && <ModalContainer child={<PositionTreeForm />} />}
+      {renderFormFlag && <ModalContainer child={<UserForm />} />}
 
       {checkListView && (
         <CommentAccountingModalContainer

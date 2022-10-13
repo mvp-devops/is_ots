@@ -62,7 +62,8 @@ export const usePositionTree = () => {
             actionType === FormActions.REMOVE ||
             actionType === FormActions.REMOVE_CHILD ||
             actionType === FormActions.EDIT ||
-            actionType === FormActions.EDIT_CHILD)
+            actionType === FormActions.EDIT_CHILD ||
+            actionType === FormActions.ADD_USER)
       );
   }, [baseTarget, actionType, formVisible]);
 

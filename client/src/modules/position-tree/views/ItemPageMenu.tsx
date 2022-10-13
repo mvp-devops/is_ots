@@ -71,7 +71,7 @@ const ItemPageMenu = () => {
             <Space
               onClick={() => {
                 setFormVisible(true);
-                setActionType(FormActions.USER);
+                setActionType(FormActions.ADD_USER);
               }}
             >
               <UserAddOutlined style={{ marginBottom: 20, padding: 0 }} />

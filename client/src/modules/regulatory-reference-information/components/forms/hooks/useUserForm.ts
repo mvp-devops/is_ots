@@ -34,7 +34,7 @@ export const useUserForm = () => {
   };
 
   useEffect(() => {
-    if (actionType === FormActions.USER) {
+    if (actionType === FormActions.ADD_USER) {
       getPositionTreeItems("subsidiary");
       getItems("design").then((data) => setDesignsList(data));
       getItems("counterparty").then((data) => setCounterpartiesList(data));
@@ -67,6 +67,7 @@ export const useUserForm = () => {
 
   const userRegistration = () => {
     createNewUser(userData);
+    setFormVisible(false);
   };
 
   return {
