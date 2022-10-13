@@ -203,10 +203,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
             rel="noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <FileSearchOutlined
-              className="text-primary"
-              title={`${record.unitQuestionare.code}. ${record.unitQuestionare.title}`}
-            />
+            <FileSearchOutlined className="text-primary" title="ОЛ, TT, ТЗ" />
           </a>
         )}
         {(childTarget === "project" ||

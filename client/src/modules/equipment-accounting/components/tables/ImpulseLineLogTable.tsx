@@ -13,7 +13,7 @@ const ImpulseLineLogTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderImpulseLineLogFormFormEditFlag,
+    renderImpulseLineLogFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,
@@ -34,7 +34,7 @@ const ImpulseLineLogTable = () => {
     </Row>
   );
 
-  const renderForm = renderImpulseLineLogFormFormEditFlag && (
+  const renderForm = renderImpulseLineLogFormEditFlag && (
     <ModalContainer
       target="impulse-line-log"
       child={<ImpulseLineLogForm row={currentRow as ImpulseLineLogView} />}

@@ -9,7 +9,7 @@ export const useMetrologyTable = () => {
     onSearch,
     loading,
     renderDataSource,
-    renderMetrologyFormFormEditFlag,
+    renderMetrologyFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("metrology");
@@ -53,7 +53,7 @@ export const useMetrologyTable = () => {
     searchValue,
     onSearch,
     loading,
-    renderMetrologyFormFormEditFlag,
+    renderMetrologyFormEditFlag,
     dataSource,
     currentRow,
     setCurrentRow,

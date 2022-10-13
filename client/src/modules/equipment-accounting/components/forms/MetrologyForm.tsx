@@ -43,7 +43,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
         wrapperCol={{ span: 18 }}
         layout="horizontal"
         className="m-1 p-1 border"
-        style={{ width: 1000 }}
+        style={{ width: 950 }}
       >
         <Item
           label={<Text type="secondary">Сфера гос. регулирования ЕИ</Text>}

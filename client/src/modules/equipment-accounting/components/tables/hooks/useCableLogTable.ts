@@ -10,7 +10,7 @@ export const useCableLogTable = () => {
     onSearch,
     loading,
     renderDataSource,
-    renderCableLogFormFormEditFlag,
+    renderCableLogFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("cable-log");
@@ -42,7 +42,7 @@ export const useCableLogTable = () => {
   return {
     searchValue,
     onSearch,
-    renderCableLogFormFormEditFlag,
+    renderCableLogFormEditFlag,
     loading,
     dataSource,
     currentRow,

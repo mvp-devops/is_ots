@@ -14,12 +14,12 @@ const MetrologyTable = () => {
     onSearch,
     loading,
     dataSource,
-    renderMetrologyFormFormEditFlag,
+    renderMetrologyFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useMetrologyTable();
 
-  const renderForm = renderMetrologyFormFormEditFlag && (
+  const renderForm = renderMetrologyFormEditFlag && (
     <ModalContainer
       target="metrology"
       child={<MetrologyForm row={currentRow as MetrologyView} />}

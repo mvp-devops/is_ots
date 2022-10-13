@@ -15,7 +15,7 @@ const SignalTable = () => {
     onSearch,
     loading,
     dataSource,
-    renderSignalFormFormEditFlag,
+    renderSignalFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useSignalTable();
@@ -37,7 +37,7 @@ const SignalTable = () => {
 
   const columns = TableColumns("signal", dataSource, currentRow);
 
-  const renderForm = renderSignalFormFormEditFlag && (
+  const renderForm = renderSignalFormEditFlag && (
     <ModalContainer
       target="signal"
       child={<SignalForm row={currentRow as SignalView} />}

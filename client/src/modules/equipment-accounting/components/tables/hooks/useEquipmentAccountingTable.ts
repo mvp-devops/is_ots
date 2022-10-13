@@ -140,32 +140,32 @@ export const useEquipmentAccountingTable = (target?: string) => {
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) =>
     setSearchValue(e.target.value);
 
-  const renderGeneralInformationFormFormEditFlag =
+  const renderGeneralInformationFormEditFlag =
     target === "general-information" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
 
-  const renderMetrologyFormFormEditFlag =
-    target === "gmetrology" &&
+  const renderMetrologyFormEditFlag =
+    target === "metrology" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
 
-  const renderSignalFormFormEditFlag =
+  const renderSignalFormEditFlag =
     target === "signal" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
 
-  const renderCableLogFormFormEditFlag =
+  const renderCableLogFormEditFlag =
     target === "cable-log" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
 
-  const renderImpulseLineLogFormFormEditFlag =
+  const renderImpulseLineLogFormEditFlag =
     target === "impulse-line-log" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
 
-  const renderMonitoringFormFormEditFlag =
+  const renderMonitoringFormEditFlag =
     target === "monitoring" &&
     formVisible &&
     actionType === FormActions.EDIT_EQUIPMENT;
@@ -180,12 +180,12 @@ export const useEquipmentAccountingTable = (target?: string) => {
     subUnitsList,
     subUnitId,
     setSubUnitId,
-    renderGeneralInformationFormFormEditFlag,
-    renderMetrologyFormFormEditFlag,
-    renderSignalFormFormEditFlag,
-    renderCableLogFormFormEditFlag,
-    renderImpulseLineLogFormFormEditFlag,
-    renderMonitoringFormFormEditFlag,
+    renderGeneralInformationFormEditFlag,
+    renderMetrologyFormEditFlag,
+    renderSignalFormEditFlag,
+    renderCableLogFormEditFlag,
+    renderImpulseLineLogFormEditFlag,
+    renderMonitoringFormEditFlag,
     currentRow,
     setCurrentRow,
     renderDataSource,
