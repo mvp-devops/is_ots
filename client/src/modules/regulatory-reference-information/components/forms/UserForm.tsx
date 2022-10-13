@@ -1,13 +1,4 @@
-import {
-  Button,
-  Checkbox,
-  Divider,
-  Form,
-  Input,
-  Space,
-  Typography,
-  Upload,
-} from "antd";
+import { Button, Divider, Form, Space, Typography, Upload } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 
 import { useUserForm } from "./hooks";

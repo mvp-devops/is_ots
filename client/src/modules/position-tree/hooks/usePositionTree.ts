@@ -52,6 +52,7 @@ export const usePositionTree = () => {
   }, [target]);
 
   const [renderFormFlag, setRenderFormFlag] = useState(false);
+  const [renderUserFormFlag, setRenderUserFormFlag] = useState(false);
 
   useEffect(() => {
     baseTarget === "POSITION_TREE" &&
@@ -62,9 +63,9 @@ export const usePositionTree = () => {
             actionType === FormActions.REMOVE ||
             actionType === FormActions.REMOVE_CHILD ||
             actionType === FormActions.EDIT ||
-            actionType === FormActions.EDIT_CHILD ||
-            actionType === FormActions.ADD_USER)
+            actionType === FormActions.EDIT_CHILD)
       );
+    setRenderUserFormFlag(actionType === FormActions.ADD_USER);
   }, [baseTarget, actionType, formVisible]);
 
   return {
@@ -73,6 +74,7 @@ export const usePositionTree = () => {
     target,
     childTarget,
     currentItemFolderPath,
+    renderUserFormFlag,
     setFolderPath,
     renderItems,
     loading,

@@ -177,6 +177,7 @@ export const useCommentAccountingForm = () => {
     onHandlerChange,
     solutions,
     addItem,
+    addNewItems,
     removeItem,
     changeItems,
     addNewItem,

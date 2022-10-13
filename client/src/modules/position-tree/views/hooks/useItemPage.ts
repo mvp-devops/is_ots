@@ -4,7 +4,7 @@ import { usePositionTree } from "./../../hooks";
 
 import { PositionTreeView } from "../..";
 import { useActions, useTypedSelector } from "../../../../hooks";
-import { ListItem, MenuItem, Roles } from "../../../main";
+import { MenuItem, Roles } from "../../../main";
 import { getAllItems } from "../..";
 
 export const useItemPage = (items?: MenuItem[]) => {
@@ -37,7 +37,7 @@ export const useItemPage = (items?: MenuItem[]) => {
 
   const { getPositionTreeStatistic } = useActions();
 
-  const { renderFormFlag } = usePositionTree();
+  const { renderFormFlag, renderUserFormFlag } = usePositionTree();
 
   const {
     setFormVisible,
@@ -46,7 +46,6 @@ export const useItemPage = (items?: MenuItem[]) => {
     setStatisticView,
     setCollectiveCheckSheetView,
     setSummaryListOfEquipmentView,
-    getPositionTreeItems,
     setListItemsView,
     setDocumentationView,
   } = useActions();
@@ -115,6 +114,7 @@ export const useItemPage = (items?: MenuItem[]) => {
     setActionType,
     childrenList,
     childrenListHeader,
+    renderUserFormFlag,
     menuItems,
     currentItem,
     loading,

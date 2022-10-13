@@ -28,6 +28,7 @@ const ItemPage = () => {
     currentItem,
     setSummaryListOfEquipmentView,
     summaryListOfEquipmentView,
+    renderUserFormFlag,
     loading,
     renderFormFlag,
   } = useItemPage();
@@ -60,7 +61,7 @@ const ItemPage = () => {
       )}
 
       {renderFormFlag && <ModalContainer child={<PositionTreeForm />} />}
-      {renderFormFlag && <ModalContainer child={<UserForm />} />}
+      {renderUserFormFlag && <ModalContainer child={<UserForm />} />}
 
       {checkListView && (
         <CommentAccountingModalContainer

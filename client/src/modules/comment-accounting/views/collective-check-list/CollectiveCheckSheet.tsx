@@ -23,7 +23,6 @@ const CollectiveCheckSheet = () => {
     checkedDesignDocuments,
     target,
     ids,
-    dataSource,
   } = useCollectiveCheckSheet();
   const { setFormVisible, setActionType, renderCommentAccountingFormFlag } =
     useCommentAccounting();

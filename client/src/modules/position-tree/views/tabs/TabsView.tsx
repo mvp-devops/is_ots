@@ -1,11 +1,11 @@
-import { Space, Tabs, Typography } from "antd";
+import { Space, Tabs } from "antd";
 
 import {
   DatabaseOutlined,
   PieChartOutlined,
   SisternodeOutlined,
 } from "@ant-design/icons";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { DesignDocumentTable } from "../../../file-storage";
 import PositionTreeTable from "../../components/table/PositionTreeTable";

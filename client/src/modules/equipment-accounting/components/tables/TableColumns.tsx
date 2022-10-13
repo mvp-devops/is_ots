@@ -11,7 +11,6 @@ import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
-  AppstoreAddOutlined,
   FileSearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
@@ -25,7 +24,6 @@ import {
   Views,
 } from "../../types";
 import { setTableColumnFilters } from ".";
-import { Link } from "react-router-dom";
 import { FormActions, setFilePath } from "../../../main";
 import { DeleteDialog } from "../../../../components";
 import { MenuItemType } from "rc-menu/lib/interface";
@@ -35,7 +33,6 @@ import {
   verificateDates,
 } from "../../../../utils/main.utils";
 import { useActions } from "../../../../hooks";
-import { ReactNode } from "react";
 
 const { Text } = Typography;
 

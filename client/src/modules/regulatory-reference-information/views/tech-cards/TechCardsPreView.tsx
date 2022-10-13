@@ -1,4 +1,4 @@
-import { Layout, Space, Typography, Row, Col, TableColumnsType } from "antd";
+import { Layout, Space, Typography, TableColumnsType } from "antd";
 import Table, { ColumnType } from "antd/lib/table";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
@@ -8,18 +8,6 @@ import { FormActions } from "../../../main";
 import { NSIView } from "../../types";
 
 const { Text } = Typography;
-
-interface TechnicalCardView {
-  id: string;
-  title: string;
-  //   workType:
-  //     | "Подготовительные работы"
-  //     | "Автономная наладка"
-  //     | "Комплексная наладка";
-  //   operationTitle: string;
-  //   categoryExecutor: string;
-  //   laborCosts: number;
-}
 
 const renderNumber = (id: string): ReactNode => {
   const ind = +id;
@@ -161,9 +149,7 @@ const TechCardsPreView = () => {
     </Space>
   );
 
-  const { loading, renderNsiItems, dictionaryTarget } = useTypedSelector(
-    (state) => state.nsi
-  );
+  const { renderNsiItems } = useTypedSelector((state) => state.nsi);
   const { setFormVisible, setActionType, setCurrentNsiItem } = useActions();
 
   const numberColumn: ColumnType<NSIView> = {

@@ -1,4 +1,4 @@
-import { Layout, Button, Divider, Form, Input, Space, Typography } from "antd";
+import { Layout, Button, Divider, Form, Space, Typography } from "antd";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InputUIComponent } from "../components";
@@ -18,7 +18,7 @@ function AuthPage() {
 
   const { login } = useActions();
 
-  const { isAuth, currentUser } = useTypedSelector((state) => state.main);
+  const { isAuth } = useTypedSelector((state) => state.main);
 
   const onFormSubmit = (data: LoginData) => {
     const { email, password } = data;

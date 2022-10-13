@@ -1,6 +1,6 @@
 import { Button, Divider, Form, Select, Space, Typography, Upload } from "antd";
 
-import { UploadOutlined, InfoCircleOutlined } from "@ant-design/icons";
+import { UploadOutlined } from "@ant-design/icons";
 import {
   DeleteForm,
   InputUIComponent,
@@ -23,7 +23,7 @@ const PositionTreeForm = () => {
     editRow,
     onHandlerChange,
     addNewItem,
-    addNewItems,
+    // addNewItems,
     updateItem,
     deleteItem,
 

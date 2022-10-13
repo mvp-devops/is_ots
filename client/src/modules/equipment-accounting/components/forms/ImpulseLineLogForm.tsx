@@ -1,5 +1,5 @@
-import { Button, Divider, Form, Input, Space, Typography } from "antd";
-import { ChangeEvent, FC, ReactNode } from "react";
+import { Button, Divider, Form, Space, Typography } from "antd";
+import { FC, ReactNode } from "react";
 import {
   ImpulseLineLogCreateOrUpdateAttrs,
   ImpulseLineLogView,

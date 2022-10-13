@@ -9,7 +9,6 @@ import CommentTableColumns from "./CommentTableColumns";
 import CommentTableSummary from "./CommentTableSummary";
 import CommentTableFooter from "./CommentTableFooter";
 import SolutionTable from "../solutionTable/";
-import { useCommentAccounting } from "../../../hooks";
 
 const CommentTable = () => {
   const {

@@ -21,7 +21,7 @@ const DesignDocumentForm = () => {
     actionType,
     setFormVisible,
     addNewItem,
-    addNewItems,
+    // addNewItems,
     deleteItem,
     updateItem,
   } = useFileStorageForm();

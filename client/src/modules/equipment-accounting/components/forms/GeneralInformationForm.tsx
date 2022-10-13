@@ -42,7 +42,6 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
   const [addFacilityVisible, setAddFacilityVisible] = useState(false);
 
   const {
-    unitId,
     onChangeTargetId,
     target,
     addNewFacilityModification,
@@ -56,9 +55,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     onModificationChange,
     setNewFacility,
     unitsList,
-    setUnitId,
     subUnitsList,
-    setSubUnitId,
   } = useGeneralInformationForm(row, data, setData);
 
   const formItems = (

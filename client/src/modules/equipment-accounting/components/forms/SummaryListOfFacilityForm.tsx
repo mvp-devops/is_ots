@@ -1,5 +1,5 @@
-import { Button, Divider, Layout, message, Space, Steps } from "antd";
-import React, { FC, useEffect, useState } from "react";
+import { Button, Divider, Space, Steps } from "antd";
+import React, { useEffect, useState } from "react";
 import {
   CableLogCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,

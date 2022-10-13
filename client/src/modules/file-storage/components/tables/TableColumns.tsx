@@ -5,7 +5,6 @@ import {
   FileUnknownOutlined,
   DeleteOutlined,
   MessageOutlined,
-  SearchOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import { DesignDocumentView } from "../../types";

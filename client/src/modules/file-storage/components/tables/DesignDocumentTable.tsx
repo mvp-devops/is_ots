@@ -33,7 +33,6 @@ const DesignDocumentTable = () => {
     searchValue,
     onSearch,
     renderFileStorageFormFlag,
-    formVisible,
     setFormVisible,
     actionType,
     setActionType,
