@@ -46,9 +46,7 @@ const ItemPage = () => {
 
         <Layout className="site-layout-background" style={{ padding: "0 0" }}>
           <TabsView />
-          {currentItem && (
-            <ItemPageMenu childTarget={currentItem.childrenTarget} />
-          )}
+          {currentItem && <ItemPageMenu />}
         </Layout>
       </Content>
       {summaryListOfEquipmentView && (

@@ -14,7 +14,6 @@ export const usePage = () => {
     setTarget,
     setChildTarget,
     setBaseTarget,
-    getPositionTreeStatistic,
   } = useActions();
 
   const { menuItems, currentItem } = useTypedSelector(
@@ -27,10 +26,6 @@ export const usePage = () => {
   const { renderNsiItems, dictionaryTarget } = useTypedSelector(
     (state) => state.nsi
   );
-
-  useEffect(() => {
-    currentItem && getPositionTreeStatistic(currentItem.target, currentItem.id);
-  }, [currentItem]);
 
   useEffect(() => {
     currentUser &&

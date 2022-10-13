@@ -27,9 +27,15 @@ export const useItemPage = (items?: MenuItem[]) => {
     baseTarget,
   } = useTypedSelector((state) => state.main);
 
-  const { checkListData, loading } = useTypedSelector(
+  const { checkListData, loading, statistic } = useTypedSelector(
     (state) => state.positionTree
   );
+
+  useEffect(() => {
+    currentItem && getPositionTreeStatistic(currentItem.target, currentItem.id);
+  }, [currentItem]);
+
+  const { getPositionTreeStatistic } = useActions();
 
   const { renderFormFlag } = usePositionTree();
 
@@ -163,7 +169,7 @@ export const useItemPage = (items?: MenuItem[]) => {
     menuItems,
     currentItem,
     loading,
-
+    statistic,
     setStatisticView,
     setCollectiveCheckSheetView,
     setSummaryListOfEquipmentView,
