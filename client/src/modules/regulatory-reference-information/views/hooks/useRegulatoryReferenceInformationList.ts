@@ -15,7 +15,7 @@ export const useRegulatoryReferenceInformationList = () => {
     baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
       dictionaryTarget &&
       setNsiItems(dictionaryTarget);
-  }, [baseTarget, dictionaryTarget]);
+  }, [baseTarget, dictionaryTarget]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     dictionaryTarget,

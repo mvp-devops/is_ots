@@ -43,13 +43,13 @@ export const usePositionTree = () => {
           actionType === FormActions.REMOVE_DOCUMENT) &&
         setFolderPath(currentItem.target, currentItem.id);
     }
-  }, [currentItem]);
+  }, [currentItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (currentItem && baseTarget === "POSITION_TREE") {
       getPositionTreeItem(target, currentItem.id);
     }
-  }, [target]);
+  }, [target]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [renderFormFlag, setRenderFormFlag] = useState(false);
   const [renderUserFormFlag, setRenderUserFormFlag] = useState(false);

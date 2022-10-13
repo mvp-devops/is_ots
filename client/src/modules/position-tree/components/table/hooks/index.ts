@@ -56,7 +56,7 @@ export const usePositionTreeTable = () => {
               ?.includes(searchValue.toLocaleLowerCase()))
       )
     );
-  }, [searchValue]);
+  }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const tableTitle =
     childTarget === "field"
@@ -108,7 +108,7 @@ export const usePositionTreeTable = () => {
     setSearchValue("");
     setActionType("");
     setFormVisible(false);
-  }, [currentItem?.id, target]);
+  }, [currentItem?.id, target]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => setDataSource(renderItems), [renderItems]);
 

@@ -47,7 +47,7 @@ export const useCommentAccountingFormData = () => {
       }
     });
     getItems("direction").then((data) => setDirectionsList(data));
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     switch (target) {
@@ -87,7 +87,7 @@ export const useCommentAccountingFormData = () => {
     );
   }, []);
 
-  useEffect(() => setSets({ ...sets, settings }), [settings]);
+  useEffect(() => setSets({ ...sets, settings }), [settings]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const addItem = () => {
     setSettings([
@@ -187,7 +187,7 @@ export const useCommentAccountingFormData = () => {
         currentCriticalities.criticalities,
         currentCriticalities.index
       );
-  }, [currentCriticalities, stage]);
+  }, [currentCriticalities, stage]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     addItem,

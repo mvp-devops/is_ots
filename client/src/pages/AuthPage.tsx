@@ -38,7 +38,7 @@ function AuthPage() {
     } else {
       navigate("/");
     }
-  }, [isAuth]);
+  }, [isAuth]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const authForm = (
     <Form

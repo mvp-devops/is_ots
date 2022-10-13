@@ -46,7 +46,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
     checkedItem &&
       actionType === FormActions.SUMMARY_LIST_OF_EQUIPMENT &&
       getSummaryListOfEquipment(parrentTarget, checkedItem.id as string);
-  }, [checkedItem, actionType]);
+  }, [checkedItem, actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(
     () => setRequestedData(summaryListOfEquipment),
@@ -88,7 +88,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
         summaryListOfEquipment.filter((item) => item.unitId === unitId)
       );
     }
-  }, [unitId]);
+  }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (subUnitId === "0" || subUnitId === "") {
@@ -98,7 +98,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
         summaryListOfEquipment.filter((item) => item.subUnitId === subUnitId)
       );
     }
-  }, [subUnitId]);
+  }, [subUnitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const [currentRow, setCurrentRow] = useState<Views>();
   const [renderDataSource, setRenderDataSource] = useState<Views[]>([]);

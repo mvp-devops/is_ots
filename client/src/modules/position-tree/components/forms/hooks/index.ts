@@ -88,7 +88,7 @@ export const usePositionTreeForm = () => {
       default:
         break;
     }
-  }, [actionType]);
+  }, [actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (
@@ -128,7 +128,7 @@ export const usePositionTreeForm = () => {
           break;
       }
     }
-  }, [actionType, formTarget]);
+  }, [actionType, formTarget]); // eslint-disable-line react-hooks/exhaustive-deps
 
   //Обновление данных полей формы
   const onHandlerChange = (

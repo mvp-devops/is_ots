@@ -39,7 +39,7 @@ export const useUserForm = () => {
       getItems("design").then((data) => setDesignsList(data));
       getItems("counterparty").then((data) => setCounterpartiesList(data));
     }
-  }, [actionType]);
+  }, [actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     userData.roles.includes("OTS") &&
@@ -54,13 +54,13 @@ export const useUserForm = () => {
   };
 
   const emailValidate = (email: string): boolean => {
-    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/; // eslint-disable-line
 
     return reg.test(email);
   };
 
   const phoneValidate = (phone: string): boolean => {
-    const reg = /^([+]?[0-9\s-\(\)]{3,25})*$/i;
+    const reg = /^([+]?[0-9\s-\(\)]{3,25})*$/i; // eslint-disable-line
 
     return reg.test(phone);
   };

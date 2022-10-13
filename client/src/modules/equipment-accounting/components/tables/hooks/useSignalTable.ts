@@ -34,7 +34,7 @@ export const useSignalTable = () => {
             .includes(searchValue.toUpperCase())
       )
     );
-  }, [searchValue]);
+  }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     searchValue,

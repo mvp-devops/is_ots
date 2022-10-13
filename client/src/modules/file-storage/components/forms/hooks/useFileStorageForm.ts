@@ -83,13 +83,13 @@ export const useFileStorageForm = () => {
           break;
       }
     }
-  }, [actionType]);
+  }, [actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     editRow &&
       editRow.stageId === 5 &&
       getNSIList("counterparty").then((data) => setSuppliersList(data));
-  }, [editRow?.stageId]);
+  }, [editRow?.stageId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   //Обновление данных полей формы
   const onHandlerChange = (

@@ -57,7 +57,7 @@ export const useStatistic = () => {
 
   useEffect(() => {
     currentItem && getPositionTreeStatistic(currentItem.target, currentItem.id);
-  }, [currentItem]);
+  }, [currentItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => setLoadignStatistic(true), [currentItem]);
   useEffect(() => setLoadignStatistic(false), [statistic]);

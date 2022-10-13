@@ -29,7 +29,7 @@ const TabsView = () => {
       currentItem.target === "sub-unit")
       ? setDocumentationView(true)
       : setDocumentationView(false);
-  }, [currentItem]);
+  }, [currentItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const childTarget = currentItem?.childrenTarget;
 

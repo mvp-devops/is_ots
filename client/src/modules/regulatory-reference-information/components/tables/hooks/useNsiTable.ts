@@ -89,7 +89,7 @@ export const useNsiTable = () => {
           item?.code?.toLowerCase()?.includes(searchValue.toLowerCase())
       )
     );
-  }, [searchValue]);
+  }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     renderNsiFormFlag,

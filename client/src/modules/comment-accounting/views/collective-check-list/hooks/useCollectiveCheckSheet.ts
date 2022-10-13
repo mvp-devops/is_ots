@@ -41,7 +41,7 @@ export const useCollectiveCheckSheet = () => {
       currentDesignDocument &&
         getManyComments(target, currentDesignDocument.id);
     }
-  }, [checkedDesignDocuments, currentDesignDocument]);
+  }, [checkedDesignDocuments, currentDesignDocument]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setDataSource(renderComments);
@@ -92,7 +92,7 @@ export const useCollectiveCheckSheet = () => {
           break;
       }
     }
-  }, [renderOneItem]);
+  }, [renderOneItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     projectTitleRender,

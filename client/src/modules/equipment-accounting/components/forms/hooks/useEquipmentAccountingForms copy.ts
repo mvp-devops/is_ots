@@ -83,7 +83,7 @@ export const useEquipmentAccountingForm = (
       setCounterpartiesList(data);
       setVendorsList(renderNSIList(data));
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const removeItem = (index: string | number | null) => {
     data &&
@@ -197,7 +197,7 @@ export const useEquipmentAccountingForm = (
         );
       unitsList.length <= 0 && setSubUnitsList(currentItem?.children || []);
     }
-  }, [unitsList, unitId]);
+  }, [unitsList, unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // useEffect(() => console.log("Data: ", data), [data]);
 

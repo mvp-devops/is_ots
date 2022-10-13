@@ -85,7 +85,7 @@ export const useEquipmentAccountingForm = (
       setCounterpartiesList(data);
       setVendorsList(renderNSIList(data));
     });
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const removeItem = (index: string | number | null) => {
     data &&
@@ -205,8 +205,7 @@ export const useEquipmentAccountingForm = (
           break;
       }
     }
-  }, [currentItem, checkedItem, target]);
-
+  }, [currentItem, checkedItem, target]); // eslint-disable-line react-hooks/exhaustive-deps
   useEffect(() => {
     if (currentItem && checkedItem) {
       switch (target) {
@@ -239,9 +238,9 @@ export const useEquipmentAccountingForm = (
           break;
       }
     }
-  }, [unitId]);
+  }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => console.log("SubUnits: ", subUnitsList), [unitId]);
+  useEffect(() => console.log("SubUnits: ", subUnitsList), [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { facilitiesList } = useTypedSelector(
     (state) => state.equipmentAccounting
@@ -255,7 +254,7 @@ export const useEquipmentAccountingForm = (
 
   useEffect(() => {
     getFacilitiesList();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => setFacilities(facilitiesList), [facilitiesList]);
 

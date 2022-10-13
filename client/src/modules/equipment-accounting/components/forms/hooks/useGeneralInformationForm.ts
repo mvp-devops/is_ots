@@ -82,11 +82,11 @@ export const useGeneralInformationForm = (
       setData &&
       setData({ ...data, facility: { ...data.facility, modifications } });
     editRow && console.log(editRow.facility);
-  }, [modifications]);
+  }, [modifications]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     onHandlerChange("facility", newFacility);
-  }, [newFacility]);
+  }, [newFacility]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     facilities.length > 0 &&
@@ -103,7 +103,7 @@ export const useGeneralInformationForm = (
         facilities.filter((item, index) => item.id === editRow.facilityId)[0]
           ?.modifications || []
       );
-  }, [editRow?.facilityId, data?.facilityId]);
+  }, [editRow?.facilityId, data?.facilityId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(
     () => console.log("GeneralInformationFormRow: ", editRow),

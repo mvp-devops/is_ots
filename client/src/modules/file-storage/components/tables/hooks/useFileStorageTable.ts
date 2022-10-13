@@ -34,7 +34,7 @@ export const useFileStorageTable = () => {
     documentationView &&
       currentItem &&
       getAllDesignDocuments(currentItem.target, currentItem.id);
-  }, [documentationView, currentItem, formVisible]);
+  }, [documentationView, currentItem, formVisible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setDataSource(designDocuments);
@@ -54,7 +54,7 @@ export const useFileStorageTable = () => {
           item?.createdAt?.toLowerCase()?.includes(searchValue.toLowerCase())
       )
     );
-  }, [searchValue]);
+  }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     renderFileStorageFormFlag,

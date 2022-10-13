@@ -33,7 +33,7 @@ export const useItemPage = (items?: MenuItem[]) => {
 
   useEffect(() => {
     currentItem && getPositionTreeStatistic(currentItem.target, currentItem.id);
-  }, [currentItem]);
+  }, [currentItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { getPositionTreeStatistic } = useActions();
 
@@ -99,11 +99,11 @@ export const useItemPage = (items?: MenuItem[]) => {
           break;
       }
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     items && setMenuItems(renderMenuItems(items));
-  }, [currentItem]);
+  }, [currentItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     formVisible,

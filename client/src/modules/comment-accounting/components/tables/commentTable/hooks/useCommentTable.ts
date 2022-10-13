@@ -4,7 +4,6 @@ import {
   DesignDocumentCommentView,
 } from "../../../..";
 import { useActions, useTypedSelector } from "../../../../../..";
-import { FormActions } from "../../../../../main";
 import { getAllItems as getNsiItems } from "../../../../../regulatory-reference-information";
 
 export const useCommentTable = () => {
@@ -37,14 +36,7 @@ export const useCommentTable = () => {
       currentDesignDocument &&
         getManyComments(target, currentDesignDocument.id);
     }
-  }, [
-    checkedDesignDocuments,
-    currentDesignDocument,
-    formVisible &&
-      (actionType === FormActions.COLLECTIVE_CHECK_SHEET ||
-        actionType === FormActions.ADD_COMMENT ||
-        actionType === FormActions.EDIT_COMMENT),
-  ]);
+  }, [checkedDesignDocuments, currentDesignDocument, actionType, formVisible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setDataSource(renderComments);
@@ -76,10 +68,7 @@ export const useCommentTable = () => {
           ]);
       });
     }
-  }, [
-    currentDesignDocument,
-    actionType === FormActions.COLLECTIVE_CHECK_SHEET,
-  ]);
+  }, [currentDesignDocument, actionType]);
 
   return {
     dataSource,

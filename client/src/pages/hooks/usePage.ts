@@ -31,7 +31,7 @@ export const usePage = () => {
     currentUser &&
       currentUser.subsidiaryId &&
       setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
-  }, [formVisible]);
+  }, [formVisible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {
     if (item) {

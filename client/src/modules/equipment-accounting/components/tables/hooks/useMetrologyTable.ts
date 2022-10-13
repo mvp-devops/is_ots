@@ -47,7 +47,7 @@ export const useMetrologyTable = () => {
           item.mpi.toUpperCase().includes(searchValue.toUpperCase())
       )
     );
-  }, [searchValue]);
+  }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     searchValue,

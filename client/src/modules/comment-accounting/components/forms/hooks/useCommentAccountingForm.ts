@@ -61,7 +61,7 @@ export const useCommentAccountingForm = () => {
           )
         );
     }
-  }, [actionType]);
+  }, [actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (
@@ -98,15 +98,11 @@ export const useCommentAccountingForm = () => {
     //   getItems("normative").then((data) =>
     //   setCriticalities(data)
     // );
-  }, [
-    currentDesignDocument,
-    actionType === FormActions.ADD_COMMENT,
-    actionType === FormActions.EDIT_COMMENT,
-  ]);
+  }, [currentDesignDocument, actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     editRow && setEditRow({ ...editRow, solutions });
-  }, [solutions]);
+  }, [solutions]); // eslint-disable-line react-hooks/exhaustive-deps
 
   //Обновление данных полей формы
   const onHandlerChange = (key: string, value: string | number | null) => {
