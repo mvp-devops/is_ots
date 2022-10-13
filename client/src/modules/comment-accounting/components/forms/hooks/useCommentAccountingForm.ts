@@ -16,6 +16,7 @@ export const useCommentAccountingForm = () => {
     useState<DesignDocumentCommentCreationAttrs | null>(null);
   const [directionsList, setDirectionsList] = useState<NSIView[]>([]);
   const [criticalitiesList, setCriticalitiesList] = useState<NSIView[]>([]);
+
   const [normativesList, setNormativesList] = useState<NSIView[]>([]);
   const [solutions, setSolutions] = useState<
     DesignDocumentCommentSolutionCreationAttrs[]
@@ -171,6 +172,7 @@ export const useCommentAccountingForm = () => {
     criticalitiesList,
     editRow,
     onHandlerChange,
+    normativesList,
     solutions,
     addItem,
     addNewItems,

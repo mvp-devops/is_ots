@@ -201,6 +201,7 @@ export const useCommentAccountingFormData = () => {
     target,
     id,
     stages,
+    normativesList,
     criticalities,
     sets,
     settings,
