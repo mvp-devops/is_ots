@@ -279,6 +279,7 @@ export interface GeneralInformationCreateOrUpdateAttrs {
   unitId: string | number | null;
   subUnitId: string | number | null;
   facilityId: string | number | null;
+  technacalCardId?: string | number | null;
   installationLocation: string;
   questionare?: any;
   systemType: string[];

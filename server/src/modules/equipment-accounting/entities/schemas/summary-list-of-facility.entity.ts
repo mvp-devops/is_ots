@@ -84,7 +84,6 @@ export class SummaryListOfEquipmentEntity extends Model<
   @ForeignKey(() => TechnicalCardEntity)
   @Column({
     type: DataType.INTEGER,
-    allowNull: false,
   })
   technicalCardId: number;
 

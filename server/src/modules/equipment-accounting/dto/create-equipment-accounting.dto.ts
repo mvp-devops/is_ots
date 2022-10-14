@@ -9,6 +9,7 @@ import {
   SignalCreateOrUpdateAttrs,
   SummaryListOfEquipmentFormData,
 } from "../../../../common/types/equipment-accounting";
+import { FacilityEntity } from "../entities";
 
 export class CreateFacilityDto implements FacilityCreateOrUpdateAttrs {
   @ApiProperty({
@@ -372,6 +373,118 @@ export class CreateSignalDto implements SignalCreateOrUpdateAttrs {
     description: "Аварийный протокол",
   })
   readonly emergencyProtocol: string;
+}
+
+export class CreateGeneralInformationDto
+  implements GeneralInformationCreateOrUpdateAttrs
+{
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор единицы оборудования",
+  })
+  readonly sloeId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор проекта",
+  })
+  readonly projectId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор объекта строительства",
+  })
+  readonly unitId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор объекта/установки",
+  })
+  readonly subUnitId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор оборудования",
+  })
+  readonly facilityId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор тех. карты ПНР",
+  })
+  readonly techicalCardId: number;
+
+  @ApiProperty({
+    example: "Кран Г-3",
+    description: "Место установки",
+  })
+  readonly installationLocation: string;
+
+  @ApiProperty({
+    example: "[РСУ, ПАЗ]",
+    description: "Принадлежность к системам",
+  })
+  readonly systemType: string[];
+
+  @ApiProperty({
+    example: "TAG",
+    description: "TAG",
+  })
+  readonly tag: string;
+
+  @ApiProperty({
+    example: "Давление газ до крана Г-3",
+    description: "Контроллируемый параметр",
+  })
+  readonly controlledParameter: string;
+
+  @ApiProperty({
+    example: "Оборудование",
+    description: "Оборудование",
+  })
+  readonly facility?: FacilityEntity;
+
+  @ApiProperty({
+    example: "Модификация",
+    description: "Модификация",
+  })
+  readonly facilityModification: string;
+
+  @ApiProperty({
+    example: "Зав. №",
+    description: "Зав. №",
+  })
+  readonly factoryNumber: string;
+
+  @ApiProperty({
+    example: "Год выпуска",
+    description: "Год выпуска",
+  })
+  readonly year: string;
+
+  @ApiProperty({
+    example: "Месяц выпуска",
+    description: "Месяц выпуска",
+  })
+  readonly month: string;
+
+  @ApiProperty({
+    example: "Срок эксплуатации",
+    description: "Срок эксплуатации",
+  })
+  readonly period: string;
+
+  @ApiProperty({
+    example: "Спецификация поставки",
+    description: "Спецификация поставки",
+  })
+  readonly specification: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  readonly description: string;
 }
 
 export class CreateSummaryListOfEquipmentDto

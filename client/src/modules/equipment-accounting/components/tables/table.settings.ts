@@ -17,206 +17,208 @@ export const setTableColumnFilters = (
   items: Views[]
 ): ColumnFilterItem[] => {
   const array: string[] = [];
-
-  switch (target) {
-    case "unit": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].unit;
-        if (!array.includes(item)) {
-          array.push(item);
-        }
-      }
-      break;
-    }
-    case "sub-unit": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].subUnit;
-        if (item && !array.includes(item)) {
-          array.push(item);
-        }
-      }
-      break;
-    }
-    case "tag": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].tag;
-        if (item && !array.includes(item)) {
-          array.push(item);
-        }
-      }
-      break;
-    }
-    case "installation-location": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i]
-          .installationLocation;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "controlled-parameter": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i].controlledParameter;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "equipment-type": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i].facility
-          .equipmentType;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "country": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i].facility.country;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "vendor": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i].facility.vendor;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "facility-title": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i].facility.title;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "facility-modification": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as GeneralInformationView[])[i]
-          .facilityModification;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-
-    case "sgroei": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as MetrologyView[])[i].sgroei;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "area": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as MetrologyView[])[i].measurementArea;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "type": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as MetrologyView[])[i].meansurementType;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "group": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as MetrologyView[])[i].meansureGroup;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "grsi": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as MetrologyView[])[i].grsi;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-
-      break;
-    }
-    case "date-to-verification": {
-      for (let i = 0; i < items.length; i++) {
-        const item = formatDate((items as MetrologyView[])[i].toDate);
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-
-      break;
-    }
-
-    case "signal-type": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as SignalView[])[i].signalType;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "signal-protocol": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as SignalView[])[i].signalProtocol;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-
-    case "impulse-line-type": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as ImpulseLineLogView[])[i].impulseLineType;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    case "cable-mark": {
-      for (let i = 0; i < items.length; i++) {
-        const item = (items as CableLogView[])[i].cableMark;
-        if (item && !array.includes(item.toString())) {
-          array.push(item.toString());
-        }
-      }
-      break;
-    }
-    default:
-      break;
-  }
   const result: ColumnFilterItem[] = [];
 
-  for (let j = 0; j < array.length; j++) {
-    result.push({
-      text: array[j],
-      value: array[j],
-    });
+  if (items.length > 0) {
+    switch (target) {
+      case "unit": {
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i].unit;
+          if (!array.includes(item)) {
+            array.push(item);
+          }
+        }
+        break;
+      }
+      case "sub-unit": {
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i].subUnit;
+          if (item && !array.includes(item)) {
+            array.push(item);
+          }
+        }
+        break;
+      }
+      case "tag": {
+        for (let i = 0; i < items.length; i++) {
+          const item = items[i].tag;
+          if (item && !array.includes(item)) {
+            array.push(item);
+          }
+        }
+        break;
+      }
+      case "installation-location": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i]
+            .installationLocation;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "controlled-parameter": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i]
+            .controlledParameter;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "equipment-type": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i].facility
+            .equipmentType;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "country": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i].facility.country;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "vendor": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i].facility.vendor;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "facility-title": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i].facility.title;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "facility-modification": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as GeneralInformationView[])[i]
+            .facilityModification;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+
+      case "sgroei": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as MetrologyView[])[i].sgroei;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "area": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as MetrologyView[])[i].measurementArea;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "type": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as MetrologyView[])[i].meansurementType;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "group": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as MetrologyView[])[i].meansureGroup;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "grsi": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as MetrologyView[])[i].grsi;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+
+        break;
+      }
+      case "date-to-verification": {
+        for (let i = 0; i < items.length; i++) {
+          const item = formatDate((items as MetrologyView[])[i].toDate);
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+
+        break;
+      }
+
+      case "signal-type": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as SignalView[])[i].signalType;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "signal-protocol": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as SignalView[])[i].signalProtocol;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+
+      case "impulse-line-type": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as ImpulseLineLogView[])[i].impulseLineType;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      case "cable-mark": {
+        for (let i = 0; i < items.length; i++) {
+          const item = (items as CableLogView[])[i].cableMark;
+          if (item && !array.includes(item.toString())) {
+            array.push(item.toString());
+          }
+        }
+        break;
+      }
+      default:
+        break;
+    }
+    for (let j = 0; j < array.length; j++) {
+      result.push({
+        text: array[j],
+        value: array[j],
+      });
+    }
   }
 
   return result;

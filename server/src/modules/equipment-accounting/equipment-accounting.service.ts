@@ -10,6 +10,7 @@ import {
   CableLogView,
   ExportEquipmentToAtlas,
   FacilityView,
+  GeneralInformationView,
   ImpulseLineLogView,
   MetrologyView,
   MonitoringView,
@@ -50,6 +51,25 @@ import {
   SignalEntity,
   SummaryListOfEquipmentEntity,
 } from "./entities";
+import { UpdateRegulatoryReferenceInformationDto } from "../regulatory-reference-information/dto";
+import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
+
+type EquipmentAccountingAssetView =
+  | SummaryListOfEquipmentView
+  | GeneralInformationView
+  | MetrologyView
+  | SignalView
+  | CableLogView
+  | ImpulseLineLogView
+  | MonitoringView
+  | null;
+type UpdateEquipmentAccountingAssetDto =
+  | UpdateGeneralInformationDto
+  | UpdateMetrologyDto
+  | UpdateSignalDto
+  | UpdateCableLogDto
+  | UpdateImpulseLineLogDto
+  | UpdateMonitoringDto;
 
 @Injectable()
 export class EquipmentAccountingService {
@@ -394,7 +414,8 @@ export class EquipmentAccountingService {
     parrentFolderPath?: string
   ): Promise<CableLogView> => {
     try {
-      await this.cableLogRepository.update(dto, { where: { id } });
+      let item = await this.findOneCableLogAsset(+id);
+
       if (wiringDiagram) {
         await this.fileService.createDesignDocument(
           id.toString(),
@@ -403,7 +424,8 @@ export class EquipmentAccountingService {
           wiringDiagram
         );
       }
-      const item = await this.findOneCableLogAsset(+id);
+      await this.cableLogRepository.update(dto, { where: { id } });
+      item = await this.findOneCableLogAsset(+id);
       return item;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -805,8 +827,7 @@ export class EquipmentAccountingService {
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
-      await this.metrologyRepository.update(dto, { where: { id } });
-      const item = await this.findOneMetrologyAsset(+id);
+      let item = await this.findOneMetrologyAsset(+id);
 
       if (document) {
         if (!item.document) {
@@ -858,6 +879,9 @@ export class EquipmentAccountingService {
           );
         }
       }
+
+      await this.metrologyRepository.update(dto, { where: { id } });
+      item = await this.findOneMetrologyAsset(+id);
 
       return item;
     } catch (e: any) {
@@ -1271,8 +1295,7 @@ export class EquipmentAccountingService {
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
-      await this.monitoringRepository.update(dto, { where: { id } });
-      const item = await this.findOneMonitoringAsset(+id);
+      let item = await this.findOneMonitoringAsset(+id);
 
       if (functionalDiagram) {
         await this.fileService.createDesignDocument(
@@ -1367,6 +1390,8 @@ export class EquipmentAccountingService {
           );
         }
       }
+      await this.monitoringRepository.update(dto, { where: { id } });
+      item = await this.findOneMonitoringAsset(+id);
 
       return item;
     } catch (e: any) {
@@ -1780,109 +1805,139 @@ export class EquipmentAccountingService {
     }
   };
 
-  updateSummaryListOfEquipmentAsset = async (
-    id: number,
-    dto: UpdateSummaryListOfEquipmentDto,
-    questionare?: File,
-    wiringDiagram?: File,
-    document?: File,
-    verificationProcedure?: File,
-    typeApprovalCertificate?: File,
-    functionalDiagram?: File,
-    mountDocument?: File,
-    connectDocument?: File,
-    testDocument?: File,
-    awpDocument?: File,
-    commisionDocument?: File,
-    parrentFolderPath?: string
-  ): Promise<SummaryListOfEquipmentView> => {
+  findOneGeneralInformationAsset = async (
+    id: number
+  ): Promise<GeneralInformationView> => {
     try {
       const {
-        generalInformation,
-        metrology,
-        monitoring,
-        cableLog,
-        impulseLineLog,
-        signals,
-      } = dto;
+        facilityId,
+        subUnitId,
+        subUnit,
+        tag,
+        installationLocation,
+        facilityModification,
+        equipmentQuestionare,
+        systemType,
+        controlledParameter,
+        factoryNumber,
+        year,
+        month,
+        period,
+        specification,
+        description,
+      } = await this.summaryListOfEquipmentRepository.findOne({
+        where: { id },
+        include: [
+          {
+            model: SubUnitEntity,
+            include: [
+              {
+                model: UnitEntity,
+                include: [
+                  {
+                    model: ProjectEntity,
+                    include: [
+                      {
+                        model: FieldEntity,
+                      },
+                    ],
+                  },
+                ],
+              },
+            ],
+          },
+          {
+            model: DesignDocumentEntity,
+            as: "equipmentQuestionare",
+          },
+          {
+            model: FacilityEntity,
+          },
+        ],
+      });
 
-      if (generalInformation.facility) {
-        await this.updateFacilityAsset(
-          generalInformation.facility.id.toString(),
-          generalInformation.facility
-        );
+      const item: GeneralInformationView = {
+        id: id.toString(),
+        sloeId: id.toString(),
+        projectId: subUnit.unit.projectId.toString(),
+        project: subUnit.unit.project.title,
+        unitId: subUnit.unitId.toString(),
+        unit: subUnit.unit.title,
+        subUnitId: subUnitId.toString(),
+        subUnit: subUnit.title,
+
+        facilityId: facilityId,
+        tag: tag,
+        installationLocation: installationLocation,
+        facilityModification: facilityModification,
+        questionare: equipmentQuestionare,
+        systemType: systemType,
+        controlledParameter: controlledParameter,
+        factoryNumber: factoryNumber,
+        year: year,
+        month: month,
+        period: period,
+        specification: specification,
+        description: description,
+        facility: await this.findOneFacilityAsset(facilityId),
+      };
+
+      return item;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
+  updateGeneralInformationAsset = async (
+    id: number,
+    dto: UpdateGeneralInformationDto,
+    questionare?: File,
+    parrentFolderPath?: string
+  ): Promise<GeneralInformationView> => {
+    try {
+      let newFacility: FacilityEntity | null = null;
+      let facilityId = dto.facilityId;
+      const { facility } = dto;
+
+      const itemId = id.toString();
+      if (facility) {
+        newFacility = await this.facilityRepository.create(facility);
+        facilityId = +newFacility.id;
       }
-
-      //  await this.summaryListOfEquipmentRepository.update(generalInformation, {where: {id: +generalInformation.id}});
 
       if (questionare) {
         await this.fileService.createDesignDocument(
-          generalInformation.id.toString(),
+          itemId,
           "summary-list-of-equipment",
           parrentFolderPath,
           questionare
         );
       }
+      await this.summaryListOfEquipmentRepository.update(
+        { ...dto, facilityId },
+        { where: { id } }
+      );
 
-      if (metrology) {
-        await this.updateMetrologyAsset(
-          metrology.id.toString(),
-          metrology,
-          document,
-          verificationProcedure,
-          typeApprovalCertificate,
-          parrentFolderPath
+      const item = await this.findOneGeneralInformationAsset(id);
+
+      return item;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
+  deleteGeneralInformationAsset = async (
+    id: number
+  ): Promise<GeneralInformationView> => {
+    try {
+      const item = await this.findOneGeneralInformationAsset(id);
+      await this.summaryListOfEquipmentRepository.destroy({ where: { id } });
+
+      if (item.questionare) {
+        await this.fileService.deleteDesignDocument(
+          item.questionare.id.toString()
         );
       }
-
-      if (cableLog.length > 0) {
-        for (let i = 0; i < cableLog.length; i++) {
-          const item = cableLog[i];
-
-          await this.updateCableLogAsset(
-            item.id.toString(),
-            { ...item, sloeId: +item.sloeId },
-            wiringDiagram,
-            parrentFolderPath
-          );
-        }
-      }
-
-      if (impulseLineLog.length > 0) {
-        for (let i = 0; i < impulseLineLog.length; i++) {
-          const item = impulseLineLog[i];
-          await this.updateImpulseLineLogAsset(item.id.toString(), {
-            ...item,
-            sloeId: +item.sloeId,
-          });
-        }
-      }
-
-      if (signals.length > 0) {
-        for (let i = 0; i < signals.length; i++) {
-          const item = signals[i];
-          await this.updateSignalAsset(item.id.toString(), {
-            ...item,
-            sloeId: +item.sloeId,
-          });
-        }
-      }
-
-      if (monitoring) {
-        await this.updateMonitoringAsset(
-          monitoring.id.toString(),
-          { ...monitoring, sloeId: +monitoring.sloeId },
-          functionalDiagram,
-          mountDocument,
-          connectDocument,
-          testDocument,
-          awpDocument,
-          commisionDocument,
-          parrentFolderPath
-        );
-      }
-
-      const item = await this.findOneSummaryListOfEquipmentAsset(id);
 
       return item;
     } catch (e: any) {
@@ -1891,13 +1946,18 @@ export class EquipmentAccountingService {
   };
 
   deleteSummaryListOfEquipmentAsset = async (
-    id: number
+    id: number,
+    parrentFolderPath?: string
   ): Promise<SummaryListOfEquipmentView> => {
     try {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
       await this.summaryListOfEquipmentRepository.destroy({ where: { id } });
 
-      item.metrology && (await this.deleteMetrologyAsset(+item.metrology.id));
+      item.metrology &&
+        (await this.deleteMetrologyAsset(
+          +item.metrology.id,
+          parrentFolderPath
+        ));
 
       if (item.cableLog && item.cableLog.length > 0) {
         for (let i = 0; i < item.cableLog.length; i++) {
@@ -1921,7 +1981,10 @@ export class EquipmentAccountingService {
       }
 
       item.monitoring &&
-        (await this.deleteMonitoringAsset(+item.monitoring.id));
+        (await this.deleteMonitoringAsset(
+          +item.monitoring.id,
+          parrentFolderPath
+        ));
 
       if (item.questionare) {
         await this.fileService.deleteDesignDocument(
@@ -2029,6 +2092,142 @@ export class EquipmentAccountingService {
     };
 
     return dataItem;
+  };
+
+  updateSummaryListOfEquipmentAsset = async (
+    target: string,
+    id: number,
+    dto: UpdateEquipmentAccountingAssetDto,
+    questionare?: File,
+    wiringDiagram?: File,
+    document?: File,
+    verificationProcedure?: File,
+    typeApprovalCertificate?: File,
+    functionalDiagram?: File,
+    mountDocument?: File,
+    connectDocument?: File,
+    testDocument?: File,
+    awpDocument?: File,
+    commisionDocument?: File,
+    parrentFolderPath?: string
+  ): Promise<EquipmentAccountingAssetView> => {
+    let item: EquipmentAccountingAssetView = null;
+
+    const itemId = id.toString();
+
+    switch (target) {
+      case "general-information": {
+        item = await this.updateGeneralInformationAsset(
+          +itemId,
+          dto as UpdateGeneralInformationDto,
+          questionare,
+          parrentFolderPath
+        );
+        break;
+      }
+
+      case "metrology": {
+        item = await this.updateMetrologyAsset(
+          itemId,
+          dto as UpdateMetrologyDto,
+          document,
+          verificationProcedure,
+          typeApprovalCertificate,
+          parrentFolderPath
+        );
+        break;
+      }
+
+      case "signal": {
+        item = await this.updateSignalAsset(itemId, dto as UpdateSignalDto);
+        break;
+      }
+
+      case "cable-log": {
+        item = await this.updateCableLogAsset(
+          itemId,
+          dto as UpdateCableLogDto,
+          wiringDiagram,
+          parrentFolderPath
+        );
+        break;
+      }
+
+      case "impulse-line-log": {
+        item = await this.updateImpulseLineLogAsset(
+          itemId,
+          dto as UpdateImpulseLineLogDto
+        );
+        break;
+      }
+
+      case "monitoring": {
+        item = await this.updateMonitoringAsset(
+          itemId,
+          dto as UpdateMonitoringDto,
+          functionalDiagram,
+          mountDocument,
+          connectDocument,
+          testDocument,
+          awpDocument,
+          commisionDocument,
+          parrentFolderPath
+        );
+        break;
+      }
+      default:
+        break;
+    }
+
+    return item;
+  };
+
+  deleteSummaryListOfEquipmentSubAsset = async (
+    target: string,
+    id: number,
+    parrentFolderPath?: string
+  ): Promise<EquipmentAccountingAssetView> => {
+    let item: EquipmentAccountingAssetView = null;
+
+    switch (target) {
+      case "general-information": {
+        item = await this.deleteSummaryListOfEquipmentAsset(
+          id,
+          parrentFolderPath
+        );
+        break;
+      }
+
+      case "metrology": {
+        item = await this.deleteMetrologyAsset(id, parrentFolderPath);
+        break;
+      }
+
+      case "signal": {
+        item = await this.deleteSignalAsset(id);
+        break;
+      }
+
+      case "cable-log": {
+        item = await this.deleteCableLogAsset(id);
+        break;
+      }
+
+      case "impulse-line-log": {
+        console.log("this: ", target, id);
+        item = await this.deleteImpulseLineLogAsset(id);
+        break;
+      }
+
+      case "monitoring": {
+        item = await this.deleteMonitoringAsset(id, parrentFolderPath);
+        break;
+      }
+      default:
+        break;
+    }
+
+    return item;
   };
 
   exportToAtlas = async (

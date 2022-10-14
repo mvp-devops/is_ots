@@ -7,7 +7,10 @@ import {
   CreateMonitoringDto,
   CreateSummaryListOfEquipmentDto,
 } from ".";
-import { CreateSignalDto } from "./create-equipment-accounting.dto";
+import {
+  CreateGeneralInformationDto,
+  CreateSignalDto,
+} from "./create-equipment-accounting.dto";
 
 export class UpdateFacilityDto extends PartialType(CreateFacilityDto) {}
 
@@ -25,4 +28,8 @@ export class UpdateSignalDto extends PartialType(CreateSignalDto) {}
 
 export class UpdateSummaryListOfEquipmentDto extends PartialType(
   CreateSummaryListOfEquipmentDto
+) {}
+
+export class UpdateGeneralInformationDto extends PartialType(
+  CreateGeneralInformationDto
 ) {}

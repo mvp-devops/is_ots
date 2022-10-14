@@ -16,7 +16,15 @@ import { FileInterceptor } from "@nestjs/platform-express";
 import { setCurrentDate } from "../../../common/utils";
 import type { Response } from "express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
-import { CreateSummaryListOfEquipmentDto } from "./dto";
+import {
+  CreateSummaryListOfEquipmentDto,
+  UpdateCableLogDto,
+  UpdateImpulseLineLogDto,
+  UpdateMetrologyDto,
+  UpdateMonitoringDto,
+  UpdateSignalDto,
+} from "./dto";
+import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
@@ -107,7 +115,72 @@ export class EquipmentAccountingController {
   }
 
   @Delete("/summary-list-of-equipment-asset/remove/:id")
-  deleteSummaryListOfEquipmentAsset(@Param("id") id: string) {
-    return this.service.deleteSummaryListOfEquipmentAsset(+id);
+  deleteSummaryListOfEquipmentAsset(
+    @Param("id") id: string,
+    @Query() query: { target: string; parrentFolderPath?: string }
+  ) {
+    const { target, parrentFolderPath } = query;
+    return this.service.deleteSummaryListOfEquipmentSubAsset(
+      target,
+      +id,
+      parrentFolderPath
+    );
+  }
+
+  @Put("/summary-list-of-equipment-asset/edit/:id")
+  @UseInterceptors(
+    FileInterceptor("questionare"),
+    FileInterceptor("wiringDiagram"),
+    FileInterceptor("document"),
+    FileInterceptor("verificationProcedure"),
+    FileInterceptor("typeApprovalCertificate"),
+    FileInterceptor("functionalDiagram"),
+    FileInterceptor("mountDocument"),
+    FileInterceptor("connectDocument"),
+    FileInterceptor("testDocument"),
+    FileInterceptor("awpDocument"),
+    FileInterceptor("commisionDocument")
+  )
+  updateSummaryListOfEquipmentAsset(
+    @Param("id") id: string,
+    @Query() query: { target: string; parrentFolderPath?: string },
+    @Body()
+    dto:
+      | UpdateCableLogDto
+      | UpdateImpulseLineLogDto
+      | UpdateMetrologyDto
+      | UpdateMonitoringDto
+      | UpdateSignalDto
+      | UpdateGeneralInformationDto,
+    @UploadedFile() questionare?: any,
+    @UploadedFile() wiringDiagram?: any,
+    @UploadedFile() document?: any,
+    @UploadedFile() verificationProcedure?: any,
+    @UploadedFile() typeApprovalCertificate?: any,
+    @UploadedFile() functionalDiagram?: any,
+    @UploadedFile() mountDocument?: any,
+    @UploadedFile() connectDocument?: any,
+    @UploadedFile() testDocument?: any,
+    @UploadedFile() awpDocument?: any,
+    @UploadedFile() commisionDocument?: any
+  ) {
+    const { target, parrentFolderPath } = query;
+    return this.service.updateSummaryListOfEquipmentAsset(
+      target,
+      +id,
+      dto,
+      questionare,
+      wiringDiagram,
+      document,
+      verificationProcedure,
+      typeApprovalCertificate,
+      functionalDiagram,
+      mountDocument,
+      connectDocument,
+      testDocument,
+      awpDocument,
+      commisionDocument,
+      parrentFolderPath
+    );
   }
 }

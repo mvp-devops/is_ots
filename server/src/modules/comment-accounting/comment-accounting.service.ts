@@ -590,10 +590,11 @@ export class CommentAccountingService {
           designContacts,
           solutionId,
           solution,
-          expertContacts: `${user.lastName} ${user.firstName.slice(
-            0,
-            1
-          )}. ${user.secondName.slice(0, 1)}.  \r\n\
+          expertContacts: user
+            ? `${user.lastName} ${user.firstName.slice(
+                0,
+                1
+              )}. ${user.secondName.slice(0, 1)}.  \r\n\
           
           ${user.subsidiary.title} \r\n\
           
@@ -603,7 +604,8 @@ export class CommentAccountingService {
           
           почта: ${user.email} \r\n\
           
-          телефон: ${user.phone}`,
+          телефон: ${user.phone}`
+            : "",
         };
         commentSolutions.push(elem);
       }
@@ -649,17 +651,19 @@ export class CommentAccountingService {
           comment,
           normative: `${normative.code}. ${normative.title}`,
           criticalityId,
-          expertSubdivision: user.subsidiary.title,
-          expertContacts: `${user.lastName} ${user.firstName.slice(
-            0,
-            1
-          )}. ${user.secondName.slice(0, 1)}.  \r\n\       
+          expertSubdivision: user ? user.subsidiary.title : "",
+          expertContacts: user
+            ? `${user.lastName} ${user.firstName.slice(
+                0,
+                1
+              )}. ${user.secondName.slice(0, 1)}.  \r\n\       
 
           ${user.position} \r\n\
           
           почта: ${user.email}  \r\n\
           
-          телефон: ${user.phone}`,
+          телефон: ${user.phone}`
+            : "",
 
           solutions: this.solutionsRender(solutions),
           pdcId,
