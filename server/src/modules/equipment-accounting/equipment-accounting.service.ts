@@ -8,6 +8,7 @@ import {
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CableLogView,
+  EquipmentAccountingAssetView,
   ExportEquipmentToAtlas,
   FacilityView,
   GeneralInformationView,
@@ -54,15 +55,6 @@ import {
 import { UpdateRegulatoryReferenceInformationDto } from "../regulatory-reference-information/dto";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
 
-type EquipmentAccountingAssetView =
-  | SummaryListOfEquipmentView
-  | GeneralInformationView
-  | MetrologyView
-  | SignalView
-  | CableLogView
-  | ImpulseLineLogView
-  | MonitoringView
-  | null;
 type UpdateEquipmentAccountingAssetDto =
   | UpdateGeneralInformationDto
   | UpdateMetrologyDto

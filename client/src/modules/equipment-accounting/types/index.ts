@@ -16,6 +16,8 @@ import {
   SummaryListOfEquipmentView,
   SummaryListOfEquipmentCreateOrUpdateAttrs,
   SummaryListOfEquipmentFormData,
+  EquipmentAccountingAssetView,
+  EquipmentAccountingAssetCreateOrUpdateAttrs,
 } from "../../../../../server/common/types/equipment-accounting";
 
 import {
@@ -46,6 +48,8 @@ export type {
   SummaryListOfEquipmentView,
   SummaryListOfEquipmentCreateOrUpdateAttrs,
   SummaryListOfEquipmentFormData,
+  EquipmentAccountingAssetView,
+  EquipmentAccountingAssetCreateOrUpdateAttrs,
 };
 
 export { ActionTypes };

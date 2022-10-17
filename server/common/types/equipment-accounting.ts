@@ -350,3 +350,21 @@ export interface ExportEquipmentToAtlas {
   remark: string; //summaryListOfEquipment.metrology.status
   actual_tech_condition: string; //summaryListOfEquipment.description
 }
+
+export type EquipmentAccountingAssetView =
+  | SummaryListOfEquipmentView
+  | GeneralInformationView
+  | MetrologyView
+  | SignalView
+  | CableLogView
+  | ImpulseLineLogView
+  | MonitoringView
+  | null;
+
+export type EquipmentAccountingAssetCreateOrUpdateAttrs =
+  | GeneralInformationCreateOrUpdateAttrs
+  | MetrologyCreateOrUpdateAttrs
+  | SignalCreateOrUpdateAttrs
+  | CableLogCreateOrUpdateAttrs
+  | ImpulseLineLogCreateOrUpdateAttrs
+  | MonitoringCreateOrUpdateAttrs;

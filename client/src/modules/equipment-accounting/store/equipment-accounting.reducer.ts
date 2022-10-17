@@ -1,4 +1,9 @@
-import { ActionTypes, EssenceAction, EssenceState } from "../types";
+import {
+  ActionTypes,
+  EssenceAction,
+  EssenceState,
+  GeneralInformationView,
+} from "../types";
 
 const initialState: EssenceState = {
   loading: true,

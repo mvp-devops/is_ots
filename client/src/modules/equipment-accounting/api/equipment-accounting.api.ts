@@ -2,6 +2,8 @@ import axios from "axios";
 import {
   CableLogCreateOrUpdateAttrs,
   CableLogView,
+  EquipmentAccountingAssetCreateOrUpdateAttrs,
+  EquipmentAccountingAssetView,
   FacilityView,
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
@@ -203,11 +205,14 @@ export const createManyEssences = async (
 export const updateOneEssence = async (
   target: string,
   id: string | number,
-  item: GeneralInformationCreateOrUpdateAttrs
+  item: EquipmentAccountingAssetCreateOrUpdateAttrs,
+  parrentFolderPath?: string
 ): Promise<GeneralInformationView> => {
-  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
+  const url = setUrl(
+    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/edit/${id}`
+  );
   const { data } = await axios.put<GeneralInformationView>(url, item, {
-    params: { target, id },
+    params: { target, parrentFolderPath },
   });
 
   return data;
@@ -215,11 +220,14 @@ export const updateOneEssence = async (
 
 export const deleteOneEssence = async (
   target: string,
-  id: string | number
+  id: string | number,
+  parrentFolderPath?: string
 ): Promise<GeneralInformationView> => {
-  const url = setUrl(`${equipmentAccountingUrl}/${id}`);
+  const url = setUrl(
+    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/remove/${id}`
+  );
   const { data } = await axios.delete<GeneralInformationView>(url, {
-    params: { target, id },
+    params: { target, parrentFolderPath },
   });
 
   return data;
