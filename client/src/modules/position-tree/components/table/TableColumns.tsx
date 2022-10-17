@@ -27,7 +27,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "№ п/п",
 
     key: "number",
-    align: "center",
     width: 50,
 
     render: (_, __, ind: number) => (
@@ -43,7 +42,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "Наименование",
     dataIndex: "title",
     key: "title",
-    align: "center",
     filters: titleFilters,
 
     filtered: true,
@@ -67,7 +65,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "Шифр",
     dataIndex: "code",
     key: "code",
-    align: "center",
     width: 100,
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
@@ -84,7 +81,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "Примечание",
     dataIndex: "description",
     key: "description",
-    align: "center",
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -98,7 +94,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "№ договора",
     dataIndex: "contract",
     key: "contract",
-    align: "center",
     filters: contractFilters,
     filterSearch: contractFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
@@ -117,7 +112,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "Позиция по ГП",
     dataIndex: "position",
     key: "position",
-    align: "center",
     sorter: (a, b) =>
       "position" in a && "position" in b && a.position < b.position ? -1 : 0,
     filtered: true,
@@ -138,7 +132,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
   const designTitleColumn: ColumnType<PositionTreeView> = {
     title: "Проектировщик",
     key: "designTitle",
-    align: "center",
     filters: designTitleFilters,
     filterSearch: designTitleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>

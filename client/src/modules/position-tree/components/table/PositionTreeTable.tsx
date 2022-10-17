@@ -116,7 +116,15 @@ const PositionTreeTable = () => {
           )}
           rowKey={(record) => record.id}
           columns={columns}
-          dataSource={dataSource}
+          dataSource={dataSource.sort((a, b) =>
+            "position" in a && "position" in b
+              ? a.position < b.position
+                ? -1
+                : 0
+              : a.code < b.code
+              ? -1
+              : 0
+          )}
           footer={() => (
             <Space className="d-flex justify-content-end ">
               <Text className="text-secondary">Количество:</Text>

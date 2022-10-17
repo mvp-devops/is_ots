@@ -46,14 +46,15 @@ export const useEquipmentAccountingForm = (
   const [subUnitId, setSubUnitId] = useState("");
 
   const [currentId, setCurrentId] = useState("");
-  const { currentItem, target, checkedItem } = useTypedSelector(
-    (state) => state.positionTree
-  );
+  const { currentItem, target, checkedItem, currentItemFolderPath } =
+    useTypedSelector((state) => state.positionTree);
   useEffect(() => {
     if (currentItem) {
       setCurrentId(currentItem.id);
     }
   }, [currentItem]);
+
+  // console.log("currentItemFolderPath: ", currentItemFolderPath);
 
   const renderNSIList = (items: NSIView[]): any[] => {
     const arr: any[] = [];
