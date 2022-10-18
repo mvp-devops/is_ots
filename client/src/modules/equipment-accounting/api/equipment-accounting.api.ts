@@ -22,6 +22,130 @@ import { setUrl } from "../../main";
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
+const setFormData = (
+  item: EquipmentAccountingAssetCreateOrUpdateAttrs
+): FormData => {
+  const data = new FormData();
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).projectId) {
+    data.append(
+      "projectId",
+      (item as GeneralInformationCreateOrUpdateAttrs).projectId.toString()
+    );
+  }
+  if ((item as GeneralInformationCreateOrUpdateAttrs).unitId) {
+    data.append(
+      "unitId",
+      (item as GeneralInformationCreateOrUpdateAttrs).unitId.toString()
+    );
+  }
+  if ((item as GeneralInformationCreateOrUpdateAttrs).subUnitId) {
+    data.append(
+      "subUnitId",
+      (item as GeneralInformationCreateOrUpdateAttrs).subUnitId.toString()
+    );
+  }
+  if ((item as GeneralInformationCreateOrUpdateAttrs).sloeId) {
+    data.append(
+      "sloeId",
+      (item as GeneralInformationCreateOrUpdateAttrs).sloeId.toString()
+    );
+  }
+  if ((item as GeneralInformationCreateOrUpdateAttrs).facilityId) {
+    data.append(
+      "facilityId",
+      (item as GeneralInformationCreateOrUpdateAttrs).facilityId.toString()
+    );
+  }
+  if ((item as GeneralInformationCreateOrUpdateAttrs).technacalCardId) {
+    data.append(
+      "technacalCardId",
+      (item as GeneralInformationCreateOrUpdateAttrs).technacalCardId.toString()
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).installationLocation) {
+    data.append(
+      "installationLocation",
+      (item as GeneralInformationCreateOrUpdateAttrs).installationLocation
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).questionare) {
+    data.append(
+      "questionare",
+      (item as GeneralInformationCreateOrUpdateAttrs).questionare
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).systemType) {
+    const arr = (item as GeneralInformationCreateOrUpdateAttrs).systemType;
+    for (var i = 0; i < arr.length; i++) {
+      data.append("systemType[]", arr[i]);
+    }
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).tag) {
+    data.append("tag", (item as GeneralInformationCreateOrUpdateAttrs).tag);
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).controlledParameter) {
+    data.append(
+      "controlledParameter",
+      (item as GeneralInformationCreateOrUpdateAttrs).controlledParameter
+    );
+  }
+
+  // if ((item as GeneralInformationCreateOrUpdateAttrs).facility)  {
+  //   data.append("facility{}", (item as GeneralInformationCreateOrUpdateAttrs).facility)
+  // }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).facilityModification) {
+    data.append(
+      "facilityModification",
+      (item as GeneralInformationCreateOrUpdateAttrs).facilityModification
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).factoryNumber) {
+    data.append(
+      "factoryNumber",
+      (item as GeneralInformationCreateOrUpdateAttrs).factoryNumber
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).year) {
+    data.append("year", (item as GeneralInformationCreateOrUpdateAttrs).year);
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).month) {
+    data.append("month", (item as GeneralInformationCreateOrUpdateAttrs).month);
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).period) {
+    data.append(
+      "period",
+      (item as GeneralInformationCreateOrUpdateAttrs).period
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).specification) {
+    data.append(
+      "specification",
+      (item as GeneralInformationCreateOrUpdateAttrs).specification
+    );
+  }
+
+  if ((item as GeneralInformationCreateOrUpdateAttrs).description) {
+    data.append(
+      "description",
+      (item as GeneralInformationCreateOrUpdateAttrs).description
+    );
+  }
+
+  return data;
+};
+
 export const getAllMetrology = (
   data: SummaryListOfEquipmentView[]
 ): MetrologyView[] => {
@@ -208,10 +332,22 @@ export const updateOneEssence = async (
   item: EquipmentAccountingAssetCreateOrUpdateAttrs,
   parrentFolderPath?: string
 ): Promise<GeneralInformationView> => {
+  const formData = setFormData(item);
   const url = setUrl(
     `${equipmentAccountingUrl}/summary-list-of-equipment-asset/edit/${id}`
   );
-  const { data } = await axios.put<GeneralInformationView>(url, item, {
+
+  const requestedData =
+    target === "general-information"
+      ? {
+          ...formData,
+          facility: (item as GeneralInformationCreateOrUpdateAttrs).facility,
+          systemType: (item as GeneralInformationCreateOrUpdateAttrs)
+            .systemType,
+        }
+      : formData;
+
+  const { data } = await axios.put<GeneralInformationView>(url, requestedData, {
     params: { target, parrentFolderPath },
   });
 

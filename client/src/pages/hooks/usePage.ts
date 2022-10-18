@@ -14,9 +14,10 @@ export const usePage = () => {
     setTarget,
     setChildTarget,
     setBaseTarget,
+    setFolderPath,
   } = useActions();
 
-  const { menuItems, currentItem } = useTypedSelector(
+  const { menuItems, currentItem, currentItemFolderPath } = useTypedSelector(
     (state) => state.positionTree
   );
   const { currentUser, baseTarget, formVisible } = useTypedSelector(
@@ -38,6 +39,7 @@ export const usePage = () => {
       setCurrentItem(item);
       setTarget(item.target);
       setChildTarget(item.childrenTarget);
+      setFolderPath(item.target, item.id);
     } else {
       setTarget("");
       setChildTarget("");
@@ -53,6 +55,8 @@ export const usePage = () => {
       onMenuItemSelected();
     }
   };
+
+  console.log("currentItemFolderPath: ", currentItemFolderPath);
 
   return {
     dictionaryTarget,

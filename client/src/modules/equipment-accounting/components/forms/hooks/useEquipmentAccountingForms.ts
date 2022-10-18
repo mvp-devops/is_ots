@@ -48,13 +48,13 @@ export const useEquipmentAccountingForm = (
   const [currentId, setCurrentId] = useState("");
   const { currentItem, target, checkedItem, currentItemFolderPath } =
     useTypedSelector((state) => state.positionTree);
+
+  const { actionType } = useTypedSelector((state) => state.main);
   useEffect(() => {
     if (currentItem) {
       setCurrentId(currentItem.id);
     }
   }, [currentItem]);
-
-  // console.log("currentItemFolderPath: ", currentItemFolderPath);
 
   const renderNSIList = (items: NSIView[]): any[] => {
     const arr: any[] = [];
@@ -251,7 +251,7 @@ export const useEquipmentAccountingForm = (
     useState<FacilityCreateOrUpdateAttrs>(facilityItem);
   const [facilities, setFacilities] = useState<FacilityView[]>(facilitiesList);
 
-  const { getFacilitiesList } = useActions();
+  const { getFacilitiesList, setFormVisible } = useActions();
 
   useEffect(() => {
     getFacilitiesList();
@@ -268,6 +268,9 @@ export const useEquipmentAccountingForm = (
   // useEffect(() => console.log("Data: ", data), [data]);
 
   return {
+    actionType,
+    currentItemFolderPath,
+    setFormVisible,
     onChangeTargetId,
     facilities,
     newFacility,

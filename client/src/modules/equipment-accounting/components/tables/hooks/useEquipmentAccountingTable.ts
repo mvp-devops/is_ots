@@ -143,32 +143,38 @@ export const useEquipmentAccountingTable = (target?: string) => {
   const renderGeneralInformationFormEditFlag =
     target === "general-information" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   const renderMetrologyFormEditFlag =
     target === "metrology" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   const renderSignalFormEditFlag =
     target === "signal" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   const renderCableLogFormEditFlag =
     target === "cable-log" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   const renderImpulseLineLogFormEditFlag =
     target === "impulse-line-log" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   const renderMonitoringFormEditFlag =
     target === "monitoring" &&
     formVisible &&
-    actionType === FormActions.EDIT_EQUIPMENT;
+    (actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.REMOVE_EQUIPMENT);
 
   return {
     loading,

@@ -1,4 +1,10 @@
 import {
+  CableLogCreateOrUpdateAttrs,
+  ImpulseLineLogCreateOrUpdateAttrs,
+  MonitoringCreateOrUpdateAttrs,
+  SignalCreateOrUpdateAttrs,
+} from "./../../../common/types/equipment-accounting";
+import {
   forwardRef,
   HttpException,
   HttpStatus,
@@ -8,14 +14,21 @@ import {
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CableLogView,
+  EquipmentAccountingAssetCreateOrUpdateAttrs,
   EquipmentAccountingAssetView,
   ExportEquipmentToAtlas,
+  FacilityCreateOrUpdateAttrs,
   FacilityView,
+  GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,
   ImpulseLineLogView,
+  MetrologyCreateOrUpdateAttrs,
   MetrologyView,
   MonitoringView,
   SignalView,
+  SummaryListOfEquipmentCreateOrUpdateAttrs,
+  SummaryListOfEquipmentCreateOrUpdateFiles,
+  SummaryListOfEquipmentFormData,
   SummaryListOfEquipmentView,
 } from "../../../common/types/equipment-accounting";
 import {
@@ -97,6 +110,21 @@ export class EquipmentAccountingService {
     }
   };
 
+  createNewFacilityAssets = async (
+    dto: CreateFacilityDto[]
+  ): Promise<FacilityView[]> => {
+    try {
+      for (let i = 0; i < dto.length; i++) {
+        await this.facilityRepository.create(dto[i]);
+      }
+
+      const items = await this.findAllFacilityAssets();
+      return items;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
   findOneFacilityAsset = async (id: number): Promise<FacilityView> => {
     try {
       let item: FacilityView | null = null;
@@ -162,10 +190,24 @@ export class EquipmentAccountingService {
 
   createNewCableLogAsset = async (
     dto: CreateCableLogDto,
-    wiringDiagram?: File,
+    wiringDiagram?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<CableLogView> => {
     try {
+      // const data: CreateCableLogDto = {
+      //   sloeId: +(dto.get("sloeId") as string),
+      //   numberOfTrace: dto.get("numberOfTrace") as string,
+      //   cableMark: dto.get("cableMark") as string,
+      //   cableSection: dto.get("cableSection") as string,
+      //   fromUnit: dto.get("fromUnit") as string,
+      //   fromPlace: dto.get("fromPlace") as string,
+      //   toUnit: dto.get("toUnit") as string,
+      //   toPlace: dto.get("toPlace") as string,
+      //   cableLenght: dto.get("cableLenght") as string,
+      //   range: dto.get("range") as string,
+      //   description: dto.get("description") as string,
+
+      // }
       const { id } = await this.cableLogRepository.create(dto);
       const item = await this.findOneCableLogAsset(id);
 
@@ -402,7 +444,7 @@ export class EquipmentAccountingService {
   updateCableLogAsset = async (
     id: string,
     dto: UpdateCableLogDto,
-    wiringDiagram?: File,
+    wiringDiagram?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<CableLogView> => {
     try {
@@ -610,9 +652,9 @@ export class EquipmentAccountingService {
 
   createNewMetrologyAsset = async (
     dto: CreateMetrologyDto,
-    document?: File,
-    verificationProcedure?: File,
-    typeApprovalCertificate?: File,
+    document?: Express.Multer.File,
+    verificationProcedure?: Express.Multer.File,
+    typeApprovalCertificate?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
@@ -813,9 +855,9 @@ export class EquipmentAccountingService {
   updateMetrologyAsset = async (
     id: string,
     dto: UpdateMetrologyDto,
-    document?: File,
-    verificationProcedure?: File,
-    typeApprovalCertificate?: File,
+    document?: Express.Multer.File,
+    verificationProcedure?: Express.Multer.File,
+    typeApprovalCertificate?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
@@ -1055,12 +1097,12 @@ export class EquipmentAccountingService {
 
   createNewMonitoringAsset = async (
     dto: CreateMonitoringDto,
-    functionalDiagram?: File,
-    mountDocument?: File,
-    connectDocument?: File,
-    testDocument?: File,
-    awpDocument?: File,
-    commisionDocument?: File,
+    functionalDiagram?: Express.Multer.File,
+    mountDocument?: Express.Multer.File,
+    connectDocument?: Express.Multer.File,
+    testDocument?: Express.Multer.File,
+    awpDocument?: Express.Multer.File,
+    commisionDocument?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
@@ -1278,12 +1320,12 @@ export class EquipmentAccountingService {
   updateMonitoringAsset = async (
     id: string,
     dto: UpdateMonitoringDto,
-    functionalDiagram?: File,
-    mountDocument?: File,
-    connectDocument?: File,
-    testDocument?: File,
-    awpDocument?: File,
-    commisionDocument?: File,
+    functionalDiagram?: Express.Multer.File,
+    mountDocument?: Express.Multer.File,
+    connectDocument?: Express.Multer.File,
+    testDocument?: Express.Multer.File,
+    awpDocument?: Express.Multer.File,
+    commisionDocument?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
@@ -1434,19 +1476,194 @@ export class EquipmentAccountingService {
     }
   };
 
+  setFormData = (
+    data: GeneralInformationCreateOrUpdateAttrs &
+      FacilityCreateOrUpdateAttrs &
+      MetrologyCreateOrUpdateAttrs &
+      SignalCreateOrUpdateAttrs &
+      CableLogCreateOrUpdateAttrs &
+      ImpulseLineLogCreateOrUpdateAttrs &
+      MonitoringCreateOrUpdateAttrs,
+    files?: SummaryListOfEquipmentCreateOrUpdateFiles
+  ): FormData => {
+    const formData = new FormData();
+    const facilityFormData = new FormData();
+    const generalInformationFormData = new FormData();
+    const metrologyFormData = new FormData();
+
+    const {
+      projectId,
+      unitId,
+      subUnitId,
+      facilityId,
+      technacalCardId,
+      installationLocation,
+      systemType,
+      tag,
+      controlledParameter,
+      country,
+      vendor,
+      equipmentType,
+      meansurementArea,
+      metrologyType,
+      meansureGroup,
+      title,
+      facilityModification,
+      factoryNumber,
+      year,
+      month,
+      period,
+      specification,
+      description,
+      modifications,
+    } = data;
+    projectId &&
+      generalInformationFormData.append("projectId", projectId.toString());
+    unitId && generalInformationFormData.append("unitId", unitId.toString());
+    subUnitId &&
+      generalInformationFormData.append("subUnitId", subUnitId.toString());
+    facilityId &&
+      generalInformationFormData.append("facilityId", facilityId.toString());
+    technacalCardId &&
+      generalInformationFormData.append(
+        "technacalCardId",
+        technacalCardId.toString()
+      );
+    installationLocation &&
+      generalInformationFormData.append(
+        "installationLocation",
+        installationLocation
+      );
+    if (files.questionare) {
+      generalInformationFormData.append(
+        "questionare",
+        files.questionare[0] as any
+      );
+    }
+
+    if (systemType) {
+      const arr = systemType;
+      for (var i = 0; i < arr.length; i++) {
+        generalInformationFormData.append("systemType[]", arr[i]);
+      }
+    }
+
+    country && facilityFormData.append("country", country);
+    vendor && facilityFormData.append("vendor", vendor);
+    equipmentType && facilityFormData.append("equipmentType", equipmentType);
+    title && facilityFormData.append("title", title);
+    meansurementArea &&
+      facilityFormData.append("meansurementArea", meansurementArea);
+    metrologyType && facilityFormData.append("metrologyType", metrologyType);
+    meansureGroup && facilityFormData.append("meansureGroup", meansureGroup);
+
+    if (modifications) {
+      const arr = modifications;
+      for (var i = 0; i < arr.length; i++) {
+        generalInformationFormData.append("modifications[]", arr[i]);
+      }
+    }
+
+    tag && generalInformationFormData.append("tag", tag);
+    controlledParameter &&
+      generalInformationFormData.append(
+        "controlledParameter",
+        controlledParameter
+      );
+    facilityModification &&
+      generalInformationFormData.append(
+        "facilityModification",
+        facilityModification
+      );
+    factoryNumber &&
+      generalInformationFormData.append("factoryNumber", factoryNumber);
+    year && generalInformationFormData.append("year", year);
+    month && generalInformationFormData.append("month", month);
+    period && generalInformationFormData.append("period", period);
+    specification &&
+      generalInformationFormData.append("specification", specification);
+    description &&
+      generalInformationFormData.append("description", description);
+
+    formData.append(
+      "generalInformation",
+      JSON.stringify(generalInformationFormData)
+    );
+
+    if (files.document) {
+      metrologyFormData.append("document", files.document[0] as any);
+    }
+    if (files.verificationProcedure) {
+      metrologyFormData.append(
+        "verificationProcedure",
+        files.verificationProcedure[0] as any
+      );
+    }
+    if (files.typeApprovalCertificate) {
+      metrologyFormData.append(
+        "typeApprovalCertificate",
+        files.typeApprovalCertificate[0] as any
+      );
+    }
+
+    return formData;
+  };
+
+  getFormData = (formData: FormData): CreateSummaryListOfEquipmentDto => {
+    let data: CreateSummaryListOfEquipmentDto | null = null;
+
+    const systemType: string[] = [];
+    const modifications: string[] = [];
+
+    formData.forEach((value, key) => {
+      if (key === "systemType[]") {
+        systemType.push(value as string);
+      }
+    });
+    formData.forEach((value, key) => {
+      if (key === "modifications[]") {
+        modifications.push(value as string);
+      }
+    });
+
+    const generalInformationData: GeneralInformationCreateOrUpdateAttrs = {
+      projectId: formData.get("projectId") as string,
+      unitId: formData.get("unitId") as string,
+      subUnitId: formData.get("subUnitId") as string,
+      facilityId: formData.get("facilityId") as string,
+      technacalCardId: formData.get("technacalCardId") as string,
+      installationLocation: formData.get("installationLocation") as string,
+      tag: formData.get("tag") as string,
+      controlledParameter: formData.get("controlledParameter") as string,
+      systemType,
+      facility: {
+        country: formData.get("country") as string,
+        vendor: formData.get("vendor") as string,
+        equipmentType: formData.get("equipmentType") as string,
+        title: formData.get("title") as string,
+        meansurementArea: formData.get("meansurementArea") as string,
+        meansurementType: formData.get("meansurementType") as string,
+        meansureGroup: formData.get("meansureGroup") as string,
+        modifications,
+      },
+      facilityModification: formData.get("facilityModification") as string,
+      factoryNumber: formData.get("factoryNumber") as string,
+      year: formData.get("year") as string,
+      month: formData.get("month") as string,
+      period: formData.get("period") as string,
+      specification: formData.get("specification") as string,
+      description: formData.get("description") as string,
+    };
+
+    data.generalInformation = generalInformationData;
+
+    return data;
+  };
+
   createNewSummaryListOfEquipmentAsset = async (
     dto: CreateSummaryListOfEquipmentDto,
-    questionare?: any,
-    wiringDiagram?: any,
-    document?: any,
-    verificationProcedure?: any,
-    typeApprovalCertificate?: any,
-    functionalDiagram?: any,
-    mountDocument?: any,
-    connectDocument?: any,
-    testDocument?: any,
-    awpDocument?: any,
-    commisionDocument?: any,
+
+    files?: SummaryListOfEquipmentCreateOrUpdateFiles,
     parrentFolderPath?: string
   ): Promise<SummaryListOfEquipmentView> => {
     try {
@@ -1460,7 +1677,7 @@ export class EquipmentAccountingService {
         signals,
       } = dto;
 
-      if (generalInformation.facility) {
+      if (generalInformation && generalInformation.facility) {
         facility = await this.createNewFacilityAsset(
           generalInformation.facility
         );
@@ -1472,21 +1689,21 @@ export class EquipmentAccountingService {
           : facility.id,
       });
 
-      if (questionare) {
+      if (files.questionare) {
         await this.fileService.createDesignDocument(
           id.toString(),
           "summary-list-of-equipment",
           parrentFolderPath,
-          questionare
+          files.questionare[0]
         );
       }
 
       if (metrology) {
         await this.createNewMetrologyAsset(
           { ...metrology, sloeId: id },
-          document,
-          verificationProcedure,
-          typeApprovalCertificate,
+          files.document[0],
+          files.verificationProcedure[0],
+          files.typeApprovalCertificate[0],
           parrentFolderPath
         );
       }
@@ -1497,7 +1714,7 @@ export class EquipmentAccountingService {
 
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
-            wiringDiagram,
+            files.wiringDiagram[0],
             parrentFolderPath
           );
         }
@@ -1520,12 +1737,12 @@ export class EquipmentAccountingService {
       if (monitoring) {
         await this.createNewMonitoringAsset(
           { ...monitoring, sloeId: id },
-          functionalDiagram,
-          mountDocument,
-          connectDocument,
-          testDocument,
-          awpDocument,
-          commisionDocument,
+          files.functionalDiagram[0],
+          files.mountDocument[0],
+          files.connectDocument[0],
+          files.testDocument[0],
+          files.awpDocument[0],
+          files.commisionDocument[0],
           parrentFolderPath
         );
       }
@@ -1533,6 +1750,21 @@ export class EquipmentAccountingService {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
 
       return item;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
+  createNewSummaryListOfEquipmentAssets = async (
+    dto: CreateSummaryListOfEquipmentDto[]
+  ): Promise<SummaryListOfEquipmentView[]> => {
+    try {
+      let items: SummaryListOfEquipmentView[] = [];
+      for (let i = 0; i < dto.length; i++) {
+        const item = await this.createNewSummaryListOfEquipmentAsset(dto[i]);
+        items.push(item);
+      }
+      return items;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -1798,7 +2030,7 @@ export class EquipmentAccountingService {
   };
 
   findOneGeneralInformationAsset = async (
-    id: number
+    id: string
   ): Promise<GeneralInformationView> => {
     try {
       const {
@@ -1881,9 +2113,9 @@ export class EquipmentAccountingService {
   };
 
   updateGeneralInformationAsset = async (
-    id: number,
+    id: string,
     dto: UpdateGeneralInformationDto,
-    questionare?: File,
+    questionare?: Express.Multer.File,
     parrentFolderPath?: string
   ): Promise<GeneralInformationView> => {
     try {
@@ -1891,7 +2123,6 @@ export class EquipmentAccountingService {
       let facilityId = dto.facilityId;
       const { facility } = dto;
 
-      const itemId = id.toString();
       if (facility) {
         newFacility = await this.facilityRepository.create(facility);
         facilityId = +newFacility.id;
@@ -1899,7 +2130,7 @@ export class EquipmentAccountingService {
 
       if (questionare) {
         await this.fileService.createDesignDocument(
-          itemId,
+          id,
           "summary-list-of-equipment",
           parrentFolderPath,
           questionare
@@ -1919,7 +2150,7 @@ export class EquipmentAccountingService {
   };
 
   deleteGeneralInformationAsset = async (
-    id: number
+    id: string
   ): Promise<GeneralInformationView> => {
     try {
       const item = await this.findOneGeneralInformationAsset(id);
@@ -2088,31 +2319,20 @@ export class EquipmentAccountingService {
 
   updateSummaryListOfEquipmentAsset = async (
     target: string,
-    id: number,
+    id: string,
     dto: UpdateEquipmentAccountingAssetDto,
-    questionare?: File,
-    wiringDiagram?: File,
-    document?: File,
-    verificationProcedure?: File,
-    typeApprovalCertificate?: File,
-    functionalDiagram?: File,
-    mountDocument?: File,
-    connectDocument?: File,
-    testDocument?: File,
-    awpDocument?: File,
-    commisionDocument?: File,
+    files?: SummaryListOfEquipmentCreateOrUpdateFiles,
     parrentFolderPath?: string
   ): Promise<EquipmentAccountingAssetView> => {
     let item: EquipmentAccountingAssetView = null;
 
-    const itemId = id.toString();
-
     switch (target) {
       case "general-information": {
+        console.log("id: ", id);
         item = await this.updateGeneralInformationAsset(
-          +itemId,
+          id,
           dto as UpdateGeneralInformationDto,
-          questionare,
+          files.questionare[0],
           parrentFolderPath
         );
         break;
@@ -2120,26 +2340,26 @@ export class EquipmentAccountingService {
 
       case "metrology": {
         item = await this.updateMetrologyAsset(
-          itemId,
+          id,
           dto as UpdateMetrologyDto,
-          document,
-          verificationProcedure,
-          typeApprovalCertificate,
+          files.document[0],
+          files.verificationProcedure[0],
+          files.typeApprovalCertificate[0],
           parrentFolderPath
         );
         break;
       }
 
       case "signal": {
-        item = await this.updateSignalAsset(itemId, dto as UpdateSignalDto);
+        item = await this.updateSignalAsset(id, dto as UpdateSignalDto);
         break;
       }
 
       case "cable-log": {
         item = await this.updateCableLogAsset(
-          itemId,
+          id,
           dto as UpdateCableLogDto,
-          wiringDiagram,
+          files.wiringDiagram[0],
           parrentFolderPath
         );
         break;
@@ -2147,7 +2367,7 @@ export class EquipmentAccountingService {
 
       case "impulse-line-log": {
         item = await this.updateImpulseLineLogAsset(
-          itemId,
+          id,
           dto as UpdateImpulseLineLogDto
         );
         break;
@@ -2155,14 +2375,14 @@ export class EquipmentAccountingService {
 
       case "monitoring": {
         item = await this.updateMonitoringAsset(
-          itemId,
+          id,
           dto as UpdateMonitoringDto,
-          functionalDiagram,
-          mountDocument,
-          connectDocument,
-          testDocument,
-          awpDocument,
-          commisionDocument,
+          files.functionalDiagram[0],
+          files.mountDocument[0],
+          files.connectDocument[0],
+          files.testDocument[0],
+          files.awpDocument[0],
+          files.commisionDocument[0],
           parrentFolderPath
         );
         break;
@@ -2206,7 +2426,6 @@ export class EquipmentAccountingService {
       }
 
       case "impulse-line-log": {
-        console.log("this: ", target, id);
         item = await this.deleteImpulseLineLogAsset(id);
         break;
       }

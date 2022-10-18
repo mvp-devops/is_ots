@@ -11,12 +11,17 @@ import {
   UploadedFile,
   Put,
   Res,
+  UploadedFiles,
 } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from "@nestjs/platform-express";
 import { setCurrentDate } from "../../../common/utils";
 import type { Response } from "express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
 import {
+  CreateFacilityDto,
   CreateSummaryListOfEquipmentDto,
   UpdateCableLogDto,
   UpdateImpulseLineLogDto,
@@ -25,6 +30,10 @@ import {
   UpdateSignalDto,
 } from "./dto";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
+import {
+  GeneralInformationCreateOrUpdateAttrs,
+  SummaryListOfEquipmentCreateOrUpdateFiles,
+} from "../../../common/types/equipment-accounting";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
@@ -33,6 +42,11 @@ export class EquipmentAccountingController {
   @Get("/facilities/find")
   findAllFacilityAssets() {
     return this.service.findAllFacilityAssets();
+  }
+
+  @Post("/facility/add/many")
+  createManyFacilities(@Body("items") dto: CreateFacilityDto[]) {
+    return this.service.createNewFacilityAssets(dto);
   }
 
   @Get("/export-to-atlas")
@@ -55,49 +69,39 @@ export class EquipmentAccountingController {
 
   @Post("/summary-list-of-equipment-asset/add")
   @UseInterceptors(
-    FileInterceptor("questionare"),
-    FileInterceptor("wiringDiagram"),
-    FileInterceptor("document"),
-    FileInterceptor("verificationProcedure"),
-    FileInterceptor("typeApprovalCertificate"),
-    FileInterceptor("functionalDiagram"),
-    FileInterceptor("mountDocument"),
-    FileInterceptor("connectDocument"),
-    FileInterceptor("testDocument"),
-    FileInterceptor("awpDocument"),
-    FileInterceptor("commisionDocument")
+    FileFieldsInterceptor([
+      { name: "questionare", maxCount: 1 },
+      { name: "wiringDiagram", maxCount: 1 },
+      { name: "document", maxCount: 1 },
+      { name: "verificationProcedure", maxCount: 1 },
+      { name: "typeApprovalCertificate", maxCount: 1 },
+      { name: "functionalDiagram", maxCount: 1 },
+      { name: "mountDocument", maxCount: 1 },
+      { name: "connectDocument", maxCount: 1 },
+      { name: "testDocument", maxCount: 1 },
+      { name: "awpDocument", maxCount: 1 },
+      { name: "commisionDocument", maxCount: 1 },
+    ])
   )
   create(
-    @Body() dto: CreateSummaryListOfEquipmentDto,
+    @Body()
+    dto: CreateSummaryListOfEquipmentDto,
+
     @Query() query: { parrentFolderPath?: string },
-    @UploadedFile() questionare?: any,
-    @UploadedFile() wiringDiagram?: any,
-    @UploadedFile() document?: any,
-    @UploadedFile() verificationProcedure?: any,
-    @UploadedFile() typeApprovalCertificate?: any,
-    @UploadedFile() functionalDiagram?: any,
-    @UploadedFile() mountDocument?: any,
-    @UploadedFile() connectDocument?: any,
-    @UploadedFile() testDocument?: any,
-    @UploadedFile() awpDocument?: any,
-    @UploadedFile() commisionDocument?: any
+    @UploadedFiles()
+    files?: SummaryListOfEquipmentCreateOrUpdateFiles
   ) {
     const { parrentFolderPath } = query;
     return this.service.createNewSummaryListOfEquipmentAsset(
       dto,
-      questionare,
-      wiringDiagram,
-      document,
-      verificationProcedure,
-      typeApprovalCertificate,
-      functionalDiagram,
-      mountDocument,
-      connectDocument,
-      testDocument,
-      awpDocument,
-      commisionDocument,
+      files,
       parrentFolderPath
     );
+  }
+
+  @Post("/summary-list-of-equipment-asset/add/many")
+  createMany(@Body("items") dto: CreateSummaryListOfEquipmentDto[]) {
+    return this.service.createNewSummaryListOfEquipmentAssets(dto);
   }
 
   @Get("/summary-list-of-equipment-asset/find/:id")
@@ -129,17 +133,19 @@ export class EquipmentAccountingController {
 
   @Put("/summary-list-of-equipment-asset/edit/:id")
   @UseInterceptors(
-    FileInterceptor("questionare"),
-    FileInterceptor("wiringDiagram"),
-    FileInterceptor("document"),
-    FileInterceptor("verificationProcedure"),
-    FileInterceptor("typeApprovalCertificate"),
-    FileInterceptor("functionalDiagram"),
-    FileInterceptor("mountDocument"),
-    FileInterceptor("connectDocument"),
-    FileInterceptor("testDocument"),
-    FileInterceptor("awpDocument"),
-    FileInterceptor("commisionDocument")
+    FileFieldsInterceptor([
+      { name: "questionare", maxCount: 1 },
+      { name: "wiringDiagram", maxCount: 1 },
+      { name: "document", maxCount: 1 },
+      { name: "verificationProcedure", maxCount: 1 },
+      { name: "typeApprovalCertificate", maxCount: 1 },
+      { name: "functionalDiagram", maxCount: 1 },
+      { name: "mountDocument", maxCount: 1 },
+      { name: "connectDocument", maxCount: 1 },
+      { name: "testDocument", maxCount: 1 },
+      { name: "awpDocument", maxCount: 1 },
+      { name: "commisionDocument", maxCount: 1 },
+    ])
   )
   updateSummaryListOfEquipmentAsset(
     @Param("id") id: string,
@@ -152,34 +158,15 @@ export class EquipmentAccountingController {
       | UpdateMonitoringDto
       | UpdateSignalDto
       | UpdateGeneralInformationDto,
-    @UploadedFile() questionare?: any,
-    @UploadedFile() wiringDiagram?: any,
-    @UploadedFile() document?: any,
-    @UploadedFile() verificationProcedure?: any,
-    @UploadedFile() typeApprovalCertificate?: any,
-    @UploadedFile() functionalDiagram?: any,
-    @UploadedFile() mountDocument?: any,
-    @UploadedFile() connectDocument?: any,
-    @UploadedFile() testDocument?: any,
-    @UploadedFile() awpDocument?: any,
-    @UploadedFile() commisionDocument?: any
+    @UploadedFiles()
+    files?: SummaryListOfEquipmentCreateOrUpdateFiles
   ) {
     const { target, parrentFolderPath } = query;
     return this.service.updateSummaryListOfEquipmentAsset(
       target,
-      +id,
+      id,
       dto,
-      questionare,
-      wiringDiagram,
-      document,
-      verificationProcedure,
-      typeApprovalCertificate,
-      functionalDiagram,
-      mountDocument,
-      connectDocument,
-      testDocument,
-      awpDocument,
-      commisionDocument,
+      files,
       parrentFolderPath
     );
   }

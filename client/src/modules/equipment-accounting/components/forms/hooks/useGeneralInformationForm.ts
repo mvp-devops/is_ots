@@ -7,6 +7,7 @@ import {
 } from "../../../types";
 
 import { generalInformationItem, useEquipmentAccountingForm } from "..";
+import { deleteOneEssence, updateOneEssence } from "../../../api";
 
 export const useGeneralInformationForm = (
   row?: GeneralInformationView,
@@ -46,11 +47,14 @@ export const useGeneralInformationForm = (
   );
 
   const {
+    currentItemFolderPath,
     facilities,
     newFacility,
     setNewFacility,
     onHandlerChange,
     onChangeTargetId,
+    setFormVisible,
+    actionType,
   } = useEquipmentAccountingForm(
     generalInformationItem,
     editRow,
@@ -121,7 +125,25 @@ export const useGeneralInformationForm = (
     target,
   } = useEquipmentAccountingForm(editRow, data, setData);
 
+  const updateGeneralInformationItem = () => {
+    editRow &&
+      updateOneEssence(
+        "general-information",
+        editRow.id,
+        editRow,
+        currentItemFolderPath
+      );
+    setFormVisible(false);
+  };
+
+  const deleteGeneralInformationItem = () => {
+    deleteOneEssence("general-information", editRow.id, currentItemFolderPath)
+      .then((data) => console.log(data))
+      .finally(() => setFormVisible(false));
+  };
+
   return {
+    actionType,
     onChangeTargetId,
     unitId,
     setUnitId,
@@ -144,5 +166,7 @@ export const useGeneralInformationForm = (
     setNewModification,
     addNewFacilityModification,
     onModificationChange,
+    updateGeneralInformationItem,
+    deleteGeneralInformationItem,
   };
 };

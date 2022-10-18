@@ -360,20 +360,17 @@ export class FileStorageService {
           break;
         }
         case "summary-list-of-equipment": {
-          document.sloeId = +parrentId;
-          this.createDirectory(`${parrentFolderPath}/Оборудование`);
-          const pathToFile = `${parrentFolderPath}/Оборудование/ОЛ, ТТ, ТЗ`;
-          this.createDirectory(pathToFile);
-
-          fileName = this.fileUpload(pathToFile, file);
+          console.log("parrentId: ", parrentId);
+          document.sloeId = parrentId;
+          console.log("document.sloeId: ", document.sloeId);
+          const pathToFile = `${parrentFolderPath}\\Оборудование\\ОЛ, ТТ, ТЗ`;
           document.filePath = pathToFile;
-          document.fileName = fileName;
+          document.fileName = await this.fileUpload(pathToFile, file);
           break;
         }
         case "monitoring": {
           document.monitoringId = +parrentId;
-          this.createDirectory(`${parrentFolderPath}/Оборудование`);
-          const pathToFile = `${parrentFolderPath}/Оборудование`;
+          const pathToFile = `${parrentFolderPath}\\Оборудование\\`;
           fileName = this.fileUpload(pathToFile, file);
           document.filePath = pathToFile;
           document.fileName = fileName;
@@ -1213,25 +1210,50 @@ export class FileStorageService {
   };
 
   //загрузка файла на сервер
+  // fileUpload = (folder: string, file: any): string => {
+  //   const fileName = this.generateFileName(file);
+
+  //   try {
+  //     const fileFolder = this.getFilePath(folder);
+
+  //     const filePath = this.getPath([fileFolder, fileName]);
+
+  //     const dir = path.dirname(filePath);
+  //     if (!fs.existsSync(dir)) {
+  //       fs.mkdirSync(dir);
+  //       fs.writeFileSync(path.join(filePath), file.buffer);
+  //     } else {
+  //       fs.writeFileSync(path.join(filePath), file.buffer);
+
+  //       return fileName;
+  //     }
+  //   } catch (e) {
+  //     throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+  //   }
+  //   return fileName;
+  // };
+
   fileUpload = (folder: string, file: any): string => {
     const fileName = this.generateFileName(file);
-    try {
-      const fileFolder = this.getFilePath(folder);
 
-      const filePath = this.getPath([fileFolder, fileName]);
+    const fileFolder = this.getFilePath(folder);
 
-      const dir = path.dirname(filePath);
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir);
+    const filePath = this.getPath([fileFolder, fileName]);
+
+    const dir = path.dirname(filePath);
+    if (!fs.existsSync(dir)) {
+      fs.mkdir(dir, { recursive: true }, (err) => {
+        if (err) {
+          console.log(err);
+        }
         fs.writeFileSync(path.join(filePath), file.buffer);
-      } else {
-        fs.writeFileSync(path.join(filePath), file.buffer);
+      });
+    } else {
+      fs.writeFileSync(path.join(filePath), file.buffer);
 
-        return fileName;
-      }
-    } catch (e) {
-      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+      return fileName;
     }
+
     return fileName;
   };
 

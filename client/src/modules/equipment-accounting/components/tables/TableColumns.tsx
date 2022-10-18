@@ -39,7 +39,8 @@ const { Text } = Typography;
 const TableColumns = (
   target: string,
   dataSource: Views[],
-  currentRow?: Views
+  currentRow?: Views,
+  deleteRow?: Function
 ): TableColumnsType<Views> => {
   const { setFormVisible, setActionType } = useActions();
   const columns: TableColumnsType<Views> = [];
@@ -67,26 +68,44 @@ const TableColumns = (
     key: "EDIT_EQUIPMENT_ASSET",
   };
 
+  // const deleteAssetMenuItem = {
+  //   label: (
+  //     <DeleteDialog
+  //       target="cable-log"
+  //       id={currentRow?.id as string}
+  //       onCancel={() => {
+  //         setFormVisible(false);
+  //         setActionType("");
+  //       }}
+  //       onConfirm={() => deleteRow()}
+  //       children={
+  //         <Space className="text-secondary">
+  //           <DeleteOutlined
+  //             className="text-danger"
+  //             style={{ marginBottom: "6px", padding: 0 }}
+  //           />
+  //           Удалить
+  //         </Space>
+  //       }
+  //     />
+  //   ),
+  //   key: "REMOVE_EQUIPMENT_ASSET",
+  // };
   const deleteAssetMenuItem = {
     label: (
-      <DeleteDialog
-        target="cable-log"
-        id={currentRow?.id as string}
-        onCancel={() => {
-          setFormVisible(false);
-          setActionType("");
+      <Space
+        className="text-secondary"
+        onClick={() => {
+          setActionType(FormActions.REMOVE_EQUIPMENT);
+          setFormVisible(true);
         }}
-        onConfirm={() => console.log("currentRow?.id: ", currentRow?.id)}
-        children={
-          <Space className="text-secondary">
-            <DeleteOutlined
-              className="text-danger"
-              style={{ marginBottom: "6px", padding: 0 }}
-            />
-            Удалить
-          </Space>
-        }
-      />
+      >
+        <DeleteOutlined
+          style={{ marginBottom: "6px", padding: 0 }}
+          className="text-secondary"
+        />
+        Удалить
+      </Space>
     ),
     key: "REMOVE_EQUIPMENT_ASSET",
   };

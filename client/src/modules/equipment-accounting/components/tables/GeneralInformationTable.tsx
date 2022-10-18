@@ -4,6 +4,7 @@ import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
 import { TableColumns, useGeneralInformationTable } from ".";
 import { tableLocale } from "../../../main";
+import { useGeneralInformationForm } from "../forms/hooks";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -19,7 +20,14 @@ const GeneralInformationTable = () => {
     setCurrentRow,
   } = useGeneralInformationTable();
 
-  const columns = TableColumns("general-information", dataSource, currentRow);
+  const { deleteGeneralInformationItem } = useGeneralInformationForm();
+
+  const columns = TableColumns(
+    "general-information",
+    dataSource,
+    currentRow,
+    deleteGeneralInformationItem
+  );
 
   const summary = () => (
     <Row style={{ margin: 0, padding: 0 }}>

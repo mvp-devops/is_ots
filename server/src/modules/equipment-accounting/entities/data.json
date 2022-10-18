@@ -1,0 +1,104 @@
+{
+  "items": [
+    {
+      "generalInformation": {
+        "projectId": 63,
+        "unitId": 508,
+        "subUnitId": 4,
+        "facilityId": 8,
+        "technicalCardId": 18,
+        "installationLocation": "Тр-д пластовой смеси.  8-ая нитка",
+        "systemType": [],
+        "tag": "B-KPPG-00000-PG-01229",
+        "controlledParameter": "н/д",
+        "facilityModification": "н/д",
+        "factoryNumber": "н/д",
+        "year": "н/д",
+        "month": "н/д",
+        "period": "н/д",
+        "specification": "н/д",
+        "description": "н/д"
+      },
+      "metrology": {},
+      "signals": [],
+      "cableLog": [],
+      "impulseLineLog": [],
+      "monitoring": {}
+    },
+    {
+      "generalInformation": {
+        "projectId": 63,
+        "unitId": 508,
+        "subUnitId": 4,
+        "facilityId": 8,
+        "technicalCardId": 18,
+        "installationLocation": "Тр-д пластовой смеси.  8-ая нитка",
+        "systemType": [],
+        "tag": "B-KPPG-00000-PG-01230",
+        "controlledParameter": "н/д",
+        "facilityModification": "н/д",
+        "factoryNumber": "н/д",
+        "year": "н/д",
+        "month": "н/д",
+        "period": "н/д",
+        "specification": "н/д",
+        "description": "н/д"
+      },
+      "metrology": {},
+      "signals": [],
+      "cableLog": [],
+      "impulseLineLog": [],
+      "monitoring": {}
+    },
+    {
+      "generalInformation": {
+        "projectId": 63,
+        "unitId": 508,
+        "subUnitId": 4,
+        "facilityId": 8,
+        "technicalCardId": 18,
+        "installationLocation": "Тр-д пластовой смеси.  7-ая нитка",
+        "systemType": [],
+        "tag": "B-KPPG-00000-PG-01225",
+        "controlledParameter": "н/д",
+        "facilityModification": "н/д",
+        "factoryNumber": "н/д",
+        "year": "н/д",
+        "month": "н/д",
+        "period": "н/д",
+        "specification": "н/д",
+        "description": "н/д"
+      },
+      "metrology": {},
+      "signals": [],
+      "cableLog": [],
+      "impulseLineLog": [],
+      "monitoring": {}
+    },
+    {
+      "generalInformation": {
+        "projectId": 63,
+        "unitId": 508,
+        "subUnitId": 4,
+        "facilityId": 8,
+        "technicalCardId": 18,
+        "installationLocation": "Тр-д пластовой смеси.  7-ая нитка",
+        "systemType": [],
+        "tag": "B-KPPG-00000-PG-01226",
+        "controlledParameter": "н/д",
+        "facilityModification": "н/д",
+        "factoryNumber": "н/д",
+        "year": "н/д",
+        "month": "н/д",
+        "period": "н/д",
+        "specification": "н/д",
+        "description": "н/д"
+      },
+      "metrology": {},
+      "signals": [],
+      "cableLog": [],
+      "impulseLineLog": [],
+      "monitoring": {}
+    }
+  ]
+}

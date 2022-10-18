@@ -174,7 +174,7 @@ export class SummaryListOfEquipmentEntity extends Model<
     description: "Спецификация поставки",
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
   })
   specification: string;
 
@@ -183,7 +183,7 @@ export class SummaryListOfEquipmentEntity extends Model<
     description: "Примечание",
   })
   @Column({
-    type: DataType.STRING,
+    type: DataType.TEXT,
   })
   description: string;
 

@@ -1,5 +1,6 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
+import { MulterModule } from "@nestjs/platform-express";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { ServeStaticModule } from "@nestjs/serve-static";
 import { join } from "path";
@@ -108,9 +109,9 @@ import {
     PositionTreeModule,
     FileStorageModule,
     RegulatoryReferenceInformationModule,
-    // MulterModule.register({
-    //   dest: `.${process.env.NODE_ENV}.env`,
-    // }),
+    MulterModule.register({
+      // dest: `.${process.env.NODE_ENV}.env`,
+    }),
   ],
   controllers: [],
   providers: [],

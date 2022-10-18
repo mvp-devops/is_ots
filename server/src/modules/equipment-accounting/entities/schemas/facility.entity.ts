@@ -27,6 +27,7 @@ export class FacilityEntity extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    defaultValue: "Россия",
   })
   country: string;
 
@@ -37,6 +38,7 @@ export class FacilityEntity extends Model<
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    defaultValue: "Не определен",
   })
   vendor: string;
 
