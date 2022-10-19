@@ -115,14 +115,10 @@ export class EquipmentAccountingController {
   @Delete("/summary-list-of-equipment-asset/remove/:id")
   deleteSummaryListOfEquipmentAsset(
     @Param("id") id: string,
-    @Query() query: { target: string; parrentFolderPath?: string }
+    @Query() query: { target: string }
   ) {
-    const { target, parrentFolderPath } = query;
-    return this.service.deleteSummaryListOfEquipmentSubAsset(
-      target,
-      +id,
-      parrentFolderPath
-    );
+    const { target } = query;
+    return this.service.deleteSummaryListOfEquipmentSubAsset(target, +id);
   }
 
   @Put("/summary-list-of-equipment-asset/edit/:id")

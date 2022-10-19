@@ -360,34 +360,25 @@ export class FileStorageService {
           break;
         }
         case "summary-list-of-equipment": {
-          console.log("parrentId: ", parrentId);
           document.sloeId = parrentId;
-          console.log("document.sloeId: ", document.sloeId);
           const pathToFile = `${parrentFolderPath}\\Оборудование\\ОЛ, ТТ, ТЗ`;
           document.filePath = pathToFile;
-          document.fileName = await this.fileUpload(pathToFile, file);
+          document.fileName = this.fileUpload(pathToFile, file);
           break;
         }
         case "monitoring": {
-          document.monitoringId = +parrentId;
-          const pathToFile = `${parrentFolderPath}\\Оборудование\\`;
-          fileName = this.fileUpload(pathToFile, file);
+          document.monitoringId = parrentId;
+
+          const pathToFile = `${parrentFolderPath}\\Оборудование\\ФСА`;
           document.filePath = pathToFile;
-          document.fileName = fileName;
+          document.fileName = this.fileUpload(pathToFile, file);
 
           break;
         }
         case "cable-log": {
-          document.cableLogId = +parrentId;
-          // this.createDirectory(`${parrentFolderPath}/Оборудование`);
-          // const pathToFile = `${parrentFolderPath}/Оборудование/Схемы`;
-          // this.createDirectory(pathToFile);
-
-          const pathToFile = parrentFolderPath;
-
-          fileName = this.fileUpload(pathToFile, file);
+          const pathToFile = `${parrentFolderPath}\\Оборудование\\С5`;
           document.filePath = pathToFile;
-          document.fileName = fileName;
+          document.fileName = await this.fileUpload(pathToFile, file);
           break;
         }
         default:
@@ -1203,6 +1194,7 @@ export class FileStorageService {
   //получить имя файла
   getFileName = (file: any): string => {
     try {
+      console.log("getFileName: ", path.basename(file.originalname));
       return path.basename(file.originalname);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
