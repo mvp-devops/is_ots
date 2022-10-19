@@ -135,6 +135,7 @@ export interface SignalView {
   signalType: string;
   signalProtocol: string;
   signalTag: string;
+  signalParameter: string;
   ll: string;
   l: string;
   h: string;
@@ -148,6 +149,7 @@ export interface SignalCreateOrUpdateAttrs {
   signalType: string;
   signalProtocol: string;
   signalTag: string;
+  signalParameter: string;
   ll: string;
   l: string;
   h: string;

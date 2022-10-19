@@ -1892,6 +1892,7 @@ export const summaryListOfEquipmentRequestData: SummaryListOfEquipmentView[] = [
         signalType: "type-1",
         signalProtocol: "protocol-1",
         signalTag: "signal-tag-1",
+        signalParameter: "",
         ll: "6.3",
         l: "5.3",
         h: "5",

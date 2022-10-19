@@ -54,6 +54,15 @@ export class SignalEntity extends Model<
   signalProtocol: string;
 
   @ApiProperty({
+    example: "Кран открыт",
+    description: "Контролируемый параметр",
+  })
+  @Column({
+    type: DataType.TEXT,
+  })
+  signalParameter: string;
+
+  @ApiProperty({
     example: "PISA-1-1",
     description: "TAG сигнала",
   })

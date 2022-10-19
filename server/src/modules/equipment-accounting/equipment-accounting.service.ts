@@ -1032,6 +1032,7 @@ export class EquipmentAccountingService {
         signalTag: data.signalTag,
         signalType: data.signalType,
         signalProtocol: data.signalProtocol,
+        signalParameter: data.signalParameter,
         h: data.h,
         l: data.l,
         ll: data.ll,

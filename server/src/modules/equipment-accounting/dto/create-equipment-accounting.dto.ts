@@ -345,6 +345,12 @@ export class CreateSignalDto implements SignalCreateOrUpdateAttrs {
   readonly signalTag: string;
 
   @ApiProperty({
+    example: "Кран открыт",
+    description: "Контроллируемый параметр",
+  })
+  readonly signalParameter: string;
+
+  @ApiProperty({
     example: "Авария, min",
     description: "Авария, min",
   })
