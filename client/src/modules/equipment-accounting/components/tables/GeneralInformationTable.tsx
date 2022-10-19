@@ -86,7 +86,7 @@ const GeneralInformationTable = () => {
           };
         }}
         columns={columns}
-        rowKey={(record) => record.id as string}
+        rowKey={(record) => Math.random()}
         summary={() => summary()}
       />
       {formRender}

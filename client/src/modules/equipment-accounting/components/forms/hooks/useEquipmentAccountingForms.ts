@@ -211,7 +211,6 @@ export const useEquipmentAccountingForm = (
     if (currentItem && checkedItem) {
       switch (target) {
         case "field": {
-          console.log("this!!!");
           unitId
             ? setSubUnitsList(
                 currentItem?.children
@@ -241,8 +240,6 @@ export const useEquipmentAccountingForm = (
     }
   }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => console.log("SubUnits: ", subUnitsList), [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const { facilitiesList } = useTypedSelector(
     (state) => state.equipmentAccounting
   );
@@ -265,9 +262,9 @@ export const useEquipmentAccountingForm = (
     key === "subUnitId" && setSubUnitId(value);
   };
 
-  // useEffect(() => console.log("Data: ", data), [data]);
-
   return {
+    currentItem,
+    checkedItem,
     actionType,
     currentItemFolderPath,
     setFormVisible,

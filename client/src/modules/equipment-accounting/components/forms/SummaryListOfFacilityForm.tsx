@@ -26,8 +26,8 @@ const SummaryListOfFacilityForm = () => {
   );
 
   const setGeneralInformation = (
-    generalInformation: GeneralInformationCreateOrUpdateAttrs[]
-  ) => setData({ ...data, ...generalInformation });
+    generalInformation: GeneralInformationCreateOrUpdateAttrs
+  ) => setData({ ...data, generalInformation });
 
   const setCableLog = (cableLog: CableLogCreateOrUpdateAttrs[]) =>
     setData({ ...data, cableLog });
@@ -169,6 +169,7 @@ const SummaryListOfFacilityForm = () => {
         {current === steps.length - 1 && (
           <Button
             type="primary"
+            onClick={() => console.log(data)}
             //   onClick={() => createOneFacility(data)}
           >
             Добавить

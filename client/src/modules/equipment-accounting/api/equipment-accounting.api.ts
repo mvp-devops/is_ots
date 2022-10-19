@@ -22,126 +22,335 @@ import { setUrl } from "../../main";
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
+const setGeneralInformationFormData = (
+  item: GeneralInformationCreateOrUpdateAttrs
+): FormData => {
+  const data = new FormData();
+
+  const {
+    projectId,
+    unitId,
+    subUnitId,
+    sloeId,
+    facilityId,
+    facilityModification,
+    facility,
+    technacalCardId,
+    installationLocation,
+    questionare,
+    systemType,
+    tag,
+    controlledParameter,
+    factoryNumber,
+    year,
+    month,
+    period,
+    specification,
+    description,
+  } = item;
+
+  projectId && data.append("projectId", projectId.toString());
+
+  unitId && data.append("unitId", unitId.toString());
+
+  subUnitId && data.append("subUnitId", subUnitId.toString());
+
+  sloeId && data.append("sloeId", sloeId.toString());
+
+  facilityId && data.append("facilityId", facilityId.toString());
+
+  facility && data.append("facility", JSON.stringify(facility));
+
+  technacalCardId && data.append("technacalCardId", technacalCardId.toString());
+
+  installationLocation &&
+    data.append("installationLocation", installationLocation);
+
+  questionare && data.append("questionare", questionare);
+
+  if (systemType) {
+    const arr = systemType;
+    for (var i = 0; i < arr.length; i++) {
+      data.append("systemType[]", arr[i]);
+    }
+  }
+  tag && data.append("tag", tag);
+
+  controlledParameter &&
+    data.append("controlledParameter", controlledParameter);
+
+  facilityModification &&
+    data.append("facilityModification", facilityModification);
+
+  factoryNumber && data.append("factoryNumber", factoryNumber);
+
+  year && data.append("year", year);
+
+  month && data.append("month", month);
+
+  period && data.append("period", period);
+
+  specification && data.append("specification", specification);
+
+  description && data.append("description", description);
+  return data;
+};
+
+const setMetrologyFormData = (item: MetrologyCreateOrUpdateAttrs): FormData => {
+  const data = new FormData();
+
+  const {
+    sloeId,
+    counterpartyId,
+    sgroei,
+    grsi,
+    min,
+    max,
+    range,
+    accuracy,
+    mpi,
+    metrologyType,
+    documentType,
+    documentNumber,
+    fromDate,
+    toDate,
+    document,
+    status,
+    arshin,
+    verificationProcedure,
+    typeApprovalCertificate,
+  } = item;
+
+  counterpartyId && data.append("counterpartyId", counterpartyId.toString());
+
+  sgroei && data.append("sgroei", sgroei);
+
+  grsi && data.append("grsi", grsi);
+
+  sloeId && data.append("sloeId", sloeId.toString());
+
+  min && data.append("min", min);
+
+  max && data.append("max", max);
+
+  range && data.append("range", range);
+
+  accuracy && data.append("accuracy", accuracy);
+
+  mpi && data.append("mpi", mpi);
+
+  metrologyType && data.append("metrologyType", metrologyType);
+
+  documentType && data.append("documentType", documentType);
+
+  documentNumber && data.append("documentNumber", documentNumber);
+
+  fromDate && data.append("fromDate", fromDate);
+
+  toDate && data.append("toDate", toDate);
+
+  document && data.append("document", document);
+
+  status && data.append("status", status);
+
+  arshin && data.append("arshin", arshin);
+
+  verificationProcedure &&
+    data.append("verificationProcedure", verificationProcedure);
+
+  typeApprovalCertificate &&
+    data.append("typeApprovalCertificate", typeApprovalCertificate);
+
+  return data;
+};
+
+const setSignalFormData = (item: SignalCreateOrUpdateAttrs): FormData => {
+  const data = new FormData();
+
+  const {
+    sloeId,
+    signalType,
+    signalProtocol,
+    signalTag,
+    h,
+    l,
+    ll,
+    hh,
+    emergencyProtocol,
+  } = item;
+
+  sloeId && data.append("sloeId", sloeId.toString());
+  signalType && data.append("signalType", signalType);
+  signalProtocol && data.append("signalProtocol", signalProtocol);
+  signalTag && data.append("signalTag", signalTag);
+  h && data.append("h", h);
+  l && data.append("l", l);
+  ll && data.append("ll", ll);
+  hh && data.append("hh", hh);
+  emergencyProtocol && data.append("emergencyProtocol", emergencyProtocol);
+  return data;
+};
+
+const setCableLogFormData = (item: CableLogCreateOrUpdateAttrs): FormData => {
+  const data = new FormData();
+
+  const {
+    sloeId,
+    numberOfTrace,
+    cableMark,
+    cableSection,
+    fromUnit,
+    fromPlace,
+    toUnit,
+    toPlace,
+    cableLenght,
+    range,
+    description,
+    wiringDiagram,
+  } = item;
+
+  sloeId && data.append("sloeId", sloeId.toString());
+  numberOfTrace && data.append("numberOfTrace", numberOfTrace);
+  cableMark && data.append("cableMark", cableMark);
+  cableSection && data.append("cableSection", cableSection);
+  fromUnit && data.append("fromUnit", fromUnit);
+  fromPlace && data.append("fromPlace", fromPlace);
+  toUnit && data.append("toUnit", toUnit);
+  toPlace && data.append("toPlace", toPlace);
+  cableLenght && data.append("cableLenght", cableLenght);
+  range && data.append("range", range);
+  description && data.append("description", description);
+  wiringDiagram && data.append("wiringDiagram", wiringDiagram);
+  return data;
+};
+
+const setImpulseLineLogFormData = (
+  item: ImpulseLineLogCreateOrUpdateAttrs
+): FormData => {
+  const data = new FormData();
+
+  const {
+    sloeId,
+    numberOfTrace,
+    impulseLineType,
+    fromPlace,
+    toPlace,
+    impulseLineLenght,
+    range,
+    description,
+  } = item;
+
+  sloeId && data.append("sloeId", sloeId.toString());
+  numberOfTrace && data.append("numberOfTrace", numberOfTrace);
+  impulseLineType && data.append("impulseLineType", impulseLineType);
+  fromPlace && data.append("fromPlace", fromPlace);
+  toPlace && data.append("toPlace", toPlace);
+  impulseLineLenght && data.append("impulseLineLenght", impulseLineLenght);
+  range && data.append("range", range);
+  description && data.append("description", description);
+  return data;
+};
+
+const setmonitoringFormData = (
+  item: MonitoringCreateOrUpdateAttrs
+): FormData => {
+  const data = new FormData();
+
+  const {
+    sloeId,
+    mountDate,
+    mountDocument,
+    connectDate,
+    connectDocument,
+    testDate,
+    testDocument,
+    awpDate,
+    awpDocument,
+    commisionDate,
+    commisionDocument,
+  } = item;
+
+  sloeId && data.append("sloeId", sloeId.toString());
+  mountDate && data.append("mountDate", mountDate);
+  mountDocument && data.append("mountDocument", mountDocument);
+  connectDate && data.append("connectDate", connectDate);
+  connectDocument && data.append("connectDocument", connectDocument);
+  testDate && data.append("testDate", testDate);
+  testDocument && data.append("testDocument", testDocument);
+  awpDate && data.append("awpDate", awpDate);
+  awpDocument && data.append("awpDocument", awpDocument);
+  commisionDate && data.append("commisionDate", commisionDate);
+  commisionDocument && data.append("commisionDocument", commisionDocument);
+  return data;
+};
+
 const setFormData = (
   item: EquipmentAccountingAssetCreateOrUpdateAttrs
 ): FormData => {
   const data = new FormData();
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).projectId) {
-    data.append(
-      "projectId",
-      (item as GeneralInformationCreateOrUpdateAttrs).projectId.toString()
-    );
-  }
-  if ((item as GeneralInformationCreateOrUpdateAttrs).unitId) {
-    data.append(
-      "unitId",
-      (item as GeneralInformationCreateOrUpdateAttrs).unitId.toString()
-    );
-  }
-  if ((item as GeneralInformationCreateOrUpdateAttrs).subUnitId) {
-    data.append(
-      "subUnitId",
-      (item as GeneralInformationCreateOrUpdateAttrs).subUnitId.toString()
-    );
-  }
-  if ((item as GeneralInformationCreateOrUpdateAttrs).sloeId) {
-    data.append(
-      "sloeId",
-      (item as GeneralInformationCreateOrUpdateAttrs).sloeId.toString()
-    );
-  }
-  if ((item as GeneralInformationCreateOrUpdateAttrs).facilityId) {
-    data.append(
-      "facilityId",
-      (item as GeneralInformationCreateOrUpdateAttrs).facilityId.toString()
-    );
-  }
-  if ((item as GeneralInformationCreateOrUpdateAttrs).technacalCardId) {
-    data.append(
-      "technacalCardId",
-      (item as GeneralInformationCreateOrUpdateAttrs).technacalCardId.toString()
-    );
-  }
+  const {
+    generalInformation,
+    metrology,
+    signals,
+    cableLog,
+    impulseLineLog,
+    monitoring,
+  } = item as SummaryListOfEquipmentFormData;
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).installationLocation) {
-    data.append(
-      "installationLocation",
-      (item as GeneralInformationCreateOrUpdateAttrs).installationLocation
-    );
-  }
+  data.append("generalInformation", JSON.stringify(generalInformation)); //TODO: grdfgdg
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).questionare) {
-    data.append(
-      "questionare",
-      (item as GeneralInformationCreateOrUpdateAttrs).questionare
-    );
-  }
+  data.append("metrology", JSON.stringify(metrology));
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).systemType) {
-    const arr = (item as GeneralInformationCreateOrUpdateAttrs).systemType;
-    for (var i = 0; i < arr.length; i++) {
-      data.append("systemType[]", arr[i]);
+  if (signals && signals.length > 0) {
+    const arr = signals;
+    for (let i = 0; i < arr.length; i++) {
+      data.append("signals[]", JSON.stringify(arr[i]));
     }
   }
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).tag) {
-    data.append("tag", (item as GeneralInformationCreateOrUpdateAttrs).tag);
+  if (cableLog && cableLog.length > 0) {
+    const arr = cableLog;
+    for (let i = 0; i < arr.length; i++) {
+      data.append("cableLog[]", JSON.stringify(arr[i]));
+      arr[i].wiringDiagram &&
+        data.append("wiringDiagram", arr[i].wiringDiagram);
+    }
   }
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).controlledParameter) {
-    data.append(
-      "controlledParameter",
-      (item as GeneralInformationCreateOrUpdateAttrs).controlledParameter
-    );
+  if (impulseLineLog && impulseLineLog.length > 0) {
+    const arr = impulseLineLog;
+    for (let i = 0; i < arr.length; i++) {
+      data.append("impulseLineLog[]", JSON.stringify(arr[i]));
+    }
   }
 
-  // if ((item as GeneralInformationCreateOrUpdateAttrs).facility)  {
-  //   data.append("facility{}", (item as GeneralInformationCreateOrUpdateAttrs).facility)
-  // }
+  data.append("monitoring", JSON.stringify(monitoring));
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).facilityModification) {
-    data.append(
-      "facilityModification",
-      (item as GeneralInformationCreateOrUpdateAttrs).facilityModification
-    );
-  }
+  const { questionare } = generalInformation;
+  questionare && data.append("questionare", questionare);
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).factoryNumber) {
-    data.append(
-      "factoryNumber",
-      (item as GeneralInformationCreateOrUpdateAttrs).factoryNumber
-    );
-  }
+  const { document, verificationProcedure, typeApprovalCertificate } =
+    metrology;
+  document && data.append("document", document);
+  verificationProcedure &&
+    data.append("verificationProcedure", verificationProcedure);
+  typeApprovalCertificate &&
+    data.append("typeApprovalCertificate", typeApprovalCertificate);
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).year) {
-    data.append("year", (item as GeneralInformationCreateOrUpdateAttrs).year);
-  }
+  const {
+    mountDocument,
+    connectDocument,
+    awpDocument,
+    testDocument,
+    commisionDocument,
+  } = monitoring;
 
-  if ((item as GeneralInformationCreateOrUpdateAttrs).month) {
-    data.append("month", (item as GeneralInformationCreateOrUpdateAttrs).month);
-  }
-
-  if ((item as GeneralInformationCreateOrUpdateAttrs).period) {
-    data.append(
-      "period",
-      (item as GeneralInformationCreateOrUpdateAttrs).period
-    );
-  }
-
-  if ((item as GeneralInformationCreateOrUpdateAttrs).specification) {
-    data.append(
-      "specification",
-      (item as GeneralInformationCreateOrUpdateAttrs).specification
-    );
-  }
-
-  if ((item as GeneralInformationCreateOrUpdateAttrs).description) {
-    data.append(
-      "description",
-      (item as GeneralInformationCreateOrUpdateAttrs).description
-    );
-  }
+  mountDocument && data.append("mountDocument", mountDocument);
+  connectDocument && data.append("connectDocument", connectDocument);
+  awpDocument && data.append("awpDocument", awpDocument);
+  testDocument && data.append("testDocument", testDocument);
+  commisionDocument && data.append("commisionDocument", commisionDocument);
 
   return data;
 };

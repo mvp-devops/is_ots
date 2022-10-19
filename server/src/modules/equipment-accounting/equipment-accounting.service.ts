@@ -65,7 +65,6 @@ import {
   SignalEntity,
   SummaryListOfEquipmentEntity,
 } from "./entities";
-import { UpdateRegulatoryReferenceInformationDto } from "../regulatory-reference-information/dto";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
 
 type UpdateEquipmentAccountingAssetDto =
@@ -190,7 +189,7 @@ export class EquipmentAccountingService {
 
   createNewCableLogAsset = async (
     dto: CreateCableLogDto,
-    wiringDiagram?: Express.Multer.File,
+    wiringDiagram?: File,
     parrentFolderPath?: string
   ): Promise<CableLogView> => {
     try {
@@ -444,7 +443,7 @@ export class EquipmentAccountingService {
   updateCableLogAsset = async (
     id: string,
     dto: UpdateCableLogDto,
-    wiringDiagram?: Express.Multer.File,
+    wiringDiagram?: File,
     parrentFolderPath?: string
   ): Promise<CableLogView> => {
     try {
@@ -652,9 +651,9 @@ export class EquipmentAccountingService {
 
   createNewMetrologyAsset = async (
     dto: CreateMetrologyDto,
-    document?: Express.Multer.File,
-    verificationProcedure?: Express.Multer.File,
-    typeApprovalCertificate?: Express.Multer.File,
+    document?: File,
+    verificationProcedure?: File,
+    typeApprovalCertificate?: File,
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
@@ -855,9 +854,9 @@ export class EquipmentAccountingService {
   updateMetrologyAsset = async (
     id: string,
     dto: UpdateMetrologyDto,
-    document?: Express.Multer.File,
-    verificationProcedure?: Express.Multer.File,
-    typeApprovalCertificate?: Express.Multer.File,
+    document?: File,
+    verificationProcedure?: File,
+    typeApprovalCertificate?: File,
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
@@ -1097,12 +1096,12 @@ export class EquipmentAccountingService {
 
   createNewMonitoringAsset = async (
     dto: CreateMonitoringDto,
-    functionalDiagram?: Express.Multer.File,
-    mountDocument?: Express.Multer.File,
-    connectDocument?: Express.Multer.File,
-    testDocument?: Express.Multer.File,
-    awpDocument?: Express.Multer.File,
-    commisionDocument?: Express.Multer.File,
+    functionalDiagram?: File,
+    mountDocument?: File,
+    connectDocument?: File,
+    testDocument?: File,
+    awpDocument?: File,
+    commisionDocument?: File,
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
@@ -1320,12 +1319,12 @@ export class EquipmentAccountingService {
   updateMonitoringAsset = async (
     id: string,
     dto: UpdateMonitoringDto,
-    functionalDiagram?: Express.Multer.File,
-    mountDocument?: Express.Multer.File,
-    connectDocument?: Express.Multer.File,
-    testDocument?: Express.Multer.File,
-    awpDocument?: Express.Multer.File,
-    commisionDocument?: Express.Multer.File,
+    functionalDiagram?: File,
+    mountDocument?: File,
+    connectDocument?: File,
+    testDocument?: File,
+    awpDocument?: File,
+    commisionDocument?: File,
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
@@ -1694,16 +1693,16 @@ export class EquipmentAccountingService {
           id.toString(),
           "summary-list-of-equipment",
           parrentFolderPath,
-          files.questionare[0]
+          files.questionare
         );
       }
 
       if (metrology) {
         await this.createNewMetrologyAsset(
           { ...metrology, sloeId: id },
-          files.document[0],
-          files.verificationProcedure[0],
-          files.typeApprovalCertificate[0],
+          files.document,
+          files.verificationProcedure,
+          files.typeApprovalCertificate,
           parrentFolderPath
         );
       }
@@ -1714,7 +1713,7 @@ export class EquipmentAccountingService {
 
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
-            files.wiringDiagram[0],
+            files.wiringDiagram,
             parrentFolderPath
           );
         }
@@ -1737,12 +1736,12 @@ export class EquipmentAccountingService {
       if (monitoring) {
         await this.createNewMonitoringAsset(
           { ...monitoring, sloeId: id },
-          files.functionalDiagram[0],
-          files.mountDocument[0],
-          files.connectDocument[0],
-          files.testDocument[0],
-          files.awpDocument[0],
-          files.commisionDocument[0],
+          files.functionalDiagram,
+          files.mountDocument,
+          files.connectDocument,
+          files.testDocument,
+          files.awpDocument,
+          files.commisionDocument,
           parrentFolderPath
         );
       }
@@ -2115,7 +2114,7 @@ export class EquipmentAccountingService {
   updateGeneralInformationAsset = async (
     id: string,
     dto: UpdateGeneralInformationDto,
-    questionare?: Express.Multer.File,
+    questionare?: File,
     parrentFolderPath?: string
   ): Promise<GeneralInformationView> => {
     try {
@@ -2332,7 +2331,7 @@ export class EquipmentAccountingService {
         item = await this.updateGeneralInformationAsset(
           id,
           dto as UpdateGeneralInformationDto,
-          files.questionare[0],
+          files.questionare,
           parrentFolderPath
         );
         break;
@@ -2342,9 +2341,9 @@ export class EquipmentAccountingService {
         item = await this.updateMetrologyAsset(
           id,
           dto as UpdateMetrologyDto,
-          files.document[0],
-          files.verificationProcedure[0],
-          files.typeApprovalCertificate[0],
+          files.document,
+          files.verificationProcedure,
+          files.typeApprovalCertificate,
           parrentFolderPath
         );
         break;
@@ -2359,7 +2358,7 @@ export class EquipmentAccountingService {
         item = await this.updateCableLogAsset(
           id,
           dto as UpdateCableLogDto,
-          files.wiringDiagram[0],
+          files.wiringDiagram,
           parrentFolderPath
         );
         break;
@@ -2377,12 +2376,12 @@ export class EquipmentAccountingService {
         item = await this.updateMonitoringAsset(
           id,
           dto as UpdateMonitoringDto,
-          files.functionalDiagram[0],
-          files.mountDocument[0],
-          files.connectDocument[0],
-          files.testDocument[0],
-          files.awpDocument[0],
-          files.commisionDocument[0],
+          files.functionalDiagram,
+          files.mountDocument,
+          files.connectDocument,
+          files.testDocument,
+          files.awpDocument,
+          files.commisionDocument,
           parrentFolderPath
         );
         break;

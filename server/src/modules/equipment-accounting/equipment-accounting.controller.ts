@@ -13,10 +13,7 @@ import {
   Res,
   UploadedFiles,
 } from "@nestjs/common";
-import {
-  FileFieldsInterceptor,
-  FileInterceptor,
-} from "@nestjs/platform-express";
+import { FileFieldsInterceptor } from "@nestjs/platform-express";
 import { setCurrentDate } from "../../../common/utils";
 import type { Response } from "express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
@@ -30,10 +27,7 @@ import {
   UpdateSignalDto,
 } from "./dto";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
-import {
-  GeneralInformationCreateOrUpdateAttrs,
-  SummaryListOfEquipmentCreateOrUpdateFiles,
-} from "../../../common/types/equipment-accounting";
+import type { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../common/types/equipment-accounting";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
@@ -62,7 +56,7 @@ export class EquipmentAccountingController {
     res.header("Content-disposition", `attachment; filename=${fileName}`);
     res.type("application/json; charset=UTF-8");
 
-    res.download(fileLocation, `=${fileName}`, (err) => {
+    res.download(fileLocation, `${fileName}`, (err) => {
       if (err) console.log(err);
     });
   }

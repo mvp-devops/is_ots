@@ -55,6 +55,7 @@ export const useGeneralInformationForm = (
     onChangeTargetId,
     setFormVisible,
     actionType,
+    checkedItem,
   } = useEquipmentAccountingForm(
     generalInformationItem,
     editRow,
@@ -109,11 +110,6 @@ export const useGeneralInformationForm = (
       );
   }, [editRow?.facilityId, data?.facilityId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(
-    () => console.log("GeneralInformationFormRow: ", editRow),
-    [editRow]
-  );
-
   const {
     unitId,
     setUnitId,
@@ -122,6 +118,7 @@ export const useGeneralInformationForm = (
     setSubUnitId,
     subUnitsList,
     currentId,
+    currentItem,
     target,
   } = useEquipmentAccountingForm(editRow, data, setData);
 
@@ -141,6 +138,34 @@ export const useGeneralInformationForm = (
       .then((data) => console.log(data))
       .finally(() => setFormVisible(false));
   };
+
+  useEffect(() => {
+    switch (target) {
+      case "field": {
+        console.log("projectId: ", checkedItem.id);
+        break;
+      }
+      case "project": {
+        console.log("projectId: ", currentItem.keys[2]);
+        console.log("unitId: ", checkedItem.id);
+        break;
+      }
+      case "unit": {
+        console.log("projectId: ", currentItem.keys[2]);
+        console.log("unitId: ", currentItem.keys[3]);
+        console.log("subUnitId: ", checkedItem.id);
+        break;
+      }
+      case "sub-unit": {
+        console.log("projectId: ", currentItem.keys[2]);
+        console.log("unitId: ", currentItem.keys[3]);
+        console.log("subUnitId: ", currentItem.keys[4]);
+        break;
+      }
+      default:
+        break;
+    }
+  }, [checkedItem, target]);
 
   return {
     actionType,

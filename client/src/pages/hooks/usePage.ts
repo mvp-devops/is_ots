@@ -56,8 +56,6 @@ export const usePage = () => {
     }
   };
 
-  console.log("currentItemFolderPath: ", currentItemFolderPath);
-
   return {
     dictionaryTarget,
     currentItem,

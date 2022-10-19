@@ -1,5 +1,6 @@
 import {
   CableLogCreateOrUpdateAttrs,
+  FacilityCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
   ImpulseLineLogCreateOrUpdateAttrs,
   MetrologyCreateOrUpdateAttrs,
@@ -10,7 +11,7 @@ import {
 
 export const initData = () => {};
 
-export const facilityItem = {
+export const facilityItem: FacilityCreateOrUpdateAttrs = {
   id: null,
   country: "",
   vendor: "",

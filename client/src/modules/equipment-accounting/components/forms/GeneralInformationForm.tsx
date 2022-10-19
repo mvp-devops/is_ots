@@ -66,7 +66,8 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     item: GeneralInformationCreateOrUpdateAttrs
   ): ReactNode => (
     <>
-      {actionType === FormActions.EDIT_EQUIPMENT ? (
+      {actionType === FormActions.EDIT_EQUIPMENT ||
+      actionType === FormActions.ADD_EQUIPMENT ? (
         <Form
           labelCol={{ span: 5 }}
           wrapperCol={{ span: 18 }}
@@ -74,27 +75,29 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           className="m-1 p-1 border"
           style={{ width: 950 }}
         >
-          {target !== "unit" && target !== "sub-unit" && (
-            <FormItemUIComponent
-              className="m-0"
-              title="Объект строительства"
-              children={
-                <SelectUIComponent
-                  defaultValue={row && row.unitId}
-                  id="unitId"
-                  items={unitsList}
-                  changeValue={onChangeTargetId}
-                />
-              }
-            />
-          )}
-          {subUnitsList.length > 0 && (
+          {target !== "project" &&
+            target !== "unit" &&
+            target !== "sub-unit" && (
+              <FormItemUIComponent
+                className="m-0"
+                title="Объект строительства"
+                children={
+                  <SelectUIComponent
+                    defaultValue={editRow && (editRow.unitId as string)}
+                    id="unitId"
+                    items={unitsList}
+                    changeValue={onChangeTargetId}
+                  />
+                }
+              />
+            )}
+          {target !== "sub-unit" && (
             <FormItemUIComponent
               className="m-0"
               title="Установка/объект"
               children={
                 <SelectUIComponent
-                  defaultValue={row && row.subUnitId}
+                  defaultValue={editRow && (editRow.subUnitId as string)}
                   id="subUnitId"
                   items={subUnitsList}
                   changeValue={onChangeTargetId}
@@ -107,7 +110,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Место установки"
             children={
               <InputUIComponent
-                value={item.installationLocation}
+                value={editRow && editRow.installationLocation}
                 id="installationLocation"
                 changeValue={onHandlerChange}
               />
@@ -118,7 +121,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="TAG"
             children={
               <InputUIComponent
-                value={item.tag}
+                value={editRow && editRow.tag}
                 id="tag"
                 changeValue={onHandlerChange}
               />
@@ -129,7 +132,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Контролируемый параметр"
             children={
               <InputUIComponent
-                value={item.controlledParameter}
+                value={editRow && editRow.controlledParameter}
                 id="controlledParameter"
                 changeValue={onHandlerChange}
               />
@@ -158,7 +161,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                   </Text>
                 </Space>
               }
-              defaultValue={row && item.facility?.title}
+              defaultValue={editRow && editRow.facility.title}
               optionFilterProp="children"
               filterOption={(input, option) =>
                 (option!.children as unknown as string).includes(input)
@@ -213,7 +216,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                     </Text>
                   </Space>
                 }
-                defaultValue={row && item.facilityModification}
+                defaultValue={editRow && editRow.facilityModification}
                 onChange={(value: string) =>
                   onHandlerChange("facilityModification", value)
                 }
@@ -272,7 +275,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Зав. №"
             children={
               <InputUIComponent
-                value={item.factoryNumber}
+                value={editRow && editRow.factoryNumber}
                 id="factoryNumber"
                 style={{ maxWidth: 150 }}
                 changeValue={onHandlerChange}
@@ -305,7 +308,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Спецификация поставки"
             children={
               <InputUIComponent
-                value={item.specification}
+                value={editRow && editRow.specification}
                 id="specification"
                 changeValue={onHandlerChange}
               />
@@ -318,7 +321,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
               <InputUIComponent
                 type="number"
                 style={{ maxWidth: 150 }}
-                value={item.year}
+                value={editRow && editRow.year}
                 id="year"
                 changeValue={onHandlerChange}
               />
@@ -331,7 +334,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
               <SelectUIComponent
                 sortKey="id"
                 style={{ maxWidth: 150 }}
-                defaultValue={row && row.month}
+                defaultValue={editRow && editRow.month}
                 id="month"
                 items={months}
                 changeValue={onHandlerChange}
@@ -345,7 +348,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
               <InputUIComponent
                 style={{ maxWidth: 150 }}
                 type="number"
-                value={item.period}
+                value={editRow && editRow.period}
                 id="period"
                 changeValue={onHandlerChange}
               />
@@ -356,7 +359,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Примечание"
             children={
               <InputUIComponent
-                value={item.description}
+                value={editRow && editRow.description}
                 id="description"
                 changeValue={onHandlerChange}
               />

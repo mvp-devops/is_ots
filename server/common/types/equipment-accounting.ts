@@ -367,18 +367,19 @@ export type EquipmentAccountingAssetCreateOrUpdateAttrs =
   | SignalCreateOrUpdateAttrs
   | CableLogCreateOrUpdateAttrs
   | ImpulseLineLogCreateOrUpdateAttrs
-  | MonitoringCreateOrUpdateAttrs;
+  | MonitoringCreateOrUpdateAttrs
+  | SummaryListOfEquipmentFormData;
 
 export interface SummaryListOfEquipmentCreateOrUpdateFiles {
-  questionare?: Express.Multer.File[];
-  wiringDiagram?: Express.Multer.File[];
-  document?: Express.Multer.File[];
-  verificationProcedure?: Express.Multer.File[];
-  typeApprovalCertificate?: Express.Multer.File[];
-  functionalDiagram?: Express.Multer.File[];
-  mountDocument?: Express.Multer.File[];
-  connectDocument?: Express.Multer.File[];
-  testDocument?: Express.Multer.File[];
-  awpDocument?: Express.Multer.File[];
-  commisionDocument?: Express.Multer.File[];
+  questionare?: File;
+  wiringDiagram?: File;
+  document?: File;
+  verificationProcedure?: File;
+  typeApprovalCertificate?: File;
+  functionalDiagram?: File;
+  mountDocument?: File;
+  connectDocument?: File;
+  testDocument?: File;
+  awpDocument?: File;
+  commisionDocument?: File;
 }
