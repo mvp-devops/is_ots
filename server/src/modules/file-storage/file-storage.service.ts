@@ -376,6 +376,7 @@ export class FileStorageService {
           break;
         }
         case "cable-log": {
+          document.cableLogId = parrentId;
           const pathToFile = `${parrentFolderPath}\\Оборудование\\С5`;
           document.filePath = pathToFile;
           document.fileName = await this.fileUpload(pathToFile, file);

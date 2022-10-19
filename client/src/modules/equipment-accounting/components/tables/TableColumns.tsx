@@ -431,97 +431,215 @@ const TableColumns = (
     return render;
   };
 
-  // const monitoringDocumentsViewMenuItem = {
-  //   label: (
-  //     <Space className="text-secondary">
-  //       <SearchOutlined
-  //         style={{ marginBottom: "6px", padding: 0 }}
-  //         className="text-primary"
-  //       />
-  //       Документы
-  //     </Space>
-  //   ),
+  const monitoringDocumentsViewMenuItem = (record: MonitoringView) => {
+    const children: MenuItemType[] = [];
 
-  //   key: "MONITORING_DOCUMENTS_VIEW",
-  //   children: [
-  //     {
-  //       label: (
-  //         <Space className="text-secondary">
-  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-  //             <SearchOutlined
-  //               style={{
-  //                 marginRight: "6px",
+    const functionalDiagramView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.functionalDiagram
+                ? setFilePath(
+                    `${record.functionalDiagram.filePath}/${record.functionalDiagram.fileName}`
+                  )
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Схема P&ID"
+            />
+            <Text type="secondary">Схема P&ID</Text>
+          </a>
+        </Space>
+      ),
+      key: "LIST_OF_INSTALLED_EQUIPMENT_VIEW",
+    };
 
-  //                 padding: 0,
-  //               }}
-  //               className="text-primary"
-  //             />
-  //             <Text type="secondary">
-  //               Ведомость смонтированного оборудования
-  //             </Text>
-  //           </Link>
-  //         </Space>
-  //       ),
-  //       key: "LIST_OF_INSTALLED_EQUIPMENT_VIEW",
-  //     },
-  //     {
-  //       label: (
-  //         <Space className="text-secondary">
-  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-  //             <SearchOutlined
-  //               style={{ marginRight: "6px", padding: 0 }}
-  //               className="text-primary"
-  //             />
-  //             <Text type="secondary">Акт о подключении</Text>
-  //           </Link>
-  //         </Space>
-  //       ),
-  //       key: "CONNECTION_ACT_VIEW",
-  //     },
-  //     {
-  //       label: (
-  //         <Space className="text-secondary">
-  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-  //             <SearchOutlined
-  //               style={{ marginRight: "6px", padding: 0 }}
-  //               className="text-primary"
-  //             />
-  //             <Text type="secondary">Акт об окончии ПНР</Text>
-  //           </Link>
-  //         </Space>
-  //       ),
-  //       key: "ACT_OF_COMPLETION_OOF_THE_COMMISION_WORS_VIEW",
-  //     },
-  //     {
-  //       label: (
-  //         <Space className="text-secondary">
-  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-  //             <SearchOutlined
-  //               style={{ marginRight: "6px", padding: 0 }}
-  //               className="text-primary"
-  //             />
-  //             <Text type="secondary">Протокол проверки сигналов</Text>
-  //           </Link>
-  //         </Space>
-  //       ),
-  //       key: "SIGNAL_TEST_PROTOCOL_VIEW",
-  //     },
-  //     {
-  //       label: (
-  //         <Space className="text-secondary">
-  //           <Link to="#" target="_blank" style={{ textDecoration: "none" }}>
-  //             <SearchOutlined
-  //               style={{ marginRight: "6px", padding: 0 }}
-  //               className="text-primary"
-  //             />
-  //             <Text type="secondary">Акт ввода в эксплуатацию</Text>
-  //           </Link>
-  //         </Space>
-  //       ),
-  //       key: "COMMISIONING_ACT_VIEW",
-  //     },
-  //   ],
-  // };
+    const mountDocumentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.mountDocument
+                ? setFilePath(record.mountDocument)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Ведомость смонтированного оборудования"
+            />
+            <Text type="secondary">Ведомость смонтированного оборудования</Text>
+          </a>
+        </Space>
+      ),
+      key: "LIST_OF_INSTALLED_EQUIPMENT_VIEW",
+    };
+
+    const connectDocumentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.connectDocument
+                ? setFilePath(record.connectDocument)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Акт о подключении"
+            />
+            <Text type="secondary">Акт о подключении</Text>
+          </a>
+        </Space>
+      ),
+      key: "CONNECTION_ACT_VIEW",
+    };
+
+    const testDocumentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.testDocument
+                ? setFilePath(record.testDocument)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Протокол проведения индивидуальных испытаний"
+            />
+            <Text type="secondary">
+              Протокол проведения индивидуальных испытаний
+            </Text>
+          </a>
+        </Space>
+      ),
+      key: "ACT_OF_COMPLETION_OF_THE_COMMISION_WORS_VIEW",
+    };
+
+    const awpDocumentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.awpDocument
+                ? setFilePath(record.awpDocument)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Протокол проверки сигналов"
+            />
+            <Text type="secondary">Протокол проверки сигналов</Text>
+          </a>
+        </Space>
+      ),
+      key: "SIGNAL_TEST_PROTOCOL_VIEW",
+    };
+
+    const commisionDocumentView = {
+      label: (
+        <Space className="text-secondary">
+          <a
+            href={
+              record && record.commisionDocument
+                ? setFilePath(record.commisionDocument)
+                : "#"
+            }
+            target="_blank"
+            rel="noreferrer"
+            style={{ textDecoration: "none" }}
+          >
+            <FileSearchOutlined
+              className="text-primary"
+              style={{ marginBottom: 12, marginRight: 10 }}
+              title="Акт ввода в эксплуатацию"
+            />
+            <Text type="secondary">Акт ввода в эксплуатацию</Text>
+          </a>
+        </Space>
+      ),
+      key: "COMMISIONING_ACT_VIEW",
+    };
+
+    if (record && record.functionalDiagram) {
+      children.push(functionalDiagramView);
+    }
+
+    if (record && record.mountDate && record.mountDocument) {
+      children.push(mountDocumentView);
+    }
+
+    if (record && record.connectDate && record.connectDocument) {
+      children.push(connectDocumentView);
+    }
+
+    if (record && record.testDate && record.testDocument) {
+      children.push(testDocumentView);
+    }
+
+    if (record && record.awpDate && record.awpDocument) {
+      children.push(awpDocumentView);
+    }
+    if (record && record.commisionDate && record.commisionDocument) {
+      children.push(commisionDocumentView);
+    }
+
+    const render =
+      record &&
+      (record.functionalDiagram ||
+        record.mountDocument ||
+        record.connectDocument ||
+        record.testDocument ||
+        record.awpDocument ||
+        record.commisionDocument)
+        ? {
+            label: (
+              <Space className="text-secondary">
+                <SearchOutlined
+                  style={{ marginBottom: "6px", padding: 0 }}
+                  className="text-primary"
+                />
+                Документы
+              </Space>
+            ),
+
+            key: "MONITORING_DOCUMENTS_VIEW",
+            children,
+          }
+        : {
+            label: "",
+            key: "",
+          };
+
+    return render;
+  };
 
   const numberColumn: ColumnType<Views> = {
     title: "№ п/п",
@@ -1611,7 +1729,17 @@ const TableColumns = (
       columns.push(commisionDateColumn);
       columns.push(actionsColumn);
 
-      // menuItems.push(monitoringDocumentsViewMenuItem);
+      currentRow &&
+        ((currentRow as MonitoringView).functionalDiagram ||
+          (currentRow as MonitoringView).mountDocument ||
+          (currentRow as MonitoringView).connectDocument ||
+          (currentRow as MonitoringView).testDocument ||
+          (currentRow as MonitoringView).awpDocument ||
+          (currentRow as MonitoringView).commisionDocument) &&
+        menuItems.push(
+          monitoringDocumentsViewMenuItem(currentRow as MonitoringView)
+        );
+
       menuItems.push(editAssetMenuItem);
       menuItems.push(deleteAssetMenuItem);
 

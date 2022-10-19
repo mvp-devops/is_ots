@@ -450,12 +450,24 @@ export class EquipmentAccountingService {
       let item = await this.findOneCableLogAsset(+id);
 
       if (wiringDiagram) {
-        await this.fileService.createDesignDocument(
-          id.toString(),
-          "cable-log",
-          parrentFolderPath,
-          wiringDiagram
-        );
+        if (!item.wiringDiagram) {
+          await this.fileService.createDesignDocument(
+            id.toString(),
+            "cable-log",
+            parrentFolderPath,
+            wiringDiagram
+          );
+        } else {
+          await this.fileService.deleteDesignDocument(
+            item.wiringDiagram.id.toString()
+          );
+          await this.fileService.createDesignDocument(
+            id.toString(),
+            "cable-log",
+            parrentFolderPath,
+            wiringDiagram
+          );
+        }
       }
       await this.cableLogRepository.update(dto, { where: { id } });
       item = await this.findOneCableLogAsset(+id);
@@ -2066,7 +2078,7 @@ export class EquipmentAccountingService {
           metrology: await this.findOneMetrologyAsset(undefined, id),
           cableLog: await this.findAllCableLogAssets(id),
           impulseLineLog: await this.findAllImpulseLineLogAssets(id),
-          imonitoring: await this.findOneMonitoringAsset(undefined, id),
+          monitoring: await this.findOneMonitoringAsset(undefined, id),
         };
 
         items.push(item);
