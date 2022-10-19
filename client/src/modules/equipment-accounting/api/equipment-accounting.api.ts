@@ -251,7 +251,7 @@ const setImpulseLineLogFormData = (
   return data;
 };
 
-const setmonitoringFormData = (
+const setMonitoringFormData = (
   item: MonitoringCreateOrUpdateAttrs
 ): FormData => {
   const data = new FormData();
@@ -298,7 +298,7 @@ const setFormData = (
     monitoring,
   } = item as SummaryListOfEquipmentFormData;
 
-  data.append("generalInformation", JSON.stringify(generalInformation)); //TODO: grdfgdg
+  data.append("generalInformation", JSON.stringify(generalInformation));
 
   data.append("metrology", JSON.stringify(metrology));
 

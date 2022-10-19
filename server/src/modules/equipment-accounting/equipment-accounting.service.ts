@@ -657,25 +657,42 @@ export class EquipmentAccountingService {
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
-      const { id } = await this.metrologyRepository.create(dto);
+      let documentPath = "",
+        verificationProcedurePath = "",
+        typeApprovalCertificatePath = "";
 
       if (document) {
-        this.fileService.fileUpload(`${parrentFolderPath}/metrology`, document);
+        const documentName = this.fileService.fileUpload(
+          `${parrentFolderPath}/metrology`,
+          document
+        );
+        documentPath = `${parrentFolderPath}/metrology}/${documentName}`;
       }
 
       if (verificationProcedure) {
-        this.fileService.fileUpload(
+        const documentName = this.fileService.fileUpload(
           `${parrentFolderPath}/metrology`,
           verificationProcedure
         );
+
+        verificationProcedurePath = `${parrentFolderPath}/metrology}/${documentName}`;
       }
 
       if (typeApprovalCertificate) {
-        this.fileService.fileUpload(
+        const documentName = this.fileService.fileUpload(
           `${parrentFolderPath}/metrology`,
           typeApprovalCertificate
         );
+        typeApprovalCertificatePath = `${parrentFolderPath}/metrology}/${documentName}`;
       }
+
+      const { id } = await this.metrologyRepository.create({
+        ...dto,
+        document: documentPath,
+        verificationProcedure: verificationProcedurePath,
+        typeApprovalCertificate: typeApprovalCertificatePath,
+      });
+
       const item = await this.findOneMetrologyAsset(id);
       return item;
     } catch (e: any) {
@@ -862,58 +879,70 @@ export class EquipmentAccountingService {
     try {
       let item = await this.findOneMetrologyAsset(+id);
 
+      let documentPath = item.document,
+        verificationProcedurePath = item.verificationProcedure,
+        typeApprovalCertificatePath = item.typeApprovalCertificate;
+
       if (document) {
         if (!item.document) {
-          this.fileService.fileUpload(
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             document
           );
+          documentPath = `${parrentFolderPath}/metrology}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/metrology/${item.document}`
-          );
-          this.fileService.fileUpload(
+          this.fileService.removeDirectoryOrFile(item.document);
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             document
           );
+          documentPath = `${parrentFolderPath}/metrology}/${documentName}`;
         }
       }
 
       if (verificationProcedure) {
         if (!item.verificationProcedure) {
-          this.fileService.fileUpload(
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             verificationProcedure
           );
+          verificationProcedurePath = `${parrentFolderPath}/metrology}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/metrology/${item.verificationProcedure}`
-          );
-          this.fileService.fileUpload(
+          this.fileService.removeDirectoryOrFile(item.verificationProcedure);
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             verificationProcedure
           );
+          verificationProcedurePath = `${parrentFolderPath}/metrology}/${documentName}`;
         }
       }
 
       if (typeApprovalCertificate) {
         if (!item.typeApprovalCertificate) {
-          this.fileService.fileUpload(
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             typeApprovalCertificate
           );
+          typeApprovalCertificatePath = `${parrentFolderPath}/metrology}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/metrology/${item.typeApprovalCertificate}`
-          );
-          this.fileService.fileUpload(
+          this.fileService.removeDirectoryOrFile(item.typeApprovalCertificate);
+          const documentName = this.fileService.fileUpload(
             `${parrentFolderPath}/metrology`,
             typeApprovalCertificate
           );
+          typeApprovalCertificatePath = `${parrentFolderPath}/metrology}/${documentName}`;
         }
       }
 
-      await this.metrologyRepository.update(dto, { where: { id } });
+      await this.metrologyRepository.update(
+        {
+          ...dto,
+          document: documentPath,
+          verificationProcedure: verificationProcedurePath,
+          typeApprovalCertificate: typeApprovalCertificatePath,
+        },
+        { where: { id } }
+      );
       item = await this.findOneMetrologyAsset(+id);
 
       return item;
@@ -930,21 +959,15 @@ export class EquipmentAccountingService {
       const item = await this.findOneMetrologyAsset(id);
       await this.metrologyRepository.destroy({ where: { id } });
       if (item.document) {
-        this.fileService.removeDirectoryOrFile(
-          `${parrentFolderPath}/metrology/${item.document}`
-        );
+        this.fileService.removeDirectoryOrFile(item.document);
       }
 
       if (item.verificationProcedure) {
-        this.fileService.removeDirectoryOrFile(
-          `${parrentFolderPath}/metrology/${item.verificationProcedure}`
-        );
+        this.fileService.removeDirectoryOrFile(item.verificationProcedure);
       }
 
       if (item.typeApprovalCertificate) {
-        this.fileService.removeDirectoryOrFile(
-          `${parrentFolderPath}/metrology/${item.typeApprovalCertificate}`
-        );
+        this.fileService.removeDirectoryOrFile(item.typeApprovalCertificate);
       }
 
       return item;
@@ -1105,8 +1128,64 @@ export class EquipmentAccountingService {
     parrentFolderPath?: string
   ): Promise<MonitoringView> => {
     try {
-      const { id } = await this.monitoringRepository.create(dto);
-      const item = await this.findOneMonitoringAsset(id);
+      let mountDocumentPath = "",
+        connectDocumentPath = "",
+        testDocumentPath = "",
+        awpDocumentPath = "",
+        commisionDocumentPath = "";
+
+      const docPath = `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`;
+
+      if (mountDocument) {
+        const documentName = this.fileService.fileUpload(
+          docPath,
+          mountDocument
+        );
+        mountDocumentPath = `${docPath}/${documentName}`;
+      }
+
+      if (connectDocument) {
+        const documentName = this.fileService.fileUpload(
+          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          connectDocument
+        );
+
+        connectDocumentPath = `${docPath}/${documentName}`;
+      }
+
+      if (testDocument) {
+        const documentName = this.fileService.fileUpload(
+          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          testDocument
+        );
+        testDocumentPath = `${docPath}/${documentName}`;
+      }
+
+      if (awpDocument) {
+        const documentName = this.fileService.fileUpload(
+          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          awpDocument
+        );
+        awpDocumentPath = `${docPath}/${documentName}`;
+      }
+
+      if (commisionDocument) {
+        const documentName = this.fileService.fileUpload(
+          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          commisionDocument
+        );
+
+        commisionDocumentPath = `${docPath}/${documentName}`;
+      }
+
+      const { id } = await this.monitoringRepository.create({
+        ...dto,
+        mountDocument: mountDocumentPath,
+        connectDocument: connectDocumentPath,
+        testDocument: testDocumentPath,
+        awpDocument: awpDocumentPath,
+        commisionDocument: commisionDocumentPath,
+      });
 
       if (functionalDiagram) {
         await this.fileService.createDesignDocument(
@@ -1117,40 +1196,7 @@ export class EquipmentAccountingService {
         );
       }
 
-      if (mountDocument) {
-        this.fileService.fileUpload(
-          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
-          mountDocument
-        );
-      }
-
-      if (connectDocument) {
-        this.fileService.fileUpload(
-          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
-          connectDocument
-        );
-      }
-
-      if (testDocument) {
-        this.fileService.fileUpload(
-          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
-          testDocument
-        );
-      }
-
-      if (awpDocument) {
-        this.fileService.fileUpload(
-          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
-          awpDocument
-        );
-      }
-
-      if (commisionDocument) {
-        this.fileService.fileUpload(
-          `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
-          commisionDocument
-        );
-      }
+      const item = await this.findOneMonitoringAsset(id);
 
       return item;
     } catch (e: any) {
@@ -1330,100 +1376,131 @@ export class EquipmentAccountingService {
     try {
       let item = await this.findOneMonitoringAsset(+id);
 
+      let mountDocumentPath = item.mountDocument,
+        connectDocumentPath = item.connectDocument,
+        testDocumentPath = item.testDocument,
+        awpDocumentPath = item.awpDocument,
+        commisionDocumentPath = item.commisionDocument;
+
+      const docPath = `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`;
+
       if (functionalDiagram) {
-        await this.fileService.createDesignDocument(
-          id.toString(),
-          "monitoring",
-          parrentFolderPath,
-          functionalDiagram
-        );
+        if (!item.functionalDiagram) {
+          await this.fileService.createDesignDocument(
+            id.toString(),
+            "monitoring",
+            parrentFolderPath,
+            functionalDiagram
+          );
+        } else {
+          await this.fileService.deleteDesignDocument(
+            item.functionalDiagram.id.toString()
+          );
+
+          await this.fileService.createDesignDocument(
+            id.toString(),
+            "monitoring",
+            parrentFolderPath,
+            functionalDiagram
+          );
+        }
       }
 
       if (mountDocument) {
         if (!item.mountDocument) {
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          const documentName = this.fileService.fileUpload(
+            docPath,
             mountDocument
           );
+          mountDocumentPath = `${docPath}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР/${item.mountDocument}`
-          );
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          this.fileService.removeDirectoryOrFile(item.mountDocument);
+          const documentName = this.fileService.fileUpload(
+            docPath,
             mountDocument
           );
+          mountDocumentPath = `${docPath}/${documentName}`;
         }
       }
 
       if (connectDocument) {
         if (!item.connectDocument) {
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          const documentName = this.fileService.fileUpload(
+            docPath,
             connectDocument
           );
+          connectDocumentPath = `${docPath}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР/${item.connectDocument}`
-          );
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          this.fileService.removeDirectoryOrFile(item.connectDocument);
+          const documentName = this.fileService.fileUpload(
+            docPath,
             connectDocument
           );
+          connectDocumentPath = `${docPath}/${documentName}`;
         }
       }
 
       if (testDocument) {
         if (!item.testDocument) {
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          const documentName = this.fileService.fileUpload(
+            docPath,
             testDocument
           );
+          testDocumentPath = `${docPath}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР/${item.testDocument}`
-          );
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          this.fileService.removeDirectoryOrFile(item.testDocument);
+          const documentName = this.fileService.fileUpload(
+            docPath,
             testDocument
           );
+          testDocumentPath = `${docPath}/${documentName}`;
         }
       }
 
       if (awpDocument) {
         if (!item.awpDocument) {
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          const documentName = this.fileService.fileUpload(
+            docPath,
             awpDocument
           );
+          awpDocumentPath = `${docPath}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР/${item.awpDocument}`
-          );
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          this.fileService.removeDirectoryOrFile(item.awpDocument);
+          const documentName = this.fileService.fileUpload(
+            docPath,
             awpDocument
           );
+          awpDocumentPath = `${docPath}/${documentName}`;
         }
       }
 
       if (commisionDocument) {
         if (!item.commisionDocument) {
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          const documentName = this.fileService.fileUpload(
+            docPath,
             commisionDocument
           );
+          commisionDocumentPath = `${docPath}/${documentName}`;
         } else {
-          this.fileService.removeDirectoryOrFile(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР/${item.commisionDocument}`
-          );
-          this.fileService.fileUpload(
-            `${parrentFolderPath}/001. Иная документация/Мониторинг СМР`,
+          this.fileService.removeDirectoryOrFile(item.commisionDocument);
+          const documentName = this.fileService.fileUpload(
+            docPath,
             commisionDocument
           );
+          commisionDocumentPath = `${docPath}/${documentName}`;
         }
       }
-      await this.monitoringRepository.update(dto, { where: { id } });
+      await this.monitoringRepository.update(
+        {
+          ...dto,
+          mountDocument: mountDocumentPath,
+          connectDocument: connectDocumentPath,
+          testDocument: testDocumentPath,
+          awpDocument: awpDocumentPath,
+          commisionDocument: commisionDocumentPath,
+        },
+        { where: { id } }
+      );
       item = await this.findOneMonitoringAsset(+id);
 
       return item;

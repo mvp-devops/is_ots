@@ -2,6 +2,7 @@ import {
   DesignDocumentCreateOrUpdateAttrs,
   LogoCreationAttrs,
   NormativeCreateOrUpdateAttrs,
+  OperationalDocumentCreateOrUpdateAttrs,
 } from "../../../../common/types/file-storage";
 
 import { ApiProperty } from "@nestjs/swagger";
@@ -190,6 +191,98 @@ export class CreateNormativeDto implements NormativeCreateOrUpdateAttrs {
     description: "№ ревизии",
   })
   readonly revision: string;
+
+  @ApiProperty({
+    example: "Путь к файлу",
+    description: "Путь к файлу",
+  })
+  readonly filePath: string;
+
+  @ApiProperty({
+    example: "Тип файла",
+    description: "Тип файла",
+  })
+  readonly fileType: string;
+
+  @ApiProperty({
+    example: "00dd3128-3332-4ff1-b108-75d739291a0d.png",
+    description: "Путь к файлу",
+  })
+  readonly fileName: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  readonly description: string;
+}
+
+export class CreateOperationalDocumentDto
+  implements OperationalDocumentCreateOrUpdateAttrs
+{
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор единицы оборудования",
+  })
+  readonly sloeId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор документа со сведениями о поверке",
+  })
+  readonly metrologyDocumentId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор методики поверки",
+  })
+  readonly verificationProcedureId: number;
+
+  @ApiProperty({
+    example: "1",
+    description:
+      "Уникальный идентификатор свидетельства об утверждении типа СИ",
+  })
+  readonly typeApprovalCertificateId: number;
+
+  @ApiProperty({
+    example: "1",
+    description:
+      "Уникальный идентификатор ведомости смонтированного оборудования",
+  })
+  readonly mountDocumentId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор акта о подключении оборудования",
+  })
+  readonly connectDocumentId: number;
+
+  @ApiProperty({
+    example: "1",
+    description:
+      "Уникальный идентификатор протокола проведения индивидуальных испытаний",
+  })
+  readonly testDocumentId: number;
+
+  @ApiProperty({
+    example: "1",
+    description:
+      "Уникальный идентификатор протокола проверки прохождения сигналов на АРМ оператора",
+  })
+  readonly awpDocumentId: number;
+
+  @ApiProperty({
+    example: "1",
+    description: "Уникальный идентификатор акта ввода в эксплуатацию",
+  })
+  readonly commisionDocumentId: number;
+
+  @ApiProperty({
+    example: "Наименование документа",
+    description: "Наименование документа",
+  })
+  readonly title: string;
 
   @ApiProperty({
     example: "Путь к файлу",

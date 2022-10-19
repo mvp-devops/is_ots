@@ -32,6 +32,42 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   file: any;
 }
 
+export interface OperationalDocumentCreateOrUpdateAttrs {
+  sloeId: string | number | null;
+  metrologyDocumentId: string | number | null;
+  verificationProcedureId: string | number | null;
+  typeApprovalCertificateId: string | number | null;
+  mountDocumentId: string | number | null;
+  connectDocumentId: string | number | null;
+  testDocumentId: string | number | null;
+  awpDocumentId: string | number | null;
+  commisionDocumentId: string | number | null;
+  title: string;
+  description: string;
+  filePath: string;
+  fileName: string;
+  fileType: string;
+  file?: any;
+}
+
+export interface OperationalDocumentView {
+  sloeId: string | number | null;
+  metrologyDocumentId: string | number | null;
+  verificationProcedureId: string | number | null;
+  typeApprovalCertificateId: string | number | null;
+  mountDocumentId: string | number | null;
+  connectDocumentId: string | number | null;
+  testDocumentId: string | number | null;
+  awpDocumentId: string | number | null;
+  commisionDocumentId: string | number | null;
+  title: string;
+  description: string;
+  filePath: string;
+  fileName: string;
+  fileType: string;
+  file: any;
+}
+
 export interface NormativeCreateOrUpdateAttrs {
   code: string;
   title: string;
