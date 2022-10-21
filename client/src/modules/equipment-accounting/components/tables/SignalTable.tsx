@@ -1,7 +1,7 @@
 import { Input, Space, Table, Typography } from "antd";
 import { ModalContainer } from "../../../../components";
 
-import { SignalView } from "../../types";
+import { SignalView, Views } from "../../types";
 import { SignalForm } from "../forms";
 import { TableColumns, useSignalTable } from ".";
 import { tableLocale } from "../../../main";
@@ -20,16 +20,16 @@ const SignalTable = () => {
     setCurrentRow,
   } = useSignalTable();
 
-  const summary = () => (
+  const summary = (data: readonly Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
       <Cell index={0} colSpan={4} align="right">
         <Text strong>Количество:</Text>
       </Cell>
       <Cell index={1} align="center">
-        <Text strong>{dataSource.length}</Text>
+        <Text strong>{data.length}</Text>
       </Cell>
       <Cell index={2} align="center">
-        <Text strong>{dataSource.length}</Text>
+        <Text strong>{data.length}</Text>
       </Cell>
       <Cell index={3} colSpan={7} />
     </Row>
@@ -82,7 +82,7 @@ const SignalTable = () => {
           };
         }}
         rowKey={(record) => record.id as string}
-        summary={() => summary()}
+        summary={(data) => summary(data)}
       />
       {renderForm}
     </>

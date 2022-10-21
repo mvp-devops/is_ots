@@ -19,19 +19,26 @@ export const useSignalTable = () => {
 
   useEffect(() => {
     setDataSource(
-      (renderDataSource as SignalView[]).filter(
+      (renderDataSource as SignalView[])?.filter(
         (item) =>
-          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.signalType.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.signalProtocol
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.signalTag.includes(searchValue.toUpperCase()) ||
-          item.emergencyProtocol
-            .toUpperCase()
-            .includes(searchValue.toUpperCase())
+          item.unit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item.subUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item.tag?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item.signalType
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.signalProtocol
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.signalTag
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.signalParameter
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.emergencyProtocol
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase())
       )
     );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -22,29 +22,33 @@ export const useMetrologyTable = () => {
     setDataSource(
       (renderDataSource as MetrologyView[]).filter(
         (item) =>
-          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.sgroei.includes(searchValue.toUpperCase()) ||
-          item.measurementArea
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.meansurementType
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.meansureGroup
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.grsi.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.documentType.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.documentNumber
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.counterparty.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.fromDate.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.toDate.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.status.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.mpi.toUpperCase().includes(searchValue.toUpperCase())
+          item?.unit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.subUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.sgroei?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.measurementArea
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.meansurementType
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.meansureGroup
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.grsi?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.documentType
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.documentNumber
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.counterparty
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.fromDate?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.toDate?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.status?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.mpi?.toUpperCase()?.includes(searchValue?.toUpperCase())
       )
     );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

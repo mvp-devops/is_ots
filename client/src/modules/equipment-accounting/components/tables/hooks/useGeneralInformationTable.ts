@@ -22,29 +22,31 @@ export const useGeneralInformationTable = () => {
     setDataSource(
       (renderDataSource as GeneralInformationView[]).filter(
         (item) =>
-          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.installationLocation
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.facility.equipmentType
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.systemType.includes(searchValue.toUpperCase()) ||
-          item.facility.country
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.facility.vendor
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.facility.title
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.facilityModification
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.specification.toUpperCase().includes(searchValue.toUpperCase())
+          item?.unit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.subUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.installationLocation
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.facility?.equipmentType
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.systemType?.includes(searchValue?.toUpperCase()) ||
+          item?.facility?.country
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.facility?.vendor
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.facility?.title
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.facilityModification
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.specification
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase())
       )
     );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

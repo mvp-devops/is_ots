@@ -114,7 +114,7 @@ export class EquipmentAccountingService {
   ): Promise<FacilityView[]> => {
     const items: FacilityView[] = [];
     for (let i = 0; i < dto.length; i++) {
-      const item = await this.createNewFacilityAsset(dto[i]);
+      const item = await this.facilityRepository.create(dto[i]);
       items.push(item);
     }
     return items;
@@ -1053,6 +1053,7 @@ export class EquipmentAccountingService {
   };
 
   findAllSignalAssets = async (
+    sloeId?: number,
     signalType?: string,
     signalProtocol?: string,
     unitId?: string,
@@ -1061,7 +1062,7 @@ export class EquipmentAccountingService {
     try {
       let items: SignalView[] = [];
       const data = await this.signalRepository.findAll({
-        where: { signalType, signalProtocol },
+        where: { sloeId },
         include: [
           {
             model: SummaryListOfEquipmentEntity,
@@ -1756,7 +1757,7 @@ export class EquipmentAccountingService {
           : facility.id,
       });
 
-      if (files.questionare) {
+      if (files?.questionare) {
         await this.fileService.createDesignDocument(
           id.toString(),
           "summary-list-of-equipment",
@@ -1768,9 +1769,9 @@ export class EquipmentAccountingService {
       if (metrology) {
         await this.createNewMetrologyAsset(
           { ...metrology, sloeId: id },
-          files.document[0],
-          files.verificationProcedure[0],
-          files.typeApprovalCertificate[0],
+          files?.document[0],
+          files?.verificationProcedure[0],
+          files?.typeApprovalCertificate[0],
           parrentFolderPath
         );
       }
@@ -1781,7 +1782,7 @@ export class EquipmentAccountingService {
 
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
-            files.wiringDiagram[0],
+            files?.wiringDiagram[0],
             parrentFolderPath
           );
         }
@@ -1804,12 +1805,12 @@ export class EquipmentAccountingService {
       if (monitoring) {
         await this.createNewMonitoringAsset(
           { ...monitoring, sloeId: id },
-          files.functionalDiagram[0],
-          files.mountDocument[0],
-          files.connectDocument[0],
-          files.testDocument[0],
-          files.awpDocument[0],
-          files.commisionDocument[0],
+          files?.functionalDiagram[0],
+          files?.mountDocument[0],
+          files?.connectDocument[0],
+          files?.testDocument[0],
+          files?.awpDocument[0],
+          files?.commisionDocument[0],
           parrentFolderPath
         );
       }
@@ -2082,6 +2083,7 @@ export class EquipmentAccountingService {
           specification,
           description,
           facility: await this.findOneFacilityAsset(facilityId),
+          signals: await this.findAllSignalAssets(id),
           metrology: await this.findOneMetrologyAsset(undefined, id),
           cableLog: await this.findAllCableLogAssets(id),
           impulseLineLog: await this.findAllImpulseLineLogAssets(id),

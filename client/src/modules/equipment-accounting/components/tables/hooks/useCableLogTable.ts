@@ -23,18 +23,24 @@ export const useCableLogTable = () => {
     setDataSource(
       (renderDataSource as CableLogView[]).filter(
         (item) =>
-          item.unit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.subUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.tag.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.numberOfTrace
-            .toUpperCase()
-            .includes(searchValue.toUpperCase()) ||
-          item.cableMark.includes(searchValue.toUpperCase()) ||
-          item.cableSection.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.fromUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.fromPlace.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.toUnit.toUpperCase().includes(searchValue.toUpperCase()) ||
-          item.toPlace.toUpperCase().includes(searchValue.toUpperCase())
+          item?.unit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.subUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.numberOfTrace
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.cableMark
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.cableSection
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.fromUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.fromPlace
+            ?.toUpperCase()
+            ?.includes(searchValue?.toUpperCase()) ||
+          item?.toUnit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
+          item?.toPlace?.toUpperCase()?.includes(searchValue?.toUpperCase())
       )
     );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

@@ -102,7 +102,7 @@ const TableColumns = (
       >
         <DeleteOutlined
           style={{ marginBottom: "6px", padding: 0 }}
-          className="text-secondary"
+          className="text-danger"
         />
         Удалить
       </Space>
@@ -1275,13 +1275,21 @@ const TableColumns = (
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
+  const signalParameterColumn: ColumnType<Views> = {
+    title: "Параметр",
+    dataIndex: "signalParameter",
+    key: "signalParameter",
+    align: "center",
+    render: (value) => <Text type="secondary">{value}</Text>,
+  };
+
   const hColumn: ColumnType<Views> = {
     title: "H",
     dataIndex: "h",
     key: "h",
     align: "center",
     width: 80,
-    render: (value) => <Text type="warning">{+value}</Text>,
+    render: (value) => <Text type="danger">{value}</Text>,
   };
 
   const lColumn: ColumnType<Views> = {
@@ -1290,7 +1298,7 @@ const TableColumns = (
     key: "l",
     align: "center",
     width: 80,
-    render: (value) => <Text type="warning">{+value}</Text>,
+    render: (value) => <Text type="warning">{value}</Text>,
   };
 
   const llColumn: ColumnType<Views> = {
@@ -1299,7 +1307,7 @@ const TableColumns = (
     key: "ll",
     align: "center",
     width: 80,
-    render: (value) => <Text type="danger">{+value}</Text>,
+    render: (value) => <Text type="warning">{value}</Text>,
   };
 
   const hhColumn: ColumnType<Views> = {
@@ -1308,7 +1316,7 @@ const TableColumns = (
     key: "hh",
     align: "center",
     width: 80,
-    render: (value) => <Text type="danger">{+value}</Text>,
+    render: (value) => <Text type="danger">{value}</Text>,
   };
 
   const emergencyProtocolColumn: ColumnType<Views> = {
@@ -1653,6 +1661,7 @@ const TableColumns = (
       });
       columns.push(signalTypeColumn);
       columns.push(signalProtocolColumn);
+      columns.push(signalParameterColumn);
       columns.push(signalTagColumn);
       columns.push({
         title: "Уставки",
