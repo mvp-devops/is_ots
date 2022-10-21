@@ -36,6 +36,7 @@ import {
   updateOneMonitoringEssence,
   updateOneSignalEssence,
 } from "../api";
+import { notification } from "antd";
 
 export const getSummaryListOfEquipment = (
   parrentTarget: string,
@@ -117,10 +118,19 @@ export const createOneEquipment = (item: SummaryListOfEquipmentFormData) => {
         type: ActionTypes.POST_ONE_ITEM_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Единица оборудования успешно добавлена",
+      });
     } catch (error) {
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_ERROR,
         payload: "Ошибка добавления данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+        // description: "Ошибка добавления данных",
       });
     }
   };

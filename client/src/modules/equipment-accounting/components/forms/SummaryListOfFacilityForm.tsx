@@ -1,5 +1,8 @@
 import { Button, Divider, Space, Steps } from "antd";
 import { useEffect, useState } from "react";
+import { useActions } from "../../../..";
+import { setFormVisible } from "../../../main/store/main.action-creators";
+import { PositionTreeItem } from "../../../position-tree";
 import {
   CableLogCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
@@ -12,6 +15,7 @@ import {
 import CableLogForm from "./CableLogForm";
 import { summaryListOfEquipmentFormData } from "./form.settings";
 import GeneralInformationForm from "./GeneralInformationForm";
+import { useEquipmentAccountingForm } from "./hooks";
 import ImpulseLineLogForm from "./ImpulseLineLogForm";
 import MetrologyForm from "./MetrologyForm";
 import MonitoringForm from "./MonitoringForm";
@@ -24,6 +28,10 @@ const SummaryListOfFacilityForm = () => {
   const [data, setData] = useState<SummaryListOfEquipmentFormData>(
     summaryListOfEquipmentFormData
   );
+
+  const { currentItem, checkedItem, target } = useEquipmentAccountingForm();
+
+  const { createOneEquipment } = useActions();
 
   const setGeneralInformation = (
     generalInformation: GeneralInformationCreateOrUpdateAttrs
@@ -45,31 +53,94 @@ const SummaryListOfFacilityForm = () => {
   const setMetrology = (metrology: MetrologyCreateOrUpdateAttrs) =>
     setData({ ...data, metrology });
 
-  //   const setItems = (
-  //     target: string,
-  //     menuItems: PositionTreeItem[],
-  //     keys: string[]
-  //   ): PositionTreeItem[] => {
-  //     let items: PositionTreeItem[] = [];
+  const createNewAsset = () => {
+    createOneEquipment(data);
+    setFormVisible(false);
+  };
 
-  //     items =
-  //       target === "project"
-  //         ? menuItems
-  //             .filter((item) => item.id === keys[0])[0]
-  //             ?.children?.filter((item) => item.id === keys[1])[0]
-  //             ?.children?.filter((item) => item.id === keys[2])[0]?.children || []
-  //         : target === "unit"
-  //         ? menuItems
-  //             .filter((item) => item.id === keys[0])[0]
-  //             ?.children?.filter((item) => item.id === keys[1])[0]
-  //             ?.children?.filter((item) => item.id === keys[2])[0]
-  //             ?.children?.filter((item) => item.id === keys[3])[0].children || []
-  //         : [];
-
-  //     return items;
-  //   };
-
-  useEffect(() => console.log(data), [data]);
+  useEffect(() => {
+    if (currentItem && checkedItem) {
+      switch (target) {
+        case "field": {
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              projectId: checkedItem.id,
+            },
+          });
+          break;
+        }
+        case "project": {
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              projectId: currentItem.keys[2],
+            },
+          });
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              unitId: checkedItem.id,
+            },
+          });
+          break;
+        }
+        case "unit": {
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              projectId: currentItem.keys[2],
+            },
+          });
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              unitId: currentItem.keys[3],
+            },
+          });
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              subUnitId: checkedItem.id,
+            },
+          });
+          break;
+        }
+        case "sub-unit": {
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              projectId: currentItem.keys[2],
+            },
+          });
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              unitId: currentItem.keys[3],
+            },
+          });
+          setData({
+            ...data,
+            generalInformation: {
+              ...data.generalInformation,
+              subUnitId: currentItem.keys[4],
+            },
+          });
+          break;
+        }
+        default:
+          break;
+      }
+    }
+  }, [currentItem, checkedItem]);
 
   const steps = [
     {
@@ -144,8 +215,6 @@ const SummaryListOfFacilityForm = () => {
     setCurrent(current - 1);
   };
 
-  // useEffect(() => console.log(data), [data]);
-
   return (
     <>
       <Steps current={current} style={{ maxWidth: 1200 }} className="">
@@ -167,11 +236,7 @@ const SummaryListOfFacilityForm = () => {
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => console.log(data)}
-            //   onClick={() => createOneFacility(data)}
-          >
+          <Button type="primary" onClick={createNewAsset}>
             Добавить
           </Button>
         )}

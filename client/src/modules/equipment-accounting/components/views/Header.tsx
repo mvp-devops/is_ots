@@ -40,7 +40,7 @@ const Header = () => {
                     label: (
                       <Space
                         className="text-secondary"
-                        onSelect={(key) => console.log(key)}
+                        onSelect={(key) => console.log("ATLAS")}
                       >
                         <AppstoreOutlined
                           style={{ marginBottom: "6px", padding: 0 }}
@@ -56,7 +56,7 @@ const Header = () => {
                     label: (
                       <Space
                         className="text-secondary"
-                        onSelect={(key) => console.log(key)}
+                        onSelect={(key) => console.log("TORO")}
                       >
                         <AppstoreOutlined
                           style={{ marginBottom: "6px", padding: 0 }}
@@ -72,7 +72,7 @@ const Header = () => {
                     label: (
                       <Space
                         className="text-secondary"
-                        onSelect={(key) => console.log(key)}
+                        onSelect={(key) => console.log("EXCEL")}
                       >
                         <FileExcelOutlined
                           style={{ marginBottom: "6px", padding: 0 }}

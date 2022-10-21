@@ -47,7 +47,7 @@ export const useFileStorageTable = () => {
 
   useEffect(() => {
     setDataSource(
-      designDocuments.filter(
+      designDocuments?.filter(
         (item) =>
           item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
           item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||

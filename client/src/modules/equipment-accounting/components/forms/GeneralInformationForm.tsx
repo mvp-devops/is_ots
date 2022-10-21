@@ -9,7 +9,7 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode, useEffect, useState } from "react";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   GeneralInformationCreateOrUpdateAttrs,
@@ -57,7 +57,6 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     onModificationChange,
     setNewFacility,
     unitsList,
-    subUnitsList,
     updateGeneralInformationItem,
     deleteGeneralInformationItem,
   } = useGeneralInformationForm(row, data, setData);
@@ -91,7 +90,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 }
               />
             )}
-          {target !== "sub-unit" && (
+          {target !== "sub-unit" && editRow && (
             <FormItemUIComponent
               className="m-0"
               title="Установка/объект"
@@ -99,7 +98,11 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 <SelectUIComponent
                   defaultValue={editRow && (editRow.subUnitId as string)}
                   id="subUnitId"
-                  items={subUnitsList}
+                  items={
+                    unitsList.filter(
+                      (item) => item.id === editRow.unitId.toString()
+                    )[0]?.children || []
+                  }
                   changeValue={onChangeTargetId}
                 />
               }

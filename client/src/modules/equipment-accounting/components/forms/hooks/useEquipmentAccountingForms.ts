@@ -207,38 +207,6 @@ export const useEquipmentAccountingForm = (
       }
     }
   }, [currentItem, checkedItem, target]); // eslint-disable-line react-hooks/exhaustive-deps
-  useEffect(() => {
-    if (currentItem && checkedItem) {
-      switch (target) {
-        case "field": {
-          unitId
-            ? setSubUnitsList(
-                currentItem?.children
-                  ?.filter((item) => item.id === checkedItem?.id.toString())[0]
-                  ?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
-          break;
-        }
-        case "project": {
-          unitId
-            ? setUnitsList(
-                currentItem?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
-          break;
-        }
-        case "unit": {
-          setUnitsList([currentItem]);
-          break;
-        }
-        default:
-          break;
-      }
-    }
-  }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const { facilitiesList } = useTypedSelector(
     (state) => state.equipmentAccounting
@@ -279,6 +247,7 @@ export const useEquipmentAccountingForm = (
     vendorsList,
     counterpartiesList,
     onHandlerChange,
+    setSubUnitsList,
     addItem,
     removeItem,
     changeItems,

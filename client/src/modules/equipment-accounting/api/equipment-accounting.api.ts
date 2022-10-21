@@ -374,7 +374,6 @@ export const getAllMonitoring = (
 
   for (let i = 0; i < data.length; i++) {
     const { monitoring } = data[i];
-    console.log("MONITORING: ", monitoring);
     monitoring && res.push(monitoring);
   }
   return res;
@@ -524,7 +523,8 @@ export const createOneEssence = async (
   item: SummaryListOfEquipmentFormData
 ): Promise<SummaryListOfEquipmentView> => {
   const url = setUrl(equipmentAccountingUrl);
-  const { data } = await axios.post(url, item);
+  const uploadedData = setFormData(item);
+  const { data } = await axios.post(url, uploadedData);
   return data;
 };
 

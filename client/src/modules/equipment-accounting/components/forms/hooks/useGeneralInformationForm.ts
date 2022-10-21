@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { InputRef } from "antd";
 
 import {
@@ -8,6 +8,7 @@ import {
 
 import { generalInformationItem, useEquipmentAccountingForm } from "..";
 import { deleteOneEssence, updateOneEssence } from "../../../api";
+import { PositionTreeItem } from "../../../../position-tree";
 
 export const useGeneralInformationForm = (
   row?: GeneralInformationView,
@@ -86,7 +87,6 @@ export const useGeneralInformationForm = (
     data &&
       setData &&
       setData({ ...data, facility: { ...data.facility, modifications } });
-    editRow && console.log(editRow.facility);
   }, [modifications]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -116,11 +116,18 @@ export const useGeneralInformationForm = (
     unitsList,
     subUnitId,
     setSubUnitId,
-    subUnitsList,
+
     currentId,
+
     currentItem,
     target,
   } = useEquipmentAccountingForm(editRow, data, setData);
+
+  useEffect(() => {
+    setSubUnitsList(
+      unitsList.filter((item) => item.id === unitId)[0]?.children || []
+    );
+  }, [unitId]);
 
   const updateGeneralInformationItem = () => {
     editRow &&
@@ -134,38 +141,13 @@ export const useGeneralInformationForm = (
   };
 
   const deleteGeneralInformationItem = () => {
-    deleteOneEssence("general-information", editRow.id, currentItemFolderPath)
-      .then((data) => console.log(data))
-      .finally(() => setFormVisible(false));
+    deleteOneEssence(
+      "general-information",
+      editRow.id,
+      currentItemFolderPath
+    ).finally(() => setFormVisible(false));
   };
-
-  useEffect(() => {
-    switch (target) {
-      case "field": {
-        console.log("projectId: ", checkedItem.id);
-        break;
-      }
-      case "project": {
-        console.log("projectId: ", currentItem.keys[2]);
-        console.log("unitId: ", checkedItem.id);
-        break;
-      }
-      case "unit": {
-        console.log("projectId: ", currentItem.keys[2]);
-        console.log("unitId: ", currentItem.keys[3]);
-        console.log("subUnitId: ", checkedItem.id);
-        break;
-      }
-      case "sub-unit": {
-        console.log("projectId: ", currentItem.keys[2]);
-        console.log("unitId: ", currentItem.keys[3]);
-        console.log("subUnitId: ", currentItem.keys[4]);
-        break;
-      }
-      default:
-        break;
-    }
-  }, [checkedItem, target]);
+  const [subUnitsList, setSubUnitsList] = useState<PositionTreeItem[]>([]);
 
   return {
     actionType,
@@ -186,6 +168,7 @@ export const useGeneralInformationForm = (
     newFacility,
     setNewFacility,
     onHandlerChange,
+    setSubUnitsList,
     setModifications,
     newModification,
     setNewModification,

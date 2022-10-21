@@ -1745,6 +1745,8 @@ export class EquipmentAccountingService {
         signals,
       } = dto;
 
+      console.log("generalInformation: ", generalInformation);
+
       if (generalInformation && generalInformation.facility) {
         facility = await this.createNewFacilityAsset(
           generalInformation.facility

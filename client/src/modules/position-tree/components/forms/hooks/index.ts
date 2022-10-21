@@ -202,10 +202,6 @@ export const usePositionTreeForm = () => {
     }
   };
 
-  useEffect(() => {
-    console.log("posy: ", editRow);
-  }, [editRow]);
-
   return {
     // loading,
     // error,

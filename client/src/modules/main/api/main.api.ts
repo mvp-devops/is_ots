@@ -238,7 +238,6 @@ export const setFilePath = (filePath: string): string => {
 //   settings: CheckListSettings
 // ): Promise<ProjectCheckListView | null> => {
 //   const url = setUrl("api/check-list");
-//   console.log(url);
 //   try {
 //     const { data } = await axios.post<ProjectCheckListView>(url, settings, {
 //       params: { target, currentId },

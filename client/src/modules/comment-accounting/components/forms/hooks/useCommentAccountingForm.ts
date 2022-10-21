@@ -159,11 +159,8 @@ export const useCommentAccountingForm = () => {
   };
 
   const deleteItem = () => {
-    console.log(currentComment);
     currentComment && deleteComment(target, currentComment.id as string);
   };
-
-  useEffect(() => console.log(editRow), [editRow]);
 
   return {
     actionType,

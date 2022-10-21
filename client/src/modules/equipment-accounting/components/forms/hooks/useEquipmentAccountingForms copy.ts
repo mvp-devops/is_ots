@@ -199,8 +199,6 @@ export const useEquipmentAccountingForm = (
     }
   }, [unitsList, unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // useEffect(() => console.log("Data: ", data), [data]);
-
   return {
     currentId,
     target,

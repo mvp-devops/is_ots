@@ -15,7 +15,6 @@ const { Text } = Typography;
 const Items = () => {
   return (
     <Tabs
-      onChange={(activeKey) => console.log(activeKey)}
       tabBarExtraContent={
         <DownloadOutlined
           title="Сформировать файл"
