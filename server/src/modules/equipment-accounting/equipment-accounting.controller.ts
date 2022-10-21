@@ -43,6 +43,11 @@ export class EquipmentAccountingController {
     return this.service.createNewFacilityAssets(dto);
   }
 
+  @Post("/facility/add")
+  createOneFacility(@Body() dto: CreateFacilityDto) {
+    return this.service.createNewFacilityAsset(dto);
+  }
+
   @Get("/export-to-atlas")
   async download(@Query() query, @Res() res: Response) {
     const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;

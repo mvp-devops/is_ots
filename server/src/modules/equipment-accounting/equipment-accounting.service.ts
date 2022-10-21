@@ -112,16 +112,22 @@ export class EquipmentAccountingService {
   createNewFacilityAssets = async (
     dto: CreateFacilityDto[]
   ): Promise<FacilityView[]> => {
-    try {
-      for (let i = 0; i < dto.length; i++) {
-        await this.facilityRepository.create(dto[i]);
-      }
-
-      const items = await this.findAllFacilityAssets();
-      return items;
-    } catch (e: any) {
-      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    const items: FacilityView[] = [];
+    for (let i = 0; i < dto.length; i++) {
+      const item = await this.createNewFacilityAsset(dto[i]);
+      items.push(item);
     }
+    return items;
+
+    // try {
+    //   for (let i = 0; i < dto.length; i++) {
+    //     await this.facilityRepository.create(dto[i]);
+    //   }
+    //   const items = await this.findAllFacilityAssets();
+    //   return items;
+    // } catch (e: any) {
+    //   throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
   };
 
   findOneFacilityAsset = async (id: number): Promise<FacilityView> => {

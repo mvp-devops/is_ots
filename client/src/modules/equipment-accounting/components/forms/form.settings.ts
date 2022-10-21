@@ -79,6 +79,7 @@ export const signalItem: SignalCreateOrUpdateAttrs = {
   signalType: "",
   signalProtocol: "",
   signalTag: "",
+  signalParameter: "",
   ll: "",
   l: "",
   h: "",

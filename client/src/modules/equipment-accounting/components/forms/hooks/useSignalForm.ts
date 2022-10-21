@@ -24,6 +24,7 @@ export const useSignalForm = (
         signalType: row.signalType,
         signalProtocol: row.signalProtocol,
         signalTag: row.signalTag,
+        signalParameter: row.signalParameter,
         ll: row.ll,
         l: row.l,
         h: row.h,
