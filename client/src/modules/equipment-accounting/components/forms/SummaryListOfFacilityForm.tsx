@@ -2,6 +2,7 @@ import { Button, Divider, Space, Steps } from "antd";
 import { useEffect, useState } from "react";
 import { useActions } from "../../../..";
 import { setFormVisible } from "../../../main/store/main.action-creators";
+import { getFolderPath } from "../../../position-tree/api";
 import {
   CableLogCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
@@ -28,7 +29,8 @@ const SummaryListOfFacilityForm = () => {
     summaryListOfEquipmentFormData
   );
 
-  const { currentItem, checkedItem, target } = useEquipmentAccountingForm();
+  const { currentItem, checkedItem, target, currentItemFolderPath } =
+    useEquipmentAccountingForm();
 
   const { createOneEquipment } = useActions();
 
@@ -53,8 +55,10 @@ const SummaryListOfFacilityForm = () => {
     setData({ ...data, metrology });
 
   const createNewAsset = () => {
-    createOneEquipment(data);
-    setFormVisible(false);
+    console.log("UploadedData: ", data);
+    getFolderPath("sub-unit", data.generalInformation.subUnitId.toString())
+      .then((folderPath) => createOneEquipment(data, folderPath))
+      .finally(() => setFormVisible(false));
   };
 
   useEffect(() => {

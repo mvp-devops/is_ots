@@ -18,6 +18,7 @@ import {
   SummaryListOfEquipmentView,
 } from "../types";
 import { setUrl } from "../../main";
+import { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../../../server/common/types/equipment-accounting";
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
@@ -65,7 +66,7 @@ const setGeneralInformationFormData = (
   installationLocation &&
     data.append("installationLocation", installationLocation);
 
-  questionare && data.append("questionare", questionare);
+  questionare && data.append("files", questionare);
 
   if (systemType) {
     const arr = systemType;
@@ -288,6 +289,20 @@ const setFormData = (
 ): FormData => {
   const data = new FormData();
 
+  let files: SummaryListOfEquipmentCreateOrUpdateFiles = {
+    questionare: null,
+    document: null,
+    verificationProcedure: null,
+    typeApprovalCertificate: null,
+    wiringDiagram: null,
+    functionalDiagram: null,
+    mountDocument: null,
+    connectDocument: null,
+    testDocument: null,
+    awpDocument: null,
+    commisionDocument: null,
+  };
+
   const {
     generalInformation,
     metrology,
@@ -299,7 +314,28 @@ const setFormData = (
 
   data.append("generalInformation", JSON.stringify(generalInformation));
 
+  const { questionare } = generalInformation;
+  if (questionare) {
+    files.questionare = questionare;
+    data.append("questionare", questionare);
+  }
+
   data.append("metrology", JSON.stringify(metrology));
+
+  const { document, verificationProcedure, typeApprovalCertificate } =
+    metrology;
+  if (document) {
+    files.document = document;
+    data.append("document", document);
+  }
+  if (verificationProcedure) {
+    files.verificationProcedure = verificationProcedure;
+    data.append("verificationProcedure", verificationProcedure);
+  }
+  if (typeApprovalCertificate) {
+    files.typeApprovalCertificate = typeApprovalCertificate;
+    data.append("typeApprovalCertificate", typeApprovalCertificate);
+  }
 
   if (signals && signals.length > 0) {
     const arr = signals;
@@ -326,17 +362,6 @@ const setFormData = (
 
   data.append("monitoring", JSON.stringify(monitoring));
 
-  const { questionare } = generalInformation;
-  questionare && data.append("questionare", questionare);
-
-  const { document, verificationProcedure, typeApprovalCertificate } =
-    metrology;
-  document && data.append("document", document);
-  verificationProcedure &&
-    data.append("verificationProcedure", verificationProcedure);
-  typeApprovalCertificate &&
-    data.append("typeApprovalCertificate", typeApprovalCertificate);
-
   const {
     mountDocument,
     connectDocument,
@@ -344,6 +369,24 @@ const setFormData = (
     testDocument,
     commisionDocument,
   } = monitoring;
+
+  // if (typeApprovalCertificate) {
+  //   files.typeApprovalCertificate = typeApprovalCertificate;
+  // }
+  // if (typeApprovalCertificate) {
+  //   files.typeApprovalCertificate = typeApprovalCertificate;
+  // }
+  // if (typeApprovalCertificate) {
+  //   files.typeApprovalCertificate = typeApprovalCertificate;
+  // }
+  // if (typeApprovalCertificate) {
+  //   files.typeApprovalCertificate = typeApprovalCertificate;
+  // }
+  // if (typeApprovalCertificate) {
+  //   files.typeApprovalCertificate = typeApprovalCertificate;
+  // }
+
+  // data.append("files", JSON.stringify(files));
 
   mountDocument && data.append("mountDocument", mountDocument);
   connectDocument && data.append("connectDocument", connectDocument);
@@ -519,11 +562,16 @@ export const getOneEssences = async (
 };
 
 export const createOneEssence = async (
-  item: SummaryListOfEquipmentFormData
+  item: SummaryListOfEquipmentFormData,
+  parrentFolderPath?: string
 ): Promise<SummaryListOfEquipmentView> => {
-  const url = setUrl(equipmentAccountingUrl);
+  const url = setUrl(
+    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/add`
+  );
   const uploadedData = setFormData(item);
-  const { data } = await axios.post(url, uploadedData);
+  const { data } = await axios.post(url, uploadedData, {
+    params: { parrentFolderPath },
+  });
   return data;
 };
 

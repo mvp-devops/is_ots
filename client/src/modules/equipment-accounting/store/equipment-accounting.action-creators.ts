@@ -109,11 +109,14 @@ export const getFacilitiesList = () => {
   };
 };
 
-export const createOneEquipment = (item: SummaryListOfEquipmentFormData) => {
+export const createOneEquipment = (
+  item: SummaryListOfEquipmentFormData,
+  parrentFolderPath?: string
+) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.POST_ONE_ITEM });
-      const data = await createOneEssence(item);
+      const data = await createOneEssence(item, parrentFolderPath);
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_SUCCESS,
         payload: data,

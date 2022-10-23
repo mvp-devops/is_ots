@@ -56,7 +56,7 @@ const FacilityForm: FC<FormProps> = ({ row, data, setData }) => {
         }
       />
       <FormItemUIComponent
-        title="Страна-производитель"
+        title="Производитель"
         className="m-0"
         children={
           <SelectUIComponent

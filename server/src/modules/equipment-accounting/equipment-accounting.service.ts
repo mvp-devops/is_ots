@@ -1730,7 +1730,6 @@ export class EquipmentAccountingService {
 
   createNewSummaryListOfEquipmentAsset = async (
     dto: CreateSummaryListOfEquipmentDto,
-
     files?: SummaryListOfEquipmentCreateOrUpdateFiles,
     parrentFolderPath?: string
   ): Promise<SummaryListOfEquipmentView> => {
@@ -1745,19 +1744,40 @@ export class EquipmentAccountingService {
         signals,
       } = dto;
 
-      console.log("generalInformation: ", generalInformation);
+      const generalInformationData: GeneralInformationCreateOrUpdateAttrs =
+        typeof generalInformation === "string" &&
+        JSON.parse(generalInformation);
+      const metrologyData: MetrologyCreateOrUpdateAttrs =
+        typeof metrology === "string" && JSON.parse(metrology);
+      const signalsData: SignalCreateOrUpdateAttrs[] =
+        typeof signals === "string" && JSON.parse(signals);
+      const cableLogData: CableLogCreateOrUpdateAttrs[] =
+        typeof cableLog === "string" && JSON.parse(cableLog);
+      const impulseLineLogData: ImpulseLineLogCreateOrUpdateAttrs[] =
+        typeof impulseLineLog === "string" && JSON.parse(impulseLineLog);
+      const monitoringData: MonitoringCreateOrUpdateAttrs =
+        typeof monitoring === "string" && JSON.parse(monitoring);
 
-      if (generalInformation && generalInformation.facility) {
+      console.log("files: ", files);
+      // console.log("DTO: ", dto);
+
+      // console.log("generalInformation: ", generalInformation);
+
+      if (
+        generalInformationData &&
+        generalInformationData.facility &&
+        !generalInformationData.facilityId
+      ) {
+        console.log("FACI: ", generalInformationData.facility);
         facility = await this.createNewFacilityAsset(
-          generalInformation.facility
+          generalInformationData.facility
         );
+        generalInformationData.facilityId = facility.id;
       }
-      const { id } = await this.summaryListOfEquipmentRepository.create({
-        ...generalInformation,
-        facilityId: generalInformation.facilityId
-          ? generalInformation.facilityId
-          : facility.id,
-      });
+
+      const { id } = await this.summaryListOfEquipmentRepository.create(
+        generalInformationData
+      );
 
       if (files?.questionare) {
         await this.fileService.createDesignDocument(
@@ -1768,51 +1788,55 @@ export class EquipmentAccountingService {
         );
       }
 
-      if (metrology) {
+      if (metrologyData.min) {
         await this.createNewMetrologyAsset(
-          { ...metrology, sloeId: id },
-          files?.document[0],
-          files?.verificationProcedure[0],
-          files?.typeApprovalCertificate[0],
+          { ...metrologyData, sloeId: id },
+          files?.document[0] ? files?.document : undefined,
+          files?.verificationProcedure
+            ? files?.verificationProcedure[0]
+            : undefined,
+          files?.typeApprovalCertificate
+            ? files?.typeApprovalCertificate[0]
+            : undefined,
           parrentFolderPath
         );
       }
 
-      if (cableLog && cableLog.length > 0) {
-        for (let i = 0; i < cableLog.length; i++) {
-          const item = cableLog[i];
+      if (signalsData && signalsData.length > 0) {
+        for (let i = 0; i < signalsData.length; i++) {
+          const item = signalsData[i];
+          await this.createNewSignalAsset({ ...item, sloeId: id });
+        }
+      }
+
+      if (cableLogData && cableLogData.length > 0) {
+        for (let i = 0; i < cableLogData.length; i++) {
+          const item = cableLogData[i];
 
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
-            files?.wiringDiagram[0],
+            files?.wiringDiagram ? files?.wiringDiagram[i] : undefined,
             parrentFolderPath
           );
         }
       }
 
-      if (impulseLineLog && impulseLineLog.length > 0) {
-        for (let i = 0; i < impulseLineLog.length; i++) {
-          const item = impulseLineLog[i];
+      if (impulseLineLogData && impulseLineLogData.length > 0) {
+        for (let i = 0; i < impulseLineLogData.length; i++) {
+          const item = impulseLineLogData[i];
           await this.createNewImpulseLineLogAsset({ ...item, sloeId: id });
         }
       }
 
-      if (signals && signals.length > 0) {
-        for (let i = 0; i < signals.length; i++) {
-          const item = signals[i];
-          await this.createNewSignalAsset({ ...item, sloeId: id });
-        }
-      }
-
-      if (monitoring) {
+      if (monitoringData.mountDate) {
         await this.createNewMonitoringAsset(
-          { ...monitoring, sloeId: id },
-          files?.functionalDiagram[0],
-          files?.mountDocument[0],
-          files?.connectDocument[0],
-          files?.testDocument[0],
-          files?.awpDocument[0],
-          files?.commisionDocument[0],
+          { ...monitoringData, sloeId: id },
+          files?.functionalDiagram ? files?.functionalDiagram[0] : undefined,
+          files?.mountDocument ? files.mountDocument[0] : undefined,
+          files?.connectDocument ? files.connectDocument[0] : undefined,
+          files?.testDocument ? files.testDocument[0] : undefined,
+          files?.awpDocument ? files.awpDocument[0] : undefined,
+          files?.commisionDocument ? files.commisionDocument[0] : undefined,
           parrentFolderPath
         );
       }

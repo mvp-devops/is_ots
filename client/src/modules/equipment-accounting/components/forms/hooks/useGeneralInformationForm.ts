@@ -115,7 +115,6 @@ export const useGeneralInformationForm = (
     unitsList,
     subUnitId,
     setSubUnitId,
-
     currentId,
 
     target,

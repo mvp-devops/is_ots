@@ -53,6 +53,17 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
+      <Item
+        label={<Text type="secondary">Контроллируемый параметр</Text>}
+        className="m-0"
+      >
+        <InputUIComponent
+          value={item.signalParameter}
+          id="signalParameter"
+          itemId={item.id}
+          changeValue={onHandlerChange}
+        />
+      </Item>
       <Item label={<Text type="secondary">Авария, min</Text>} className="m-0">
         <InputUIComponent
           type="number"
