@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
+import { useTypedSelector } from "../../../../..";
 import { GeneralInformationView } from "../../../types";
 
 export const useGeneralInformationTable = () => {
@@ -14,9 +15,15 @@ export const useGeneralInformationTable = () => {
     setCurrentRow,
   } = useEquipmentAccountingTable("general-information");
 
+  const { formVisible } = useTypedSelector((state) => state.main);
+
   useEffect(() => {
     setDataSource(renderDataSource as GeneralInformationView[]);
   }, [renderDataSource]);
+
+  // useEffect(() => {
+  //   setDataSource(generalInformationList);
+  // }, [generalInformationList]);
 
   useEffect(() => {
     setDataSource(

@@ -290,7 +290,7 @@ export const deleteOneGeneralInformation = (target: string, id: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.DELETE_ONE_ITEM });
-      const data = await deleteOneEssence(id, target);
+      const data = await deleteOneEssence(target, id);
       dispatch({
         type: ActionTypes.DELETE_ONE_ITEM_SUCCESS,
         payload: data,

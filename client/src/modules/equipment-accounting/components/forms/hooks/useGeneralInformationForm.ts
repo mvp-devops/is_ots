@@ -10,6 +10,7 @@ import { generalInformationItem, useEquipmentAccountingForm } from "..";
 import { deleteOneEssence, updateOneEssence } from "../../../api";
 import { PositionTreeItem } from "../../../../position-tree";
 import { useGeneralInformationTable } from "../../tables";
+import { useActions } from "../../../../..";
 
 export const useGeneralInformationForm = (
   row?: GeneralInformationView,
@@ -121,6 +122,8 @@ export const useGeneralInformationForm = (
     target,
   } = useEquipmentAccountingForm(editRow, data, setData);
 
+  const { deleteOneGeneralInformation } = useActions();
+
   useEffect(() => {
     setSubUnitsList(
       unitsList.filter((item) => item.id === unitId)[0]?.children || []
@@ -138,13 +141,15 @@ export const useGeneralInformationForm = (
     setFormVisible(false);
   };
 
-  const { dataSource, setDataSource } = useGeneralInformationTable();
+  // const { dataSource, setDataSource } = useGeneralInformationTable();
 
   const deleteGeneralInformationItem = () => {
-    deleteOneEssence("general-information", row.id).finally(() => {
-      setDataSource(dataSource.filter((item) => item.id !== row.id));
-      setFormVisible(false);
-    });
+    deleteOneGeneralInformation("general-information", row.id.toString());
+    setFormVisible(false);
+    // deleteOneEssence("general-information", row.id).finally(() => {
+    //   setDataSource(dataSource.filter((item) => item.id !== row.id));
+    //   setFormVisible(false);
+    // });
   };
   const [subUnitsList, setSubUnitsList] = useState<PositionTreeItem[]>([]);
 
