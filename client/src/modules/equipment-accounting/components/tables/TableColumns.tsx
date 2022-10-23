@@ -25,7 +25,6 @@ import {
 } from "../../types";
 import { setTableColumnFilters } from ".";
 import { FormActions, setFilePath } from "../../../main";
-import { DeleteDialog } from "../../../../components";
 import { MenuItemType } from "rc-menu/lib/interface";
 import {
   formatDate,

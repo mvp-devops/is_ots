@@ -17,7 +17,7 @@ export const useCommentAccountingForm = () => {
   const [directionsList, setDirectionsList] = useState<NSIView[]>([]);
   const [criticalitiesList, setCriticalitiesList] = useState<NSIView[]>([]);
 
-  const [normativesList, setNormativesList] = useState<NSIView[]>([]);
+  const [normativesList, setNormativesList] = useState<NSIView[]>([]); //TODO: Релизовать подгрузку листа нормативных документов
   const [solutions, setSolutions] = useState<
     DesignDocumentCommentSolutionCreationAttrs[]
   >([]);

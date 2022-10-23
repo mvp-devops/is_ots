@@ -9,7 +9,7 @@ import {
   Typography,
   Upload,
 } from "antd";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { FC, ReactNode, useState } from "react";
 import { UploadOutlined, PlusOutlined } from "@ant-design/icons";
 import {
   GeneralInformationCreateOrUpdateAttrs,

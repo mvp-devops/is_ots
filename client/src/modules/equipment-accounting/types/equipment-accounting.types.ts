@@ -7,7 +7,6 @@ import {
   MonitoringView,
   SignalView,
   SummaryListOfEquipmentView,
-  EquipmentAccountingAssetView,
 } from "../types";
 
 export type Views =

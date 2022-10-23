@@ -2,7 +2,6 @@ import { Button, Divider, Space, Steps } from "antd";
 import { useEffect, useState } from "react";
 import { useActions } from "../../../..";
 import { setFormVisible } from "../../../main/store/main.action-creators";
-import { PositionTreeItem } from "../../../position-tree";
 import {
   CableLogCreateOrUpdateAttrs,
   GeneralInformationCreateOrUpdateAttrs,
@@ -140,7 +139,7 @@ const SummaryListOfFacilityForm = () => {
           break;
       }
     }
-  }, [currentItem, checkedItem]);
+  }, [currentItem, checkedItem]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const steps = [
     {

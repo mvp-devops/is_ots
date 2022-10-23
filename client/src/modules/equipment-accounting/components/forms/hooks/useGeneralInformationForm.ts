@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { InputRef } from "antd";
 
 import {
@@ -56,7 +56,6 @@ export const useGeneralInformationForm = (
     onChangeTargetId,
     setFormVisible,
     actionType,
-    checkedItem,
   } = useEquipmentAccountingForm(
     generalInformationItem,
     editRow,
@@ -119,7 +118,6 @@ export const useGeneralInformationForm = (
 
     currentId,
 
-    currentItem,
     target,
   } = useEquipmentAccountingForm(editRow, data, setData);
 
@@ -127,7 +125,7 @@ export const useGeneralInformationForm = (
     setSubUnitsList(
       unitsList.filter((item) => item.id === unitId)[0]?.children || []
     );
-  }, [unitId]);
+  }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const updateGeneralInformationItem = () => {
     editRow &&

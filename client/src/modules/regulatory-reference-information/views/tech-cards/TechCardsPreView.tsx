@@ -1,21 +1,10 @@
 import { Layout, Space, Typography, TableColumnsType } from "antd";
 import Table, { ColumnType } from "antd/lib/table";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import Pagination from "rc-pagination/lib/locale/ru_RU";
 import { ReactNode } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { FormActions, tableLocale } from "../../../main";
 import { NSIView } from "../../types";
-import { Locale } from "antd/lib/locale-provider";
-
-const locale: Locale = {
-  locale: "ru",
-  Pagination,
-  global: {
-    placeholder: "Выберите",
-  },
-  Table: tableLocale,
-};
 
 const { Text } = Typography;
 

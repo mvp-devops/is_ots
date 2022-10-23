@@ -3,7 +3,6 @@ import {
   CableLogCreateOrUpdateAttrs,
   CableLogView,
   EquipmentAccountingAssetCreateOrUpdateAttrs,
-  EquipmentAccountingAssetView,
   FacilityView,
   GeneralInformationCreateOrUpdateAttrs,
   GeneralInformationView,

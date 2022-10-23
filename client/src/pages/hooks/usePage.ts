@@ -17,7 +17,7 @@ export const usePage = () => {
     setFolderPath,
   } = useActions();
 
-  const { menuItems, currentItem, currentItemFolderPath } = useTypedSelector(
+  const { menuItems, currentItem } = useTypedSelector(
     (state) => state.positionTree
   );
   const { currentUser, baseTarget, formVisible } = useTypedSelector(
