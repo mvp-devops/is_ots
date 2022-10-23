@@ -61,5 +61,6 @@ export const useMetrologyTable = () => {
     dataSource,
     currentRow,
     setCurrentRow,
+    setDataSource,
   };
 };

@@ -59,5 +59,6 @@ export const useGeneralInformationTable = () => {
     dataSource,
     currentRow,
     setCurrentRow,
+    setDataSource,
   };
 };

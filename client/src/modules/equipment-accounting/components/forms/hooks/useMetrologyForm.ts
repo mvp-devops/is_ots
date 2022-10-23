@@ -6,6 +6,8 @@ import {
 
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingForm } from ".";
+import { deleteOneEssence } from "../../../api";
+import { useEquipmentAccountingTable, useMetrologyTable } from "../../tables";
 
 export const useMetrologyForm = (
   row?: MetrologyView,
@@ -43,19 +45,38 @@ export const useMetrologyForm = (
     [row]
   );
 
-  const { counterpartiesList, onHandlerChange, changeDate } =
-    useEquipmentAccountingForm(
-      metrologyItem,
-      editRow,
-      setEditRow,
-      data,
-      setData
-    );
+  const {
+    counterpartiesList,
+    onHandlerChange,
+    changeDate,
+    setFormVisible,
+    actionType,
+  } = useEquipmentAccountingForm(
+    metrologyItem,
+    editRow,
+    setEditRow,
+    data,
+    setData
+  );
+
+  const { dataSource, setDataSource } = useMetrologyTable();
+
+  const deleteMetrologyItem = () => {
+    deleteOneEssence("metrology", row.id).finally(() => {
+      setDataSource(dataSource.filter((item) => item.id !== row.id));
+      setFormVisible(false);
+    });
+  };
+
+  const updateMetrologyItem = () => {};
 
   return {
     counterpartiesList,
     editRow,
     onHandlerChange,
     changeDate,
+    deleteMetrologyItem,
+    updateMetrologyItem,
+    actionType,
   };
 };

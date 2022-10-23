@@ -134,7 +134,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
       default:
         break;
     }
-  }, [target, requestedData]);
+  }, [target, requestedData, formVisible]);
 
   const [searchValue, setSearchValue] = useState("");
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) =>

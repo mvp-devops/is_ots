@@ -370,24 +370,6 @@ const setFormData = (
     commisionDocument,
   } = monitoring;
 
-  // if (typeApprovalCertificate) {
-  //   files.typeApprovalCertificate = typeApprovalCertificate;
-  // }
-  // if (typeApprovalCertificate) {
-  //   files.typeApprovalCertificate = typeApprovalCertificate;
-  // }
-  // if (typeApprovalCertificate) {
-  //   files.typeApprovalCertificate = typeApprovalCertificate;
-  // }
-  // if (typeApprovalCertificate) {
-  //   files.typeApprovalCertificate = typeApprovalCertificate;
-  // }
-  // if (typeApprovalCertificate) {
-  //   files.typeApprovalCertificate = typeApprovalCertificate;
-  // }
-
-  // data.append("files", JSON.stringify(files));
-
   mountDocument && data.append("mountDocument", mountDocument);
   connectDocument && data.append("connectDocument", connectDocument);
   awpDocument && data.append("awpDocument", awpDocument);

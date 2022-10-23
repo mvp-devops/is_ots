@@ -43,6 +43,16 @@ const MonitoringForm: FC<FormProps> = ({ row, data, setData }) => {
       style={{ width: 800 }}
     >
       <FormItemUIComponent
+        title="Функциональная схема"
+        className="m-2 me-2"
+        children={
+          <UploadUIComponent
+            id="functionalDiagram"
+            changeValue={onHandlerChange}
+          />
+        }
+      />
+      <FormItemUIComponent
         title="Дата монтажа"
         className="m-2 me-2"
         children={

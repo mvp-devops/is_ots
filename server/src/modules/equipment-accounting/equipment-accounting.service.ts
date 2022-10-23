@@ -2268,6 +2268,7 @@ export class EquipmentAccountingService {
   ): Promise<SummaryListOfEquipmentView> => {
     try {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
+      console.log("ITEM: ", item);
       await this.deleteGeneralInformationAsset(id.toString());
 
       item.metrology && (await this.deleteMetrologyAsset(+item.metrology.id));
