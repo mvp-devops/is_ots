@@ -1,3 +1,4 @@
+import download from "js-file-download";
 import axios from "axios";
 import {
   CableLogCreateOrUpdateAttrs,
@@ -17,8 +18,11 @@ import {
   SummaryListOfEquipmentFormData,
   SummaryListOfEquipmentView,
 } from "../types";
-import { setUrl } from "../../main";
-import { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../../../server/common/types/equipment-accounting";
+import { setCurrentDate, setUrl } from "../../main";
+import {
+  ExportEquipmentToAtlas,
+  SummaryListOfEquipmentCreateOrUpdateFiles,
+} from "../../../../../server/common/types/equipment-accounting";
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
@@ -731,4 +735,58 @@ export const deleteOneSignalEssence = async (
   });
 
   return data;
+};
+
+export const exportToAtlas = async (
+  e: any,
+  parrentTarget: string,
+  parrentId: string,
+  parrentTitle: string,
+  parrentFolder: string
+) => {
+  const url = setUrl(`${equipmentAccountingUrl}/export-to-atlas`);
+  const fileName = `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`;
+
+  const { data } = await axios.get<ExportEquipmentToAtlas[]>(url, {
+    params: { parrentTarget, parrentId, parrentTitle, parrentFolder },
+  });
+
+  e.preventDefault();
+
+  downloadFile({
+    data: JSON.stringify(data),
+    fileName,
+    fileType: "text/json",
+  });
+
+  // axios
+  //   .get(url, {
+  //     responseType: "blob",
+  //     params: { parrentTarget, parrentId, parrentTitle, parrentFolder },
+  //   })
+  //   .then((resp) => {
+  //     console.log(resp.data);
+  //     download(
+  //       resp.data,
+  //       `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`
+  //     );
+  //   });
+};
+
+export const downloadFile = ({ data, fileName, fileType }) => {
+  // Create a blob with the data we want to download as a file
+  console.log(data);
+  const blob = new Blob([data], { type: "text/json" });
+  // Create an anchor element and dispatch a click event on it
+  // to trigger a download
+  const a = document.createElement("a");
+  a.download = fileName;
+  a.href = window.URL.createObjectURL(blob);
+  const clickEvt = new MouseEvent("click", {
+    view: window,
+    bubbles: true,
+    cancelable: true,
+  });
+  a.dispatchEvent(clickEvt);
+  a.remove();
 };

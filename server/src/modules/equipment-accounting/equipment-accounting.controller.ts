@@ -48,29 +48,41 @@ export class EquipmentAccountingController {
     return this.service.createNewFacilityAsset(dto);
   }
 
+  // @Get("/export-to-atlas")
+  // async download(@Query() query, @Res() res: Response) {
+  //   const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;
+  //   let fileLocation = await this.service.exportToAtlas(
+  //     parrentTarget,
+  //     parrentId,
+  //     parrentTitle,
+  //     parrentFolder
+  //   );
+  //   const fileName = `export_to_atlas_${setCurrentDate()}.json`;
+
+  //   res.header("Content-disposition", `attachment; filename=${fileName}`);
+  //   res.type("application/json; charset=UTF-8");
+
+  //   res.download(fileLocation, `${fileName}`, (err) => {
+  //     if (err) console.log(err);
+  //   });
+  // }
+
   @Get("/export-to-atlas")
-  async download(@Query() query, @Res() res: Response) {
+  async download(@Query() query) {
     const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;
-    let fileLocation = await this.service.exportToAtlas(
+    return this.service.exportToAtlas(
       parrentTarget,
       parrentId,
       parrentTitle,
       parrentFolder
     );
-    const fileName = `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`;
-    res.header("Content-disposition", `attachment; filename=${fileName}`);
-    res.type("application/json; charset=UTF-8");
-
-    res.download(fileLocation, `${fileName}`, (err) => {
-      if (err) console.log(err);
-    });
   }
 
   @Post("/summary-list-of-equipment-asset/add")
   @UseInterceptors(
     FileFieldsInterceptor([
       { name: "questionare", maxCount: 1 },
-      { name: "wiringDiagram", maxCount: 1 },
+      { name: "wiringDiagram", maxCount: 100 },
       { name: "document", maxCount: 1 },
       { name: "verificationProcedure", maxCount: 1 },
       { name: "typeApprovalCertificate", maxCount: 1 },

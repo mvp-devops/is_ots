@@ -15,13 +15,13 @@ const { Text } = Typography;
 const Items = () => {
   return (
     <Tabs
-      tabBarExtraContent={
-        <DownloadOutlined
-          title="Сформировать файл"
-          className="text-secondary me-3"
-          style={{ fontSize: "20px", cursor: "pointer" }}
-        />
-      }
+    // tabBarExtraContent={
+    //   <DownloadOutlined
+    //     title="Сформировать файл"
+    //     className="text-secondary me-3"
+    //     style={{ fontSize: "20px", cursor: "pointer" }}
+    //   />
+    // }
     >
       <TabPane
         tab={

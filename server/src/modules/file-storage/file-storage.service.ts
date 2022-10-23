@@ -1255,10 +1255,12 @@ export class FileStorageService {
     parrentFolder: string,
     parrentTitle: string
   ): string => {
-    const fileFolder = this.getFilePath(`${parrentFolder}/imports`);
-    this.createDirectory(fileFolder);
+    const fileFolder = this.getFilePath(`${parrentFolder}\\imports`);
+
+    this.createDirectory(`${parrentFolder}\\imports`);
     const fileName = `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`;
-    const filePath = this.getPath([fileFolder, fileName]);
+    const filePath = `${fileFolder}\\${fileName}`;
+
     fse.writeJson(filePath, data, (err) => {
       if (err) return console.error(err);
     });

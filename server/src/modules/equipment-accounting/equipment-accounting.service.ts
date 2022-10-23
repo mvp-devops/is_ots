@@ -1758,17 +1758,11 @@ export class EquipmentAccountingService {
       const monitoringData: MonitoringCreateOrUpdateAttrs =
         typeof monitoring === "string" && JSON.parse(monitoring);
 
-      console.log("files: ", files);
-      // console.log("DTO: ", dto);
-
-      // console.log("generalInformation: ", generalInformation);
-
       if (
         generalInformationData &&
         generalInformationData.facility &&
         !generalInformationData.facilityId
       ) {
-        console.log("FACI: ", generalInformationData.facility);
         facility = await this.createNewFacilityAsset(
           generalInformationData.facility
         );
@@ -1802,17 +1796,22 @@ export class EquipmentAccountingService {
         );
       }
 
-      if (signalsData && signalsData.length > 0) {
-        for (let i = 0; i < signalsData.length; i++) {
-          const item = signalsData[i];
+      if (signals && signals.length > 0) {
+        for (let i = 0; i < signals.length; i++) {
+          const elem = signals[i];
+          const item: SignalCreateOrUpdateAttrs =
+            typeof elem === "string" && JSON.parse(elem);
+          item.id = null;
           await this.createNewSignalAsset({ ...item, sloeId: id });
         }
       }
 
-      if (cableLogData && cableLogData.length > 0) {
-        for (let i = 0; i < cableLogData.length; i++) {
-          const item = cableLogData[i];
-
+      if (cableLog && cableLog.length > 0) {
+        for (let i = 0; i < cableLog.length; i++) {
+          const elem = cableLog[i];
+          const item: CableLogCreateOrUpdateAttrs =
+            typeof elem === "string" && JSON.parse(elem);
+          item.id = null;
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
             files?.wiringDiagram ? files?.wiringDiagram[i] : undefined,
@@ -1821,9 +1820,12 @@ export class EquipmentAccountingService {
         }
       }
 
-      if (impulseLineLogData && impulseLineLogData.length > 0) {
-        for (let i = 0; i < impulseLineLogData.length; i++) {
-          const item = impulseLineLogData[i];
+      if (impulseLineLog && impulseLineLog.length > 0) {
+        for (let i = 0; i < impulseLineLog.length; i++) {
+          const elem = impulseLineLog[i];
+          const item: ImpulseLineLogCreateOrUpdateAttrs =
+            typeof elem === "string" && JSON.parse(elem);
+          item.id = null;
           await this.createNewImpulseLineLogAsset({ ...item, sloeId: id });
         }
       }
@@ -2268,7 +2270,6 @@ export class EquipmentAccountingService {
   ): Promise<SummaryListOfEquipmentView> => {
     try {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
-      console.log("ITEM: ", item);
       await this.deleteGeneralInformationAsset(id.toString());
 
       item.metrology && (await this.deleteMetrologyAsset(+item.metrology.id));
@@ -2363,7 +2364,7 @@ export class EquipmentAccountingService {
               +metrology.fromDate.split(".")[0]
             )
           : new Date(1900, 0, 1),
-      m_range: metrology.mpi,
+      m_range: metrology && metrology.mpi ? metrology.mpi : "н/д",
       dt_next:
         metrology && metrology.fromDate
           ? new Date(
@@ -2399,7 +2400,7 @@ export class EquipmentAccountingService {
         facility.equipmentType === "СИ" ? facility.meansureGroup : "н/д",
       sgroei: metrology ? metrology.sgroei : "н/д",
       remark: metrology ? metrology.status : "н/д",
-      actual_tech_condition: description,
+      actual_tech_condition: description ? description : "н/д",
     };
 
     return dataItem;
@@ -2416,7 +2417,6 @@ export class EquipmentAccountingService {
 
     switch (target) {
       case "general-information": {
-        console.log("id: ", id);
         item = await this.updateGeneralInformationAsset(
           id,
           dto as UpdateGeneralInformationDto,
@@ -2462,7 +2462,6 @@ export class EquipmentAccountingService {
       }
 
       case "monitoring": {
-        console.log("files: ", files);
         item = await this.updateMonitoringAsset(
           id,
           dto as UpdateMonitoringDto,
@@ -2531,7 +2530,7 @@ export class EquipmentAccountingService {
     parrentId: string,
     parrentTitle: string,
     parrentFolder: string
-  ): Promise<string> => {
+  ): Promise<ExportEquipmentToAtlas[]> => {
     try {
       let exportData: ExportEquipmentToAtlas[] = [];
       let data: SummaryListOfEquipmentEntity[] = [];
@@ -2666,7 +2665,8 @@ export class EquipmentAccountingService {
         parrentTitle
       );
 
-      return filePath;
+      // return filePath;
+      return exportData;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -51,10 +51,10 @@ const TableColumns = (
     label: (
       <Space
         className="text-secondary"
-        onClick={() => {
-          setActionType(FormActions.EDIT_EQUIPMENT);
-          setFormVisible(true);
-        }}
+        // onClick={() => {
+        //   setActionType(FormActions.EDIT_EQUIPMENT);
+        //   setFormVisible(true);
+        // }}
       >
         <EditOutlined
           style={{ marginBottom: "6px", padding: 0 }}
@@ -67,37 +67,14 @@ const TableColumns = (
     key: "EDIT_EQUIPMENT_ASSET",
   };
 
-  // const deleteAssetMenuItem = {
-  //   label: (
-  //     <DeleteDialog
-  //       target="cable-log"
-  //       id={currentRow?.id as string}
-  //       onCancel={() => {
-  //         setFormVisible(false);
-  //         setActionType("");
-  //       }}
-  //       onConfirm={() => deleteRow()}
-  //       children={
-  //         <Space className="text-secondary">
-  //           <DeleteOutlined
-  //             className="text-danger"
-  //             style={{ marginBottom: "6px", padding: 0 }}
-  //           />
-  //           Удалить
-  //         </Space>
-  //       }
-  //     />
-  //   ),
-  //   key: "REMOVE_EQUIPMENT_ASSET",
-  // };
   const deleteAssetMenuItem = {
     label: (
       <Space
         className="text-secondary"
-        onClick={() => {
-          setActionType(FormActions.REMOVE_EQUIPMENT);
-          setFormVisible(true);
-        }}
+        // onClick={() => {
+        //   setActionType(FormActions.REMOVE_EQUIPMENT);
+        //   setFormVisible(true);
+        // }}
       >
         <DeleteOutlined
           style={{ marginBottom: "6px", padding: 0 }}

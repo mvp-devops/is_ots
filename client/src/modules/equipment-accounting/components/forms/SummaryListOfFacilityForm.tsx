@@ -55,10 +55,10 @@ const SummaryListOfFacilityForm = () => {
     setData({ ...data, metrology });
 
   const createNewAsset = () => {
-    console.log("UploadedData: ", data);
     getFolderPath("sub-unit", data.generalInformation.subUnitId.toString())
       .then((folderPath) => createOneEquipment(data, folderPath))
       .finally(() => setFormVisible(false));
+    setFormVisible(false);
   };
 
   useEffect(() => {
