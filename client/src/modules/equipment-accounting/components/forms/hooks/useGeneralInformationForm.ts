@@ -7,9 +7,8 @@ import {
 } from "../../../types";
 
 import { generalInformationItem, useEquipmentAccountingForm } from "..";
-import { deleteOneEssence, updateOneEssence } from "../../../api";
-import { PositionTreeItem } from "../../../../position-tree";
-import { useGeneralInformationTable } from "../../tables";
+import { updateOneEssence } from "../../../api";
+
 import { useActions } from "../../../../..";
 
 export const useGeneralInformationForm = (
@@ -58,6 +57,8 @@ export const useGeneralInformationForm = (
     onChangeTargetId,
     setFormVisible,
     actionType,
+    setSubUnitsList,
+    subUnitsList,
   } = useEquipmentAccountingForm(
     generalInformationItem,
     editRow,
@@ -124,12 +125,6 @@ export const useGeneralInformationForm = (
 
   const { deleteOneGeneralInformation } = useActions();
 
-  useEffect(() => {
-    setSubUnitsList(
-      unitsList.filter((item) => item.id === unitId)[0]?.children || []
-    );
-  }, [unitId]); // eslint-disable-line react-hooks/exhaustive-deps
-
   const updateGeneralInformationItem = () => {
     editRow &&
       updateOneEssence(
@@ -141,17 +136,10 @@ export const useGeneralInformationForm = (
     setFormVisible(false);
   };
 
-  // const { dataSource, setDataSource } = useGeneralInformationTable();
-
   const deleteGeneralInformationItem = () => {
     deleteOneGeneralInformation("general-information", row.id.toString());
     setFormVisible(false);
-    // deleteOneEssence("general-information", row.id).finally(() => {
-    //   setDataSource(dataSource.filter((item) => item.id !== row.id));
-    //   setFormVisible(false);
-    // });
   };
-  const [subUnitsList, setSubUnitsList] = useState<PositionTreeItem[]>([]);
 
   return {
     actionType,

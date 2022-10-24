@@ -178,24 +178,12 @@ export const useEquipmentAccountingForm = (
               (item) => item.id === checkedItem?.id.toString()
             )[0]?.children || []
           );
-          unitId
-            ? setSubUnitsList(
-                currentItem?.children
-                  ?.filter((item) => item.id === checkedItem?.id.toString())[0]
-                  ?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
+
           break;
         }
         case "project": {
           setUnitsList(currentItem?.children || []);
-          unitId
-            ? setUnitsList(
-                currentItem?.children?.filter((item) => item.id === unitId)[0]
-                  .children || []
-              )
-            : setSubUnitsList([]);
+
           break;
         }
         case "unit": {
@@ -229,6 +217,12 @@ export const useEquipmentAccountingForm = (
     key === "unitId" && setUnitId(value);
     key === "subUnitId" && setSubUnitId(value);
   };
+
+  useEffect(() => {
+    setSubUnitsList(
+      unitsList.filter((item) => item.id === unitId)[0]?.children || []
+    );
+  }, [unitId, unitsList]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {
     currentItem,

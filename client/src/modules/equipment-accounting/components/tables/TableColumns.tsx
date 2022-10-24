@@ -1569,8 +1569,8 @@ const TableColumns = (
           questionareViewMenuItem(currentRow as GeneralInformationView)
         );
       // menuItems.push(technologyCardsViewMenuItem);
-      menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1623,8 +1623,8 @@ const TableColumns = (
         menuItems.push(
           metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
         );
-      menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1647,7 +1647,7 @@ const TableColumns = (
       columns.push(actionsColumn);
 
       menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1673,8 +1673,8 @@ const TableColumns = (
       currentRow &&
         (currentRow as CableLogView).wiringDiagram &&
         menuItems.push(wiringDiagramViewMenuItem(currentRow as CableLogView));
-      menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1695,8 +1695,8 @@ const TableColumns = (
       columns.push(rangeColumn);
       columns.push(actionsColumn);
 
-      menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1725,8 +1725,8 @@ const TableColumns = (
           monitoringDocumentsViewMenuItem(currentRow as MonitoringView)
         );
 
-      menuItems.push(editAssetMenuItem);
-      menuItems.push(deleteAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
+      // menuItems.push(deleteAssetMenuItem);
 
       break;
     }

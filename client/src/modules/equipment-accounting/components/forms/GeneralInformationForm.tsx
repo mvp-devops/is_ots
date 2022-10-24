@@ -48,6 +48,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
     target,
     addNewFacilityModification,
     editRow,
+    unitId,
     facilities,
     inputRef,
     modifications,
@@ -90,7 +91,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 }
               />
             )}
-          {target !== "sub-unit" && editRow && (
+          {target !== "sub-unit" && (
             <FormItemUIComponent
               className="m-0"
               title="Установка/объект"
@@ -99,9 +100,15 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                   defaultValue={editRow && (editRow.subUnitId as string)}
                   id="subUnitId"
                   items={
-                    unitsList.filter(
-                      (item) => item.id === editRow.unitId.toString()
-                    )[0]?.children || []
+                    data && data.unitId
+                      ? unitsList.filter(
+                          (item) => item.id === data.unitId.toString()
+                        )[0]?.children || []
+                      : editRow && editRow.unitId
+                      ? unitsList.filter(
+                          (item) => item.id === editRow.unitId.toString()
+                        )[0]?.children || []
+                      : []
                   }
                   changeValue={onChangeTargetId}
                 />
