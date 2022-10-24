@@ -28,7 +28,7 @@ export const generalInformationItem: GeneralInformationCreateOrUpdateAttrs = {
   sloeId: null,
   projectId: null,
   unitId: null,
-  subUnitId: 53,
+  subUnitId: null,
   installationLocation: "",
   questionare: null,
   systemType: [],
