@@ -42,8 +42,8 @@ const CommentTableColumns = () => {
     filterSearch: markFilters.length > 5 ? true : false,
     filters: markFilters,
     onFilter: (value: any, record) =>
-      record.documentSection
-        ? record.documentSection.toUpperCase().includes(value.toUpperCase())
+      record?.documentSection
+        ? record?.documentSection?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     width: 50,
     align: "center",
@@ -70,7 +70,7 @@ const CommentTableColumns = () => {
         currentDesignDocument && (
           <Space className="d-flex justify-content-start">
             <Text type="secondary">
-              {currentDesignDocument.fileType.toUpperCase() === ".PDF" ? (
+              {currentDesignDocument?.fileType?.toUpperCase() === ".PDF" ? (
                 <FilePdfOutlined className="text-danger" />
               ) : (
                 <FileUnknownOutlined className="text-secondary" />
@@ -78,14 +78,14 @@ const CommentTableColumns = () => {
             </Text>
             <a
               href={setFilePath(
-                `${currentDesignDocument.filePath}/${currentDesignDocument.fileName}`
+                `${currentDesignDocument?.filePath}/${currentDesignDocument?.fileName}`
               )}
               target="_blank"
               rel="noreferrer"
               className="mx-2 text-secondary"
-              title={record.documentTitle}
+              title={record?.documentTitle}
             >
-              {record.documentTitle}
+              {record?.documentTitle}
             </a>
           </Space>
         )
@@ -120,8 +120,8 @@ const CommentTableColumns = () => {
     filterSearch: normativeFilters.length > 5 ? true : false,
     filters: normativeFilters,
     onFilter: (value: any, record) =>
-      record.normative
-        ? record.normative.toUpperCase().includes(value.toUpperCase())
+      record?.normative
+        ? record?.normative?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     width: 250,
     align: "center",
@@ -137,11 +137,11 @@ const CommentTableColumns = () => {
     filterSearch: criticalityFilters.length > 5 ? true : false,
     filters: criticalityFilters,
     onFilter: (value, record) =>
-      record.criticalityId
-        ? record.criticalityId
-            .toString()
-            .toUpperCase()
-            .includes(value.toString().toUpperCase())
+      record?.criticalityId
+        ? record?.criticalityId
+            ?.toString()
+            ?.toUpperCase()
+            ?.includes(value?.toString()?.toUpperCase())
         : false,
     width: 50,
     align: "center",
@@ -160,8 +160,10 @@ const CommentTableColumns = () => {
     filterSearch: subdivisionFilters.length > 5 ? true : false,
     filters: subdivisionFilters,
     onFilter: (value: any, record) =>
-      record.expertSubdivision
-        ? record.expertSubdivision.toUpperCase().includes(value.toUpperCase())
+      record?.expertSubdivision
+        ? record?.expertSubdivision
+            ?.toUpperCase()
+            ?.includes(value?.toUpperCase())
         : false,
     align: "center",
     render: (value) => <Text type="secondary">{value}</Text>,
@@ -179,8 +181,8 @@ const CommentTableColumns = () => {
     filterSearch: expertContactsFilters.length > 5 ? true : false,
     filters: expertContactsFilters,
     onFilter: (value: any, record) =>
-      record.expertContacts
-        ? record.expertContacts.toUpperCase().includes(value.toUpperCase())
+      record?.expertContacts
+        ? record?.expertContacts?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     align: "center",
     render: (value) => <Text type="secondary">{value}</Text>,

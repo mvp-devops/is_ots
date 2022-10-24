@@ -22,19 +22,30 @@ export const useImpulseLineLogTable = () => {
       setDataSource(
         (renderDataSource as ImpulseLineLogView[]).filter(
           (item) =>
-            item?.unit?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
-            item?.subUnit
-              ?.toUpperCase()
-              ?.includes(searchValue?.toUpperCase()) ||
-            item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase()) ||
-            item?.numberOfTrace
-              ?.toUpperCase()
-              ?.includes(searchValue?.toUpperCase()) ||
-            item?.impulseLineType?.includes(searchValue?.toUpperCase()) ||
-            item?.fromPlace
-              ?.toUpperCase()
-              ?.includes(searchValue?.toUpperCase()) ||
-            item?.toPlace?.toUpperCase()?.includes(searchValue?.toUpperCase())
+            (item?.unit &&
+              item?.unit
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase())) ||
+            (item?.subUnit &&
+              item?.subUnit
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase())) ||
+            (item?.tag &&
+              item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase())) ||
+            (item?.numberOfTrace &&
+              item?.numberOfTrace
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase())) ||
+            (item?.impulseLineType &&
+              item?.impulseLineType?.includes(searchValue?.toUpperCase())) ||
+            (item?.fromPlace &&
+              item?.fromPlace
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase())) ||
+            (item?.toPlace &&
+              item?.toPlace
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase()))
         )
       );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

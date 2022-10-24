@@ -38,7 +38,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.title.toUpperCase().includes(value.toUpperCase()),
+      record?.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text
         type="secondary"
@@ -61,7 +61,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.code.toUpperCase().includes(value.toUpperCase()),
+      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}

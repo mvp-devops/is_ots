@@ -48,25 +48,25 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.title.toUpperCase().includes(value.toUpperCase()),
+      record?.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => {
       return (
         <Space className="d-flex justify-content-start">
           <Text type="secondary">
-            {record.fileType.toUpperCase() === ".PDF" ? (
+            {record?.fileType.toUpperCase() === ".PDF" ? (
               <FilePdfOutlined className="text-danger" />
             ) : (
               <FileUnknownOutlined className="text-secondary" />
             )}
           </Text>
           <a
-            href={setFilePath(`${record.filePath}/${record.fileName}`)}
+            href={setFilePath(`${record?.filePath}/${record?.fileName}`)}
             target="_blank"
             rel="noreferrer"
             className="mx-2 text-secondary"
-            title={record.title}
+            title={record?.title}
           >
-            {record.title && record.title}
+            {record?.title && record?.title}
           </a>
         </Space>
       );
@@ -84,7 +84,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.code.toUpperCase().includes(value.toUpperCase()),
+      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -114,7 +114,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: stageFilters,
     filterSearch: stageFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.stageTitle.toUpperCase().includes(value.toUpperCase()),
+      record?.stageTitle?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -132,7 +132,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: sectionFilters,
     filterSearch: sectionFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.sectionTitle.toUpperCase().includes(value.toUpperCase()),
+      record?.sectionTitle?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -150,7 +150,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: supplierFilters,
     filterSearch: supplierFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.supplierTitle.toUpperCase().includes(value.toUpperCase()),
+      record?.supplierTitle?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}

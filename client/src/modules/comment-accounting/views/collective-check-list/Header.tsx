@@ -38,7 +38,8 @@ const Header = () => {
                 <Text strong>Технические требования:</Text>
                 <Space className="d-flex justify-content-start">
                   <Text type="secondary">
-                    {unitQuestionareRender.fileType.toUpperCase() === ".PDF" ? (
+                    {unitQuestionareRender?.fileType?.toUpperCase() ===
+                    ".PDF" ? (
                       <FilePdfOutlined
                         className="text-danger"
                         style={{ marginBottom: 6 }}
@@ -52,14 +53,14 @@ const Header = () => {
                   </Text>
                   <a
                     href={setFilePath(
-                      `${unitQuestionareRender.filePath}/${unitQuestionareRender.fileName}`
+                      `${unitQuestionareRender?.filePath}/${unitQuestionareRender?.fileName}`
                     )}
                     target="_blank"
                     rel="noreferrer"
                     className="mx-2 text-secondary"
-                    title={unitQuestionareRender.title}
+                    title={unitQuestionareRender?.title}
                   >
-                    {unitQuestionareRender.code}.{unitQuestionareRender.title}
+                    {unitQuestionareRender?.code}.{unitQuestionareRender?.title}
                   </a>
                 </Space>
               </Space>
@@ -82,7 +83,7 @@ const Header = () => {
                   <Text strong>Технические требования:</Text>
                   <Space className="d-flex justify-content-start">
                     <Text type="secondary">
-                      {subUnitQuestionareRender.fileType.toUpperCase() ===
+                      {subUnitQuestionareRender?.fileType?.toUpperCase() ===
                       ".PDF" ? (
                         <FilePdfOutlined className="text-danger" />
                       ) : (
@@ -91,15 +92,15 @@ const Header = () => {
                     </Text>
                     <a
                       href={setFilePath(
-                        `${subUnitQuestionareRender.filePath}/${subUnitQuestionareRender.fileName}`
+                        `${subUnitQuestionareRender?.filePath}/${subUnitQuestionareRender?.fileName}`
                       )}
                       target="_blank"
                       rel="noreferrer"
                       className="mx-2 text-secondary"
-                      title={subUnitQuestionareRender.title}
+                      title={subUnitQuestionareRender?.title}
                     >
-                      {subUnitQuestionareRender.code}.
-                      {subUnitQuestionareRender.title}
+                      {subUnitQuestionareRender?.code}.
+                      {subUnitQuestionareRender?.title}
                     </a>
                   </Space>
                 </Space>

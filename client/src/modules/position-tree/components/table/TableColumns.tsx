@@ -47,7 +47,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.title.toUpperCase().includes(value.toUpperCase()),
+      record?.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text
         type="secondary"
@@ -69,7 +69,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record.code.toUpperCase().includes(value.toUpperCase()),
+      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -98,10 +98,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: contractFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "contract" in record &&
-      record.contract.toUpperCase().includes(value.toUpperCase()),
+      record?.contract?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"contract" in record && record.contract}
+        {"contract" in record && record?.contract}
       </Text>
     ),
   };
@@ -119,10 +119,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: positionFilters ? true : false,
     onFilter: (value: any, record) =>
       "position" in record &&
-      record.position.toUpperCase().includes(value.toUpperCase()),
+      record?.position?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"position" in record && record.position}
+        {"position" in record && record?.position}
       </Text>
     ),
   };
@@ -136,10 +136,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: designTitleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "design" in record &&
-      record.design.title.toUpperCase().includes(value.toUpperCase()),
+      record?.design.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"design" in record && record.design.title}
+        {"design" in record && record?.design.title}
       </Text>
     ),
   };
@@ -154,10 +154,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: equipmenTypeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "equipment" in record &&
-      record.equipment.title.toUpperCase().includes(value.toUpperCase()),
+      record?.equipment.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"equipment" in record && record.equipment.title}
+        {"equipment" in record && record?.equipment.title}
       </Text>
     ),
   };
@@ -172,11 +172,11 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: supplierTitleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "supplier" in record &&
-      record.supplier.title.toUpperCase().includes(value.toUpperCase()),
+      record?.supplier.title?.toUpperCase()?.includes(value.toUpperCase()),
 
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"supplier" in record && record.supplier.title}
+        {"supplier" in record && record?.supplier.title}
       </Text>
     ),
   };
@@ -187,10 +187,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     align: "right",
     render: (_blank, record) => (
       <Space size="middle" className="d-flex justify-content-end">
-        {"unitQuestionare" in record && record.unitQuestionare && (
+        {"unitQuestionare" in record && record?.unitQuestionare && (
           <a
             href={setFilePath(
-              `${record.unitQuestionare.filePath}/${record.unitQuestionare.fileName}`
+              `${record?.unitQuestionare.filePath}/${record?.unitQuestionare.fileName}`
             )}
             target="_blank"
             rel="noreferrer"
@@ -212,10 +212,10 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
             }}
           />
         )}
-        {"subUnitQuestionare" in record && record.subUnitQuestionare && (
+        {"subUnitQuestionare" in record && record?.subUnitQuestionare && (
           <a
             href={setFilePath(
-              `${record.subUnitQuestionare.filePath}/${record.subUnitQuestionare.fileName}`
+              `${record?.subUnitQuestionare.filePath}/${record?.subUnitQuestionare.fileName}`
             )}
             target="_blank"
             rel="noreferrer"
@@ -223,7 +223,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
           >
             <FileSearchOutlined
               className="text-primary"
-              title={`${record.subUnitQuestionare.code}. ${record.subUnitQuestionare.title}`}
+              title={`${record?.subUnitQuestionare.code}. ${record?.subUnitQuestionare.title}`}
             />
           </a>
         )}

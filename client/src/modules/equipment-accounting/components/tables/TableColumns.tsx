@@ -92,9 +92,9 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.questionare
+              record && record?.questionare
                 ? setFilePath(
-                    `${record.questionare.filePath}/${record.questionare.fileName}`
+                    `${record?.questionare?.filePath}/${record?.questionare?.fileName}`
                   )
                 : "#"
             }
@@ -125,7 +125,7 @@ const TableColumns = (
   //       <Space className="text-secondary">
   //         <a
   //           // href={
-  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
   //           // }
   //           href="#"
   //           target="_blank"
@@ -152,7 +152,7 @@ const TableColumns = (
   //       <Space className="text-secondary">
   //         <a
   //           // href={
-  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
   //           // }
   //           href="#"
   //           target="_blank"
@@ -180,7 +180,7 @@ const TableColumns = (
   //       <Space className="text-secondary">
   //         <a
   //           // href={
-  //           //   record && record.questionare ? setFilePath(`${record.questionare.filePath}/${record.questionare.fileName}`) : "#"
+  //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
   //           // }
   //           href="#"
   //           target="_blank"
@@ -205,9 +205,9 @@ const TableColumns = (
 
   //   const render =
   //   record &&
-  //     (record.technicalServiceCard ||
-  //       record.metrologyServiceCard ||
-  //       record.commisionCard )
+  //     (record?.technicalServiceCard ||
+  //       record?.metrologyServiceCard ||
+  //       record?.commisionCard )
   //     ? {
   //       label: (
   //         <Space className="text-secondary">
@@ -238,8 +238,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.typeApprovalCertificate
-                ? setFilePath(record.typeApprovalCertificate)
+              record && record?.typeApprovalCertificate
+                ? setFilePath(record?.typeApprovalCertificate)
                 : "#"
             }
             target="_blank"
@@ -263,8 +263,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.verificationProcedure
-                ? setFilePath(record.verificationProcedure)
+              record && record?.verificationProcedure
+                ? setFilePath(record?.verificationProcedure)
                 : "#"
             }
             target="_blank"
@@ -288,7 +288,7 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.document ? setFilePath(record.document) : "#"
+              record && record?.document ? setFilePath(record?.document) : "#"
             }
             target="_blank"
             rel="noreferrer"
@@ -312,7 +312,7 @@ const TableColumns = (
       label: (
         <Space className="text-secondary">
           <a
-            href={record && record.arshin ? record.arshin : "#"}
+            href={record && record?.arshin ? record?.arshin : "#"}
             target="_blank"
             rel="noreferrer"
             style={{ textDecoration: "none" }}
@@ -329,28 +329,28 @@ const TableColumns = (
       key: "ARSHIN_VIEW",
     };
 
-    if (record && record.typeApprovalCertificate) {
+    if (record && record?.typeApprovalCertificate) {
       children.push(typeApprovalCertificateView);
     }
 
-    if (record && record.verificationProcedure) {
+    if (record && record?.verificationProcedure) {
       children.push(verificationProcedureView);
     }
 
-    if (record && record.document) {
+    if (record && record?.document) {
       children.push(documentView);
     }
 
-    if (record && record.arshin) {
+    if (record && record?.arshin) {
       children.push(arshinView);
     }
 
     const render =
       record &&
-      (record.typeApprovalCertificate ||
-        record.verificationProcedure ||
-        record.document ||
-        record.arshin)
+      (record?.typeApprovalCertificate ||
+        record?.verificationProcedure ||
+        record?.document ||
+        record?.arshin)
         ? {
             label: (
               <Space className="text-secondary">
@@ -379,9 +379,9 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.wiringDiagram
+              record && record?.wiringDiagram
                 ? setFilePath(
-                    `${record.wiringDiagram.filePath}/${record.wiringDiagram.fileName}`
+                    `${record?.wiringDiagram?.filePath}/${record?.wiringDiagram?.fileName}`
                   )
                 : "#"
             }
@@ -415,9 +415,9 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.functionalDiagram
+              record && record?.functionalDiagram
                 ? setFilePath(
-                    `${record.functionalDiagram.filePath}/${record.functionalDiagram.fileName}`
+                    `${record?.functionalDiagram?.filePath}/${record?.functionalDiagram?.fileName}`
                   )
                 : "#"
             }
@@ -442,8 +442,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.mountDocument
-                ? setFilePath(record.mountDocument)
+              record && record?.mountDocument
+                ? setFilePath(record?.mountDocument)
                 : "#"
             }
             target="_blank"
@@ -467,8 +467,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.connectDocument
-                ? setFilePath(record.connectDocument)
+              record && record?.connectDocument
+                ? setFilePath(record?.connectDocument)
                 : "#"
             }
             target="_blank"
@@ -492,8 +492,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.testDocument
-                ? setFilePath(record.testDocument)
+              record && record?.testDocument
+                ? setFilePath(record?.testDocument)
                 : "#"
             }
             target="_blank"
@@ -519,8 +519,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.awpDocument
-                ? setFilePath(record.awpDocument)
+              record && record?.awpDocument
+                ? setFilePath(record?.awpDocument)
                 : "#"
             }
             target="_blank"
@@ -544,8 +544,8 @@ const TableColumns = (
         <Space className="text-secondary">
           <a
             href={
-              record && record.commisionDocument
-                ? setFilePath(record.commisionDocument)
+              record && record?.commisionDocument
+                ? setFilePath(record?.commisionDocument)
                 : "#"
             }
             target="_blank"
@@ -564,37 +564,37 @@ const TableColumns = (
       key: "COMMISIONING_ACT_VIEW",
     };
 
-    if (record && record.functionalDiagram) {
+    if (record && record?.functionalDiagram) {
       children.push(functionalDiagramView);
     }
 
-    if (record && record.mountDate && record.mountDocument) {
+    if (record && record?.mountDate && record?.mountDocument) {
       children.push(mountDocumentView);
     }
 
-    if (record && record.connectDate && record.connectDocument) {
+    if (record && record?.connectDate && record?.connectDocument) {
       children.push(connectDocumentView);
     }
 
-    if (record && record.testDate && record.testDocument) {
+    if (record && record?.testDate && record?.testDocument) {
       children.push(testDocumentView);
     }
 
-    if (record && record.awpDate && record.awpDocument) {
+    if (record && record?.awpDate && record?.awpDocument) {
       children.push(awpDocumentView);
     }
-    if (record && record.commisionDate && record.commisionDocument) {
+    if (record && record?.commisionDate && record?.commisionDocument) {
       children.push(commisionDocumentView);
     }
 
     const render =
       record &&
-      (record.functionalDiagram ||
-        record.mountDocument ||
-        record.connectDocument ||
-        record.testDocument ||
-        record.awpDocument ||
-        record.commisionDocument)
+      (record?.functionalDiagram ||
+        record?.mountDocument ||
+        record?.connectDocument ||
+        record?.testDocument ||
+        record?.awpDocument ||
+        record?.commisionDocument)
         ? {
             label: (
               <Space className="text-secondary">
@@ -642,8 +642,8 @@ const TableColumns = (
     filterSearch: unitFilters.length > 5 ? true : false,
     filters: unitFilters,
     onFilter: (value: any, record) =>
-      record.unit
-        ? record.unit.toUpperCase().includes(value.toUpperCase())
+      record?.unit
+        ? record?.unit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -659,8 +659,8 @@ const TableColumns = (
     filterSearch: subUnitFilters.length > 5 ? true : false,
     filters: subUnitFilters,
     onFilter: (value: any, record) =>
-      record.subUnit
-        ? record.subUnit.toUpperCase().includes(value.toUpperCase())
+      record?.subUnit
+        ? record?.subUnit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -676,7 +676,7 @@ const TableColumns = (
     filterSearch: tagFilters.length > 5 ? true : false,
     filters: tagFilters,
     onFilter: (value: any, record) =>
-      record.tag.toUpperCase().includes(value.toUpperCase()),
+      record?.tag?.toUpperCase()?.includes(value?.toUpperCase()),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -697,10 +697,10 @@ const TableColumns = (
         : false,
     filters: installationLocationFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).installationLocation
-        ? (record as GeneralInformationView).installationLocation
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.installationLocation
+        ? (record as GeneralInformationView)?.installationLocation
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -722,10 +722,10 @@ const TableColumns = (
         : false,
     filters: controlledParameterFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).controlledParameter
-        ? (record as GeneralInformationView).controlledParameter
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.controlledParameter
+        ? (record as GeneralInformationView)?.controlledParameter
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -745,10 +745,10 @@ const TableColumns = (
       equipmentTypeFilters && equipmentTypeFilters.length > 5 ? true : false,
     filters: equipmentTypeFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).facility.equipmentType
-        ? (record as GeneralInformationView).facility.equipmentType
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.facility.equipmentType
+        ? (record as GeneralInformationView)?.facility.equipmentType
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (facility) => (
       <Text type="secondary">{facility.equipmentType}</Text>
@@ -761,7 +761,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("РСУ") ? (
+      (record as GeneralInformationView)?.systemType.includes("РСУ") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -786,7 +786,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("ПАЗ") ? (
+      (record as GeneralInformationView)?.systemType.includes("ПАЗ") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -810,7 +810,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView).systemType.includes("КИТСО") ? (
+      (record as GeneralInformationView)?.systemType.includes("КИТСО") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -841,10 +841,10 @@ const TableColumns = (
     filterSearch: countryFilters && countryFilters.length > 5 ? true : false,
     filters: countryFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).facility.country
-        ? (record as GeneralInformationView).facility.country
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.facility.country
+        ? (record as GeneralInformationView)?.facility.country
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (facility) => <Text type="secondary">{facility.country}</Text>,
   };
@@ -862,10 +862,10 @@ const TableColumns = (
     filterSearch: vendorFilters && vendorFilters.length > 5 ? true : false,
     filters: vendorFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).facility.vendor
-        ? (record as GeneralInformationView).facility.vendor
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.facility.vendor
+        ? (record as GeneralInformationView)?.facility.vendor
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (facility) => <Text type="secondary">{facility.vendor}</Text>,
   };
@@ -884,10 +884,10 @@ const TableColumns = (
       facilityTitleFilters && facilityTitleFilters.length > 5 ? true : false,
     filters: facilityTitleFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).facility.title
-        ? (record as GeneralInformationView).facility.title
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.facility.title
+        ? (record as GeneralInformationView)?.facility.title
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (facility) => <Text type="secondary">{facility.title}</Text>,
   };
@@ -908,10 +908,10 @@ const TableColumns = (
         : false,
     filters: facilityModificationFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView).facilityModification
-        ? (record as GeneralInformationView).facilityModification
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as GeneralInformationView)?.facilityModification
+        ? (record as GeneralInformationView)?.facilityModification
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -964,10 +964,10 @@ const TableColumns = (
     filterSearch: sgroeiFilters && sgroeiFilters.length > 5 ? true : false,
     filters: sgroeiFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).sgroei
-        ? (record as MetrologyView).sgroei
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as MetrologyView)?.sgroei
+        ? (record as MetrologyView)?.sgroei
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -989,10 +989,10 @@ const TableColumns = (
         : false,
     filters: measurementAreaFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).measurementArea
-        ? (record as MetrologyView).measurementArea
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as MetrologyView)?.measurementArea
+        ? (record as MetrologyView)?.measurementArea
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1014,10 +1014,10 @@ const TableColumns = (
         : false,
     filters: measurementTypeFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).meansurementType
-        ? (record as MetrologyView).meansurementType
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as MetrologyView)?.meansurementType
+        ? (record as MetrologyView)?.meansurementType
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1039,10 +1039,10 @@ const TableColumns = (
         : false,
     filters: measurementGroupFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).meansureGroup
-        ? (record as MetrologyView).meansureGroup
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as MetrologyView)?.meansureGroup
+        ? (record as MetrologyView)?.meansureGroup
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1060,10 +1060,10 @@ const TableColumns = (
     filterSearch: grsiFilters && grsiFilters.length > 5 ? true : false,
     filters: grsiFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).grsi
-        ? (record as MetrologyView).grsi
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as MetrologyView)?.grsi
+        ? (record as MetrologyView)?.grsi
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1076,7 +1076,7 @@ const TableColumns = (
     // width: 200,
     render: (value, record) => (
       <Text type="secondary">
-        {value} {(record as MetrologyView).range}
+        {value} {(record as MetrologyView)?.range}
       </Text>
     ),
   };
@@ -1089,7 +1089,7 @@ const TableColumns = (
     // width: 200,
     render: (value, record) => (
       <Text type="secondary">
-        {value} {(record as MetrologyView).range}
+        {value} {(record as MetrologyView)?.range}
       </Text>
     ),
   };
@@ -1129,7 +1129,7 @@ const TableColumns = (
     width: 120,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MetrologyView).fromDate)}
+        {formatDate((record as MetrologyView)?.fromDate)}
       </Text>
     ),
   };
@@ -1148,25 +1148,25 @@ const TableColumns = (
     filterSearch: toDateFilters && toDateFilters.length > 5 ? true : false,
     filters: toDateFilters,
     onFilter: (value: any, record) =>
-      (record as MetrologyView).toDate
-        ? (record as MetrologyView).toDate
-            .toUpperCase()
-            .includes(formatDate(value.toUpperCase()))
+      (record as MetrologyView)?.toDate
+        ? (record as MetrologyView)?.toDate
+            ?.toUpperCase()
+            .includes(formatDate(value?.toUpperCase()))
         : false,
     render: (value, record) => (
       <Text
         type={
           verificateDates(
             setDateToVerification(
-              (record as MetrologyView).fromDate,
-              (record as MetrologyView).mpi
+              (record as MetrologyView)?.fromDate,
+              (record as MetrologyView)?.mpi
             )
           ) === "d"
             ? "danger"
             : verificateDates(
                 setDateToVerification(
-                  (record as MetrologyView).fromDate,
-                  (record as MetrologyView).mpi
+                  (record as MetrologyView)?.fromDate,
+                  (record as MetrologyView)?.mpi
                 )
               ) === "s"
             ? "success"
@@ -1174,8 +1174,8 @@ const TableColumns = (
         }
       >
         {setDateToVerification(
-          (record as MetrologyView).fromDate,
-          (record as MetrologyView).mpi
+          (record as MetrologyView)?.fromDate,
+          (record as MetrologyView)?.mpi
         )}
       </Text>
     ),
@@ -1213,10 +1213,10 @@ const TableColumns = (
       signalTypeFilters && signalTypeFilters.length > 5 ? true : false,
     filters: signalTypeFilters,
     onFilter: (value: any, record) =>
-      (record as SignalView).signalType
-        ? (record as SignalView).signalType
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as SignalView)?.signalType
+        ? (record as SignalView)?.signalType
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1235,10 +1235,10 @@ const TableColumns = (
       signalProtocolFilters && signalProtocolFilters.length > 5 ? true : false,
     filters: signalProtocolFilters,
     onFilter: (value: any, record) =>
-      (record as SignalView).signalProtocol
-        ? (record as SignalView).signalProtocol
-            .toUpperCase()
-            .includes(value.toUpperCase())
+      (record as SignalView)?.signalProtocol
+        ? (record as SignalView)?.signalProtocol
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1329,9 +1329,9 @@ const TableColumns = (
     filters: cableMarkFilters,
     onFilter: (value: any, record) =>
       (record as CableLogView)
-        ? (record as CableLogView).cableMark
-            .toUpperCase()
-            .includes(value.toUpperCase())
+        ? (record as CableLogView)?.cableMark
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1426,9 +1426,9 @@ const TableColumns = (
     filters: impulseLineTypeFilters,
     onFilter: (value: any, record) =>
       (record as ImpulseLineLogView)
-        ? (record as ImpulseLineLogView).impulseLineType
-            .toUpperCase()
-            .includes(value.toUpperCase())
+        ? (record as ImpulseLineLogView)?.impulseLineType
+            ?.toUpperCase()
+            .includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1450,7 +1450,7 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView).mountDate)}
+        {formatDate((record as MonitoringView)?.mountDate)}
       </Text>
     ),
   };
@@ -1463,7 +1463,7 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView).connectDate)}
+        {formatDate((record as MonitoringView)?.connectDate)}
       </Text>
     ),
   };
@@ -1476,7 +1476,7 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView).testDate)}
+        {formatDate((record as MonitoringView)?.testDate)}
       </Text>
     ),
   };
@@ -1489,7 +1489,7 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView).awpDate)}
+        {formatDate((record as MonitoringView)?.awpDate)}
       </Text>
     ),
   };
@@ -1502,7 +1502,7 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView).commisionDate)}
+        {formatDate((record as MonitoringView)?.commisionDate)}
       </Text>
     ),
   };
@@ -1564,7 +1564,7 @@ const TableColumns = (
       columns.push(actionsColumn);
 
       currentRow &&
-        (currentRow as GeneralInformationView).questionare &&
+        (currentRow as GeneralInformationView)?.questionare &&
         menuItems.push(
           questionareViewMenuItem(currentRow as GeneralInformationView)
         );
@@ -1616,10 +1616,10 @@ const TableColumns = (
       columns.push(actionsColumn);
 
       currentRow &&
-        ((currentRow as MetrologyView).typeApprovalCertificate ||
-          (currentRow as MetrologyView).verificationProcedure ||
-          (currentRow as MetrologyView).document ||
-          (currentRow as MetrologyView).arshin) &&
+        ((currentRow as MetrologyView)?.typeApprovalCertificate ||
+          (currentRow as MetrologyView)?.verificationProcedure ||
+          (currentRow as MetrologyView)?.document ||
+          (currentRow as MetrologyView)?.arshin) &&
         menuItems.push(
           metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
         );
@@ -1671,7 +1671,7 @@ const TableColumns = (
       columns.push(actionsColumn);
 
       currentRow &&
-        (currentRow as CableLogView).wiringDiagram &&
+        (currentRow as CableLogView)?.wiringDiagram &&
         menuItems.push(wiringDiagramViewMenuItem(currentRow as CableLogView));
       // menuItems.push(editAssetMenuItem);
       // menuItems.push(deleteAssetMenuItem);
@@ -1715,12 +1715,12 @@ const TableColumns = (
       columns.push(actionsColumn);
 
       currentRow &&
-        ((currentRow as MonitoringView).functionalDiagram ||
-          (currentRow as MonitoringView).mountDocument ||
-          (currentRow as MonitoringView).connectDocument ||
-          (currentRow as MonitoringView).testDocument ||
-          (currentRow as MonitoringView).awpDocument ||
-          (currentRow as MonitoringView).commisionDocument) &&
+        ((currentRow as MonitoringView)?.functionalDiagram ||
+          (currentRow as MonitoringView)?.mountDocument ||
+          (currentRow as MonitoringView)?.connectDocument ||
+          (currentRow as MonitoringView)?.testDocument ||
+          (currentRow as MonitoringView)?.awpDocument ||
+          (currentRow as MonitoringView)?.commisionDocument) &&
         menuItems.push(
           monitoringDocumentsViewMenuItem(currentRow as MonitoringView)
         );

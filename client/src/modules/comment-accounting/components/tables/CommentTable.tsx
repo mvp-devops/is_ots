@@ -114,8 +114,10 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         setCommentFilters("document-section", data).length > 5 ? true : false,
       filters: setCommentFilters("document-section", data),
       onFilter: (value: any, record) =>
-        record.documentSection
-          ? record.documentSection.toUpperCase().includes(value.toUpperCase())
+        record?.documentSection
+          ? record?.documentSection
+              ?.toUpperCase()
+              ?.includes(value?.toUpperCase())
           : false,
       width: 50,
       align: "center",
@@ -141,7 +143,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           currentDesignDocument && (
             <Space className="d-flex justify-content-start">
               <Text type="secondary">
-                {currentDesignDocument.fileType.toUpperCase() === ".PDF" ? (
+                {currentDesignDocument?.fileType?.toUpperCase() === ".PDF" ? (
                   <FilePdfOutlined className="text-danger" />
                 ) : (
                   <FileUnknownOutlined className="text-secondary" />
@@ -149,14 +151,14 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               </Text>
               <a
                 href={setFilePath(
-                  `${currentDesignDocument.filePath}/${currentDesignDocument.fileName}`
+                  `${currentDesignDocument?.filePath}/${currentDesignDocument?.fileName}`
                 )}
                 target="_blank"
                 rel="noreferrer"
                 className="mx-2 text-secondary"
-                title={record.documentTitle}
+                title={record?.documentTitle}
               >
-                {record.documentTitle}
+                {record?.documentTitle}
               </a>
             </Space>
           )
@@ -187,8 +189,8 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         setCommentFilters("normative", data).length > 5 ? true : false,
       filters: setCommentFilters("normative", data),
       onFilter: (value: any, record) =>
-        record.normative
-          ? record.normative.toUpperCase().includes(value.toUpperCase())
+        record?.normative
+          ? record?.normative?.toUpperCase()?.includes(value?.toUpperCase())
           : false,
       width: 250,
       align: "center",
@@ -203,11 +205,11 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         setCommentFilters("criticality", data).length > 5 ? true : false,
       filters: setCommentFilters("criticality", data),
       onFilter: (value: any, record) =>
-        record.criticalityId
-          ? record.criticalityId
-              .toString()
-              .toUpperCase()
-              .includes(value.toString().toUpperCase())
+        record?.criticalityId
+          ? record?.criticalityId
+              ?.toString()
+              ?.toUpperCase()
+              ?.includes(value?.toString()?.toUpperCase())
           : false,
       width: 50,
       align: "center",
@@ -222,8 +224,10 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         setCommentFilters("expert-subdivision", data).length > 5 ? true : false,
       filters: setCommentFilters("expert-subdivision", data),
       onFilter: (value: any, record) =>
-        record.expertSubdivision
-          ? record.expertSubdivision.toUpperCase().includes(value.toUpperCase())
+        record?.expertSubdivision
+          ? record?.expertSubdivision
+              ?.toUpperCase()
+              ?.includes(value?.toUpperCase())
           : false,
       align: "center",
       render: (value) => <Text type="secondary">{value}</Text>,
@@ -236,8 +240,10 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         setCommentFilters("expert-contacts", data).length > 5 ? true : false,
       filters: setCommentFilters("expert-contacts", data),
       onFilter: (value: any, record) =>
-        record.expertContacts
-          ? record.expertContacts.toUpperCase().includes(value.toUpperCase())
+        record?.expertContacts
+          ? record?.expertContacts
+              ?.toUpperCase()
+              ?.includes(value?.toUpperCase())
           : false,
       align: "center",
       render: (value) => <Text type="secondary">{value}</Text>,
@@ -278,7 +284,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               <Text strong>Количество:</Text>
             </Cell>
             <Cell index={1} align="center">
-              <Text strong>{dataSource.length}</Text>
+              <Text strong>{dataSource?.length}</Text>
             </Cell>
           </Row>
         )}
@@ -300,17 +306,17 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   bordered
                   size="small"
                   // style={{ width: "1000px" }}
-                  dataSource={criticalityRequestData.slice(1, 11)}
+                  dataSource={criticalityRequestData?.slice(1, 11)}
                   renderItem={(item) => (
-                    <Item key={item.id}>
+                    <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item.id}</Text>}
+                        avatar={<Text type="secondary">{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item.id.toString()}>
-                            {item.title}
+                          <Text type="secondary" key={item?.id.toString()}>
+                            {item?.title}
                           </Text>
                         }
-                        description={item.description}
+                        description={item?.description}
                       />
                     </Item>
                   )}
@@ -326,15 +332,15 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   size="small"
                   dataSource={statusRequestData}
                   renderItem={(item) => (
-                    <Item key={item.id}>
+                    <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item.id}</Text>}
+                        avatar={<Text type="secondary">{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item.id.toString()}>
-                            {item.title}
+                          <Text type="secondary" key={item?.id.toString()}>
+                            {item?.title}
                           </Text>
                         }
-                        description={item.description}
+                        description={item?.description}
                       />
                     </Item>
                   )}
@@ -349,15 +355,15 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   size="small"
                   dataSource={solutionRequestData}
                   renderItem={(item) => (
-                    <Item key={item.id}>
+                    <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item.id}</Text>}
+                        avatar={<Text type="secondary">{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item.id.toString()}>
-                            {item.title}
+                          <Text type="secondary" key={item?.id.toString()}>
+                            {item?.title}
                           </Text>
                         }
-                        description={item.description}
+                        description={item?.description}
                       />
                     </Item>
                   )}
