@@ -88,7 +88,7 @@ function AuthPage() {
     <Layout className="d-flex justify-content-center align-items-center">
       <Space
         style={{
-          height: window.innerHeight - 40,
+          height: window.innerHeight - 100,
           // width: window.innerWidth - 400,
         }}
       >

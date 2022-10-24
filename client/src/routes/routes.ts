@@ -1,6 +1,6 @@
 import { AuthPage, MainPage } from "../pages";
 
-export const BASENAME = window.location.pathname.slice(0, -1);
+export const BASENAME = window.location.pathname.slice(0, 0);
 export const site = window.location.origin + BASENAME;
 
 export enum Routes {
