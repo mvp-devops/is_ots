@@ -53,7 +53,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
       return (
         <Space className="d-flex justify-content-start">
           <Text type="secondary">
-            {record?.fileType.toUpperCase() === ".PDF" ? (
+            {record?.fileType?.toUpperCase() === ".PDF" ? (
               <FilePdfOutlined className="text-danger" />
             ) : (
               <FileUnknownOutlined className="text-secondary" />
