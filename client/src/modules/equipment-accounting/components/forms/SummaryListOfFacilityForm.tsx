@@ -1,7 +1,6 @@
 import { Button, Divider, Space, Steps } from "antd";
 import { useEffect, useState } from "react";
-import { useActions } from "../../../..";
-import { setFormVisible } from "../../../main/store/main.action-creators";
+import { useActions, useTypedSelector } from "../../../..";
 import { getFolderPath } from "../../../position-tree/api";
 import {
   CableLogCreateOrUpdateAttrs,
@@ -29,10 +28,11 @@ const SummaryListOfFacilityForm = () => {
     summaryListOfEquipmentFormData
   );
 
-  const { currentItem, checkedItem, target, currentItemFolderPath } =
-    useEquipmentAccountingForm();
+  const { currentItem, checkedItem, target } = useEquipmentAccountingForm();
 
-  const { createOneEquipment } = useActions();
+  const { createOneEquipment, setFormVisible } = useActions();
+
+  const { formVisible } = useTypedSelector((state) => state.main);
 
   const setGeneralInformation = (
     generalInformation: GeneralInformationCreateOrUpdateAttrs
@@ -55,10 +55,11 @@ const SummaryListOfFacilityForm = () => {
     setData({ ...data, metrology });
 
   const createNewAsset = () => {
-    getFolderPath("sub-unit", data.generalInformation.subUnitId.toString())
-      .then((folderPath) => createOneEquipment(data, folderPath))
-      .finally(() => setFormVisible(false));
-    setFormVisible(false);
+    // setFormVisible(false);
+    getFolderPath(
+      "sub-unit",
+      data.generalInformation.subUnitId.toString()
+    ).then((folderPath) => createOneEquipment(data, folderPath));
   };
 
   useEffect(() => {
@@ -239,7 +240,14 @@ const SummaryListOfFacilityForm = () => {
           </Button>
         )}
         {current === steps.length - 1 && (
-          <Button type="primary" onClick={createNewAsset}>
+          <Button
+            type="primary"
+            onClick={() => {
+              createNewAsset();
+              setFormVisible(false);
+              console.log(formVisible);
+            }}
+          >
             Добавить
           </Button>
         )}
