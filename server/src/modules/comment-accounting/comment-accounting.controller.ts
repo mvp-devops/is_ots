@@ -16,6 +16,7 @@ import {
   UpdateDesignDocumentCommentDto,
 } from "./dto";
 import type { Response } from "express";
+import * as uuid from "uuid";
 
 @Controller("api/comment-accounting")
 export class CommentAccountingController {
@@ -67,23 +68,27 @@ export class CommentAccountingController {
   }
 
   @Get("/download")
-  async download(@Query() query, @Res() res: Response) {
-    const { target, parrentId } = query;
-    let fileLocation = await this.service.exportExcelFile(target, parrentId);
-    res.header(
-      "Content-disposition",
-      `attachment; filename=${target}_CCKSH_${setCurrentDate()}.xlsx`
+  async download(
+    @Query()
+    query: { target: string; parrentId?: string; parrentIds?: string[] },
+    @Res() res: Response
+  ) {
+    const { target, parrentId, parrentIds } = query;
+    let fileLocation = await this.service.exportExcelFile(
+      target,
+      parrentId,
+      parrentIds
     );
+    const fileName = `${uuid.v4()}_${setCurrentDate()}.xlsx`;
+    res.header("Content-disposition", `attachment; filename=${fileName}`);
     res.type(
       "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
     );
 
-    res.download(
-      fileLocation,
-      `${target}_CCKSH_${setCurrentDate()}.xlsx`,
-      (err) => {
-        if (err) console.log(err);
-      }
-    );
+    res.download(fileLocation, fileName, (err) => {
+      console.log(fileLocation);
+      console.log(fileName);
+      if (err) console.log(err);
+    });
   }
 }

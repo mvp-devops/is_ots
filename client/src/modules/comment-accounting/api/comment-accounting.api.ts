@@ -86,6 +86,7 @@ export const exportLKPData = async (
       params: { target, parrentId, parrentIds },
     })
     .then((resp) => {
+      console.log(resp.data);
       download(resp.data, `LKP_${Math.random()}.xlsx`);
     });
 };

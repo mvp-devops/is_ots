@@ -188,8 +188,8 @@ export class ExcelService {
       subUnitQuestionareRender,
     } = headers;
 
-    workBook.xlsx
-      .readFile(`${templateFilePath}/${templateFileName}`)
+    await workBook.xlsx
+      .readFile(`${templateFilePath}\\${templateFileName}`)
       .then(async () => {
         const workSheet = workBook.getWorksheet(1);
 
@@ -258,13 +258,13 @@ export class ExcelService {
       })
       .then(() =>
         workBook.xlsx
-          .writeFile(`${outputFilePath}/${outputFileName}`)
+          .writeFile(`${outputFilePath}\\${outputFileName}`)
           .then(() => console.log("Файл сохранен!"))
           .catch((err) => {
             throw new BadRequestException(err);
           })
       );
 
-    return `${outputFilePath}/${outputFileName}`;
+    return `${outputFilePath}\\${outputFileName}`;
   };
 }
