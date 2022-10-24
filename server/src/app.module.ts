@@ -55,8 +55,12 @@ import {
 
 @Module({
   imports: [
+    // ConfigModule.forRoot({
+    //   envFilePath: join(__dirname, "..", "..", `.development.env`),
+    //   isGlobal: true,
+    // }),
     ConfigModule.forRoot({
-      envFilePath: join(__dirname, "..", "..", `.development.env`),
+      envFilePath: join(__dirname, "..", "..", `.production.env`),
       isGlobal: true,
     }),
     ServeStaticModule.forRoot({
