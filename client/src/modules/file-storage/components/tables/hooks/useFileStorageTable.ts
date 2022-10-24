@@ -46,14 +46,15 @@ export const useFileStorageTable = () => {
   };
 
   useEffect(() => {
-    setDataSource(
-      designDocuments?.filter(
-        (item) =>
-          item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
-          item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
-          item?.createdAt?.toLowerCase()?.includes(searchValue.toLowerCase())
-      )
-    );
+    designDocuments.length > 0 &&
+      setDataSource(
+        designDocuments?.filter(
+          (item) =>
+            item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
+            item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
+            item?.createdAt?.toLowerCase()?.includes(searchValue.toLowerCase())
+        )
+      );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {

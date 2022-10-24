@@ -35,19 +35,21 @@ export const useGeneralInformationTable = () => {
           item?.installationLocation
             ?.toUpperCase()
             ?.includes(searchValue?.toUpperCase()) ||
-          item?.facility?.equipmentType
-            ?.toUpperCase()
-            ?.includes(searchValue?.toUpperCase()) ||
           item?.systemType?.includes(searchValue?.toUpperCase()) ||
-          item?.facility?.country
-            ?.toUpperCase()
-            ?.includes(searchValue?.toUpperCase()) ||
-          item?.facility?.vendor
-            ?.toUpperCase()
-            ?.includes(searchValue?.toUpperCase()) ||
-          item?.facility?.title
-            ?.toUpperCase()
-            ?.includes(searchValue?.toUpperCase()) ||
+          (item &&
+            item.facility &&
+            (item?.facility?.equipmentType
+              ?.toUpperCase()
+              ?.includes(searchValue?.toUpperCase()) ||
+              item?.facility?.country
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase()) ||
+              item?.facility?.vendor
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase()) ||
+              item?.facility?.title
+                ?.toUpperCase()
+                ?.includes(searchValue?.toUpperCase()))) ||
           item?.facilityModification
             ?.toUpperCase()
             ?.includes(searchValue?.toUpperCase()) ||

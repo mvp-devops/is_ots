@@ -83,23 +83,23 @@ const Header = () => {
 
                   //   key: "EXPORT_TO_TORO",
                   // },
-                  {
-                    label: (
-                      <Space
-                        className="text-secondary"
-                        onSelect={(key) => console.log("EXCEL")}
-                      >
-                        <FileExcelOutlined
-                          style={{ marginBottom: "6px", padding: 0 }}
-                          className="text-success"
-                          title="Сформировать файл выгрузки"
-                        />
-                        MS Excel
-                      </Space>
-                    ),
+                  // {
+                  //   label: (
+                  //     <Space
+                  //       className="text-secondary"
+                  //       onSelect={(key) => console.log("EXCEL")}
+                  //     >
+                  //       <FileExcelOutlined
+                  //         style={{ marginBottom: "6px", padding: 0 }}
+                  //         className="text-success"
+                  //         title="Сформировать файл выгрузки"
+                  //       />
+                  //       MS Excel
+                  //     </Space>
+                  //   ),
 
-                    key: "EXPORT_TO_EXCEL",
-                  },
+                  //   key: "EXPORT_TO_EXCEL",
+                  // },
                 ]}
               />
             }

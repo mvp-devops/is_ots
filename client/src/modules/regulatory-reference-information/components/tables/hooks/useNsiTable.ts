@@ -82,13 +82,14 @@ export const useNsiTable = () => {
   };
 
   useEffect(() => {
-    setDataSource(
-      renderNsiItems.filter(
-        (item) =>
-          item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
-          item?.code?.toLowerCase()?.includes(searchValue.toLowerCase())
-      )
-    );
+    renderNsiItems.length > 0 &&
+      setDataSource(
+        renderNsiItems.filter(
+          (item) =>
+            item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
+            item?.code?.toLowerCase()?.includes(searchValue.toLowerCase())
+        )
+      );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return {

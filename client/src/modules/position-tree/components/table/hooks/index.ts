@@ -29,33 +29,34 @@ export const usePositionTreeTable = () => {
   } = usePositionTree();
 
   useEffect(() => {
-    setDataSource(
-      renderItems.filter(
-        (item) =>
-          item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
-          item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
-          ("design" in item &&
-            item.design.title
-              .toLocaleLowerCase()
-              ?.includes(searchValue.toLocaleLowerCase())) ||
-          ("contract" in item &&
-            item.contract
-              .toLocaleLowerCase()
-              ?.includes(searchValue.toLocaleLowerCase())) ||
-          ("position" in item &&
-            item.position
-              .toLocaleLowerCase()
-              ?.includes(searchValue.toLocaleLowerCase())) ||
-          ("equipment" in item &&
-            item.equipment.title
-              .toLocaleLowerCase()
-              ?.includes(searchValue.toLocaleLowerCase())) ||
-          ("supplier" in item &&
-            item.supplier.title
-              .toLocaleLowerCase()
-              ?.includes(searchValue.toLocaleLowerCase()))
-      )
-    );
+    renderItems.length > 0 &&
+      setDataSource(
+        renderItems.filter(
+          (item) =>
+            item?.title?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
+            item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
+            ("design" in item &&
+              item.design.title
+                .toLocaleLowerCase()
+                ?.includes(searchValue.toLocaleLowerCase())) ||
+            ("contract" in item &&
+              item.contract
+                .toLocaleLowerCase()
+                ?.includes(searchValue.toLocaleLowerCase())) ||
+            ("position" in item &&
+              item.position
+                .toLocaleLowerCase()
+                ?.includes(searchValue.toLocaleLowerCase())) ||
+            ("equipment" in item &&
+              item.equipment.title
+                .toLocaleLowerCase()
+                ?.includes(searchValue.toLocaleLowerCase())) ||
+            ("supplier" in item &&
+              item.supplier.title
+                .toLocaleLowerCase()
+                ?.includes(searchValue.toLocaleLowerCase()))
+        )
+      );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const tableTitle =
