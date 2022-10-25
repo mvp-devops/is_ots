@@ -23,61 +23,76 @@ export const useMetrologyTable = () => {
       setDataSource(
         (renderDataSource as MetrologyView[]).filter(
           (item) =>
-            (item?.unit &&
+            (item &&
+              item?.unit &&
               item?.unit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.subUnit &&
+            (item &&
+              item?.subUnit &&
               item?.subUnit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.tag &&
+            (item &&
+              item?.tag &&
               item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase())) ||
-            (item?.sgroei &&
+            (item &&
+              item?.sgroei &&
               item?.sgroei
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.measurementArea &&
+            (item &&
+              item?.measurementArea &&
               item?.measurementArea
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.meansurementType &&
+            (item &&
+              item?.meansurementType &&
               item?.meansurementType
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.meansureGroup &&
+            (item &&
+              item?.meansureGroup &&
               item?.meansureGroup
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.grsi &&
+            (item &&
+              item?.grsi &&
               item?.grsi
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.documentType &&
+            (item &&
+              item?.documentType &&
               item?.documentType
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.documentNumber &&
+            (item &&
+              item?.documentNumber &&
               item?.documentNumber
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.counterparty &&
+            (item &&
+              item?.counterparty &&
               item?.counterparty
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.fromDate &&
+            (item &&
+              item?.fromDate &&
               item?.fromDate
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.toDate &&
+            (item &&
+              item?.toDate &&
               item?.toDate
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.status &&
+            (item &&
+              item?.status &&
               item?.status
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.mpi &&
+            (item &&
+              item?.mpi &&
               item?.mpi?.toUpperCase()?.includes(searchValue?.toUpperCase()))
         )
       );

@@ -19,46 +19,62 @@ export const useCableLogTable = () => {
     setDataSource(renderDataSource as CableLogView[]);
   }, [renderDataSource]);
 
+  const onSearchItem = (initValue: string, compareValue: string): boolean => {
+    return !initValue
+      ? false
+      : initValue.toUpperCase().includes(compareValue.toUpperCase());
+  };
+
   useEffect(() => {
     renderDataSource.length > 0 &&
       setDataSource(
         (renderDataSource as CableLogView[]).filter(
           (item) =>
-            (item?.unit &&
+            (item &&
+              item?.unit &&
               item?.unit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.subUnit &&
+            (item &&
+              item?.subUnit &&
               item?.subUnit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.tag &&
+            (item &&
+              item?.tag &&
               item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase())) ||
-            (item?.numberOfTrace &&
+            (item &&
+              item?.numberOfTrace &&
               item?.numberOfTrace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.cableMark &&
+            (item &&
+              item?.cableMark &&
               item?.cableMark
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.cableSection &&
+            (item &&
+              item?.cableSection &&
               item?.cableSection
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.fromUnit &&
+            (item &&
+              item?.fromUnit &&
               item?.fromUnit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.fromPlace &&
+            (item &&
+              item?.fromPlace &&
               item?.fromPlace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.toUnit &&
+            (item &&
+              item?.toUnit &&
               item?.toUnit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.toPlace &&
+            (item &&
+              item?.toPlace &&
               item?.toPlace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase()))

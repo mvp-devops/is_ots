@@ -29,7 +29,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
       className="m-1 p-1 border"
     >
       <Item
-        label={<Text type="secondary">Номер кабельной линии</Text>}
+        label={<Text type="secondary">Номер импульсной линии</Text>}
         className="m-0"
       >
         <InputUIComponent

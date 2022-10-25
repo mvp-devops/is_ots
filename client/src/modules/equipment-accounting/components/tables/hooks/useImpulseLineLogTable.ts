@@ -22,27 +22,34 @@ export const useImpulseLineLogTable = () => {
       setDataSource(
         (renderDataSource as ImpulseLineLogView[]).filter(
           (item) =>
-            (item?.unit &&
+            (item &&
+              item?.unit &&
               item?.unit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.subUnit &&
+            (item &&
+              item?.subUnit &&
               item?.subUnit
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.tag &&
+            (item &&
+              item?.tag &&
               item?.tag?.toUpperCase()?.includes(searchValue?.toUpperCase())) ||
-            (item?.numberOfTrace &&
+            (item &&
+              item?.numberOfTrace &&
               item?.numberOfTrace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.impulseLineType &&
+            (item &&
+              item?.impulseLineType &&
               item?.impulseLineType?.includes(searchValue?.toUpperCase())) ||
-            (item?.fromPlace &&
+            (item &&
+              item?.fromPlace &&
               item?.fromPlace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase())) ||
-            (item?.toPlace &&
+            (item &&
+              item?.toPlace &&
               item?.toPlace
                 ?.toUpperCase()
                 ?.includes(searchValue?.toUpperCase()))

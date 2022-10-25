@@ -24,11 +24,12 @@ const CheckList = () => {
             <Text strong>{setCurrentDate()}</Text>
             <Text strong>ОЦЕНОЧНЫЙ ЛИСТ КОНТРАГЕНТА</Text>
             <Space className="d-flex justify-content-between mx-3">
-              <FileExcelOutlined
+              {/* <FileExcelOutlined
                 style={{ fontSize: "20px", cursor: "pointer" }}
                 title="Выгрузить"
                 className="text-success"
-              />
+              /> */}{" "}
+              //TODO: заменить на печать pdf
             </Space>
           </Space>
           <Divider className="m-1 p-0" />
