@@ -683,7 +683,8 @@ export class EquipmentAccountingService {
 
       if (document) {
         const documentName = this.fileService.fileUpload(docPath, document);
-        documentPath = `${docPath}/${documentName}`;
+        documentPath = `${docPath}\\${documentName}`;
+        console.log("documentPath: ", documentPath);
       }
 
       if (verificationProcedure) {
@@ -790,31 +791,31 @@ export class EquipmentAccountingService {
 
       if (data) {
         item = {
-          id: data.id,
-          sloeId: data.sloeId,
-          unitId: data.sloe.subUnit.unit.id.toString(),
-          unit: data.sloe.subUnit.unit.title,
-          subUnitId: data.sloe.subUnit.id.toString(),
-          subUnit: data.sloe.subUnit.title,
-          counterpartyId: data.counterpartyId,
-          tag: data.sloe.tag,
-          sgroei: data.sgroei,
-          measurementArea: data.sloe.facility.measurementArea,
-          meansurementType: data.sloe.facility.meansurementType,
-          meansureGroup: data.sloe.facility.meansureGroup,
-          grsi: data.grsi,
-          min: data.min,
-          max: data.max,
-          range: data.range,
-          accuracy: data.accuracy,
-          mpi: data.mpi,
-          metrologyType: data.metrologyType,
-          documentType: data.documentType,
-          documentNumber: data.documentNumber,
-          document: data.document,
-          verificationProcedure: data.verificationProcedure,
-          typeApprovalCertificate: data.typeApprovalCertificate,
-          counterparty: data.counterparty.title,
+          id: data?.id,
+          sloeId: data?.sloeId,
+          unitId: data?.sloe.subUnit.unit.id.toString(),
+          unit: data?.sloe.subUnit.unit.title,
+          subUnitId: data?.sloe.subUnit.id.toString(),
+          subUnit: data?.sloe.subUnit.title,
+          counterpartyId: data?.counterpartyId,
+          tag: data?.sloe.tag,
+          sgroei: data?.sgroei,
+          measurementArea: data?.sloe.facility.measurementArea,
+          meansurementType: data?.sloe.facility.meansurementType,
+          meansureGroup: data?.sloe.facility.meansureGroup,
+          grsi: data?.grsi,
+          min: data?.min,
+          max: data?.max,
+          range: data?.range,
+          accuracy: data?.accuracy,
+          mpi: data?.mpi,
+          metrologyType: data?.metrologyType,
+          documentType: data?.documentType,
+          documentNumber: data?.documentNumber,
+          document: data?.document,
+          verificationProcedure: data?.verificationProcedure,
+          typeApprovalCertificate: data?.typeApprovalCertificate,
+          counterparty: data.counterpartyId ? data?.counterparty?.title : "н/д",
           fromDate: data.fromDate,
           toDate: data.toDate,
           status: data.status,
@@ -1785,7 +1786,7 @@ export class EquipmentAccountingService {
       if (metrologyData.min) {
         await this.createNewMetrologyAsset(
           { ...metrologyData, sloeId: id },
-          files?.document[0] ? files?.document : undefined,
+          files?.document ? files?.document[0] : undefined,
           files?.verificationProcedure
             ? files?.verificationProcedure[0]
             : undefined,
@@ -1956,6 +1957,8 @@ export class EquipmentAccountingService {
         description: description,
         facility: await this.findOneFacilityAsset(facilityId),
         metrology: await this.findOneMetrologyAsset(undefined, id),
+        signals: await this.findAllSignalAssets(id),
+
         cableLog: await this.findAllCableLogAssets(id),
         impulseLineLog: await this.findAllImpulseLineLogAssets(id),
         monitoring: await this.findOneMonitoringAsset(undefined, id),

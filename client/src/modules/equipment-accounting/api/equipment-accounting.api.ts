@@ -372,8 +372,10 @@ const setFormData = (
     awpDocument,
     testDocument,
     commisionDocument,
+    functionalDiagram,
   } = monitoring;
 
+  functionalDiagram && data.append("functionalDiagram", functionalDiagram);
   mountDocument && data.append("mountDocument", mountDocument);
   connectDocument && data.append("connectDocument", connectDocument);
   awpDocument && data.append("awpDocument", awpDocument);

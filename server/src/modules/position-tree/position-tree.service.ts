@@ -336,6 +336,16 @@ export class PositionTreeService {
               folderName,
               file
             ));
+          if (
+            (dto as CreateUnitDto).subUnits &&
+            (dto as CreateUnitDto).subUnits.length > 0
+          ) {
+            const items = (dto as CreateUnitDto).subUnits;
+            for (let i = 0; i < items.length; i++) {
+              const item = items[i];
+              await this.createOne("sub-unit", { ...item, unitId: id });
+            }
+          }
           item = await this.findOne(target, id.toString());
           break;
         }
@@ -1485,7 +1495,7 @@ export class PositionTreeService {
               ? `${parrentFolderName}/${oldFolder}`
               : "";
 
-          await this.unitRepository.update(dto, { where: { id } });
+          // await this.unitRepository.update(dto, { where: { id } }); //TODO: вурнуть из коммента
           item = await this.unitRepository.findOne({ where: { id } });
 
           break;

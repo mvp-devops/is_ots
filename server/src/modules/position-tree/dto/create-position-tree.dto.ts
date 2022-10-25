@@ -6,6 +6,8 @@ import {
   SubUnitCreateOrUpdateAttrs,
   UnitCreateOrUpdateAttrs,
 } from "../../../../common/types/position-tree";
+import { SubUnitEntity } from "../entities";
+import { UpdateSubUnitDto } from "./update-position-tree.dto";
 
 export class CreateSubsidiaryDto implements SubsidiaryCreateOrUpdateAttrs {
   @ApiProperty({
@@ -152,6 +154,8 @@ export class CreateUnitDto implements UnitCreateOrUpdateAttrs {
     description: "ТЗ, ТТ, ОЛ",
   })
   readonly file: any;
+
+  readonly subUnits?: CreateSubUnitDto[];
 }
 
 export class CreateSubUnitDto implements SubUnitCreateOrUpdateAttrs {

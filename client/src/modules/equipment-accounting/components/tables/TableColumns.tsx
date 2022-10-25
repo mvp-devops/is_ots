@@ -700,7 +700,7 @@ const TableColumns = (
       (record as GeneralInformationView)?.installationLocation
         ? (record as GeneralInformationView)?.installationLocation
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -725,7 +725,7 @@ const TableColumns = (
       (record as GeneralInformationView)?.controlledParameter
         ? (record as GeneralInformationView)?.controlledParameter
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -745,13 +745,13 @@ const TableColumns = (
       equipmentTypeFilters && equipmentTypeFilters.length > 5 ? true : false,
     filters: equipmentTypeFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView)?.facility.equipmentType
-        ? (record as GeneralInformationView)?.facility.equipmentType
+      (record as GeneralInformationView)?.facility?.equipmentType
+        ? (record as GeneralInformationView)?.facility?.equipmentType
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (facility) => (
-      <Text type="secondary">{facility.equipmentType}</Text>
+      <Text type="secondary">{facility?.equipmentType}</Text>
     ),
   };
 
@@ -761,7 +761,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView)?.systemType.includes("РСУ") ? (
+      (record as GeneralInformationView)?.systemType?.includes("РСУ") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -786,7 +786,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView)?.systemType.includes("ПАЗ") ? (
+      (record as GeneralInformationView)?.systemType?.includes("ПАЗ") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -810,7 +810,7 @@ const TableColumns = (
     key: "systemType",
     align: "center",
     render: (_blank, record) =>
-      (record as GeneralInformationView)?.systemType.includes("КИТСО") ? (
+      (record as GeneralInformationView)?.systemType?.includes("КИТСО") ? (
         <Badge status="success" />
       ) : (
         <Badge status="error" />
@@ -841,12 +841,12 @@ const TableColumns = (
     filterSearch: countryFilters && countryFilters.length > 5 ? true : false,
     filters: countryFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView)?.facility.country
-        ? (record as GeneralInformationView)?.facility.country
+      (record as GeneralInformationView)?.facility?.country
+        ? (record as GeneralInformationView)?.facility?.country
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
-    render: (facility) => <Text type="secondary">{facility.country}</Text>,
+    render: (facility) => <Text type="secondary">{facility?.country}</Text>,
   };
 
   const vendorFilters =
@@ -862,12 +862,12 @@ const TableColumns = (
     filterSearch: vendorFilters && vendorFilters.length > 5 ? true : false,
     filters: vendorFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView)?.facility.vendor
-        ? (record as GeneralInformationView)?.facility.vendor
+      (record as GeneralInformationView)?.facility?.vendor
+        ? (record as GeneralInformationView)?.facility?.vendor
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
-    render: (facility) => <Text type="secondary">{facility.vendor}</Text>,
+    render: (facility) => <Text type="secondary">{facility?.vendor}</Text>,
   };
 
   const facilityTitleFilters =
@@ -884,12 +884,12 @@ const TableColumns = (
       facilityTitleFilters && facilityTitleFilters.length > 5 ? true : false,
     filters: facilityTitleFilters,
     onFilter: (value: any, record) =>
-      (record as GeneralInformationView)?.facility.title
-        ? (record as GeneralInformationView)?.facility.title
+      (record as GeneralInformationView)?.facility?.title
+        ? (record as GeneralInformationView)?.facility?.title
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
-    render: (facility) => <Text type="secondary">{facility.title}</Text>,
+    render: (facility) => <Text type="secondary">{facility?.title}</Text>,
   };
 
   const facilityModificationFilters =
@@ -911,7 +911,7 @@ const TableColumns = (
       (record as GeneralInformationView)?.facilityModification
         ? (record as GeneralInformationView)?.facilityModification
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -967,7 +967,7 @@ const TableColumns = (
       (record as MetrologyView)?.sgroei
         ? (record as MetrologyView)?.sgroei
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -992,7 +992,7 @@ const TableColumns = (
       (record as MetrologyView)?.measurementArea
         ? (record as MetrologyView)?.measurementArea
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1017,7 +1017,7 @@ const TableColumns = (
       (record as MetrologyView)?.meansurementType
         ? (record as MetrologyView)?.meansurementType
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1042,7 +1042,7 @@ const TableColumns = (
       (record as MetrologyView)?.meansureGroup
         ? (record as MetrologyView)?.meansureGroup
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1063,7 +1063,7 @@ const TableColumns = (
       (record as MetrologyView)?.grsi
         ? (record as MetrologyView)?.grsi
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1151,7 +1151,7 @@ const TableColumns = (
       (record as MetrologyView)?.toDate
         ? (record as MetrologyView)?.toDate
             ?.toUpperCase()
-            .includes(formatDate(value?.toUpperCase()))
+            ?.includes(formatDate(value?.toUpperCase()))
         : false,
     render: (value, record) => (
       <Text
@@ -1216,7 +1216,7 @@ const TableColumns = (
       (record as SignalView)?.signalType
         ? (record as SignalView)?.signalType
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1238,7 +1238,7 @@ const TableColumns = (
       (record as SignalView)?.signalProtocol
         ? (record as SignalView)?.signalProtocol
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1331,7 +1331,7 @@ const TableColumns = (
       (record as CableLogView)
         ? (record as CableLogView)?.cableMark
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1428,7 +1428,7 @@ const TableColumns = (
       (record as ImpulseLineLogView)
         ? (record as ImpulseLineLogView)?.impulseLineType
             ?.toUpperCase()
-            .includes(value?.toUpperCase())
+            ?.includes(value?.toUpperCase())
         : false,
     render: (value) => <Text type="secondary">{value}</Text>,
   };
@@ -1646,7 +1646,7 @@ const TableColumns = (
       columns.push(emergencyProtocolColumn);
       columns.push(actionsColumn);
 
-      menuItems.push(editAssetMenuItem);
+      // menuItems.push(editAssetMenuItem);
       // menuItems.push(deleteAssetMenuItem);
 
       break;

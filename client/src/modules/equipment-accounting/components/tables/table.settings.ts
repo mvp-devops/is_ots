@@ -23,7 +23,7 @@ export const setTableColumnFilters = (
     switch (target) {
       case "unit": {
         for (let i = 0; i < items.length; i++) {
-          const item = items[i].unit;
+          const item = items[i]?.unit;
           if (!array.includes(item)) {
             array.push(item);
           }
@@ -32,7 +32,7 @@ export const setTableColumnFilters = (
       }
       case "sub-unit": {
         for (let i = 0; i < items.length; i++) {
-          const item = items[i].subUnit;
+          const item = items[i]?.subUnit;
           if (item && !array.includes(item)) {
             array.push(item);
           }
@@ -41,7 +41,7 @@ export const setTableColumnFilters = (
       }
       case "tag": {
         for (let i = 0; i < items.length; i++) {
-          const item = items[i].tag;
+          const item = items[i]?.tag;
           if (item && !array.includes(item)) {
             array.push(item);
           }
@@ -51,7 +51,7 @@ export const setTableColumnFilters = (
       case "installation-location": {
         for (let i = 0; i < items.length; i++) {
           const item = (items as GeneralInformationView[])[i]
-            .installationLocation;
+            ?.installationLocation;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -61,7 +61,7 @@ export const setTableColumnFilters = (
       case "controlled-parameter": {
         for (let i = 0; i < items.length; i++) {
           const item = (items as GeneralInformationView[])[i]
-            .controlledParameter;
+            ?.controlledParameter;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -70,8 +70,8 @@ export const setTableColumnFilters = (
       }
       case "equipment-type": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as GeneralInformationView[])[i].facility
-            .equipmentType;
+          const item = (items as GeneralInformationView[])[i]?.facility
+            ?.equipmentType;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -80,7 +80,8 @@ export const setTableColumnFilters = (
       }
       case "country": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as GeneralInformationView[])[i].facility.country;
+          const item = (items as GeneralInformationView[])[i]?.facility
+            ?.country;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -89,7 +90,7 @@ export const setTableColumnFilters = (
       }
       case "vendor": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as GeneralInformationView[])[i].facility.vendor;
+          const item = (items as GeneralInformationView[])[i]?.facility?.vendor;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -98,7 +99,7 @@ export const setTableColumnFilters = (
       }
       case "facility-title": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as GeneralInformationView[])[i].facility.title;
+          const item = (items as GeneralInformationView[])[i]?.facility?.title;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -108,7 +109,7 @@ export const setTableColumnFilters = (
       case "facility-modification": {
         for (let i = 0; i < items.length; i++) {
           const item = (items as GeneralInformationView[])[i]
-            .facilityModification;
+            ?.facilityModification;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -118,7 +119,7 @@ export const setTableColumnFilters = (
 
       case "sgroei": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as MetrologyView[])[i].sgroei;
+          const item = (items as MetrologyView[])[i]?.sgroei;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -127,7 +128,7 @@ export const setTableColumnFilters = (
       }
       case "area": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as MetrologyView[])[i].measurementArea;
+          const item = (items as MetrologyView[])[i]?.measurementArea;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -136,7 +137,7 @@ export const setTableColumnFilters = (
       }
       case "type": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as MetrologyView[])[i].meansurementType;
+          const item = (items as MetrologyView[])[i]?.meansurementType;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -145,7 +146,7 @@ export const setTableColumnFilters = (
       }
       case "group": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as MetrologyView[])[i].meansureGroup;
+          const item = (items as MetrologyView[])[i]?.meansureGroup;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -154,7 +155,7 @@ export const setTableColumnFilters = (
       }
       case "grsi": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as MetrologyView[])[i].grsi;
+          const item = (items as MetrologyView[])[i]?.grsi;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -164,7 +165,7 @@ export const setTableColumnFilters = (
       }
       case "date-to-verification": {
         for (let i = 0; i < items.length; i++) {
-          const item = formatDate((items as MetrologyView[])[i].toDate);
+          const item = formatDate((items as MetrologyView[])[i]?.toDate);
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -175,7 +176,7 @@ export const setTableColumnFilters = (
 
       case "signal-type": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as SignalView[])[i].signalType;
+          const item = (items as SignalView[])[i]?.signalType;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -184,7 +185,7 @@ export const setTableColumnFilters = (
       }
       case "signal-protocol": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as SignalView[])[i].signalProtocol;
+          const item = (items as SignalView[])[i]?.signalProtocol;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -194,7 +195,7 @@ export const setTableColumnFilters = (
 
       case "impulse-line-type": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as ImpulseLineLogView[])[i].impulseLineType;
+          const item = (items as ImpulseLineLogView[])[i]?.impulseLineType;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -203,7 +204,7 @@ export const setTableColumnFilters = (
       }
       case "cable-mark": {
         for (let i = 0; i < items.length; i++) {
-          const item = (items as CableLogView[])[i].cableMark;
+          const item = (items as CableLogView[])[i]?.cableMark;
           if (item && !array.includes(item.toString())) {
             array.push(item.toString());
           }
@@ -234,26 +235,26 @@ export const sum = (
   switch (target) {
     case "cable-log": {
       for (let i = 0; i < data.length; i++) {
-        sum += +(data as CableLogView[])[i].cableLenght;
+        sum += +(data as CableLogView[])[i]?.cableLenght;
       }
       break;
     }
     case "impulse-line-log": {
       for (let i = 0; i < data.length; i++) {
-        sum += +(data as ImpulseLineLogView[])[i].impulseLineLenght;
+        sum += +(data as ImpulseLineLogView[])[i]?.impulseLineLenght;
       }
       break;
     }
     case "signal": {
       if (tag === "type") {
         for (let i = 0; i < data.length; i++) {
-          sum += +(data as SignalView[])[i].signalType;
+          sum += +(data as SignalView[])[i]?.signalType;
         }
       }
 
       if (tag === "protocol") {
         for (let i = 0; i < data.length; i++) {
-          sum += +(data as SignalView[])[i].signalProtocol;
+          sum += +(data as SignalView[])[i]?.signalProtocol;
         }
       }
       break;

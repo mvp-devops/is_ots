@@ -34,6 +34,7 @@ export interface UnitCreateOrUpdateAttrs extends Object {
   contract: string;
   description: string;
   file: any;
+  subUnits?: SubUnitCreateOrUpdateAttrs[];
 }
 
 export interface SubUnitCreateOrUpdateAttrs extends Object {

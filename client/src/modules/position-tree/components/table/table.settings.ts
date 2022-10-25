@@ -17,7 +17,7 @@ export const setTableColumnFilters = (
   switch (target) {
     case "title": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].title;
+        const item = items[i]?.title;
         if (item && !array.includes(item)) {
           array.push(item);
         }
@@ -27,7 +27,7 @@ export const setTableColumnFilters = (
 
     case "code": {
       for (let i = 0; i < items.length; i++) {
-        const item = items[i].code;
+        const item = items[i]?.code;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -36,7 +36,7 @@ export const setTableColumnFilters = (
     }
     case "subsidiary": {
       for (let i = 0; i < items.length; i++) {
-        const item = (items[i] as FieldView).subsidiary.title;
+        const item = (items[i] as FieldView)?.subsidiary?.title;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -47,7 +47,7 @@ export const setTableColumnFilters = (
     case "contract": {
       for (let i = 0; i < items.length; i++) {
         const item = (items[i] as ProjectView | UnitView | SubUnitView)
-          .contract;
+          ?.contract;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -56,7 +56,7 @@ export const setTableColumnFilters = (
     }
     case "position": {
       for (let i = 0; i < items.length; i++) {
-        const item = (items[i] as UnitView | SubUnitView).position;
+        const item = (items[i] as UnitView | SubUnitView)?.position;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -65,8 +65,8 @@ export const setTableColumnFilters = (
     }
     case "design": {
       for (let i = 0; i < items.length; i++) {
-        const item = (items[i] as ProjectView).design
-          ? (items[i] as ProjectView).design.title
+        const item = (items[i] as ProjectView)?.design
+          ? (items[i] as ProjectView)?.design?.title
           : "";
         if (!array.includes(item)) {
           array.push(item);
@@ -76,8 +76,8 @@ export const setTableColumnFilters = (
     }
     case "equipment": {
       for (let i = 0; i < items.length; i++) {
-        const item = (items[i] as UnitView | SubUnitView).equipment
-          ? (items[i] as UnitView | SubUnitView).equipment.title
+        const item = (items[i] as UnitView | SubUnitView)?.equipment
+          ? (items[i] as UnitView | SubUnitView)?.equipment?.title
           : "";
         if (!array.includes(item)) {
           array.push(item);
@@ -87,8 +87,8 @@ export const setTableColumnFilters = (
     }
     case "supplier": {
       for (let i = 0; i < items.length; i++) {
-        const item = (items[i] as UnitView | SubUnitView).supplier
-          ? (items[i] as UnitView | SubUnitView).supplier.title
+        const item = (items[i] as UnitView | SubUnitView)?.supplier
+          ? (items[i] as UnitView | SubUnitView)?.supplier?.title
           : "";
         if (!array.includes(item)) {
           array.push(item);

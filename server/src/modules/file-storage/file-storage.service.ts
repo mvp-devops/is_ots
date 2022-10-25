@@ -1195,7 +1195,6 @@ export class FileStorageService {
   //получить имя файла
   getFileName = (file: any): string => {
     try {
-      console.log("getFileName: ", path.basename(file.originalname));
       return path.basename(file.originalname);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -1239,6 +1238,7 @@ export class FileStorageService {
         if (err) {
           console.log(err);
         }
+
         fs.writeFileSync(path.join(filePath), file.buffer);
       });
     } else {

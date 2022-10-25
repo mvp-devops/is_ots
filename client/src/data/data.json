@@ -1,0 +1,85 @@
+{
+  "items": [
+    {
+      "projectId": "63",
+      "equipmentId": "10",
+      "supplierId": "1",
+      "position": "10",
+      "title": "Узел измерения расхода и показателей качества СОГ (УИРиПК1)",
+      "code": "УИРиПК-1"
+    },
+    {
+      "projectId": "63",
+      "equipmentId": "11",
+      "supplierId": "1",
+      "position": "9",
+      "title": "Узел измерений расхода и показателей качества нестабильного газового конденсата (УИРиПКНК)",
+      "code": "УИРиПКНК"
+    },
+    {
+      "projectId": "63",
+      "equipmentId": "17",
+      "supplierId": "1",
+      "position": "11.1",
+      "title": "Установка деэтанизации и стабилизации конденсата №1",
+      "code": "УДиСК-1",
+      "subUnits": [
+        {
+          "supplierId": 1,
+          "equipmentId": 8,
+          "position": "11.1.9",
+          "title": "Аппаратная",
+          "code": "Аппаратная"
+        },
+
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.5",
+          "title": "Этажерка №1",
+          "code": "Этажерка-1"
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 18,
+          "position": "11.1.8",
+          "title": "Станция насосная",
+          "code": ""
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.1",
+          "title": "Площадка емкости аварийно-дренажной",
+          "code": "Площадка ЕАД"
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.2",
+          "title": "Площадка факельного сепаратора",
+          "code": "Площадка ФС"
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.3",
+          "title": "Площадка дренажных емкостей",
+          "code": "Площадка ДЕ"
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.4",
+          "title": "Площадка буферно-разделительных емкостей"
+        },
+        {
+          "supplierId": 1,
+          "equipmentId": 1,
+          "position": "11.1.6",
+          "title": "Площадка колонн"
+        }
+      ]
+    }
+  ]
+}

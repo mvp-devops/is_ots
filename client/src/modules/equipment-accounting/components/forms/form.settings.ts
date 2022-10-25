@@ -13,8 +13,8 @@ export const initData = () => {};
 
 export const facilityItem: FacilityCreateOrUpdateAttrs = {
   id: null,
-  country: "",
-  vendor: "",
+  country: "Россия",
+  vendor: "Не определен",
   title: "",
   equipmentType: "",
   meansurementArea: null,
@@ -90,7 +90,7 @@ export const signalItem: SignalCreateOrUpdateAttrs = {
 export const monitoringItem: MonitoringCreateOrUpdateAttrs = {
   id: null,
   sloeId: null,
-  mountDate: null,
+  mountDate: new Date(1970, 0, 1).toString(),
   mountDocument: null,
   connectDate: null,
   connectDocument: null,

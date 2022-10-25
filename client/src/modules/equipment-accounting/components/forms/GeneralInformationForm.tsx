@@ -28,6 +28,7 @@ import {
 } from "../../../../components";
 import { FormActions, months, systemType } from "../../../main";
 import { CheckboxValueType } from "antd/lib/checkbox/Group";
+import { useTypedSelector } from "../../../..";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -42,10 +43,13 @@ interface FormProps {
 const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
   const [addFacilityVisible, setAddFacilityVisible] = useState(false);
 
+  const { currentItem } = useTypedSelector((state) => state.positionTree);
+
   const {
     actionType,
     onChangeTargetId,
     target,
+
     addNewFacilityModification,
     editRow,
     unitId,
@@ -107,6 +111,10 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                       : editRow && editRow.unitId
                       ? unitsList.filter(
                           (item) => item.id === editRow.unitId.toString()
+                        )[0]?.children || []
+                      : target === "unit" && currentItem
+                      ? unitsList.filter(
+                          (item) => item.id === currentItem.id.toString()
                         )[0]?.children || []
                       : []
                   }
