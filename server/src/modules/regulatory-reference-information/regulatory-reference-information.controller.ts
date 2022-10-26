@@ -111,4 +111,24 @@ export class RegulatoryReferenceInformationController {
       }
     );
   }
+
+  @Get("/download/tech-cards")
+  async downloadTechCards(@Res() res: Response) {
+    let fileLocation = await this.service.downdoadTechCards();
+    res.header(
+      "Content-disposition",
+      `attachment; filename=import_tech_cards_${setCurrentDate()}.xlsx`
+    );
+    res.type(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.download(
+      fileLocation,
+      `import_tech_cards_${setCurrentDate()}.xlsx`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+  }
 }

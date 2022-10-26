@@ -5,6 +5,8 @@ import { ReactNode } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { FormActions, tableLocale } from "../../../main";
 import { NSIView } from "../../types";
+import { FileExcelOutlined } from "@ant-design/icons";
+import { exportTechCards } from "../../api/regulatory-reference-information.api";
 
 const { Text } = Typography;
 
@@ -245,12 +247,27 @@ const TechCardsPreView = () => {
       }}
     />
   );
+  const actionsPanel = (
+    <Space
+      className="text-secondary d-flex justify-content-between  justify-items-end me-2"
+      // onSelect={(key) => exportTechCards()}
+    >
+      <span></span>
+      <FileExcelOutlined
+        onClick={() => exportTechCards()}
+        style={{ marginBottom: "6px", padding: 0, fontSize: 20 }}
+        className="text-success"
+        title="Сформировать файл выгрузки"
+      />
+    </Space>
+  );
 
   return (
     <Layout className="site-layout-background p-2">
       {header}
       {subHeader}
       {title}
+      {actionsPanel}
       {TechCardsTable}
     </Layout>
   );

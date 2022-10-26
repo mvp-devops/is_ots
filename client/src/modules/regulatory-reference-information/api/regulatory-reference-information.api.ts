@@ -200,3 +200,18 @@ export const exportData = async (target: string) => {
       download(resp.data, `${target}.xlsx`);
     });
 };
+
+export const exportTechCards = async () => {
+  const url = setUrl(`${baseUrl}/download/tech-cards`);
+
+  axios
+    .get(url, {
+      responseType: "blob",
+    })
+    .then((resp) => {
+      download(
+        resp.data,
+        `КТ-339. Технологические карты на проведение пуско-наладочных работ КИПиА, ОПС, среднего уровня АСУТП (ЛСУ) (v. 1.0).xlsx`
+      );
+    });
+};

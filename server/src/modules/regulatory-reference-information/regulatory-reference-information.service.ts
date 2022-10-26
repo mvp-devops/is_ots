@@ -604,4 +604,11 @@ export class RegulatoryReferenceInformationService {
 
     return file;
   };
+
+  downdoadTechCards = (): string => {
+    const fileName = "fd548fff-b961-4f70-81bd-c371d92a32aqq.xlsx";
+    const filePath = this.fileService.getFilePath("normatives");
+    const fileLocation = `${filePath}\\${fileName}`;
+    return fileLocation;
+  };
 }
