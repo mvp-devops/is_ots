@@ -56,7 +56,7 @@ const MetrologyTable = () => {
         locale={tableLocale}
         scroll={{ y: 500, x: "100%" }}
         pagination={dataSource.length < 5 && false}
-        dataSource={dataSource}
+        dataSource={dataSource.sort((a, b) => (a.tag < b.tag ? -1 : 0))}
         columns={columns}
         onRow={(record) => {
           return {

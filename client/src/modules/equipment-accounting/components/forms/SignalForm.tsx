@@ -54,7 +54,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Контроллируемый параметр</Text>}
+        label={<Text type="secondary">Контр. параметр</Text>}
         className="m-0"
       >
         <InputUIComponent

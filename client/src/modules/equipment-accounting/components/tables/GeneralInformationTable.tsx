@@ -1,5 +1,5 @@
 import { Input, Space, Table, Typography } from "antd";
-import { GeneralInformationView } from "../../types";
+import { GeneralInformationView, Views } from "../../types";
 import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
 import { TableColumns, useGeneralInformationTable } from ".";
@@ -29,13 +29,13 @@ const GeneralInformationTable = () => {
     deleteGeneralInformationItem
   );
 
-  const summary = () => (
+  const summary = (data: readonly Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
       <Cell index={0} colSpan={18} align="right">
         <Text strong>Количество:</Text>
       </Cell>
       <Cell index={1} colSpan={2} align="center">
-        <Text strong>{dataSource.length}</Text>
+        <Text strong>{data.length}</Text>
       </Cell>
     </Row>
   );
@@ -77,7 +77,7 @@ const GeneralInformationTable = () => {
         locale={tableLocale}
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
-        dataSource={dataSource}
+        dataSource={dataSource.sort((a, b) => (a.tag < b.tag ? -1 : 0))}
         onRow={(record) => {
           return {
             onMouseEnter: () => {
@@ -87,7 +87,7 @@ const GeneralInformationTable = () => {
         }}
         columns={columns}
         rowKey={(record) => Math.random()}
-        summary={() => summary()}
+        summary={(data) => summary(data)}
       />
       {formRender}
     </>

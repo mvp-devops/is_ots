@@ -37,19 +37,11 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
   sortKey,
   props,
 }) => {
-  const dataSourse = sortKey
-    ? items.map((item) => (
-        <Option key={item.id} value={item.value ? item.value : item.id}>
-          {item.title}
-        </Option>
-      ))
-    : items
-        .sort((a, b) => (a.title < b.title ? -1 : 0))
-        .map((item) => (
-          <Option key={item.id} value={item.value ? item.value : item.id}>
-            {item.title}
-          </Option>
-        ));
+  const dataSourse = items.map((item) => (
+    <Option key={item.id} value={item.value ? item.value : item.id}>
+      {item.title}
+    </Option>
+  ));
 
   return (
     <Select
@@ -81,8 +73,8 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
       }
       filterSort={(optionA, optionB) =>
         (optionA!.children as unknown as string)
-          .toUpperCase()
-          .localeCompare((optionB!.children as unknown as string).toUpperCase())
+          .toLowerCase()
+          .localeCompare((optionB!.children as unknown as string).toLowerCase())
       }
       onChange={(value: string) => changeValue(id, value, itemId)}
     >

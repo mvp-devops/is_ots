@@ -354,7 +354,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                 style={{ maxWidth: 150 }}
                 defaultValue={editRow && editRow.month}
                 id="month"
-                items={months}
+                items={months.sort((a, b) => (a.id < b.id ? -1 : 0))}
                 changeValue={onHandlerChange}
               />
             }

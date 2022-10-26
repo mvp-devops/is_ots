@@ -21,7 +21,7 @@ const CableLogTable = () => {
     setCurrentRow,
   } = useCableLogTable();
 
-  const summary = (data: Views[]) => (
+  const summary = (data: readonly Views[]) => (
     <Row style={{ margin: 0, padding: 0 }}>
       <Cell index={0} colSpan={11} align="right">
         <Text strong>Длина:</Text>
@@ -74,7 +74,7 @@ const CableLogTable = () => {
         bordered
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
-        dataSource={dataSource}
+        dataSource={dataSource.sort((a, b) => (a.tag < b.tag ? -1 : 0))}
         onRow={(record, rowIndex) => {
           return {
             onMouseEnter: () => {
@@ -84,7 +84,7 @@ const CableLogTable = () => {
         }}
         columns={columns}
         rowKey={(record) => record.id as string}
-        summary={(data) => summary(data as Views[])}
+        summary={(data) => summary(data)}
       />
 
       {renderForm}

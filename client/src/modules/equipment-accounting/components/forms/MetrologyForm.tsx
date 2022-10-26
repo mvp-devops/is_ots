@@ -24,6 +24,7 @@ import {
   UploadUIComponent,
 } from "../../../../components";
 import { FormActions } from "../../../main";
+import { rangeDictionary } from "../../utils/equipment-accounting.consts";
 
 const { Item } = Form;
 const { Text } = Typography;
@@ -139,9 +140,10 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
                 changeValue={onHandlerChange}
               />
             </Item>
+
             {!editRow && (
               <Item
-                style={{ maxWidth: 364 }}
+                style={{ maxWidth: 500 }}
                 label={
                   <Text type="secondary" style={{ marginLeft: 140 }}>
                     Ед. изм.
@@ -149,12 +151,18 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
                 }
                 className="m-0"
               >
-                <InputUIComponent
-                  style={{ maxWidth: 150 }}
-                  // value={editRow ? editRow.range }
+                <SelectUIComponent
                   id="range"
+                  items={rangeDictionary}
                   changeValue={onHandlerChange}
                 />
+
+                {/* <InputUIComponent
+                style={{ maxWidth: 150 }}
+                // value={editRow ? editRow.range }
+                id="range"
+                changeValue={onHandlerChange}
+              /> */}
               </Item>
             )}
           </Item>

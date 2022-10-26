@@ -1956,7 +1956,7 @@ export class EquipmentAccountingService {
         specification: specification,
         description: description,
         facility: await this.findOneFacilityAsset(facilityId),
-        metrology: await this.findOneMetrologyAsset(undefined, id),
+        // metrology: await this.findOneMetrologyAsset(undefined, id),
         signals: await this.findAllSignalAssets(id),
 
         cableLog: await this.findAllCableLogAssets(id),

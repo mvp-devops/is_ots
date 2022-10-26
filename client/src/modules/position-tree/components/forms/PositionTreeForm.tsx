@@ -86,7 +86,7 @@ const PositionTreeForm = () => {
         id="designId"
         defaultValue={editRow.designId as string}
         changeValue={onHandlerChange}
-        items={designsList}
+        items={designsList.sort((a, b) => (a.id < b.id ? -1 : 0))}
       />
     </Item>
   );

@@ -28,7 +28,7 @@ export const fieldItem: FieldCreateOrUpdateAttrs = {
 
 export const projectItem: ProjectCreateOrUpdateAttrs = {
   fieldId: "",
-  designId: 10,
+  designId: 0,
   title: "",
   code: "",
   contract: "н/д",

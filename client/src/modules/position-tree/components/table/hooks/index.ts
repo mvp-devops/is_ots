@@ -37,24 +37,24 @@ export const usePositionTreeTable = () => {
             item?.code?.toLowerCase()?.includes(searchValue.toLowerCase()) ||
             ("design" in item &&
               item.design.title
-                .toLocaleLowerCase()
-                ?.includes(searchValue.toLocaleLowerCase())) ||
+                .toLowerCase()
+                ?.includes(searchValue.toLowerCase())) ||
             ("contract" in item &&
               item.contract
-                .toLocaleLowerCase()
-                ?.includes(searchValue.toLocaleLowerCase())) ||
+                .toLowerCase()
+                ?.includes(searchValue.toLowerCase())) ||
             ("position" in item &&
               item.position
-                .toLocaleLowerCase()
-                ?.includes(searchValue.toLocaleLowerCase())) ||
+                .toLowerCase()
+                ?.includes(searchValue.toLowerCase())) ||
             ("equipment" in item &&
               item.equipment.title
-                .toLocaleLowerCase()
-                ?.includes(searchValue.toLocaleLowerCase())) ||
+                .toLowerCase()
+                ?.includes(searchValue.toLowerCase())) ||
             ("supplier" in item &&
               item.supplier.title
-                .toLocaleLowerCase()
-                ?.includes(searchValue.toLocaleLowerCase()))
+                .toLowerCase()
+                ?.includes(searchValue.toLowerCase()))
         )
       );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

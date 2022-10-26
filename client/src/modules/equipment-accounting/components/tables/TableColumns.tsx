@@ -768,14 +768,19 @@ const TableColumns = (
       ),
     filters: [
       {
-        value: "Да",
+        value: "РСУ",
         text: "Да",
       },
       {
-        value: "Нет",
+        value: "",
         text: "Нет",
       },
     ],
+
+    onFilter: (value: any, record) =>
+      (record as GeneralInformationView)?.systemType
+        ? (record as GeneralInformationView)?.systemType?.includes(value)
+        : false,
 
     width: 80,
   };
@@ -793,15 +798,19 @@ const TableColumns = (
       ),
     filters: [
       {
-        value: "Да",
+        value: "ПАЗ",
         text: "Да",
       },
       {
-        value: "Нет",
+        value: "",
         text: "Нет",
       },
     ],
     width: 80,
+    onFilter: (value: any, record) =>
+      (record as GeneralInformationView)?.systemType
+        ? (record as GeneralInformationView)?.systemType?.includes(value)
+        : false,
   };
 
   const kitsoColumn: ColumnType<Views> = {
@@ -817,7 +826,7 @@ const TableColumns = (
       ),
     filters: [
       {
-        value: "Да",
+        value: "КИТСО",
         text: "Да",
       },
       {
@@ -825,6 +834,10 @@ const TableColumns = (
         text: "Нет",
       },
     ],
+    onFilter: (value: any, record) =>
+      (record as GeneralInformationView)?.systemType
+        ? (record as GeneralInformationView)?.systemType?.includes(value)
+        : false,
     width: 80,
   };
 
