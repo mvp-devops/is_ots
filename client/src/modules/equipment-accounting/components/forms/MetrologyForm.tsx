@@ -151,18 +151,18 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
                 }
                 className="m-0"
               >
-                <SelectUIComponent
+                {/* <SelectUIComponent
                   id="range"
                   items={rangeDictionary}
                   changeValue={onHandlerChange}
-                />
+                /> */}
 
-                {/* <InputUIComponent
-                style={{ maxWidth: 150 }}
-                // value={editRow ? editRow.range }
-                id="range"
-                changeValue={onHandlerChange}
-              /> */}
+                <InputUIComponent
+                  style={{ maxWidth: 150 }}
+                  // value={editRow ? editRow.range }
+                  id="range"
+                  changeValue={onHandlerChange}
+                />
               </Item>
             )}
           </Item>
