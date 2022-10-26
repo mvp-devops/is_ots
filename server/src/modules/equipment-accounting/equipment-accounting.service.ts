@@ -684,7 +684,6 @@ export class EquipmentAccountingService {
       if (document) {
         const documentName = this.fileService.fileUpload(docPath, document);
         documentPath = `${docPath}\\${documentName}`;
-        console.log("documentPath: ", documentPath);
       }
 
       if (verificationProcedure) {
@@ -1124,6 +1123,7 @@ export class EquipmentAccountingService {
     try {
       const item = await this.findOneSignalAsset(id);
       await this.signalRepository.destroy({ where: { id } });
+
       return item;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -2273,8 +2273,6 @@ export class EquipmentAccountingService {
   ): Promise<SummaryListOfEquipmentView> => {
     try {
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
-      await this.deleteGeneralInformationAsset(id.toString());
-
       item.metrology && (await this.deleteMetrologyAsset(+item.metrology.id));
 
       if (item.cableLog && item.cableLog.length > 0) {
@@ -2284,28 +2282,33 @@ export class EquipmentAccountingService {
         }
       }
 
-      if (item.impulseLineLog && item.impulseLineLog.length > 0) {
-        for (let i = 0; i < item.impulseLineLog.length; i++) {
-          const { id } = item.impulseLineLog[i];
-          await this.deleteImpulseLineLogAsset(+id);
-        }
-      }
+      item.impulseLineLog.length > 0 &&
+        (await this.impulseLineLogRepository.destroy({
+          where: { sloeId: id },
+        }));
+      item.signals.length > 0 &&
+        (await this.signalRepository.destroy({ where: { sloeId: id } }));
 
-      if (item.signals && item.signals.length > 0) {
-        for (let i = 0; i < item.signals.length; i++) {
-          const { id } = item.signals[i];
-          await this.deleteSignalAsset(+id);
-        }
-      }
+      // if (item.impulseLineLog && item.impulseLineLog.length > 0) {
+      //   for (let i = 0; i < item.impulseLineLog.length; i++) {
+      //     const { id } = item.impulseLineLog[i];
+      //     item.impulseLineLog && console.log("impulseLineLog id: ", id, i);
+      //     await this.deleteImpulseLineLogAsset(+id);
+      //   }
+      // }
+
+      // if (item.signals && item.signals.length > 0) {
+      //   for (let i = 0; i < item.signals.length; i++) {
+      //     const { id } = item.signals[i];
+      //     console.log("signal item from sloe: ", item.signals[i].id);
+      //     await this.deleteSignalAsset(+id);
+      //   }
+      // }
 
       item.monitoring &&
         (await this.deleteMonitoringAsset(+item.monitoring.id));
 
-      if (item.questionare) {
-        await this.fileService.deleteDesignDocument(
-          item.questionare.id.toString()
-        );
-      }
+      await this.deleteGeneralInformationAsset(id.toString());
 
       return item;
     } catch (e: any) {

@@ -139,7 +139,7 @@ export const equipmentAccountingReducer = (
       return state;
     case ActionTypes.DELETE_ONE_ITEM_SUCCESS:
       const deletedArr = [
-        ...state.generalInformationList.filter(
+        ...state.summaryListOfEquipment.filter(
           (item) => item.id !== action.payload.id
         ),
       ];
@@ -147,7 +147,7 @@ export const equipmentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        generalInformationList: deletedArr,
+        summaryListOfEquipment: deletedArr,
       };
     case ActionTypes.DELETE_ONE_ITEM_ERROR:
       return {

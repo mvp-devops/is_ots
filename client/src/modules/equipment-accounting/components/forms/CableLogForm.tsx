@@ -119,7 +119,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       </Item>
 
       <Item
-        label={<Text type="secondary">схема подключения:</Text>}
+        label={<Text type="secondary">Схема подключения:</Text>}
         className="m-0"
       >
         <UploadUIComponent

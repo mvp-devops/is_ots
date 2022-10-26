@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
 import { useEquipmentAccountingTable } from ".";
 import { useTypedSelector } from "../../../../..";
+import { FormActions } from "../../../../main";
 import { GeneralInformationView } from "../../../types";
 
 export const useGeneralInformationTable = () => {
   const [dataSource, setDataSource] = useState<GeneralInformationView[]>([]);
+  const [
+    renderGeneralInformationFormEditFlag,
+    setRenderGeneralInformationFormEditFlag,
+  ] = useState(false);
   const {
     searchValue,
     onSearch,
     loading,
     renderDataSource,
-    renderGeneralInformationFormEditFlag,
     currentRow,
     setCurrentRow,
   } = useEquipmentAccountingTable("general-information");
 
-  const { formVisible } = useTypedSelector((state) => state.main);
+  const { formVisible, actionType } = useTypedSelector((state) => state.main);
 
   useEffect(() => {
     setDataSource(renderDataSource as GeneralInformationView[]);
@@ -24,6 +28,13 @@ export const useGeneralInformationTable = () => {
   // useEffect(() => {
   //   setDataSource(generalInformationList);
   // }, [generalInformationList]);
+
+  useEffect(() => {
+    formVisible &&
+      (actionType === FormActions.EDIT_EQUIPMENT ||
+        actionType === FormActions.REMOVE_EQUIPMENT) &&
+      setRenderGeneralInformationFormEditFlag(true);
+  }, [formVisible, actionType]);
 
   useEffect(() => {
     setDataSource(

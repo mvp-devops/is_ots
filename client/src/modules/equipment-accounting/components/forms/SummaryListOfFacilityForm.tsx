@@ -180,7 +180,7 @@ const SummaryListOfFacilityForm = () => {
       ),
     },
     {
-      title: "Кабельный журнал",
+      title: "Каб. журнал",
       content: (
         <Space className="d-flex justify-content-center">
           <CableLogForm data={data.cableLog} setData={setCableLog} />
@@ -221,7 +221,7 @@ const SummaryListOfFacilityForm = () => {
 
   return (
     <>
-      <Steps current={current} style={{ maxWidth: 1200 }} className="">
+      <Steps current={current} style={{ maxWidth: 1400 }} className="">
         {steps.map((item) => (
           <Step key={item.title} title={item.title} />
         ))}

@@ -71,10 +71,10 @@ const TableColumns = (
     label: (
       <Space
         className="text-secondary"
-        // onClick={() => {
-        //   setActionType(FormActions.REMOVE_EQUIPMENT);
-        //   setFormVisible(true);
-        // }}
+        onClick={() => {
+          setActionType(FormActions.REMOVE_EQUIPMENT);
+          setFormVisible(true);
+        }}
       >
         <DeleteOutlined
           style={{ marginBottom: "6px", padding: 0 }}
@@ -1583,7 +1583,7 @@ const TableColumns = (
         );
       // menuItems.push(technologyCardsViewMenuItem);
       // menuItems.push(editAssetMenuItem);
-      // menuItems.push(deleteAssetMenuItem);
+      menuItems.push(deleteAssetMenuItem);
 
       break;
     }

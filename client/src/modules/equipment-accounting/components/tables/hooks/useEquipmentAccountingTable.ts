@@ -102,6 +102,10 @@ export const useEquipmentAccountingTable = (target?: string) => {
 
   const [currentRow, setCurrentRow] = useState<Views>();
   const [renderDataSource, setRenderDataSource] = useState<Views[]>([]);
+  const [
+    renderGeneralInformationFormEditFlag,
+    setRenderGeneralInformationFormEditFlag,
+  ] = useState(false);
 
   useEffect(() => {
     switch (target) {
@@ -140,41 +144,63 @@ export const useEquipmentAccountingTable = (target?: string) => {
   const onSearch: ChangeEventHandler<HTMLInputElement> = (e) =>
     setSearchValue(e.target.value);
 
-  const renderGeneralInformationFormEditFlag =
-    target === "general-information" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  // useEffect(() => {
+  //   switch (target) {
+  //     case "general-information": {
+  //       setRenderGeneralInformationFormEditFlag(
+  //         actionType === FormActions.EDIT_EQUIPMENT ||
+  //           actionType === FormActions.REMOVE_EQUIPMENT
+  //       );
+  //       console.log(
+  //         "renderGeneralInformationFormEditFlag: ",
+  //         renderGeneralInformationFormEditFlag
+  //       );
+  //       break;
+  //     }
+  //     case "metrology": {
+  //       setRenderGeneralInformationFormEditFlag(false);
+  //       console.log(
+  //         "renderGeneralInformationFormEditFlag: ",
+  //         renderGeneralInformationFormEditFlag
+  //       );
+  //       break;
+  //     }
+  //     default: {
+  //       setRenderGeneralInformationFormEditFlag(false);
+  //       break;
+  //     }
+  //   }
+  // }, [target, actionType]);
 
-  const renderMetrologyFormEditFlag =
-    target === "metrology" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const renderMetrologyFormEditFlag = false;
+  // target === "metrology" &&
+  // formVisible &&
+  // (actionType === FormActions.EDIT_EQUIPMENT ||
+  //   actionType === FormActions.REMOVE_EQUIPMENT);
 
-  const renderSignalFormEditFlag =
-    target === "signal" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const renderSignalFormEditFlag = false;
+  // target === "signal" &&
+  // formVisible &&
+  // (actionType === FormActions.EDIT_EQUIPMENT ||
+  //   actionType === FormActions.REMOVE_EQUIPMENT);
 
-  const renderCableLogFormEditFlag =
-    target === "cable-log" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const renderCableLogFormEditFlag = false;
+  // target === "cable-log" &&
+  // formVisible &&
+  // (actionType === FormActions.EDIT_EQUIPMENT ||
+  //   actionType === FormActions.REMOVE_EQUIPMENT);
 
-  const renderImpulseLineLogFormEditFlag =
-    target === "impulse-line-log" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const renderImpulseLineLogFormEditFlag = false;
+  // target === "impulse-line-log" &&
+  // formVisible &&
+  // (actionType === FormActions.EDIT_EQUIPMENT ||
+  //   actionType === FormActions.REMOVE_EQUIPMENT);
 
-  const renderMonitoringFormEditFlag =
-    target === "monitoring" &&
-    formVisible &&
-    (actionType === FormActions.EDIT_EQUIPMENT ||
-      actionType === FormActions.REMOVE_EQUIPMENT);
+  const renderMonitoringFormEditFlag = false;
+  // target === "monitoring" &&
+  // formVisible &&
+  // (actionType === FormActions.EDIT_EQUIPMENT ||
+  //   actionType === FormActions.REMOVE_EQUIPMENT);
 
   return {
     loading,
@@ -186,7 +212,7 @@ export const useEquipmentAccountingTable = (target?: string) => {
     subUnitsList,
     subUnitId,
     setSubUnitId,
-    renderGeneralInformationFormEditFlag,
+
     renderMetrologyFormEditFlag,
     renderSignalFormEditFlag,
     renderCableLogFormEditFlag,

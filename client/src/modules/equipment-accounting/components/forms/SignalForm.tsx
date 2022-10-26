@@ -108,7 +108,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Аварийны протокол</Text>}
+        label={<Text type="secondary">Аварийный протокол</Text>}
         className="m-0"
       >
         <InputUIComponent

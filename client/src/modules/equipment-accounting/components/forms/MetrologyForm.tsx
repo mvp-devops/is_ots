@@ -246,7 +246,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 106 }}>
+                <Text type="secondary" style={{ marginLeft: 16 }}>
                   Дата поверки/калибровки
                 </Text>
               }
@@ -320,7 +320,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
           </Item>
           <Divider className="m-1 p-0" />
-          <Item style={{ marginLeft: 234, marginBottom: 0 }}>
+          <Item style={{ marginLeft: 224, marginBottom: 0 }}>
             <Item
               style={{ maxWidth: 444 }}
               label={
