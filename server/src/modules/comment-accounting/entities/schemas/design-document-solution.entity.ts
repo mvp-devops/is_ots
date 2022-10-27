@@ -50,7 +50,6 @@ export class DesignDocumentSolutionEntity extends Model<
   })
   @Column({
     type: DataType.TEXT,
-    allowNull: false,
   })
   answer: string;
 
@@ -61,6 +60,7 @@ export class DesignDocumentSolutionEntity extends Model<
   @Column({
     type: DataType.TEXT,
     allowNull: false,
+    defaultValue: "н/д",
   })
   designContacts: string;
 
@@ -88,7 +88,6 @@ export class DesignDocumentSolutionEntity extends Model<
   })
   @Column({
     type: DataType.TEXT,
-    allowNull: false,
   })
   solution: string;
 

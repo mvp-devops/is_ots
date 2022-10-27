@@ -12,6 +12,7 @@ import { FormActions, setFilePath } from "../../../main";
 import { useFileStorage } from "../../hooks";
 import { setTableColumnFilters } from "./table.settings";
 import { useFileStorageTable } from "./hooks";
+import { positionSorter, stringSorter } from "../../../main/utils/main.utils";
 
 const { Text } = Typography;
 
@@ -49,6 +50,8 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.title?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.title, b?.title),
+
     render: (_, record) => {
       return (
         <Space className="d-flex justify-content-start">
@@ -85,6 +88,8 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.code, b?.code),
+
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -97,6 +102,8 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     dataIndex: "revision",
     key: "revision",
     align: "center",
+    sorter: (a, b) => positionSorter(a?.revision, b?.revision),
+
     render: (value) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -115,6 +122,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filterSearch: stageFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.stageTitle?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.stageTitle, b?.stageTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -133,6 +141,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filterSearch: sectionFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.sectionTitle?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.sectionTitle, b?.sectionTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -151,6 +160,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filterSearch: supplierFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.supplierTitle?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.supplierTitle, b?.supplierTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -163,6 +173,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     dataIndex: "createdAt",
     key: "createdAt",
     align: "center",
+    sorter: (a, b) => stringSorter(a?.createdAt, b?.createdAt),
     render: (value) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -175,6 +186,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     dataIndex: "description",
     key: "description",
     align: "center",
+    sorter: (a, b) => stringSorter(a?.description, b?.description),
     render: (value) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}

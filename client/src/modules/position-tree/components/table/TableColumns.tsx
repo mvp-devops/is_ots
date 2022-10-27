@@ -10,6 +10,7 @@ import { PositionTreeView } from "../../types";
 import { FormActions, setFilePath } from "../../../main";
 import { usePositionTreeTable } from "./hooks";
 import { setTableColumnFilters } from "./table.settings";
+import { positionSorter, stringSorter } from "../../../main/utils/main.utils";
 
 const { Text } = Typography;
 
@@ -28,7 +29,6 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
 
     key: "number",
     width: 50,
-
     render: (_, __, ind: number) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {ind + 1}
@@ -48,6 +48,13 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.title?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      a?.title?.toUpperCase() < b?.title?.toUpperCase()
+        ? -1
+        : a?.title?.toUpperCase() > b?.title?.toUpperCase()
+        ? 1
+        : 0,
+
     render: (value: string) => (
       <Text
         type="secondary"
@@ -70,6 +77,12 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      a?.code?.toUpperCase() < b?.code?.toUpperCase()
+        ? -1
+        : a?.code?.toUpperCase() > b?.code?.toUpperCase()
+        ? 1
+        : 0,
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -81,6 +94,12 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     title: "Примечание",
     dataIndex: "description",
     key: "description",
+    sorter: (a, b) =>
+      a?.description?.toUpperCase() < b?.description?.toUpperCase()
+        ? -1
+        : a?.description?.toUpperCase() > b?.description?.toUpperCase()
+        ? 1
+        : 0,
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -99,11 +118,23 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     onFilter: (value: any, record) =>
       "contract" in record &&
       record?.contract?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      "contract" in a &&
+      "contract" in b &&
+      (a?.contract?.toUpperCase() < b?.contract?.toUpperCase()
+        ? -1
+        : a?.contract?.toUpperCase() > b?.contract?.toUpperCase()
+        ? 1
+        : 0),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {"contract" in record && record?.contract}
       </Text>
     ),
+  };
+
+  const fff = (n: number, m: number): number => {
+    return n < m ? -1 : n > m ? 1 : 0;
   };
 
   const positionFilters = setTableColumnFilters("position", renderItems);
@@ -115,9 +146,8 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     sorter: (a, b) =>
       "position" in a &&
       "position" in b &&
-      a.position.toUpperCase() < b.position.toUpperCase()
-        ? 0
-        : 1,
+      positionSorter(a.position, b.position),
+
     filtered: true,
     filters: positionFilters,
     filterSearch: positionFilters ? true : false,
@@ -140,10 +170,14 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     filterSearch: designTitleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       "design" in record &&
-      record?.design.title?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.design?.title?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      "design" in a &&
+      "design" in b &&
+      stringSorter(a?.design?.title, b?.design?.title),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"design" in record && record?.design.title}
+        {"design" in record && record?.design?.title}
       </Text>
     ),
   };
@@ -159,6 +193,16 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     onFilter: (value: any, record) =>
       "equipment" in record &&
       record?.equipment.title?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      "equipment" in a &&
+      "equipment" in b &&
+      (a?.equipment?.title?.toUpperCase() < b?.equipment?.title?.toUpperCase()
+        ? -1
+        : a?.equipment?.title?.toUpperCase() >
+          b?.equipment?.title?.toUpperCase()
+        ? 1
+        : 0),
+
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {"equipment" in record && record?.equipment.title}
@@ -177,6 +221,14 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     onFilter: (value: any, record) =>
       "supplier" in record &&
       record?.supplier.title?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      "supplier" in a &&
+      "supplier" in b &&
+      (a?.supplier?.title?.toUpperCase() < b?.supplier?.title?.toUpperCase()
+        ? -1
+        : a?.supplier?.title?.toUpperCase() > b?.supplier?.title?.toUpperCase()
+        ? 1
+        : 0),
 
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
@@ -194,7 +246,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         {"unitQuestionare" in record && record?.unitQuestionare && (
           <a
             href={setFilePath(
-              `${record?.unitQuestionare.filePath}/${record?.unitQuestionare.fileName}`
+              `${record?.unitQuestionare?.filePath}/${record?.unitQuestionare?.fileName}`
             )}
             target="_blank"
             rel="noreferrer"
@@ -219,16 +271,13 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         {"subUnitQuestionare" in record && record?.subUnitQuestionare && (
           <a
             href={setFilePath(
-              `${record?.subUnitQuestionare.filePath}/${record?.subUnitQuestionare.fileName}`
+              `${record?.subUnitQuestionare?.filePath}/${record?.subUnitQuestionare?.fileName}`
             )}
             target="_blank"
             rel="noreferrer"
             style={{ textDecoration: "none" }}
           >
-            <FileSearchOutlined
-              className="text-primary"
-              title={`${record?.subUnitQuestionare.code}. ${record?.subUnitQuestionare.title}`}
-            />
+            <FileSearchOutlined className="text-primary" title="ОЛ, TT, ТЗ" />
           </a>
         )}
         <EditOutlined

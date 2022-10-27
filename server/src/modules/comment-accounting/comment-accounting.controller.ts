@@ -1,3 +1,4 @@
+import { CreateDesignDocumentSolutionDto } from "./dto/create-comment-accounting.dto";
 import {
   Controller,
   Get,
@@ -86,9 +87,11 @@ export class CommentAccountingController {
     );
 
     res.download(fileLocation, fileName, (err) => {
-      console.log(fileLocation);
-      console.log(fileName);
       if (err) console.log(err);
     });
+  }
+  @Post("/add/solution")
+  createOneSolution(@Body() dto: CreateDesignDocumentSolutionDto) {
+    return this.service.createOneSolution(dto);
   }
 }

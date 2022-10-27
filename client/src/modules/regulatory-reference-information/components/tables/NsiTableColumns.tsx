@@ -5,6 +5,7 @@ import { ColumnType } from "antd/lib/table";
 import { FormActions } from "../../../main";
 import { NSIView } from "../../types";
 import { useNsiTable, setTableColumnFilters } from ".";
+import { stringSorter } from "../../../main/utils/main.utils";
 
 const { Text } = Typography;
 
@@ -37,6 +38,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
 
     filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
+    sorter: (a, b) => stringSorter(a?.title, b?.title),
     onFilter: (value: any, record) =>
       record?.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
@@ -62,6 +64,14 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
       record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      isNaN(+a.code) && isNaN(+b.code)
+        ? stringSorter(a?.code, b?.code)
+        : +a?.code < +b?.code
+        ? -1
+        : +a?.code > +b?.code
+        ? 1
+        : 0,
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -74,6 +84,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     dataIndex: "description",
     key: "description",
     align: "center",
+    sorter: (a, b) => stringSorter(a?.description, b?.description),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -86,6 +97,12 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     dataIndex: "tenseGoal",
     key: "tenseGoal",
     align: "center",
+    sorter: (a, b) =>
+      +a?.tenseGoal < +b?.tenseGoal
+        ? -1
+        : +a?.tenseGoal > +b?.tenseGoal
+        ? 1
+        : 0,
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -98,6 +115,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     dataIndex: "goal",
     key: "goal",
     align: "center",
+    sorter: (a, b) => (+a?.goal < +b?.goal ? -1 : +a?.goal > +b?.goal ? 1 : 0),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}
@@ -110,6 +128,12 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     dataIndex: "threshold",
     key: "threshold",
     align: "center",
+    sorter: (a, b) =>
+      +a?.threshold < +b?.threshold
+        ? -1
+        : +a?.threshold > +b?.threshold
+        ? 1
+        : 0,
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {value}

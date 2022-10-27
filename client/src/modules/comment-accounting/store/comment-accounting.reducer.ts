@@ -59,7 +59,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderComments: [...state.renderComments, action.payload],
+        renderComments: [action.payload, ...state.renderComments],
       };
 
     case ActionTypes.POST_ONE_COMMENT_ERROR:
@@ -76,7 +76,7 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderComments: [...state.renderComments, ...action.payload],
+        renderComments: [...action.payload, ...state.renderComments],
       };
 
     case ActionTypes.POST_MANY_COMMENTS_ERROR:
@@ -94,10 +94,10 @@ export const commentAccountingReducer = (
         ...state,
         loading: false,
         renderComments: [
+          action.payload,
           ...state.renderComments.filter(
             (item) => item.id !== action.payload.id
           ),
-          action.payload,
         ],
       };
 

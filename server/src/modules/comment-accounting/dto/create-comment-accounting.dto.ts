@@ -83,19 +83,19 @@ export class CreateDesignDocumentSolutionDto
     example: 1,
     description: "Уникальный идентификатор замечания",
   })
-  readonly commentId: string | number;
+  readonly commentId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор эксперта, выдавшего замечание",
   })
-  readonly userId: string | number;
+  readonly userId: number;
 
   @ApiProperty({
     example: 1,
     description: "Уникальный идентификатор статуса ответа на замечание",
   })
-  readonly statusId: string | number;
+  readonly statusId: number;
 
   @ApiProperty({
     example: "Ответ",
@@ -113,7 +113,7 @@ export class CreateDesignDocumentSolutionDto
     example: 1,
     description: "Уникальный идентификатор статуса решения по замечанию",
   })
-  readonly solutionId: string | number;
+  readonly solutionId: number;
 
   @ApiProperty({
     example: "Решение",

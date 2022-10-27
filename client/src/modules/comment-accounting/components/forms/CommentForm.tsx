@@ -126,7 +126,7 @@ const CommentForm = () => {
                 showCount
               />
             </Item>
-            <Item
+            {/* <Item
               label={<Text type="secondary">Нормативная ссылка</Text>}
               className="m-0"
             >
@@ -135,7 +135,7 @@ const CommentForm = () => {
                 items={[]}
                 changeValue={onHandlerChange}
               />
-            </Item>
+            </Item> */}
             <Item
               label={<Text type="secondary">Код критерия критичности</Text>}
               className="m-0"

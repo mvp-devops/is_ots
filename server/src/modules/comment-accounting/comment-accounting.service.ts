@@ -50,26 +50,48 @@ export class CommentAccountingService {
   async createOne(
     dto: CreateDesignDocumentCommentDto
   ): Promise<DesignDocumentCommentEntity> {
-    const item = await this.commentRepository.create(dto);
+    try {
+      const item = await this.commentRepository.create(dto);
 
-    if (dto.solutions.length > 0) {
-      for (let i = 0; i < dto.solutions.length; i++) {
-        const { statusId, solutionId, answer, designContacts, solution } =
-          dto.solutions[i];
-        const solutionItem = {
-          key: item.id.toString(),
-          commentId: item.id,
-          statusId,
-          solutionId,
-          designContacts,
-          answer,
-          solution,
-          userId: dto.userId,
-        };
-        await this.solutionRepository.create(solutionItem);
+      if (dto.solutions.length > 0) {
+        for (let i = 0; i < dto.solutions.length; i++) {
+          const { statusId, solutionId, answer, designContacts, solution } =
+            dto.solutions[i];
+
+          const solutionItem = {
+            key: item.id.toString(),
+            commentId: item.id,
+            statusId: +statusId,
+            solutionId: +solutionId,
+            designContacts,
+            answer,
+            solution,
+            userId: +dto.userId,
+          };
+
+          try {
+            await this.solutionRepository.create(solutionItem);
+          } catch (error) {
+            throw new Error(error.message);
+          }
+        }
       }
+      return item;
+    } catch (error) {
+      throw new Error(error.message);
     }
-    return item;
+  }
+
+  async createOneSolution(
+    dto: CreateDesignDocumentSolutionDto
+  ): Promise<DesignDocumentSolutionEntity> {
+    try {
+      const item = await this.solutionRepository.create(dto);
+
+      return item;
+    } catch (error) {
+      throw new Error(error.message);
+    }
   }
 
   createMany = async (
@@ -173,7 +195,6 @@ export class CommentAccountingService {
         },
       ],
     });
-    console.log(this.statisticService.getCommentStatistic(item));
     let render: DesignDocumentCommentView[] = [];
     let documentSection = "",
       documentCode = "",

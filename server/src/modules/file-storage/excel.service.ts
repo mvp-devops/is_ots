@@ -259,7 +259,6 @@ export class ExcelService {
       .then(() =>
         workBook.xlsx
           .writeFile(`${outputFilePath}\\${outputFileName}`)
-          .then(() => console.log("Файл сохранен!"))
           .catch((err) => {
             throw new BadRequestException(err);
           })
