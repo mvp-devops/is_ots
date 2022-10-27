@@ -16,9 +16,6 @@ export class DesignDocumentSolutionEntity extends Model<
   DesignDocumentSolutionEntity,
   DesignDocumentCommentSolutionCreationAttrs
 > {
-  constructor() {
-    super();
-  }
   @ApiProperty({ example: 1, description: "Уникальный идентификатор" })
   @Column({
     type: DataType.INTEGER,
