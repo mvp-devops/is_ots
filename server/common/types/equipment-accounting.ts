@@ -23,6 +23,8 @@ export interface SummaryListOfEquipmentView {
   period: string;
   specification: string;
   description: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
   cableLog?: CableLogView[];
   impulseLineLog?: ImpulseLineLogView[];
   metrology?: MetrologyView;
@@ -77,6 +79,8 @@ export interface CableLogView {
   cableLenght: string;
   range: string;
   description: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface CableLogCreateOrUpdateAttrs {
@@ -110,6 +114,8 @@ export interface ImpulseLineLogView {
   impulseLineLenght: string;
   range: string;
   description: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface ImpulseLineLogCreateOrUpdateAttrs {
@@ -141,6 +147,8 @@ export interface SignalView {
   h: string;
   hh: string;
   emergencyProtocol: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface SignalCreateOrUpdateAttrs {
@@ -187,6 +195,8 @@ export interface MetrologyView {
   arshin: string;
   verificationProcedure: string;
   typeApprovalCertificate: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface MetrologyCreateOrUpdateAttrs {
@@ -231,6 +241,8 @@ export interface MonitoringView {
   awpDocument: string;
   commisionDate: string;
   commisionDocument: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface MonitoringCreateOrUpdateAttrs {
@@ -272,6 +284,8 @@ export interface GeneralInformationView {
   period: string;
   specification: string;
   description: string;
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface GeneralInformationCreateOrUpdateAttrs {
@@ -307,6 +321,8 @@ export interface FacilityView {
   meansurementType?: string | null;
   meansureGroup?: string | null;
   modifications: string[];
+  createdAt?: number | string;
+  updatedAt?: number | string;
 }
 
 export interface FacilityCreateOrUpdateAttrs extends FacilityView {}

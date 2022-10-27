@@ -113,7 +113,11 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     dataIndex: "position",
     key: "position",
     sorter: (a, b) =>
-      "position" in a && "position" in b && a.position < b.position ? -1 : 0,
+      "position" in a &&
+      "position" in b &&
+      a.position.toUpperCase() < b.position.toUpperCase()
+        ? 0
+        : 1,
     filtered: true,
     filters: positionFilters,
     filterSearch: positionFilters ? true : false,

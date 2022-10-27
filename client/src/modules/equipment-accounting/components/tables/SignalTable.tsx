@@ -72,7 +72,9 @@ const SignalTable = () => {
         locale={tableLocale}
         scroll={{ y: 500, x: "100%" }}
         pagination={dataSource.length < 5 && false}
-        dataSource={dataSource.sort((a, b) => (a.tag < b.tag ? -1 : 0))}
+        dataSource={dataSource.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 0
+        )}
         columns={columns}
         onRow={(record, rowIndex) => {
           return {

@@ -350,11 +350,10 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             title="Месяц выпуска"
             children={
               <SelectUIComponent
-                sortKey="id"
                 style={{ maxWidth: 150 }}
                 defaultValue={editRow && editRow.month}
                 id="month"
-                items={months.sort((a, b) => (a.id < b.id ? -1 : 0))}
+                items={months}
                 changeValue={onHandlerChange}
               />
             }

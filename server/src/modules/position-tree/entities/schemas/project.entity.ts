@@ -41,7 +41,7 @@ export class ProjectEntity extends Model<
   @Column({
     type: DataType.INTEGER,
     allowNull: false,
-    defaultValue: 10,
+    defaultValue: 0,
   })
   designId: number;
 

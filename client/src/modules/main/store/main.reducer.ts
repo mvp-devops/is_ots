@@ -12,6 +12,7 @@ const initialState: EssenceState = {
   documentationView: false,
   isAuth: false,
   currentUser: null,
+  // isAuth: true,
   // currentUser: {
   //   id: 1,
   //   subsidiaryId: 4,

@@ -121,7 +121,7 @@ const PositionTreeTable = () => {
               ? a.position < b.position
                 ? -1
                 : 0
-              : a.code < b.code
+              : a.title < b.title
               ? -1
               : 0
           )}

@@ -54,52 +54,64 @@ export const userRoles = [
 
 export const months = [
   {
-    id: "01",
+    id: 1,
     title: "Январь",
+    value: "01",
   },
   {
-    id: "02",
+    id: 2,
     title: "Февраль",
+    value: "02",
   },
   {
-    id: "03",
+    id: 3,
     title: "Март",
+    value: "03",
   },
   {
-    id: "04",
+    id: 4,
     title: "Апрель",
+    value: "04",
   },
   {
-    id: "05",
+    id: 5,
     title: "Май",
+    value: "05",
   },
   {
-    id: "06",
+    id: 6,
     title: "Июнь",
+    value: "06",
   },
   {
-    id: "07",
+    id: 7,
     title: "Июль",
+    value: "07",
   },
   {
-    id: "08",
+    id: 8,
     title: "Август",
+    value: "08",
   },
   {
-    id: "09",
+    id: 9,
     title: "Сентябрь",
+    value: "09",
   },
   {
-    id: "10",
+    id: 10,
     title: "Октябрь",
+    value: "10",
   },
   {
-    id: "11",
+    id: 11,
     title: "Ноябрь",
+    value: "11",
   },
   {
-    id: "12",
+    id: 12,
     title: "Декабрь",
+    value: "12",
   },
 ];
 

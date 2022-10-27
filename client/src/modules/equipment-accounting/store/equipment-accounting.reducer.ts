@@ -67,7 +67,9 @@ export const equipmentAccountingReducer = (
     case ActionTypes.POST_ONE_ITEM:
       return state;
     case ActionTypes.POST_ONE_ITEM_SUCCESS:
-      const newArr = [...state.summaryListOfEquipment, action.payload];
+      const newArr = [...state.summaryListOfEquipment, action.payload].sort(
+        (a, b) => (a.createdAt > b.createdAt ? -1 : 0)
+      );
       return {
         ...state,
 
@@ -86,7 +88,7 @@ export const equipmentAccountingReducer = (
       const newSummaryListOfEquipment = [
         ...state.summaryListOfEquipment,
         ...action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
 
@@ -139,9 +141,9 @@ export const equipmentAccountingReducer = (
       return state;
     case ActionTypes.DELETE_ONE_ITEM_SUCCESS:
       const deletedArr = [
-        ...state.summaryListOfEquipment.filter(
-          (item) => item.id !== action.payload.id
-        ),
+        ...state.summaryListOfEquipment
+          .filter((item) => item.id !== action.payload.id)
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0)),
       ];
 
       return {
@@ -164,7 +166,7 @@ export const equipmentAccountingReducer = (
           (item) => item.id !== action.payload.id
         ),
         action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
         loading: false,
@@ -181,9 +183,9 @@ export const equipmentAccountingReducer = (
       return state;
     case ActionTypes.DELETE_ONE_METROLOGY_ITEM_SUCCESS:
       const deletedMeArr = [
-        ...state.metrologiesList.filter(
-          (item) => item.id !== action.payload.id
-        ),
+        ...state.metrologiesList
+          .filter((item) => item.id !== action.payload.id)
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0)),
       ];
 
       return {
@@ -206,7 +208,7 @@ export const equipmentAccountingReducer = (
           (item) => item.id !== action.payload.id
         ),
         action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
         loading: false,
@@ -223,9 +225,9 @@ export const equipmentAccountingReducer = (
       return state;
     case ActionTypes.DELETE_ONE_MONITORING_ITEM_SUCCESS:
       const deletedMoArr = [
-        ...state.monitoringsList.filter(
-          (item) => item.id !== action.payload.id
-        ),
+        ...state.monitoringsList
+          .filter((item) => item.id !== action.payload.id)
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0)),
       ];
 
       return {
@@ -246,7 +248,7 @@ export const equipmentAccountingReducer = (
       const updatedCLArr = [
         ...state.cableLogList.filter((item) => item.id !== action.payload.id),
         action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
         loading: false,
@@ -264,7 +266,7 @@ export const equipmentAccountingReducer = (
     case ActionTypes.DELETE_ONE_CABLE_LOG_ITEM_SUCCESS:
       const deletedCLArr = [
         ...state.cableLogList.filter((item) => item.id !== action.payload.id),
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
 
       return {
         ...state,
@@ -286,7 +288,7 @@ export const equipmentAccountingReducer = (
           (item) => item.id !== action.payload.id
         ),
         action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
         loading: false,
@@ -306,7 +308,7 @@ export const equipmentAccountingReducer = (
         ...state.impulseLineLogList.filter(
           (item) => item.id !== action.payload.id
         ),
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
 
       return {
         ...state,
@@ -326,7 +328,7 @@ export const equipmentAccountingReducer = (
       const updatedSArr = [
         ...state.signalsList.filter((item) => item.id !== action.payload.id),
         action.payload,
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
         loading: false,
@@ -344,7 +346,7 @@ export const equipmentAccountingReducer = (
     case ActionTypes.DELETE_ONE_SIGNAL_ITEM_SUCCESS:
       const deletedSArr = [
         ...state.signalsList.filter((item) => item.id !== action.payload.id),
-      ];
+      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
 
       return {
         ...state,

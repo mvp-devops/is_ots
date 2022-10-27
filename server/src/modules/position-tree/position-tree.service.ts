@@ -158,7 +158,9 @@ export class PositionTreeService {
               key: `${subsidiaryId.toString()}-${fieldId.toString()}-${projectId.toString()}-${id.toString()}`,
               id: id.toString(),
               title: `${position}. ${title}`,
-              children: unitChildren,
+              children: unitChildren.sort((a, b) =>
+                a.title < b.title ? -1 : 0
+              ),
             };
             projectChildren.push(projectChild);
           }
@@ -170,7 +172,9 @@ export class PositionTreeService {
             key: `${subsidiaryId.toString()}-${fieldId.toString()}-${id.toString()}`,
             id: id.toString(),
             title: `${code}. ${title}`,
-            children: projectChildren,
+            children: projectChildren.sort((a, b) =>
+              a.title < b.title ? -1 : 0
+            ),
           };
           fieldChilren.push(fieldChild);
         }

@@ -623,7 +623,6 @@ const TableColumns = (
     key: "number",
     align: "center",
     width: 50,
-
     render: (_, __, ind: number) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
         {ind + 1}
@@ -645,6 +644,7 @@ const TableColumns = (
       record?.unit
         ? record?.unit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1534,7 +1534,7 @@ const TableColumns = (
     key: "actions",
     width: 30,
     render: (_blank, record) => (
-      <Dropdown trigger={["click"]} overlay={menu}>
+      <Dropdown trigger={["click", "hover"]} overlay={menu}>
         <EllipsisOutlined className="text-secondary" />
       </Dropdown>
     ),

@@ -22,7 +22,11 @@ export const useGeneralInformationTable = () => {
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
 
   useEffect(() => {
-    setDataSource(renderDataSource as GeneralInformationView[]);
+    setDataSource(
+      (renderDataSource as GeneralInformationView[]).sort((a, b) =>
+        a.createdAt > b.createdAt ? -1 : 0
+      )
+    );
   }, [renderDataSource]);
 
   // useEffect(() => {
@@ -54,6 +58,11 @@ export const useGeneralInformationTable = () => {
           (item &&
             item?.installationLocation &&
             item?.installationLocation
+              ?.toUpperCase()
+              ?.includes(searchValue?.toUpperCase())) ||
+          (item &&
+            item?.controlledParameter &&
+            item?.controlledParameter
               ?.toUpperCase()
               ?.includes(searchValue?.toUpperCase())) ||
           (item &&

@@ -49,7 +49,12 @@ export const useEquipmentAccountingTable = (target?: string) => {
   }, [checkedItem, actionType]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(
-    () => setRequestedData(summaryListOfEquipment),
+    () =>
+      setRequestedData(
+        summaryListOfEquipment.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 0
+        )
+      ),
     [summaryListOfEquipment]
   );
 
@@ -110,29 +115,53 @@ export const useEquipmentAccountingTable = (target?: string) => {
   useEffect(() => {
     switch (target) {
       case "general-information": {
-        setRenderDataSource(getAllGeneralInformation(requestedData));
+        setRenderDataSource(
+          getAllGeneralInformation(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
 
         break;
       }
       case "metrology": {
-        setRenderDataSource(getAllMetrology(requestedData));
+        setRenderDataSource(
+          getAllMetrology(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
 
         break;
       }
       case "signal": {
-        setRenderDataSource(getAllSignal(requestedData));
+        setRenderDataSource(
+          getAllSignal(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
         break;
       }
       case "cable-log": {
-        setRenderDataSource(getAllCableLog(requestedData));
+        setRenderDataSource(
+          getAllCableLog(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
         break;
       }
       case "impulse-line-log": {
-        setRenderDataSource(getAllImpulseLineLog(requestedData));
+        setRenderDataSource(
+          getAllImpulseLineLog(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
         break;
       }
       case "monitoring": {
-        setRenderDataSource(getAllMonitoring(requestedData));
+        setRenderDataSource(
+          getAllMonitoring(requestedData).sort((a, b) =>
+            a.createdAt > b.createdAt ? -1 : 0
+          )
+        );
         break;
       }
       default:

@@ -142,6 +142,8 @@ export class EquipmentAccountingService {
         country: data.country,
         vendor: data.vendor,
         modifications: data.modifications,
+        createdAt: data.createdAt,
+        updatedAt: data.updatedAt,
       };
 
       return item;
@@ -284,6 +286,8 @@ export class EquipmentAccountingService {
         range: data.range,
         description: data.description,
         wiringDiagram: data.wiringDiagram,
+        createdAt: +new Date(data.sloe.createdAt),
+        updatedAt: +new Date(data.sloe.updatedAt),
       };
 
       return item;
@@ -560,6 +564,8 @@ export class EquipmentAccountingService {
         impulseLineLenght: data.impulseLineLenght,
         range: data.range,
         description: data.description,
+        createdAt: +new Date(data.sloe.createdAt),
+        updatedAt: +new Date(data.sloe.updatedAt),
       };
 
       return item;
@@ -819,6 +825,8 @@ export class EquipmentAccountingService {
           toDate: data.toDate,
           status: data.status,
           arshin: data.arshin,
+          createdAt: +new Date(data.sloe.createdAt),
+          updatedAt: +new Date(data.sloe.updatedAt),
         };
       }
 
@@ -1044,6 +1052,8 @@ export class EquipmentAccountingService {
         ll: data.ll,
         hh: data.hh,
         emergencyProtocol: data.emergencyProtocol,
+        createdAt: +new Date(data.sloe.createdAt),
+        updatedAt: +new Date(data.sloe.updatedAt),
       };
 
       return item;
@@ -1305,6 +1315,8 @@ export class EquipmentAccountingService {
           awpDocument: data.awpDocument,
           commisionDate: data.commisionDate,
           commisionDocument: data.commisionDocument,
+          createdAt: +new Date(data.sloe.createdAt),
+          updatedAt: +new Date(data.sloe.updatedAt),
         };
       }
 
@@ -1887,6 +1899,8 @@ export class EquipmentAccountingService {
         period,
         specification,
         description,
+        createdAt,
+        updatedAt,
         metrology,
       } = await this.summaryListOfEquipmentRepository.findOne({
         where: { id },
@@ -1962,6 +1976,8 @@ export class EquipmentAccountingService {
         cableLog: await this.findAllCableLogAssets(id),
         impulseLineLog: await this.findAllImpulseLineLogAssets(id),
         monitoring: await this.findOneMonitoringAsset(undefined, id),
+        createdAt: +new Date(createdAt),
+        updatedAt: +new Date(updatedAt),
       };
 
       return item;
@@ -2090,6 +2106,8 @@ export class EquipmentAccountingService {
           period,
           specification,
           description,
+          createdAt,
+          updatedAt,
         } = data[i];
 
         const item = {
@@ -2119,6 +2137,8 @@ export class EquipmentAccountingService {
           cableLog: await this.findAllCableLogAssets(id),
           impulseLineLog: await this.findAllImpulseLineLogAssets(id),
           monitoring: await this.findOneMonitoringAsset(undefined, id),
+          createdAt: +new Date(createdAt),
+          updatedAt: +new Date(updatedAt),
         };
 
         items.push(item);
@@ -2149,6 +2169,8 @@ export class EquipmentAccountingService {
         period,
         specification,
         description,
+        createdAt,
+        updatedAt,
       } = await this.summaryListOfEquipmentRepository.findOne({
         where: { id },
         include: [
@@ -2204,6 +2226,8 @@ export class EquipmentAccountingService {
         specification: specification,
         description: description,
         facility: await this.findOneFacilityAsset(facilityId),
+        createdAt: +new Date(createdAt),
+        updatedAt: +new Date(updatedAt),
       };
 
       return item;

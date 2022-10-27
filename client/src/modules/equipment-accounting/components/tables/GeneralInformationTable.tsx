@@ -77,7 +77,9 @@ const GeneralInformationTable = () => {
         locale={tableLocale}
         pagination={dataSource.length < 5 && false}
         scroll={{ y: 500, x: "100%" }}
-        dataSource={dataSource.sort((a, b) => (a.tag < b.tag ? -1 : 0))}
+        dataSource={dataSource.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 0
+        )}
         onRow={(record) => {
           return {
             onMouseEnter: () => {
