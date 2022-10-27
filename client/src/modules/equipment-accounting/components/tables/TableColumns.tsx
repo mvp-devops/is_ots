@@ -32,6 +32,7 @@ import {
   verificateDates,
 } from "../../../../utils/main.utils";
 import { useActions } from "../../../../hooks";
+import { stringSorter } from "../../../main/utils/main.utils";
 
 const { Text } = Typography;
 
@@ -644,7 +645,7 @@ const TableColumns = (
       record?.unit
         ? record?.unit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
-
+    sorter: (a, b) => stringSorter(a?.unit, b?.unit),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -662,6 +663,8 @@ const TableColumns = (
       record?.subUnit
         ? record?.subUnit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) => stringSorter(a?.subUnit, b?.subUnit),
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -677,6 +680,7 @@ const TableColumns = (
     filters: tagFilters,
     onFilter: (value: any, record) =>
       record?.tag?.toUpperCase()?.includes(value?.toUpperCase()),
+    sorter: (a, b) => stringSorter(a?.tag, b?.tag),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -702,6 +706,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "installationLocation" in a &&
+      "installationLocation" in b &&
+      stringSorter(a?.installationLocation, b?.installationLocation),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -711,7 +719,7 @@ const TableColumns = (
       : undefined;
 
   const controlledParameterColumn: ColumnType<Views> = {
-    title: "Параметр",
+    title: "Пар-тр",
     dataIndex: "controlledParameter",
     key: "controlledParameter",
     align: "center",
@@ -727,6 +735,11 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "controlledParameter" in a &&
+      "controlledParameter" in b &&
+      stringSorter(a?.controlledParameter, b?.controlledParameter),
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -750,6 +763,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "facility" in a &&
+      "facility" in b &&
+      stringSorter(a?.facility?.equipmentType, b?.facility?.equipmentType),
     render: (facility) => (
       <Text type="secondary">{facility?.equipmentType}</Text>
     ),
@@ -859,6 +876,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "facility" in a &&
+      "facility" in b &&
+      stringSorter(a?.facility?.country, b?.facility?.country),
     render: (facility) => <Text type="secondary">{facility?.country}</Text>,
   };
 
@@ -880,6 +901,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "facility" in a &&
+      "facility" in b &&
+      stringSorter(a?.facility?.vendor, b?.facility?.vendor),
     render: (facility) => <Text type="secondary">{facility?.vendor}</Text>,
   };
 
@@ -902,6 +927,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "facility" in a &&
+      "facility" in b &&
+      stringSorter(a?.facility?.title, b?.facility?.title),
     render: (facility) => <Text type="secondary">{facility?.title}</Text>,
   };
 
@@ -926,6 +955,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "facilityModification" in a &&
+      "facilityModification" in b &&
+      stringSorter(a?.facilityModification, b?.facilityModification),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -934,6 +967,10 @@ const TableColumns = (
     dataIndex: "specification",
     key: "specification",
     align: "center",
+    sorter: (a, b) =>
+      "specification" in a &&
+      "specification" in b &&
+      stringSorter(a?.specification, b?.specification),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -942,6 +979,8 @@ const TableColumns = (
     dataIndex: "month",
     key: "month",
     align: "center",
+    // sorter: (a, b) =>
+    //   "month" in a && "month" in b && stringSorter(a?.month, b?.month),
     render: (value) => <Text type="secondary">{value}</Text>,
     width: 50,
   };
@@ -951,6 +990,8 @@ const TableColumns = (
     dataIndex: "year",
     key: "year",
     align: "center",
+    // sorter: (a, b) =>
+    //   "year" in a && "year" in b && stringSorter(a?.year, b?.year),
     render: (value) => <Text type="secondary">{value}</Text>,
     width: 50,
   };
@@ -960,6 +1001,8 @@ const TableColumns = (
     dataIndex: "period",
     key: "period",
     align: "center",
+    // sorter: (a, b) =>
+    // "period" in a && "period" in b && stringSorter(a?.period, b?.period),
     render: (value) => <Text type="secondary">{value}</Text>,
     width: 50,
   };
@@ -982,6 +1025,8 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    // sorter: (a, b) =>
+    //   "sgroei" in a && "sgroei" in b && stringSorter(a?.sgroei, b?.sgroei),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1007,6 +1052,10 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "measurementArea" in a &&
+      "measurementArea" in b &&
+      stringSorter(a?.measurementArea, b?.measurementArea),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1032,6 +1081,11 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      stringSorter(
+        (a as MetrologyView)?.meansurementType,
+        (b as MetrologyView)?.meansurementType
+      ),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1057,6 +1111,11 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "meansureGroup" in a &&
+      "meansureGroup" in b &&
+      stringSorter(a?.meansureGroup, b?.meansureGroup),
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1078,6 +1137,8 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
+    sorter: (a, b) =>
+      "grsi" in a && "grsi" in b && stringSorter(a?.grsi, b?.grsi),
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1087,6 +1148,7 @@ const TableColumns = (
     key: "min",
     align: "center",
     // width: 200,
+    sorter: (a, b) => "min" in a && "min" in b && stringSorter(a?.min, b?.min),
     render: (value, record) => (
       <Text type="secondary">
         {value} {(record as MetrologyView)?.range}
@@ -1100,6 +1162,8 @@ const TableColumns = (
     key: "max",
     align: "center",
     // width: 200,
+    sorter: (a, b) => "max" in a && "max" in b && stringSorter(a?.max, b?.max),
+
     render: (value, record) => (
       <Text type="secondary">
         {value} {(record as MetrologyView)?.range}
@@ -1108,34 +1172,48 @@ const TableColumns = (
   };
 
   const accuracyColumn: ColumnType<Views> = {
-    title: "Погрешность/класс точности, %",
+    title: "П-сть/кл. точн., %",
     dataIndex: "accuracy",
     key: "accuracy",
     align: "center",
     // width: 200,
+    sorter: (a, b) =>
+      "accuracy" in a &&
+      "accuracy" in b &&
+      stringSorter(a?.accuracy, b?.accuracy),
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
   const documentTypeColumn: ColumnType<Views> = {
-    title: "Тип документа",
+    title: "Тип док-та",
     dataIndex: "documentType",
     key: "documentType",
     align: "center",
     // width: 200,
+    sorter: (a, b) =>
+      "documentType" in a &&
+      "documentType" in b &&
+      stringSorter(a?.documentType, b?.documentType),
+
     render: (value, record) => <Text type="secondary">{value}</Text>,
   };
 
   const counterpartyColumn: ColumnType<Views> = {
-    title: "Орг-я, выполнившая работы",
+    title: "Орг-я, вып. работы",
     dataIndex: "counterparty",
     key: "counterparty",
     align: "center",
     // width: 200,
+    sorter: (a, b) =>
+      "counterparty" in a &&
+      "counterparty" in b &&
+      stringSorter(a?.counterparty, b?.counterparty),
     render: (value, record) => <Text type="secondary">{value}</Text>,
   };
 
   const fromDateColumn: ColumnType<Views> = {
-    title: "Дата поверки/калибровки",
+    title: "Дата пов-ки/калиб-ки",
     dataIndex: "fromDate",
     key: "fromDate",
     align: "center",
@@ -1200,6 +1278,8 @@ const TableColumns = (
     key: "mpi",
     align: "center",
     width: 60,
+    sorter: (a, b) => "mpi" in a && "mpi" in b && stringSorter(a?.mpi, b?.mpi),
+
     render: (value) => <Text type="secondary">{value}</Text>,
   };
 
@@ -1209,6 +1289,9 @@ const TableColumns = (
     key: "status",
     align: "center",
     // width: 200,
+    sorter: (a, b) =>
+      "status" in a && "status" in b && stringSorter(a?.status, b?.status),
+
     render: (value, record) => <Text type="secondary">{value}</Text>,
   };
 
