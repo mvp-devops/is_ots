@@ -29,7 +29,6 @@ const CheckList = () => {
                 title="Выгрузить"
                 className="text-success"
               /> */}{" "}
-              //TODO: заменить на печать pdf
             </Space>
           </Space>
           <Divider className="m-1 p-0" />
