@@ -29,7 +29,9 @@ const CommentTable = () => {
         locale={tableLocale}
         pagination={dataSource.length < 10 && false}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={dataSource.sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 0
+        )}
         expandable={{
           expandedRowRender: (record: DesignDocumentCommentView) => (
             <SolutionTable record={record} />

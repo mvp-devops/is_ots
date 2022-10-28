@@ -504,17 +504,17 @@ export class CommentAccountingService {
         normative: `${items[i].normative.code}. ${items[i].normative.title}`,
         criticalityId: items[i].criticalityId,
         expertSubdivision: `${items[i].user.subsidiary.title}
-        \r\n\
+      
         ${items[i].user.subdivision} `,
         expertContacts: `${items[i].user.lastName} ${items[
           i
         ].user.firstName.slice(0, 1)}. ${items[i].user.secondName.slice(0, 1)}.
-        \r\n\
+      
         ${items[i].user.position}
-        \r\n\
+     
 
         почта: ${items[i].user.email}
-        \r\n\
+  
         
         телефон: ${items[i].user.phone}`,
         solutions: [],
@@ -525,6 +525,8 @@ export class CommentAccountingService {
         userId: items[i].userId,
         directionId: items[i].directionId,
         normativeId: items[i].normativeId,
+        createdAt: +new Date(items[i].createdAt),
+        updatedAt: +new Date(items[i].updatedAt),
       };
 
       const solutionsRender: DesignDocumentCommentSolutionView[] = [];
@@ -660,6 +662,8 @@ export class CommentAccountingService {
           criticality,
           solutions,
           user,
+          createdAt,
+          updatedAt,
         } = items[c];
 
         const item: DesignDocumentCommentView = {
@@ -677,16 +681,18 @@ export class CommentAccountingService {
             ? `${user.lastName} ${user.firstName.slice(
                 0,
                 1
-              )}. ${user.secondName.slice(0, 1)}.  \r\n\       
+              )}. ${user.secondName.slice(0, 1)}.        
 
-          ${user.position} \r\n\
+          ${user.position} 
           
-          почта: ${user.email}  \r\n\
+          почта: ${user.email}  
           
           телефон: ${user.phone}`
             : "",
 
           solutions: this.solutionsRender(solutions),
+          createdAt: +new Date(createdAt),
+          updatedAt: +new Date(updatedAt),
           pdcId,
           udcId,
           sudcId,

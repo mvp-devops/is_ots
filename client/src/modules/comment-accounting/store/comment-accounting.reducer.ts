@@ -59,7 +59,9 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderComments: [action.payload, ...state.renderComments],
+        renderComments: [action.payload, ...state.renderComments].sort((a, b) =>
+          a.createdAt > b.createdAt ? -1 : 0
+        ),
       };
 
     case ActionTypes.POST_ONE_COMMENT_ERROR:
@@ -76,7 +78,9 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderComments: [...action.payload, ...state.renderComments],
+        renderComments: [...action.payload, ...state.renderComments].sort(
+          (a, b) => (a.createdAt > b.createdAt ? -1 : 0)
+        ),
       };
 
     case ActionTypes.POST_MANY_COMMENTS_ERROR:
@@ -95,9 +99,9 @@ export const commentAccountingReducer = (
         loading: false,
         renderComments: [
           action.payload,
-          ...state.renderComments.filter(
-            (item) => item.id !== action.payload.id
-          ),
+          ...state.renderComments
+            .filter((item) => item.id !== action.payload.id)
+            .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0)),
         ],
       };
 
@@ -115,9 +119,9 @@ export const commentAccountingReducer = (
       return {
         ...state,
         loading: false,
-        renderComments: state.renderComments.filter(
-          (item) => item.id !== action.payload.id
-        ),
+        renderComments: state.renderComments
+          .filter((item) => item.id !== action.payload.id)
+          .sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0)),
       };
 
     case ActionTypes.DELETE_ONE_COMMENT_ERROR:

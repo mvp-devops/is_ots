@@ -64,6 +64,8 @@ export interface DesignDocumentCommentView {
   directionId: string | number | null;
   normativeId: string | number | null;
   userId: string | number | null;
+  createdAt?: number;
+  updatedAt?: number;
 }
 
 export interface DesignDocumentCommentRequestData {

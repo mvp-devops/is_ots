@@ -41,8 +41,8 @@ export const usePage = () => {
       setChildTarget(item.childrenTarget);
       setFolderPath(item.target, item.id);
     } else {
-      setTarget("");
-      setChildTarget("");
+      // setTarget("");
+      // setChildTarget("");
       setBaseTarget("POSITION_TREE");
     }
   };
@@ -51,9 +51,10 @@ export const usePage = () => {
     if (selectedKeys.length > 0) {
       onMenuItemSelected(e.node);
       setBaseTarget("POSITION_TREE");
-    } else {
-      onMenuItemSelected();
     }
+    // else {
+    //   onMenuItemSelected();
+    // }
   };
 
   return {
