@@ -106,6 +106,7 @@ export const useEquipmentAccountingForm = (
       | RcFile
       | CheckboxValueType[]
       | FacilityCreateOrUpdateAttrs
+      | { title: string; code: string; description: string }
       | null,
     id?: string | number | null
   ) => {
@@ -133,6 +134,7 @@ export const useEquipmentAccountingForm = (
       | RcFile
       | CheckboxValueType[]
       | FacilityCreateOrUpdateAttrs
+      | { title: string; code: string; description: string }
       | null
   ) => {
     editRow &&
@@ -153,6 +155,7 @@ export const useEquipmentAccountingForm = (
       | RcFile
       | CheckboxValueType[]
       | FacilityCreateOrUpdateAttrs
+      | { title: string; code: string; description: string }
       | null,
     id?: string | number | null
   ) => {

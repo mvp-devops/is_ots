@@ -1770,18 +1770,24 @@ export class EquipmentAccountingService {
       } = dto;
 
       const generalInformationData: GeneralInformationCreateOrUpdateAttrs =
-        typeof generalInformation === "string" &&
-        JSON.parse(generalInformation);
+        typeof generalInformation === "string"
+          ? JSON.parse(generalInformation)
+          : generalInformation;
+
+      //
       const metrologyData: MetrologyCreateOrUpdateAttrs =
-        typeof metrology === "string" && JSON.parse(metrology);
+        typeof metrology === "string" ? JSON.parse(metrology) : metrology;
+
       const signalsData: SignalCreateOrUpdateAttrs[] =
-        typeof signals === "string" && JSON.parse(signals);
+        typeof signals === "string" ? JSON.parse(signals) : signals;
       const cableLogData: CableLogCreateOrUpdateAttrs[] =
-        typeof cableLog === "string" && JSON.parse(cableLog);
+        typeof cableLog === "string" ? JSON.parse(cableLog) : cableLog;
       const impulseLineLogData: ImpulseLineLogCreateOrUpdateAttrs[] =
-        typeof impulseLineLog === "string" && JSON.parse(impulseLineLog);
+        typeof impulseLineLog === "string"
+          ? JSON.parse(impulseLineLog)
+          : impulseLineLog;
       const monitoringData: MonitoringCreateOrUpdateAttrs =
-        typeof monitoring === "string" && JSON.parse(monitoring);
+        typeof monitoring === "string" ? JSON.parse(monitoring) : monitoring;
 
       if (
         generalInformationData &&
@@ -1807,7 +1813,7 @@ export class EquipmentAccountingService {
         );
       }
 
-      if (metrologyData.min) {
+      if (metrologyData?.min) {
         await this.createNewMetrologyAsset(
           { ...metrologyData, sloeId: id },
           files?.document ? files?.document[0] : undefined,
@@ -1821,21 +1827,21 @@ export class EquipmentAccountingService {
         );
       }
 
-      if (signals && signals.length > 0) {
-        for (let i = 0; i < signals.length; i++) {
-          const elem = signals[i];
+      if (signalsData && signalsData.length > 0) {
+        for (let i = 0; i < signalsData.length; i++) {
+          const elem = signalsData[i];
           const item: SignalCreateOrUpdateAttrs =
-            typeof elem === "string" && JSON.parse(elem);
+            typeof elem === "string" ? JSON.parse(elem) : elem;
           item.id = null;
           await this.createNewSignalAsset({ ...item, sloeId: id });
         }
       }
 
-      if (cableLog && cableLog.length > 0) {
-        for (let i = 0; i < cableLog.length; i++) {
-          const elem = cableLog[i];
+      if (cableLogData && cableLogData.length > 0) {
+        for (let i = 0; i < cableLogData.length; i++) {
+          const elem = cableLogData[i];
           const item: CableLogCreateOrUpdateAttrs =
-            typeof elem === "string" && JSON.parse(elem);
+            typeof elem === "string" ? JSON.parse(elem) : elem;
           item.id = null;
           await this.createNewCableLogAsset(
             { ...item, sloeId: id },
@@ -1845,17 +1851,17 @@ export class EquipmentAccountingService {
         }
       }
 
-      if (impulseLineLog && impulseLineLog.length > 0) {
-        for (let i = 0; i < impulseLineLog.length; i++) {
-          const elem = impulseLineLog[i];
+      if (impulseLineLogData && impulseLineLogData.length > 0) {
+        for (let i = 0; i < impulseLineLogData.length; i++) {
+          const elem = impulseLineLogData[i];
           const item: ImpulseLineLogCreateOrUpdateAttrs =
-            typeof elem === "string" && JSON.parse(elem);
+            typeof elem === "string" ? JSON.parse(elem) : elem;
           item.id = null;
           await this.createNewImpulseLineLogAsset({ ...item, sloeId: id });
         }
       }
 
-      if (monitoringData.mountDate) {
+      if (monitoringData?.mountDate) {
         await this.createNewMonitoringAsset(
           { ...monitoringData, sloeId: id },
           files?.functionalDiagram ? files?.functionalDiagram[0] : undefined,
@@ -1982,7 +1988,7 @@ export class EquipmentAccountingService {
         specification: specification,
         description: description,
         facility: await this.findOneFacilityAsset(facilityId),
-        // metrology: await this.findOneMetrologyAsset(undefined, id),
+        metrology: await this.findOneMetrologyAsset(undefined, id),
         signals: await this.findAllSignalAssets(id),
 
         cableLog: await this.findAllCableLogAssets(id),

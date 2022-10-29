@@ -123,6 +123,7 @@ export const metrologyItem: MetrologyCreateOrUpdateAttrs = {
   arshin: "",
   verificationProcedure: null,
   typeApprovalCertificate: null,
+  newCounterParty: undefined,
 };
 
 export const summaryListOfEquipmentFormData: SummaryListOfEquipmentFormData = {
