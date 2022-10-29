@@ -15,7 +15,7 @@ interface InputUIComponentProps extends InputProps {
   type?: string;
   id: string;
   value?: string | number;
-
+  defaultValue?: string | number;
   changeValue: Function;
   status?: "warning" | "error" | undefined;
   itemId?: string | number | null;
@@ -35,6 +35,7 @@ const InputUIComponent: FC<InputUIComponentProps> = ({
   itemId,
   addonAfter,
   style,
+  defaultValue,
   props,
 }) => {
   const prop = {

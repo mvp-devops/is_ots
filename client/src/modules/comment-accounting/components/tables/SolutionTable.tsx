@@ -29,7 +29,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
 
           align: "center",
           filterSearch:
-            setSolutionFilters("status", record).length > 5 ? true : false,
+            setSolutionFilters("status", record)?.length > 5 ? true : false,
           filters: setSolutionFilters("status", record),
           onFilter: (value: any, record) =>
             record?.statusId
@@ -76,7 +76,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           width: 50,
           align: "center",
           filterSearch:
-            setSolutionFilters("solution", record).length > 5 ? true : false,
+            setSolutionFilters("solution", record)?.length > 5 ? true : false,
           filters: setSolutionFilters("solution", record),
           onFilter: (value: any, record) =>
             record?.solutionId

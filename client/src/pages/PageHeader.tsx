@@ -1,4 +1,4 @@
-import { Space, Layout } from "antd";
+import { Space, Layout, Typography } from "antd";
 import {
   MenuOutlined,
   QuestionCircleOutlined,
@@ -7,11 +7,21 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { usePage } from ".";
+import { useTypedSelector } from "..";
 
 const { Header } = Layout;
+const { Text } = Typography;
 
 const PageHeader = () => {
   const { navigate, logout, collapsed, setCollapsed } = usePage();
+
+  const { currentUser } = useTypedSelector((state) => state.main);
+
+  const user = `${currentUser.subdivision} - ${currentUser.position} - ${
+    currentUser.lastName
+  } ${currentUser.firstName.slice(0, 1)}. 
+
+  ${currentUser.secondName.slice(0, 1)}.`;
 
   return (
     <Header className="site-layout-background d-flex justify-content-between">
@@ -22,7 +32,9 @@ const PageHeader = () => {
           title="Меню"
           onClick={() => setCollapsed(!collapsed)}
         />
+        <Text className="text-white mb-2">{user}</Text>
       </Space>
+
       <Space className=" mb-2 me-2">
         <UserOutlined
           className={"text-white me-2"}

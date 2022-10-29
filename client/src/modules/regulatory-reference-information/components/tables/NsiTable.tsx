@@ -97,7 +97,11 @@ const NsiTable = () => {
         title={() => title}
         rowKey={(record) => record.id}
         columns={columns}
-        dataSource={dataSource}
+        dataSource={
+          dictionaryTarget !== "design"
+            ? dataSource
+            : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
+        }
         footer={() => NsiTableFooter()}
       />
 

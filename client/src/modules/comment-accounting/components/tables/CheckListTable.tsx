@@ -50,7 +50,7 @@ const CheckListTable = () => {
       key: "StageTitle",
       className: "bg-table-blue border-white",
       render: (value, record) => (
-        <Text type="secondary">{record.stageTitle}</Text>
+        <Text type="secondary">{record?.stageTitle}</Text>
       ),
 
       width: 400,
@@ -105,8 +105,8 @@ const CheckListTable = () => {
       align: "center",
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
-        record.stageFactor !== 0 && (
-          <Text type="secondary">{record.stageFactor}</Text>
+        record?.stageFactor !== 0 && (
+          <Text type="secondary">{record?.stageFactor}</Text>
         ),
     },
     {
@@ -117,7 +117,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 1 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -129,7 +129,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 2 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -141,7 +141,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 3 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -153,7 +153,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 4 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -165,7 +165,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 5 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -177,7 +177,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 6 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -189,7 +189,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 7 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -201,7 +201,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 8 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -213,7 +213,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 9 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -225,7 +225,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 10 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -237,7 +237,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 11 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -249,7 +249,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         currentMonth === 12 && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -261,7 +261,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         (currentMonth === 1 || currentMonth === 2 || currentMonth === 3) && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -273,7 +273,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         (currentMonth === 4 || currentMonth === 5 || currentMonth === 6) && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -285,7 +285,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         (currentMonth === 7 || currentMonth === 8 || currentMonth === 9) && (
           <Text type="secondary" strong>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -297,7 +297,7 @@ const CheckListTable = () => {
       render: (value, record) =>
         (currentMonth === 10 || currentMonth === 11 || currentMonth === 12) && (
           <Text type="secondary" strong style={{ cursor: "pointer" }}>
-            {record.stageTotal.toFixed(2)}
+            {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
     },
@@ -313,12 +313,12 @@ const CheckListTable = () => {
             placement="right"
             color="white"
             title={
-              record.stageTitle === "Заводские приемо-сдаточные испытания" ? (
+              record?.stageTitle === "Заводские приемо-сдаточные испытания" ? (
                 <Text type="secondary">{textPSI}</Text>
-              ) : record.stageTitle ===
+              ) : record?.stageTitle ===
                 "Пусконаладочные работы, комплексное опробование и достижение гарантированных показателей" ? (
                 <Text type="secondary">{textPNR}</Text>
-              ) : record.stageTitle ===
+              ) : record?.stageTitle ===
                 "Стадия эксплуатации (гарантийный и постгарантийный периоды)" ? (
                 <Text type="secondary">{textED}</Text>
               ) : (
@@ -373,7 +373,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
         align: "center",
         render: (value, record) =>
-          record.weight !== 0 && (
+          record?.weight !== 0 && (
             <Text italic type="secondary" style={{ fontSize: 12 }}>
               шт.
             </Text>
@@ -444,9 +444,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -469,9 +469,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -494,9 +494,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -521,7 +521,7 @@ const CheckListTable = () => {
               type={
                 value >= record.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -544,9 +544,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -569,9 +569,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -594,9 +594,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -619,9 +619,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -644,9 +644,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -669,9 +669,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -694,9 +694,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -719,9 +719,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -744,9 +744,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -769,9 +769,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -794,9 +794,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -821,9 +821,9 @@ const CheckListTable = () => {
             <Text
               strong
               type={
-                value >= record.threshold
+                value >= record?.threshold
                   ? "danger"
-                  : value <= record.goal && value > record.tenseGoal
+                  : value <= record?.goal && value > record?.tenseGoal
                   ? "warning"
                   : "success"
               }
@@ -850,7 +850,7 @@ const CheckListTable = () => {
 
     const data: CheckListCriticalityCriterions[] = [];
 
-    for (let i = 0; i < record.criterions.length; i++) {
+    for (let i = 0; i < record?.criterions?.length; i++) {
       const {
         criticalityTitle,
         weight,
@@ -860,7 +860,7 @@ const CheckListTable = () => {
         result,
         count,
         eliminated,
-      } = record.criterions[i];
+      } = record?.criterions[i];
       data.push({
         criticalityTitle,
         weight,
@@ -901,27 +901,27 @@ const CheckListTable = () => {
     checkListData && checkListData?.result >= 99
       ? "success"
       : checkListData &&
-        checkListData.result < 99 &&
+        checkListData?.result < 99 &&
         checkListData &&
-        checkListData.result >= checkListData.great
+        checkListData?.result >= checkListData?.great
       ? "warning"
       : checkListData &&
-        checkListData.result < checkListData.great &&
+        checkListData?.result < checkListData?.great &&
         checkListData &&
-        checkListData.result >= checkListData.okay
+        checkListData?.result >= checkListData?.okay
       ? "warning"
       : "danger";
 
   return (
     <Table
       style={{ width: 1800 }}
-      rowKey={(row) => row.stageTitle}
+      rowKey={(row) => row?.stageTitle}
       size="small"
       loading={false}
       bordered
       pagination={false}
       columns={columns}
-      dataSource={checkListData ? checkListData.criterions : []}
+      dataSource={checkListData ? checkListData?.criterions : []}
       expandable={{
         expandedRowRender,
         // defaultExpandAllRows: true,
@@ -942,84 +942,84 @@ const CheckListTable = () => {
           <Cell index={2} align="center">
             {currentMonth === 1 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={3} align="center">
             {currentMonth === 2 && checkListData && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={4} align="center">
             {currentMonth === 3 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={5} align="center">
             {currentMonth === 4 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={6} align="center">
             {currentMonth === 5 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={7} align="center">
             {currentMonth === 6 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={8} align="center">
             {currentMonth === 7 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={9} align="center">
             {currentMonth === 8 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={10} align="center">
             {currentMonth === 9 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={11} align="center">
             {currentMonth === 10 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={12} align="center">
             {currentMonth === 11 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
           <Cell index={13} align="center">
             {currentMonth === 12 && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
@@ -1028,7 +1028,7 @@ const CheckListTable = () => {
               currentMonth === 2 ||
               currentMonth === 3) && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
@@ -1037,7 +1037,7 @@ const CheckListTable = () => {
               currentMonth === 5 ||
               currentMonth === 6) && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
@@ -1046,7 +1046,7 @@ const CheckListTable = () => {
               currentMonth === 8 ||
               currentMonth === 9) && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>
@@ -1055,7 +1055,7 @@ const CheckListTable = () => {
               currentMonth === 11 ||
               currentMonth === 12) && (
               <Text strong type={textType}>
-                {checkListData?.result.toFixed(2)}
+                {checkListData?.result?.toFixed(2)}
               </Text>
             )}
           </Cell>

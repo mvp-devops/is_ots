@@ -75,14 +75,14 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
           width: 50,
           align: "center",
           filterSearch:
-            setSolutionFilters("solution", record).length > 5 ? true : false,
+            setSolutionFilters("solution", record)?.length > 5 ? true : false,
           filters: setSolutionFilters("solution", record),
           onFilter: (value: any, record) =>
-            record.solutionId
-              ? record.solutionId
-                  .toString()
-                  .toUpperCase()
-                  .includes(value.toString().toUpperCase())
+            record?.solutionId
+              ? record?.solutionId
+                  ?.toString()
+                  ?.toUpperCase()
+                  ?.includes(value?.toString()?.toUpperCase())
               : false,
           render: (value: string) =>
             value === "1" ? (
@@ -115,7 +115,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
 
   const data: DesignDocumentCommentSolutionView[] = [];
 
-  for (let i = 0; i < record.solutions.length; i++) {
+  for (let i = 0; i < record?.solutions?.length; i++) {
     const {
       statusId,
       answer,
@@ -123,7 +123,7 @@ const SolutionTable: FC<SolutionTableProps> = ({ record }) => {
       solutionId,
       solution,
       expertContacts,
-    } = record.solutions[i];
+    } = record?.solutions[i];
     data.push({
       statusId,
       answer,

@@ -58,6 +58,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
 
   return (
     <Modal
+      maskClosable={false}
       style={{ border: "1px white" }}
       title={
         <Space className="d-flex justify-content-center">

@@ -32,7 +32,7 @@ export class TechnicalCardEntity extends Model<
   })
   @Column({
     type: DataType.TEXT,
-    unique: true,
+    // unique: true,
     allowNull: false,
   })
   title: string;

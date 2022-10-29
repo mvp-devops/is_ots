@@ -20,6 +20,7 @@ const CommentAccountingModalContainer: FC<ModalContainerProps> = ({
 }) => {
   return (
     <Modal
+      maskClosable={false}
       title={
         <Space className="d-flex justify-content-start">
           <Text strong className="text-white">

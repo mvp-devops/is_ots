@@ -9,7 +9,7 @@ export const setCommentFilters = (
 
   switch (target) {
     case "document-section": {
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items?.length; i++) {
         const item = items[i]?.documentSection;
         if (!array.includes(item)) {
           array.push(item);
@@ -18,7 +18,7 @@ export const setCommentFilters = (
       break;
     }
     case "normative": {
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items?.length; i++) {
         const item = items[i]?.normative;
         if (item && !array.includes(item)) {
           array.push(item);
@@ -27,7 +27,7 @@ export const setCommentFilters = (
       break;
     }
     case "criticality": {
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items?.length; i++) {
         const item = items[i]?.criticalityId;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
@@ -36,7 +36,7 @@ export const setCommentFilters = (
       break;
     }
     case "expert-subdivision": {
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items?.length; i++) {
         const item = items[i]?.expertSubdivision;
         if (item && !array.includes(item)) {
           array.push(item);
@@ -45,7 +45,7 @@ export const setCommentFilters = (
       break;
     }
     case "expert-contacts": {
-      for (let i = 0; i < items.length; i++) {
+      for (let i = 0; i < items?.length; i++) {
         const item = items[i]?.expertContacts;
         if (item && !array.includes(item)) {
           array.push(item);
@@ -58,7 +58,7 @@ export const setCommentFilters = (
   }
   const result: ColumnFilterItem[] = [];
 
-  for (let j = 0; j < array.length; j++) {
+  for (let j = 0; j < array?.length; j++) {
     result.push({
       text: array[j],
       value: array[j],
@@ -76,7 +76,7 @@ export const setSolutionFilters = (
 
   switch (target) {
     case "status": {
-      for (let i = 0; i < record?.solutions.length; i++) {
+      for (let i = 0; i < record?.solutions?.length; i++) {
         const item = record?.solutions[i]?.statusId;
         if (!array.includes(item)) {
           array.push(item);
@@ -85,7 +85,7 @@ export const setSolutionFilters = (
       break;
     }
     case "solution": {
-      for (let i = 0; i < record?.solutions.length; i++) {
+      for (let i = 0; i < record?.solutions?.length; i++) {
         const item = record?.solutions[i]?.solutionId;
         if (item && !array.includes(item)) {
           array.push(item);
@@ -99,7 +99,7 @@ export const setSolutionFilters = (
   }
   const result: ColumnFilterItem[] = [];
 
-  for (let j = 0; j < array.length; j++) {
+  for (let j = 0; j < array?.length; j++) {
     result.push({
       text: array[j],
       value: array[j],

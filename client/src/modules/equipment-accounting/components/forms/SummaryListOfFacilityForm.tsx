@@ -188,7 +188,7 @@ const SummaryListOfFacilityForm = () => {
       ),
     },
     {
-      title: "Журнал ИМ",
+      title: "Журнал ИЛ",
       content: (
         <Space className="d-flex justify-content-center">
           <ImpulseLineLogForm

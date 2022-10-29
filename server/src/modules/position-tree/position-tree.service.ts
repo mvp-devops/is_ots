@@ -53,6 +53,39 @@ type PositionTreeView =
   | SubUnitEntity
   | null;
 
+const positionSorter = (posA: string, posB: string): number => {
+  if (!posA && !posB) {
+    return 0;
+  } else {
+    const a = posA.split(".");
+    const b = posB.split(".");
+    if (+a[0] < +b[0]) {
+      return -1;
+    }
+    if (+a[0] > +b[0]) {
+      return 1;
+    }
+    if (+a[0] === +b[0]) {
+      if (+a[1] < +b[1]) {
+        return -1;
+      }
+      if (+a[1] > +b[1]) {
+        return 1;
+      }
+      if (+a[1] === +b[1]) {
+        if (+a[2] < +b[2]) {
+          return -1;
+        }
+        if (+a[2] > +b[2]) {
+          return 1;
+        }
+        if (+a[2] === +b[2]) {
+        }
+      }
+    }
+  }
+};
+
 @Injectable()
 export class PositionTreeService {
   constructor(
@@ -171,7 +204,7 @@ export class PositionTreeService {
             keys: [subsidiaryId.toString(), fieldId.toString(), id.toString()],
             key: `${subsidiaryId.toString()}-${fieldId.toString()}-${id.toString()}`,
             id: id.toString(),
-            title: `${code}. ${title}`,
+            title: `${title} (${code})`,
             children: projectChildren.sort((a, b) =>
               a.title < b.title ? -1 : 0
             ),
@@ -186,7 +219,7 @@ export class PositionTreeService {
           key: `${subsidiaryId.toString()}-${id.toString()}`,
           id: id.toString(),
           title,
-          children: fieldChilren,
+          children: fieldChilren.sort((a, b) => (a.title < b.title ? -1 : 0)),
         };
         subsidiaryChildren.push(subsidiaryChild);
       }
@@ -198,7 +231,9 @@ export class PositionTreeService {
         key: id.toString(),
         id: id.toString(),
         title,
-        children: subsidiaryChildren,
+        children: subsidiaryChildren.sort((a, b) =>
+          a.title < b.title ? -1 : 0
+        ),
       };
 
       items.push(item);

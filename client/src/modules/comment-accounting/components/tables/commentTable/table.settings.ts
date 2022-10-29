@@ -9,8 +9,8 @@ export const setTableColumnFilters = (
 
   switch (target) {
     case "document-section": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].documentSection;
+      for (let i = 0; i < items?.length; i++) {
+        const item = items[i]?.documentSection;
         if (!array.includes(item)) {
           array.push(item);
         }
@@ -18,8 +18,8 @@ export const setTableColumnFilters = (
       break;
     }
     case "normative": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].normative;
+      for (let i = 0; i < items?.length; i++) {
+        const item = items[i]?.normative;
         if (item && !array.includes(item)) {
           array.push(item);
         }
@@ -27,8 +27,8 @@ export const setTableColumnFilters = (
       break;
     }
     case "criticality": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].criticalityId;
+      for (let i = 0; i < items?.length; i++) {
+        const item = items[i]?.criticalityId;
         if (item && !array.includes(item.toString())) {
           array.push(item.toString());
         }
@@ -36,8 +36,8 @@ export const setTableColumnFilters = (
       break;
     }
     case "expert-subdivision": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].expertSubdivision;
+      for (let i = 0; i < items?.length; i++) {
+        const item = items[i]?.expertSubdivision;
         if (item && !array.includes(item)) {
           array.push(item);
         }
@@ -45,8 +45,8 @@ export const setTableColumnFilters = (
       break;
     }
     case "expert-contacts": {
-      for (let i = 0; i < items.length; i++) {
-        const item = items[i].expertContacts;
+      for (let i = 0; i < items?.length; i++) {
+        const item = items[i]?.expertContacts;
         if (item && !array.includes(item)) {
           array.push(item);
         }
@@ -58,7 +58,7 @@ export const setTableColumnFilters = (
   }
   const result: ColumnFilterItem[] = [];
 
-  for (let j = 0; j < array.length; j++) {
+  for (let j = 0; j < array?.length; j++) {
     result.push({
       text: array[j],
       value: array[j],

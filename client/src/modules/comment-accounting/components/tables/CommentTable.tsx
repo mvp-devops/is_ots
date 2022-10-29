@@ -111,7 +111,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "documentSection",
       key: "documentSection",
       filterSearch:
-        setCommentFilters("document-section", data).length > 5 ? true : false,
+        setCommentFilters("document-section", data)?.length > 5 ? true : false,
       filters: setCommentFilters("document-section", data),
       onFilter: (value: any, record) =>
         record?.documentSection
@@ -186,7 +186,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "normative",
       key: "normative",
       filterSearch:
-        setCommentFilters("normative", data).length > 5 ? true : false,
+        setCommentFilters("normative", data)?.length > 5 ? true : false,
       filters: setCommentFilters("normative", data),
       onFilter: (value: any, record) =>
         record?.normative
@@ -202,7 +202,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "criticalityId",
       key: "criticalityId",
       filterSearch:
-        setCommentFilters("criticality", data).length > 5 ? true : false,
+        setCommentFilters("criticality", data)?.length > 5 ? true : false,
       filters: setCommentFilters("criticality", data),
       onFilter: (value: any, record) =>
         record?.criticalityId
@@ -221,7 +221,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "expertSubdivision",
       key: "expertSubdivision",
       filterSearch:
-        setCommentFilters("expert-subdivision", data).length > 5 ? true : false,
+        setCommentFilters("expert-subdivision", data)?.length > 5
+          ? true
+          : false,
       filters: setCommentFilters("expert-subdivision", data),
       onFilter: (value: any, record) =>
         record?.expertSubdivision
@@ -237,7 +239,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       dataIndex: "expertContacts",
       key: "expertContacts",
       filterSearch:
-        setCommentFilters("expert-contacts", data).length > 5 ? true : false,
+        setCommentFilters("expert-contacts", data)?.length > 5 ? true : false,
       filters: setCommentFilters("expert-contacts", data),
       onFilter: (value: any, record) =>
         record?.expertContacts
@@ -261,19 +263,20 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   return (
     <>
       <Table
-        rowKey={(row) => row.number}
+        rowKey={(row) => row?.number}
         size="small"
         loading={false}
         bordered
         locale={tableLocale}
-        pagination={dataSource.length < 10 && false}
+        pagination={dataSource?.length < 10 && false}
         columns={columns}
         dataSource={dataSource.sort((a, b) =>
-          a.createdAt > b.createdAt ? -1 : 0
+          a?.createdAt > b?.createdAt ? -1 : 0
         )}
         expandable={{
           expandedRowRender,
-          rowExpandable: (record) => (record.comment.length > 0 ? true : false),
+          rowExpandable: (record) =>
+            record?.comment?.length > 0 ? true : false,
         }}
         // onRow={(record, rowIndex) => {
         //   return {
