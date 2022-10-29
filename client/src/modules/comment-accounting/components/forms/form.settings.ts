@@ -26,7 +26,7 @@ export const solutionItem = {
   userId: "",
   statusId: 1,
   answer: "",
-  designContacts: "",
+  designContacts: "н/д",
   solutionId: 1,
   solution: "",
 };
