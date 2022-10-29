@@ -59,7 +59,9 @@ const PositionTreeForm = () => {
           defaultValue={editRow.fieldId.toString()}
           optionFilterProp="children"
           filterOption={(input, option) =>
-            (option!.children as unknown as string).includes(input)
+            (option!.children as unknown as string)
+              ?.toUpperCase()
+              ?.includes(input?.toUpperCase())
           }
           filterSort={(optionA, optionB) =>
             (optionA!.children as unknown as string)

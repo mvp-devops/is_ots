@@ -55,7 +55,10 @@ import {
   UnitEntity,
   SubsidiaryEntity,
 } from "../position-tree";
-import { CounterpartyEntity } from "../regulatory-reference-information";
+import {
+  CounterpartyEntity,
+  RegulatoryReferenceInformationService,
+} from "../regulatory-reference-information";
 import {
   CableLogEntity,
   FacilityEntity,
@@ -93,7 +96,9 @@ export class EquipmentAccountingService {
     @InjectModel(SummaryListOfEquipmentEntity)
     private summaryListOfEquipmentRepository: typeof SummaryListOfEquipmentEntity,
     @Inject(forwardRef(() => FileStorageService))
-    private fileService: FileStorageService
+    private fileService: FileStorageService,
+    @Inject(forwardRef(() => RegulatoryReferenceInformationService))
+    private nsiService: RegulatoryReferenceInformationService
   ) {}
 
   createNewFacilityAsset = async (
@@ -709,8 +714,15 @@ export class EquipmentAccountingService {
         typeApprovalCertificatePath = `${docPath}/${documentName}`;
       }
 
+      const { newCounterParty } = dto;
+
+      const counterpartyId = newCounterParty
+        ? (await this.nsiService.createOne("counterparty", newCounterParty)).id
+        : dto.counterpartyId;
+
       const { id } = await this.metrologyRepository.create({
         ...dto,
+        counterpartyId,
         document: documentPath,
         verificationProcedure: verificationProcedurePath,
         typeApprovalCertificate: typeApprovalCertificatePath,

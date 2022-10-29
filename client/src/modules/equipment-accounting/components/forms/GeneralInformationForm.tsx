@@ -182,7 +182,9 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
               defaultValue={editRow && editRow.facility.title}
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
+                (option!.children as unknown as string)
+                  ?.toUpperCase()
+                  ?.includes(input?.toUpperCase())
               }
               filterSort={(optionA, optionB) =>
                 (optionA!.children as unknown as string)

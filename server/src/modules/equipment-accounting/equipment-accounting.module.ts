@@ -1,3 +1,4 @@
+import { RegulatoryReferenceInformationModule } from "./../regulatory-reference-information";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { forwardRef, Module } from "@nestjs/common";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
@@ -27,6 +28,7 @@ import { FileStorageModule } from "../file-storage";
       MonitoringEntity,
     ]),
     forwardRef(() => FileStorageModule),
+    forwardRef(() => RegulatoryReferenceInformationModule),
   ],
 })
 export class EquipmentAccountingModule {}

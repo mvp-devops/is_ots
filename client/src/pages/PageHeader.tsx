@@ -17,11 +17,11 @@ const PageHeader = () => {
 
   const { currentUser } = useTypedSelector((state) => state.main);
 
-  const user = `${currentUser.subdivision} - ${currentUser.position} - ${
-    currentUser.lastName
-  } ${currentUser.firstName.slice(0, 1)}. 
-
-  ${currentUser.secondName.slice(0, 1)}.`;
+  const user =
+    // ${currentUser.subsidiaryTitle}. ${currentUser.subdivision}
+    `${currentUser.lastName} 
+  ${currentUser.firstName.slice(0, 1)}.
+  ${currentUser.secondName.slice(0, 1)}. (${currentUser.roles[0]})`;
 
   return (
     <Header className="site-layout-background d-flex justify-content-between">
@@ -32,10 +32,10 @@ const PageHeader = () => {
           title="Меню"
           onClick={() => setCollapsed(!collapsed)}
         />
-        <Text className="text-white mb-2">{user}</Text>
       </Space>
 
       <Space className=" mb-2 me-2">
+        <Text className="text-white me-5">{user}</Text>
         <UserOutlined
           className={"text-white me-2"}
           title="Профиль"

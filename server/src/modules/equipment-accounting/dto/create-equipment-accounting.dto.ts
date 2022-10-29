@@ -1,4 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
+import { NsiCreateOrUpdateAttrs } from "../../../../common/types/regulatory-reference-information";
 import {
   CableLogCreateOrUpdateAttrs,
   FacilityCreateOrUpdateAttrs,
@@ -279,6 +280,12 @@ export class CreateMetrologyDto implements MetrologyCreateOrUpdateAttrs {
     description: "ССылка на ФГИС АРШИН",
   })
   readonly arshin: string;
+
+  readonly newCounterParty?: {
+    title: string;
+    code: string;
+    description: string;
+  };
 }
 
 export class CreateMonitoringDto implements MonitoringCreateOrUpdateAttrs {

@@ -1,5 +1,6 @@
 import { DesignDocumentEntity } from "../../src/modules/file-storage";
 import { DesignDocumentView } from "./file-storage";
+import { NsiCreateOrUpdateAttrs } from "./regulatory-reference-information";
 
 export interface SummaryListOfEquipmentView {
   id: string;
@@ -220,6 +221,7 @@ export interface MetrologyCreateOrUpdateAttrs {
   arshin: string;
   verificationProcedure?: any;
   typeApprovalCertificate?: any;
+  newCounterParty?: { title: string; code: string; description: string };
 }
 
 export interface MonitoringView {

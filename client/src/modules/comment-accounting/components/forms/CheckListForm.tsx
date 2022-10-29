@@ -68,7 +68,9 @@ const CheckListForm = () => {
             showSearch
             optionFilterProp="children"
             filterOption={(input, option) =>
-              (option!.children as unknown as string).includes(input)
+              (option!.children as unknown as string)
+                ?.toUpperCase()
+                ?.includes(input?.toUpperCase())
             }
             filterSort={(optionA, optionB) =>
               (optionA!.children as unknown as string)
@@ -161,7 +163,9 @@ const CheckListForm = () => {
               }
               optionFilterProp="children"
               filterOption={(input, option) =>
-                (option!.children as unknown as string).includes(input)
+                (option!.children as unknown as string)
+                  ?.toUpperCase()
+                  ?.includes(input?.toUpperCase())
               }
               filterSort={(optionA, optionB) =>
                 (optionA!.children as unknown as string)
@@ -208,7 +212,9 @@ const CheckListForm = () => {
                 showSearch
                 optionFilterProp="children"
                 filterOption={(input, option) =>
-                  (option!.children as unknown as string).includes(input)
+                  (option!.children as unknown as string)
+                    ?.toUpperCase()
+                    ?.includes(input?.toUpperCase())
                 }
                 filterSort={(optionA, optionB) =>
                   (optionA!.children as unknown as string)
