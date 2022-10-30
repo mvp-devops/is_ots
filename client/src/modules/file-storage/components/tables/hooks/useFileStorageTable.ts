@@ -46,7 +46,8 @@ export const useFileStorageTable = () => {
   };
 
   useEffect(() => {
-    designDocuments.length > 0 &&
+    designDocuments &&
+      designDocuments.length > 0 &&
       setDataSource(
         designDocuments?.filter(
           (item) =>

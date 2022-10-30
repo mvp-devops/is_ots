@@ -1220,7 +1220,9 @@ const TableColumns = (
     width: 120,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MetrologyView)?.fromDate)}
+        {formatDate((record as MetrologyView)?.fromDate).includes("1970")
+          ? ""
+          : formatDate((record as MetrologyView)?.fromDate).includes("1970")}
       </Text>
     ),
   };
@@ -1546,7 +1548,9 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView)?.mountDate)}
+        {formatDate((record as MonitoringView)?.mountDate).includes("1970")
+          ? ""
+          : formatDate((record as MonitoringView)?.mountDate)}
       </Text>
     ),
   };
@@ -1559,7 +1563,9 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView)?.connectDate)}
+        {formatDate((record as MonitoringView)?.connectDate).includes("1970")
+          ? ""
+          : formatDate((record as MonitoringView)?.connectDate)}
       </Text>
     ),
   };
@@ -1572,7 +1578,9 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView)?.testDate)}
+        {formatDate((record as MonitoringView)?.testDate).includes("1970")
+          ? ""
+          : formatDate((record as MonitoringView)?.testDate)}
       </Text>
     ),
   };
@@ -1585,7 +1593,9 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView)?.awpDate)}
+        {formatDate((record as MonitoringView)?.awpDate).includes("1970")
+          ? ""
+          : formatDate((record as MonitoringView)?.awpDate)}
       </Text>
     ),
   };
@@ -1598,7 +1608,9 @@ const TableColumns = (
     width: 150,
     render: (value, record) => (
       <Text type="secondary">
-        {formatDate((record as MonitoringView)?.commisionDate)}
+        {formatDate((record as MonitoringView)?.commisionDate).includes("1970")
+          ? ""
+          : formatDate((record as MonitoringView)?.commisionDate)}
       </Text>
     ),
   };

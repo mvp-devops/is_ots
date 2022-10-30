@@ -135,7 +135,7 @@ const CheckListForm = () => {
         </Space>
         {settings.map((item) => formItems(item))}
       </Tabs.TabPane>
-      <Tabs.TabPane tab="Контрагент" key="counterparty">
+      {/* <Tabs.TabPane tab="Контрагент" key="counterparty">
         <Row justify="start" align="middle" wrap gutter={10}>
           <Col flex="180px">
             <Text type="secondary">
@@ -247,7 +247,7 @@ const CheckListForm = () => {
           </Button>
         </Space>
         {settings.map((item) => formItems(item))}
-      </Tabs.TabPane>
+      </Tabs.TabPane> */}
     </Tabs>
   );
 

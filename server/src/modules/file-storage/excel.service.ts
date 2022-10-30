@@ -140,12 +140,9 @@ export class ExcelService {
 
     const fileName = `${uuid.v4()}.xlsx`;
 
-    await workBook.xlsx
-      .writeFile(`${filePath}/${fileName}`)
-      .then(() => console.log("Файл сохранен!"))
-      .catch((err) => {
-        throw new BadRequestException(err);
-      });
+    await workBook.xlsx.writeFile(`${filePath}/${fileName}`).catch((err) => {
+      throw new BadRequestException(err);
+    });
 
     const fileLocation = `${filePath}/${fileName}`;
 

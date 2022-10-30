@@ -21,7 +21,7 @@ export const setDateToVerification = (
 
 export const formatDate = (date: string): string => {
   let d = new Date(date),
-    month = "" + (d.getMonth() + 1),
+    month = "" + d.getMonth(),
     day = "" + d.getDate(),
     year = d.getFullYear();
 
