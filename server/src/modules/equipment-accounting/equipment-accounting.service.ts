@@ -143,7 +143,7 @@ export class EquipmentAccountingService {
       item = {
         id: data.id,
         equipmentType: data.equipmentType,
-        title: data.title,
+        title: `${data.title} (${data.vendor})`,
         country: data.country,
         vendor: data.vendor,
         modifications: data.modifications,
