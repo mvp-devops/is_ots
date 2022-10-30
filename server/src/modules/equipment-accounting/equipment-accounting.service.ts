@@ -1017,6 +1017,23 @@ export class EquipmentAccountingService {
     }
   };
 
+  createNewSignalAssets = async (
+    dto: CreateSignalDto[]
+  ): Promise<SignalView[]> => {
+    try {
+      const signals: SignalView[] = [];
+      for (let i = 0; i < dto.length; i++) {
+        const { id } = await this.signalRepository.create(dto[i]);
+        const item = await this.findOneSignalAsset(id);
+        signals.push(item);
+      }
+
+      return signals;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
   findOneSignalAsset = async (id: number): Promise<SignalView> => {
     try {
       let item: SignalView | null = null;

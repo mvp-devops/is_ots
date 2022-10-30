@@ -338,8 +338,8 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 24 }}>
-                  Свидетельство об утв. типа
+                <Text type="secondary" style={{ marginLeft: 100 }}>
+                  Описание типа
                 </Text>
               }
               className="m-0"
@@ -351,7 +351,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 78 }}>
+                <Text type="secondary" style={{ marginLeft: 76 }}>
                   Методика поверки
                 </Text>
               }

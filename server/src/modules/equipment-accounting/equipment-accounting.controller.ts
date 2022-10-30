@@ -1,3 +1,4 @@
+import { CreateSignalDto } from "./dto/create-equipment-accounting.dto";
 import {
   Controller,
   Get,
@@ -41,6 +42,11 @@ export class EquipmentAccountingController {
   @Post("/facility/add/many")
   createManyFacilities(@Body("items") dto: CreateFacilityDto[]) {
     return this.service.createNewFacilityAssets(dto);
+  }
+
+  @Post("/signals/add/many")
+  createManySignals(@Body("items") dto: CreateSignalDto[]) {
+    return this.service.createNewSignalAssets(dto);
   }
 
   @Post("/facility/add")

@@ -1222,7 +1222,7 @@ const TableColumns = (
       <Text type="secondary">
         {formatDate((record as MetrologyView)?.fromDate).includes("1970")
           ? ""
-          : formatDate((record as MetrologyView)?.fromDate).includes("1970")}
+          : formatDate((record as MetrologyView)?.fromDate)}
       </Text>
     ),
   };
