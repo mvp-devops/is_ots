@@ -49,7 +49,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filtered: true,
     filterSearch: titleFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.title?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.title?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.title, b?.title),
 
     render: (_, record) => {
@@ -87,7 +87,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.code?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.code, b?.code),
 
     render: (value: string) => (
@@ -121,7 +121,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: stageFilters,
     filterSearch: stageFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.stageTitle?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.stageTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.stageTitle, b?.stageTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
@@ -140,7 +140,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: sectionFilters,
     filterSearch: sectionFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.sectionTitle?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.sectionTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.sectionTitle, b?.sectionTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
@@ -159,7 +159,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
     filters: supplierFilters,
     filterSearch: supplierFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.supplierTitle?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.supplierTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.supplierTitle, b?.supplierTitle),
     render: (value: string) => (
       <Text type="secondary" style={{ fontSize: 12 }}>

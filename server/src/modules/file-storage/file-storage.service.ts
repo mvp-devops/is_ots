@@ -268,6 +268,9 @@ export class FileStorageService {
     file: any,
     data?: DesignDocumentCreateOrUpdateAttrs
   ): Promise<DesignDocumentView> => {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
     const document: DesignDocumentCreateOrUpdateAttrs = {
       projectId: data ? data.projectId : null,
       unitId: data ? data.unitId : null,
@@ -278,12 +281,12 @@ export class FileStorageService {
       cableLogId: data ? data.cableLogId : null,
       monitoringId: data ? data.monitoringId : null,
       supplierId: data ? data.supplierId : null,
-      stageId: data ? data.stageId : 1,
-      sectionId: data ? data.sectionId : 57,
-      code: data ? data.code : "000",
-      title: data ? data.title : "",
+      stageId: data && data.stageId ? data.stageId : 1,
+      sectionId: data && data.sectionId ? data.sectionId : 57,
+      code: data && data.code ? data.code : path.parse(file.originalname).name,
+      title: data && data.title ? data.title : file.originalname,
       revision: data ? data.revision : "1",
-      description: data ? data.description : "",
+      description: data ? data.description : " ",
       filePath: "",
       fileName: "",
       fileType: "",
@@ -1194,6 +1197,9 @@ export class FileStorageService {
 
   //получить имя файла
   getFileName = (file: any): string => {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
     try {
       return path.basename(file.originalname);
     } catch (e) {
@@ -1225,8 +1231,12 @@ export class FileStorageService {
   //   return fileName;
   // };
 
-  fileUpload = (folder: string, file: any): string => {
-    const fileName = this.generateFileName(file);
+  fileUpload = (folder: string, file: any, target?: boolean): string => {
+    file.originalname = Buffer.from(file.originalname, "latin1").toString(
+      "utf8"
+    );
+
+    const fileName = target ? file.originalname : this.generateFileName(file);
 
     const fileFolder = this.getFilePath(folder);
 

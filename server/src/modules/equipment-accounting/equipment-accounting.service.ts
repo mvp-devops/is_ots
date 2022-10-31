@@ -693,14 +693,19 @@ export class EquipmentAccountingService {
       const docPath = `${parrentFolderPath}\\Оборудование\\Метрология`;
 
       if (document) {
-        const documentName = this.fileService.fileUpload(docPath, document);
+        const documentName = this.fileService.fileUpload(
+          docPath,
+          document,
+          true
+        );
         documentPath = `${docPath}\\${documentName}`;
       }
 
       if (verificationProcedure) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          verificationProcedure
+          verificationProcedure,
+          true
         );
 
         verificationProcedurePath = `${docPath}/${documentName}`;
@@ -709,7 +714,8 @@ export class EquipmentAccountingService {
       if (typeApprovalCertificate) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          typeApprovalCertificate
+          typeApprovalCertificate,
+          true
         );
         typeApprovalCertificatePath = `${docPath}/${documentName}`;
       }
@@ -924,11 +930,19 @@ export class EquipmentAccountingService {
 
       if (document) {
         if (!item.document) {
-          const documentName = this.fileService.fileUpload(docPath, document);
+          const documentName = this.fileService.fileUpload(
+            docPath,
+            document,
+            true
+          );
           documentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.document);
-          const documentName = this.fileService.fileUpload(docPath, document);
+          const documentName = this.fileService.fileUpload(
+            docPath,
+            document,
+            true
+          );
           documentPath = `${docPath}/${documentName}`;
         }
       }
@@ -937,14 +951,16 @@ export class EquipmentAccountingService {
         if (!item.verificationProcedure) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            verificationProcedure
+            verificationProcedure,
+            true
           );
           verificationProcedurePath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.verificationProcedure);
           const documentName = this.fileService.fileUpload(
             docPath,
-            verificationProcedure
+            verificationProcedure,
+            true
           );
           verificationProcedurePath = `${docPath}/${documentName}`;
         }
@@ -954,14 +970,16 @@ export class EquipmentAccountingService {
         if (!item.typeApprovalCertificate) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            typeApprovalCertificate
+            typeApprovalCertificate,
+            true
           );
           typeApprovalCertificatePath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.typeApprovalCertificate);
           const documentName = this.fileService.fileUpload(
             docPath,
-            typeApprovalCertificate
+            typeApprovalCertificate,
+            true
           );
           typeApprovalCertificatePath = `${docPath}/${documentName}`;
         }
@@ -1191,7 +1209,8 @@ export class EquipmentAccountingService {
       if (mountDocument) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          mountDocument
+          mountDocument,
+          true
         );
         mountDocumentPath = `${docPath}/${documentName}`;
       }
@@ -1199,26 +1218,36 @@ export class EquipmentAccountingService {
       if (connectDocument) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          connectDocument
+          connectDocument,
+          true
         );
 
         connectDocumentPath = `${docPath}/${documentName}`;
       }
 
       if (testDocument) {
-        const documentName = this.fileService.fileUpload(docPath, testDocument);
+        const documentName = this.fileService.fileUpload(
+          docPath,
+          testDocument,
+          true
+        );
         testDocumentPath = `${docPath}/${documentName}`;
       }
 
       if (awpDocument) {
-        const documentName = this.fileService.fileUpload(docPath, awpDocument);
+        const documentName = this.fileService.fileUpload(
+          docPath,
+          awpDocument,
+          true
+        );
         awpDocumentPath = `${docPath}/${documentName}`;
       }
 
       if (commisionDocument) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          commisionDocument
+          commisionDocument,
+          true
         );
 
         commisionDocumentPath = `${docPath}/${documentName}`;
@@ -1457,14 +1486,16 @@ export class EquipmentAccountingService {
         if (!item.mountDocument) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            mountDocument
+            mountDocument,
+            true
           );
           mountDocumentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.mountDocument);
           const documentName = this.fileService.fileUpload(
             docPath,
-            mountDocument
+            mountDocument,
+            true
           );
           mountDocumentPath = `${docPath}/${documentName}`;
         }
@@ -1474,14 +1505,16 @@ export class EquipmentAccountingService {
         if (!item.connectDocument) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            connectDocument
+            connectDocument,
+            true
           );
           connectDocumentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.connectDocument);
           const documentName = this.fileService.fileUpload(
             docPath,
-            connectDocument
+            connectDocument,
+            true
           );
           connectDocumentPath = `${docPath}/${documentName}`;
         }
@@ -1491,14 +1524,16 @@ export class EquipmentAccountingService {
         if (!item.testDocument) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            testDocument
+            testDocument,
+            true
           );
           testDocumentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.testDocument);
           const documentName = this.fileService.fileUpload(
             docPath,
-            testDocument
+            testDocument,
+            true
           );
           testDocumentPath = `${docPath}/${documentName}`;
         }
@@ -1508,14 +1543,16 @@ export class EquipmentAccountingService {
         if (!item.awpDocument) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            awpDocument
+            awpDocument,
+            true
           );
           awpDocumentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.awpDocument);
           const documentName = this.fileService.fileUpload(
             docPath,
-            awpDocument
+            awpDocument,
+            true
           );
           awpDocumentPath = `${docPath}/${documentName}`;
         }
@@ -1525,14 +1562,16 @@ export class EquipmentAccountingService {
         if (!item.commisionDocument) {
           const documentName = this.fileService.fileUpload(
             docPath,
-            commisionDocument
+            commisionDocument,
+            true
           );
           commisionDocumentPath = `${docPath}/${documentName}`;
         } else {
           this.fileService.removeDirectoryOrFile(item.commisionDocument);
           const documentName = this.fileService.fileUpload(
             docPath,
-            commisionDocument
+            commisionDocument,
+            true
           );
           commisionDocumentPath = `${docPath}/${documentName}`;
         }

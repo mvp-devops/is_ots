@@ -315,7 +315,7 @@ export class CommentAccountingService {
         }
         case "unit": {
           items = await this.commentRepository.findAll({
-            where: { pdcId: parrentId },
+            where: { udcId: parrentId },
             include: [
               {
                 model: DesignDocumentEntity,
@@ -326,6 +326,9 @@ export class CommentAccountingService {
                   },
                   {
                     model: SectionEntity,
+                  },
+                  {
+                    model: ProjectEntity,
                   },
                 ],
               },
@@ -366,7 +369,7 @@ export class CommentAccountingService {
         }
         case "sub-unit": {
           items = await this.commentRepository.findAll({
-            where: { pdcId: parrentId },
+            where: { sudcId: parrentId },
             include: [
               {
                 model: DesignDocumentEntity,
@@ -377,6 +380,9 @@ export class CommentAccountingService {
                   },
                   {
                     model: SectionEntity,
+                  },
+                  {
+                    model: ProjectEntity,
                   },
                 ],
               },
@@ -417,7 +423,7 @@ export class CommentAccountingService {
         }
         case "supplier": {
           items = await this.commentRepository.findAll({
-            where: { pdcId: parrentId },
+            where: { sdcId: parrentId },
             include: [
               {
                 model: DesignDocumentEntity,
@@ -427,13 +433,10 @@ export class CommentAccountingService {
                     model: StageEntity,
                   },
                   {
-                    model: CounterpartyEntity,
+                    model: SectionEntity,
                   },
                   {
-                    model: UnitEntity,
-                  },
-                  {
-                    model: SubUnitEntity,
+                    model: ProjectEntity,
                   },
                 ],
               },
@@ -531,9 +534,9 @@ export class CommentAccountingService {
 
       const solutionsRender: DesignDocumentCommentSolutionView[] = [];
 
-      for (let i = 0; i < items[i].solutions.length; i++) {
+      for (let i = 0; i < items[i]?.solutions.length; i++) {
         const { statusId, answer, user, solutionId, solution, designContacts } =
-          items[i].solutions[i];
+          items[i]?.solutions[i];
 
         const renderItem: DesignDocumentCommentSolutionView = {
           statusId,

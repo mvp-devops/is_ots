@@ -1,4 +1,4 @@
-import { Layout, Space, Typography, TableColumnsType } from "antd";
+import { Layout, Space, Typography, TableColumnsType, Pagination } from "antd";
 import Table, { ColumnType } from "antd/lib/table";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { ReactNode } from "react";
@@ -235,7 +235,21 @@ const TechCardsPreView = () => {
       // bordered
       size="small"
       pagination={{
-        locale: {},
+        locale: {
+          // Options.jsx
+          items_per_page: "/ стр.",
+          jump_to: "Перейти",
+          jump_to_confirm: "подтвердить",
+          page: "Страница",
+          // Pagination.jsx
+          prev_page: "Назад",
+          next_page: "Вперед",
+          prev_5: "Предыдущие 5",
+          next_5: "Следующие 5",
+          prev_3: "Предыдущие 3",
+          next_3: "Следующие 3",
+          // page_size: 'размер страницы'
+        },
       }}
       columns={columns}
       dataSource={renderNsiItems.sort((a, b) => (a.id < b.id ? -1 : 0))}

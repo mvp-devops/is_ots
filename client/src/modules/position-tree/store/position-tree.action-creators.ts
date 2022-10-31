@@ -30,7 +30,7 @@ export const setMenuItems = (roles: string[], id?: string) => {
 
       dispatch({
         type: ActionTypes.GET_MENU_ITEMS_SUCCESS,
-        payload: data,
+        payload: data.filter((item) => item.id !== "15" && item.id !== "4"),
       });
     } catch (error) {
       dispatch({

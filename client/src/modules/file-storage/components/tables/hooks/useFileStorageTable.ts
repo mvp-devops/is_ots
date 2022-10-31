@@ -55,15 +55,22 @@ export const useFileStorageTable = () => {
               item?.title &&
               item?.title
                 ?.toLowerCase()
-                ?.includes(searchValue.toLowerCase())) ||
+                ?.includes(searchValue?.toLowerCase())) ||
             (item &&
               item?.code &&
-              item?.code?.toLowerCase()?.includes(searchValue.toLowerCase())) ||
+              item?.code
+                ?.toLowerCase()
+                ?.includes(searchValue?.toLowerCase())) ||
             (item &&
               item?.description &&
+              item?.description
+                ?.toLowerCase()
+                ?.includes(searchValue?.toLowerCase())) ||
+            (item &&
+              item?.createdAt &&
               item?.createdAt
                 ?.toLowerCase()
-                ?.includes(searchValue.toLowerCase()))
+                ?.includes(searchValue?.toLowerCase()))
         )
       );
   }, [searchValue]); // eslint-disable-line react-hooks/exhaustive-deps

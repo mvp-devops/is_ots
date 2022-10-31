@@ -55,7 +55,23 @@ const MetrologyTable = () => {
         loading={loading}
         locale={tableLocale}
         scroll={{ y: 500, x: "100%" }}
-        pagination={dataSource.length < 5 && false}
+        pagination={{
+          locale: {
+            // Options.jsx
+            items_per_page: "/ стр.",
+            jump_to: "Перейти",
+            jump_to_confirm: "подтвердить",
+            page: "Страница",
+            // Pagination.jsx
+            prev_page: "Назад",
+            next_page: "Вперед",
+            prev_5: "Предыдущие 5",
+            next_5: "Следующие 5",
+            prev_3: "Предыдущие 3",
+            next_3: "Следующие 3",
+            // page_size: 'размер страницы'
+          },
+        }}
         dataSource={dataSource.sort((a, b) =>
           a.createdAt > b.createdAt ? -1 : 0
         )}
