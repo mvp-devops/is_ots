@@ -9,6 +9,9 @@ import { ModalContainer } from "../../../../components";
 import { FormActions, tableLocale } from "../../../main";
 import { RegulatoryReferenceInformationForm } from "../forms";
 import { useNsiTable, NsiTableColumns, NsiTableFooter } from ".";
+import SearchPanel from "../../../../components/search-panel/SearchPanel";
+import { useState } from "react";
+import { useSearch } from "../../../../hooks/useSearch";
 
 const { Text } = Typography;
 
@@ -53,6 +56,28 @@ const NsiTable = () => {
     </>
   );
 
+  const [searchInput, setSearchInput] = useState("");
+  const [filteredResults, setFilteredResults] = useState([]);
+
+  // const suffix = <SearchOutlined className="text-primary" />;
+
+  const searchItems = (data: any[], searchValue: string) => {
+    setSearchInput(searchValue);
+    if (searchInput !== "") {
+      const filteredData = data.filter((item) => {
+        return Object.values(item)
+          .join("")
+          .toLowerCase()
+          .includes(searchInput.toLowerCase());
+      });
+      setFilteredResults(filteredData);
+    } else {
+      setFilteredResults(data);
+    }
+  };
+
+  console.log("DATA: ", dataSource);
+
   const title = (
     <Space className="d-flex align-items-center justify-content-between">
       <Text strong type="secondary">
@@ -62,7 +87,16 @@ const NsiTable = () => {
         direction="horizontal"
         className="d-flex align-items-center justify-content-between"
       >
+        {/* <SearchPanel data={dataSource} /> */}
         <Input
+          placeholder="Поиск..."
+          className="text-secondary mt-2 mb-2"
+          style={{ color: "red", maxWidth: 600 }}
+          size="small"
+          suffix={<SearchOutlined className="text-primary" />}
+          onChange={(e) => searchItems(dataSource, e.target.value)}
+        />
+        {/* <Input
           size="small"
           className="text-secondary"
           style={{ minWidth: 300 }}
@@ -71,7 +105,7 @@ const NsiTable = () => {
           value={searchValue}
           suffix={<SearchOutlined className="text-secondary" />}
           onChange={onSearch}
-        />
+        /> */}
         {menuItems}
       </Space>
     </Space>
@@ -83,6 +117,7 @@ const NsiTable = () => {
 
   return (
     <Layout>
+      {/* <SearchPanel data={ } /> */}
       <Table
         className="border p-1 m-0"
         style={{ fontSize: 12 }}
@@ -115,11 +150,11 @@ const NsiTable = () => {
         rowKey={(record) => record.id}
         columns={columns}
         dataSource={
-          dictionaryTarget !== "design"
-            ? dataSource
-            : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
+          // dictionaryTarget !== "design"
+          searchInput.length > 1 ? filteredResults : dataSource
+          // : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
         }
-        footer={() => NsiTableFooter()}
+        footer={() => NsiTableFooter(filteredResults)}
       />
 
       {renderForm}

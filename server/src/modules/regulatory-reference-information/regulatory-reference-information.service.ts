@@ -38,6 +38,7 @@ import {
   UpdateNSIDto,
 } from "./dto/update-regulatory-reference-information.dto";
 import { ExcelService } from "../file-storage/excel.service";
+import { formattedDate } from "../../../common/utils/formatDate.pipe";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -56,6 +57,28 @@ type RegulatoryReferenceInformationView =
   | SectionEntity
   | TechnicalCardEntity
   | null;
+
+type NsiEntity =
+  | CounterpartyEntity
+  | DesignEntity
+  | EquipmentEntity
+  | CriticalityEntity
+  | SectionEntity
+  | StageEntity
+  | DirectionEntity
+  | TechnicalCardEntity;
+
+interface NsiView {
+  id: number;
+  title: string;
+  code: string | number;
+  description: string;
+  threshold?: number;
+  goal?: number;
+  tenseGoal?: number;
+  createdDate: string;
+  updatedDate: string;
+}
 
 @Injectable()
 export class RegulatoryReferenceInformationService {
@@ -84,6 +107,33 @@ export class RegulatoryReferenceInformationService {
     @Inject(forwardRef(() => ExcelService))
     private excelService: ExcelService
   ) {}
+
+  renderItem = (item: NsiEntity): NsiView => {
+    const { id, title, code, description, createdAt, updatedAt } = item;
+
+    if (item instanceof CriticalityEntity) {
+      return {
+        id,
+        title,
+        code,
+        description,
+        threshold: +item.threshold,
+        goal: +item.goal,
+        tenseGoal: +item.tenseGoal,
+        createdDate: formattedDate(createdAt, true),
+        updatedDate: formattedDate(updatedAt, true),
+      };
+    } else {
+      return {
+        id,
+        title,
+        code,
+        description,
+        createdDate: formattedDate(createdAt, true),
+        updatedDate: formattedDate(updatedAt, true),
+      };
+    }
+  };
 
   userRegistration = async (
     dto: CreateUserDto,
@@ -515,7 +565,9 @@ export class RegulatoryReferenceInformationService {
   findAll = async (
     target: string
   ): Promise<RegulatoryReferenceInformationView[]> => {
-    let items: RegulatoryReferenceInformationView[] = [];
+    let items: RegulatoryReferenceInformationView[] | NsiEntity[] = [];
+
+    const renderData: NsiView[] = [];
 
     switch (target) {
       case "counterparty": {
@@ -594,6 +646,10 @@ export class RegulatoryReferenceInformationService {
       default:
         break;
     }
+
+    items.map((item) => renderData.push(this.renderItem(item)));
+
+    console.log("Render: ", renderData);
 
     return items;
   };

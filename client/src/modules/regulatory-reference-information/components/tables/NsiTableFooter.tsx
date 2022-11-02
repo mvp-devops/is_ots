@@ -3,14 +3,12 @@ import { useNsiTable } from ".";
 
 const { Text } = Typography;
 
-const NsiTableFooter = () => {
-  const { dataSource } = useNsiTable();
-
+const NsiTableFooter = (data: any[]) => {
   return (
     <Space className="d-flex justify-content-end ">
       <Text className="text-secondary">Количество записей:</Text>
       <Text strong type="secondary">
-        {dataSource.length}
+        {data.length}
       </Text>
     </Space>
   );

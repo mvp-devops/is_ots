@@ -62,3 +62,17 @@ export const setDate = (date: string) => {
 
   return d;
 };
+
+export const filterData = (data: any[], searchValue: string): any[] => {
+  if (searchValue !== "") {
+    const filteredData = data.filter((item) => {
+      return Object.values(item)
+        .join("")
+        .toLowerCase()
+        .includes(searchValue.toLowerCase());
+    });
+    return filteredData;
+  } else {
+    return data;
+  }
+};

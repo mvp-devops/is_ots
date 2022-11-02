@@ -10,6 +10,7 @@ import { useActions, useTypedSelector } from "../../../../hooks";
 import { DesignDocumentTable } from "../../../file-storage";
 import PositionTreeTable from "../../components/table/PositionTreeTable";
 import StatisticPage from "../StatisticPage";
+import MonitoringPageView from "../MonitoringPageView";
 
 const { TabPane } = Tabs;
 
@@ -70,6 +71,7 @@ const TabsView = () => {
           <PositionTreeTable />
         </TabPane>
       )}
+
       {documentationView && (
         <TabPane
           key="documentation"
@@ -83,6 +85,21 @@ const TabsView = () => {
           <DesignDocumentTable />
         </TabPane>
       )}
+      {currentItem &&
+        (currentItem.target === "sub-unit" ||
+          currentItem.target === "unit") && (
+          <TabPane
+            key="monitoring"
+            tab={
+              <Space>
+                <DatabaseOutlined style={{ marginBottom: 6, padding: 0 }} />
+                Мониторинг СМР
+              </Space>
+            }
+          >
+            <MonitoringPageView />
+          </TabPane>
+        )}
     </Tabs>
   );
 };

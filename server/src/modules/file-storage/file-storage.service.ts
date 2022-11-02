@@ -106,6 +106,22 @@ export class FileStorageService {
           break;
       }
 
+      const formatBytes = (bytes: number | string, decimals = 2) => {
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ["б", "кб", "Мб", "Гб", "Тб", "Пб", "Еб", "Зб", "ЙОб"];
+
+        if (!+bytes) return `0 ${sizes[0]}`;
+
+        const i = Math.floor(Math.log(+bytes) / Math.log(k));
+
+        return `${parseFloat((+bytes / Math.pow(k, i)).toFixed(dm))} ${
+          sizes[i]
+        }`;
+      };
+
+      console.log("Size: ", path.parse(file.originalname).ext);
+
       await this.logoRepository.create(logo);
     }
   };
