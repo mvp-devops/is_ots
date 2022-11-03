@@ -41,6 +41,7 @@ import {
   CommentAccountingService,
   StatisticService,
 } from "../comment-accounting";
+import {NewFileStorageService} from "./new-file-storage.service";
 
 export enum FileType {
   PDF = "pdf",
@@ -61,7 +62,9 @@ export class FileStorageService {
     @Inject(forwardRef(() => CommentAccountingService))
     private commentService: CommentAccountingService,
     @Inject(forwardRef(() => StatisticService))
-    private statisticService: StatisticService
+    private statisticService: StatisticService,
+    @Inject(forwardRef(() => NewFileStorageService))
+    private newFileStorageService: NewFileStorageService
   ) {}
 
   createLogo = async (

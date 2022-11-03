@@ -1,4 +1,44 @@
 import { DesignDocumentCommentView } from "./comments-accounting";
+import {ApiProperty} from "@nestjs/swagger";
+import {Column, DataType} from "sequelize-typescript";
+
+
+export interface File  extends Express.Multer.File {};
+
+export enum FileTypes {
+  "JSON" = "JSON",
+  "PDF" = "PDF",
+  "XLS" = "XLS",
+  "XLSX" = "XLSX",
+  "DOC" = "DOC",
+  "DOCX" = "DOCX"
+}
+
+export interface NormativeView {
+  readonly id: number;
+  readonly code: string;
+  readonly title: string;
+  readonly revision: string;
+  readonly fileType: string;
+  readonly filePath: string;
+  readonly fileName: string;
+  readonly description: string;
+  readonly createdAt: string;
+  readonly updatedAt: string;
+}
+
+export interface FileProperties {
+  destination?: string;  //путь к файлу в хранилище
+  fileName: string; //имя файла для записи в БД
+  nameWithoutExt: string; // имя файла без расширения
+  extName: string;  //расширение файла
+  size: string; //размер файла
+  mimeType: string // тип заголовка ответа HTTP-запроса
+  buffer: Buffer // содержимое файла
+}
+
+
+
 
 export interface LogoCreationAttrs {
   subsidiaryId: number | string | null;
@@ -9,6 +49,8 @@ export interface LogoCreationAttrs {
   fileName: string;
   fileType: string;
 }
+
+
 
 export interface DesignDocumentCreateOrUpdateAttrs {
   projectId: string | number | null;

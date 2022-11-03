@@ -13,6 +13,7 @@ import SearchPanel from "../../../../components/search-panel/SearchPanel";
 import { useState } from "react";
 import { useSearch } from "../../../../hooks/useSearch";
 import NewCommentForm from "../forms/NewCommentForm";
+import NormativeForm from "../forms/NormativeForm";
 
 const { Text } = Typography;
 
@@ -111,7 +112,7 @@ const NsiTable = () => {
   );
 
   const renderForm = renderNsiFormFlag && (
-    <ModalContainer child={<NewCommentForm />} />
+    <ModalContainer child={<NormativeForm />} />
   );
 
   return (

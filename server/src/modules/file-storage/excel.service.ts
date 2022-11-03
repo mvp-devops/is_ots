@@ -1,21 +1,32 @@
 import {
-  BadRequestException,
+  BadRequestException, forwardRef, Inject,
   Injectable,
   NotFoundException,
 } from "@nestjs/common";
-import { join } from "path";
+import {join} from "path";
 import * as uuid from "uuid";
-import { Workbook, Font, Alignment } from "exceljs";
+import {Workbook, Font, Alignment} from "exceljs";
 
-import { setCurrentDate } from "../../../common/utils";
-import { NsiEntries } from "../../../common/types/regulatory-reference-information";
+import {setCurrentDate} from "../../../common/utils";
+import {NsiEntries} from "../../../common/types/regulatory-reference-information";
 import {
   CollectiveCheckSheetHeaders,
   DesignDocumentCommentView,
 } from "../../../common/types/comments-accounting";
 
+import { readFile, utils } from "xlsx"
+import {File} from "../../../common/types/file-storage";
+import {NewFileStorageService} from "./new-file-storage.service";
+
+// const readFile = xlsx.readFile;
+// const sheetToJSON = xlsx.utils.sheet_to_json;
+
 @Injectable()
 export class ExcelService {
+  constructor(
+    @Inject(forwardRef(() => NewFileStorageService))
+    private fileStorageService: NewFileStorageService) {}
+
   exportNsiToExcel = async (target: string, data: any[]) => {
     const workBook = new Workbook();
     const sheet = workBook.addWorksheet("data");
@@ -34,7 +45,7 @@ export class ExcelService {
       key: "id",
       type: Number,
       width: 10,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const titleColumn = {
@@ -42,7 +53,7 @@ export class ExcelService {
       key: "title",
 
       width: 150,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const weightColumn = {
@@ -50,14 +61,14 @@ export class ExcelService {
       key: "code",
       type: Number,
       width: 15,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const codeColumn = {
       header: "Шифр",
       key: "code",
       width: 20,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const thresholdColumn = {
@@ -65,7 +76,7 @@ export class ExcelService {
       key: "threshold",
       type: Number,
       width: 15,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const goalColumn = {
@@ -73,7 +84,7 @@ export class ExcelService {
       key: "goal",
       type: Number,
       width: 15,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const tenseGoalColumn = {
@@ -81,14 +92,14 @@ export class ExcelService {
       key: "tenseGoal",
       type: Number,
       width: 15,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     const descriptionColumn = {
       header: "Примечание",
       key: "description",
       width: 50,
-      style: { font: tableFontStyle, alignment: alignCenter },
+      style: {font: tableFontStyle, alignment: alignCenter},
     };
 
     switch (target) {
@@ -263,4 +274,22 @@ export class ExcelService {
 
     return `${outputFilePath}\\${outputFileName}`;
   };
+
+  convertExcelFileToJson = (file: File) => {
+
+    const {destination, fileName} = this.fileStorageService.fileUpload('temp', file);
+    const pathToFile = this.fileStorageService.getPath([destination,fileName]);
+    const fileData = readFile(pathToFile);
+    const sheetNames = fileData.SheetNames;
+    const totalSheets = sheetNames.length;
+    let parsedData = [];
+
+    for (let i = 0; i < totalSheets; i++) {
+      const tempData = utils.sheet_to_json(fileData.Sheets[sheetNames[i]]);
+      // tempData.shift();
+      parsedData.push(...tempData);
+    }
+    this.fileStorageService.removeDirectoryOrFile(pathToFile)
+    return parsedData
+  }
 }

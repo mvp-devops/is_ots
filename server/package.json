@@ -46,7 +46,8 @@
     "tmp": "^0.2.1",
     "uuid": "^8.3.2",
     "write-excel-file": "^1.4.13",
-    "write-json-file": "^5.0.0"
+    "write-json-file": "^5.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@compodoc/compodoc": "^1.1.19",

@@ -6,15 +6,15 @@ export const site = window.location.origin + BASENAME;
 
 export enum Routes {
   LOGIN_ROUTE = `/`,
-  MAIN_ROUTE = `/main`,
-  HELP_ROUTE = `/help`,
-  TEST_ROUTE = `/test`,
-  ADMIN_ROUTE = `/admin`,
-  EXPERT_ROUTE = `/expert`,
-  FIELD_OTS_ROUTE = `/field-ots`,
-  CUSTOMER_ROUTE = `/customer`,
-  USER_ROUTE = `/profile`,
-  SUBSIDIARY_ROUTE = `/subsidiary`,
+  MAIN_ROUTE = `/main/`,
+  HELP_ROUTE = `/help/`,
+  TEST_ROUTE = `/test/`,
+  ADMIN_ROUTE = `/admin/`,
+  EXPERT_ROUTE = `/expert/`,
+  FIELD_OTS_ROUTE = `/field-ots/`,
+  CUSTOMER_ROUTE = `/customer/`,
+  USER_ROUTE = `/profile/`,
+  SUBSIDIARY_ROUTE = `/subsidiary/`,
 }
 
 export const authRoutes = [

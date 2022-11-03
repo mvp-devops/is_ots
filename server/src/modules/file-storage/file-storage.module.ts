@@ -6,11 +6,13 @@ import { FileStorageService } from "./file-storage.service";
 import { RegulatoryReferenceInformationModule } from "../regulatory-reference-information";
 import { CommentAccountingModule } from "../comment-accounting";
 import { ExcelService } from "./excel.service";
+import {NewFileStorageService} from "./new-file-storage.service";
+import {NormativeService} from "./normative.service";
 
 @Module({
   controllers: [FileStorageController],
-  providers: [FileStorageService, ExcelService],
-  exports: [FileStorageService, ExcelService],
+  providers: [FileStorageService, ExcelService, NewFileStorageService, NormativeService],
+  exports: [FileStorageService, ExcelService, NewFileStorageService, NormativeService],
   imports: [
     SequelizeModule.forFeature([
       LogoEntity,

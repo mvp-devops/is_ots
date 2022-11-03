@@ -23,7 +23,7 @@ function AuthPage() {
   const onFormSubmit = (data: LoginData) => {
     const { email, password } = data;
     login(email, password);
-    isAuth && navigate("/main");
+    isAuth && navigate("/main/");
   };
 
   const onChangeData = (key: string, value: string) => {
@@ -34,7 +34,7 @@ function AuthPage() {
 
   useEffect(() => {
     if (isAuth) {
-      navigate("/main");
+      navigate("/main/");
     } else {
       navigate("/");
     }

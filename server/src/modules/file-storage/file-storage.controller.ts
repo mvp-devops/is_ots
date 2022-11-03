@@ -8,18 +8,23 @@ import {
   Delete,
   Query,
   UseInterceptors,
-  UploadedFile,
+  UploadedFile, UploadedFiles,
 } from "@nestjs/common";
-import { FileInterceptor } from "@nestjs/platform-express";
+import {FileFieldsInterceptor, FileInterceptor} from "@nestjs/platform-express";
 import {
   CreateDesignDocumentDto,
   CreateNormativeDto,
 } from "./dto/create-file-storage.dto";
 import { FileStorageService } from "./file-storage.service";
+import {NormativeService} from "./normative.service";
+import {File, NormativeCreateOrUpdateAttrs} from "../../../common/types/file-storage";
 
 @Controller("api/file-storage")
 export class FileStorageController {
-  constructor(private readonly service: FileStorageService) {}
+  constructor(
+    private readonly service: FileStorageService,
+    private readonly normativeService: NormativeService
+  ) {}
 
   @Post("/add/design-document")
   @UseInterceptors(FileInterceptor("file"))
@@ -45,9 +50,10 @@ export class FileStorageController {
   }
 
   @Post("/add/normative")
-  @UseInterceptors(FileInterceptor("file"))
-  createNormative(@Body() dto: CreateNormativeDto, @UploadedFile() file: any) {
-    return this.service.createNormative(dto, file);
+  @UseInterceptors(FileFieldsInterceptor([{ name: "descriptor", maxCount: 1 }, { name: "documents", maxCount: 20 }]))
+  uploadNormative(@UploadedFiles() files: {descriptor: File, documents: File[]}) {
+    console.log("documents: ", files.documents);
+    return this.normativeService.uploadManyNormative(files);
   }
 
   @Get("/find/design-documents")
