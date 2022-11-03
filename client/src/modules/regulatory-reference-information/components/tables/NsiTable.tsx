@@ -12,6 +12,7 @@ import { useNsiTable, NsiTableColumns, NsiTableFooter } from ".";
 import SearchPanel from "../../../../components/search-panel/SearchPanel";
 import { useState } from "react";
 import { useSearch } from "../../../../hooks/useSearch";
+import NewCommentForm from "../forms/NewCommentForm";
 
 const { Text } = Typography;
 
@@ -76,8 +77,6 @@ const NsiTable = () => {
     }
   };
 
-  console.log("DATA: ", dataSource);
-
   const title = (
     <Space className="d-flex align-items-center justify-content-between">
       <Text strong type="secondary">
@@ -112,7 +111,7 @@ const NsiTable = () => {
   );
 
   const renderForm = renderNsiFormFlag && (
-    <ModalContainer child={<RegulatoryReferenceInformationForm />} />
+    <ModalContainer child={<NewCommentForm />} />
   );
 
   return (

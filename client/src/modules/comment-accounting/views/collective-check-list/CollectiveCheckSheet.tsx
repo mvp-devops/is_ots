@@ -5,8 +5,9 @@ import Header from "./Header";
 import { useCollectiveCheckSheet } from "./hooks/useCollectiveCheckSheet";
 import { useCommentAccounting } from "../../hooks";
 import { FormActions } from "../../../main";
-import { CommentForm, CommentTable } from "../../components";
+import { CommentTable } from "../../components";
 import { ModalContainer } from "../../../../components";
+import CommentForm from "../../components/forms/CommentForm";
 // import CommentTable from "../../components/tables/CommentTable";
 
 const { Text } = Typography;

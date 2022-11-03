@@ -66,9 +66,6 @@ export const getAllItems = async (
   parrentIds?: string[]
 ): Promise<DesignDocumentCommentView[]> => {
   const url = setUrl(`${baseUrl}/find`);
-  console.log("parrent target: ", parrentTarget);
-  console.log("parrent id: ", parrentId);
-  console.log("parrent ids: ", parrentIds);
   const { data } = await axios.get<DesignDocumentCommentView[]>(url, {
     params: { parrentTarget, parrentId, parrentIds },
   });

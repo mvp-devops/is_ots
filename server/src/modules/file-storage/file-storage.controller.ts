@@ -86,4 +86,9 @@ export class FileStorageController {
   remove(@Param("id") id: string) {
     return this.service.deleteDesignDocument(id);
   }
+
+  @Get("/find/normanives")
+  findAllNormatives() {
+    return this.service.findAllNormatives();
+  }
 }

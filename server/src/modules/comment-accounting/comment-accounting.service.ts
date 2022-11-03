@@ -1,4 +1,10 @@
-import { forwardRef, Inject, Injectable } from "@nestjs/common";
+import {
+  forwardRef,
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+} from "@nestjs/common";
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CreateDesignDocumentCommentDto,
@@ -53,7 +59,7 @@ export class CommentAccountingService {
     try {
       const item = await this.commentRepository.create(dto);
 
-      if (dto.solutions.length > 0) {
+      if (dto.solutions && dto.solutions.length > 0) {
         for (let i = 0; i < dto.solutions.length; i++) {
           const { statusId, solutionId, answer, designContacts, solution } =
             dto.solutions[i];
@@ -295,19 +301,6 @@ export class CommentAccountingService {
                   },
                 ],
               },
-              {
-                model: DesignDocumentSolutionEntity,
-                include: [
-                  {
-                    model: UserEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
-                  },
-                ],
-              },
             ],
           });
 
@@ -346,19 +339,6 @@ export class CommentAccountingService {
                 include: [
                   {
                     model: SubsidiaryEntity,
-                  },
-                ],
-              },
-              {
-                model: DesignDocumentSolutionEntity,
-                include: [
-                  {
-                    model: UserEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
                   },
                 ],
               },
@@ -403,19 +383,6 @@ export class CommentAccountingService {
                   },
                 ],
               },
-              {
-                model: DesignDocumentSolutionEntity,
-                include: [
-                  {
-                    model: UserEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
-                  },
-                ],
-              },
             ],
           });
 
@@ -454,19 +421,6 @@ export class CommentAccountingService {
                 include: [
                   {
                     model: SubsidiaryEntity,
-                  },
-                ],
-              },
-              {
-                model: DesignDocumentSolutionEntity,
-                include: [
-                  {
-                    model: UserEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
                   },
                 ],
               },
@@ -520,7 +474,7 @@ export class CommentAccountingService {
   
         
         телефон: ${items[i].user.phone}`,
-        solutions: [],
+        solutions: await this.getAllSolutions(items[i].id),
         pdcId: items[i].pdcId,
         udcId: items[i].udcId,
         sudcId: items[i].sudcId,
@@ -532,51 +486,51 @@ export class CommentAccountingService {
         updatedAt: +new Date(items[i].updatedAt),
       };
 
-      const solutionsRender: DesignDocumentCommentSolutionView[] = [];
+      // const solutionsRender: DesignDocumentCommentSolutionView[] = [];
 
-      for (let i = 0; i < items[i]?.solutions.length; i++) {
-        const { statusId, answer, user, solutionId, solution, designContacts } =
-          items[i]?.solutions[i];
+      // for (let i = 0; i < items[i]?.solutions.length; i++) {
+      //   const { statusId, answer, user, solutionId, solution, designContacts } =
+      //     items[i]?.solutions[i];
 
-        const renderItem: DesignDocumentCommentSolutionView = {
-          statusId,
-          answer,
-          designContacts,
-          solutionId,
-          solution,
-          expertContacts: formatUser(user),
-        };
-        solutionsRender.push(renderItem);
-      }
+      //   const renderItem: DesignDocumentCommentSolutionView = {
+      //     statusId,
+      //     answer,
+      //     designContacts,
+      //     solutionId,
+      //     solution,
+      //     expertContacts: formatUser(user),
+      //   };
+      //   solutionsRender.push(renderItem);
+      // }
 
-      renderItem.solutions = solutionsRender;
+      // renderItem.solutions = solutionsRender;
 
       switch (parrentTarget) {
         case "project": {
-          renderItem.documentSection = `${items[i].pdc.stage.code}/${items[i].pdc.section.code}`;
-          renderItem.documentCode = items[i].pdc.code;
-          renderItem.documentTitle = items[i].pdc.title;
+          renderItem.documentSection = `${items[i]?.pdc?.stage?.code}/${items[i]?.pdc?.section?.code}`;
+          renderItem.documentCode = items[i]?.pdc?.code;
+          renderItem.documentTitle = items[i]?.pdc?.title;
           renderItem.documentPage = "н/д";
           break;
         }
         case "unit": {
-          renderItem.documentSection = `${items[i].udc.stage.code}/${items[i].udc.section.code}`;
-          renderItem.documentCode = items[i].udc.code;
-          renderItem.documentTitle = items[i].udc.title;
+          renderItem.documentSection = `${items[i]?.udc?.stage?.code}/${items[i]?.udc?.section?.code}`;
+          renderItem.documentCode = items[i]?.udc?.code;
+          renderItem.documentTitle = items[i]?.udc?.title;
           renderItem.documentPage = "н/д";
           break;
         }
         case "sub-unit": {
-          renderItem.documentSection = `${items[i].sudc.stage.code}/${items[i].sudc.section.code}`;
-          renderItem.documentCode = items[i].sudc.code;
-          renderItem.documentTitle = items[i].sudc.title;
+          renderItem.documentSection = `${items[i]?.sudc?.stage?.code}/${items[i]?.sudc?.section?.code}`;
+          renderItem.documentCode = items[i]?.sudc?.code;
+          renderItem.documentTitle = items[i]?.sudc?.title;
           renderItem.documentPage = "н/д";
           break;
         }
         case "supplier": {
-          renderItem.documentSection = `${items[i].sdc.stage.code}/${items[i].sdc.supplier.title}`;
-          renderItem.documentCode = items[i].sdc.code;
-          renderItem.documentTitle = items[i].sdc.title;
+          renderItem.documentSection = `${items[i]?.sdc?.stage?.code}/${items[i]?.sdc?.supplier?.title}`;
+          renderItem.documentCode = items[i]?.sdc?.code;
+          renderItem.documentTitle = items[i]?.sdc?.title;
           renderItem.documentPage = "н/д";
           break;
         }
@@ -587,6 +541,69 @@ export class CommentAccountingService {
       render.push(renderItem);
     }
     return render;
+  };
+
+  solutionRender = (
+    item: DesignDocumentSolutionEntity
+  ): DesignDocumentCommentSolutionView => {
+    const { statusId, answer, designContacts, solutionId, solution, user } =
+      item;
+
+    const elem = {
+      statusId,
+      answer,
+      designContacts,
+      solutionId,
+      solution,
+      expertContacts: user
+        ? `${user.lastName} ${user.firstName.slice(
+            0,
+            1
+          )}. ${user.secondName.slice(0, 1)}.  \r\n\
+      
+      ${user.subsidiary.title} \r\n\
+      
+      ${user.subdivision} \r\n\
+      
+      ${user.position} \r\n\
+      
+      почта: ${user.email} \r\n\
+      
+      телефон: ${user.phone}`
+        : "",
+    };
+
+    return elem;
+  };
+
+  getAllSolutions = async (
+    commentId: number
+  ): Promise<DesignDocumentCommentSolutionView[]> => {
+    try {
+      const items = await this.solutionRepository.findAll({
+        where: { commentId },
+        include: [
+          {
+            model: UserEntity,
+            include: [
+              {
+                model: SubsidiaryEntity,
+              },
+            ],
+          },
+        ],
+      });
+      let data: DesignDocumentCommentSolutionView[] = [];
+      if (items && items.length > 0) {
+        for (let i = 0, len = items.length; i < len; i++) {
+          data.push(this.solutionRender(items[i]));
+        }
+      }
+
+      return data;
+    } catch (e: any) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   };
 
   remove = async (

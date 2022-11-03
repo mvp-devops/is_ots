@@ -50,25 +50,25 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const menu = (
     <Menu
       items={[
-        {
-          label: (
-            <Space
-              className="text-secondary"
-              onClick={() => {
-                setActionType(FormActions.EDIT_COMMENT);
-                setFormVisible(true);
-              }}
-            >
-              <EditOutlined
-                style={{ marginBottom: "6px", padding: 0 }}
-                className="text-secondary"
-              />
-              Редактировать
-            </Space>
-          ),
+        // {
+        //   label: (
+        //     <Space
+        //       className="text-secondary"
+        //       onClick={() => {
+        //         setActionType(FormActions.EDIT_COMMENT);
+        //         setFormVisible(true);
+        //       }}
+        //     >
+        //       <EditOutlined
+        //         style={{ marginBottom: "6px", padding: 0 }}
+        //         className="text-secondary"
+        //       />
+        //       Редактировать
+        //     </Space>
+        //   ),
 
-          key: "EDIT_COMMENT",
-        },
+        //   key: "EDIT_COMMENT",
+        // },
         {
           label: (
             <Space

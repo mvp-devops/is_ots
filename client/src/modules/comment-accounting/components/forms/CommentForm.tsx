@@ -1,187 +1,183 @@
-import { Button, Divider, Form, Space, Typography } from "antd";
-import { DesignDocumentCommentCreationAttrs } from "../../types";
-import SolutionForm from "./SolutionForm";
-import { useCommentAccountingForm } from "./hooks/useCommentAccountingForm";
+import { Button, Divider, Form, notification, Space, Typography } from "antd";
+import React, { FC, useLayoutEffect, useState } from "react";
+import { FormInstance } from "antd/es/form";
+import { InfoCircleOutlined } from "@ant-design/icons";
+
+import { useActions, useTypedSelector } from "../../../../hooks";
+import { DesignDocumentCommentCreationAttrs, NSIView } from "../../types";
+import { getAllItems } from "../../../regulatory-reference-information";
+import CommentFormItem from "./comment-form/CommentFormItem";
 import {
-  DeleteForm,
-  SelectUIComponent,
-  TextAreaUIComponent,
-} from "../../../../components";
+  solutionRequestData,
+  statusRequestData,
+} from "../../utils/comment-accounting.consts";
+import { findAllNormatives } from "../../../file-storage/api/file-storage.api";
 import { FormActions } from "../../../main";
 
 const { Item } = Form;
+
 const { Text } = Typography;
 
-export interface CommentFormProps {
-  target: string;
-  currentId: string;
-  onCancel: () => void;
-  data?: DesignDocumentCommentCreationAttrs;
+interface CommentFormProps {
+  rows?:
+    | DesignDocumentCommentCreationAttrs
+    | DesignDocumentCommentCreationAttrs[];
 }
 
-const CommentForm = () => {
-  const {
-    actionType,
-    directionsList,
-    criticalitiesList,
-    setFormVisible,
-    onHandlerChange,
-    solutions,
-    addItem,
-    removeItem,
-    changeItems,
-    addNewItem,
-    updateItem,
-    deleteItem,
-    editRow,
-  } = useCommentAccountingForm();
+const CommentForm: FC<CommentFormProps> = ({ rows }) => {
+  const [form] = Form.useForm();
 
-  const renderAddActions = (
-    <Button
-      type="primary"
-      className="m-1"
-      title="Добавить новое замечание"
-      onClick={() => {
-        addNewItem();
-        setFormVisible(false);
-      }}
+  const formRef = React.createRef<FormInstance>();
+
+  const { currentDesignDocument } = useTypedSelector(
+    (state) => state.fileStorage
+  );
+  const { actionType, currentUser } = useTypedSelector((state) => state.main);
+
+  const { currentComment } = useTypedSelector(
+    (state) => state.commentAccounting
+  );
+
+  const { target } = useTypedSelector((state) => state.positionTree);
+
+  const [buttonTitle, setButtonTitle] = useState("");
+
+  const [directionsList, setDirectionsList] = useState<NSIView[]>([]);
+  const [criticalitiesList, setCriticalitiesList] = useState<NSIView[]>([]);
+
+  const [normativesList, setNormativesList] = useState<any[]>([]);
+
+  //TODO: продумать как оптимизировать проверку сдалии документа, чтобы отдавать корректный список критериев критичности
+  const stages = [1, 2, 3, 4, 5, 6, "1", "2", "3", "4", "5", "6"];
+
+  const { stageId, projectId, unitId, subUnitId, supplierId } =
+    currentDesignDocument;
+
+  const userId = currentUser.id;
+  const documentId = currentDesignDocument.id;
+
+  const { createManyComments, setFormVisible, updateComment, deleteComment } =
+    useActions();
+
+  useLayoutEffect(() => {
+    getAllItems("criticality").then((data) => {
+      stages.includes(stageId) &&
+        setCriticalitiesList(
+          data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(0, 11)
+        );
+      stageId === 7 &&
+        setCriticalitiesList([
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(0, 1),
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(16, 22),
+        ]);
+      stageId === 8 &&
+        setCriticalitiesList([
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(0, 1),
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(22, 29),
+        ]);
+      stageId === 10 &&
+        setCriticalitiesList([
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(0, 1),
+          ...data.sort((a, b) => (a.id < b.id ? -1 : 0)).slice(29),
+        ]);
+    });
+    getAllItems("direction").then((data) => setDirectionsList(data));
+
+    findAllNormatives().then((data) => setNormativesList(data));
+
+    switch (actionType) {
+      case FormActions.ADD_COMMENT:
+        setButtonTitle("Добавить");
+        break;
+      case FormActions.EDIT_COMMENT:
+        setButtonTitle("Обновить");
+        break;
+      case FormActions.REMOVE_COMMENT:
+        setButtonTitle("Удалить");
+        break;
+      default:
+        break;
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const onFinish = (values: any) => {
+    actionType === FormActions.REMOVE_COMMENT &&
+      deleteComment(target, currentComment.id.toString());
+    actionType === FormActions.EDIT_COMMENT &&
+      updateComment(currentComment.id.toString(), values);
+    actionType === FormActions.ADD_COMMENT && createManyComments(values);
+    onReset();
+    setFormVisible(false);
+  };
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+    notification["error"]({
+      message: "Ошибка",
+      description: "Ошибка ввода данных. Проверьте все поля формы",
+    });
+  };
+
+  const onReset = () => {
+    formRef.current!.resetFields();
+    form.setFieldsValue([]);
+  };
+
+  const commentItem: DesignDocumentCommentCreationAttrs = {
+    pdcId: projectId !== null ? documentId : null,
+    udcId: unitId !== null ? documentId : null,
+    sudcId: subUnitId !== null ? documentId : null,
+    sdcId: supplierId !== null ? documentId : null,
+    userId,
+    directionId: "1",
+    criticalityId: "1",
+    normativeId: "1",
+    comment: "",
+    solutions: [],
+  };
+
+  return (
+    <Form
+      layout="vertical"
+      ref={formRef}
+      form={form}
+      name="dynamic_form_nest_item"
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="on"
     >
-      Добавить
-    </Button>
-  );
+      {actionType === FormActions.REMOVE_COMMENT ? (
+        <Space className="d-flex justify-content-start ">
+          <InfoCircleOutlined
+            style={{ fontSize: 30 }}
+            className="text-warning me-3"
+          />
+          <Text type="secondary">Удалить замечание?</Text>
+        </Space>
+      ) : (
+        <CommentFormItem
+          initialValues={commentItem}
+          directionsList={directionsList}
+          criticalitiesList={criticalitiesList}
+          normativesList={normativesList}
+          statusesList={statusRequestData}
+          solutionsList={solutionRequestData}
+        />
+      )}
 
-  const renderEditActions = (
-    <Button
-      type="primary"
-      className="m-1"
-      title="Редактировать замечание"
-      onClick={() => {
-        updateItem();
-        setFormVisible(false);
-      }}
-    >
-      Обновить
-    </Button>
-  );
-
-  const renderRemoveActions = (
-    <Button
-      type="primary"
-      className="m-1"
-      title="Удалить замечание"
-      onClick={() => {
-        deleteItem();
-        setFormVisible(false);
-      }}
-    >
-      Удалить
-    </Button>
-  );
-
-  const renderDelete = (
-    <>
-      <DeleteForm message="Удалить замечание?" />
-      <Divider className="m-1" />
-      <Space className="d-flex justify-content-end mb-2">
-        {renderRemoveActions}
-      </Space>
-    </>
-  );
-
-  const renderAction =
-    actionType === FormActions.ADD_COMMENT
-      ? renderAddActions
-      : renderEditActions;
-
-  const renderForm =
-    actionType === FormActions.ADD_COMMENT ||
-    actionType === FormActions.EDIT_COMMENT ? (
-      <>
-        {editRow && (
-          <Form
-            labelCol={{ span: 10 }}
-            wrapperCol={{ span: 14 }}
-            layout="horizontal"
-            className="m-1 p-1 border"
-          >
-            <Item
-              label={<Text type="secondary">Функциональное направление</Text>}
-              className="m-0"
-            >
-              <SelectUIComponent
-                id="directionId"
-                defaultValue={editRow.directionId as string}
-                items={directionsList}
-                changeValue={onHandlerChange}
-              />
-            </Item>
-            <Item
-              label={<Text type="secondary">Замечание</Text>}
-              className="m-0"
-            >
-              <TextAreaUIComponent
-                id="comment"
-                defaultValue={editRow.comment}
-                changeValue={onHandlerChange}
-                showCount
-              />
-            </Item>
-            {/* <Item
-              label={<Text type="secondary">Нормативная ссылка</Text>}
-              className="m-0"
-            >
-              <SelectUIComponent
-                id="normativeId"
-                items={[]}
-                changeValue={onHandlerChange}
-              />
-            </Item> */}
-            <Item
-              label={<Text type="secondary">Код критерия критичности</Text>}
-              className="m-0"
-            >
-              <SelectUIComponent
-                id="criticalityId"
-                defaultValue={editRow.criticalityId as string}
-                items={criticalitiesList}
-                changeValue={onHandlerChange}
-              />
-            </Item>
-          </Form>
-        )}
-        <Divider orientation="right">
-          <Text type="secondary">Добавить новое решение</Text>
+      <Space className="d-flex justify-content-end">
+        <Item>
           <Button
             type="primary"
-            className="m-1"
-            title="Добавить новое решение"
-            onClick={() => addItem()}
+            htmlType="submit"
+            title={`${buttonTitle} замечание`}
           >
-            +
+            {buttonTitle}
           </Button>
-        </Divider>
-
-        <Space direction="horizontal" className="d-inline-block mt-2">
-          {solutions.map((item) => (
-            <Space key={item.key}>
-              <SolutionForm
-                id={item.key}
-                changeValue={changeItems}
-                onRemove={() => removeItem(item.key)}
-              />
-            </Space>
-          ))}
-        </Space>
-        <Divider className="m-1" />
-        <Space className="d-flex justify-content-end mb-2">
-          {renderAction}
-        </Space>
-      </>
-    ) : (
-      renderDelete
-    );
-
-  return renderForm;
+        </Item>
+      </Space>
+    </Form>
+  );
 };
 
 export default CommentForm;

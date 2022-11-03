@@ -42,7 +42,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const containerWidth =
     actionType === FormActions.ADD_COMMENT ||
     actionType === FormActions.EDIT_COMMENT
-      ? 900
+      ? 1200
       : actionType === FormActions.ADD_EQUIPMENT &&
         (target === "cable-log" ||
           target === "impulse-line-log" ||
@@ -54,7 +54,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       ? 1000
       : target === "monitoring"
       ? 1200
-      : 600;
+      : 1200;
 
   return (
     <Modal

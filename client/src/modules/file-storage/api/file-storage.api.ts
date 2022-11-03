@@ -75,6 +75,12 @@ export const createDesignDocuments = async (
   return items;
 };
 
+export const findAllNormatives = async () => {
+  const url = setUrl(`${baseUrl}/find/normanives`);
+  const { data } = await axios.get(url);
+  return data;
+};
+
 //   export const createManyEssences = async (
 //     items: DesignDocumentCommentCreationAttrs[]
 //   ): Promise<DesignDocumentCommentView[]> => {

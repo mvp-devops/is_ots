@@ -23,9 +23,11 @@ export interface DesignDocumentCommentSolutionCreationAttrs {
 
 export interface DesignDocumentCommentSolutionView {
   statusId: number | string;
+  statusDescription?: string;
   answer: string;
   designContacts: string;
   solutionId: number | string;
+  solutionDescription?: string;
   solution: string;
   expertContacts: string;
 }

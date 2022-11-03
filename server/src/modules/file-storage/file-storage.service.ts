@@ -449,6 +449,15 @@ export class FileStorageService {
     }
   };
 
+  findAllNormatives = async (): Promise<NormativeEntity[]> => {
+    try {
+      const items = await this.normativeRepository.findAll();
+      return items;
+    } catch (e) {
+      throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+  };
+
   findAllDesignDocuments = async (
     parrentTarget: string,
     parrentId: string
