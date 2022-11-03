@@ -39,6 +39,7 @@ import {
 } from "../position-tree";
 import { ExcelService } from "../file-storage/excel.service";
 import { StatisticService } from "./statistic.service";
+import { formattedDate } from "../../../common/utils/formatDate.pipe";
 
 @Injectable()
 export class CommentAccountingService {
@@ -484,6 +485,8 @@ export class CommentAccountingService {
         normativeId: items[i].normativeId,
         createdAt: +new Date(items[i].createdAt),
         updatedAt: +new Date(items[i].updatedAt),
+        // createdDate: formattedDate(createdAt, true),
+        // updatedDate: formattedDate(updatedAt, true),
       };
 
       // const solutionsRender: DesignDocumentCommentSolutionView[] = [];

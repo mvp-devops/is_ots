@@ -649,8 +649,6 @@ export class RegulatoryReferenceInformationService {
 
     items.map((item) => renderData.push(this.renderItem(item)));
 
-    console.log("Render: ", renderData);
-
     return items;
   };
 
