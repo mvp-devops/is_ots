@@ -20,7 +20,8 @@ import {File, NormativeCreateOrUpdateAttrs, NormativeView} from "../../../common
 import {formattedDate} from "../../../common/utils/formatDate.pipe";
 import {ExcelService} from "./excel.service";
 
-
+//FIXME: комментарий для фиксации изменений
+//TODO: комментарий для задачи
 
 @Injectable()
 export class NormativeService {

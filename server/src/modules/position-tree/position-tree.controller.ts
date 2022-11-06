@@ -9,17 +9,46 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
-  Put,
+  Put, Header, Res,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
 import type { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 
 import type { CheckListSets } from "../../../common/types/comments-accounting";
+import {ReportRequestParams} from "../../../common/types/report.types";
+import {Response} from "express";
+import {setCurrentDate} from "../../../common/utils";
 
 @Controller("api/position-tree")
 export class PositionTreeController {
   constructor(private readonly service: PositionTreeService) {}
+
+
+  @Post("/report")
+
+  @Header('Content-Type', 'application/pdf')
+  @Header('Content-Disposition', 'attachment; filename=report.pdf')
+  async getReport (
+    @Body() params: ReportRequestParams,
+    @Query() query: {target: string, id: string},
+    @Res() res: Response
+  ) {
+    const {target, id} = query;
+    // res.header('Content-Disposition', 'attachment; filename=report.pdf');
+    // res.type("application/pdf");
+    const fileLocation = await this.service.getReport(target, id, params);
+
+    res.download(
+      fileLocation,
+      `report.pdf`,
+      (e: Error) => {
+        if (e) {
+          throw new Error(e.message)
+        };
+      }
+    );
+  }
 
   @Post("/add")
   @UseInterceptors(FileInterceptor("file"))

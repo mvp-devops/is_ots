@@ -52,6 +52,7 @@ import {
   TechnicalCardEntity,
   TechnicalCardOperationEntity,
 } from "./modules/regulatory-reference-information";
+import {ReportModule} from "./modules/reports/report.module";
 
 @Module({
   imports: [
@@ -113,6 +114,7 @@ import {
     PositionTreeModule,
     FileStorageModule,
     RegulatoryReferenceInformationModule,
+    ReportModule,
     MulterModule.register({
       // dest: `.${process.env.NODE_ENV}.env`,
     }),

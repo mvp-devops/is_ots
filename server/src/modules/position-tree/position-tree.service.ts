@@ -5,12 +5,12 @@ import {
   Inject,
   Injectable,
 } from "@nestjs/common";
-import { InjectModel } from "@nestjs/sequelize";
+import {InjectModel} from "@nestjs/sequelize";
 import {
   CheckListSets,
   StatisticView,
 } from "../../../common/types/comments-accounting";
-import { PositionTreeItem } from "../../../common/types/position-tree";
+import {PositionTreeItem} from "../../../common/types/position-tree";
 import {
   CheckListService,
   DesignDocumentCommentEntity,
@@ -44,6 +44,9 @@ import {
   SubUnitEntity,
   UnitEntity,
 } from "./entities";
+import {Remarks, ReportRequestParams, ReportRow, ReportView, SignerData} from "../../../common/types/report.types";
+import {ReportService} from "../reports/report.service";
+import {join} from "path";
 
 type PositionTreeView =
   | SubsidiaryEntity
@@ -99,16 +102,16 @@ export class PositionTreeService {
     private unitRepository: typeof UnitEntity,
     @InjectModel(SubUnitEntity)
     private subUnitRepository: typeof SubUnitEntity,
-
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
-
     @Inject(forwardRef(() => CheckListService))
     private readonly checkListService: CheckListService,
-
     @Inject(forwardRef(() => StatisticService))
-    private readonly statisticService: StatisticService
-  ) {}
+    private readonly statisticService: StatisticService,
+    @Inject(forwardRef(() => ReportService))
+    private readonly reportService: ReportService
+  ) {
+  }
 
   getPositionTree = async (): Promise<PositionTreeItem[]> => {
     let items: PositionTreeItem[] = [];
@@ -143,24 +146,24 @@ export class PositionTreeService {
       });
 
     for (let i = 0; i < subsidiaries.length; i++) {
-      const { id, title, fields } = subsidiaries[i];
+      const {id, title, fields} = subsidiaries[i];
 
       let subsidiaryChildren: PositionTreeItem[] = [];
 
       for (let j = 0; j < fields.length; j++) {
-        const { subsidiaryId, id, title, projects } = fields[j];
+        const {subsidiaryId, id, title, projects} = fields[j];
         let fieldChilren: PositionTreeItem[] = [];
 
         for (let p = 0; p < projects.length; p++) {
-          const { fieldId, id, title, code, units } = projects[p];
+          const {fieldId, id, title, code, units} = projects[p];
           let projectChildren: PositionTreeItem[] = [];
 
           for (let u = 0; u < units.length; u++) {
-            const { projectId, id, position, title, subUnits } = units[u];
+            const {projectId, id, position, title, subUnits} = units[u];
             let unitChildren: PositionTreeItem[] = [];
 
             for (let su = 0; su < subUnits.length; su++) {
-              const { unitId, id, position, title } = subUnits[su];
+              const {unitId, id, position, title} = subUnits[su];
 
               const unitChild = {
                 target: "sub-unit",
@@ -254,23 +257,23 @@ export class PositionTreeService {
       switch (target) {
         case "subsidiary": {
           item = await this.subsidiaryRepository.create(dto);
-          const { id, code } = item;
+          const {id, code} = item;
           folderName = this.fileService.generateFolderName(target, id, code);
 
           file &&
-            (await this.fileService.createLogo(
-              item.id.toString(),
-              target,
-              file
-            ));
+          (await this.fileService.createLogo(
+            item.id.toString(),
+            target,
+            file
+          ));
           item = await this.findOne(target, id.toString());
           break;
         }
         case "field": {
           item = await this.fieldRepository.create(dto);
-          const { id, code, subsidiaryId } = item;
+          const {id, code, subsidiaryId} = item;
           const parrent = await this.subsidiaryRepository.findOne({
-            where: { id: subsidiaryId },
+            where: {id: subsidiaryId},
             attributes: ["id", "code"],
           });
           const subsidiaryFolderName = this.fileService.generateFolderName(
@@ -289,9 +292,9 @@ export class PositionTreeService {
         }
         case "project": {
           item = await this.projectRepository.create(dto);
-          const { id, code, description, fieldId } = item;
+          const {id, code, description, fieldId} = item;
           const parrent = await this.fieldRepository.findOne({
-            where: { id: fieldId },
+            where: {id: fieldId},
             attributes: ["id", "code"],
             include: [
               {
@@ -324,9 +327,9 @@ export class PositionTreeService {
 
         case "unit": {
           item = await this.unitRepository.create(dto);
-          const { id, code, position, projectId } = item;
+          const {id, code, position, projectId} = item;
           const parrent = await this.projectRepository.findOne({
-            where: { id: projectId },
+            where: {id: projectId},
             attributes: ["id", "code", "description"],
             include: [
               {
@@ -369,12 +372,12 @@ export class PositionTreeService {
           // this.fileService.createDirectory(pathToFile);
 
           file &&
-            (await this.fileService.createDesignDocument(
-              item.id.toString(),
-              target,
-              folderName,
-              file
-            ));
+          (await this.fileService.createDesignDocument(
+            item.id.toString(),
+            target,
+            folderName,
+            file
+          ));
           if (
             (dto as CreateUnitDto).subUnits &&
             (dto as CreateUnitDto).subUnits.length > 0
@@ -382,7 +385,7 @@ export class PositionTreeService {
             const items = (dto as CreateUnitDto).subUnits;
             for (let i = 0; i < items.length; i++) {
               const item = items[i];
-              await this.createOne("sub-unit", { ...item, unitId: id });
+              await this.createOne("sub-unit", {...item, unitId: id});
             }
           }
           item = await this.findOne(target, id.toString());
@@ -390,9 +393,9 @@ export class PositionTreeService {
         }
         case "sub-unit": {
           item = await this.subUnitRepository.create(dto);
-          const { id, code, position, unitId } = item;
+          const {id, code, position, unitId} = item;
           const parrent = await this.unitRepository.findOne({
-            where: { id: unitId },
+            where: {id: unitId},
             attributes: ["id", "code", "position"],
             include: [
               {
@@ -446,12 +449,12 @@ export class PositionTreeService {
           // this.fileService.createDirectory(pathToFile);
 
           file &&
-            (await this.fileService.createDesignDocument(
-              item.id.toString(),
-              target,
-              folderName,
-              file
-            ));
+          (await this.fileService.createDesignDocument(
+            item.id.toString(),
+            target,
+            folderName,
+            file
+          ));
           item = await this.findOne(target, id.toString());
           break;
         }
@@ -480,6 +483,111 @@ export class PositionTreeService {
     return items;
   };
 
+  getReportRows = async (target: string, item: any, periodOfReport: string): Promise<{fields: string[], reportRows: ReportRow[] }> => {
+    const rows: ReportRow[] = [];
+
+    const month = periodOfReport.split(".")[0];
+    const year = periodOfReport.split(".")[1];
+    const period: string[] = [];
+    for (let i = 1; i <= 31; i++) {
+      const day = i < 9 ? `0${i}` : i;
+      period.push(`${day}.${month}.${year}`);
+    }
+    const ft = [];
+
+    switch (target) {
+      case "subsidiary": {
+        const {fields} = item as SubsidiaryEntity;
+        if(fields && fields.length > 0) {
+
+
+          for(let i = 0, len = fields.length; i < len; i++) {
+            ft.push(fields[i].title)
+            const {projects} = fields[i];
+            if(projects && projects.length > 0) {
+              for(let j = 0, len =  projects.length; j < len; j++) {
+                const {id, units} = projects[j];
+                const row = await this.reportService.getDocumentForReport("project", id.toString(), period);
+                rows.push(...row);
+                if(units && units.length > 0) {
+                  for(let k = 0, len =  units.length; k < len; k++) {
+                    const {id, subUnits} = units[k];
+                    const row = await this.reportService.getDocumentForReport("unit", id.toString(), period);
+                    rows.push(...row);
+                    if(subUnits && subUnits.length > 0) {
+                      for(let n = 0, len =  subUnits.length; n < len; n++) {
+                        const {id} = subUnits[k];
+                        const row = await this.reportService.getDocumentForReport("sub-unit", id.toString(), period);
+                        rows.push(...row);
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+        break;
+      }
+      default: break;
+    }
+
+    return {
+    fields: ft, reportRows: rows
+  };
+  }
+
+
+
+  //TODO: сервис по запросу данных из БД.
+  getReport = async (target: string, id: string, params: ReportRequestParams): Promise<string> => {
+
+    const {direction, period, costs, customerPosition, customerFio, executorPosition, executorFio} = params;
+   let item = null;
+
+    switch (target) {
+      case "subsidiary": {
+        item = await this.subsidiaryRepository.findOne({
+          where: {id},
+          include: [
+            {
+              model: FieldEntity,
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: UnitEntity,
+                      include: [
+                        {
+                          model: SubUnitEntity,
+                         }
+                        ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        })
+        break;
+      }
+
+      default:
+        break;
+    }
+
+    const customer: SignerData = {position: customerPosition, fio: customerFio}
+    const executor: SignerData = {position: executorPosition, fio: executorFio}
+    const {fields, reportRows} = await this.getReportRows(target, item, period);
+
+    const reportTarget = item.title
+
+    const report = this.reportService.createReport(reportTarget, fields, reportRows, costs, direction, period, customer, executor);
+
+    return report;
+  }
+
   findOne = async (target: string, id: string): Promise<PositionTreeView> => {
     let item: PositionTreeView = null;
 
@@ -487,7 +595,7 @@ export class PositionTreeService {
       switch (target) {
         case "subsidiary": {
           item = await this.subsidiaryRepository.findOne({
-            where: { id },
+            where: {id},
             include: [
               {
                 model: LogoEntity,
@@ -512,7 +620,7 @@ export class PositionTreeService {
         }
         case "field": {
           item = await this.fieldRepository.findOne({
-            where: { id },
+            where: {id},
             include: [
               {
                 model: SubsidiaryEntity,
@@ -535,7 +643,7 @@ export class PositionTreeService {
         }
         case "project": {
           item = await this.projectRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: [
               "fieldId",
               "designId",
@@ -584,7 +692,7 @@ export class PositionTreeService {
         }
         case "unit": {
           item = await this.unitRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: [
               "projectId",
               "equipmentId",
@@ -654,7 +762,7 @@ export class PositionTreeService {
         }
         case "sub-unit": {
           item = await this.subUnitRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: [
               "unitId",
               "equipmentId",
@@ -770,441 +878,441 @@ export class PositionTreeService {
         case "field": {
           items = parrentId
             ? await this.fieldRepository.findAll({
-                where: { subsidiaryId: parrentId },
-                include: [
-                  {
-                    model: SubsidiaryEntity,
-                  },
-                  {
-                    model: ProjectEntity,
-                    attributes: [
-                      "fieldId",
-                      "designId",
-                      "id",
-                      "title",
-                      "code",
-                      "contract",
-                      "description",
-                    ],
-                  },
-                ],
-              })
+              where: {subsidiaryId: parrentId},
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+                {
+                  model: ProjectEntity,
+                  attributes: [
+                    "fieldId",
+                    "designId",
+                    "id",
+                    "title",
+                    "code",
+                    "contract",
+                    "description",
+                  ],
+                },
+              ],
+            })
             : await this.fieldRepository.findAll({
-                include: [
-                  {
-                    model: SubsidiaryEntity,
-                  },
-                  {
-                    model: ProjectEntity,
-                    attributes: [
-                      "fieldId",
-                      "designId",
-                      "id",
-                      "title",
-                      "code",
-                      "contract",
-                      "description",
-                    ],
-                  },
-                ],
-              });
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                },
+                {
+                  model: ProjectEntity,
+                  attributes: [
+                    "fieldId",
+                    "designId",
+                    "id",
+                    "title",
+                    "code",
+                    "contract",
+                    "description",
+                  ],
+                },
+              ],
+            });
           break;
         }
         case "project": {
           items = parrentId
             ? await this.projectRepository.findAll({
-                where: { fieldId: parrentId },
-                attributes: [
-                  "fieldId",
-                  "designId",
-                  "id",
-                  "title",
-                  "code",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: FieldEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
-                  },
-                  {
-                    model: UnitEntity,
-                    include: [
-                      {
-                        model: SubUnitEntity,
-                      },
-                    ],
-                  },
-                  {
-                    model: DesignEntity,
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "projectDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              })
+              where: {fieldId: parrentId},
+              attributes: [
+                "fieldId",
+                "designId",
+                "id",
+                "title",
+                "code",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: SubUnitEntity,
+                    },
+                  ],
+                },
+                {
+                  model: DesignEntity,
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "projectDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            })
             : await this.projectRepository.findAll({
-                attributes: [
-                  "fieldId",
-                  "designId",
-                  "id",
-                  "title",
-                  "code",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: FieldEntity,
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                      },
-                    ],
-                  },
-                  {
-                    model: UnitEntity,
-                    include: [
-                      {
-                        model: SubUnitEntity,
-                      },
-                    ],
-                  },
-                  {
-                    model: DesignEntity,
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "projectDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              });
+              attributes: [
+                "fieldId",
+                "designId",
+                "id",
+                "title",
+                "code",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: SubUnitEntity,
+                    },
+                  ],
+                },
+                {
+                  model: DesignEntity,
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "projectDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            });
           break;
         }
         case "unit": {
           items = parrentId
             ? await this.unitRepository.findAll({
-                where: { projectId: parrentId },
-                attributes: [
-                  "projectId",
-                  "equipmentId",
-                  "supplierId",
+              where: {projectId: parrentId},
+              attributes: [
+                "projectId",
+                "equipmentId",
+                "supplierId",
 
-                  "id",
-                  "title",
-                  "code",
-                  "position",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: ProjectEntity,
-                    include: [
-                      {
-                        model: FieldEntity,
-                        include: [
-                          {
-                            model: SubsidiaryEntity,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    model: SubUnitEntity,
-                    attributes: [
-                      "unitId",
-                      "equipmentId",
-                      "supplierId",
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: SubUnitEntity,
+                  attributes: [
+                    "unitId",
+                    "equipmentId",
+                    "supplierId",
 
-                      "id",
-                      "title",
-                      "code",
-                      "position",
-                      "contract",
-                      "description",
-                    ],
-                  },
-                  {
-                    model: EquipmentEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: CounterpartyEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "unitDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "unitQuestionare",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              })
+                    "id",
+                    "title",
+                    "code",
+                    "position",
+                    "contract",
+                    "description",
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            })
             : await this.unitRepository.findAll({
-                attributes: [
-                  "projectId",
-                  "equipmentId",
-                  "supplierId",
+              attributes: [
+                "projectId",
+                "equipmentId",
+                "supplierId",
 
-                  "id",
-                  "title",
-                  "code",
-                  "position",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: ProjectEntity,
-                    include: [
-                      {
-                        model: FieldEntity,
-                        include: [
-                          {
-                            model: SubsidiaryEntity,
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    model: SubUnitEntity,
-                    attributes: [
-                      "unitId",
-                      "equipmentId",
-                      "supplierId",
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: SubUnitEntity,
+                  attributes: [
+                    "unitId",
+                    "equipmentId",
+                    "supplierId",
 
-                      "id",
-                      "title",
-                      "code",
-                      "position",
-                      "contract",
-                      "description",
-                    ],
-                  },
-                  {
-                    model: EquipmentEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: CounterpartyEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "unitDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "unitQuestionare",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              });
+                    "id",
+                    "title",
+                    "code",
+                    "position",
+                    "contract",
+                    "description",
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "unitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            });
           break;
         }
         case "sub-unit": {
           items = parrentId
             ? await this.subUnitRepository.findAll({
-                where: { unitId: parrentId },
-                attributes: [
-                  "unitId",
-                  "equipmentId",
-                  "supplierId",
+              where: {unitId: parrentId},
+              attributes: [
+                "unitId",
+                "equipmentId",
+                "supplierId",
 
-                  "id",
-                  "title",
-                  "code",
-                  "position",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: UnitEntity,
-                    include: [
-                      {
-                        model: ProjectEntity,
-                        include: [
-                          {
-                            model: FieldEntity,
-                            include: [
-                              {
-                                model: SubsidiaryEntity,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    model: EquipmentEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: CounterpartyEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "subUnitDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "subUnitQuestionare",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              })
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: ProjectEntity,
+                      include: [
+                        {
+                          model: FieldEntity,
+                          include: [
+                            {
+                              model: SubsidiaryEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            })
             : await this.subUnitRepository.findAll({
-                attributes: [
-                  "unitId",
-                  "equipmentId",
-                  "supplierId",
+              attributes: [
+                "unitId",
+                "equipmentId",
+                "supplierId",
 
-                  "id",
-                  "title",
-                  "code",
-                  "position",
-                  "contract",
-                  "description",
-                ],
-                include: [
-                  {
-                    model: UnitEntity,
-                    include: [
-                      {
-                        model: ProjectEntity,
-                        include: [
-                          {
-                            model: FieldEntity,
-                            include: [
-                              {
-                                model: SubsidiaryEntity,
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                  {
-                    model: EquipmentEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: CounterpartyEntity,
-                    attributes: ["id", "title", "code", "description"],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "subUnitDocuments",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                  {
-                    model: DesignDocumentEntity,
-                    as: "subUnitQuestionare",
-                    attributes: [
-                      "id",
-                      "title",
-                      "code",
-                      "revision",
-                      "fileType",
-                      "fileName",
-                      "filePath",
-                    ],
-                  },
-                ],
-              });
+                "id",
+                "title",
+                "code",
+                "position",
+                "contract",
+                "description",
+              ],
+              include: [
+                {
+                  model: UnitEntity,
+                  include: [
+                    {
+                      model: ProjectEntity,
+                      include: [
+                        {
+                          model: FieldEntity,
+                          include: [
+                            {
+                              model: SubsidiaryEntity,
+                            },
+                          ],
+                        },
+                      ],
+                    },
+                  ],
+                },
+                {
+                  model: EquipmentEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: CounterpartyEntity,
+                  attributes: ["id", "title", "code", "description"],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitDocuments",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+                {
+                  model: DesignDocumentEntity,
+                  as: "subUnitQuestionare",
+                  attributes: [
+                    "id",
+                    "title",
+                    "code",
+                    "revision",
+                    "fileType",
+                    "fileName",
+                    "filePath",
+                  ],
+                },
+              ],
+            });
           break;
         }
 
@@ -1231,13 +1339,13 @@ export class PositionTreeService {
     try {
       switch (target) {
         case "subsidiary": {
-          item = await this.subsidiaryRepository.findOne({ where: { id } });
+          item = await this.subsidiaryRepository.findOne({where: {id}});
           file &&
-            (await this.fileService.updateLogo(
-              item.id.toString(),
-              target,
-              file
-            ));
+          (await this.fileService.updateLogo(
+            item.id.toString(),
+            target,
+            file
+          ));
           if (dto.code) {
             oldFolderName = this.fileService.generateFolderName(
               target,
@@ -1250,22 +1358,22 @@ export class PositionTreeService {
               dto.code
             );
           }
-          await this.subsidiaryRepository.update(dto, { where: { id } });
-          item = await this.subsidiaryRepository.findOne({ where: { id } });
+          await this.subsidiaryRepository.update(dto, {where: {id}});
+          item = await this.subsidiaryRepository.findOne({where: {id}});
           break;
         }
         case "field": {
-          item = await this.fieldRepository.findOne({ where: { id } });
+          item = await this.fieldRepository.findOne({where: {id}});
           const oldParrent = await this.subsidiaryRepository.findOne({
-            where: { id: item.subsidiaryId },
+            where: {id: item.subsidiaryId},
             attributes: ["id", "code"],
           });
 
           const newParrent = (<UpdateFieldDto>dto).subsidiaryId
             ? await this.subsidiaryRepository.findOne({
-                where: { id: (<UpdateFieldDto>dto).subsidiaryId },
-                attributes: ["id", "code"],
-              })
+              where: {id: (<UpdateFieldDto>dto).subsidiaryId},
+              attributes: ["id", "code"],
+            })
             : null;
 
           const oldSubsidiaryFolderName = this.fileService.generateFolderName(
@@ -1275,10 +1383,10 @@ export class PositionTreeService {
           );
           const newSubsidiaryFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "subsidiary",
-                newParrent.id,
-                newParrent.code
-              )
+              "subsidiary",
+              newParrent.id,
+              newParrent.code
+            )
             : "";
           const oldFieldFolderName = this.fileService.generateFolderName(
             target,
@@ -1295,19 +1403,19 @@ export class PositionTreeService {
             newParrent && newFieldFolderName
               ? `${newSubsidiaryFolderName}/${newFieldFolderName}`
               : newParrent && !newFieldFolderName
-              ? `${newSubsidiaryFolderName}/${oldFieldFolderName}`
-              : !newParrent && newFieldFolderName
-              ? `${oldSubsidiaryFolderName}/${newFieldFolderName}`
-              : "";
+                ? `${newSubsidiaryFolderName}/${oldFieldFolderName}`
+                : !newParrent && newFieldFolderName
+                  ? `${oldSubsidiaryFolderName}/${newFieldFolderName}`
+                  : "";
 
-          await this.fieldRepository.update(dto, { where: { id } });
-          item = await this.fieldRepository.findOne({ where: { id } });
+          await this.fieldRepository.update(dto, {where: {id}});
+          item = await this.fieldRepository.findOne({where: {id}});
           break;
         }
         case "project": {
-          item = await this.projectRepository.findOne({ where: { id } });
+          item = await this.projectRepository.findOne({where: {id}});
           const parrent = await this.fieldRepository.findOne({
-            where: { id: item.fieldId },
+            where: {id: item.fieldId},
             attributes: ["id", "code"],
             include: [
               {
@@ -1318,15 +1426,15 @@ export class PositionTreeService {
           });
           const newParrent = (<CreateProjectDto>dto).fieldId
             ? await this.fieldRepository.findOne({
-                where: { id: (<CreateProjectDto>dto).fieldId },
-                attributes: ["id", "code"],
-                include: [
-                  {
-                    model: SubsidiaryEntity,
-                    attributes: ["id", "code"],
-                  },
-                ],
-              })
+              where: {id: (<CreateProjectDto>dto).fieldId},
+              attributes: ["id", "code"],
+              include: [
+                {
+                  model: SubsidiaryEntity,
+                  attributes: ["id", "code"],
+                },
+              ],
+            })
             : null;
 
           const oldSubsidiaryFolderName = this.fileService.generateFolderName(
@@ -1337,10 +1445,10 @@ export class PositionTreeService {
 
           const newSubsidiaryFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "subsidiary",
-                newParrent.subsidiary.id,
-                newParrent.subsidiary.code
-              )
+              "subsidiary",
+              newParrent.subsidiary.id,
+              newParrent.subsidiary.code
+            )
             : "";
 
           const oldFieldFolderName = this.fileService.generateFolderName(
@@ -1351,10 +1459,10 @@ export class PositionTreeService {
 
           const newFieldFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "field",
-                newParrent.id,
-                newParrent.code
-              )
+              "field",
+              newParrent.id,
+              newParrent.code
+            )
             : "";
 
           const parrentFolderName = newParrent
@@ -1373,44 +1481,44 @@ export class PositionTreeService {
           const newFolder =
             dto.code && dto.description
               ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  dto.code,
-                  dto.description
-                )
+                target,
+                +id,
+                dto.code,
+                dto.description
+              )
               : dto.code && !dto.description
-              ? this.fileService.generateFolderName(
+                ? this.fileService.generateFolderName(
                   target,
                   +id,
                   dto.code,
                   item.description
                 )
-              : !dto.code && dto.description
-              ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  item.code,
-                  dto.description
-                )
-              : "";
+                : !dto.code && dto.description
+                  ? this.fileService.generateFolderName(
+                    target,
+                    +id,
+                    item.code,
+                    dto.description
+                  )
+                  : "";
 
           newFolderName =
             newFolder && newFieldFolderName
               ? `${parrentFolderName}/${newFolder}`
               : newFolder && !newFieldFolderName
-              ? `${parrentFolderName}/${newFolder}`
-              : !newFolder && newFieldFolderName
-              ? `${parrentFolderName}/${oldFolder}`
-              : "";
+                ? `${parrentFolderName}/${newFolder}`
+                : !newFolder && newFieldFolderName
+                  ? `${parrentFolderName}/${oldFolder}`
+                  : "";
 
-          await this.projectRepository.update(dto, { where: { id } });
-          item = await this.projectRepository.findOne({ where: { id } });
+          await this.projectRepository.update(dto, {where: {id}});
+          item = await this.projectRepository.findOne({where: {id}});
           break;
         }
         case "unit": {
-          item = await this.unitRepository.findOne({ where: { id } });
+          item = await this.unitRepository.findOne({where: {id}});
           const parrent = await this.projectRepository.findOne({
-            where: { id: item.projectId },
+            where: {id: item.projectId},
             attributes: ["id", "code", "description"],
             include: [
               {
@@ -1427,21 +1535,21 @@ export class PositionTreeService {
           });
           const newParrent = (<UpdateUnitDto>dto).projectId
             ? await this.projectRepository.findOne({
-                where: { id: (<UpdateUnitDto>dto).projectId },
-                attributes: ["id", "code", "description"],
-                include: [
-                  {
-                    model: FieldEntity,
-                    attributes: ["id", "code"],
-                    include: [
-                      {
-                        model: SubsidiaryEntity,
-                        attributes: ["id", "code"],
-                      },
-                    ],
-                  },
-                ],
-              })
+              where: {id: (<UpdateUnitDto>dto).projectId},
+              attributes: ["id", "code", "description"],
+              include: [
+                {
+                  model: FieldEntity,
+                  attributes: ["id", "code"],
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                      attributes: ["id", "code"],
+                    },
+                  ],
+                },
+              ],
+            })
             : null;
 
           const oldSubsidiaryFolderName = this.fileService.generateFolderName(
@@ -1452,10 +1560,10 @@ export class PositionTreeService {
 
           const newSubsidiaryFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "subsidiary",
-                newParrent.field.subsidiary.id,
-                newParrent.field.subsidiary.code
-              )
+              "subsidiary",
+              newParrent.field.subsidiary.id,
+              newParrent.field.subsidiary.code
+            )
             : "";
 
           const oldFieldFolderName = this.fileService.generateFolderName(
@@ -1466,10 +1574,10 @@ export class PositionTreeService {
 
           const newFieldFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "field",
-                newParrent.field.id,
-                newParrent.field.code
-              )
+              "field",
+              newParrent.field.id,
+              newParrent.field.code
+            )
             : "";
 
           const oldProjectFolderName = this.fileService.generateFolderName(
@@ -1481,11 +1589,11 @@ export class PositionTreeService {
 
           const newProjectFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "project",
-                newParrent.id,
-                newParrent.code,
-                newParrent.description
-              )
+              "project",
+              newParrent.id,
+              newParrent.code,
+              newParrent.description
+            )
             : "";
 
           const parrentFolderName = newParrent
@@ -1504,45 +1612,45 @@ export class PositionTreeService {
           const newFolder =
             dto.code && (<UpdateUnitDto>dto).position
               ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  (<UpdateUnitDto>dto).position,
-                  dto.code
-                )
+                target,
+                +id,
+                (<UpdateUnitDto>dto).position,
+                dto.code
+              )
               : dto.code && !(<UpdateUnitDto>dto).position
-              ? this.fileService.generateFolderName(
+                ? this.fileService.generateFolderName(
                   target,
                   +id,
                   item.position,
                   dto.code
                 )
-              : !dto.code && (<UpdateUnitDto>dto).position
-              ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  (<UpdateUnitDto>dto).position,
-                  item.code
-                )
-              : "";
+                : !dto.code && (<UpdateUnitDto>dto).position
+                  ? this.fileService.generateFolderName(
+                    target,
+                    +id,
+                    (<UpdateUnitDto>dto).position,
+                    item.code
+                  )
+                  : "";
 
           newFolderName =
             newFolder && newProjectFolderName
               ? `${parrentFolderName}/${newFolder}`
               : newFolder && !newProjectFolderName
-              ? `${parrentFolderName}/${newFolder}`
-              : !newFolder && newProjectFolderName
-              ? `${parrentFolderName}/${oldFolder}`
-              : "";
+                ? `${parrentFolderName}/${newFolder}`
+                : !newFolder && newProjectFolderName
+                  ? `${parrentFolderName}/${oldFolder}`
+                  : "";
 
           // await this.unitRepository.update(dto, { where: { id } }); //TODO: вурнуть из коммента
-          item = await this.unitRepository.findOne({ where: { id } });
+          item = await this.unitRepository.findOne({where: {id}});
 
           break;
         }
         case "sub-unit": {
-          item = await this.subUnitRepository.findOne({ where: { id } });
+          item = await this.subUnitRepository.findOne({where: {id}});
           const parrent = await this.unitRepository.findOne({
-            where: { id: item.unitId },
+            where: {id: item.unitId},
             attributes: ["id", "code", "position"],
             include: [
               {
@@ -1565,27 +1673,27 @@ export class PositionTreeService {
           });
           const newParrent = (<UpdateSubUnitDto>dto).unitId
             ? await this.unitRepository.findOne({
-                where: { id: (<UpdateSubUnitDto>dto).unitId },
-                attributes: ["id", "code", "position"],
-                include: [
-                  {
-                    model: ProjectEntity,
-                    attributes: ["id", "code", "description"],
-                    include: [
-                      {
-                        model: FieldEntity,
-                        attributes: ["id", "code"],
-                        include: [
-                          {
-                            model: SubsidiaryEntity,
-                            attributes: ["id", "code"],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              })
+              where: {id: (<UpdateSubUnitDto>dto).unitId},
+              attributes: ["id", "code", "position"],
+              include: [
+                {
+                  model: ProjectEntity,
+                  attributes: ["id", "code", "description"],
+                  include: [
+                    {
+                      model: FieldEntity,
+                      attributes: ["id", "code"],
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                          attributes: ["id", "code"],
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            })
             : null;
 
           const oldSubsidiaryFolderName = this.fileService.generateFolderName(
@@ -1596,10 +1704,10 @@ export class PositionTreeService {
 
           const newSubsidiaryFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "subsidiary",
-                newParrent.project.field.subsidiary.id,
-                newParrent.project.field.subsidiary.code
-              )
+              "subsidiary",
+              newParrent.project.field.subsidiary.id,
+              newParrent.project.field.subsidiary.code
+            )
             : "";
 
           const oldFieldFolderName = this.fileService.generateFolderName(
@@ -1610,10 +1718,10 @@ export class PositionTreeService {
 
           const newFieldFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "field",
-                newParrent.project.field.id,
-                newParrent.project.field.code
-              )
+              "field",
+              newParrent.project.field.id,
+              newParrent.project.field.code
+            )
             : "";
 
           const oldProjectFolderName = this.fileService.generateFolderName(
@@ -1625,11 +1733,11 @@ export class PositionTreeService {
 
           const newProjectFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "project",
-                newParrent.project.id,
-                newParrent.project.code,
-                newParrent.project.description
-              )
+              "project",
+              newParrent.project.id,
+              newParrent.project.code,
+              newParrent.project.description
+            )
             : "";
 
           const oldUnitFolderName = this.fileService.generateFolderName(
@@ -1641,11 +1749,11 @@ export class PositionTreeService {
 
           const newUnitFolderName = newParrent
             ? this.fileService.generateFolderName(
-                "project",
-                newParrent.id,
-                newParrent.position,
-                newParrent.code
-              )
+              "project",
+              newParrent.id,
+              newParrent.position,
+              newParrent.code
+            )
             : "";
 
           const parrentFolderName = newParrent
@@ -1664,38 +1772,38 @@ export class PositionTreeService {
           const newFolder =
             dto.code && (<UpdateSubUnitDto>dto).position
               ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  (<UpdateSubUnitDto>dto).position,
-                  dto.code
-                )
+                target,
+                +id,
+                (<UpdateSubUnitDto>dto).position,
+                dto.code
+              )
               : dto.code && !(<UpdateSubUnitDto>dto).position
-              ? this.fileService.generateFolderName(
+                ? this.fileService.generateFolderName(
                   target,
                   +id,
                   item.position,
                   dto.code
                 )
-              : !dto.code && (<UpdateSubUnitDto>dto).position
-              ? this.fileService.generateFolderName(
-                  target,
-                  +id,
-                  (<UpdateSubUnitDto>dto).position,
-                  item.code
-                )
-              : "";
+                : !dto.code && (<UpdateSubUnitDto>dto).position
+                  ? this.fileService.generateFolderName(
+                    target,
+                    +id,
+                    (<UpdateSubUnitDto>dto).position,
+                    item.code
+                  )
+                  : "";
 
           newFolderName =
             newFolder && newUnitFolderName
               ? `${parrentFolderName}/${newFolder}`
               : newFolder && !newUnitFolderName
-              ? `${parrentFolderName}/${newFolder}`
-              : !newFolder && newUnitFolderName
-              ? `${parrentFolderName}/${oldFolder}`
-              : "";
+                ? `${parrentFolderName}/${newFolder}`
+                : !newFolder && newUnitFolderName
+                  ? `${parrentFolderName}/${oldFolder}`
+                  : "";
 
-          await this.subUnitRepository.update(dto, { where: { id } });
-          item = await this.subUnitRepository.findOne({ where: { id } });
+          await this.subUnitRepository.update(dto, {where: {id}});
+          item = await this.subUnitRepository.findOne({where: {id}});
           // file &&
           // (await this.fileService.updateDesignDocument(
           //   item.id.toString(),
@@ -1710,7 +1818,7 @@ export class PositionTreeService {
       }
 
       newFolderName &&
-        this.fileService.moveDirectoryOrFile(oldFolderName, newFolderName);
+      this.fileService.moveDirectoryOrFile(oldFolderName, newFolderName);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -1723,30 +1831,30 @@ export class PositionTreeService {
     try {
       switch (target) {
         case "subsidiary": {
-          item = await this.subsidiaryRepository.findOne({ where: { id } });
+          item = await this.subsidiaryRepository.findOne({where: {id}});
           await this.fileService.deleteLogo(id, target);
-          await this.subsidiaryRepository.destroy({ where: { id } });
+          await this.subsidiaryRepository.destroy({where: {id}});
 
           break;
         }
         case "field": {
-          item = await this.fieldRepository.findOne({ where: { id } });
-          await this.fieldRepository.destroy({ where: { id } });
+          item = await this.fieldRepository.findOne({where: {id}});
+          await this.fieldRepository.destroy({where: {id}});
           break;
         }
         case "project": {
-          item = await this.projectRepository.findOne({ where: { id } });
-          await this.projectRepository.destroy({ where: { id } });
+          item = await this.projectRepository.findOne({where: {id}});
+          await this.projectRepository.destroy({where: {id}});
           break;
         }
         case "unit": {
-          item = await this.unitRepository.findOne({ where: { id } });
-          await this.unitRepository.destroy({ where: { id } });
+          item = await this.unitRepository.findOne({where: {id}});
+          await this.unitRepository.destroy({where: {id}});
           break;
         }
         case "sub-unit": {
-          item = await this.subUnitRepository.findOne({ where: { id } });
-          await this.subUnitRepository.destroy({ where: { id } });
+          item = await this.subUnitRepository.findOne({where: {id}});
+          await this.subUnitRepository.destroy({where: {id}});
           break;
         }
         default:
@@ -1788,7 +1896,7 @@ export class PositionTreeService {
       switch (target) {
         case "project": {
           item = await this.projectRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: [
               "fieldId",
               "designId",
@@ -1875,7 +1983,7 @@ export class PositionTreeService {
         }
         case "unit": {
           item = await this.unitRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: [
               "projectId",
               "equipmentId",
@@ -2054,8 +2162,8 @@ export class PositionTreeService {
     let folderPath = "";
     switch (target) {
       case "subsidiary": {
-        const { code } = await this.subsidiaryRepository.findOne({
-          where: { id },
+        const {code} = await this.subsidiaryRepository.findOne({
+          where: {id},
           attributes: ["code"],
         });
         folderPath = this.fileService.generateFolderName(target, +id, code);
@@ -2063,9 +2171,9 @@ export class PositionTreeService {
       }
 
       case "field": {
-        const { code, subsidiary: parrent } =
+        const {code, subsidiary: parrent} =
           await this.fieldRepository.findOne({
-            where: { id },
+            where: {id},
             attributes: ["code"],
             include: [
               {
@@ -2095,7 +2203,7 @@ export class PositionTreeService {
           description,
           field: parrent,
         } = await this.projectRepository.findOne({
-          where: { id },
+          where: {id},
           attributes: ["code", "description"],
           include: [
             {
@@ -2137,7 +2245,7 @@ export class PositionTreeService {
           position,
           project: parrent,
         } = await this.unitRepository.findOne({
-          where: { id },
+          where: {id},
           attributes: ["code", "position"],
           include: [
             {
@@ -2191,7 +2299,7 @@ export class PositionTreeService {
           position,
           unit: parrent,
         } = await this.subUnitRepository.findOne({
-          where: { id },
+          where: {id},
           attributes: ["code", "position"],
           include: [
             {
@@ -2264,7 +2372,7 @@ export class PositionTreeService {
     switch (target) {
       case "subsidiary": {
         const item = await this.subsidiaryRepository.findOne({
-          where: { id },
+          where: {id},
           include: [
             {
               model: FieldEntity,
@@ -2359,7 +2467,7 @@ export class PositionTreeService {
       }
       case "field": {
         const item = await this.fieldRepository.findOne({
-          where: { id },
+          where: {id},
           include: [
             {
               model: ProjectEntity,
@@ -2469,7 +2577,7 @@ export class PositionTreeService {
       }
       case "project": {
         const item = await this.projectRepository.findOne({
-          where: { id },
+          where: {id},
 
           include: [
             {
@@ -2575,7 +2683,7 @@ export class PositionTreeService {
       }
       case "unit": {
         const item = await this.unitRepository.findOne({
-          where: { id },
+          where: {id},
           include: [
             {
               model: CounterpartyEntity,
@@ -2660,7 +2768,7 @@ export class PositionTreeService {
       }
       case "sub-unit": {
         const item = await this.subUnitRepository.findOne({
-          where: { id },
+          where: {id},
           include: [
             {
               model: CounterpartyEntity,
