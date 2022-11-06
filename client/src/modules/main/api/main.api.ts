@@ -8,10 +8,10 @@
 
 export const BASENAME = window.location.pathname.slice(0, -1);
 
-export const site = window.location.origin + BASENAME;
+// export const site = window.location.origin + BASENAME;
 // console.log(site);
 
-// export const site = "http://localhost:7000";
+export const site = "http://localhost:7000";
 
 export const setUrl = (target: string, id?: string): string => {
   const url = id ? `${site}/${target}/${id}` : `${site}/${target}`;

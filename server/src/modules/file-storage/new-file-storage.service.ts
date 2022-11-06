@@ -96,9 +96,9 @@ export class NewFileStorageService {
 
   getFileProperties = (file: File, generateFileName = false): FileProperties => {
     try {
-      // file.originalname = Buffer.from(file.originalname, 'latin1').toString(
-      //   'utf8'
-      // );
+      file.originalname = Buffer.from(file.originalname, 'latin1').toString(
+        'utf8'
+      );
 
       const fullName = file.originalname.toString();
       const extName = parse(file.originalname).ext.slice(1).toLowerCase();

@@ -1,17 +1,17 @@
-import { ConfigProvider } from "antd";
-import { Provider } from "react-redux";
+import {ConfigProvider} from "antd";
+import {Provider} from "react-redux";
 import AppRouter from "./routes/AppRouter";
-import { appStore } from "./store";
+import {appStore} from "./store";
+import ruRu from 'antd/lib/locale-provider/ru_RU';
+import LocaleProvider from "antd/es/locale-provider";
 
-import ruRU from "antd/es/locale-provider/ru_RU";
-// export const BASENAME = window.location.pathname.slice(0, -1);
-// export const site = window.location.origin + BASENAME;
 
 function App() {
   return (
     <Provider store={appStore}>
-      {/* <ConfigProvider locale={ruRU}> */} <AppRouter />
-      {/* </ConfigProvider> */}
+      <LocaleProvider locale={ruRu}>
+        <AppRouter/>
+      </LocaleProvider>
     </Provider>
   );
 }

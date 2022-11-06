@@ -50,10 +50,21 @@ export class FileStorageController {
   }
 
   @Post("/add/normative")
-  @UseInterceptors(FileFieldsInterceptor([{ name: "descriptor", maxCount: 1 }, { name: "documents", maxCount: 20 }]))
-  uploadNormative(@UploadedFiles() files: {descriptor: File, documents: File[]}) {
-    console.log("documents: ", files.documents);
-    return this.normativeService.uploadManyNormative(files);
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: "document", maxCount: 1 },
+    { name: "descriptor", maxCount: 1 },
+    { name: "documents", maxCount: 20 }
+  ]))
+  uploadNormative(
+    @Body()
+    data: any,
+    @UploadedFiles()
+      files: {
+      document?: File,
+      descriptor?: File,
+      documents?: File[]
+    }) {
+    return this.normativeService.uploadManyNormative(data, files);
   }
 
   @Get("/find/design-documents")

@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
   DesignDocumentCreateOrUpdateAttrs,
-  DesignDocumentView, NormativeCreateOrUpdateAttrs, NormativeView,
+  DesignDocumentView, File, NormativeCreateOrUpdateAttrs, NormativeView,
 } from "../../../../../server/common/types/file-storage";
 import { setUrl } from "../../main";
 
@@ -46,47 +46,42 @@ const setFormData = (item: DesignDocumentCreateOrUpdateAttrs): FormData => {
 
 //TODO: создать сервис по загрузке нормативных документов
 
-export const createNormative = async (
-item: any
-): Promise<NormativeView[]> => {
+// interface NormativeCreateOrUpdateAttrs {
+//   title?: string;
+//   code?: string;
+//   revision?: string;
+//   description?: string;
+//   descriptor?: File;
+//   document?: File;
+//   documents?: File[]
+// }
+
+export const createNormative = async (item: any): Promise<NormativeView[]> => {
   const url = setUrl(`${baseUrl}/add/normative`);
 
-  const {descriptor, documents} = item;
+  const {multiple, code, title, revision, description, document, descriptor, documents} = item;
 
   const formData = new FormData();
-  descriptor && formData.append("descriptor", descriptor.file);
+  multiple ? formData.append("multiple", multiple.toString())
+    : formData.append("multiple", "false")
+  code && formData.append("code", code);
+  title && formData.append("title", title);
+  revision && formData.append("revision", revision)
+  description && formData.append("description", description)
+  document && formData.append("document", document)
+  descriptor && formData.append("descriptor", descriptor);
 
-  // for(let i =0; i < documents.files.length; i++) {
-  //   formData.append("files", files.files[i]);
-  // }
-
-  console.log(documents.fileList.length)
-
-  for( let i = 0, len = documents.fileList.length; i < len; i++){
-    formData.append('documents', documents.fileList[i])
+if(documents) {
+  for( let i = 0, len = documents.length; i < len; i++){
+    const document = documents[i].originFileObj;
+    formData.append('documents', document)
   }
+}
 
-
-
-  console.log("formData: ", formData);
   const { data } = await axios.post<NormativeView[]>(url, formData);
   return data;
 };
 
-// const createNormative = async (item: NormativeCreateOrUpdateAttrs): FormData => {
-//   const data = new FormData();
-//
-//   item.title && data.append("title", item.title);
-//
-//   item.code && data.append("code", item.code);
-//
-//   item.revision && data.append("revision", item.revision);
-//
-//   item.description && data.append("description", item.description);
-//
-//   item. && data.append("files", item.files);
-//   return data
-// }
 
 export const createDesignDocument = async (
   parrentId: string,

@@ -1,6 +1,6 @@
-import React, {createRef} from 'react';
+import React, {createRef, useState} from 'react';
 import {createNormative} from "../../../file-storage/api/file-storage.api";
-import {Button, Form, Input, Space, Typography} from "antd";
+import {Button, Form, Input, Space, Switch, Typography} from "antd";
 import {FormInstance} from "antd/es/form";
 import CommentFormItem from "./comment-form/CommentFormItem";
 import {InputUIComponent, UploadUIComponent} from "../../../../components";
@@ -25,11 +25,11 @@ const NormativeForm = () => {
   const [form] = Form.useForm();
 
   const formRef = createRef<FormInstance>();
-
+  const [multiple, setMultiple] = useState(false);
 
 
   const onFinish = (values: any) => {
-    // createNormative(values).then((data => console.log(data)));
+    createNormative(values).then((data => console.log(data)));
     console.log("Success:", values);
     onReset();
   }
@@ -41,51 +41,86 @@ const NormativeForm = () => {
   const onReset = () => {
     formRef.current!.resetFields();
     form.setFieldsValue([]);
+    setMultiple(false)
   };
 
-  const fileItem =  (
-    <Item name="documents" label={<Text type="secondary">Файлы</Text>} className="m-0" valuePropName="fileList">
-      <Dragger
+  const normalizingFileUpload = (e: any) => {
+    if (Array.isArray(e)) {
+      return e;
+    }
+    return e && e.fileList;
+  };
+
+
+
+  const switchItem = (
+    <Item name="multiple" label="Загрузить несколько ?" valuePropName="multiple">
+      <Switch onChange={() => setMultiple(!multiple)}/>
+    </Item>
+  )
+
+  const filesItem =  (
+    <Item name="documents" label={<Text type="secondary">Файлы</Text>} className="m-0" valuePropName="fileList" getValueFromEvent={normalizingFileUpload}>
+
+      <Upload
+        listType="picture-card"
         multiple
         beforeUpload={(file, fileList) => {
           form.setFieldValue("documents", fileList);
           return false;
         }}
-
-        //TODO: реализовать удаление файлов из списка
-        // onRemove={(file) => {
-        //   form.setFieldValue("documents", null)
-        // }}
-
       >
-        <p className="ant-upload-drag-icon">
-          <InboxOutlined />
-        </p>
-        <p className="ant-upload-text">Нажмите или перетащите файл в эту область, чтобы загрузить</p>
-        <p className="ant-upload-hint">
-          Поддержка одиночной или массовой загрузки. Строго запретить загружать данные компании или другие групповые файлы
-        </p>
-      </Dragger>
+        <div>
+          <UploadOutlined />
+          <div style={{ marginTop: 8 }}>Добавить</div>
+        </div>
+      </Upload>
 
     </Item>
   );
-  const infoItem =  (
-    <Item name="descriptor" label={<Text type="secondary">Файл-дескриптор</Text>} className="m-0" valuePropName="file">
+
+  const descriptorItem =  (
+    <Item
+      name="descriptor"
+      label={<Text type="secondary">Файл-дескриптор</Text>}
+      className="m-0"
+      valuePropName="file"
+      getValueFromEvent={(e) => e.file}
+    >
       <Upload
-        className="mb-1"
-        onRemove={(file) => {
-          form.setFieldValue("descriptor", null)
-        }}
+        maxCount={1}
+        listType="picture-card"
         beforeUpload={(file, fileList) => {
-          form.setFieldValue("descriptor", file)
+          form.setFieldValue("descriptor", file);
           return false;
         }}
       >
-        <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-          <Text type="secondary">Выбрать файл</Text>
-        </Button>
+        <div>
+          <UploadOutlined />
+          <div style={{ marginTop: 8 }}>Добавить</div>
+        </div>
       </Upload>
     </Item>
+  );
+  const fileItem =  (
+    <Space direction="vertical" style={{ width: '100%' }} size="large">
+      <Item name="document" label={<Text type="secondary">Документ</Text>} className="m-0" valuePropName="file" getValueFromEvent={(e) => e.file}>
+        <Upload
+          maxCount={1}
+          listType="picture-card"
+          beforeUpload={(file, fileList) => {
+            form.setFieldValue("document", file);
+            return false;
+          }}
+        >
+          <div>
+            <UploadOutlined />
+            <div style={{ marginTop: 8 }}>Добавить</div>
+          </div>
+        </Upload>
+      </Item>
+    </Space>
+
   );
 
   const titleItem = (
@@ -126,6 +161,25 @@ const NormativeForm = () => {
   );
 
 
+  const oneDocument = (
+<>
+  {codeItem}
+  {titleItem}
+  {revisionItem}
+  {descriptionItem}
+  {fileItem}
+</>
+  )
+
+
+    const manyDocuments = (
+      <>
+        {descriptorItem}
+        {filesItem}
+      </>
+    )
+
+
 
   return (
     <Form
@@ -137,12 +191,11 @@ const NormativeForm = () => {
       onFinishFailed={onFinishFailed}
       autoComplete="on"
     >
-      {codeItem}
-      {titleItem}
-      {revisionItem}
-      {descriptionItem}
-      {infoItem}
-      {fileItem}
+      {switchItem}
+      {
+        multiple ? manyDocuments : oneDocument
+      }
+
 
 
       <Space className="d-flex justify-content-end">

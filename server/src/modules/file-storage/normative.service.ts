@@ -53,8 +53,9 @@ export class NormativeService {
     }
   }
 
-  uploadOneNormative = async (file: File, data?: NormativeCreateOrUpdateAttrs): Promise<NormativeView> => {
+  uploadOneNormative = async (data: any, file: File): Promise<NormativeView> => {
     try {
+      console.log(file);
       const code = data ? data.code : undefined;
       const title = data ? data.title : undefined;
       const revision = data ? data.revision : undefined;
@@ -86,20 +87,33 @@ export class NormativeService {
     }
   }
 
-  uploadManyNormative = async (files: {descriptor: File, documents: File[]}): Promise<NormativeView[]> => {
+  uploadManyNormative = async (
+    data: any,
+    files: {
+      document?: File,
+      descriptor?: File,
+      documents?: File[]
+    }): Promise<NormativeView | NormativeView[]> => {
     try {
-      const {descriptor, documents} = files;
-      const filesDescription: NormativeCreateOrUpdateAttrs[] = this.excelService.convertExcelFileToJson(descriptor[0]);
+      const {multiple} = data;
+      const {descriptor, documents, document} = files;
 
+   const flag = multiple === " true" ? true : false
 
-      const items: NormativeView[] = [];
-     for(let i = 0, len = documents.length; i < len; i++) {
-       const data = filesDescription[i]
-       const file = documents[i];
-       const item = await this.uploadOneNormative(file, data);
-       items.push(item)
-     }
-      return items
+      if(flag) {
+        const filesDescription: NormativeCreateOrUpdateAttrs[] = this.excelService.convertExcelFileToJson(descriptor[0]);
+        const items: NormativeView[] = [];
+        for(let i = 0, len = documents.length; i < len; i++) {
+          const data = filesDescription[i]
+          const file = documents[i];
+          const item = await this.uploadOneNormative(data, file);
+          items.push(item)
+        }
+        return items
+      } else {
+        const item = this.uploadOneNormative(data, document[0])
+        return item
+      }
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
