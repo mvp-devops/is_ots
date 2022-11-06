@@ -65,8 +65,8 @@ export class NormativeService {
 
       const nameSpace = nameWithoutExt.split(".")
       const docCode = code ? code : nameSpace[0];
-      const docTitle = title ? title : nameSpace[1];
-      const docRevision = revision ? revision : nameSpace[2] ? nameSpace[2] : " ";
+      const docTitle = title ? title : nameSpace[1].slice(1);
+      const docRevision = revision ? revision : nameSpace[2].slice(1) ? nameSpace[2] : " ";
 
       const doc: NormativeCreateOrUpdateAttrs = {
         code: docCode,

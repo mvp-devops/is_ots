@@ -1,47 +1,37 @@
-import React, {createRef, useState} from 'react';
-import {createNormative} from "../../../file-storage/api/file-storage.api";
-import {Button, Form, Input, Space, Switch, Typography} from "antd";
-import {FormInstance} from "antd/es/form";
-import CommentFormItem from "./comment-form/CommentFormItem";
-import {InputUIComponent, UploadUIComponent} from "../../../../components";
+import {createRef, useState} from 'react';
+import {Button, Divider, Form, Input, notification, Space, Switch, Typography, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
-
-import { InboxOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
-import { message, Upload } from 'antd';
+import {FormInstance} from "antd/es/form";
+import {createNormative} from "../../../file-storage/api/file-storage.api";
+import {useActions} from "../../../../hooks";
 
 const {Item} = Form;
 const {Text} = Typography
 
-const { Dragger } = Upload;
-
-
-
-
-
-
-
 const NormativeForm = () => {
-  const [form] = Form.useForm();
-
-  const formRef = createRef<FormInstance>();
   const [multiple, setMultiple] = useState(false);
+  const [form] = Form.useForm();
+  const formRef = createRef<FormInstance>();
+  const {setFormVisible} = useActions()
 
+  const onReset = () => {
+    formRef.current!.resetFields();
+    form.setFieldsValue([]);
+    setMultiple(false);
+  };
 
   const onFinish = (values: any) => {
     createNormative(values).then((data => console.log(data)));
-    console.log("Success:", values);
+    setFormVisible(false);
     onReset();
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
-  };
-
-  const onReset = () => {
-    formRef.current!.resetFields();
-    form.setFieldsValue([]);
-    setMultiple(false)
+    notification["error"]({
+      message: "Ошибка",
+      description: "Ошибка ввода данных. Проверьте все поля формы",
+    });
   };
 
   const normalizingFileUpload = (e: any) => {
@@ -52,16 +42,31 @@ const NormativeForm = () => {
   };
 
 
-
   const switchItem = (
-    <Item name="multiple" label="Загрузить несколько ?" valuePropName="multiple">
-      <Switch onChange={() => setMultiple(!multiple)}/>
-    </Item>
-  )
+    <Space direction="horizontal" className="d-flex justify-content-end">
+      <Item
+        name="multiple"
+        valuePropName="multiple"
+        label={<Text type="secondary">Загрузить несколько</Text>}
+        className="mb-0"
+      >
+        <Switch onChange={() => setMultiple(!multiple)}/>
+      </Item>
+    </Space>
+  );
 
-  const filesItem =  (
-    <Item name="documents" label={<Text type="secondary">Файлы</Text>} className="m-0" valuePropName="fileList" getValueFromEvent={normalizingFileUpload}>
-
+  const documentsItems = (
+    <Item
+      name="documents"
+      valuePropName="fileList"
+      getValueFromEvent={normalizingFileUpload}
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, выберите документы",
+        }
+      ]}
+    >
       <Upload
         listType="picture-card"
         multiple
@@ -71,21 +76,30 @@ const NormativeForm = () => {
         }}
       >
         <div>
-          <UploadOutlined />
-          <div style={{ marginTop: 8 }}>Добавить</div>
+          <UploadOutlined className="text-secondary"/>
+          <div
+            style={{marginTop: 8}}
+            className="text-secondary"
+          >
+            Документы
+          </div>
         </div>
       </Upload>
 
     </Item>
   );
 
-  const descriptorItem =  (
+  const descriptorItem = (
     <Item
       name="descriptor"
-      label={<Text type="secondary">Файл-дескриптор</Text>}
-      className="m-0"
       valuePropName="file"
       getValueFromEvent={(e) => e.file}
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, выберите файл-шаблон загрузки",
+        }
+      ]}
     >
       <Upload
         maxCount={1}
@@ -96,112 +110,183 @@ const NormativeForm = () => {
         }}
       >
         <div>
-          <UploadOutlined />
-          <div style={{ marginTop: 8 }}>Добавить</div>
+          <UploadOutlined className="text-secondary"/>
+          <div
+            style={{marginTop: 8}}
+            className="text-secondary"
+          >Шаблон
+          </div>
         </div>
       </Upload>
     </Item>
   );
-  const fileItem =  (
-    <Space direction="vertical" style={{ width: '100%' }} size="large">
-      <Item name="document" label={<Text type="secondary">Документ</Text>} className="m-0" valuePropName="file" getValueFromEvent={(e) => e.file}>
-        <Upload
-          maxCount={1}
-          listType="picture-card"
-          beforeUpload={(file, fileList) => {
-            form.setFieldValue("document", file);
-            return false;
-          }}
-        >
-          <div>
-            <UploadOutlined />
-            <div style={{ marginTop: 8 }}>Добавить</div>
-          </div>
-        </Upload>
-      </Item>
-    </Space>
 
+  const documentItem = (
+    <Item
+      name="document"
+      valuePropName="file"
+      getValueFromEvent={(e) => e.file}
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, выберите документ",
+        }
+      ]}
+    >
+      <Upload
+        maxCount={1}
+        listType="picture-card"
+        beforeUpload={(file, fileList) => {
+          form.setFieldValue("document", file);
+          return false;
+        }}
+      >
+        <div>
+          <UploadOutlined className="text-secondary"/>
+          <div
+            style={{marginTop: 8}}
+            className="text-secondary"
+          >
+            Документ
+          </div>
+        </div>
+      </Upload>
+    </Item>
   );
 
-  const titleItem = (
-    <Item name="title" label={<Text type="secondary">Наименование</Text>} className="m-0">
+  const codeItem = (
+    <Item
+      labelCol={{ span: 10}}
+      wrapperCol={{ span: 14 }}
+      name="code"
+      label={<Text type="secondary">Шифр</Text>}
+      className="mb-1"
+      style={{marginLeft: -8}}
+      rules={[
+        {
+          required: true,
+          message: "Пожалуйста, заполните шифр документа",
+        }
+      ]}
+    >
       <Input
-        placeholder="Замечание"
+        size="small"
         className="text-secondary"
+        style={{width: 241}}
       />
     </Item>
   );
 
-
-  const codeItem = (
-    <Item name="code" label={<Text type="secondary">Шифр</Text>} className="m-0">
+  const titleItem = (
+    <Item
+      labelCol={{ span: 8}}
+      wrapperCol={{ span: 16 }}
+      name="title"
+      label={<Text type="secondary">Наименование</Text>}
+      className="mb-1"
+      rules={[
+        {
+          required: true,
+          message:
+            "Пожалуйста, заполните наименование документа",
+        },
+      ]}
+    >
       <Input
-        placeholder="Шифр документа"
+        size="small"
         className="text-secondary"
+        style={{width: 240}}
       />
     </Item>
   );
 
   const revisionItem = (
-    <Item name="revision" label={<Text type="secondary">Версия/ревизия</Text>} className="m-0">
+    <Item
+      labelCol={{ span: 15}}
+      wrapperCol={{ span: 9 }}
+      name="revision"
+      label={<Text type="secondary">Версия/ревизия</Text>}
+      className="mb-1"
+    >
       <Input
-        placeholder="№ ревизии/версии"
+        size="small"
+        type="number"
         className="text-secondary"
+        style={{width: 80}}
       />
     </Item>
   );
 
   const descriptionItem = (
-    <Item name="description" label={<Text type="secondary">Примечание</Text>} className="m-0">
+    <Item
+      name="description"
+      className="mb-1">
       <Input.TextArea
-        placeholder="Примечание"
+        autoSize={{minRows: 7.2, maxRows: 7.2}}
         className="text-secondary"
+        style={{width: 400}}
+        placeholder="Примечание"
       />
     </Item>
   );
 
 
   const oneDocument = (
-<>
-  {codeItem}
-  {titleItem}
-  {revisionItem}
-  {descriptionItem}
-  {fileItem}
-</>
+       <Space direction="horizontal" align="center" className="d-flex border p-1 mb-2 justify-content-between">
+         <Space direction="vertical" align="start">
+             {titleItem}
+             {codeItem}
+             {revisionItem}
+         </Space>
+         <Divider type="vertical" className="m-0"/>
+         <Space direction="vertical" align="start">
+           {descriptionItem}
+         </Space>
+         <Divider type="vertical"/>
+         <Space direction="vertical" align="start">
+           {documentItem}
+         </Space>
+       </Space>
   )
 
-
-    const manyDocuments = (
-      <>
-        {descriptorItem}
-        {filesItem}
-      </>
-    )
-
-
+  const manyDocuments = (
+    <Space
+      direction="horizontal"
+      align="start"
+      className="d-flex justify-content-between border p-1 mb-2"
+    >
+      {descriptorItem}
+      <Divider type="vertical"/>
+      {documentsItems}
+    </Space>
+  )
 
   return (
     <Form
-      layout="vertical"
+      layout="horizontal"
       ref={formRef}
       form={form}
       name="normative-form"
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
+      onReset={onReset}
       autoComplete="on"
+      style={{width: 1060}}
     >
       {switchItem}
       {
         multiple ? manyDocuments : oneDocument
       }
 
-
-
       <Space className="d-flex justify-content-end">
         <Item>
           <Button type="primary" htmlType="submit">
             Добавить
+          </Button>
+        </Item>
+        <Item>
+          <Button htmlType="reset">
+            Очистить
           </Button>
         </Item>
       </Space>
