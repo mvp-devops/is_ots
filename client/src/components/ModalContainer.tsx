@@ -54,7 +54,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       ? 1000
       : target === "monitoring"
       ? 1200
-      : 1200;
+      : actionType === FormActions.REPORT ? 600 : 1200;
 
   return (
     <Modal
@@ -73,7 +73,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
               ? "Чек-лист"
               : actionType === FormActions.ADD_USER
               ? "Регистрация пользователя"
-              : "Другое"}
+              : actionType === FormActions.REPORT ? "Отчет" : "Другое"}
           </Text>
         </Space>
       }

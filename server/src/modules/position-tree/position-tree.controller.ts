@@ -9,16 +9,17 @@ import {
   Query,
   UseInterceptors,
   UploadedFile,
-  Put, Header, Res,
+  Put, Header, Res, HttpException, HttpStatus,
 } from "@nestjs/common";
 import { PositionTreeService } from "./position-tree.service";
 import type { CreatePositionTreeDto, UpdatePositionTreeDto } from "./dto";
 import { FileInterceptor } from "@nestjs/platform-express";
 
 import type { CheckListSets } from "../../../common/types/comments-accounting";
-import {ReportRequestParams} from "../../../common/types/report.types";
-import {Response} from "express";
+import type {ReportRequestParams} from "../../../common/types/report.types";
+import type {Response} from "express";
 import {setCurrentDate} from "../../../common/utils";
+import {existsSync, readFile} from "fs";
 
 @Controller("api/position-tree")
 export class PositionTreeController {
@@ -27,25 +28,34 @@ export class PositionTreeController {
 
   @Post("/report")
 
-  @Header('Content-Type', 'application/pdf')
-  @Header('Content-Disposition', 'attachment; filename=report.pdf')
-  async getReport (
+ async setReport (
     @Body() params: ReportRequestParams,
     @Query() query: {target: string, id: string},
-    @Res() res: Response
   ) {
     const {target, id} = query;
-    // res.header('Content-Disposition', 'attachment; filename=report.pdf');
-    // res.type("application/pdf");
-    const fileLocation = await this.service.getReport(target, id, params);
+    const  fileLocation  = await this.service.getReport(target, id, params)
+    return fileLocation
+  }
+
+  @Get("/report/download")
+
+  getReport (
+    @Query() query: {0: string},
+    @Res() res: Response
+  ) {
+    res.header(
+      "Content-disposition",
+      `attachment; filename=report.pdf`
+    );
+    res.type(
+      "application/pdf"
+    );
 
     res.download(
-      fileLocation,
+      query["0"],
       `report.pdf`,
-      (e: Error) => {
-        if (e) {
-          throw new Error(e.message)
-        };
+      (err) => {
+        if (err) console.log(err);
       }
     );
   }

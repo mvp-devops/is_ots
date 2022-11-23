@@ -537,9 +537,6 @@ export class PositionTreeService {
   };
   }
 
-
-
-  //TODO: сервис по запросу данных из БД.
   getReport = async (target: string, id: string, params: ReportRequestParams): Promise<string> => {
 
     const {direction, period, costs, customerPosition, customerFio, executorPosition, executorFio} = params;
@@ -583,7 +580,7 @@ export class PositionTreeService {
 
     const reportTarget = item.title
 
-    const report = this.reportService.createReport(reportTarget, fields, reportRows, costs, direction, period, customer, executor);
+    const report = await this.reportService.createReport(reportTarget, fields, reportRows, costs, direction, period, customer, executor);
 
     return report;
   }

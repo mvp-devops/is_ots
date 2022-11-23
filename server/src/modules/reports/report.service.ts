@@ -15,6 +15,9 @@ import {formattedDate} from "../../../common/utils/formatDate.pipe";
 
 const pdf =  require("html-pdf");
 import {monthReport as template} from "../../../common/templates/month.report";
+import {readdirSync, statSync} from "fs";
+import {join} from "path";
+import {create} from "domain";
 
 
 @Injectable()
@@ -315,77 +318,79 @@ export class ReportService {
     return laborCosts;
   }
 
-  createReport = (target: string, fields: string[], reportRows: ReportRow[], costs: number, direction: string, period: string, customer: SignerData, executor: SignerData): string => {
+  createReport = async (target: string, fields: string[], reportRows: ReportRow[], costs: number, direction: string, period: string, customer: SignerData, executor: SignerData): Promise<string> => {
 
-    const totalRemarks: Remarks = {
-      issued: 0,
-      repeated: 0,
-      critical: 0,
-      eliminated: 0
-    }
-    const rows: ReportRow[] = [];
-
-    if (reportRows.length > 0) {
-      for (let i = 0, len = reportRows.length; i < len; i++) {
-
-        const {issued, repeated, critical, eliminated} = reportRows[i].remarks
-        totalRemarks.issued += issued;
-        totalRemarks.repeated += repeated;
-        totalRemarks.critical += critical;
-        totalRemarks.eliminated += eliminated;
+      const totalRemarks: Remarks = {
+        issued: 0,
+        repeated: 0,
+        critical: 0,
+        eliminated: 0
       }
-      for (let i = 0, len = reportRows.length; i < len; i++) {
-        const index = i < 9 ? `00${i + 1}` : i < 100 ? `0${i + 1}` : (i + 1).toString();
-        const {date, code, title, documents, typeOfWork} = reportRows[i];
-        const {remarks} = reportRows[i];
-        const laborCosts = this.reportRowLaborCosts(remarks, totalRemarks, costs);
-        rows.push({
-          index,
-          date,
-          code,
-          title,
-          documents,
-          typeOfWork,
-          remarks,
-          laborCosts
-        })
+      const rows: ReportRow[] = [];
+
+      if (reportRows.length > 0) {
+        for (let i = 0, len = reportRows.length; i < len; i++) {
+
+          const {issued, repeated, critical, eliminated} = reportRows[i].remarks
+          totalRemarks.issued += issued;
+          totalRemarks.repeated += repeated;
+          totalRemarks.critical += critical;
+          totalRemarks.eliminated += eliminated;
+        }
+        for (let i = 0, len = reportRows.length; i < len; i++) {
+          const index = i < 9 ? `00${i + 1}` : i < 100 ? `0${i + 1}` : (i + 1).toString();
+          const {date, code, title, documents, typeOfWork} = reportRows[i];
+          const {remarks} = reportRows[i];
+          const laborCosts = this.reportRowLaborCosts(remarks, totalRemarks, costs);
+          rows.push({
+            index,
+            date,
+            code,
+            title,
+            documents,
+            typeOfWork,
+            remarks,
+            laborCosts
+          })
+        }
       }
-    }
 
-    const months = ['Январь', 'Февраль', 'Март', 'Апрель','Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    const month = +period.split(".")[0];
-    const year = period.split(".")[1];
-    const reportPeriod = `${months[month - 1]} ${year} г.`
+      const months = ['Январь', 'Февраль', 'Март', 'Апрель','Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+      const month = +period.split(".")[0];
+      const year = period.split(".")[1];
+      const reportPeriod = `${months[month - 1]} ${year} г.`
 
-    const data = {
-      fields,
-      direction,
-      period: reportPeriod,
-      rows,
-      totalRemarks,
-      costs,
-      customer,
-      executor
-    }
+      const data = {
+        fields,
+        direction,
+        period: reportPeriod,
+        rows,
+        totalRemarks,
+        costs,
+        customer,
+        executor
+      }
 
-      const fileName = `${target}. Отчет за ${reportPeriod} (${direction}).pdf`
+
       const reportFolder = this.fileService.getCurrentPath("reports");
       this.fileService.createDirectory(reportFolder);
-      const pathToFile = this.fileService.getPath([reportFolder, fileName]);
 
-    try {
-      pdf.create(template(data), {format: 'A4', orientation: "landscape"}).toFile(pathToFile, (e: any) => {
-        if(e) {
-          throw new HttpException(e.message, HttpStatus.FORBIDDEN)
-        }
-      })
-    } catch (e: any) {
-      throw new Error(e.message)
-    }
+      try {
+        const fileName = `${target}. Отчет за ${reportPeriod} (${direction}).pdf`
+        const pathToFile = this.fileService.getPath([reportFolder, fileName]);
 
-    return pathToFile
+        pdf.create(template(data), {format: 'A4', orientation: "landscape"}).toFile(pathToFile, (e: any, file: any) => {
+          if(e) {
+            throw new HttpException(e.message, HttpStatus.FORBIDDEN)
+          }
+          return file
+        });
 
+
+        return pathToFile
+      } catch (e: any) {
+        throw new HttpException(e.message, HttpStatus.FORBIDDEN)
+      }
 
   }
-
 }

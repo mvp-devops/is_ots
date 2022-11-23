@@ -13,6 +13,7 @@ import { QuestionCircleOutlined } from "@ant-design/icons";
 import { ModalContainer } from "../../../components";
 import { CheckListForm } from "../../comment-accounting";
 import { useStatistic } from "./hooks";
+import MonthReportForm from "../../reports/month-report-form/MonthReportForm";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -24,6 +25,7 @@ const StatisticPage = () => {
     loadignStatistic,
     renderCheckListButtonFlag,
     renderCheckListFormFlag,
+    renderReportFormFlag,
     onCreateCheckList,
     onCreateReport,
     setShowDetails,
@@ -110,6 +112,10 @@ const StatisticPage = () => {
   const renderCheckListForm = renderCheckListFormFlag && (
     <ModalContainer child={<CheckListForm />} />
   );
+
+  const renderReportForm = renderReportFormFlag && (
+    <ModalContainer child={<MonthReportForm />} />
+  )
 
   const renderExaminationDocumentationStatisticRender = (
     <Card
@@ -243,6 +249,7 @@ const StatisticPage = () => {
         </Content>
       )}
       {renderCheckListForm}
+      {renderReportForm}
     </>
   );
 };

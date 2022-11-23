@@ -65,6 +65,9 @@ export const useStatistic = () => {
   const renderCheckListFormFlag =
     formVisible && actionType === FormActions.CHECKLIST;
 
+  const renderReportFormFlag =
+    formVisible && actionType === FormActions.REPORT;
+
   const renderCheckListButtonFlag =
     target === "project" || target === "unit" || target === "sub-unit";
 
@@ -256,6 +259,7 @@ export const useStatistic = () => {
     onCreateCheckList,
     onCreateReport,
     setShowDetails,
+    renderReportFormFlag,
 
     itemStatistic,
     renderItemStatisticFlag,
