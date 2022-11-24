@@ -20,6 +20,7 @@ import type {ReportRequestParams} from "../../../common/types/report.types";
 import type {Response} from "express";
 import {setCurrentDate} from "../../../common/utils";
 import {existsSync, readFile} from "fs";
+import {delay} from "rxjs";
 
 @Controller("api/position-tree")
 export class PositionTreeController {
@@ -33,7 +34,8 @@ export class PositionTreeController {
     @Query() query: {target: string, id: string},
   ) {
     const {target, id} = query;
-    const  fileLocation  = await this.service.getReport(target, id, params)
+    const  fileLocation  = await this.service.getReport(target, id, params);
+
     return fileLocation
   }
 

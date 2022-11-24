@@ -1,11 +1,11 @@
-import {Button, Divider, Form, Input, notification, Select, Space, Switch, Typography, Upload} from "antd";
+import {Button, Divider, Form, Input, notification, Select, Space, Spin, Switch, Typography, Upload} from "antd";
 import {createRef, useEffect, useLayoutEffect, useState} from "react";
 import {FormInstance} from "antd/es/form";
 import {useActions, useTypedSelector} from "../../../hooks";
 import {createNormative} from "../../file-storage/api/file-storage.api";
 import {FormActions, months} from "../../main";
 import {getAllItems as getNSIList, NSIView} from "../../regulatory-reference-information";
-import {ExclamationCircleOutlined} from "@ant-design/icons";
+import {ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
 import {buildReportPerMonth, reportDownload} from "../api/reports.api";
 import download from "js-file-download";
 
@@ -19,6 +19,7 @@ const MonthReportForm = () => {
   const {setFormVisible} = useActions();
   const {currentItem, target} = useTypedSelector(state => state.positionTree);
   const [directionsList, setDirectionsList] = useState<NSIView[]>([]);
+  const [loading, setLoading] = useState(false)
 
   useLayoutEffect(() => {
     getNSIList("direction").then((data) => setDirectionsList(data));
@@ -57,10 +58,18 @@ const MonthReportForm = () => {
       executorFio
     }
 
-    buildReportPerMonth(target, id, reportData, title)
-    setFormVisible(false);
-    onReset();
+    setLoading(true);
+    buildReportPerMonth(target, id, reportData, title).then(() => {
+      setLoading(false);
+      setFormVisible(false);
+    })
+
+    onReset()
   }
+
+
+
+  useEffect(() => console.log("load: ", loading), [loading])
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -391,12 +400,17 @@ const MonthReportForm = () => {
 
       <Space className="d-flex justify-content-end mt-2">
         <Item>
-          <Button type="primary" htmlType="submit">
-            Сформировать
+          <Button type={loading ? "default" : "primary"} htmlType="submit" >
+            {loading ?
+              <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
+              Загрузка отчета</Spin> :
+
+               "Сформировать"}
+
           </Button>
         </Item>
         <Item>
-          <Button htmlType="reset">
+          <Button htmlType="reset" disabled={loading}>
             Очистить
           </Button>
         </Item>

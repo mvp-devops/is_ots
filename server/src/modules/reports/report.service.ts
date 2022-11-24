@@ -5,19 +5,19 @@ import {
   Inject,
   Injectable,
 } from "@nestjs/common";
-import {Remarks, ReportRow, ReportView, SignerData} from "../../../common/types/report.types";
+import {Remarks, ReportRow,  SignerData} from "../../../common/types/report.types";
 import {InjectModel} from "@nestjs/sequelize";
 import {DesignDocumentEntity, NewFileStorageService} from "../file-storage";
 import {DesignDocumentCommentEntity, DesignDocumentSolutionEntity} from "../comment-accounting";
-import {SectionEntity, StageEntity} from "../regulatory-reference-information";
+import { StageEntity} from "../regulatory-reference-information";
 import {FieldEntity, ProjectEntity, SubUnitEntity, UnitEntity} from "../position-tree";
 import {formattedDate} from "../../../common/utils/formatDate.pipe";
 
 const pdf =  require("html-pdf");
 import {monthReport as template} from "../../../common/templates/month.report";
-import {readdirSync, statSync} from "fs";
-import {join} from "path";
-import {create} from "domain";
+import {delay, delayWhen} from "rxjs";
+import {readFile, readFileSync} from "fs";
+
 
 
 @Injectable()
@@ -26,7 +26,7 @@ export class ReportService {
     @InjectModel(DesignDocumentEntity)
     private designDocumentRepository: typeof DesignDocumentEntity,
     @Inject(forwardRef(() => NewFileStorageService))
-    private fileService: NewFileStorageService,
+    private fileService: NewFileStorageService
   ) {
   }
 
@@ -371,26 +371,37 @@ export class ReportService {
         executor
       }
 
-
       const reportFolder = this.fileService.getCurrentPath("reports");
       this.fileService.createDirectory(reportFolder);
 
-      try {
-        const fileName = `${target}. Отчет за ${reportPeriod} (${direction}).pdf`
-        const pathToFile = this.fileService.getPath([reportFolder, fileName]);
+    const fileName = `${target}. Отчет за ${reportPeriod} (${direction}).pdf`
+    const pathToFile = this.fileService.getPath([reportFolder, fileName]);
 
-        pdf.create(template(data), {format: 'A4', orientation: "landscape"}).toFile(pathToFile, (e: any, file: any) => {
-          if(e) {
-            throw new HttpException(e.message, HttpStatus.FORBIDDEN)
-          }
-          return file
-        });
+    const file = this.createPdf(5000, template(data), pathToFile, {format: 'A4', orientation: "landscape"})
 
-
-        return pathToFile
-      } catch (e: any) {
-        throw new HttpException(e.message, HttpStatus.FORBIDDEN)
-      }
-
+    return file
   }
+
+  createPdf = async (delay: number, template: string, fileName: string, options?: Object, ) => {
+
+        function sleep(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+    }
+
+
+      pdf.create(template, options).toFile(fileName, (e: Error) => {
+        if (e) {
+          throw new HttpException(e.message, HttpStatus.FORBIDDEN)
+        }
+      })
+
+    await sleep(delay)
+
+      return fileName
+
+
+   }
+
+
+
 }
