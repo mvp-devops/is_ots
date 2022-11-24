@@ -162,7 +162,7 @@ const MonthReportForm = () => {
         }
       >
         {months.map(({id, title}) => (
-            <Option key={id} title={title} value={id} className="text-secondary">
+            <Option key={id} title={title} value={title} className="text-secondary">
               {title}
             </Option>
           )

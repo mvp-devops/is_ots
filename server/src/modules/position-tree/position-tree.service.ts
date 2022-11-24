@@ -516,7 +516,7 @@ export class PositionTreeService {
                     rows.push(...row);
                     if(subUnits && subUnits.length > 0) {
                       for(let n = 0, len =  subUnits.length; n < len; n++) {
-                        const {id} = subUnits[k];
+                        const {id} = subUnits[n];
                         const row = await this.reportService.getDocumentForReport("sub-unit", id.toString(), period);
                         rows.push(...row);
                       }

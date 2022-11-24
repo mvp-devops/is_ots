@@ -71,6 +71,7 @@ export class ReportService {
             }
           ]
         })
+        console.log("1: ", documents.length);
         break;
       }
       case "unit": {
@@ -105,6 +106,7 @@ export class ReportService {
             }
           ]
         })
+        console.log("2: ", documents.length);
         break;
       }
       case "sub-unit": {
@@ -144,6 +146,7 @@ export class ReportService {
             }
           ]
         })
+        console.log("3: ", documents.length);
         break;
       }
       case "supplier": {
@@ -291,6 +294,7 @@ export class ReportService {
         (issued !== 0 || repeated !== 0 || critical !== 0 || eliminated !== 0) && reportRows.push(row);
       }
     }
+
     return reportRows;
   }
 
@@ -319,7 +323,7 @@ export class ReportService {
   }
 
   createReport = async (target: string, fields: string[], reportRows: ReportRow[], costs: number, direction: string, period: string, customer: SignerData, executor: SignerData): Promise<string> => {
-
+    console.log(reportRows.length);
       const totalRemarks: Remarks = {
         issued: 0,
         repeated: 0,
