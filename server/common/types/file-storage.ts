@@ -14,6 +14,17 @@ export enum FileTypes {
   "DOCX" = "DOCX"
 }
 
+export interface DocumentCreateOrUpdateAttrs {
+  multiple?: boolean;
+  code?: string;
+  title?: string;
+  revision?: number;
+  description?: string;
+  document?: File;
+  descriptor?: File
+  documents?: File[]
+}
+
 export interface NormativeView {
   readonly id: number;
   readonly code: string;

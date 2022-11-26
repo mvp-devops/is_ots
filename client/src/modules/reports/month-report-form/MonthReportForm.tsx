@@ -84,7 +84,6 @@ const MonthReportForm = () => {
       <Text type="warning">
         <ExclamationCircleOutlined style={{fontSize: 20, marginBottom: 2}}/>
       </Text>
-
       <Text type="secondary" style={{fontSize: 12, marginBottom: 2}}>
         Нет данных для отображения. Уточнить поиск
       </Text>

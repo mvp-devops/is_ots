@@ -8,6 +8,8 @@ import {
   deleteOneEssense,
 } from "../api";
 
+import {NormativeCreateOrUpdateAttrs} from "../../../../../server/common/types/file-storage"
+
 import {
   ActionTypes,
   EssenceAction,
@@ -15,6 +17,14 @@ import {
   NSIView,
   UserCreateOrUpdateAttrs,
 } from "../types";
+import {
+  findAllNormative,
+  createNormative,
+  findOneNormative,
+  deleteNormative,
+  deleteManyNormative,
+  editNormative
+} from "../../file-storage/api/normative.api";
 
 export const setNsiItems = (target: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
@@ -162,4 +172,155 @@ export const deleteNsiItem = (target: string, id: string) => {
       });
     }
   };
+
+};
+
+export const setNormativeList = () => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({type: ActionTypes.GET_ALL_NORMATIVE});
+
+      const data = await findAllNormative();
+
+      dispatch({
+        type: ActionTypes.GET_ALL_NORMATIVE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.GET_ALL_NORMATIVE_ERROR,
+        payload: "Ошибка получения данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+      });
+    }
+  };
+};
+
+export const setCurrentNormative = (id: string) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({type: ActionTypes.GET_ONE_NORMATIVE});
+
+      const data = await findOneNormative(id);
+
+      dispatch({
+        type: ActionTypes.GET_ONE_NORMATIVE_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.GET_ONE_NORMATIVE_ERROR,
+        payload: "Ошибка получения данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+      });
+    }
+  };
+};
+
+  export const uploadNormative = ( item: any) => {
+    return async (dispatch: Dispatch<EssenceAction>) => {
+      try {
+        dispatch({ type: ActionTypes.POST_ONE_NORMATIVE });
+        const data = await createNormative(item);
+        dispatch({
+          type: ActionTypes.POST_ONE_NORMATIVE_SUCCESS,
+          payload: data,
+        });
+        notification["success"]({
+          message: "ОК",
+          description: "Данные успешно добавлены",
+        });
+      } catch (error: any) {
+        dispatch({
+          type: ActionTypes.POST_ONE_NORMATIVE_ERROR,
+          payload: "Ошибка отправки данных",
+        });
+        notification["error"]({
+          message: "Ошибка",
+          description: error.message,
+        });
+      }
+    };
+  };
+
+export const updateNormative = ( item: any, id: string) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({ type: ActionTypes.UPDATE_ONE_NORMATIVE });
+      const data = await editNormative(item, id);
+      dispatch({
+        type: ActionTypes.UPDATE_ONE_NORMATIVE_SUCCESS,
+        payload: data,
+      });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно обновлены",
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ActionTypes.UPDATE_ONE_NORMATIVE_ERROR,
+        payload: "Ошибка отправки данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+      });
+    }
+  };
+};
+
+export const removeNormative = (id?: string, ids?: string[]) => {
+  if(id) {
+    return async (dispatch: Dispatch<EssenceAction>) => {
+      try {
+        dispatch({type: ActionTypes.DELETE_ONE_NORMATIVE});
+
+        const data = await deleteNormative(id);
+
+        dispatch({
+          type: ActionTypes.DELETE_ONE_NORMATIVE_SUCCESS,
+          payload: data,
+        });
+      } catch (error) {
+        dispatch({
+          type: ActionTypes.DELETE_ONE_NORMATIVE_ERROR,
+          payload: "Ошибка удаления данных",
+        });
+        notification["error"]({
+          message: "Ошибка",
+          description: error.message,
+        });
+      }
+    }
+  }
+    if(ids && ids.length > 0) {
+      return async (dispatch: Dispatch<EssenceAction>) => {
+        try {
+          dispatch({type: ActionTypes.DELETE_MANY_NORMATIVE});
+
+          const data = await deleteManyNormative(ids);
+
+          dispatch({
+            type: ActionTypes.DELETE_MANY_NORMATIVE_SUCCESS,
+            payload: data,
+          });
+        } catch (error) {
+          dispatch({
+            type: ActionTypes.DELETE_MANY_NORMATIVE_ERROR,
+            payload: "Ошибка удаления данных",
+          });
+          notification["error"]({
+            message: "Ошибка",
+            description: error.message,
+          });
+        }
+      }
+  }
+
 };

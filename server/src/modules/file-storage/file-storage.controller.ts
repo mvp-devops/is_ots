@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseInterceptors,
-  UploadedFile, UploadedFiles,
+  UploadedFile, UploadedFiles, Put,
 } from "@nestjs/common";
 import {FileFieldsInterceptor, FileInterceptor} from "@nestjs/platform-express";
 import {
@@ -17,7 +17,7 @@ import {
 } from "./dto/create-file-storage.dto";
 import { FileStorageService } from "./file-storage.service";
 import {NormativeService} from "./normative.service";
-import {File, NormativeCreateOrUpdateAttrs} from "../../../common/types/file-storage";
+import type {DocumentCreateOrUpdateAttrs, File, NormativeCreateOrUpdateAttrs} from "../../../common/types/file-storage";
 
 @Controller("api/file-storage")
 export class FileStorageController {
@@ -49,6 +49,9 @@ export class FileStorageController {
     );
   }
 
+
+  //NORMATIVE
+
   @Post("/add/normative")
   @UseInterceptors(FileFieldsInterceptor([
     { name: "document", maxCount: 1 },
@@ -57,7 +60,7 @@ export class FileStorageController {
   ]))
   uploadNormative(
     @Body()
-    data: any,
+    data: DocumentCreateOrUpdateAttrs,
     @UploadedFiles()
       files: {
       document?: File,
@@ -65,6 +68,44 @@ export class FileStorageController {
       documents?: File[]
     }) {
     return this.normativeService.uploadManyNormative(data, files);
+  }
+
+  @Get("/find/normative/all")
+  findAllNormative() {
+    return this.normativeService.findAllNormative();
+  }
+
+  @Get("/find/normative/:id")
+  findOneNormative(
+    @Param("id") id: string
+  ) {
+    return this.normativeService.findOneNormative(id);
+  }
+
+  @Put("/edit/normative/:id")
+  @UseInterceptors(FileInterceptor("document"))
+  updateOneNormative(
+    @Param("id") id: string,
+    @Body() data: DocumentCreateOrUpdateAttrs,
+    @UploadedFile() document?: File
+  ) {
+
+    return this.normativeService.updateNormative(data, id, document);
+  }
+
+  @Delete("/remove/normative/:id")
+  removeOneNormative(
+    @Param("id") id: string
+  ) {
+    return this.normativeService.removeOneNormative(id);
+  }
+
+  @Delete("/remove/normative")
+  removeManyNormative(
+    @Query() query: { ids: string }
+  ) {
+    const {ids} = query;
+    return this.normativeService.removeManyNormative(ids);
   }
 
   @Get("/find/design-documents")
@@ -102,10 +143,5 @@ export class FileStorageController {
   @Delete("remove/design-document/:id")
   remove(@Param("id") id: string) {
     return this.service.deleteDesignDocument(id);
-  }
-
-  @Get("/find/normanives")
-  findAllNormatives() {
-    return this.service.findAllNormatives();
   }
 }

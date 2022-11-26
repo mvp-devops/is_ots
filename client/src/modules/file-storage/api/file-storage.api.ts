@@ -82,6 +82,12 @@ if(documents) {
   return data;
 };
 
+export const findAllNormatives = async (): Promise<any[]> => {
+  const url = setUrl(`${baseUrl}/find/normative/all`);
+  const { data } = await axios.get(url);
+  return data;
+};
+
 
 export const createDesignDocument = async (
   parrentId: string,
@@ -114,11 +120,6 @@ export const createDesignDocuments = async (
   return items;
 };
 
-export const findAllNormatives = async () => {
-  const url = setUrl(`${baseUrl}/find/normanives`);
-  const { data } = await axios.get(url);
-  return data;
-};
 
 //   export const createManyEssences = async (
 //     items: DesignDocumentCommentCreationAttrs[]

@@ -3,6 +3,7 @@ import { usePage, PageHeader, PageFooter, PageMenu } from ".";
 import NsiPage from "../modules/regulatory-reference-information/views/NsiPage";
 import { ItemPage } from "../modules/position-tree";
 import TechCardsPreView from "../modules/regulatory-reference-information/views/tech-cards/TechCardsPreView";
+import NormativeTable from "../modules/regulatory-reference-information/components/tables/normative/NormativeTable";
 
 const { Content } = Layout;
 
@@ -19,10 +20,12 @@ const MainPage = () => {
     <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
       {baseTarget === "POSITION_TREE" && currentItem && <ItemPage />}
       {baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
-        dictionaryTarget !== "technical-card" &&
+        dictionaryTarget !== ("technical-card" || "normative" || "facility") &&
         renderNsiItems.length > 0 && <NsiPage />}
       {baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
         dictionaryTarget === "technical-card" && <TechCardsPreView />}
+      {baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
+        dictionaryTarget === "normative" && <NormativeTable />}
     </Content>
   );
 

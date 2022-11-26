@@ -1,18 +1,27 @@
-import {createRef, useState} from 'react';
+import {createRef, FC, useState} from 'react';
 import {Button, Divider, Form, Input, notification, Space, Switch, Typography, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
 import {FormInstance} from "antd/es/form";
 import {createNormative} from "../../../file-storage/api/file-storage.api";
 import {useActions} from "../../../../hooks";
+import type {NormativeView} from "../../../../../../server/common/types/file-storage";
+import {FormActions, setFilePath, setUrl} from "../../../main";
+import {updateNormative} from "../../store/regulatory-reference-information.action-creators";
+
 
 const {Item} = Form;
 const {Text} = Typography
 
-const NormativeForm = () => {
+interface NormativeFormProps {
+  editRow?: NormativeView;
+  action: string;
+}
+
+const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
   const [multiple, setMultiple] = useState(false);
   const [form] = Form.useForm();
   const formRef = createRef<FormInstance>();
-  const {setFormVisible} = useActions()
+  const {setFormVisible, uploadNormative, updateNormative} = useActions()
 
   const onReset = () => {
     formRef.current!.resetFields();
@@ -20,8 +29,15 @@ const NormativeForm = () => {
     setMultiple(false);
   };
 
+  const {id, code, title, revision, description} = editRow;
+
   const onFinish = (values: any) => {
-    createNormative(values).then((data => console.log(data)));
+    if(action === FormActions.EDIT_NORMATIVE) {
+      updateNormative(values, id.toString())
+      console.log(values);
+    } else {
+      uploadNormative(values);
+    }
     setFormVisible(false);
     onReset();
   }
@@ -41,6 +57,7 @@ const NormativeForm = () => {
     return e && e.fileList;
   };
 
+  const template = setFilePath("templates/template_descriptor_normative.xlsx");
 
   const switchItem = (
     <Space direction="horizontal" className="d-flex justify-content-end">
@@ -59,6 +76,7 @@ const NormativeForm = () => {
     <Item
       name="documents"
       valuePropName="fileList"
+      className="mb-0"
       getValueFromEvent={normalizingFileUpload}
       rules={[
         {
@@ -85,7 +103,6 @@ const NormativeForm = () => {
           </div>
         </div>
       </Upload>
-
     </Item>
   );
 
@@ -94,6 +111,8 @@ const NormativeForm = () => {
       name="descriptor"
       valuePropName="file"
       getValueFromEvent={(e) => e.file}
+      style={{maxWidth: 100}}
+      className="mb-0"
       rules={[
         {
           required: true,
@@ -119,6 +138,8 @@ const NormativeForm = () => {
         </div>
       </Upload>
     </Item>
+
+
   );
 
   const documentItem = (
@@ -126,9 +147,10 @@ const NormativeForm = () => {
       name="document"
       valuePropName="file"
       getValueFromEvent={(e) => e.file}
+
       rules={[
         {
-          required: true,
+          required: action === FormActions.ADD_NORMATIVE,
           message: "Пожалуйста, выберите документ",
         }
       ]}
@@ -159,6 +181,7 @@ const NormativeForm = () => {
       labelCol={{ span: 10}}
       wrapperCol={{ span: 14 }}
       name="code"
+      initialValue={code}
       label={<Text type="secondary">Шифр</Text>}
       className="mb-1"
       style={{marginLeft: -8}}
@@ -182,6 +205,7 @@ const NormativeForm = () => {
       labelCol={{ span: 8}}
       wrapperCol={{ span: 16 }}
       name="title"
+      initialValue={title}
       label={<Text type="secondary">Наименование</Text>}
       className="mb-1"
       rules={[
@@ -192,10 +216,11 @@ const NormativeForm = () => {
         },
       ]}
     >
-      <Input
-        size="small"
+      <Input.TextArea
+        autoSize={{minRows: 4}}
         className="text-secondary"
         style={{width: 240}}
+        placeholder="Примечание"
       />
     </Item>
   );
@@ -204,6 +229,7 @@ const NormativeForm = () => {
     <Item
       labelCol={{ span: 15}}
       wrapperCol={{ span: 9 }}
+      initialValue={revision}
       name="revision"
       label={<Text type="secondary">Версия/ревизия</Text>}
       className="mb-1"
@@ -220,7 +246,10 @@ const NormativeForm = () => {
   const descriptionItem = (
     <Item
       name="description"
-      className="mb-1">
+      className="mb-1"
+      initialValue={description}
+    >
+
       <Input.TextArea
         autoSize={{minRows: 7.2, maxRows: 7.2}}
         className="text-secondary"
@@ -253,9 +282,12 @@ const NormativeForm = () => {
     <Space
       direction="horizontal"
       align="start"
-      className="d-flex justify-content-between border p-1 mb-2"
+      className="d-flex justify-content-between align-items-center border p-1 mb-2"
     >
-      {descriptorItem}
+<Space direction="vertical"  >
+  {descriptorItem}
+  <a href={template} className="mt-0">Скачать шаблон</a>
+</Space>
       <Divider type="vertical"/>
       {documentsItems}
     </Space>
@@ -273,7 +305,7 @@ const NormativeForm = () => {
       autoComplete="on"
       style={{width: 1060}}
     >
-      {switchItem}
+      {action !== FormActions.EDIT_NORMATIVE && switchItem}
       {
         multiple ? manyDocuments : oneDocument
       }
@@ -281,12 +313,13 @@ const NormativeForm = () => {
       <Space className="d-flex justify-content-end">
         <Item>
           <Button type="primary" htmlType="submit">
-            Добавить
+            {action === FormActions.EDIT_NORMATIVE ? "Редактировать" : "Добавить"}
+
           </Button>
         </Item>
         <Item>
           <Button htmlType="reset">
-            Очистить
+            {action === FormActions.EDIT_NORMATIVE ? "Сбросить" : "Очистить"}
           </Button>
         </Item>
       </Space>

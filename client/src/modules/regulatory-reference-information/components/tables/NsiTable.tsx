@@ -112,7 +112,7 @@ const NsiTable = () => {
   );
 
   const renderForm = renderNsiFormFlag && (
-    <ModalContainer child={<NormativeForm />} />
+    <ModalContainer child={<RegulatoryReferenceInformationForm />} />
   );
 
   return (

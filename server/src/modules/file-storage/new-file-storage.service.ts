@@ -131,6 +131,7 @@ export class NewFileStorageService {
         mimeType,
         buffer
       } = this.getFileProperties(file, generateFileName);
+
       const destination = this.getCurrentPath(path);
       const pathToFile = this.getPath([destination, fileName]);
 
