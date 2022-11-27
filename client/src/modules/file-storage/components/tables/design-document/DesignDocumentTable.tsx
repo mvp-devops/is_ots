@@ -5,45 +5,52 @@ import {
   SearchOutlined,
   FileExcelOutlined, LoadingOutlined,
 } from "@ant-design/icons";
-import type {NormativeView} from "../../../../../../../server/common/types/file-storage";
 import { ModalContainer } from "../../../../../components";
 import {FormActions, tableLocale} from "../../../../main";
-import {findAllNormatives} from "../../../../file-storage/api/file-storage.api";
 
-import NewCommentForm from "../../forms/NewCommentForm";
 
 import MenuItems from "./MenuItems";
 import TableColumns from "./TableColumns";
 import TableFooter from "./TableFooter";
-import NormativeForm from "../../forms/NormativeForm";
+import DesignDocumentForm from "../../forms/design-document";
+import {DesignDocumentView} from "../../../types"
 import {useActions, useTypedSelector} from "../../../../../hooks";
-import {DesignDocumentView} from "../../../../../../../server/common/types/file-storage";
+import {CollectiveCheckSheet, CommentAccountingModalContainer, CommentForm} from "../../../../comment-accounting";
 
 const { Text } = Typography;
 
-const NormativeTable = () => {
+const DesignDocumentTable = () => {
 
   const [renderFormFlag, setRenderFormFlag] = useState(false);
-  const [currentRow, setCurrentRow] = useState<NormativeView>();
+  const [renderCommentAccountingFormFlag, setRenderCommentAccountingFormFlag] = useState(false);
+  const [currentRow, setCurrentRow] = useState<DesignDocumentView>();
   const [selectedRows, setSelectedRows] = useState([]);
   const [searchInput, setSearchInput] = useState("");
   const [filteredResults, setFilteredResults] = useState([]);
+  const [selected, setSelected] = useState([]);
 
-  const {formVisible, actionType} = useTypedSelector(state => state.main)
+  const {formVisible, actionType, collectiveCheckSheetView} = useTypedSelector(state => state.main);
+  const {target, currentItem: {id}} = useTypedSelector(state => state.positionTree)
 
-  const {setNormativeList} = useActions();
+  const {setDesignDocuments, setCheckedDocuments, setCollectiveCheckSheetView, setCurrentDocument} = useActions();
 
   useLayoutEffect(() => {
-    setNormativeList()
+    setDesignDocuments(target, id)
   }, []);
 
-
-
-  const {normativeList: dataSource, currentNormative} = useTypedSelector(state => state.nsi)
+  const {designDocuments: dataSource, currentDesignDocument} = useTypedSelector(state => state.fileStorage)
 
 
   useEffect(() => {
-    setRenderFormFlag((actionType === FormActions.ADD_NORMATIVE || actionType === FormActions.EDIT_NORMATIVE || actionType === FormActions.REMOVE_NORMATIVE) && formVisible)
+    setRenderFormFlag((formVisible &&
+      actionType === FormActions.ADD_DOCUMENT ||
+      actionType === FormActions.EDIT_DOCUMENT ||
+      actionType === FormActions.REMOVE_DOCUMENT));
+
+    setRenderCommentAccountingFormFlag(formVisible &&
+      (actionType === FormActions.ADD_COMMENT ||
+        actionType === FormActions.EDIT_COMMENT ||
+        actionType === FormActions.REMOVE_COMMENT))
   }, [formVisible, actionType]);
 
 
@@ -63,7 +70,7 @@ const NormativeTable = () => {
 
   }
 
-  const searchItems = (data: NormativeView[], searchValue: string) => {
+  const searchItems = (data: DesignDocumentView[], searchValue: string) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
       const filteredData = data.filter((item) => {
@@ -81,7 +88,7 @@ const NormativeTable = () => {
   const title = (
     <Space className="d-flex align-items-center justify-content-between">
       <Text strong type="secondary">
-        Нормативные документы
+        Документация
       </Text>
       <Space
         direction="horizontal"
@@ -95,13 +102,30 @@ const NormativeTable = () => {
           suffix={<SearchOutlined className="text-primary" />}
           onChange={(e) => searchItems(dataSource, e.target.value)}
         />
-        <MenuItems selectedRows={selectedRows} resetSelectedRows={() => setSelectedRows([])}/>
+        <MenuItems
+          selectedRows={selected}
+          resetSelectedRows={() => setSelected([])}
+          parentTarget={target}
+        />
       </Space>
     </Space>
   );
 
   const renderForm = renderFormFlag && (
-    <ModalContainer child={<NormativeForm action={actionType} editRow={actionType === FormActions.EDIT_NORMATIVE && currentRow}/>} />
+    <ModalContainer child={<DesignDocumentForm  editRow={actionType === FormActions.EDIT_DOCUMENT && currentRow}/>} />
+  );
+
+  const addCommentForm = renderCommentAccountingFormFlag && (
+    <ModalContainer child={<CommentForm />} />
+  );
+
+  const collectiveCheckSheetViewRender = collectiveCheckSheetView && (
+    <CommentAccountingModalContainer
+      show={collectiveCheckSheetView}
+      onCancel={() => setCollectiveCheckSheetView(false)}
+      action={actionType}
+      child={<CollectiveCheckSheet />}
+    />
   );
 
 
@@ -116,21 +140,34 @@ const NormativeTable = () => {
         loading={loading}
         onRow={(record, rowIndex) => {
           return {
-            onMouseEnter: (event) => setCurrentRow(record),
+            onMouseEnter: (event) => {
+              setCurrentRow(record);
+              setCurrentDocument(record)
+            },
           };
         }}
         title={() => title}
-        rowKey={(record) => record.id}
+        rowKey={(record) => +record.id}
         rowSelection={{
-          onChange: (selectedRowKeys) => setSelectedRows(selectedRowKeys)}}
+          onChange: (
+            selectedRowKeys,
+            selectedRows: DesignDocumentView[]
+          ) => {
+            setCheckedDocuments(selectedRows);
+            setSelected(selectedRowKeys)
+          },
+        }}
+
         columns={columns}
         dataSource={searchInput.length > 1 ? filteredResults : dataSource}
         footer={() => TableFooter(searchInput.length > 1 ? filteredResults : dataSource)}
       />
 
       {renderForm}
+      {collectiveCheckSheetViewRender}
+      {addCommentForm}
     </Layout>
   );
 };
 
-export default NormativeTable;
+export default DesignDocumentTable;

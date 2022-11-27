@@ -18,35 +18,96 @@ import {
 import { FileStorageService } from "./file-storage.service";
 import {NormativeService} from "./normative.service";
 import type {DocumentCreateOrUpdateAttrs, File, NormativeCreateOrUpdateAttrs} from "../../../common/types/file-storage";
+import {DesignDocumentService} from "./design-document.service";
 
 @Controller("api/file-storage")
 export class FileStorageController {
   constructor(
     private readonly service: FileStorageService,
-    private readonly normativeService: NormativeService
+    private readonly normativeService: NormativeService,
+    private readonly designDocumentService: DesignDocumentService
   ) {}
 
-  @Post("/add/design-document")
-  @UseInterceptors(FileInterceptor("file"))
-  create(
-    @Body() dto: CreateDesignDocumentDto,
-    @Query()
-    query: {
-      parrentId: string;
-      parrentTarget: string;
-      parrentFolderPath: string;
-    },
-    @UploadedFile() file?: any
-  ) {
-    const { parrentId, parrentTarget, parrentFolderPath } = query;
+  // @Post("/add/design-document")
+  // @UseInterceptors(FileInterceptor("file"))
+  // create(
+  //   @Body() dto: CreateDesignDocumentDto,
+  //   @Query()
+  //   query: {
+  //     parrentId: string;
+  //     parrentTarget: string;
+  //     parrentFolderPath: string;
+  //   },
+  //   @UploadedFile() file?: any
+  // ) {
+  //   const { parrentId, parrentTarget, parrentFolderPath } = query;
+  //
+  //   return this.service.createDesignDocument(
+  //     parrentId,
+  //     parrentTarget,
+  //     parrentFolderPath,
+  //     file,
+  //     dto
+  //   );
+  // }
 
-    return this.service.createDesignDocument(
-      parrentId,
-      parrentTarget,
-      parrentFolderPath,
-      file,
-      dto
-    );
+  /* DESIGN-DOCUMENTS */
+
+  @Post("/add/design-document")
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: "document", maxCount: 1 },
+    { name: "descriptor", maxCount: 1 },
+    { name: "documents", maxCount: 20 }
+  ]))
+  uploadDesignDocument(
+    @Body() data: any,
+    @UploadedFiles() files: {
+      document?: File,
+      descriptor?: File,
+      documents?: File[]
+    }) {
+    return this.designDocumentService.uploadManyDesignDocument(data, files);
+  }
+
+  @Get("/find/design-documents")
+  findAllDesignDocuments(
+    @Query() query: {
+      parentTarget: string;
+      parentId: string;
+    }) {
+    const { parentTarget, parentId } = query;
+    return this.designDocumentService.findAllDesignDocuments(parentTarget, parentId);
+  }
+
+  @Get("/find/design-document/:id")
+  findOneDesignDocument(
+    @Param("id") id: string,
+    @Query() query: { parentTarget?: string}) {
+    const { parentTarget } = query;
+    return this.designDocumentService.findOneDesignDocument(+id, parentTarget);
+  }
+
+  @Put("/edit/design-document/:id")
+  @UseInterceptors(FileInterceptor("document"))
+  updateOneDesignDocument(
+    @Param("id") id: string,
+    @Body() data: any,
+    @UploadedFile() document?: File) {
+    return this.designDocumentService.updateDesignDocument(data, +id, document);
+  }
+
+  @Delete("/remove/design-document/:id")
+  removeOneDesignDocument(
+    @Param("id") id: string,
+    @Query() query: { parentTarget?: string}) {
+    const {parentTarget} = query
+    return this.designDocumentService.removeOneDesignDocument(+id, parentTarget);
+  }
+
+  @Delete("/remove/design-document")
+  removeManyDesignDocument(@Query() query: { ids: string, parentTarget: string }) {
+    const {ids, parentTarget} = query;
+    return this.designDocumentService.removeManyDesignDocuments(ids, parentTarget);
   }
 
 
@@ -61,8 +122,7 @@ export class FileStorageController {
   uploadNormative(
     @Body()
     data: DocumentCreateOrUpdateAttrs,
-    @UploadedFiles()
-      files: {
+    @UploadedFiles() files: {
       document?: File,
       descriptor?: File,
       documents?: File[]
@@ -70,15 +130,13 @@ export class FileStorageController {
     return this.normativeService.uploadManyNormative(data, files);
   }
 
-  @Get("/find/normative/all")
+  @Get("/find/normative")
   findAllNormative() {
     return this.normativeService.findAllNormative();
   }
 
   @Get("/find/normative/:id")
-  findOneNormative(
-    @Param("id") id: string
-  ) {
+  findOneNormative(@Param("id") id: string) {
     return this.normativeService.findOneNormative(id);
   }
 
@@ -87,61 +145,18 @@ export class FileStorageController {
   updateOneNormative(
     @Param("id") id: string,
     @Body() data: DocumentCreateOrUpdateAttrs,
-    @UploadedFile() document?: File
-  ) {
-
+    @UploadedFile() document?: File) {
     return this.normativeService.updateNormative(data, id, document);
   }
 
   @Delete("/remove/normative/:id")
-  removeOneNormative(
-    @Param("id") id: string
-  ) {
+  removeOneNormative(@Param("id") id: string) {
     return this.normativeService.removeOneNormative(id);
   }
 
   @Delete("/remove/normative")
-  removeManyNormative(
-    @Query() query: { ids: string }
-  ) {
+  removeManyNormative(@Query() query: { ids: string }) {
     const {ids} = query;
     return this.normativeService.removeManyNormative(ids);
-  }
-
-  @Get("/find/design-documents")
-  findAllDesignDocuments(
-    @Query()
-    query: {
-      parrentTarget: string;
-      parrentId: string;
-    }
-  ) {
-    const { parrentTarget, parrentId } = query;
-    return this.service.findAllDesignDocuments(parrentTarget, parrentId);
-  }
-
-  @Get("/find/design-document/:id")
-  findOneDesignDocument(@Param("id") id: string) {
-    return this.service.findOneDesignDocument(+id);
-  }
-
-  // @Get("/find:id")
-  // findOne(@Param("id") id: string) {
-  //   return this.service.findOne(id);
-  // }
-
-  // @Patch("/edit:id")
-  // update(
-  //   @Param("id") id: string,
-  //   @Query() query: { target: string },
-  //   @Body() dto: UpdateFileStorageDto
-  // ) {
-  //   const { target } = query;
-  //   return this.service.update(id, target, dto);
-  // }
-
-  @Delete("remove/design-document/:id")
-  remove(@Param("id") id: string) {
-    return this.service.deleteDesignDocument(id);
   }
 }

@@ -2,7 +2,6 @@ import {createRef, FC, useState} from 'react';
 import {Button, Divider, Form, Input, notification, Space, Switch, Typography, Upload} from "antd";
 import {UploadOutlined} from "@ant-design/icons";
 import {FormInstance} from "antd/es/form";
-import {createNormative} from "../../../file-storage/api/file-storage.api";
 import {useActions} from "../../../../hooks";
 import type {NormativeView} from "../../../../../../server/common/types/file-storage";
 import {FormActions, setFilePath, setUrl} from "../../../main";
@@ -220,7 +219,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
         autoSize={{minRows: 4}}
         className="text-secondary"
         style={{width: 240}}
-        placeholder="Примечание"
+        placeholder="Наименование"
       />
     </Item>
   );

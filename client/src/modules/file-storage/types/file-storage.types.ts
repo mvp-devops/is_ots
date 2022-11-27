@@ -1,4 +1,4 @@
-import { DesignDocumentView } from "../../../../../server/common/types/file-storage";
+import {DesignDocumentView, NormativeView} from "../../../../../server/common/types/file-storage";
 
 export enum ActionTypes {
   GET_ALL_ITEMS_SUCCESS = "GET_ALL_ITEMS_SUCCESS",
@@ -26,6 +26,29 @@ export enum ActionTypes {
 
   SET_CURRENT_DOCUMENT = "SET_CURRENT_DOCUMENT",
   SET_CHECKED_DOCUMENTS = "SET_CHECKED_DOCUMENTS",
+
+  /* DESIGN-DOCUMENT */
+  GET_ALL_DESIGN_DOCUMENT = "GET_ALL_DESIGN_DOCUMENT",
+  GET_ALL_DESIGN_DOCUMENT_SUCCESS = "GET_ALL_DESIGN_DOCUMENT_SUCCESS",
+  GET_ALL_DESIGN_DOCUMENT_ERROR = "GET_ALL_DESIGN_DOCUMENT_ERROR",
+  GET_ONE_DESIGN_DOCUMENT = "GET_ONE_DESIGN_DOCUMENT",
+  GET_ONE_DESIGN_DOCUMENT_SUCCESS = "GET_ONE_DESIGN_DOCUMENT_SUCCESS",
+  GET_ONE_DESIGN_DOCUMENT_ERROR = "GET_ONE_DESIGN_DOCUMENT_ERROR",
+  POST_MANY_DESIGN_DOCUMENT = "POST_MANY_DESIGN_DOCUMENT",
+  POST_MANY_DESIGN_DOCUMENT_SUCCESS = "POST_MANY_DESIGN_DOCUMENT_SUCCESS",
+  POST_MANY_DESIGN_DOCUMENT_ERROR = "POST_MANY_DESIGN_DOCUMENT_ERROR",
+  POST_ONE_DESIGN_DOCUMENT = "POST_ONE_DESIGN_DOCUMENT",
+  POST_ONE_DESIGN_DOCUMENT_SUCCESS = "POST_ONE_DESIGN_DOCUMENT_SUCCESS",
+  POST_ONE_DESIGN_DOCUMENT_ERROR = "POST_ONE_DESIGN_DOCUMENT_ERROR",
+  UPDATE_ONE_DESIGN_DOCUMENT = "UPDATE_ONE_DESIGN_DOCUMENT",
+  UPDATE_ONE_DESIGN_DOCUMENT_SUCCESS = "UPDATE_ONE_DESIGN_DOCUMENT_SUCCESS",
+  UPDATE_ONE_DESIGN_DOCUMENT_ERROR = "UPDATE_ONE_DESIGN_DOCUMENT_ERROR",
+  DELETE_ONE_DESIGN_DOCUMENT = "DELETE_ONE_DESIGN_DOCUMENT",
+  DELETE_ONE_DESIGN_DOCUMENT_SUCCESS = "DELETE_ONE_DESIGN_DOCUMENT_SUCCESS",
+  DELETE_ONE_DESIGN_DOCUMENT_ERROR = "DELETE_ONE_DESIGN_DOCUMENT_ERROR",
+  DELETE_MANY_DESIGN_DOCUMENT = "DELETE_MANY_DESIGN_DOCUMENT",
+  DELETE_MANY_DESIGN_DOCUMENT_SUCCESS = "DELETE_MANY_DESIGN_DOCUMENT_SUCCESS",
+  DELETE_MANY_DESIGN_DOCUMENT_ERROR = "DELETE_MANY_DESIGN_DOCUMENT_ERROR",
 }
 
 export interface EssenceState {
@@ -113,6 +136,92 @@ interface SetCheckedDocumentsAction {
   payload: DesignDocumentView[];
 }
 
+/* DESIGN-DOCUMENT */
+
+interface GetAllDesignDocumentAction {
+  type: ActionTypes.GET_ALL_DESIGN_DOCUMENT;
+}
+interface GetAllDesignDocumentSuccessAction {
+  type: ActionTypes.GET_ALL_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView[];
+}
+interface GetAllDesignDocumentErrorAction {
+  type: ActionTypes.GET_ALL_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface GetOneDesignDocumentAction {
+  type: ActionTypes.GET_ONE_DESIGN_DOCUMENT;
+}
+interface GetOneDesignDocumentSuccessAction {
+  type: ActionTypes.GET_ONE_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView;
+}
+interface GetOneDesignDocumentErrorAction {
+  type: ActionTypes.GET_ONE_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface PostOneDesignDocumentAction {
+  type: ActionTypes.POST_ONE_DESIGN_DOCUMENT;
+}
+interface PostOneDesignDocumentSuccessAction {
+  type: ActionTypes.POST_ONE_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView[];
+}
+interface PostOneDesignDocumentErrorAction {
+  type: ActionTypes.POST_ONE_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface PostManyDesignDocumentAction {
+  type: ActionTypes.POST_MANY_DESIGN_DOCUMENT;
+}
+interface PostManyDesignDocumentSuccessAction {
+  type: ActionTypes.POST_MANY_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView[];
+}
+interface PostManyDesignDocumentErrorAction {
+  type: ActionTypes.POST_MANY_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface UpdateOneDesignDocumentAction {
+  type: ActionTypes.UPDATE_ONE_DESIGN_DOCUMENT;
+}
+interface UpdateOneDesignDocumentSuccessAction {
+  type: ActionTypes.UPDATE_ONE_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView;
+}
+interface UpdateOneDesignDocumentErrorAction {
+  type: ActionTypes.UPDATE_ONE_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface DeleteOneDesignDocumentAction {
+  type: ActionTypes.DELETE_ONE_DESIGN_DOCUMENT;
+}
+interface DeleteOneDesignDocumentSuccessAction {
+  type: ActionTypes.DELETE_ONE_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView;
+}
+interface DeleteOneDesignDocumentErrorAction {
+  type: ActionTypes.DELETE_ONE_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
+interface DeleteManyDesignDocumentAction {
+  type: ActionTypes.DELETE_MANY_DESIGN_DOCUMENT;
+}
+interface DeleteManyDesignDocumentSuccessAction {
+  type: ActionTypes.DELETE_MANY_DESIGN_DOCUMENT_SUCCESS;
+  payload: DesignDocumentView[];
+}
+interface DeleteManyDesignDocumentErrorAction {
+  type: ActionTypes.DELETE_MANY_DESIGN_DOCUMENT_ERROR;
+  payload: string;
+}
+
 export type EssenceAction =
   | GetAllItemsAction
   | GetAllItemsSuccessAction
@@ -132,4 +241,27 @@ export type EssenceAction =
   | SetPageAction
   | SetLimitAction
   | SetCurrentDocumentAction
-  | SetCheckedDocumentsAction;
+  | SetCheckedDocumentsAction
+/* DESIGN-DOCUMENT */
+  /* NORMATIVE */
+  | GetAllDesignDocumentAction
+  | GetAllDesignDocumentSuccessAction
+  | GetAllDesignDocumentErrorAction
+  |GetOneDesignDocumentAction
+  | GetOneDesignDocumentSuccessAction
+  | GetOneDesignDocumentErrorAction
+  | PostOneDesignDocumentAction
+  | PostOneDesignDocumentSuccessAction
+  | PostOneDesignDocumentErrorAction
+  | PostManyDesignDocumentAction
+  | PostManyDesignDocumentSuccessAction
+  | PostManyDesignDocumentErrorAction
+  | UpdateOneDesignDocumentAction
+  | UpdateOneDesignDocumentSuccessAction
+  | UpdateOneDesignDocumentErrorAction
+  | DeleteOneDesignDocumentAction
+  | DeleteOneDesignDocumentSuccessAction
+  | DeleteOneDesignDocumentErrorAction
+  | DeleteManyDesignDocumentAction
+  | DeleteManyDesignDocumentSuccessAction
+  | DeleteManyDesignDocumentErrorAction

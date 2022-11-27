@@ -46,41 +46,7 @@ const setFormData = (item: DesignDocumentCreateOrUpdateAttrs): FormData => {
 
 //TODO: создать сервис по загрузке нормативных документов
 
-// interface NormativeCreateOrUpdateAttrs {
-//   title?: string;
-//   code?: string;
-//   revision?: string;
-//   description?: string;
-//   descriptor?: File;
-//   document?: File;
-//   documents?: File[]
-// }
 
-export const createNormative = async (item: any): Promise<NormativeView[]> => {
-  const url = setUrl(`${baseUrl}/add/normative`);
-
-  const {multiple, code, title, revision, description, document, descriptor, documents} = item;
-
-  const formData = new FormData();
-  multiple ? formData.append("multiple", multiple.toString())
-    : formData.append("multiple", "false")
-  code && formData.append("code", code);
-  title && formData.append("title", title);
-  revision && formData.append("revision", revision)
-  description && formData.append("description", description)
-  document && formData.append("document", document)
-  descriptor && formData.append("descriptor", descriptor);
-
-if(documents) {
-  for( let i = 0, len = documents.length; i < len; i++){
-    const document = documents[i].originFileObj;
-    formData.append('documents', document)
-  }
-}
-
-  const { data } = await axios.post<NormativeView[]>(url, formData);
-  return data;
-};
 
 export const findAllNormatives = async (): Promise<any[]> => {
   const url = setUrl(`${baseUrl}/find/normative/all`);
@@ -119,47 +85,6 @@ export const createDesignDocuments = async (
   const items: DesignDocumentView[] = [];
   return items;
 };
-
-
-//   export const createManyEssences = async (
-//     items: DesignDocumentCommentCreationAttrs[]
-//   ): Promise<DesignDocumentCommentView[]> => {
-//     const url = setUrl(`${baseUrl}/add/many`);
-//     const { data } = await axios.post<DesignDocumentCommentView[]>(url, items);
-//     return data;
-//   };
-
-//   export const updateOneEssence = async (
-//     id: string,
-//     item: DesignDocumentCommentCreationAttrs
-//   ): Promise<DesignDocumentCommentView> => {
-//     const url = setUrl(`${baseUrl}/edit/${id}`);
-//     const { data } = await axios.put<DesignDocumentCommentView>(url, item);
-
-//     return data;
-//   };
-
-//   export const deleteOneEssence = async (
-//     id: string
-//   ): Promise<DesignDocumentCommentView> => {
-//     const url = setUrl(`${baseUrl}/remove/${id}`);
-//     const { data } = await axios.delete<DesignDocumentCommentView>(url);
-
-//     return data;
-//   };
-
-//   export const getOneItem = async (
-//     target: string,
-//     id: string
-//   ): Promise<DesignDocumentCommentView> => {
-//     const url = setUrl(`${baseUrl}/find/${id}`);
-
-//     const { data } = await axios.get<DesignDocumentCommentView>(url, {
-//       params: { target },
-//     });
-
-//     return data;
-//   };
 
 export const getAllEssences = async (
   parrentTarget: string,

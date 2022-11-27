@@ -180,7 +180,7 @@ export class NewFileStorageService {
   }
 
   generateFolderName = (prefix: string, index?: number): string => {
-    // регулярное выражение ждя исключения запрещенных символов
+    // регулярное выражение для исключения запрещенных символов
     const regex = '^(?!><:"/\\\\\\|\\?.*$)(.*)$';
     const pref = prefix.replace(regex, "-");
 

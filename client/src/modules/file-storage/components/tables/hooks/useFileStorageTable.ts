@@ -11,7 +11,7 @@ export const useFileStorageTable = () => {
   );
 
   const {
-    getAllDesignDocuments,
+    setDesignDocuments,
     setCurrentDocument,
     setCheckedDocuments,
     setDocumentationView,
@@ -33,7 +33,7 @@ export const useFileStorageTable = () => {
   useEffect(() => {
     documentationView &&
       currentItem &&
-      getAllDesignDocuments(currentItem.target, currentItem.id);
+    setDesignDocuments(currentItem.target, currentItem.id);
   }, [documentationView, currentItem, formVisible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
@@ -85,7 +85,7 @@ export const useFileStorageTable = () => {
     onSearch,
     searchValue,
     dataSource,
-    getAllDesignDocuments,
+
     setCurrentDocument,
     setCheckedDocuments,
     setDocumentationView,

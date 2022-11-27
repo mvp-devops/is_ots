@@ -18,7 +18,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const addActionsFlag =
     actionType === FormActions.ADD ||
     actionType === FormActions.ADD_CHILD ||
-    actionType === FormActions.ADD_DOCUMENT ||
+    // actionType === FormActions.ADD_DOCUMENT ||
     actionType === FormActions.ADD_COMMENT ||
     actionType === FormActions.ADD_DICTIONARY_ITEM ||
     actionType === FormActions.ADD_EQUIPMENT;
@@ -26,7 +26,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const editActionsFlag =
     actionType === FormActions.EDIT ||
     actionType === FormActions.EDIT_CHILD ||
-    actionType === FormActions.EDIT_DOCUMENT ||
+    // actionType === FormActions.EDIT_DOCUMENT ||
     actionType === FormActions.EDIT_COMMENT ||
     actionType === FormActions.EDIT_DICTIONARY_ITEM ||
     actionType === FormActions.EDIT_EQUIPMENT;
@@ -34,10 +34,16 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const removeActionsFlag =
     actionType === FormActions.REMOVE ||
     actionType === FormActions.REMOVE_CHILD ||
-    actionType === FormActions.REMOVE_DOCUMENT ||
+    // actionType === FormActions.REMOVE_DOCUMENT ||
     actionType === FormActions.REMOVE_COMMENT ||
     actionType === FormActions.REMOVE_DICTIONARY_ITEM ||
     actionType === FormActions.REMOVE_EQUIPMENT;
+
+  const documentForm =
+    actionType === FormActions.ADD_DOCUMENT ||
+    actionType === FormActions.EDIT_DOCUMENT ||
+    actionType === FormActions.ADD_NORMATIVE ||
+    actionType === FormActions.EDIT_NORMATIVE
 
   const containerWidth =
     actionType === FormActions.ADD_COMMENT ||
@@ -54,7 +60,17 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       ? 1000
       : target === "monitoring"
       ? 1200
-      : actionType === FormActions.REPORT ? 600 : 1200;
+      : actionType === FormActions.REPORT ? 600 : documentForm ? 1100 : 1200;
+
+  let title = "";
+
+  switch (actionType) {
+    case FormActions.ADD_DOCUMENT: title = "Добавление документации"; break;
+    case FormActions.EDIT_DOCUMENT: title = "Редактирование документа"; break;
+    case FormActions.ADD_NORMATIVE: title = "Добавление нормативной документации"; break
+    case FormActions.EDIT_NORMATIVE: title = "Редактирование нормативного документа"; break;
+    default: title = "Другое"; break;
+  }
 
   return (
     <Modal
@@ -73,7 +89,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
               ? "Чек-лист"
               : actionType === FormActions.ADD_USER
               ? "Регистрация пользователя"
-              : actionType === FormActions.REPORT ? "Отчет" : "Другое"}
+              : actionType === FormActions.REPORT ? "Отчет" : title}
           </Text>
         </Space>
       }

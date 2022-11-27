@@ -2,7 +2,6 @@ import {Button, Divider, Form, Input, notification, Select, Space, Spin, Switch,
 import {createRef, useEffect, useLayoutEffect, useState} from "react";
 import {FormInstance} from "antd/es/form";
 import {useActions, useTypedSelector} from "../../../hooks";
-import {createNormative} from "../../file-storage/api/file-storage.api";
 import {FormActions, months} from "../../main";
 import {getAllItems as getNSIList, NSIView} from "../../regulatory-reference-information";
 import {ExclamationCircleOutlined, LoadingOutlined } from "@ant-design/icons";
@@ -67,9 +66,6 @@ const MonthReportForm = () => {
     onReset()
   }
 
-
-
-  useEffect(() => console.log("load: ", loading), [loading])
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);

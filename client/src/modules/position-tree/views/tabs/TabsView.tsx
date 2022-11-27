@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import { useEffect } from "react";
 import { useActions, useTypedSelector } from "../../../../hooks";
-import { DesignDocumentTable } from "../../../file-storage";
+import  DesignDocumentTable  from "../../../file-storage/components/tables/design-document/DesignDocumentTable";
 import PositionTreeTable from "../../components/table/PositionTreeTable";
 import StatisticPage from "../StatisticPage";
 import MonitoringPageView from "../MonitoringPageView";

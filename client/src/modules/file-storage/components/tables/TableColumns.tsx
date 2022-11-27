@@ -13,13 +13,21 @@ import { useFileStorage } from "../../hooks";
 import { setTableColumnFilters } from "./table.settings";
 import { useFileStorageTable } from "./hooks";
 import { positionSorter, stringSorter } from "../../../main/utils/main.utils";
+import {useActions} from "../../../../hooks";
 
 const { Text } = Typography;
 
 const TableColumns = (): TableColumnsType<DesignDocumentView> => {
-  const { setFormVisible, setActionType, designDocuments } = useFileStorage();
+  const { designDocuments } = useFileStorage();
 
   const { setCollectiveCheckSheetView } = useFileStorageTable();
+
+  const { setActionType, setFormVisible, removeNormative } = useActions();
+
+  const showForm = (action: string) => {
+    setActionType(action);
+    setFormVisible(true);
+  }
 
   const columns: TableColumnsType<DesignDocumentView> = [];
 
@@ -197,7 +205,7 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
   const actionsColumn: ColumnType<DesignDocumentView> = {
     title: "Действия",
     key: "operation",
-    render: (_blank, record) => (
+    render: (_blank, {id}) => (
       <Space size="middle">
         <MessageOutlined
           title="Добавить замечание"
@@ -210,19 +218,13 @@ const TableColumns = (): TableColumnsType<DesignDocumentView> => {
         <EditOutlined
           title="Редактировать информацию"
           className="text-secondary"
-          onClick={() => {
-            setActionType(FormActions.EDIT_DOCUMENT);
-            setFormVisible(true);
-          }}
+          onClick={() => showForm(FormActions.EDIT_DOCUMENT)}
         />
-        <DeleteOutlined
-          title="Удалить документ"
-          className="text-danger"
-          onClick={() => {
-            setActionType(FormActions.REMOVE_DOCUMENT);
-            setFormVisible(true);
-          }}
-        />
+        {/*<DeleteOutlined*/}
+        {/*  title="Удалить документ"*/}
+        {/*  className="text-danger"*/}
+        {/*  onClick={() => removeDesignDocument(id, target)}*/}
+        {/*/>*/}
       </Space>
     ),
   };

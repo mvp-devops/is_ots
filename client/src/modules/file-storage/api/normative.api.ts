@@ -3,6 +3,7 @@ import axios from "axios";
 import {NormativeView, NormativeCreateOrUpdateAttrs} from "../../../../../server/common/types/file-storage";
 
 const baseUrl = "api/file-storage";
+const extUrl = "normative";
 
 interface documentFormData {
   multiple: boolean;
@@ -41,39 +42,39 @@ const setFormData = (item: documentFormData): FormData => {
 }
 
 export const findAllNormative = async (): Promise<NormativeView[]> => {
-  const url = setUrl(`${baseUrl}/find/normative/all`);
+  const url = setUrl(`${baseUrl}/find/${extUrl}`);
   const { data } = await axios.get<NormativeView[]>(url);
   return data;
 };
 
 export const findOneNormative = async (id: string): Promise<NormativeView> => {
-  const url = setUrl(`${baseUrl}/find/normative/${id}`);
+  const url = setUrl(`${baseUrl}/find/${extUrl}/${id}`);
   const { data } = await axios.get<NormativeView>(url);
   return data;
 };
 
 export const createNormative = async (item: documentFormData): Promise<NormativeView[]> => {
-  const url = setUrl(`${baseUrl}/add/normative`);
+  const url = setUrl(`${baseUrl}/add/${extUrl}`);
   const formData = setFormData(item);
   const { data } = await axios.post<NormativeView[]>(url, formData);
   return data;
 };
 
 export const editNormative = async (item: documentFormData, id: string):Promise<NormativeView> => {
-  const url = setUrl(`${baseUrl}/edit/normative/${id}`);
+  const url = setUrl(`${baseUrl}/edit/${extUrl}/${id}`);
 const formData = setFormData(item);
   const { data } = await axios.put<NormativeView>(url, formData);
   return data;
 }
 
 export const deleteNormative = async (id?: string, ids?: string[]): Promise<NormativeView> => {
-  const url = id ? setUrl(`${baseUrl}/remove/normative/${id}`) : setUrl(`${baseUrl}/remove/normative/many`);
+  const url = id ? setUrl(`${baseUrl}/remove/${extUrl}/${id}`) : setUrl(`${baseUrl}/remove/${extUrl}`);
   const { data } = await axios.delete<NormativeView>(url, {params: ids});
   return data;
 };
 
 export const deleteManyNormative = async (ids: string[]): Promise<NormativeView[]> => {
-  const url = setUrl(`${baseUrl}/remove/normative`);
+  const url = setUrl(`${baseUrl}/remove/${extUrl}`);
   const { data } = await axios.delete<NormativeView[]>(url, {params: {ids: JSON.stringify(ids)}});
   return data;
 };

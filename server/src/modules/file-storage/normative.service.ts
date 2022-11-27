@@ -50,7 +50,7 @@ export class NormativeService {
       fileName,
       fileType,
       createdAt: formattedDate(createdAt, true),
-      updatedAt: formattedDate(createdAt, true)
+      updatedAt: formattedDate(updatedAt, true)
     }
   };
 
@@ -212,7 +212,7 @@ export class NormativeService {
         const oldFile = this.fileStorageService.getPath([filePath, oldFileName]);
 
         if(document) {
-          // this.fileStorageService.removeDirectoryOrFile(oldFile);
+          this.fileStorageService.removeDirectoryOrFile(oldFile);
           const {fileName, extName} = this.fileStorageService.fileUpload(this.path, document);
           doc.fileName = fileName;
           doc.fileType = extName;

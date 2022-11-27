@@ -30,7 +30,7 @@ export enum ActionTypes {
   USER_REGISTRATION = "USER_REGISTRATION",
   SET_CURRENT_ITEM = "SET_CURRENT_ITEM",
   SET_DICTIONARY_TARGET = "SET_DICTIONARY_TARGET",
-//NORMATIVE
+/* NORMATIVE */
   GET_ALL_NORMATIVE = "GET_ALL_NORMATIVE",
   GET_ALL_NORMATIVE_SUCCESS = "GET_ALL_NORMATIVE_SUCCESS",
   GET_ALL_NORMATIVE_ERROR = "GET_ALL_NORMATIVE_ERROR",
@@ -121,6 +121,8 @@ interface DeleteOneItemErrorAction {
   type: ActionTypes.DELETE_ONE_ITEM_ERROR;
   payload: string;
 }
+
+/* NORMATIVE */
 
 interface GetAllNormativeAction {
   type: ActionTypes.GET_ALL_NORMATIVE;
@@ -225,7 +227,7 @@ export type EssenceAction =
   | DeleteOneItemSuccessAction
   | DeleteOneItemErrorAction
   | UserRegistrationAction
-  //NORMATIVE
+  /* NORMATIVE */
 | GetAllNormativeAction
 | GetAllNormativeSuccessAction
 | GetAllNormativeErrorAction

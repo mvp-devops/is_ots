@@ -8,7 +8,7 @@ import {
 
 import { DesignDocumentView } from "../../types";
 import { FormActions, tableLocale } from "../../../main";
-import { DesignDocumentForm } from "../forms";
+import  DesignDocumentForm from "../forms/design-document";
 import { ModalContainer } from "../../../../components";
 import { useFileStorageTable } from "./hooks";
 import TableColumns from "./TableColumns";
@@ -19,6 +19,8 @@ import {
   CommentForm,
   useCommentAccounting,
 } from "../../../comment-accounting";
+import {useTypedSelector} from "../../../../hooks";
+import {useState} from "react";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -40,12 +42,16 @@ const DesignDocumentTable = () => {
     setCollectiveCheckSheetView,
   } = useFileStorageTable();
 
+  const [currentRow, setCurrentRow] = useState<DesignDocumentView>();
+  const [selected, setSelected] = useState([]);
+
   const { renderCommentAccountingFormFlag } = useCommentAccounting();
+
 
   const columns = TableColumns();
 
   const formRender = renderFileStorageFormFlag && (
-    <ModalContainer child={<DesignDocumentForm />} />
+    <ModalContainer child={<DesignDocumentForm editRow={actionType === FormActions.EDIT_DOCUMENT && currentRow}/>} />
   );
 
   const addCommentForm = renderCommentAccountingFormFlag && (
@@ -100,11 +106,12 @@ const DesignDocumentTable = () => {
                 selectedRows: DesignDocumentView[]
               ) => {
                 setCheckedDocuments(selectedRows);
+                setSelected(selectedRowKeys)
               },
             }}
             onRow={(record, rowIndex) => {
               return {
-                onMouseEnter: (event) => setCurrentDocument(record),
+                onMouseEnter: (event) => setCurrentRow(record),
               };
             }}
             // title={() => <TableTitle />}

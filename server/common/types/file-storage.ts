@@ -63,7 +63,7 @@ export interface LogoCreationAttrs {
 
 
 
-export interface DesignDocumentCreateOrUpdateAttrs {
+export interface DesignDocumentCreateOrUpdateAttrs extends NormativeCreateOrUpdateAttrs{
   projectId: string | number | null;
   unitId: string | number | null;
   subUnitId: string | number | null;
@@ -75,14 +75,7 @@ export interface DesignDocumentCreateOrUpdateAttrs {
   sloeId: string | number | null;
   cableLogId: string | number | null;
   monitoringId: string | number | null;
-  code: string;
-  title: string;
-  revision: string;
-  description: string;
-  filePath: string;
-  fileName: string;
-  fileType: string;
-  file: any;
+  file?: any;
 }
 
 export interface OperationalDocumentCreateOrUpdateAttrs {
