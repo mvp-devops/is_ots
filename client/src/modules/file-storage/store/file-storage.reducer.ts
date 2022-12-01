@@ -28,7 +28,11 @@ export const fileStorageReducer = (
   let newDesignDocuments = []
   switch (action.type) {
     case ActionTypes.GET_ALL_ITEMS:
-      return state;
+      return {
+        ...state,
+        loading: true,
+        error: null
+      };
     case ActionTypes.GET_ALL_ITEMS_SUCCESS:
       return {
         ...state,

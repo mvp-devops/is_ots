@@ -75,7 +75,7 @@ export const usePositionTreeTable = () => {
       ? "проект"
       : childTarget === "unit"
       ? "объект строительства"
-      : "объект/установку";
+      : "объект/установку"
 
   useEffect(() => {
     if (currentItem && target) {

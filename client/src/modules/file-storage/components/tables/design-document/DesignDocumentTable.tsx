@@ -34,11 +34,11 @@ const DesignDocumentTable = () => {
 
   const {setDesignDocuments, setCheckedDocuments, setCollectiveCheckSheetView, setCurrentDocument} = useActions();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setDesignDocuments(target, id)
-  }, []);
+  }, [id]);
 
-  const {designDocuments: dataSource, currentDesignDocument} = useTypedSelector(state => state.fileStorage)
+  const {loading: loadingData, designDocuments: dataSource, currentDesignDocument} = useTypedSelector(state => state.fileStorage)
 
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const DesignDocumentTable = () => {
 
   const columns = TableColumns(dataSource);
 
-  const loading = dataSource.length === 0 && {indicator: <LoadingOutlined style={{ fontSize: 30, marginTop: 10 }} spin />};
+  const loading = loadingData && {indicator: <LoadingOutlined style={{ fontSize: 30, marginTop: 10 }} spin />};
 
   const pagination = (pageSize: number, length: number) => {
     const showSizeChanger = length <= pageSize ? false : true;

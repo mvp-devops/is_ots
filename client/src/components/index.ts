@@ -8,6 +8,7 @@ import FormItemUIComponent from "./FormItemUIComponent";
 import ModalContainer from "./ModalContainer";
 import DeleteForm from "./DeleteForm";
 import DeleteDialog from "./DeleteDialog";
+import NotFoundComponent from "./NotFoundComponent"
 
 export {
   SelectUIComponent,
@@ -20,4 +21,5 @@ export {
   ModalContainer,
   DeleteForm,
   DeleteDialog,
+  NotFoundComponent
 };

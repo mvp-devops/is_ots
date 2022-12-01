@@ -39,11 +39,17 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
     actionType === FormActions.REMOVE_DICTIONARY_ITEM ||
     actionType === FormActions.REMOVE_EQUIPMENT;
 
-  const documentForm =
+  /** NORMATIVE OR DESIGN-DOCUMENT FORM ACTIONS */
+  const documentFormActions =
     actionType === FormActions.ADD_DOCUMENT ||
     actionType === FormActions.EDIT_DOCUMENT ||
     actionType === FormActions.ADD_NORMATIVE ||
     actionType === FormActions.EDIT_NORMATIVE
+
+  /** QUESTIONNAIRE FORM ACTIONS */
+  const questionnaireFormActions =
+    actionType === FormActions.CREATE_NEW_QUESTIONNAIRE ||
+    actionType === FormActions.CREATE_QUESTIONNAIRE
 
   const containerWidth =
     actionType === FormActions.ADD_COMMENT ||
@@ -60,15 +66,17 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       ? 1000
       : target === "monitoring"
       ? 1200
-      : actionType === FormActions.REPORT ? 600 : documentForm ? 1100 : 1200;
+      : actionType === FormActions.REPORT ? 600 : documentFormActions ? 1100 : questionnaireFormActions ? 1400 : 1200;
 
   let title = "";
 
   switch (actionType) {
     case FormActions.ADD_DOCUMENT: title = "Добавление документации"; break;
     case FormActions.EDIT_DOCUMENT: title = "Редактирование документа"; break;
-    case FormActions.ADD_NORMATIVE: title = "Добавление нормативной документации"; break
+    case FormActions.ADD_NORMATIVE: title = "Добавление нормативной документации"; break;
     case FormActions.EDIT_NORMATIVE: title = "Редактирование нормативного документа"; break;
+    case FormActions.CREATE_QUESTIONNAIRE:
+    case FormActions.CREATE_NEW_QUESTIONNAIRE: title = "Опросный лист"; break;
     default: title = "Другое"; break;
   }
 
