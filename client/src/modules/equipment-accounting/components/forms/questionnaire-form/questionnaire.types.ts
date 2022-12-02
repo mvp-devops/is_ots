@@ -17,31 +17,34 @@ export interface QuestionnaireFormData {
   measureType?: string;
   measureRangeMax: number;
   measureRangeMin: number;
-
-  //1-2
   tempMeasureAreaMin?: number;
   tempMeasureAreaMax?: number;
   pressureMeasureAreaMin?: number;
   pressureMeasureAreaMax?: number;
+  sensorLength?: number; //Длина чувствительного элемента / глубина погружения защитной гильзы, мм
   warmingUp?: number;
   responseTime?: number;
-
-//3 для газика и температуры выбрать флажки
-  phasePartitionControl?: boolean;
-  particulateMatter?: boolean;
   valveBlock?: boolean;
-
-  // для расхода 4-5 еще 2, для уровня от раздела фаз: либо 4-5, либо 4,5,6,7
-  density?: number;
-  viscosity?: number;
-//для давления 4-5 еще 2
   valveBlockType?: string;
   airBleedValve?: boolean;
-  //для газиков 4-5 еще 2
+  connectionScheme?: string;
+  settingRange?: string;
+  sensorLDiameter?: number;
+  protectiveSleeve?: boolean;
+  protectiveSleeveMaterial?: string; //Материал защитной гильзы
   lowerThreshold?: number;
   upperThreshold?: number;
-
-
+  fault?: boolean; //Выходное реле "Неисправность"
+  registrationEvents?: boolean; //Регистрация событий в энергонезависимой памяти
+  adjustment?: boolean; // Требуется настройка электроники при замене сенсора
+  density_1?: number;
+  density_2?: number;
+  viscosity_1?: number;
+  viscosity_2?: number;
+  conductivity?: number;
+  particulateMatter?: boolean;
+  corrosiveImpurities?: number;
+  phasePartitionControl?: boolean;
   corpsMaterial: string;
   protection: string;
   explosionType: string;
@@ -58,29 +61,45 @@ export interface QuestionnaireFormData {
 
 
 
+
+  zeroDrift?: boolean;
+  opticsCleanliness?: boolean;
   connectionType: string;
   connection: string;
 
   outputSignal: string;
-  connectionScheme: string;
   voltage: number;
   hart: boolean;
   hartVersion?: string;
-  internalDiagnostic: boolean;
-  settingRange: string;
-  accuracy: string;
-
   localIndication: boolean;
-
+  internalDiagnostic: boolean;
+  converter?: string;
+  converterType?: string;
+  pipelineDiameter?: number;
+  pipeMaterial?: string;
+  flowMeterDistanceBefore?: number;
+  flowMeterDistanceAfter?: number;
+  flowStraighteners?: boolean;
+  processTurbulence?: boolean;
+  turbulenceCause?: string;
+  selfDiagnostic?: boolean;
+  blockageDiagnostic?: boolean;
+  currentLoopIntegrityDiagnostic?: boolean;
+  accuracy: string;
+  relativeAccuracy?: number;
+  sensorAccuracy?: string;
+  permissible?: number; // Предел допускаемой вариации выходного сигнала, в долях от пределов допускаемой основной
+  ambientPermissible?: number; //Предел допускаемой погрешности от изменения температуры окружающей среды от нормальной на каждые 10 оС, в долях от пределов допускаемой основной погрешности
+  sensorCalibration?: string;
+  verification: boolean;
+  verificationMethod?: string;
   calibrationStamp: boolean;
   mpi: number;
-  selfDiagnostic: boolean;
-  blockageDiagnostic: boolean;
-  currentLoopIntegrityDiagnostic: boolean;
+
 
   cableEntry: string;
   reserveCableEntryStub: string;
-  heating: string;
+  heating: string;  // Обогрев или обогрев оптики для газиков
   thermCase?: string;
   thermBox?: string;
 

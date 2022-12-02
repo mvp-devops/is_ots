@@ -32,19 +32,10 @@ const QuestionnaireFormItems: FC<QuestionnaireFormItemsProps> = ({
                                                                    connectionTypeId
                                                                  }) => {
 
-  const [hart, setHart] = useState(false);
   const [heatingValue, setHeatingValue] = useState("Не предусмотрено");
 
-  const toggleCheckBox = (e: CheckboxChangeEvent, setValue) => {
-    setValue(!e.target.checked);
-  };
 
-  const {tag, fda, accuracy, parameter, subUnit, title, mpi, lifeTime} = data
 
-  //FIXME: получать с сервера
-  const subUnitsList = [];
-  const fdaList = [];
-  const facilityTypesList = []
 
   const selectProps: SelectProps = {
     size: "small",
@@ -79,67 +70,6 @@ const QuestionnaireFormItems: FC<QuestionnaireFormItemsProps> = ({
     }
   }
 
-
-
-
-
-  /** Тип присоединения к тех. процессу */
-    //FIXME: переделать в radio-buttons-group?
-  const connectionTypeFormField = (
-      <Item
-        labelCol={{span: 10}}
-        wrapperCol={{span: 14}}
-        className="ms-2 mb-0"
-        // style={{width: 256}}
-        {...itemProps("Тип присоединения к тех. процессу", "connectionType")}
-      >
-        <Select
-          {...selectProps}
-          onChange={(value) => onConnectionTypeChange(value)}
-        >
-          {connectionType.map(({id, title, value}) => {
-            return (
-              <Option key={id} title={title} value={value} className="text-secondary">
-                {title}
-              </Option>
-            );
-          })}
-        </Select>
-      </Item>
-    );
-
-  /** Соединение с тех. процессом
-   * Список связан с полем connectionType
-   */
-  const connectionFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      // style={{width: 256}}
-      {...itemProps("Соединение с тех. процессом", "connection")}
-    >
-      <Select
-        {...selectProps}
-        onChange={(value) => onConnectionTypeChange(value)}
-      >
-        {connection.filter(item => item.connectionTypeId === connectionTypeId).map(({id, title, value}) => {
-          return (
-            <Option key={id} title={title} value={value} className="text-secondary">
-              {title}
-            </Option>
-          );
-        })}
-      </Select>
-    </Item>
-  );
-
-
-
-
-
-
-
   /** Внутренняя диагностика */
   const internalDiagnosticFormField = (
     <Item
@@ -156,61 +86,7 @@ const QuestionnaireFormItems: FC<QuestionnaireFormItemsProps> = ({
 
 
 
-  /** Предел допускаемой основной приведенной погрешности, %
-   * Если ОЛ формируется по существующее единице оборудования данные получены от сервера и поле нередактируемо
-   * Если формируется новый ОЛ - ручной ввод
-   */
-  const accuracyFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      initialValue={accuracy}
-      // style={{width: 256}}
-      {...itemProps("мин.", "accuracy")}
-    >
-      <Input
-        {...inputProps("number")}
-        disabled={!!accuracy}
-      />
-    </Item>
-  );
 
-
-
-
-
-
-
-  /** Штамп заводской калибровки */
-  const calibrationStampFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      valuePropName="checked"
-      // style={{width: 256}}
-      {...itemProps("Штамп заводской калибровки", "calibrationStamp")}
-    >
-      <Checkbox />
-    </Item>
-  );
-
-  /** Межповерочный интервал, мес. */
-  const mpiFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      initialValue={mpi}
-      // style={{width: 256}}
-      {...itemProps("Межповерочный интервал, мес.", "mpi")}
-    >
-      <Input
-        {...inputProps("number")}
-      />
-    </Item>
-  );
 
   /** Самодиагностика */
   const selfDiagnosticStampFormField = (

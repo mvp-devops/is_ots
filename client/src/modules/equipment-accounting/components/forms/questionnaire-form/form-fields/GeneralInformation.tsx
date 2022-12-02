@@ -328,14 +328,14 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   return (
     <>
       <Divider className="m-0" orientation="left"><Text type="secondary">Основная информация</Text> </Divider>
-      <Space direction="horizontal">
+      <Space direction="horizontal" >
         <Space direction="vertical" className="d-flex border p-1" style={{width: 666}}>
           {tagFormField}
           {subUnitFormField}
           {fdaFormField}
           {parameterFormField}
         </Space>
-        <Space direction="vertical" className="d-flex border p-1" style={{width: 666}}>
+        <Space direction="vertical" className="d-flex border p-1" style={{width: 666, height: 162}}>
           <Row className="d-flex align-items-center justify-content-between">
             <Col className="text-secondary" span={9} style={{marginLeft: 30}}>
               Температура окружающей среды, ℃:

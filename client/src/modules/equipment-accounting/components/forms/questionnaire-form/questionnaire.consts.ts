@@ -511,74 +511,81 @@ export const measureType = [
     title: "Электроды",
     value: "Электроды"
   },
-
 ]
 
-// {
-//   id: 20,
-//     title: "Отсутствует",
-//   value: "Отсутствует"
-// },
-// {
-//   id: 9,
-//     title: "Pt 50",
-//   value: "Pt 50"
-// },
-// {
-//   id: 9,
-//     title: "Pt 100",
-//   value: "Pt 100"
-// },
-// {
-//   id: 10,
-//     title: "Pt 500",
-//   value: "Pt 500"
-// },
-// {
-//   id: 11,
-//     title: "Pt 1000",
-//   value: "Pt 1000"
-// },
-// {
-//   id: 12,
-//     title: "ТСМ 50М",
-//   value: "ТСМ 50М"
-// },
-// {
-//   id: 13,
-//     title: "ТСМ 100М",
-//   value: "ИТСМ 100М"
-// },
-// {
-//   id: 14,
-//     title: "Ni 1000",
-//   value: "Ni 1000"
-// },
-// {
-//   id: 15,
-//     title: "Платина ТПП",
-//   value: "Платина ТПП"
-// },
-// {
-//   id: 16,
-//     title: "Платина-родий ТПР",
-//   value: "Платина-родий ТПР"
-// },
-// {
-//   id: 17,
-//     title: "Хромель-капель ТХК",
-//   value: "Хромель-капель ТХК"
-// },
-// {
-//   id: 18,
-//     title: "Хромель-алюмель ТХА",
-//   value: "Хромель-алюмель ТХА"
-// },
-// {
-//   id: 19,
-//     title: "Вольфрам-рений ТВР",
-//   value: "Вольфрам-рений ТВР"
-// }
+export const converter = ["Совместно", "Удаленно"];
+
+export const converterTypes = ["Отсутствует", "Интеллектуальный микропроцессорный", "Микропроцессорный", ]
+
+export const sensorCalibration = [
+  {
+  id: 1,
+    title: "Отсутствует",
+  value: "Отсутствует"
+},
+{
+  id: 2,
+    title: "Pt 50",
+  value: "Pt 50"
+},
+{
+  id: 3,
+    title: "Pt 100",
+  value: "Pt 100"
+},
+{
+  id: 4,
+    title: "Pt 500",
+  value: "Pt 500"
+},
+{
+  id: 5,
+    title: "Pt 1000",
+  value: "Pt 1000"
+},
+{
+  id: 6,
+    title: "ТСМ 50М",
+  value: "ТСМ 50М"
+},
+{
+  id: 7,
+    title: "ТСМ 100М",
+  value: "ИТСМ 100М"
+},
+{
+  id: 8,
+    title: "Ni 1000",
+  value: "Ni 1000"
+},
+{
+  id: 9,
+    title: "Платина ТПП",
+  value: "Платина ТПП"
+},
+{
+  id: 10,
+    title: "Платина-родий ТПР",
+  value: "Платина-родий ТПР"
+},
+{
+  id: 11,
+    title: "Хромель-капель ТХК",
+  value: "Хромель-капель ТХК"
+},
+{
+  id: 12,
+    title: "Хромель-алюмель ТХА",
+  value: "Хромель-алюмель ТХА"
+},
+{
+  id: 13,
+    title: "Вольфрам-рений ТВР",
+  value: "Вольфрам-рений ТВР"
+}
+]
+
+export const verificationMethod = ["Проливной", "Беспроливной (имитационный)"]
 
 /* Тип присоединения к тех. процессу */
 export const connectionType = [
@@ -608,115 +615,115 @@ export const connectionType = [
 export const connection = [
   {
     id: 1,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "К1/2 (ГОСТ 6111-52) внутренняя резьба",
     value: "К1/2 (ГОСТ 6111-52) внутренняя резьба"
   },
   {
     id: 2,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "К1/2 (ГОСТ 6111-52) внешняя резьба",
     value: "К1/2 (ГОСТ 6111-52) внешняя резьба"
   },
   {
     id: 3,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "М20х1,5 внешняя резьба",
     value: "М20х1,5 внешняя резьба"
   },
   {
     id: 5,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "1/2 NPT внешняя резьба",
     value: "1/2 NPT внешняя резьба"
   },
   {
     id: 6,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "1/2 NPT внутренняя",
     value: "1/2 NPT внутренняя"
   },
   {
     id: 7,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "1/4 NPT внешняя резьба",
     value: "1/4 NPT внешняя резьба"
   },
   {
     id: 8,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "1/4 NPT внутренняя",
     value: "1/4 NPT внутренняя"
   },
   {
     id: 9,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "G1 внешняя резьба",
     value: "G1 внешняя резьба"
   },
   {
     id: 10,
-    connectionTypeId: 1,
+    connectionTypeId:"Резьбовое",
     title: "G1 внутренняя резьба",
     value: "G1 внутренняя резьба"
   },
   {
     id: 11,
-    connectionTypeId: 1,
+    connectionTypeId: "Резьбовое",
     title: "G2 внутренняя резьба",
     value: "G2 внутренняя резьба"
   },
   {
     id: 12,
-    connectionTypeId: 1,
+    connectionTypeId:"Резьбовое",
     title: "G2 внешняя резьба",
     value: "G2 внешняя резьба"
   },
   {
     id: 13,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Диаметр присоединительного трубопровода DN 50мм",
     value: "Диаметр присоединительного трубопровода DN 50мм"
   },
   {
     id: 14,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Диаметр присоединительного трубопровода DN 80мм",
     value: "Диаметр присоединительного трубопровода DN 80мм"
   },
   {
     id: 15,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 50 см, диаметр трубопровода DN 50мм",
     value: "Длина удлинителя 50 см, диаметр трубопровода DN 50мм"
   },
   {
     id: 16,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 100 см, диаметр трубопровода DN 50мм",
     value: "Длина удлинителя 100 см, диаметр трубопровода DN 50мм"
   },
   {
     id: 17,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 150 см, диаметр трубопровода DN 50мм",
     value: "Длина удлинителя 150 см, диаметр трубопровода DN 50мм"
   },
   {
     id: 18,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 50 см, диаметр трубопровода DN 80мм",
     value: "Длина удлинителя 50 см, диаметр трубопровода DN 80мм"
   },
   {
     id: 19,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 100 см, диаметр трубопровода DN 80мм",
     value: "Длина удлинителя 100 см, диаметр трубопровода DN 80мм"
   },
   {
     id: 20,
-    connectionTypeId: 2,
+    connectionTypeId: "Фланцевое",
     title: "Длина удлинителя 150 см, диаметр трубопровода DN 80мм",
     value: "Длина удлинителя 150 см, диаметр трубопровода DN 80мм"
   },

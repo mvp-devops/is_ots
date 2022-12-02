@@ -30,6 +30,8 @@ import GeneralInformation from "./form-fields/GeneralInformation";
 import PerformanceCharacteristic from "./form-fields/PerformanceCharacteristic";
 import BaseInformation from "./form-fields/BaseInformation";
 import EnvironmentCharacteristic from "./form-fields/EnvironmentCharacteristic";
+import MetrologyCharacteristic from "./form-fields/MetrologyCharacteristic";
+import AdditionallyCharacteristic from "./form-fields/AdditionallyCharacteristic";
 const {Item} = Form;
 const {Text} = Typography;
 const {Option} = Select;
@@ -140,8 +142,7 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
 
 
   const [facilityType, setFacilityType] = useState("");
-  const [valveBlock, setValveBlock] = useState(false);
-  const [hart, setHart] = useState(false);
+
   const [heatingValue, setHeatingValue] = useState("Не предусмотрено");
 
   const toggleCheckBox = (e: CheckboxChangeEvent, setValue) => {
@@ -220,156 +221,6 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
   };
 
 
-  /** FORM FIELDS */
-
-
-
-
-
-  /** Местная индикация */
-  const localIndicationFormField = (
-    <Item
-      labelCol={{span: 22}}
-      // wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      valuePropName="checked"
-      // style={{width: 256}}
-      {...itemProps("Местная индикация", "localIndication")}
-    >
-      <Checkbox />
-    </Item>
-  );
-
-  /** Наличие HART-протокола */
-  const hartFormField = (
-    <Item
-      labelCol={{span: 22}}
-      // wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      valuePropName="checked"
-      // style={{width: 256}}
-      {...itemProps("HART", "hart")}
-    >
-      <Checkbox onChange={(e) => setHart(e.target.checked)}/>
-    </Item>
-  );
-
-  /** Версия HART-протокола */
-  const hartVersionFormField = (
-    <Item
-      labelCol={{span: 18}}
-      // wrapperCol={{span: 4}}
-      className="ms-2 mb-0"
-      initialValue={7.5}
-
-
-      {...itemProps("Версия HART-протокола", "hartVersion")}
-    >
-      <Select
-        {...selectProps}
-        style={{width: 94}}
-      >
-        {hartVersion.map((item, index) => {
-          return (
-            <Option key={index} title={item} value={item} className="text-secondary">
-              {item}
-            </Option>
-          );
-        })}
-      </Select>
-
-    </Item>
-  )
-
-  /** Выходной сигнал */
-  const outputSignalFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      // style={{width: 256}}
-      {...itemProps("Выходной сигнал", "outputSignal")}
-    >
-      <Select
-        {...selectProps}
-      >
-        {outputSignal.map(({id, title, value}) => {
-          return (
-            <Option key={id} title={title} value={value} className="text-secondary">
-              {title}
-            </Option>
-          );
-        })}
-      </Select>
-    </Item>
-  );
-
-  /** Схема подключения вторичного преобразователя */
-  const connectionSchemeFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      // style={{width: 256}}
-      initialValue={"Не предусмотрено"}
-      {...itemProps("Схема подключения втор. преобр.", "connectionScheme")}
-    >
-      <Select
-        {...selectProps}
-
-      >
-        {connectionScheme.map((item, index) => {
-          return (
-            <Option key={index} title={item} value={item} className="text-secondary">
-              {item}
-            </Option>
-          );
-        })}
-      </Select>
-
-    </Item>
-  )
-
-  /** Напряжение питания, В */
-  const voltageFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-    initialValue={24}
-      {...itemProps("Напряжение питания, В", "voltage")}
-    >
-      <Radio.Group>
-        {voltage.map((item, index) => {
-          return (
-            <Radio key={index} value={item} className="text-secondary" style={{width: 80}}>{item}</Radio>
-          );
-        })}
-      </Radio.Group>
-    </Item>
-  )
-
-  /** Диапазон настройки */
-  const settingRangeFormField = (
-    <Item
-      labelCol={{span: 10}}
-      wrapperCol={{span: 14}}
-      className="ms-2 mb-0"
-      valuePropName="checked"
-      initialValue={settingRange[0]}
-      {...itemProps("Диапазон настройки", "settingRange")}
-    >
-      <Radio.Group >
-        {settingRange.map((item, index) => {
-          return (
-            <Radio key={index} value={item} className="text-secondary" style={{width: 80}}>{item}</Radio>
-          );
-        })}
-      </Radio.Group>
-    </Item>
-  )
-
-
   return (
     <>
       <div>
@@ -391,9 +242,13 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
        <BaseInformation title={title} setFacilityType={setFacilityType} resetForm={onReset}/>
        <GeneralInformation tag={tag} subUnit={subUnit} subUnitsList={subUnitsList} parameter={parameter} fda={fda} facilityType={facilityType}/>
        <Divider className="m-0" orientation="left"><Text type="secondary">Эксплуатационные характеристики</Text> </Divider>
-       <Space direction="horizontal">
+       <Space direction="horizontal" >
          <PerformanceCharacteristic lifeTime={lifeTime}/>
-         {<EnvironmentCharacteristic facilityType={facilityType}/>}
+         <EnvironmentCharacteristic facilityType={facilityType}/>
+       </Space>
+       <Space direction="horizontal">
+         <MetrologyCharacteristic facilityType={facilityType} accuracy={0}/>
+         <AdditionallyCharacteristic facilityType={facilityType}/>
        </Space>
      </Space>
         <Space className="d-flex justify-content-end mt-2">
