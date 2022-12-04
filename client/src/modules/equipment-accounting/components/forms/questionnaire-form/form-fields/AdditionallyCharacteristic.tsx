@@ -58,6 +58,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const [hart, setHart] = useState(false);
   const [connectionTypeTitle, setConnectionTypeTitle] = useState("");
   const [converterType, setConverterType] = useState("");
+  const [processTurbulence, setProcessTurbulence] = useState(false);
 
   /** Местная индикация */
   const localIndicationFormField = (
@@ -148,7 +149,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Выходной сигнал */
   const outputSignalFormField = (
     <Item
-      style={{width: 530}}
+        style={{width: 530}}
       label={<Text type="secondary">Выходной сигнал</Text>}
       name={"outputSignal"}
       className="ms-2 mb-0"
@@ -266,7 +267,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   // Вторичный преобразователь
   const converterTypeFormField = (
     <Item
-      style={{width: 648}}
+      style={{width: 638}}
       label={<Text type="secondary">Тип вторичного преобразователя</Text>}
       name={"converterType"}
       className="ms-2 mb-0"
@@ -369,15 +370,16 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   );
 
   const pipelineMaterialFormField = (
     <Item
+      style={{width: 574}}
       label={<Text type="secondary">Материал трубопровода</Text>}
       name={"pipelineMaterial"}
-      initialValue={true}
       className="ms-2 mb-0"
       rules={[
         {
@@ -387,7 +389,8 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       ]}
     >
       <Input
-        {...inputProps("number")}
+        {...inputProps()}
+        className={"text-secondary text-left"}
       />
     </Item>
   );
@@ -409,11 +412,13 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   );
   const flowMeterDistanceAfterFormField = (
     <Item
+
       label={<Text type="secondary">Участок трубопровода после прибора, мм</Text>}
       name={"flowMeterDistanceAfter"}
       initialValue={true}
@@ -427,6 +432,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   );
@@ -434,7 +440,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 /** Наличие струевыпрямителей */
   const flowStraightenersFormField = (
     <Item
-      label={<Text type="secondary">Наличие струевыпрямителей</Text>}
+      label={<Text type="secondary">Струевыпрямители</Text>}
       name={"flowStraighteners"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -454,6 +460,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       label={<Text type="secondary">Турбулентность процесса</Text>}
       name={"processTurbulence"}
       valuePropName="checked"
+      initialValue={processTurbulence}
       className="ms-2 mb-0 p-0"
       rules={[
         {
@@ -461,13 +468,14 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
         }
       ]}
     >
-      <Checkbox />
+      <Checkbox onChange={(e) => setProcessTurbulence(e.target.checked)}/>
     </Item>
   );
 
   /** Причина турбулентности */
   const turbulenceCauseFormField = (
     <Item
+      style={{width: 580}}
       label={<Text type="secondary">Причина турбулентности</Text>}
       name={"turbulenceCause"}
       className="ms-2 mb-0"
@@ -481,7 +489,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       <Input.TextArea
        size={"small"}
        className={"text-secondary"}
-       rows={4}
+       autoSize={{minRows: 6.5, maxRows: 6.5}}
 
       />
     </Item>
@@ -536,17 +544,17 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     </Item>
   );
   return (
-    <Space direction="vertical" style={{width: 666}} className={"border p-1"}>
+    <Space direction="vertical" style={{width: 666, height: 580}} className={"border p-1"}>
       <Divider className="m-0" orientation="center"><Text type="secondary">Характеристики</Text> </Divider>
      <Space direction="vertical" style={{width: 666}}>
        {facilityType === FacilityType.GAZ_ANALYZE ? <Row style={{marginLeft: 44}}>{zeroDriftFormField}</Row> : (<Row>{connectionTypeFormField}</Row>)}
        {facilityType === FacilityType.GAZ_ANALYZE ? <Row style={{marginLeft: 0}}>{opticsCleanlinessFormField}</Row> : (<Row style={{marginLeft: 38 }}>{connectionFormField}</Row>)}
        {facilityType !== FacilityType.PRESSURE && (
          <>
-           <Row style={{marginLeft: 118 }} className={"p-0"}>
+           <Row style={{marginLeft: 10 }} className={"p-0"}>
              {converterTypeFormField}
            </Row>
-           {   converterType !== "Отсутствует" &&        <Row style={{marginLeft: 118 }} className={"p-0"}>
+           {   converterType !== "Отсутствует" &&        <Row style={{marginLeft: 40 }} className={"p-0"}>
              {converterFormField}
            </Row>}
          </>
@@ -566,43 +574,45 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
        </Row>
        {facilityType === FacilityType.FLOW && (
          <>
-           <Row>
-             {pipelineDiameterFormField}
-           </Row>
-           <Row>
+           <Row style={{marginLeft: 74}}>
              {pipelineMaterialFormField}
            </Row>
-           <Row>
+           <Row style={{marginLeft: 324}}>
+             {pipelineDiameterFormField}
+           </Row>
+
+           <Row style={{marginLeft: 272}}>
              {flowMeterDistanceBeforeFormField}
            </Row>
-           <Row>
+           <Row style={{marginLeft: 250}}>
              {flowMeterDistanceAfterFormField}
            </Row>
-           <Row>
-             {flowMeterDistanceAfterFormField}
+           <Row style={{marginLeft: 400}}>
+             {flowStraightenersFormField}
            </Row>
          </>
        )}
        {facilityType === FacilityType.LEVEL && (
          <>
-           <Row>
+           <Row style={{marginLeft: 64}}>
              {processTurbulenceFormField}
            </Row>
-           <Row>
-             {turbulenceCauseFormField}
+           <Row style={{marginLeft: 68}}>
+             {processTurbulence && turbulenceCauseFormField}
            </Row>
          </>
        )}
        {facilityType === FacilityType.PRESSURE && (
          <>
-           <Row>
-             {selfDiagnosticFormField}
+           <Row style={{marginLeft: 116}}>
+             {selfDiagnosticFormField}      {currentLoopIntegrityDiagnosticFormField}
+
            </Row>
-           <Row>
+           <Row style={{marginLeft: 76}}>
              {blockageDiagnosticFormField}
            </Row>
            <Row>
-             {currentLoopIntegrityDiagnosticFormField}
+
            </Row>
          </>
        )}

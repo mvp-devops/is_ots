@@ -66,7 +66,6 @@ export interface QuestionnaireFormData {
   opticsCleanliness?: boolean;
   connectionType: string;
   connection: string;
-
   outputSignal: string;
   voltage: number;
   hart: boolean;
@@ -79,7 +78,7 @@ export interface QuestionnaireFormData {
   pipeMaterial?: string;
   flowMeterDistanceBefore?: number;
   flowMeterDistanceAfter?: number;
-  flowStraighteners?: boolean;
+  flowStraighteners?: boolean; //Наличие струевыпрямителей
   processTurbulence?: boolean;
   turbulenceCause?: string;
   selfDiagnostic?: boolean;
@@ -102,6 +101,7 @@ export interface QuestionnaireFormData {
   heating: string;  // Обогрев или обогрев оптики для газиков
   thermCase?: string;
   thermBox?: string;
-
+  flanges?: boolean;
+  dustProof?: boolean;
   mountingBracket: string;
 }

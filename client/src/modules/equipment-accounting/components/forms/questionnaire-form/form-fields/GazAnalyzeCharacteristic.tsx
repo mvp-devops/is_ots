@@ -191,7 +191,7 @@ const GazAnalyzeCharacteristic = () => {
   );
 
   return (
-      <Space direction={"vertical"} style={{height: 234, marginLeft: 58}}>
+      <Space direction={"vertical"} style={{height: 278, marginLeft: 58}}>
         <Row style={{ marginBottom: 0}} >
           {warmingUpFormField}
         </Row>

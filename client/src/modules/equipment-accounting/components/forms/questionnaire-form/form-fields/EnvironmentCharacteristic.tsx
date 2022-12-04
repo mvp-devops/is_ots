@@ -121,7 +121,7 @@ const EnvironmentCharacteristic:FC<EnvironmentCharacteristicProps> = ({facilityT
   );
 
   const environmentSettings = (
-    <Space direction={"vertical"} style={{height: 272}}>
+    <Space direction={"vertical"} style={{height: 280}}>
         <Row className="d-flex align-items-center justify-content-between">
           <Col className="text-secondary" style={{marginLeft: 10}}>
             {facilityType !== FacilityType.LEVEL ? <Text type={"secondary"}>Давление измеряемой среды (изб.), МПа:</Text> : <Text type={"secondary"} style={{marginLeft: 110}}>Рабочее давление, МПа:</Text>}

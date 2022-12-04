@@ -187,7 +187,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
 
 
   return (
-    <Space direction="vertical" className="d-flex border p-1" style={{width: 666}}>
+    <Space direction="vertical" className="d-flex border p-1" style={{width: 666, height: 290}}>
       {corpsMaterialFormField}
       {protectionFormField}
       {explosionTypeFormField}

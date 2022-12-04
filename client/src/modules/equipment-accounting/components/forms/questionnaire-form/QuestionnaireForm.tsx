@@ -197,10 +197,6 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
     onReset()
   }
 
-  useEffect(() => {
-    console.log(form.getFieldValue("hart"));
-  }, [form.getFieldValue("hart")]);
-
 
   //FIXME: получать как-то
   const title = "";
@@ -235,7 +231,7 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
         onFinishFailed={onFinishFailed}
         onReset={onReset}
         autoComplete="on"
-        className="border p-1"
+        className=" p-1"
 
       >
      <Space direction="vertical">
@@ -246,12 +242,12 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
          <PerformanceCharacteristic lifeTime={lifeTime}/>
          <EnvironmentCharacteristic facilityType={facilityType}/>
        </Space>
-       <Space direction="horizontal">
+       <Space direction="horizontal" >
          <MetrologyCharacteristic facilityType={facilityType} accuracy={0}/>
          <AdditionallyCharacteristic facilityType={facilityType}/>
        </Space>
      </Space>
-        <Space className="d-flex justify-content-end mt-2">
+        <Space className="d-flex justify-content-end mt-2" style={{marginRight: 4}}>
           <Item>
             <Button type={loading ? "default" : "primary"} htmlType="submit" >
               {loading ?

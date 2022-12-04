@@ -21,6 +21,7 @@ import {
   valveBlockType, verificationMethod, voltage
 } from "../questionnaire.consts";
 import React, {FC, useState} from "react";
+import AttachmentCharacteristic from "./AttachmentCharacteristic";
 
 const {Text} = Typography;
 const {Item} = Form;
@@ -74,6 +75,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
       <Input
         {...inputProps("number")}
         disabled={!!accuracy}
+        style={{width: 100}}
       />
     </Item>
   );
@@ -82,7 +84,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
   const relativeAccuracyFormField = (
     <Item
-      label={<Text type="secondary">Предел относительной погрешности измерения нормирующего преобразователя, %</Text>}
+      label={<Text type="secondary">Предел относит. погрешности измерения нормирующего преобразователя, %</Text>}
       name={"relativeAccuracy"}
       className="ms-2 mb-0"
       rules={[
@@ -94,6 +96,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
 
       />
     </Item>
@@ -114,6 +117,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   );
@@ -122,7 +126,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
   const ambientPermissibleFormField = (
     <Item
-      label={<Text type="secondary">Предел допускаемой погрешности от изменения температуры окружающей среды</Text>}
+      label={<Text type="secondary">Предел допускаемой погрешности от изменения температуры окр. среды</Text>}
       name={"ambientPermissible"}
       className="ms-2 mb-0"
       rules={[
@@ -134,6 +138,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   )
@@ -152,7 +157,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
     >
       <Select
         {...selectProps}
-        style={{width: 94}}
+        style={{width: 120}}
       >
         {["AA", "A", "B", "C"].map((item, index) => {
           return (
@@ -167,6 +172,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
 const sensorCalibrationFormField = (
   <Item
+    style={{width: 466}}
     label={<Text type="secondary">Градуировка сенсора</Text>}
     name={"sensorCalibration"}
     className="ms-2 mb-0"
@@ -179,7 +185,7 @@ const sensorCalibrationFormField = (
   >
     <Select
       {...selectProps}
-      style={{width: 94}}
+
     >
       {sensorCalibration.map(({id, title, value}) => {
         return (
@@ -266,93 +272,68 @@ const sensorCalibrationFormField = (
     >
       <Input
         {...inputProps("number")}
+        style={{width: 100}}
       />
     </Item>
   );
   return (
-    <Space direction="vertical" style={{width: 666 }} className={"border p-1"}>
+    <Space direction="vertical" style={{width: 666, height: 580 }} className={"border p-1"}>
      <Space direction={"vertical"} style={{width: 666}}>
        <Divider className={"m-0"} orientation="center"><Text type={"secondary"}>Метрологические характеристики</Text></Divider>
-       <Row>
+       <Row style={{marginLeft: 122}}>
          {accuracyFormField}
        </Row>
+       <Row style={{marginLeft: 122}} >
+<Col>
+  {calibrationStampFormField}
+</Col>
+         <Col style={{marginLeft: 30}}>
+           {verificationFormField}
+         </Col>
+         {
+           facilityType === FacilityType.TEMPERATURE && (
+             <>
+               <Row style={{marginLeft: 42}}>{sensorAccuracyFormField }</Row>
+               <Row style={{marginLeft: 58}}>{sensorCalibrationFormField}</Row>
+             </>
+           )
+         }
+
+       </Row>
+       <Row style={{marginLeft: 314}}>
+         {mpiFormField}
+       </Row>
+
+
+
        {
          facilityType === FacilityType.TEMPERATURE && (
-           <>
-             <Row>{relativeAccuracyFormField}</Row>
-             <Row>{sensorAccuracyFormField }</Row>
-             <Row>{sensorCalibrationFormField}</Row>
-           </>
+         <Row style={{marginLeft: 16}}>{relativeAccuracyFormField}</Row>
          )
        }
+
        {
          facilityType === FacilityType.GAZ_ANALYZE && (
            <>
-             <Row>{ambientPermissibleFormField}</Row>
-             <Row>{permissibleFormField }</Row>
+
+             <Row style={{marginLeft: 192}}>{permissibleFormField }</Row>
+             <Row style={{marginLeft: 42}}>{ambientPermissibleFormField}</Row>
            </>
          )
        }
        {
          facilityType === FacilityType.FLOW && (
 
-           <Row>{verificationMethodFormField}</Row>
+           <Row     style={{marginLeft: 216}}>{verificationMethodFormField}</Row>
 
          )
        }
-       <Row>
-         <Col>
-           {calibrationStampFormField}
-         </Col>
-         <Col>
-           {verificationFormField}
-         </Col>
-       </Row>
-       <Row>
-         {mpiFormField}
-       </Row>
+
 
      </Space>
-      <Space direction={"vertical"} style={{width: 666}}>
+      <Space direction={"vertical"} style={{width: 666, marginTop: 0}}>
         <Divider className={"m-0"} orientation="center"><Text type={"secondary"}>Принадлежности</Text></Divider>
-        <Row>
-          {accuracyFormField}
-        </Row>
-        {
-          facilityType === FacilityType.TEMPERATURE && (
-            <>
-              <Row>{relativeAccuracyFormField}</Row>
-              <Row>{sensorAccuracyFormField }</Row>
-              <Row>{sensorCalibrationFormField}</Row>
-            </>
-          )
-        }
-        {
-          facilityType === FacilityType.GAZ_ANALYZE && (
-            <>
-              <Row>{ambientPermissibleFormField}</Row>
-              <Row>{permissibleFormField }</Row>
-            </>
-          )
-        }
-        {
-          facilityType === FacilityType.FLOW && (
-
-            <Row>{verificationMethodFormField}</Row>
-
-          )
-        }
-        <Row>
-          <Col>
-            {calibrationStampFormField}
-          </Col>
-          <Col>
-            {verificationFormField}
-          </Col>
-        </Row>
-        <Row>
-          {mpiFormField}
-        </Row>
+        <AttachmentCharacteristic facilityType={facilityType}/>
 
       </Space>
     </Space>
