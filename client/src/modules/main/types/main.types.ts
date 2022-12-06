@@ -9,6 +9,7 @@ export type MenuItem = {
 };
 
 export enum FormActions {
+  CREATE_POSITION_TREE_ITEMS = "CREATE_POSITION_TREE_ITEMS",
   EDIT = "EDIT",
   ADD = "ADD",
   REMOVE = "REMOVE",

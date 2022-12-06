@@ -13,6 +13,7 @@ import {useActions, useTypedSelector} from "../../../../../hooks";
 import {setTableColumnFilters} from "./table.settings";
 import {stringSorter} from "../../../../main/utils/main.utils";
 import {FormActions, setFilePath} from "../../../../main";
+import {Roles} from "../../../../main/utils/main.consts";
 
 const { Text } = Typography;
 
@@ -41,7 +42,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
 
   const fileTypeIcon = (fileType: string) => {
 
-    const type = fileType.toUpperCase();
+    const type = fileType?.toUpperCase();
     let icon = <FileUnknownOutlined className="text-secondary"/>;
 
     switch (type) {
@@ -65,7 +66,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     filters: codeFilters,
     filterSearch: codeFilters.length > 5 ? true : false,
     onFilter: (value: any, record) =>
-      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.code?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) =>
       isNaN(+a.code) && isNaN(+b.code)
         ? stringSorter(a?.code, b?.code)
@@ -92,7 +93,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     filterSearch: titleFilters.length > 5 ? true : false,
     sorter: (a, b) => stringSorter(a?.title, b?.title),
     onFilter: (value: any, record) =>
-      record?.title?.toUpperCase()?.includes(value.toUpperCase()),
+      record?.title?.toUpperCase()?.includes(value?.toUpperCase()),
     render: (_, {title, code, fileType, filePath, fileName} ) =>  (
         (
           <Space className="d-flex justify-content-start align-content-center">
@@ -229,6 +230,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
       </Text>
     ),
   };
+  const {currentUser} = useTypedSelector(state => state.main);
 
   const actionsColumn: ColumnType<DesignDocumentView> = {
     title: "Действия",
@@ -236,25 +238,32 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     align: "right",
     render: (_blank, {id}) => (
       <Space size="middle" className="d-flex justify-content-end">
-        <MessageOutlined
-          title="Добавить замечание"
-          className="text-info"
-          onClick={() => {
-            setActionType(FormActions.VIEW_COMMENT);
-            setCollectiveCheckSheetView(true);
-          }}
-        />
-        <EditOutlined
-          title="Редактировать документ"
-          className="text-secondary"
-          onClick={() => showForm(FormActions.EDIT_DOCUMENT)}
-        />
+        {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.CUSTOMER))  && (
+          <MessageOutlined
+            title="Добавить замечание"
+            className="text-info"
+            onClick={() => {
+              setActionType(FormActions.VIEW_COMMENT);
+              setCollectiveCheckSheetView(true);
+            }}
+          />
+        ) }
+        {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.ESCORT))  && (
+          <>
+            <EditOutlined
+              title="Редактировать документ"
+              className="text-secondary"
+              onClick={() => showForm(FormActions.EDIT_DOCUMENT)}
+            />
 
-        <DeleteOutlined
-          title="Удалить документ"
-          className="text-danger"
-          onClick={() => removeDesignDocument(id, undefined, target)}
-        />
+            <DeleteOutlined
+              title="Удалить документ"
+              className="text-danger"
+              onClick={() => removeDesignDocument(id, undefined, target)}
+            />
+          </>
+        )}
+
       </Space>
     ),
   };

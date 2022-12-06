@@ -108,7 +108,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   const parameterFormField = (
     <Item
       labelCol={{span: 8}}
-      initialValue={facilityType !== FacilityType.GAZ_ANALYZE ? parameter: "Загазованность"}
+      initialValue={parameter}
       rules={[
         {
           required: true,
@@ -155,19 +155,6 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
           <Input
             {...inputProps()}
           />
-          //   <Select
-          // {...selectProps}
-          //   // onChange={(value) => onStageChange(value)}
-          //   >
-          // {fdaList.map(({id, code, title}) => {
-          //   const render = `${code}. ${title}`
-          //   return (
-          //   <Option key={id} title={render} value={render} className="text-secondary">
-          // {render}
-          //   </Option>
-          //   );
-          // })}
-          //   </Select>
         )
         }
       </Item>
@@ -350,8 +337,18 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
           {facilityType !== FacilityType.FLOW && measureTypeFormField }
           {measuredAreaFormField}
           <Row className="d-flex align-items-center justify-content-between">
-            <Col className="text-secondary"  style={{marginLeft: 130}}>
-       Диапазон измерения:
+            <Col className="text-secondary"  style={{marginLeft: facilityType === FacilityType.GAZ_ANALYZE ? 76
+                : facilityType === FacilityType.TEMPERATURE ? 108
+                  : facilityType === FacilityType.FLOW ? 94
+                    : facilityType === FacilityType.PRESSURE ? 92
+                    : 104
+            }}>
+       Диапазон измерения, {
+              facilityType === FacilityType.GAZ_ANALYZE ? "% НКПР"
+                : facilityType === FacilityType.LEVEL ? "мм"
+                  : facilityType === FacilityType.FLOW ? "м³/ч"
+                    : facilityType === FacilityType.PRESSURE ? "МПа" : "°C"
+            }:
             </Col>
             <Col>
               {measureRangeMinFormField}

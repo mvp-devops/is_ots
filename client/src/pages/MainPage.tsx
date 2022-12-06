@@ -4,6 +4,11 @@ import NsiPage from "../modules/regulatory-reference-information/views/NsiPage";
 import { ItemPage } from "../modules/position-tree";
 import TechCardsPreView from "../modules/regulatory-reference-information/views/tech-cards/TechCardsPreView";
 import NormativeTable from "../modules/regulatory-reference-information/components/tables/normative/NormativeTable";
+import {FormActions} from "../modules/main";
+import ManyItemsForm from "../modules/position-tree/components/forms/ManyItemsForm";
+import {useTypedSelector} from "../hooks";
+import {ModalContainer} from "../components";
+import {UserForm} from "../modules/regulatory-reference-information";
 
 const { Content } = Layout;
 
@@ -15,6 +20,8 @@ const MainPage = () => {
     currentItem,
     collapsed,
   } = usePage();
+
+  const {formVisible, actionType} = useTypedSelector(state => state.main)
 
   const content = (
     <Content style={{ margin: "0 16px", backgroundColor: "white" }}>
@@ -36,6 +43,8 @@ const MainPage = () => {
         <Layout>
           {!collapsed && <PageMenu />}
           {content}
+          {actionType === FormActions.CREATE_POSITION_TREE_ITEMS && formVisible && <ModalContainer child={<ManyItemsForm/>}/>}
+          {actionType === FormActions.ADD_USER && formVisible && <ModalContainer child={<UserForm/>}/>}
         </Layout>
         <PageFooter />
       </Layout>

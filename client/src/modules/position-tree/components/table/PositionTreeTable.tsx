@@ -12,6 +12,7 @@ import { usePositionTreeTable } from "./hooks";
 import { ModalContainer } from "../../../../components";
 import {QuestionnaireForm} from "../../../equipment-accounting/components/forms/questionnaire-form";
 import {useTypedSelector} from "../../../../hooks";
+import {Roles} from "../../../main/utils/main.consts";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -38,30 +39,37 @@ const PositionTreeTable = () => {
   const {currentItem: {id, childrenTarget: childTarget} } = useTypedSelector(state => state.positionTree)
   const columns = TableColumns();
 
+  const {currentUser} = useTypedSelector(state => state.main);
   const menuItems = (
     <>
       <Space>
-        <PlusOutlined
-          key="ADD_CHILD"
-          className="text-success mr-3 mb-2"
-          style={{ fontSize: 16, cursor: "pointer" }}
-          title={`Добавить ${addChildButtonTitle}`}
-          onClick={() => {
-            setActionType(FormActions.ADD_CHILD);
-            setFormVisible(true);
-          }}
-        />
+        {currentUser.roles.includes(Roles.ESCORT) && (
+          <PlusOutlined
+            key="ADD_CHILD"
+            className="text-success mr-3 mb-2"
+            style={{ fontSize: 16, cursor: "pointer" }}
+            title={`Добавить ${addChildButtonTitle}`}
+            onClick={() => {
+              setActionType(FormActions.ADD_CHILD);
+              setFormVisible(true);
+            }}
+          />
+        )}
         {(childTarget === "unit" ||
-          childTarget === "sub-unit") && <FileDoneOutlined
-          key="CREATE_NEW_QUESTIONNAIRE"
-          className="text-info mr-3 mb-2"
-          style={{fontSize: 16, cursor: "pointer"}}
-          title={"Сформировать новый опросный лист"}
-          onClick={() => {
-            setActionType(FormActions.CREATE_NEW_QUESTIONNAIRE);
-            setFormVisible(true);
-          }}
-        />}
+          childTarget === "sub-unit") &&
+          (currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.CUSTOMER)) && (
+            <FileDoneOutlined
+              key="CREATE_NEW_QUESTIONNAIRE"
+              className="text-info mr-3 mb-2"
+              style={{fontSize: 16, cursor: "pointer"}}
+              title={"Сформировать новый опросный лист"}
+              onClick={() => {
+                setActionType(FormActions.CREATE_NEW_QUESTIONNAIRE);
+                setFormVisible(true);
+              }}
+            />
+          )
+        }
       </Space>
       {(childTarget === "project" ||
         childTarget === "unit" ||

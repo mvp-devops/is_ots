@@ -14,6 +14,8 @@ import { ModalContainer } from "../../../components";
 import { CheckListForm } from "../../comment-accounting";
 import { useStatistic } from "./hooks";
 import MonthReportForm from "../../reports/month-report-form/MonthReportForm";
+import {useTypedSelector} from "../../../hooks";
+import {Roles} from "../../main/utils/main.consts";
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -38,6 +40,9 @@ const StatisticPage = () => {
     renderSupervisionStatisticFlag,
     showSupervisionStatisticDescription,
   } = useStatistic();
+
+  const {currentUser} = useTypedSelector(state => state.main);
+
 
   const detailsButton = (target: string) => (
     <QuestionCircleOutlined
@@ -130,8 +135,8 @@ const StatisticPage = () => {
       }
       extra={
         <>
-          {checkListButton}
-          {reportButton}
+          {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.CLERK))  && checkListButton}
+          {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.CLERK))  && reportButton}
           {detailsButton("examination-documentation-statistic")}
         </>
       }
@@ -171,6 +176,7 @@ const StatisticPage = () => {
     </Card>
   );
 
+
   const renderSupervisionStatistic = renderSupervisionStatisticFlag && (
     <Card
       bordered={false}
@@ -184,7 +190,7 @@ const StatisticPage = () => {
       }
       extra={
         <>
-          {reportButton}
+          {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.CLERK))  && reportButton}
           {detailsButton("supervision-statistic")}
         </>
       }

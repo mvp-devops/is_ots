@@ -1,7 +1,8 @@
-import {useActions} from "../../../../../hooks";
+import {useActions, useTypedSelector} from "../../../../../hooks";
 import {DeleteOutlined, PlusOutlined} from "@ant-design/icons";
 import {FormActions} from "../../../../main";
 import {FC} from "react";
+import {Roles} from "../../../../main/utils/main.consts";
 
 interface MenuItemsProps {
   selectedRows: string[];
@@ -21,16 +22,20 @@ const MenuItems:FC<MenuItemsProps> = ({selectedRows, resetSelectedRows}) => {
     removeNormative(undefined, selectedRows);
     resetSelectedRows();
   }
+  const {currentUser} = useTypedSelector(state => state.main);
 
   return (
     <>
-      <PlusOutlined
-        key="ADD_NORMATIVE"
-        className="text-success mr-3 mb-2 ms-2"
-        style={{ fontSize: 16, cursor: "pointer" }}
-        title={`Добавить запись`}
-        onClick={() => showForm(FormActions.ADD_NORMATIVE)}
-      />
+      {currentUser.roles.includes(Roles.ESCORT) && (
+        <PlusOutlined
+          key="ADD_NORMATIVE"
+          className="text-success mr-3 mb-2 ms-2"
+          style={{ fontSize: 16, cursor: "pointer" }}
+          title={`Добавить запись`}
+          onClick={() => showForm(FormActions.ADD_NORMATIVE)}
+        />
+      )}
+
       {
         selectedRows && selectedRows.length > 0 && (
           <DeleteOutlined

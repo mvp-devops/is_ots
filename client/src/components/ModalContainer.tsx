@@ -66,7 +66,10 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       ? 1000
       : target === "monitoring"
       ? 1200
-      : actionType === FormActions.REPORT ? 600 : documentFormActions ? 1100 : questionnaireFormActions ? 1400 : 1200;
+      : actionType === FormActions.REPORT ? 600 : documentFormActions ? 1100 : questionnaireFormActions ? 1400
+            : actionType === FormActions.CREATE_POSITION_TREE_ITEMS ? 600
+              : actionType === FormActions.ADD_USER ? 600
+              : 1200;
 
   let title = "";
 
@@ -77,8 +80,11 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
     case FormActions.EDIT_NORMATIVE: title = "Редактирование нормативного документа"; break;
     case FormActions.CREATE_QUESTIONNAIRE:
     case FormActions.CREATE_NEW_QUESTIONNAIRE: title = "Опросный лист"; break;
+    case FormActions.CREATE_POSITION_TREE_ITEMS: title = "Загрузка структуры дерева позиций"; break;
     default: title = "Другое"; break;
   }
+
+
 
   return (
     <Modal

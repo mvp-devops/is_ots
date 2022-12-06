@@ -19,37 +19,64 @@ export const tableLocale = {
   cancelSort: "Сбросить",
 };
 
+export enum Roles {
+  ADMINISTRATOR = "ADMINISTRATOR",
+  CUSTOMER = "CUSTOMER",
+  EXPERT = "EXPERT",
+  OTS = "OTS",
+  GUEST = "GUEST",
+  DESIGN = "DESIGN",
+  COUNTERPARTY = "COUNTERPARTY",
+  CLERK = "CLERK",
+  ESCORT = "ESCORT"
+}
+
 export const userRoles = [
   {
     id: 1,
     title: "Администратор",
-    value: "ADMINISTRATOR",
+    value: Roles.ADMINISTRATOR,
   },
   {
     id: 2,
     title: "Заказчик",
-    value: "CUSTOMER",
+    value: Roles.CUSTOMER,
   },
   {
     id: 3,
     title: "Исполнитель",
-    value: "COUNTERPARTY",
+    value: Roles.COUNTERPARTY,
   },
   {
     id: 4,
     title: "ОТС",
-    value: "OTS",
+    value: Roles.OTS,
   },
   {
     id: 5,
     title: "Проектировщик",
-    value: "DESIGN",
+    value: Roles.DESIGN,
   },
   {
     id: 6,
     title: "Эксперт",
-    value: "EXPERT",
+    value: Roles.EXPERT,
   },
+  {
+    id: 7,
+    title: "Гость",
+    value: Roles.GUEST,
+  },
+  {
+    id: 8,
+    title: "Делопроизводитель",
+    value: Roles.CLERK,
+  },
+  {
+    id: 9,
+    title: "Сопроводитель",
+    value: Roles.ESCORT,
+  }
 ];
 
 export const months = [

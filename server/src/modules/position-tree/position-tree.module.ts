@@ -12,6 +12,7 @@ import { PositionTreeService } from "./position-tree.service";
 import { FileStorageModule } from "../file-storage";
 import { CommentAccountingModule } from "../comment-accounting";
 import {ReportModule} from "../reports/report.module";
+import {CounterpartyEntity, DesignEntity, EquipmentEntity} from "../regulatory-reference-information";
 
 @Module({
   controllers: [PositionTreeController],
@@ -24,6 +25,9 @@ import {ReportModule} from "../reports/report.module";
       ProjectEntity,
       UnitEntity,
       SubUnitEntity,
+      DesignEntity,
+      CounterpartyEntity,
+      EquipmentEntity
     ]),
     forwardRef(() => FileStorageModule),
     forwardRef(() => CommentAccountingModule),

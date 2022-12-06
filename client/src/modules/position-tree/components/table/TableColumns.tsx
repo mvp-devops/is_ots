@@ -11,6 +11,8 @@ import { FormActions, setFilePath } from "../../../main";
 import { usePositionTreeTable } from "./hooks";
 import { setTableColumnFilters } from "./table.settings";
 import { positionSorter, stringSorter } from "../../../main/utils/main.utils";
+import {Roles} from "../../../main/utils/main.consts";
+import {useTypedSelector} from "../../../../hooks";
 
 const { Text } = Typography;
 
@@ -237,6 +239,8 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     ),
   };
 
+  const {currentUser} = useTypedSelector(state => state.main);
+
   const actionsColumn: ColumnType<PositionTreeView> = {
     title: "Действия",
     key: "operation",
@@ -280,23 +284,27 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
             <FileSearchOutlined className="text-primary" title="ОЛ, TT, ТЗ" />
           </a>
         )}
-        <EditOutlined
-          title="Редактировать информацию"
-          className="text-secondary"
-          onClick={() => {
-            setActionType(FormActions.EDIT_CHILD);
-            setFormVisible(true);
-          }}
-        />
+        {currentUser.roles.includes(Roles.ESCORT) && (
+          <>
+            <EditOutlined
+              title="Редактировать информацию"
+              className="text-secondary"
+              onClick={() => {
+                setActionType(FormActions.EDIT_CHILD);
+                setFormVisible(true);
+              }}
+            />
 
-        <DeleteOutlined
-          title="Удалить запись"
-          className="text-danger"
-          onClick={() => {
-            setActionType(FormActions.REMOVE_CHILD);
-            setFormVisible(true);
-          }}
-        />
+            <DeleteOutlined
+              title="Удалить запись"
+              className="text-danger"
+              onClick={() => {
+                setActionType(FormActions.REMOVE_CHILD);
+                setFormVisible(true);
+              }}
+            />
+          </>
+        )}
       </Space>
     ),
   };

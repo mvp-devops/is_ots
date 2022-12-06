@@ -20,7 +20,7 @@ import {
 import {
   DesignDocumentEntity,
   FileStorageService,
-  LogoEntity,
+  LogoEntity, NewFileStorageService,
 } from "../file-storage";
 import {
   CounterpartyEntity,
@@ -45,8 +45,10 @@ import {
   UnitEntity,
 } from "./entities";
 import {Remarks, ReportRequestParams, ReportRow, ReportView, SignerData} from "../../../common/types/report.types";
+import type {File} from "../../../common/types/file-storage";
 import {ReportService} from "../reports/report.service";
 import {join} from "path";
+import {ExcelService} from "../file-storage/excel.service";
 
 type PositionTreeView =
   | SubsidiaryEntity
@@ -102,14 +104,24 @@ export class PositionTreeService {
     private unitRepository: typeof UnitEntity,
     @InjectModel(SubUnitEntity)
     private subUnitRepository: typeof SubUnitEntity,
+    @InjectModel(DesignEntity)
+    private designRepository: typeof DesignEntity,
+    @InjectModel(CounterpartyEntity)
+    private counterpartyRepository: typeof CounterpartyEntity,
+    @InjectModel(EquipmentEntity)
+    private equipmentRepository: typeof EquipmentEntity,
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
+    @Inject(forwardRef(() => NewFileStorageService))
+    private newFileService: NewFileStorageService,
     @Inject(forwardRef(() => CheckListService))
     private readonly checkListService: CheckListService,
     @Inject(forwardRef(() => StatisticService))
     private readonly statisticService: StatisticService,
     @Inject(forwardRef(() => ReportService))
-    private readonly reportService: ReportService
+    private readonly reportService: ReportService,
+    @Inject(forwardRef(() => ExcelService))
+    private readonly excelService: ExcelService,
   ) {
   }
 
@@ -244,6 +256,152 @@ export class PositionTreeService {
 
     return items;
   };
+//FIXME: доделать возможность загрузки не только с ДО, но и с использованием таргета и id
+  sendMany = async (descriptor: File, target?: string, id?: string, ): Promise<PositionTreeItem[]>  => {
+    const data = this.excelService.convertExcelFileToJson(descriptor);
+    for(let i = 0; i < data.length; i++) {
+      const {
+        subsidiary_title,
+        subsidiary_code,
+        subsidiary_description,
+        field_title,
+        field_code,
+        field_description,
+        project_title,
+        project_code,
+        project_design,
+        project_contract,
+        project_description,
+        unit_position,
+        unit_equipmentType,
+        unit_supplier,
+        unit_title,
+        unit_code,
+        unit_contract,
+        unit_description,
+        sub_unit_position,
+        sub_unit_equipmentType,
+        sub_unit_supplier,
+        sub_unit_title,
+        sub_unit_code,
+        sub_unit_contract,
+        sub_unit_description
+      } = data[i];
+
+      /** Ищем в БД ДО, если его нет - создаем и создаем директорию иначе получаем id и название директории */
+      const subsidiaryItem = {title: subsidiary_title, code: subsidiary_code, description: subsidiary_description};
+      const subsidiary = await this.subsidiaryRepository.findOne({where: {title: subsidiary_title}});
+      const {id: subsidiaryId, code: subsidiaryCode} = !subsidiary ? await this.subsidiaryRepository.create(subsidiaryItem) : subsidiary;
+
+      const subsidiaryFolder = this.newFileService.generateFolderName(subsidiaryCode, subsidiaryId);
+      this.newFileService.createDirectory(subsidiaryFolder);
+
+      /** Ищем в БД Месторождение, если его нет - создаем и создаем директорию иначе получаем id и название директории */
+      const fieldItem = {subsidiaryId, title: field_title, code: field_code, description: field_description};
+      const field = await this.fieldRepository.findOne({where: {title: field_title}});
+      const {id: fieldId, code: fieldCode} = !field ? await this.fieldRepository.create(fieldItem) : field;
+
+      const fieldFolder = this.newFileService.generateFolderName(fieldCode, fieldId);
+      const subsidiaryFieldFolder = this.newFileService.getPath([subsidiaryFolder, fieldFolder])
+      this.newFileService.createDirectory(subsidiaryFieldFolder);
+
+      /**
+       * Ищем в БД Проектный институт, если его нет - создаем, иначе получаем id
+       * Ищем в БД Проект, если его нет - создаем и создаем директорию иначе получаем id и название директории
+       */
+      const design = await this.designRepository.findOne({where: {title: project_design}});
+      const {id: designId} = !design ? await this.designRepository.create({
+        title: project_design,
+        code: "",
+        description: ""
+      }) : design;
+      const projectItem = {
+        fieldId, designId, title: project_title, code: project_code, description: project_description,
+        contract: project_contract
+      };
+      const project = await this.projectRepository.findOne({where: {code: project_code}});
+      const {id: projectId, code: projectCode, description: projectDescription} = !project ? await this.projectRepository.create(projectItem) : project;
+
+      const projectFolder = this.newFileService.generateFolderName(`${projectCode}. ${projectDescription}`);
+      const subsidiaryFieldProjectFolder = this.newFileService.getPath([subsidiaryFolder, fieldFolder, projectFolder])
+      this.newFileService.createDirectory(subsidiaryFieldProjectFolder);
+
+      /**
+       * Ищем в БД Группу оборудования, если ее нет - создаем, иначе получаем id
+       * Ищем в БД Поставщика, если его нет - создаем, иначе получаем id
+       * Ищем в БД Объект строительства, если его нет - создаем и создаем директорию иначе получаем id и название директории
+       */
+      const unitEquipment = await this.equipmentRepository.findOne({where: {title: unit_equipmentType}});
+      const {id: unitEquipmentId} = !unitEquipment ? await this.equipmentRepository.create({
+        title: unit_equipmentType,
+        code: unit_equipmentType.slice(0, 2).toUpperCase(),
+        description: ""
+      }) : unitEquipment;
+      const unitSupplier = await this.counterpartyRepository.findOne({where: {title: unit_supplier}});
+      const {id: unitSupplierId} = !unitSupplier ? await this.counterpartyRepository.create({
+        title: unit_supplier,
+        code: unit_supplier.slice(0, 2).toUpperCase(),
+        description: ""
+      }) : unitSupplier;
+      const unitItem = {
+        projectId,
+        equipmentId: unitEquipmentId,
+        supplierId: unitSupplierId,
+        position: unit_position,
+        title: unit_title,
+        code: unit_code,
+        contract: unit_contract,
+        description: unit_description
+      }
+      const unit = await this.unitRepository.findOne({where: {title: unit_title}});
+      const {id: unitId, position: unitPosition, code: unitCode} = !unit ? await this.unitRepository.create(unitItem) : unit;
+
+      const unitFolder = this.newFileService.generateFolderName(`${unitPosition}. ${unitCode}`);
+      const subsidiaryFieldProjectUnitFolder = this.newFileService.getPath([subsidiaryFolder, fieldFolder, projectFolder, "002. Объекты", unitFolder])
+      this.newFileService.createDirectory(subsidiaryFieldProjectUnitFolder);
+
+      /**
+       * Ищем в БД Группу оборудования, если ее нет - создаем, иначе получаем id
+       * Ищем в БД Поставщика, если его нет - создаем, иначе получаем id
+       * Ищем в БД Объект/установку, если его/ее нет - создаем и создаем директорию иначе получаем id и название директории
+       */
+      const subUnitEquipment = await this.equipmentRepository.findOne({where: {title: sub_unit_equipmentType}});
+      const {id: subUnitEquipmentId} = !subUnitEquipment ? await this.equipmentRepository.create({
+        title: sub_unit_equipmentType,
+        code: sub_unit_equipmentType.slice(0, 2).toUpperCase(),
+        description: ""
+      }) : subUnitEquipment;
+      const subUnitSupplier = await this.counterpartyRepository.findOne({where: {title: sub_unit_supplier}});
+      const {id: subUnitSupplierId} = !subUnitSupplier ? await this.counterpartyRepository.create({
+        title: sub_unit_supplier,
+        code: sub_unit_supplier.slice(0, 2).toUpperCase(),
+        description: ""
+      }) : subUnitSupplier;
+      const subUnitItem = {
+        unitId,
+        equipmentId: subUnitEquipmentId,
+        supplierId: subUnitSupplierId,
+        position: sub_unit_position,
+        title: sub_unit_title,
+        code: sub_unit_code,
+        contract: sub_unit_contract,
+        description: sub_unit_description
+      }
+      const subUnit = await this.subUnitRepository.findOne({where: {title: sub_unit_title}});
+      const {position: subUnitPosition, code: subUnitCode} = !subUnit ? await this.subUnitRepository.create(subUnitItem) : subUnit;
+      // let uniqueSubsidiaryArr = [...new Set(subsidiaryArr.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
+
+      const subUnitFolder = this.newFileService.generateFolderName(`${subUnitPosition}. ${subUnitCode}`);
+      const subsidiaryFieldProjectUnitSubUnitFolderFolder = this.newFileService.getPath([subsidiaryFolder, fieldFolder, projectFolder, "002. Объекты", unitFolder, "002. Объекты", subUnitFolder])
+      this.newFileService.createDirectory(subsidiaryFieldProjectUnitSubUnitFolderFolder);
+    }
+    return await this.getPositionTree();
+  }
+
+  downloadTemplate = (template: string): string => {
+
+    return this.newFileService.getCurrentPath(this.newFileService.getPath(["templates", template]))
+  }
 
   createOne = async (
     target: string,

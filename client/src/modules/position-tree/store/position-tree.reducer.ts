@@ -41,6 +41,24 @@ export const positionTreeReducer = (
         loading: false,
         error: action.payload,
       };
+
+    case ActionTypes.CREATE_STRUCTURE:
+      return state;
+
+    case ActionTypes.CREATE_STRUCTURE_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        menuItems: action.payload,
+      };
+
+    case ActionTypes.CREATE_STRUCTURE_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: action.payload,
+      };
+
     case ActionTypes.SET_CURRENT_ITEM:
       return {
         ...state,

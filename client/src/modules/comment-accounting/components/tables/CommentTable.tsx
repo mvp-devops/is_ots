@@ -28,6 +28,7 @@ import { FormActions, setFilePath, tableLocale } from "../../../main";
 import { useCommentAccounting } from "../../hooks";
 import { useCollectiveCheckSheet } from "../../views/collective-check-list/hooks/useCollectiveCheckSheet";
 import { useTypedSelector } from "../../../../hooks";
+import {Roles} from "../../../main/utils/main.consts";
 
 export interface CommentTableProps {
   data: DesignDocumentCommentView[];
@@ -45,49 +46,52 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
     (state) => state.fileStorage
   );
 
+  const {currentUser} = useTypedSelector(state => state.main);
+
   const { dataSource } = useCollectiveCheckSheet();
+
+  const editMenuItem =       {
+    label: (
+      <Space
+        className="text-secondary"
+        onClick={() => {
+          setActionType(FormActions.EDIT_COMMENT);
+          setFormVisible(true);
+        }}
+      >
+        <EditOutlined
+          style={{ marginBottom: "6px", padding: 0 }}
+          className="text-secondary"
+        />
+        Редактировать
+      </Space>
+    ),
+
+    key: "EDIT_COMMENT",
+  }
+
+  const removeMenuItem = {
+    label: (
+      <Space
+        className="text-secondary"
+        onClick={() => {
+          setActionType(FormActions.REMOVE_COMMENT);
+          setFormVisible(true);
+        }}
+      >
+        <DeleteOutlined
+          className="text-danger"
+          style={{ marginBottom: "6px", padding: 0 }}
+        />
+        Удалить
+      </Space>
+    ),
+    key: "REMOVE_COMMENT",
+  }
 
   const menu = (
     <Menu
-      items={[
-        // {
-        //   label: (
-        //     <Space
-        //       className="text-secondary"
-        //       onClick={() => {
-        //         setActionType(FormActions.EDIT_COMMENT);
-        //         setFormVisible(true);
-        //       }}
-        //     >
-        //       <EditOutlined
-        //         style={{ marginBottom: "6px", padding: 0 }}
-        //         className="text-secondary"
-        //       />
-        //       Редактировать
-        //     </Space>
-        //   ),
-
-        //   key: "EDIT_COMMENT",
-        // },
-        {
-          label: (
-            <Space
-              className="text-secondary"
-              onClick={() => {
-                setActionType(FormActions.REMOVE_COMMENT);
-                setFormVisible(true);
-              }}
-            >
-              <DeleteOutlined
-                className="text-danger"
-                style={{ marginBottom: "6px", padding: 0 }}
-              />
-              Удалить
-            </Space>
-          ),
-          key: "REMOVE_COMMENT",
-        },
-      ]}
+      items={currentUser.roles.includes(Roles.EXPERT) ? [editMenuItem, removeMenuItem] : currentUser.roles.includes(Roles.CUSTOMER) ? [editMenuItem] : []}
     />
   );
 
@@ -254,9 +258,10 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       title: "",
       key: "actions",
       render: (_blank, record) => (
-        <Dropdown trigger={["click"]} overlay={menu}>
-          <EllipsisOutlined className="text-secondary" />
-        </Dropdown>
+          <Dropdown trigger={["click"]} overlay={menu}>
+            <EllipsisOutlined className="text-secondary" />
+          </Dropdown>
+
       ),
     },
   ];

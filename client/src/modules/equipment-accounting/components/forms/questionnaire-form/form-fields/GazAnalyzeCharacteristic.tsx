@@ -65,7 +65,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const responseTimeFormField = (
     <Item
-      label={<Text type="secondary">Время реагирования, Т0-9, сек. (не более)</Text>}
+      label={<Text type="secondary">Время установления показаний Т0,9 ном., сек. (не более)</Text>}
       name={"responseTime"}
       initialValue={1}
       className="ms-2 mb-0"
@@ -73,7 +73,7 @@ const GazAnalyzeCharacteristic = () => {
         {
           required: true,
           message:
-            `Пожалуйста, введите время реагирования, Т0-9, сек. (не более)`,
+            `Пожалуйста, введите время установления показаний`,
         }
       ]}
     >
@@ -191,26 +191,26 @@ const GazAnalyzeCharacteristic = () => {
   );
 
   return (
-      <Space direction={"vertical"} style={{height: 278, marginLeft: 58}}>
+      <Space direction={"vertical"} style={{height: 278, marginLeft: 0}}>
         <Row style={{ marginBottom: 0}} >
           {warmingUpFormField}
         </Row>
-        <Row style={{marginLeft: 130, marginBottom: 0}} >
+        <Row style={{marginLeft: 32, marginBottom: 0}} >
           {responseTimeFormField}
         </Row>
-        <Row style={{marginLeft: 130, marginBottom: 0}} >
+        <Row style={{marginLeft: 132, marginBottom: 0}} >
           {lowerThresholdFormField}
         </Row>
-        <Row style={{marginLeft: 130, marginBottom: 0}} >
+        <Row style={{marginLeft: 132, marginBottom: 0}} >
           {upperThresholdFormField}
         </Row>
-        <Row style={{marginLeft: 186, marginBottom: 0}} >
+        <Row style={{marginLeft: 188, marginBottom: 0}} >
           {faultFormField}
         </Row>
-        <Row style={{marginLeft: 68, marginBottom: 0}}>
+        <Row style={{marginLeft: 70, marginBottom: 0}}>
           {registrationEventsFormField}
         </Row>
-        <Row style={{marginLeft: 114, marginBottom: 0}}>
+        <Row style={{marginLeft: 116, marginBottom: 0}}>
           {adjustmentEventsFormField}
         </Row>
       </Space>

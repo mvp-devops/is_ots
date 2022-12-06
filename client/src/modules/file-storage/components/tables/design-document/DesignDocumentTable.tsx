@@ -73,11 +73,11 @@ const DesignDocumentTable = () => {
   const searchItems = (data: DesignDocumentView[], searchValue: string) => {
     setSearchInput(searchValue);
     if (searchInput !== "") {
-      const filteredData = data.filter((item) => {
-        return Object.values(item)
-          .join("")
-          .toLowerCase()
-          .includes(searchInput.toLowerCase());
+      const filteredData = data?.filter((item) => {
+        return Object?.values(item)
+          ?.join("")
+          ?.toLowerCase()
+          ?.includes(searchInput?.toLowerCase());
       });
       setFilteredResults(filteredData);
     } else {

@@ -34,7 +34,6 @@ import MetrologyCharacteristic from "./form-fields/MetrologyCharacteristic";
 import AdditionallyCharacteristic from "./form-fields/AdditionallyCharacteristic";
 const {Item} = Form;
 const {Text} = Typography;
-const {Option} = Select;
 
 /**
  * Получаем id единицы оборудования
@@ -95,39 +94,6 @@ const {Option} = Select;
  *   - Степень безопасности SIL - радио SIL1, SIL2, SIL3
  *   - Если выбран SIL - в комплект сопроводительной документации необходимо добавить сертификат SIL (необходима правильная формулировка)
  */
-
-const selectProps: SelectProps = {
-  size: "small",
-  className: "text-secondary",
-  notFoundContent: <NotFoundComponent/>,
-  showSearch: true,
-  optionFilterProp: "children",
-  filterOption: (input, option) =>
-    (option!.children as unknown as string)
-      ?.toUpperCase()
-      ?.includes(input?.toUpperCase()),
-}
-
-const itemProps = (title: string, name: string): FormItemProps => {
-  return {
-    label: <Text type="secondary">{title}</Text>,
-    name,
-    rules: [
-      {
-        required: true,
-        message:
-          `Пожалуйста, выберите ${title.toLowerCase()}`,
-      }
-    ]
-  }
-}
-const inputProps = (type?: string): InputProps => {
-  return {
-    size: "small",
-    type: type ? type : "text",
-    className: "text-secondary text-center"
-  }
-}
 
 
 

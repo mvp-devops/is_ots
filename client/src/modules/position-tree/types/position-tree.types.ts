@@ -30,6 +30,9 @@ export enum ActionTypes {
   POST_MANY_ITEMS = "POST_MANY_ITEMS",
   POST_MANY_ITEMS_SUCCESS = "POST_MANY_ITEMS_SUCCESS",
   POST_MANY_ITEMS_ERROR = "POST_MANY_ITEMS_ERROR",
+  CREATE_STRUCTURE = "CREATE_STRUCTURE",
+  CREATE_STRUCTURE_SUCCESS = "CREATE_STRUCTURE_SUCCESS",
+  CREATE_STRUCTURE_ERROR = "CREATE_STRUCTURE_ERROR",
   POST_ONE_ITEM = "POST_ONE_ITEM",
   POST_ONE_ITEM_SUCCESS = "POST_ONE_ITEM_SUCCESS",
   POST_ONE_ITEM_ERROR = "POST_ONE_ITEM_ERROR",
@@ -67,11 +70,26 @@ interface GetMenuItemsSuccessAction {
   type: ActionTypes.GET_MENU_ITEMS_SUCCESS;
   payload: PositionTreeItem[];
 }
-
 interface GetMenuItemsErrorAction {
   type: ActionTypes.GET_MENU_ITEMS_ERROR;
   payload: string;
 }
+
+
+interface CreateStructureAction {
+  type: ActionTypes.CREATE_STRUCTURE;
+}
+
+interface CreateStructureSuccessAction {
+  type: ActionTypes.CREATE_STRUCTURE_SUCCESS;
+  payload: PositionTreeItem[];
+}
+
+interface CreateStructureErrorAction {
+  type: ActionTypes.CREATE_STRUCTURE_ERROR;
+  payload: string;
+}
+
 
 interface PostOneItemAction {
   type: ActionTypes.POST_ONE_ITEM;
@@ -247,4 +265,7 @@ export type EssenceAction =
   | SetCurrentItemFolderPathAction
   | GetStatisticAction
   | GetStatisticSuccessAction
-  | GetStatisticErrorAction;
+  | GetStatisticErrorAction
+| CreateStructureAction
+| CreateStructureSuccessAction
+| CreateStructureErrorAction;

@@ -9,7 +9,9 @@ import {
   PositionTreeItem,
   PositionTreeView,
 } from "../../../../../server/common/types/position-tree";
-import { Roles, setUrl } from "../../main";
+import {FormActions, setUrl} from "../../main";
+import {Roles} from "../../main/utils/main.consts"
+import download from "js-file-download";
 
 const baseUrl = "api/position-tree";
 
@@ -76,6 +78,35 @@ export const createManyEssences = async (
   return data;
 };
 
+//FIXME: доделать возможность загрузки не только с ДО, но и с использованием таргета и id
+export const createStructureFromTemplate = async (
+  descriptor: any,
+  target?: string,
+  id?: string,
+): Promise<PositionTreeItem[]> => {
+  const url = setUrl(`${baseUrl}/create/many`);
+  const formData = new FormData();
+ formData.append("descriptor", descriptor);
+
+  const { data } = await axios.post(url,  formData, { params: { target, id } });
+  return data;
+};
+
+export const getTemplate = () => {
+  const url = setUrl(`${baseUrl}/download/template`);
+
+  axios
+    .get(url, {
+      responseType: "blob",
+    })
+    .then((resp) => {
+      download(
+        resp.data,
+        `position_tree_template.xlsx`
+      );
+    });
+}
+
 export const updateOneEssence = async (
   target: string,
   id: string,
@@ -99,25 +130,32 @@ export const deleteOneEssence = async (
 };
 
 export const getMenuItems = async (
-  roles: string[],
-  id?: string
+user: any
 ): Promise<PositionTreeItem[]> => {
   const url = setUrl(`${baseUrl}/tree`);
-
+  const {roles, subsidiaryId, fieldId} = user;
   let items: PositionTreeItem[] = [];
 
   const { data } = await axios.get<PositionTreeItem[]>(url);
 
-  items =
-    roles.includes(Roles.ADMINISTRATOR) || roles.includes(Roles.EXPERT)
-      ? data
-      : (!roles.includes(Roles.ADMINISTRATOR) ||
-          !roles.includes(Roles.EXPERT)) &&
-        roles.includes(Roles.OTS)
-      ? data.filter((item) => item.id === id)
-      : roles.includes(Roles.CUSTOMER)
-      ? data.filter((item) => item.id === id)
-      : [];
+  if((roles.includes(Roles.CUSTOMER) || roles.includes(Roles.GUEST) )&& !fieldId) {
+    items = data.filter(item => +item.id === +subsidiaryId);
+  } else
+
+  if((roles.includes(Roles.CUSTOMER) || roles.includes(Roles.GUEST)) && fieldId) {
+    const ids = new Set(fieldId === 6 || fieldId === 9 ? [6,9] : [fieldId]);
+    items = data
+      .map(item => ({ ...item, children: item.children.filter(c => ids.has(+c.id)) })).filter(x => x.children.length)
+
+  } else
+
+  if(roles.includes(Roles.OTS) && fieldId) {
+    const ids = new Set( [fieldId]);
+    items = data
+      .map(item => ({ ...item, children: item.children.filter(c => ids.has(+c.id)) })).filter(x => x.children.length)
+  } else {
+    items = data.filter(item => +item.id !== 4);
+  }
 
   return items;
 };

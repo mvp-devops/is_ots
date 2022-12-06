@@ -21,30 +21,11 @@ export interface QuestionnaireFormData {
   tempMeasureAreaMax?: number;
   pressureMeasureAreaMin?: number;
   pressureMeasureAreaMax?: number;
-  sensorLength?: number; //Длина чувствительного элемента / глубина погружения защитной гильзы, мм
-  warmingUp?: number;
-  responseTime?: number;
   valveBlock?: boolean;
   valveBlockType?: string;
   airBleedValve?: boolean;
   connectionScheme?: string;
   settingRange?: string;
-  sensorLDiameter?: number;
-  protectiveSleeve?: boolean;
-  protectiveSleeveMaterial?: string; //Материал защитной гильзы
-  lowerThreshold?: number;
-  upperThreshold?: number;
-  fault?: boolean; //Выходное реле "Неисправность"
-  registrationEvents?: boolean; //Регистрация событий в энергонезависимой памяти
-  adjustment?: boolean; // Требуется настройка электроники при замене сенсора
-  density_1?: number;
-  density_2?: number;
-  viscosity_1?: number;
-  viscosity_2?: number;
-  conductivity?: number;
-  particulateMatter?: boolean;
-  corrosiveImpurities?: number;
-  phasePartitionControl?: boolean;
   corpsMaterial: string;
   protection: string;
   explosionType: string;
@@ -52,18 +33,6 @@ export interface QuestionnaireFormData {
   safety: string;
   lifeTime: number;
   mtbf: number;
-
-
-
-
-
-
-
-
-
-
-  zeroDrift?: boolean;
-  opticsCleanliness?: boolean;
   connectionType: string;
   connection: string;
   outputSignal: string;
@@ -72,36 +41,56 @@ export interface QuestionnaireFormData {
   hartVersion?: string;
   localIndication: boolean;
   internalDiagnostic: boolean;
-  converter?: string;
-  converterType?: string;
-  pipelineDiameter?: number;
-  pipeMaterial?: string;
-  flowMeterDistanceBefore?: number;
-  flowMeterDistanceAfter?: number;
-  flowStraighteners?: boolean; //Наличие струевыпрямителей
-  processTurbulence?: boolean;
-  turbulenceCause?: string;
   selfDiagnostic?: boolean;
   blockageDiagnostic?: boolean;
   currentLoopIntegrityDiagnostic?: boolean;
   accuracy: string;
-  relativeAccuracy?: number;
-  sensorAccuracy?: string;
-  permissible?: number; // Предел допускаемой вариации выходного сигнала, в долях от пределов допускаемой основной
-  ambientPermissible?: number; //Предел допускаемой погрешности от изменения температуры окружающей среды от нормальной на каждые 10 оС, в долях от пределов допускаемой основной погрешности
-  sensorCalibration?: string;
-  verification: boolean;
-  verificationMethod?: string;
-  calibrationStamp: boolean;
-  mpi: number;
-
-
-  cableEntry: string;
-  reserveCableEntryStub: string;
   heating: string;  // Обогрев или обогрев оптики для газиков
   thermCase?: string;
   thermBox?: string;
+  calibrationStamp: boolean;
+  mpi: number;
+  verification: boolean;
+  density_1?: number;
+  viscosity_1?: number;
+  particulateMatter?: boolean;
+  corrosiveImpurities?: number;
+  pipelineDiameter?: number;
+  pipeMaterial?: string;
+  flowMeterDistanceBefore?: number;
+  flowMeterDistanceAfter?: number;
+  verificationMethod?: string;
+  cableEntry: string;
+  reserveCableEntryStub: string;
+  conductivity?: number;
+  converter?: string;
+  converterType?: string;
   flanges?: boolean;
-  dustProof?: boolean;
+  flowStraighteners?: boolean; //Наличие струевыпрямителей
+  phasePartitionControl?: boolean;
+  density_2?: number;
+  viscosity_2?: number;
+  processTurbulence?: boolean;
+  turbulenceCause?: string;
   mountingBracket: string;
+  sensorAccuracy?: string;
+  sensorCalibration?: string;
+  sensorLength?: number; //Длина чувствительного элемента / глубина погружения защитной гильзы, мм
+  protectiveSleeve?: boolean;
+  protectiveSleeveMaterial?: string; //Материал защитной гильзы
+  sensorLDiameter?: number;
+  warmingUp?: number;
+  responseTime?: number;
+  lowerThreshold?: number;
+  upperThreshold?: number;
+  fault?: boolean; //Выходное реле "Неисправность"
+  registrationEvents?: boolean; //Регистрация событий в энергонезависимой памяти
+  adjustment?: boolean; // Требуется настройка электроники при замене сенсора
+  zeroDrift?: boolean;
+  opticsCleanliness?: boolean;
+  relativeAccuracy?: number;
+  permissible?: number; // Предел допускаемой вариации выходного сигнала, в долях от пределов допускаемой основной
+  ambientPermissible?: number; //Предел допускаемой погрешности от изменения температуры окружающей среды от нормальной на каждые 10 оС, в долях от пределов допускаемой основной погрешности
+  dustProof?: boolean;
+  controlCableConnection?: string;
 }

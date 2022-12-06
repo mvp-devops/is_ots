@@ -62,6 +62,38 @@ export class PositionTreeController {
     );
   }
 
+  /** Загрузка дерева позиций по шаблону */
+  @Post("/create/many")
+  @UseInterceptors(FileInterceptor("descriptor"))
+  sendMany(
+    @Query() query: { target?: string, id?: string },
+    @UploadedFile() descriptor: any
+  ) {
+    const { target, id } = query;
+    return this.service.sendMany( descriptor, target, id);
+  }
+
+  /** Скачивание шаблона загрузки дерева позиций */
+  @Get("/download/template")
+  async downloadTemplate(@Res() res: Response) {
+    const fileLocation = this.service.downloadTemplate("position_tree_template.xlsx");
+    res.header(
+      "Content-disposition",
+      `attachment; filename=position_tree_template.xlsx`
+    );
+    res.type(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+    );
+
+    res.download(
+      fileLocation,
+      `position_tree_template.xlsx`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+  }
+
   @Post("/add")
   @UseInterceptors(FileInterceptor("file"))
   create(

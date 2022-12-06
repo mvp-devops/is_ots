@@ -20,17 +20,18 @@ import {
   getFolderPath,
   getStatistic,
 } from "../api";
+import {createStructureFromTemplate} from "../api/position-tree.api";
 
-export const setMenuItems = (roles: string[], id?: string) => {
+export const setMenuItems = (user: any) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.GET_MENU_ITEMS });
 
-      const data = await getMenuItems(roles, id);
+      const data = await getMenuItems(user);
 
       dispatch({
         type: ActionTypes.GET_MENU_ITEMS_SUCCESS,
-        payload: data.filter((item) => item.id !== "15" && item.id !== "4"),
+        payload: data,
       });
     } catch (error) {
       dispatch({
@@ -64,6 +65,37 @@ export const createPositionTreeItem = (
     } catch (error: any) {
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_ERROR,
+        payload: "Ошибка отправки данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+      });
+    }
+  };
+};
+
+export const createStructure = (
+  descriptor: any,
+  target?: string,
+  id?: string
+
+) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({ type: ActionTypes.CREATE_STRUCTURE });
+      const data = await createStructureFromTemplate(descriptor, target, id);
+      dispatch({
+        type: ActionTypes.CREATE_STRUCTURE_SUCCESS,
+        payload: data,
+      });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно добавлены",
+      });
+    } catch (error: any) {
+      dispatch({
+        type: ActionTypes.CREATE_STRUCTURE_ERROR,
         payload: "Ошибка отправки данных",
       });
       notification["error"]({

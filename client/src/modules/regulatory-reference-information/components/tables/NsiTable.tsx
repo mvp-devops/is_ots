@@ -14,6 +14,8 @@ import { useState } from "react";
 import { useSearch } from "../../../../hooks/useSearch";
 import NewCommentForm from "../forms/NewCommentForm";
 import NormativeForm from "../forms/NormativeForm";
+import {useTypedSelector} from "../../../../hooks";
+import {Roles} from "../../../main/utils/main.consts";
 
 const { Text } = Typography;
 
@@ -33,19 +35,23 @@ const NsiTable = () => {
   } = useNsiTable();
 
   const columns = NsiTableColumns();
+  const {currentUser} = useTypedSelector(state => state.main);
 
   const menuItems = (
     <>
-      <PlusOutlined
-        key="ADD_DICTIONARY_ITEM"
-        className="text-success mr-3 mb-2"
-        style={{ fontSize: 16, cursor: "pointer" }}
-        title={`Добавить запись`}
-        onClick={() => {
-          setActionType(FormActions.ADD_DICTIONARY_ITEM);
-          setFormVisible(true);
-        }}
-      />
+      {currentUser.roles.includes(Roles.ESCORT) && (
+        <PlusOutlined
+          key="ADD_DICTIONARY_ITEM"
+          className="text-success mr-3 mb-2"
+          style={{ fontSize: 16, cursor: "pointer" }}
+          title={`Добавить запись`}
+          onClick={() => {
+            setActionType(FormActions.ADD_DICTIONARY_ITEM);
+            setFormVisible(true);
+          }}
+        />
+      )}
+
       <FileExcelOutlined
         key="DOWNLOAD_DICTIONARY"
         className="text-success mr-3 mb-2"

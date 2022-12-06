@@ -16,7 +16,7 @@ import {
 import {NotFoundComponent} from "../../../../../../components";
 import {
   connection,
-  connectionScheme, connectionType, converter, converterTypes, FacilityType,
+  connectionScheme, connectionType, controlCableConnectionList, converter, converterTypes, FacilityType,
   hartVersion,
   outputSignal,
   settingRange,
@@ -527,6 +527,26 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     </Item>
   );
 
+  const controlCableConnectionFormField = (
+    <Item
+      label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Место подключения контрольного кабеля" : "Тип монтажа"}</Text>}
+      name={"controlCableConnection"}
+      valuePropName="checked"
+      className="ms-2 mb-0 p-0"
+      rules={[
+        {
+          required: true,
+        }
+      ]}
+    >      <Radio.Group>
+      {(facilityType === FacilityType.GAZ_ANALYZE ? controlCableConnectionList.slice(0,2) : controlCableConnectionList.slice(2,4)).map((item, index) => {
+        return (
+          <Radio key={index} value={item} className="text-secondary" >{item}</Radio>
+        );
+      })}
+    </Radio.Group>
+    </Item>
+  );
 
   const currentLoopIntegrityDiagnosticFormField = (
     <Item
@@ -540,82 +560,120 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
         }
       ]}
     >
+
       <Checkbox />
     </Item>
   );
+
+  const gazAnalyzeAdditionallyCharacteristic = (
+    <>
+      <Row style={{marginLeft: 44}}>{zeroDriftFormField}</Row>
+      <Row style={{marginLeft: 0}}>{opticsCleanlinessFormField}</Row>
+      <Row>{controlCableConnectionFormField}</Row>
+      <Row style={{marginLeft: 10 }} className={"p-0"}>
+        {converterTypeFormField}
+      </Row>
+      { converterType !== "Отсутствует" &&
+        <Row style={{marginLeft: 40 }} className={"p-0"}>
+        {converterFormField}
+      </Row>
+      }
+      <Row style={{marginLeft: 118 }} className={"p-0"}>
+        {outputSignalFormField}
+      </Row>
+      <Row style={{marginLeft: 78 }}>
+        {voltageFormField}
+      </Row>
+      <Row style={{marginLeft: 196 }}>
+        <Col>  {hartFormField}</Col><Col>{hart && hartVersionFormField}</Col>
+      </Row>
+      <Row style={{marginLeft: 102 }}>
+        {localIndicationFormField}
+        {internalDiagnosticFormField}
+      </Row>
+    </>
+  )
+
+  const first = (
+    <>
+      <Row>{connectionTypeFormField}</Row>
+      <Row style={{marginLeft: 38 }}>{connectionFormField}</Row>
+      {facilityType === FacilityType.TEMPERATURE &&       <Row style={{marginLeft: 146}}>{controlCableConnectionFormField}</Row>}
+      {facilityType !== FacilityType.PRESSURE && (
+        <>
+          <Row style={{marginLeft: 10 }} className={"p-0"}>
+            {converterTypeFormField}
+          </Row>
+          {   converterType !== "Отсутствует" &&        <Row style={{marginLeft: 40 }} className={"p-0"}>
+            {converterFormField}
+          </Row>}
+        </>
+      )}
+      <Row style={{marginLeft: 118 }} className={"p-0"}>
+        {outputSignalFormField}
+      </Row>
+      <Row style={{marginLeft: 78 }}>
+        {voltageFormField}
+      </Row>
+      <Row style={{marginLeft: 196 }}>
+        <Col>  {hartFormField}</Col><Col>{hart && hartVersionFormField}</Col>
+      </Row>
+      <Row style={{marginLeft: 102 }}>
+        {localIndicationFormField}
+        {internalDiagnosticFormField}
+      </Row>
+      {facilityType === FacilityType.PRESSURE ? (
+        <>
+          <Row style={{marginLeft: 116}}>
+            {selfDiagnosticFormField}      {currentLoopIntegrityDiagnosticFormField}
+
+          </Row>
+          <Row style={{marginLeft: 76}}>
+            {blockageDiagnosticFormField}
+          </Row>
+        </>
+      ) : facilityType === FacilityType.FLOW ? (
+        <>
+          <Row style={{marginLeft: 74}}>
+            {pipelineMaterialFormField}
+          </Row>
+          <Row style={{marginLeft: 324}}>
+            {pipelineDiameterFormField}
+          </Row>
+
+          <Row style={{marginLeft: 272}}>
+            {flowMeterDistanceBeforeFormField}
+          </Row>
+          <Row style={{marginLeft: 250}}>
+            {flowMeterDistanceAfterFormField}
+          </Row>
+          <Row style={{marginLeft: 400}}>
+            {flowStraightenersFormField}
+          </Row>
+        </>
+      ) : facilityType === FacilityType.LEVEL ? (
+        <>
+          <Row style={{marginLeft: 64}}>
+            {processTurbulenceFormField}
+          </Row>
+          <Row style={{marginLeft: 68}}>
+            {processTurbulence && turbulenceCauseFormField}
+          </Row>
+        </>
+      ) : <></>
+      }
+
+    </>
+  )
+
+
+
+
   return (
     <Space direction="vertical" style={{width: 666, height: 580}} className={"border p-1"}>
       <Divider className="m-0" orientation="center"><Text type="secondary">Характеристики</Text> </Divider>
      <Space direction="vertical" style={{width: 666}}>
-       {facilityType === FacilityType.GAZ_ANALYZE ? <Row style={{marginLeft: 44}}>{zeroDriftFormField}</Row> : (<Row>{connectionTypeFormField}</Row>)}
-       {facilityType === FacilityType.GAZ_ANALYZE ? <Row style={{marginLeft: 0}}>{opticsCleanlinessFormField}</Row> : (<Row style={{marginLeft: 38 }}>{connectionFormField}</Row>)}
-       {facilityType !== FacilityType.PRESSURE && (
-         <>
-           <Row style={{marginLeft: 10 }} className={"p-0"}>
-             {converterTypeFormField}
-           </Row>
-           {   converterType !== "Отсутствует" &&        <Row style={{marginLeft: 40 }} className={"p-0"}>
-             {converterFormField}
-           </Row>}
-         </>
-       )}
-       <Row style={{marginLeft: 118 }} className={"p-0"}>
-         {outputSignalFormField}
-       </Row>
-       <Row style={{marginLeft: 78 }}>
-         {voltageFormField}
-       </Row>
-       <Row style={{marginLeft: 196 }}>
-         <Col>  {hartFormField}</Col><Col>{hart && hartVersionFormField}</Col>
-       </Row>
-       <Row style={{marginLeft: 102 }}>
-         {localIndicationFormField}
-         {internalDiagnosticFormField}
-       </Row>
-       {facilityType === FacilityType.FLOW && (
-         <>
-           <Row style={{marginLeft: 74}}>
-             {pipelineMaterialFormField}
-           </Row>
-           <Row style={{marginLeft: 324}}>
-             {pipelineDiameterFormField}
-           </Row>
-
-           <Row style={{marginLeft: 272}}>
-             {flowMeterDistanceBeforeFormField}
-           </Row>
-           <Row style={{marginLeft: 250}}>
-             {flowMeterDistanceAfterFormField}
-           </Row>
-           <Row style={{marginLeft: 400}}>
-             {flowStraightenersFormField}
-           </Row>
-         </>
-       )}
-       {facilityType === FacilityType.LEVEL && (
-         <>
-           <Row style={{marginLeft: 64}}>
-             {processTurbulenceFormField}
-           </Row>
-           <Row style={{marginLeft: 68}}>
-             {processTurbulence && turbulenceCauseFormField}
-           </Row>
-         </>
-       )}
-       {facilityType === FacilityType.PRESSURE && (
-         <>
-           <Row style={{marginLeft: 116}}>
-             {selfDiagnosticFormField}      {currentLoopIntegrityDiagnosticFormField}
-
-           </Row>
-           <Row style={{marginLeft: 76}}>
-             {blockageDiagnosticFormField}
-           </Row>
-           <Row>
-
-           </Row>
-         </>
-       )}
+       {facilityType === FacilityType.GAZ_ANALYZE ? gazAnalyzeAdditionallyCharacteristic : first}
      </Space>
 
     </Space>

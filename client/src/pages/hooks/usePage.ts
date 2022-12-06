@@ -31,7 +31,7 @@ export const usePage = () => {
   useEffect(() => {
     currentUser &&
       currentUser.subsidiaryId &&
-      setMenuItems(currentUser.roles, currentUser.subsidiaryId.toString());
+      setMenuItems(currentUser);
   }, [formVisible]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onMenuItemSelected = (item?: PositionTreeItem): void => {

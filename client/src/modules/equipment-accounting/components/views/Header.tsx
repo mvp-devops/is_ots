@@ -9,6 +9,7 @@ import { setCurrentDate } from "../../../../utils/main.utils";
 import { FormActions } from "../../../main";
 import { useActions, useTypedSelector } from "../../../../hooks";
 import { exportToAtlas } from "../../api/equipment-accounting.api";
+import {Roles} from "../../../main/utils/main.consts";
 
 const { Text } = Typography;
 
@@ -17,6 +18,7 @@ const Header = () => {
   const { currentItem, checkedItem, currentItemFolderPath } = useTypedSelector(
     (state) => state.positionTree
   );
+  const {currentUser} = useTypedSelector(state => state.main);
 
   return (
     <>
@@ -24,93 +26,95 @@ const Header = () => {
         <Text strong type="secondary">
           {setCurrentDate()}
         </Text>
-        <Space className="d-flex justify-content-between">
-          <PlusOutlined
-            title="Добавить новую единицу оборудования"
-            className="text-success"
-            style={{ fontSize: "20px", cursor: "pointer" }}
-            onClick={() => {
-              setActionType(FormActions.ADD_EQUIPMENT);
-              setFormVisible(true);
-            }}
-          />
-
-          <Dropdown
-            trigger={["click"]}
-            overlay={
-              <Menu
-                items={[
-                  {
-                    label: (
-                      <Space
-                        className="text-secondary"
-                        onClick={(e: any) =>
-                          exportToAtlas(
-                            e,
-                            currentItem.childrenTarget,
-                            checkedItem.id.toString(),
-                            `${checkedItem.code}-${checkedItem.title}`,
-                            currentItemFolderPath
-                          )
-                        }
-                        onSelect={(key) => console.log("ATLAS")}
-                      >
-                        <AppstoreOutlined
-                          style={{ marginBottom: "6px", padding: 0 }}
-                          className="text-primary"
-                          title="Сформировать файл выгрузки"
-                        />
-                        АИС «АТЛАС»
-                      </Space>
-                    ),
-
-                    key: "EXPORT_TO_ATLAS",
-                  },
-                  // {
-                  //   label: (
-                  //     <Space
-                  //       className="text-secondary"
-                  //       onSelect={(key) => console.log("TORO")}
-                  //     >
-                  //       <AppstoreOutlined
-                  //         style={{ marginBottom: "6px", padding: 0 }}
-                  //         className="text-primary"
-                  //         title="Сформировать файл выгрузки"
-                  //       />
-                  //       ИС «ТОРО»
-                  //     </Space>
-                  //   ),
-
-                  //   key: "EXPORT_TO_TORO",
-                  // },
-                  // {
-                  //   label: (
-                  //     <Space
-                  //       className="text-secondary"
-                  //       onSelect={(key) => console.log("EXCEL")}
-                  //     >
-                  //       <FileExcelOutlined
-                  //         style={{ marginBottom: "6px", padding: 0 }}
-                  //         className="text-success"
-                  //         title="Сформировать файл выгрузки"
-                  //       />
-                  //       MS Excel
-                  //     </Space>
-                  //   ),
-
-                  //   key: "EXPORT_TO_EXCEL",
-                  // },
-                ]}
-              />
-            }
-          >
-            <DownloadOutlined
-              title="Экспорт"
-              className="text-secondary"
+        {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS)) &&
+          <Space className="d-flex justify-content-between">
+            <PlusOutlined
+              title="Добавить новую единицу оборудования"
+              className="text-success"
               style={{ fontSize: "20px", cursor: "pointer" }}
+              onClick={() => {
+                setActionType(FormActions.ADD_EQUIPMENT);
+                setFormVisible(true);
+              }}
             />
-          </Dropdown>
-        </Space>
+
+            <Dropdown
+              trigger={["click"]}
+              overlay={
+                <Menu
+                  items={[
+                    {
+                      label: (
+                        <Space
+                          className="text-secondary"
+                          onClick={(e: any) =>
+                            exportToAtlas(
+                              e,
+                              currentItem.childrenTarget,
+                              checkedItem.id.toString(),
+                              `${checkedItem.code}-${checkedItem.title}`,
+                              currentItemFolderPath
+                            )
+                          }
+                          onSelect={(key) => console.log("ATLAS")}
+                        >
+                          <AppstoreOutlined
+                            style={{ marginBottom: "6px", padding: 0 }}
+                            className="text-primary"
+                            title="Сформировать файл выгрузки"
+                          />
+                          АИС «АТЛАС»
+                        </Space>
+                      ),
+
+                      key: "EXPORT_TO_ATLAS",
+                    },
+                    {
+                      label: (
+                        <Space
+                          className="text-secondary"
+                          onSelect={(key) => console.log("TORO")}
+                        >
+                          <AppstoreOutlined
+                            style={{ marginBottom: "6px", padding: 0 }}
+                            className="text-primary"
+                            title="Сформировать файл выгрузки"
+                          />
+                          ИС «ТОРО»
+                        </Space>
+                      ),
+
+                      key: "EXPORT_TO_TORO",
+                    },
+                    {
+                      label: (
+                        <Space
+                          className="text-secondary"
+                          onSelect={(key) => console.log("EXCEL")}
+                        >
+                          <FileExcelOutlined
+                            style={{ marginBottom: "6px", padding: 0 }}
+                            className="text-success"
+                            title="Сформировать файл выгрузки"
+                          />
+                          MS Excel
+                        </Space>
+                      ),
+
+                      key: "EXPORT_TO_EXCEL",
+                    },
+                  ]}
+                />
+              }
+            >
+              <DownloadOutlined
+                title="Экспорт"
+                className="text-secondary"
+                style={{ fontSize: "20px", cursor: "pointer" }}
+              />
+            </Dropdown>
+          </Space>
+        }
       </Space>
     </>
   );
