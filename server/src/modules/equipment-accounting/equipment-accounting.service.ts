@@ -69,6 +69,9 @@ import {
   SummaryListOfEquipmentEntity,
 } from "./entities";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
+import {stampTemplate as stampTemplate} from "../../../common/templates/questionnaire/stampTemplate";
+const pdf =  require("html-pdf");
+
 
 type UpdateEquipmentAccountingAssetDto =
   | UpdateGeneralInformationDto
@@ -100,6 +103,13 @@ export class EquipmentAccountingService {
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
     private nsiService: RegulatoryReferenceInformationService
   ) {}
+
+  /** Печать ОЛ в PDF */
+
+  printQuestionnaire = async () => {
+
+  }
+
 
   createNewFacilityAsset = async (
     dto: CreateFacilityDto
@@ -2775,4 +2785,71 @@ export class EquipmentAccountingService {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   };
+
+  /** Получаем единицу оборудования для формирования ОЛ */
+  getEquipmentAsset = async (id: string) => {
+    const item = await  this.summaryListOfEquipmentRepository.findOne({
+      where: {id},
+      include: [
+        {
+          model: FacilityEntity
+        },
+        {
+          model: MetrologyEntity
+        },
+        {
+          model: MonitoringEntity
+        },
+        {
+          model: SubUnitEntity,
+          attributes: ["position", "code", "title"],
+          include: [
+            {
+              model: UnitEntity,
+              attributes: ["position", "code", "title"],
+              include: [
+                {
+                  model: ProjectEntity,
+                  attributes: ["code", "title"],
+                  include: [
+                    {
+                      model: FieldEntity,
+                      attributes: ["code", "title"],
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                          attributes: ["code", "title"],
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    })
+
+    return {
+      subsidiary: item.subUnit.unit.project.field.subsidiary,
+      field: item.subUnit.unit.project.field,
+      project: item.subUnit.unit.project,
+      unit: item.subUnit.unit,
+      subUnit: item.subUnit,
+      location: item?.installationLocation ?  item.installationLocation  : "",
+      facilityType: item?.facility?.measurementArea ? item.facility.measurementArea : "",
+      title: item?.facility?.title ? item.facility.title : "",
+      tag: item?.tag ? item.tag : "",
+      parameter: item?.controlledParameter ? item.controlledParameter : "",
+      fda: item?.monitoring?.functionalDiagram ? item.monitoring.functionalDiagram  : "",
+      lifeTime: item?.period ? +item.period : 0,
+      range: item?.metrology?.range ? item.metrology.range : "",
+      accuracy: item?.metrology?.accuracy ? item.metrology.accuracy : "",
+      mpi: item?.metrology?.mpi ? +item.metrology.mpi : 0,
+      measureRangeMin: item?.metrology?.min ? +item.metrology.min : 0,
+      measureRangeMax: item?.metrology?.max ? +item.metrology.max : 0,
+
+    }
+  }
 }

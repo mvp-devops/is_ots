@@ -159,6 +159,7 @@ const TemperatureCharacteristic = () => {
     </Item>
   )
 
+
   return (
 <>
   <Row style={{marginLeft: 30}}>
@@ -177,6 +178,9 @@ const TemperatureCharacteristic = () => {
   <Row style={{marginLeft: 74}} >
     {protectiveSleeve && protectiveSleeveMaterialFormField}
   </Row>
+  {/*<Row>*/}
+  {/*  {controlCableConnectionFormField}*/}
+  {/*</Row>*/}
 </>
   );
 };

@@ -2,13 +2,16 @@ export interface QuestionnaireFormData {
   /** Передаем параметрами */
   subsidiary: string;
   field: string;
-  unit: string; //Unit or Project
+  project: string;
+  unit: string;
+  subUnit: string;
+  cipher: string;
   title: string;
   questionnaireType: string;
   count: number;
   year: number;
   tag: string;
-  subUnit: string;
+  location: string;
   fda: string;
   parameter?: string;
   tempAmbientMin: number;
@@ -24,6 +27,7 @@ export interface QuestionnaireFormData {
   valveBlock?: boolean;
   valveBlockType?: string;
   airBleedValve?: boolean;
+  valveBlockCorpMaterial?: string;
   connectionScheme?: string;
   settingRange?: string;
   corpsMaterial: string;

@@ -26,6 +26,12 @@ import {
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
+export const getEquipmentAsset = async (id: string): Promise<any> => {
+  const url = setUrl(`${equipmentAccountingUrl}/equipment-asset/${id}`);
+  const { data } = await axios.get<any>(url);
+  return data;
+};
+
 const setGeneralInformationFormData = (
   item: GeneralInformationCreateOrUpdateAttrs
 ): FormData => {

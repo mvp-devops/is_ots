@@ -1,4 +1,24 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "src"
+  "sourceRoot": "src",
+  "compilerOptions": {
+    "assets": [
+      {
+        "include": "../file-storage/assets",
+        "outDir": "dist/file-storage",
+        "watchAssets": true
+      },
+      {
+        "include": "../file-storage/templates",
+        "outDir": "dist/file-storage",
+        "watchAssets": true
+      },
+      {
+        "include": "../file-storage/normative",
+        "outDir": "dist/file-storage",
+        "watchAssets": true
+      }
+    ],
+    "watchAssets": true
+  }
 }

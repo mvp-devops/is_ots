@@ -1,6 +1,7 @@
 import {
+  Alert,
   Badge,
-  Card,
+  Card, Collapse,
   Divider,
   Layout,
   List,
@@ -16,6 +17,11 @@ import { useStatistic } from "./hooks";
 import MonthReportForm from "../../reports/month-report-form/MonthReportForm";
 import {useTypedSelector} from "../../../hooks";
 import {Roles} from "../../main/utils/main.consts";
+import {setFilePath} from "../../main";
+import {useEffect, useState} from "react";
+import Contacts from "../../../pages/Contacts";
+
+const pathToSvg = (svg: string) => setFilePath(`assets/fields/${svg}`);
 
 const { Text } = Typography;
 const { Content } = Layout;
@@ -229,34 +235,52 @@ const StatisticPage = () => {
     </Card>
   );
 
+  const {currentItem} = useTypedSelector(state => state.positionTree);
+  const [card, setCard] = useState("");
+  useEffect(() => {
+  switch (currentItem.target) {
+    case "subsidiary": {
+      setCard(pathToSvg("MRNG.svg"))
+      break;
+    }
+    case "field": {
+      setCard(pathToSvg("GPNZ.svg"))
+      break;
+    }
+    default: break;
+  }
+  }, [currentItem]);
+
+
+
   return (
-    <>
-      {!loadignStatistic ? (
-        <Layout
-          className="site-layout-background"
-          style={{ padding: "0 10px" }}
-        >
-          <Content className="d-flex  align-items-start">
-            <>
-              {renderItemStatistic}
-              {renderExaminationDocumentationStatisticRender}
-              {renderSupervisionStatistic}
-            </>
-          </Content>
-        </Layout>
-      ) : (
-        <Content
-          className="d-flex justify-content-center align-items-center"
-          style={{
-            height: window.innerHeight - 40,
-          }}
-        >
-          <Spin tip="загрузка..." />
-        </Content>
-      )}
+    <Space  className={"d-flex  align-items-start"} style={{padding: 10}}>
+      {(currentItem.target === "subsidiary" || currentItem.target === "field") ? (
+        <>
+          <Space direction={"vertical"} className={"d-flex justify-content-center"}>
+            <img src={card} width={750}/>
+            <Contacts/>
+          </Space>
+          {!loadignStatistic ? <Space className={"d-flex align-items-start"} style={{width: 800}}>
+            {renderItemStatistic}
+            {renderExaminationDocumentationStatisticRender}
+            {renderSupervisionStatistic}
+          </Space> : <Spin  style={{width: 750}} tip="Загрузка..."/>}
+        </>
+      ) :
+        (
+          !loadignStatistic ?  <Space className={"d-flex align-items-start"}>
+            {renderItemStatistic}
+            {renderExaminationDocumentationStatisticRender}
+            {renderSupervisionStatistic}
+          </Space> : <Spin style={{width: 750}} tip="Загрузка..."/>
+        )
+      }
+
+
       {renderCheckListForm}
       {renderReportForm}
-    </>
+    </Space>
   );
 };
 

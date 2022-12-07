@@ -8,7 +8,7 @@ import {
 } from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 
-import { SummaryListOfEquipmentEntity } from "../../../equipment-accounting/entities";
+import {FacilityEntity, SummaryListOfEquipmentEntity} from "../../../equipment-accounting/entities";
 import { TechnicalCardCreateOrUpdateAttrs } from "../../../../../common/types/regulatory-reference-information";
 import { TechnicalCardOperationEntity } from "./technical-card-operation.entity";
 
@@ -56,6 +56,9 @@ export class TechnicalCardEntity extends Model<
 
   @HasMany(() => SummaryListOfEquipmentEntity)
   equipments: SummaryListOfEquipmentEntity[];
+
+  @HasMany(() => FacilityEntity)
+  facility: FacilityEntity[];
 
   @HasMany(() => TechnicalCardOperationEntity)
   operations: TechnicalCardOperationEntity[];

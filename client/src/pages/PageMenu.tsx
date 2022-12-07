@@ -99,7 +99,7 @@ const PageMenu = () => {
                 style={{ marginBottom: 4 }}
                 className="text-secondary"
               />
-              <Text type="secondary">Дерево позиций</Text>
+              <Text type="secondary">Структура проектов Компании</Text>
             </Space>
           }
           key="POSITION_TREE"
@@ -123,7 +123,7 @@ const PageMenu = () => {
                 style={{ marginBottom: 4 }}
                 className="text-secondary"
               />
-              <Text type="secondary">Справочники</Text>
+              <Text type="secondary">Справочная информация</Text>
             </Space>
           }
           key="REGULATORY_REFERENCE_INFORMATION"

@@ -73,7 +73,7 @@ const BaseInformation: FC<BaseInformationProps> = ({title, setFacilityType, rese
       {title ? (
         <Input
           {...inputProps()}
-          disabled={!!title}
+          // disabled={!!title}
         />
       ) : (
         <TreeSelect
@@ -82,7 +82,7 @@ const BaseInformation: FC<BaseInformationProps> = ({title, setFacilityType, rese
           dropdownStyle={{ maxHeight: 400, overflow: 'auto', color: "#999" }}
           treeData={facilityTypesList}
           onSelect={(value, node) => setFacilityType(node.id)}
-          // popupClassName={"text-secondary"}
+
         />
       )}
     </Item>

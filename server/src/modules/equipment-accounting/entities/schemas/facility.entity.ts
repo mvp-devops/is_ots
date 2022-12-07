@@ -1,7 +1,8 @@
-import { Column, DataType, HasMany, Model, Table } from "sequelize-typescript";
+import {BelongsTo, Column, DataType, ForeignKey, HasMany, Model, Table} from "sequelize-typescript";
 import { ApiProperty } from "@nestjs/swagger";
 import { FacilityCreateOrUpdateAttrs } from "../../../../../common/types/equipment-accounting";
 import { SummaryListOfEquipmentEntity } from "./summary-list-of-facility.entity";
+import {TechnicalCardEntity} from "../../../regulatory-reference-information";
 
 @Table({ tableName: "facilities" })
 export class FacilityEntity extends Model<
@@ -97,6 +98,19 @@ export class FacilityEntity extends Model<
     type: DataType.ARRAY(DataType.STRING),
   })
   modifications: string[];
+
+  @ApiProperty({
+    example: "1",
+    description: "№ Тех. карты ПНР",
+  })
+  @ForeignKey(() => TechnicalCardEntity)
+  @Column({
+    type: DataType.INTEGER,
+  })
+  technicalCardId: number;
+
+  @BelongsTo(() => TechnicalCardEntity)
+  technicalCard: TechnicalCardEntity;
 
   @HasMany(() => SummaryListOfEquipmentEntity, {
     // onUpdate: "CASCADE",

@@ -6,11 +6,11 @@
 
 
 export enum FacilityType {
-  PRESSURE = "Давление",
-  TEMPERATURE = "Температура",
-  LEVEL = "Уровень",
-  FLOW = "Расход",
-  GAZ_ANALYZE = "Газоанализ"
+  PRESSURE = "Измерения давления и вакуума",
+  TEMPERATURE = "Измерения температурные и теплофизические",
+  LEVEL = "Измерение уровня",
+  FLOW = "Измерения расхода, вместимости, уровня, параметров потока",
+  GAZ_ANALYZE = "Измерения физико-химические"
 }
 
 /** Выбор оборудования для нового опросного листа */
@@ -22,30 +22,30 @@ export const facilityTypesList = [
     title: FacilityType.GAZ_ANALYZE,
     value: FacilityType.GAZ_ANALYZE,
     disabled: true,
-    key: 1,
+
     children: [
       {
         id: FacilityType.GAZ_ANALYZE,
         title: "Газоанализатор оптический",
         value: "Газоанализатор оптический",
-        key: 2
+
       },
       {
         id: FacilityType.GAZ_ANALYZE,
         title: "Газоанализатор термокаталитический",
         value: "Газоанализатор термокаталитический",
-        key: 3
+
       },
       {
         id: FacilityType.GAZ_ANALYZE,
         title: "Газоанализатор термохимический",
         value: "Газоанализатор термохимический",
-        key: 4,
+
       },      {
         id: FacilityType.GAZ_ANALYZE,
         title: "Газоанализатор электрохимический",
         value: "Газоанализатор электрохимический",
-        key: 5
+
       }
     ]
   },
@@ -54,26 +54,26 @@ export const facilityTypesList = [
     title: FacilityType.PRESSURE,
     value: FacilityType.PRESSURE,
     disabled: true,
-    key: 6,
+
     children: [
       {
         id: FacilityType.PRESSURE,
         title: "Абсолютное давление",
         value: "Абсолютное давление",
         disabled: true,
-        key: 7,
+
         children: [
           {
             id: FacilityType.PRESSURE,
             title: "Датчик абсолютного давления интеллектуальный",
             value: "Датчик абсолютного давления интеллектуальный",
-            key: 8
+
           },
           {
             id: FacilityType.PRESSURE,
             title: "Датчик абсолютного давления",
             value: "Датчик абсолютного давления",
-            key: 9
+
           }
         ]
       },
@@ -82,43 +82,42 @@ export const facilityTypesList = [
         title: "Избыточное давление",
         value: "Избыточное давление",
         disabled: true,
-        key: 10,
+
         children: [
           {
             id: FacilityType.PRESSURE,
             title: "Датчик перепада давления интеллектуальный",
             value: "Датчик перепада давления интеллектуальный",
-            key: 11,
           },
           {
             id: FacilityType.PRESSURE,
             title: "Датчик избыточного давления интеллектуальный",
             value: "Датчик избыточного давления интеллектуальный",
-            key: 12,
+
           },
           {
             id: FacilityType.PRESSURE,
             title: "Датчик избыточного давления",
             value: "Датчик избыточного давления",
-            key: 13,
+
           },
           {
             id: FacilityType.PRESSURE,
             title: "Манометр показывающий",
             value: "Манометр показывающий",
-            key: 14,
+
           },
           {
             id: FacilityType.PRESSURE,
             title: "Реле давления или перепада или напора или тяги или сигнализатора давления",
             value: "Реле давления или перепада или напора или тяги или сигнализатора давления",
-            key: 15,
+
           },
           {
             id: FacilityType.PRESSURE,
             title: "Электроконтактный манометр",
             value: "Электроконтактный манометр",
-            key: 16,
+
           }
         ]
       },
@@ -127,13 +126,13 @@ export const facilityTypesList = [
         title: "Дифференциальное давление",
         value: "Дифференциальное давление",
         disabled: true,
-        key: 17,
+
         children: [
           {
             id: FacilityType.PRESSURE,
             title: "Датчик перепада давления",
             value: "Датчик перепада давления",
-            key: 18
+
           }
         ]
       },
@@ -142,13 +141,13 @@ export const facilityTypesList = [
         title: "Гидростатическое давление",
         value: "Гидростатическое давление",
         disabled: true,
-        key: 19,
+
         children: [
           {
             id: FacilityType.PRESSURE,
             title: "Датчик гидростатического давления",
             value: "Датчик гидростатического давления",
-            key: 20
+
           }
         ]
       },
@@ -159,49 +158,49 @@ export const facilityTypesList = [
     title: FacilityType.FLOW,
     value: FacilityType.FLOW,
     disabled: true,
-    key: 48,
+
     children: [
       {
         id: FacilityType.FLOW,
         title: "Кориолисовый расходомер  (массомер)",
         value: "Кориолисовый расходомер  (массомер)",
-        key: 49
+
       },
       {
         id: FacilityType.FLOW,
         title: "Ультразвуковой расходомер",
         value: "Ультразвуковой расходомер",
-        key: 50,
+
       },
       {
         id: FacilityType.FLOW,
         title: "Турбинный расходомер",
         value: "Турбинный расходомер",
-        key: 51,
+
       },
       {
         id: FacilityType.FLOW,
         title: "Вихревой расходомер",
         value: "Вихревой расходомер",
-        key: 52,
+
       },
       {
         id: FacilityType.FLOW,
         title: "Электромагнитный расходомер",
         value: "Электромагнитный расходомер",
-        key: 53,
+
       },
       {
         id: FacilityType.FLOW,
         title: "Ротаметр",
         value: "Ротаметр",
-        key: 54,
+
       },
       {
         id: FacilityType.FLOW,
         title: "Датчик реле расхода",
         value: "Датчик реле расхода",
-        key: 55,
+
       }
     ]
   },
@@ -210,44 +209,44 @@ export const facilityTypesList = [
     title: FacilityType.TEMPERATURE,
     value: FacilityType.TEMPERATURE,
     disabled: true,
-    key: 36,
+
     children: [
       {
         id: FacilityType.TEMPERATURE,
         title: "Термопреобразователь",
         value: "Термопреобразователь",
         disabled: true,
-        key: 37,
+
         children: [
           {
             id: FacilityType.TEMPERATURE,
             title: "Интеллектуальный термопреобразователь с унифицированным выходным сигналом",
             value: "Интеллектуальный термопреобразователь с унифицированным выходным сигналом",
-            key: 38
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Термопреобразователь с унифицированным выходным сигналом",
             value: "Термопреобразователь с унифицированным выходным сигналом",
-            key: 39
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Термометр сопротивления",
             value: "Термометр сопротивления",
-            key: 40
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Интеллектуальный многоточечный датчик температуры",
             value: "Интеллектуальный Многоточечный датчик температуры",
-            key: 41
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Многоточечный датчик температуры",
             value: "Многоточечный датчик температуры",
-            key: 42
+
           }
         ]
       },
@@ -256,31 +255,31 @@ export const facilityTypesList = [
         title: "Термопара",
         value: "Термопара",
         disabled: true,
-        key: 43,
+
         children: [
           {
             id: FacilityType.TEMPERATURE,
             title: "Интеллектуальный преобразователь термоэлектрический",
             value: "Интеллектуальный преобразователь термоэлектрический",
-            key: 44
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Преобразователь термоэлектрический",
             value: "Преобразователь термоэлектрический",
-            key: 45
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Многоточечный датчик температуры",
             value: "Многоточечный датчик температуры",
-            key: 46
+
           },
           {
             id: FacilityType.TEMPERATURE,
             title: "Многоточечный датчик температуры",
             value: "Многоточечный датчик температуры",
-            key: 47
+
           }
         ]
       }
@@ -291,44 +290,44 @@ export const facilityTypesList = [
     title: FacilityType.LEVEL,
     value: FacilityType.LEVEL,
     disabled: true,
-    key: 21,
+
     children: [
       {
         id: FacilityType.LEVEL,
         title: "Сигнализатор уровня",
         value: "Сигнализатор уровня",
         disabled: true,
-        key: 22,
+
         children: [
           {
             id: FacilityType.LEVEL,
             title: "Вибрационный cигнализатор уровня",
             value: "Вибрационный cигнализатор уровня",
-            key: 23
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Емкостной cигнализатор уровня",
             value: "Емкостной cигнализатор уровня",
-            key: 24
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Кондуктометрический cигнализатор уровня",
             value: "Кондуктометрический cигнализатор уровня",
-            key: 25
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Ультразвуковой cигнализатор уровня",
             value: "Ультразвуковой cигнализатор уровня",
-            key: 26
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Термометрический",
             value: "Термометрический cигнализатор уровня",
-            key: 27
+
           }
         ]
       },
@@ -337,49 +336,49 @@ export const facilityTypesList = [
         title: "Уровнемер",
         value: "Уровнемер",
         disabled: true,
-        key: 28,
+
         children: [
           {
             id: FacilityType.LEVEL,
             title: "Буйковый уровнемер",
             value: "Буйковый уровнемер",
-            key: 29
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Волноводный уровнемер",
             value: "Волноводный уровнемер",
-            key: 30
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Гидростатический уровнемер",
             value: "Гидростатический уровнемер" ,
-            key: 31
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Микроволновый уровнемер",
             value: "Микроволновый уровнемер",
-            key: 32
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Поплавковый (магнитнострикционный) уровнемер",
             value: "Поплавковый (магнитнострикционный) уровнемер" ,
-            key: 33
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Радарный уровнемер",
             value: "Радарный уровнемер",
-            key:34
+
           },
           {
             id: FacilityType.LEVEL,
             title: "Ультразвуковой уровнемер",
             value: "Ультразвуковой уровнемер",
-            key: 35
+
           }
         ]
       }

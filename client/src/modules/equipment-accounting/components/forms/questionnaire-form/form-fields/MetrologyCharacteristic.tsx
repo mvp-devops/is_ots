@@ -51,9 +51,10 @@ const inputProps = (type?: string): InputProps => {
 interface MetrologyCharacteristicProps {
   facilityType: string;
   accuracy?: number
+  mpi?: number
 }
 
-const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType, accuracy}) => {
+const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType, accuracy, mpi}) => {
 
   /** Предел допускаемой основной приведенной погрешности, %
    * Если ОЛ формируется по существующее единице оборудования данные получены от сервера и поле нередактируемо
@@ -261,7 +262,7 @@ const sensorCalibrationFormField = (
     <Item
       label={<Text type="secondary">Межповерочный интервал, мес.</Text>}
       name={"mpi"}
-      initialValue={true}
+      initialValue={mpi}
       className="ms-2 mb-0"
       rules={[
         {

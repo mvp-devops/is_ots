@@ -3,8 +3,12 @@ import { GeneralInformationView, Views } from "../../types";
 import { GeneralInformationForm } from "../forms";
 import { ModalContainer } from "../../../../components";
 import { TableColumns, useGeneralInformationTable } from ".";
-import { tableLocale } from "../../../main";
+import {FormActions, tableLocale} from "../../../main";
 import { useGeneralInformationForm } from "../forms/hooks";
+import {useState} from "react";
+import {useTypedSelector} from "../../../../hooks";
+import {QuestionnaireForm} from "../forms/questionnaire-form";
+import {getEquipmentAsset} from "../../api/equipment-accounting.api";
 
 const { Row, Cell } = Table.Summary;
 const { Text } = Typography;
@@ -20,7 +24,11 @@ const GeneralInformationTable = () => {
     setCurrentRow,
   } = useGeneralInformationTable();
 
+  const [currentAsset, setCurrentAsset] = useState("");
+
   const { deleteGeneralInformationItem } = useGeneralInformationForm();
+  const {formVisible, actionType} = useTypedSelector(state => state.main);
+  const {target} = useTypedSelector(state => state.positionTree);
 
   const columns = TableColumns(
     "general-information",
@@ -45,6 +53,14 @@ const GeneralInformationTable = () => {
       target="general-information"
       child={
         <GeneralInformationForm row={currentRow as GeneralInformationView} />
+      }
+    />
+  );
+
+  const questionnaireFormRender = formVisible && actionType === FormActions.CREATE_QUESTIONNAIRE && (
+    <ModalContainer
+      child={
+        <QuestionnaireForm target={target}  data={currentAsset}/>
       }
     />
   );
@@ -100,6 +116,7 @@ const GeneralInformationTable = () => {
           return {
             onMouseEnter: () => {
               setCurrentRow(record as GeneralInformationView);
+              getEquipmentAsset(record.id.toString()).then(data => setCurrentAsset(data));
             },
           };
         }}
@@ -108,6 +125,7 @@ const GeneralInformationTable = () => {
         summary={(data) => summary(data)}
       />
       {formRender}
+      {questionnaireFormRender}
     </>
   );
 };

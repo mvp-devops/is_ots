@@ -11,7 +11,7 @@ import {
   SearchOutlined,
   EditOutlined,
   DeleteOutlined,
-  FileSearchOutlined,
+  FileSearchOutlined, FileDoneOutlined,
 } from "@ant-design/icons";
 import { ColumnType } from "antd/lib/table";
 import {
@@ -87,6 +87,28 @@ const TableColumns = (
     ),
     key: "REMOVE_EQUIPMENT_ASSET",
   };
+
+  const createQuestionnaireMenuItem = {
+    label: (
+      <Space
+        className="text-secondary"
+        onClick={() => {
+          setActionType(FormActions.CREATE_QUESTIONNAIRE);
+          setFormVisible(true);
+        }}
+      >
+        <FileDoneOutlined
+          key="CREATE_NEW_QUESTIONNAIRE"
+          className="text-info"
+          style={{ marginBottom: "6px", padding: 0 }}
+          title={"Сформировать новый опросный лист"}
+        />
+        Сформировать ОЛ
+      </Space>
+    ),
+    key: "CREATE_QUESTIONNAIRE",
+  };
+
 
   const questionareViewMenuItem = (record: GeneralInformationView) => {
     const render = {
@@ -1638,6 +1660,8 @@ const TableColumns = (
 
   const {currentUser} = useTypedSelector(state => state.main);
 
+  console.log((currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.CUSTOMER)));
+
   switch (target) {
     case "general-information": {
       columns.push(numberColumn);
@@ -1680,8 +1704,9 @@ const TableColumns = (
           questionareViewMenuItem(currentRow as GeneralInformationView)
         );
       // menuItems.push(technologyCardsViewMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) ) && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.CUSTOMER))  && menuItems.push(createQuestionnaireMenuItem);
 
       break;
     }
@@ -1734,8 +1759,8 @@ const TableColumns = (
         menuItems.push(
           metrologyDocumentsViewMenuItem(currentRow as MetrologyView)
         );
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1757,8 +1782,8 @@ const TableColumns = (
       columns.push(emergencyProtocolColumn);
       columns.push(actionsColumn);
 
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS)) && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1784,8 +1809,8 @@ const TableColumns = (
       currentRow &&
         (currentRow as CableLogView)?.wiringDiagram &&
         menuItems.push(wiringDiagramViewMenuItem(currentRow as CableLogView));
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS)) && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1806,8 +1831,8 @@ const TableColumns = (
       columns.push(rangeColumn);
       columns.push(actionsColumn);
 
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(deleteAssetMenuItem);
 
       break;
     }
@@ -1836,8 +1861,8 @@ const TableColumns = (
           monitoringDocumentsViewMenuItem(currentRow as MonitoringView)
         );
 
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(editAssetMenuItem);
-      currentUser.roles.includes(Roles.EXPERT) &&  currentUser.roles.includes(Roles.OTS)  && menuItems.push(deleteAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(editAssetMenuItem);
+      (currentUser.roles.includes(Roles.EXPERT) ||  currentUser.roles.includes(Roles.OTS))  && menuItems.push(deleteAssetMenuItem);
 
       break;
     }

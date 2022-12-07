@@ -1,9 +1,10 @@
 import React, {FC, useState} from "react";
 
 import {
-  Checkbox, Col, Divider,
+  Checkbox,
+  Col,
+  Divider,
   Form,
-  FormItemProps,
   Input,
   InputProps,
   Radio,
@@ -16,11 +17,13 @@ import {
 import {NotFoundComponent} from "../../../../../../components";
 import {
   connection,
-  connectionScheme, connectionType, controlCableConnectionList, converter, converterTypes, FacilityType,
+  connectionType,
+  controlCableConnectionList,
+  converter,
+  converterTypes,
+  FacilityType,
   hartVersion,
   outputSignal,
-  settingRange,
-  valveBlockType,
   voltage
 } from "../questionnaire.consts";
 
@@ -359,7 +362,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     <Item
       label={<Text type="secondary">Диаметр трубопровода Ду, мм</Text>}
       name={"pipelineDiameter"}
-      initialValue={true}
       className="ms-2 mb-0"
       rules={[
         {
@@ -401,7 +403,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     <Item
       label={<Text type="secondary">Участок трубопровода до прибора, мм</Text>}
       name={"flowMeterDistanceBefore"}
-      initialValue={true}
       className="ms-2 mb-0"
       rules={[
         {
@@ -421,7 +422,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
       label={<Text type="secondary">Участок трубопровода после прибора, мм</Text>}
       name={"flowMeterDistanceAfter"}
-      initialValue={true}
       className="ms-2 mb-0"
       rules={[
         {
@@ -529,9 +529,8 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const controlCableConnectionFormField = (
     <Item
-      label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Место подключения контрольного кабеля" : "Тип монтажа"}</Text>}
+      label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Подключение контрольного кабеля" : "Тип монтажа"}</Text>}
       name={"controlCableConnection"}
-      valuePropName="checked"
       className="ms-2 mb-0 p-0"
       rules={[
         {
@@ -564,6 +563,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       <Checkbox />
     </Item>
   );
+
 
   const gazAnalyzeAdditionallyCharacteristic = (
     <>

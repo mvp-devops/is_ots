@@ -20,18 +20,6 @@ const {Text} = Typography;
 const {Item} = Form;
 const {Option} = Select;
 
-const selectProps: SelectProps = {
-  size: "small",
-  className: "text-secondary",
-  notFoundContent: <NotFoundComponent/>,
-  showSearch: true,
-  optionFilterProp: "children",
-  filterOption: (input, option) =>
-    (option!.children as unknown as string)
-      ?.toUpperCase()
-      ?.includes(input?.toUpperCase()),
-}
-
 const inputProps = (type?: string): InputProps => {
   return {
     size: "small",

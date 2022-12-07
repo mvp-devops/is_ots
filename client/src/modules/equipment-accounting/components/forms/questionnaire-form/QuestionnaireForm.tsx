@@ -1,4 +1,4 @@
-import React, {createRef, FC, useEffect, useState} from 'react';
+import React, {createRef, FC, useEffect, useLayoutEffect, useState} from 'react';
 import {
   Button, Checkbox, Col, Divider,
   Form,
@@ -32,6 +32,7 @@ import BaseInformation from "./form-fields/BaseInformation";
 import EnvironmentCharacteristic from "./form-fields/EnvironmentCharacteristic";
 import MetrologyCharacteristic from "./form-fields/MetrologyCharacteristic";
 import AdditionallyCharacteristic from "./form-fields/AdditionallyCharacteristic";
+import {getEquipmentAsset} from "../../../api/equipment-accounting.api";
 const {Item} = Form;
 const {Text} = Typography;
 
@@ -99,21 +100,47 @@ const {Text} = Typography;
 
 interface QuestionnaireFormProps {
   target: string;
-  id?: string
+  data?: any
+
 }
 
-const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
-
-  /**  */
+const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target,  data}) => {
 
 
   const [facilityType, setFacilityType] = useState("");
+  const [subUnitsList, setSubUnitsList] = useState([]);
 
-  const [heatingValue, setHeatingValue] = useState("Не предусмотрено");
 
-  const toggleCheckBox = (e: CheckboxChangeEvent, setValue) => {
-    setValue(!e.target.checked);
-  };
+  const {currentItem} = useTypedSelector(state => state.positionTree);
+
+
+  useEffect(() => {
+    currentItem?.target === "unit" && setSubUnitsList(currentItem?.children)
+    if(currentItem?.target === "project") {
+      const subUnits = [];
+      for (let i = 0; i < currentItem?.children?.length; i++) {
+        const unit = currentItem?.children[i];
+        unit.children && subUnits.push(...unit?.children);
+      }
+      setSubUnitsList(subUnits);
+    }
+  }, [currentItem]);
+
+  useEffect(() => {
+data ? setFacilityType(data.facilityType) : setFacilityType("");
+  }, []);
+
+  useEffect(() => {
+    console.log("facilityType: ", facilityType);
+  }, [facilityType]);
+
+
+
+
+
+
+
+
 
   const [form] = Form.useForm();
   const formRef = createRef<FormInstance>();
@@ -158,21 +185,24 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
     //   setLoading(false);
     //   setFormVisible(false);
     // })
-    console.log(values);
+    console.log({
+      ...values,
+      subsidiary: data.subsidiary.title,
+      field: data.field.title,
+      project:  `${data.project.code}. ${data.project.title}`,
+      unit: `${data.unit.title} (поз. ${data.unit.position})`,
+      subUnit: `${data.subUnit.title} (поз. ${data.subUnit.position})`,
+      cipher: `${data.subsidiary.code}.${data.field.code}.${data.project.code}.${data.unit.position}.${data.subUnit.position}-${
+        values.questionnaireType === "Проектная документация" ? "ПД" 
+          : values.questionnaireType === "Рабочая документация" ? "РД"
+          : "РЭ"
+      }-${values.tag}-ОЛ`
+    });
 
     onReset()
   }
 
 
-  //FIXME: получать как-то
-  const title = "";
-  const tag = "";
-  const parameter = "";
-  const subUnit = "";
-  const subUnitsList = [];
-  const fda = "";
-  const fdaList = [];
-  const lifeTime = 0
 
   const onFinishFailed = (errorInfo: any) => {
     console.log("Failed:", errorInfo);
@@ -201,24 +231,36 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target, id}) => {
 
       >
      <Space direction="vertical">
-       <BaseInformation title={title} setFacilityType={setFacilityType} resetForm={onReset}/>
-       <GeneralInformation tag={tag} subUnit={subUnit} subUnitsList={subUnitsList} parameter={parameter} fda={fda} facilityType={facilityType}/>
-       <Divider className="m-0" orientation="left"><Text type="secondary">Эксплуатационные характеристики</Text> </Divider>
-       <Space direction="horizontal" >
-         <PerformanceCharacteristic lifeTime={lifeTime}/>
-         <EnvironmentCharacteristic facilityType={facilityType}/>
-       </Space>
-       <Space direction="horizontal" >
-         <MetrologyCharacteristic facilityType={facilityType} accuracy={0}/>
-         <AdditionallyCharacteristic facilityType={facilityType}/>
-       </Space>
+       <Space direction="horizontal"><BaseInformation title={data?.title} setFacilityType={setFacilityType} resetForm={onReset}/></Space>
+
+  {facilityType && (
+    <>
+      <GeneralInformation
+        tag={data?.tag} location={data?.location}
+        subUnitsList={subUnitsList} parameter={data?.parameter}
+        fda={data?.fda} facilityType={facilityType} range={data?.range}
+        measureRangeMin={data?.measureRangeMin}
+      measureRangeMax={data?.measureRangeMax}
+      />
+      <Divider className="m-0" orientation="left"><Text type="secondary">Эксплуатационные характеристики</Text> </Divider>
+      <Space direction="horizontal" >
+        <PerformanceCharacteristic lifeTime={data?.lifeTime}/>
+        <EnvironmentCharacteristic facilityType={facilityType}/>
+      </Space>
+      <Space direction="horizontal" >
+        <MetrologyCharacteristic facilityType={facilityType} accuracy={data?.accuracy} mpi={data?.mpi}/>
+        <AdditionallyCharacteristic facilityType={facilityType}/>
+      </Space>
+    </>
+  )}
+
      </Space>
         <Space className="d-flex justify-content-end mt-2" style={{marginRight: 4}}>
           <Item>
             <Button type={loading ? "default" : "primary"} htmlType="submit" >
               {loading ?
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                  Загрузка отчета</Spin> :
+                  Загрузка ОЛ</Spin> :
 
                 "Сформировать"}
 

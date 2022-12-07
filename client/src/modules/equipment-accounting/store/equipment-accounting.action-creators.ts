@@ -48,7 +48,6 @@ export const getSummaryListOfEquipment = (
       const data = await getAllEssences(parrentTarget, parrentId);
 
       const metrologiesList = getAllMetrology(data);
-      console.log(metrologiesList);
       const monitoringsList = getAllMonitoring(data);
       const cableLogList = getAllCableLog(data);
       const impulseLineLogList = getAllImpulseLineLog(data);

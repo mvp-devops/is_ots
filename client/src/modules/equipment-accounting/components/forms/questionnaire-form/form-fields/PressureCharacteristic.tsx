@@ -1,5 +1,5 @@
-import {useState} from "react";
-import {Checkbox, Form, FormItemProps,  Radio, Row,  Select,  SelectProps,  Typography} from "antd";
+import React, {useState} from "react";
+import {Checkbox, Form, FormItemProps, Input, InputProps, Radio, Row, Select, SelectProps, Typography} from "antd";
 import {NotFoundComponent} from "../../../../../../components";
 import {connectionScheme, settingRange, valveBlockType} from "../questionnaire.consts";
 
@@ -18,7 +18,13 @@ const selectProps: SelectProps = {
       ?.toUpperCase()
       ?.includes(input?.toUpperCase()),
 }
-
+const inputProps = (type?: string): InputProps => {
+  return {
+    size: "small",
+    type: type ? type : "text",
+    className: "text-secondary text-center"
+  }
+}
 
 const PressureCharacteristic = () => {
 
@@ -148,6 +154,27 @@ const PressureCharacteristic = () => {
     </Item>
   );
 
+  const valveBlockCorpMaterialFormField  = (
+    <Item
+      className="ms-2 mb-0 d-flex align-content-center-center"
+      label={<Text type="secondary">Материал клапанного блока</Text>}
+      name={"valveBlockCorpMaterial"}
+      rules={[
+        {
+          required: true,
+          message:
+            `Пожалуйста, введите материал клапанного блока`,
+        }
+      ]}
+    >
+      <Input
+        {...inputProps()}
+        className="text-left text-secondary"
+        style={{width: 370}}
+      />
+    </Item>
+  )
+
   const pressureSettings = (
     <>
       <Row style={{marginLeft: 30}}>
@@ -164,6 +191,9 @@ const PressureCharacteristic = () => {
       </Row>
       <Row style={{marginLeft: 38}} >
         {valveBlock && airBleedValveFormField}
+      </Row>
+      <Row style={{marginLeft: 72}}>
+        {valveBlock && valveBlockCorpMaterialFormField}
       </Row>
     </>
   )

@@ -36,14 +36,23 @@ const inputProps = (type?: string): InputProps => {
 
 interface GeneralInformationProps {
   tag: string;
-  subUnit: string;
+  location: string;
   subUnitsList: any[];
   parameter: string;
-  fda: string;
+  fda: any;
   facilityType: string;
+  range: string;
+  measureRangeMin: number;
+  measureRangeMax: number;
 }
 
-const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, subUnit, subUnitsList, parameter, fda}) => {
+const GeneralInformation: FC<GeneralInformationProps> = ({
+                                                           facilityType,
+                                                           tag, location,
+                                                           subUnitsList, parameter, fda, range,
+                                                           measureRangeMin,
+                                                           measureRangeMax
+}) => {
 
   const tagFormField = (
     <Item
@@ -73,7 +82,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   const subUnitFormField = (
       <Item
         labelCol={{span: 8}}
-        initialValue={subUnit}
+        initialValue={location}
         rules={[
           {
             required: true,
@@ -81,12 +90,12 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
               `Пожалуйста, выберите установку/аппарат/линию`,
           }
         ]}
-        {...itemProps("Установка/аппарат/линия", "subUnit")}
+        {...itemProps("Установка/аппарат/линия", "location")}
       >
-        {subUnit ? (
+        {location ? (
           <Input
             {...inputProps()}
-            disabled={!!subUnit}
+            disabled={!!location}
           />
         ) : (
           <Select
@@ -136,7 +145,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   const fdaFormField = (
       <Item
         labelCol={{span: 8}}
-        initialValue={fda}
+        initialValue={fda ? `${fda.code}. ${fda.title}` : ""}
         rules={[
           {
             required: true,
@@ -275,6 +284,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   const measureRangeMinFormField = (
     <Item
       style={{width: 150}}
+      initialValue={ measureRangeMin}
       {...itemProps("мин.", "measureRangeMin")}
       rules={[
         {
@@ -295,6 +305,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
   const measureRangeMaxFormField = (
     <Item
       style={{width: 150}}
+      initialValue={measureRangeMax}
       rules={[
         {
           required: true,
@@ -343,12 +354,13 @@ const GeneralInformation: FC<GeneralInformationProps> = ({facilityType, tag, sub
                     : facilityType === FacilityType.PRESSURE ? 92
                     : 104
             }}>
-       Диапазон измерения, {
+       Диапазон измерения, {range ? range :
               facilityType === FacilityType.GAZ_ANALYZE ? "% НКПР"
                 : facilityType === FacilityType.LEVEL ? "мм"
                   : facilityType === FacilityType.FLOW ? "м³/ч"
                     : facilityType === FacilityType.PRESSURE ? "МПа" : "°C"
             }:
+
             </Col>
             <Col>
               {measureRangeMinFormField}

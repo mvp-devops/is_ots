@@ -15,8 +15,7 @@ import {formattedDate} from "../../../common/utils/formatDate.pipe";
 
 const pdf =  require("html-pdf");
 import {monthReport as template} from "../../../common/templates/month.report";
-import {delay, delayWhen} from "rxjs";
-import {readFile, readFileSync} from "fs";
+
 
 
 

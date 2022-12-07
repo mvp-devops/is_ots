@@ -34,6 +34,13 @@ import type { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../common/
 export class EquipmentAccountingController {
   constructor(private readonly service: EquipmentAccountingService) {}
 
+  /** Получаем единицу оборудования для формирования ОЛ */
+
+  @Get("/equipment-asset/:id")
+  getEquipmentAsset(@Param("id") id: string) {
+    return this.service.getEquipmentAsset(id);
+  }
+
   @Get("/facilities/find")
   findAllFacilityAssets() {
     return this.service.findAllFacilityAssets();

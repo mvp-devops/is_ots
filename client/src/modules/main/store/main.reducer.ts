@@ -1,4 +1,4 @@
-import { ActionTypes, EssenceAction, EssenceState } from "../types/main.types";
+import {ActionTypes, EssenceAction, EssenceState} from "../types/main.types";
 import {Roles} from "../utils/main.consts";
 
 const initialState: EssenceState = {
@@ -31,7 +31,7 @@ const initialState: EssenceState = {
     position: "Главный специалист",
     email: "polyarush.mv@gazprom-neft.ru",
     phone: "+7(812) 449-03-90 (доб. 7963)",
-    roles: [Roles.EXPERT],
+    roles: [Roles.ADMINISTRATOR, Roles.EXPERT, Roles.ESCORT ],
     token:
       "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiZW1haWwiOiJwb2x5YXJ1c2gubXZAZ2F6cHJvbS1uZWZ0LnJ1ZSIsImlhdCI6MTY2MjYxNTk5MSwiZXhwIjoxNjYyNzAyMzkxfQ.ehlUhST0N8ReXIMKHD5V45DQzqcczq5g8gLqgRnTTnA",
     avatar: "logo/a6787605-f1a6-4be7-a238-e8e921fd3d6a.png",
