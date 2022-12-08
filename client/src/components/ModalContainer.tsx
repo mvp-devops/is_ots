@@ -18,7 +18,6 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   const addActionsFlag =
     actionType === FormActions.ADD ||
     actionType === FormActions.ADD_CHILD ||
-    // actionType === FormActions.ADD_DOCUMENT ||
     actionType === FormActions.ADD_COMMENT ||
     actionType === FormActions.ADD_DICTIONARY_ITEM ||
     actionType === FormActions.ADD_EQUIPMENT;
@@ -49,27 +48,62 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
   /** QUESTIONNAIRE FORM ACTIONS */
   const questionnaireFormActions =
     actionType === FormActions.CREATE_NEW_QUESTIONNAIRE ||
-    actionType === FormActions.CREATE_QUESTIONNAIRE
+    actionType === FormActions.CREATE_QUESTIONNAIRE;
 
-  const containerWidth =
-    actionType === FormActions.ADD_COMMENT ||
-    actionType === FormActions.EDIT_COMMENT
+  let containerWidth = 1200;
+
+  switch (actionType) {
+    case FormActions.ADD_COMMENT:
+    case FormActions.EDIT_COMMENT: containerWidth = 1200; break;
+    case FormActions.ADD_EQUIPMENT: containerWidth =  (target === "cable-log" ||
+      target === "impulse-line-log" ||
+      target === "signal" ||
+      target === "monitoring" ||
+      target === "summary-list-of-equipment")
       ? 1200
-      : actionType === FormActions.ADD_EQUIPMENT &&
-        (target === "cable-log" ||
-          target === "impulse-line-log" ||
-          target === "signal" ||
-          target === "monitoring" ||
-          target === "summary-list-of-equipment")
-      ? 1200
-      : target === "metrology" || target === "general-information"
-      ? 1000
-      : target === "monitoring"
-      ? 1200
-      : actionType === FormActions.REPORT ? 600 : documentFormActions ? 1100 : questionnaireFormActions ? 1400
-            : actionType === FormActions.CREATE_POSITION_TREE_ITEMS ? 600
-              : actionType === FormActions.ADD_USER ? 600
-              : 1200;
+      : 1000; break;
+    case FormActions.CREATE_POSITION_TREE_ITEMS:
+    case FormActions.ADD_USER:
+    case FormActions.REPORT: containerWidth = 600; break;
+    case FormActions.ADD_DOCUMENT:
+    case FormActions.EDIT_DOCUMENT:
+    case FormActions.ADD_NORMATIVE:
+    case FormActions.EDIT_NORMATIVE: containerWidth = 1100; break;
+    case FormActions.CREATE_NEW_QUESTIONNAIRE:
+    case FormActions.CREATE_QUESTIONNAIRE: containerWidth = 1400; break;
+    case FormActions.ADD:
+    case FormActions.ADD_CHILD:
+    case FormActions.EDIT:
+    case FormActions.EDIT_CHILD:
+    case FormActions.REMOVE:
+    case FormActions.ADD_DICTIONARY_ITEM:
+    case FormActions.EDIT_DICTIONARY_ITEM:
+    case FormActions.REMOVE_DICTIONARY_ITEM:
+    case FormActions.REMOVE_CHILD: containerWidth = 600; break;
+    case FormActions.CHECKLIST: containerWidth = 600; break;
+
+    default: break;
+  }
+
+  // const containerWidth =
+  //   actionType === FormActions.ADD_COMMENT ||
+  //   actionType === FormActions.EDIT_COMMENT
+  //     ? 1200
+  //     : actionType === FormActions.ADD_EQUIPMENT &&
+  //       (target === "cable-log" ||
+  //         target === "impulse-line-log" ||
+  //         target === "signal" ||
+  //         target === "monitoring" ||
+  //         target === "summary-list-of-equipment")
+  //     ? 1200
+  //     : target === "metrology" || target === "general-information"
+  //     ? 1000
+  //     : target === "monitoring"
+  //     ? 1200
+  //     : actionType === FormActions.REPORT ? 600 : documentFormActions ? 1100 : questionnaireFormActions ? 1400
+  //           : actionType === FormActions.CREATE_POSITION_TREE_ITEMS ? 600
+  //             : actionType === FormActions.ADD_USER ? 600
+  //             : 1200;
 
   let title = "";
 

@@ -161,11 +161,12 @@ const Contacts = () => {
 
 
   return (
-<>
+<Space direction={"vertical"} style={{minWidth: 750}}>
   <Text type={"secondary"} strong className={"d-flex justify-content-center"}>Контактные данные Заказчика:</Text>
   <List
     itemLayout="horizontal"
     dataSource={contacts}
+    style={{minWidth: 750}}
     renderItem={item => {
       const link = `mailto:${item.email}`
       return (
@@ -199,7 +200,7 @@ const Contacts = () => {
       )
     }}
   />
-</>
+</Space>
   );
 };
 

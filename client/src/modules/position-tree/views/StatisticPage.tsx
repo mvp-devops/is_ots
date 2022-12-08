@@ -240,11 +240,26 @@ const StatisticPage = () => {
   useEffect(() => {
   switch (currentItem.target) {
     case "subsidiary": {
-      setCard(pathToSvg("MRNG.svg"))
+      currentItem.id === "1" && setCard(pathToSvg(`gpnr.svg`))
+      currentItem.id === "2" && setCard(pathToSvg(`mrng.svg`))
+      currentItem.id === "3" && setCard(pathToSvg(`gpnz.svg`))
+      currentItem.id === "23" && setCard(pathToSvg(`gpnh.svg`))
       break;
     }
     case "field": {
-      setCard(pathToSvg("GPNZ.svg"))
+      currentItem.id === "1" && setCard(pathToSvg(`np.svg`))
+      currentItem.id === "2" && setCard(pathToSvg(`tz.svg`))
+      currentItem.id === "3" && setCard(pathToSvg(`p.svg`))
+      currentItem.id === "4" && setCard(pathToSvg(`en.svg`))
+      currentItem.id === "5" && setCard(pathToSvg(`ch.svg`))
+      currentItem.id === "6" && setCard(pathToSvg(`bvn.svg`))
+      currentItem.id === "7" && setCard(pathToSvg(`myam.svg`))
+      currentItem.id === "8" && setCard(pathToSvg(`ztm.svg`))
+      currentItem.id === "9" && setCard(pathToSvg(`hsv.svg`))
+      currentItem.id === "10" && setCard(pathToSvg(`o.svg`))
+      currentItem.id === "11" && setCard(pathToSvg(`ach.svg`))
+      currentItem.id === "12" && setCard(pathToSvg(`u.svg`))
+      currentItem.id === "13" && setCard(pathToSvg(`bnp.svg`))
       break;
     }
     default: break;

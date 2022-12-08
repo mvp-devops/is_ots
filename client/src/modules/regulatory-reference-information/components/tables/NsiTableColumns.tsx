@@ -33,7 +33,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     title: "Наименование",
     dataIndex: "title",
     key: "title",
-    width: 300,
+    // width: dictionaryTarget === "section" ? 800 : 400,
     filters: titleFilters,
 
     filtered: true,

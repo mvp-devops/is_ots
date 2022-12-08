@@ -1,4 +1,4 @@
-import { Input, Layout, Space, Table, Typography } from "antd";
+import {Collapse, Input, Layout, Space, Table, Typography} from "antd";
 import {
   PlusOutlined,
   SearchOutlined,
@@ -124,44 +124,134 @@ const NsiTable = () => {
   return (
     <Layout>
       {/* <SearchPanel data={ } /> */}
-      <Table
-        className="border p-1 m-0"
-        style={{ fontSize: 12 }}
-        size="small"
-        pagination={{
-          locale: {
-            // Options.jsx
-            items_per_page: "/ стр.",
-            jump_to: "Перейти",
-            jump_to_confirm: "подтвердить",
-            page: "Страница",
-            // Pagination.jsx
-            prev_page: "Назад",
-            next_page: "Вперед",
-            prev_5: "Предыдущие 5",
-            next_5: "Следующие 5",
-            prev_3: "Предыдущие 3",
-            next_3: "Следующие 3",
-            // page_size: 'размер страницы'
-          },
-        }}
-        locale={tableLocale}
-        loading={loading}
-        onRow={(record, rowIndex) => {
-          return {
-            onMouseEnter: (event) => setCurrentNsiItem(record),
-          };
-        }}
-        title={() => title}
-        rowKey={(record) => record.id}
-        columns={columns}
-        dataSource={
-          // dictionaryTarget !== "design"
-          searchInput.length > 1 ? filteredResults : dataSource
-          // : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
-        }
-        footer={() => NsiTableFooter(filteredResults)}
-      />
+      {dictionaryTarget !== "section" ? (
+        <Table
+          className="border p-1 m-0"
+          style={{ fontSize: 12 }}
+          size="small"
+          pagination={{
+            locale: {
+              // Options.jsx
+              items_per_page: "/ стр.",
+              jump_to: "Перейти",
+              jump_to_confirm: "подтвердить",
+              page: "Страница",
+              // Pagination.jsx
+              prev_page: "Назад",
+              next_page: "Вперед",
+              prev_5: "Предыдущие 5",
+              next_5: "Следующие 5",
+              prev_3: "Предыдущие 3",
+              next_3: "Следующие 3",
+              // page_size: 'размер страницы'
+            },
+          }}
+          locale={tableLocale}
+          loading={loading}
+          onRow={(record, rowIndex) => {
+            return {
+              onMouseEnter: (event) => setCurrentNsiItem(record),
+            };
+          }}
+          title={() => title}
+          rowKey={(record) => record.id}
+          columns={columns}
+          dataSource={
+            // dictionaryTarget !== "design"
+            searchInput.length > 1 ? filteredResults : dataSource
+            // : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
+          }
+          footer={() => NsiTableFooter(filteredResults)}
+        />
+      ) : (
+        <Space direction={"vertical"}>
+          <Collapse>
+            <Collapse.Panel header={<Text type={"secondary"}>Разделы проектной документации. ГОСТ Р 21.1101-2013</Text>} key="1" >
+              <Table
+                className="border p-1 m-0"
+                style={{ fontSize: 12 }}
+                size="small"
+                pagination={{
+                  locale: {
+                    // Options.jsx
+                    items_per_page: "/ стр.",
+                    jump_to: "Перейти",
+                    jump_to_confirm: "подтвердить",
+                    page: "Страница",
+                    // Pagination.jsx
+                    prev_page: "Назад",
+                    next_page: "Вперед",
+                    prev_5: "Предыдущие 5",
+                    next_5: "Следующие 5",
+                    prev_3: "Предыдущие 3",
+                    next_3: "Следующие 3",
+                    // page_size: 'размер страницы'
+                  },
+                }}
+                locale={tableLocale}
+                loading={loading}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onMouseEnter: (event) => setCurrentNsiItem(record),
+                  };
+                }}
+                title={() => title}
+                rowKey={(record) => record.id}
+                columns={columns}
+                dataSource={
+                  // dictionaryTarget !== "design"
+                  searchInput.length > 1 ? filteredResults.sort((a, b) => (a.title < b.title ? -1 : 0)) : dataSource.slice(57, 76).sort((a, b) => (a.title < b.title ? -1 : 0))
+                  // : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
+                }
+                footer={() => NsiTableFooter(filteredResults)}
+              />
+            </Collapse.Panel>
+            <Collapse.Panel header={<Text type={"secondary"}>Разделы рабочей документации. ГОСТ Р 21.1101-2013</Text>} key="2" >
+              <Table
+                className="border p-1 m-0"
+                style={{ fontSize: 12 }}
+                size="small"
+                pagination={{
+                  locale: {
+                    // Options.jsx
+                    items_per_page: "/ стр.",
+                    jump_to: "Перейти",
+                    jump_to_confirm: "подтвердить",
+                    page: "Страница",
+                    // Pagination.jsx
+                    prev_page: "Назад",
+                    next_page: "Вперед",
+                    prev_5: "Предыдущие 5",
+                    next_5: "Следующие 5",
+                    prev_3: "Предыдущие 3",
+                    next_3: "Следующие 3",
+                    // page_size: 'размер страницы'
+                  },
+                }}
+                locale={tableLocale}
+                loading={loading}
+                onRow={(record, rowIndex) => {
+                  return {
+                    onMouseEnter: (event) => setCurrentNsiItem(record),
+                  };
+                }}
+                title={() => title}
+                rowKey={(record) => record.id}
+                columns={columns}
+                dataSource={
+                  // dictionaryTarget !== "design"
+                  searchInput.length > 1 ? filteredResults.sort((a, b) => (a.title < b.title ? -1 : 0)) : dataSource.slice(0, 56).sort((a, b) => (a.title < b.title ? -1 : 0))
+                  // : dataSource.sort((a, b) => (a.id < b.id ? -1 : 0))
+                }
+                footer={() => NsiTableFooter(filteredResults)}
+              />
+            </Collapse.Panel>
+          </Collapse>
+
+
+        </Space>
+      )}
+
 
       {renderForm}
     </Layout>

@@ -3,287 +3,258 @@ export const temperatureL2Template = (data: any) => {
     tempAmbientMin, tempAmbientMax, measuredArea,
     measureRangeMin, measureRangeMax,
     pressureMeasureAreaMin, pressureMeasureAreaMax,
-    relativeAccuracy, sensorCalibration,
+    sensorCalibration,
     measureType, connectionScheme, sensorAccuracy, sensorLength,
     sensorLDiameter, hart, hartVersion, protectiveSleeve, protectiveSleeveMaterial,
     internalDiagnostic, outputSignal, voltage, lifeTime, mtbf, corpsMaterial, protection,
-    explosionType, explosionMark, safety, connectionType, connection, controlCableConnection,
-    converterType, converter, accuracy, calibrationStamp, verification, mpi
+    explosionType, explosionMark, controlCableConnection,
+    converterType, converter,
   } = data;
 
   return `
-  <!DOCTYPE html >
-<html>
-  <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <style type="text/css">
-      html { font-family:Calibri, Arial, Helvetica, sans-serif; font-size:11pt; background-color:white }
-      a.comment-indicator:hover + div.comment { background:#ffd; position:absolute; display:block; border:1px solid black; padding:0.5em }
-      a.comment-indicator { background:red; display:inline-block; border:1px solid black; width:0.5em; height:0.5em }
-      div.comment { display:none }
-      table { border-collapse:collapse; page-break-after:always }
-      .gridlines td { border:1px dotted black }
-      .gridlines th { border:1px dotted black }
-      .b { text-align:center }
-      .e { text-align:center }
-      .f { text-align:right }
-      .inlineStr { text-align:left }
-      .n { text-align:right }
-      .s { text-align:left }
-      td.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      th.style0 { vertical-align:bottom; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      td.style1 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style1 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style2 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style2 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style3 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style3 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style4 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style4 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style5 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style5 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style6 { vertical-align:bottom; text-align:center; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      th.style6 { vertical-align:bottom; text-align:center; border-bottom:none #000000; border-top:none #000000; border-left:none #000000; border-right:none #000000; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      td.style7 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style7 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style8 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      th.style8 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Calibri'; font-size:11pt; background-color:white }
-      td.style9 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style9 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style10 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style10 { vertical-align:middle; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      td.style11 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      th.style11 { vertical-align:bottom; text-align:left; padding-left:9px; border-bottom:1px solid #000000 !important; border-top:1px solid #000000 !important; border-left:1px solid #000000 !important; border-right:1px solid #000000 !important; color:#000000; font-family:'Arial'; font-size:10pt; background-color:white }
-      table.sheet0 col.col0 { width:15.58888871pt }
-      table.sheet0 col.col1 { width:216.8888864pt }
-      table.sheet0 col.col2 { width:117.25555421pt }
-      table.sheet0 col.col3 { width:117.25555421pt }
-      table.sheet0 col.col4 { width:15.58888871pt }
-      table.sheet0 tr { height:15pt }
-      table.sheet0 tr.row0 { height:17.1pt }
-      table.sheet0 tr.row1 { height:17.1pt }
-      table.sheet0 tr.row2 { height:17.1pt }
-      table.sheet0 tr.row3 { height:17.1pt }
-      table.sheet0 tr.row4 { height:17.1pt }
-      table.sheet0 tr.row5 { height:17.1pt }
-      table.sheet0 tr.row6 { height:17.1pt }
-      table.sheet0 tr.row7 { height:17.1pt }
-      table.sheet0 tr.row8 { height:17.1pt }
-      table.sheet0 tr.row9 { height:17.1pt }
-      table.sheet0 tr.row10 { height:17.1pt }
-      table.sheet0 tr.row11 { height:17.1pt }
-      table.sheet0 tr.row12 { height:17.1pt }
-      table.sheet0 tr.row13 { height:33.95pt }
-      table.sheet0 tr.row14 { height:17.1pt }
-      table.sheet0 tr.row15 { height:17.1pt }
-      table.sheet0 tr.row16 { height:17.1pt }
-      table.sheet0 tr.row17 { height:17.1pt }
-      table.sheet0 tr.row18 { height:17.1pt }
-      table.sheet0 tr.row19 { height:17.1pt }
-      table.sheet0 tr.row20 { height:17.1pt }
-      table.sheet0 tr.row21 { height:17.1pt }
-      table.sheet0 tr.row22 { height:33.95pt }
-      table.sheet0 tr.row23 { height:33.95pt }
-      table.sheet0 tr.row24 { height:17.1pt }
-      table.sheet0 tr.row25 { height:17.1pt }
-      table.sheet0 tr.row26 { height:17.1pt }
-      table.sheet0 tr.row27 { height:17.1pt }
-      table.sheet0 tr.row28 { height:17.1pt }
-      table.sheet0 tr.row29 { height:17.1pt }
-      table.sheet0 tr.row30 { height:17.1pt }
-      table.sheet0 tr.row31 { height:17.1pt }
-      table.sheet0 tr.row32 { height:17.1pt }
-      table.sheet0 tr.row33 { height:17.1pt }
-      table.sheet0 tr.row34 { height:17.1pt }
-      table.sheet0 tr.row35 { height:33.95pt }
-      table.sheet0 tr.row36 { height:33.95pt }
-      table.sheet0 tr.row37 { height:17.1pt }
-      table.sheet0 tr.row38 { height:17.1pt }
-      table.sheet0 tr.row39 { height:17.1pt }
-    </style>
-  </head>
-
-  <body>
 <style>
-@page { margin: 0in }
-body { margin: 0in }
+  table {
+    border-collapse: collapse;
+    page-break-after: always;
+  }
+  col.col0 {
+    width: 300pt;
+  }
+  col.col1 {
+    width: 120pt;
+  }
+  col.col2 {
+    width: 200pt;
+  }
+  th {
+    border: 1px solid #000000 !important;
+  }
+  tr {
+    height: 17pt;
+  }
+  tr.row0 {
+    height: 2pt;
+  }
+  tr.row1 {
+    height: 17pt;
+  }
+  tr.row2 {
+    height: 34pt;
+  }
+  tr.row3 {
+    height: 51pt;
+  }
+  tr.row4 {
+    height: 68pt;
+  }
+  tr.row5 {
+    height: 85pt;
+  }
+  td {
+    vertical-align: middle;
+    text-align: left;
+    padding-left: 5px;
+
+    color: #000000;
+    font-family: "Arial";
+    font-size: 10pt;
+    background-color: white;
+  }
+  td.style0 {
+    border-bottom: 1px solid #000000 !important;
+  }
+  td.style1 {
+    border: 1px solid #000000 !important;
+  }
 </style>
-    <table border="0" cellpadding="0" cellspacing="0" id="sheet0" class="sheet0 gridlines">
-        <col class="col0">
-        <col class="col1">
-        <col class="col2">
-        <col class="col3">
-        <col class="col4">
-        <tbody>
-          <tr class="row0">
-            <td class="column0 style6 null style6" colspan="4"></td>
-            <td class="column4 style6 null style6" rowspan="40"></td>
-          </tr>
-          <tr class="row1">
-            <td class="column0 style6 null style6" rowspan="39"></td>
-            <td class="column1 style2 s">Позиция на схеме (TAG)</td>
-            <td class="column2 style7 s style7" colspan="2">${tag}</td>
-          </tr>
-          <tr class="row2">
-            <td class="column1 style2 s">Количество, шт.</td>
-            <td class="column2 style7 s style7" colspan="2">${count}</td>
-          </tr>
-          <tr class="row3">
-            <td class="column1 style2 s">Номер аппарата или линии</td>
-            <td class="column2 style7 s style7" colspan="2">${location}</td>
-          </tr>
-          <tr class="row4">
-            <td class="column1 style2 s">No схемы автоматизации функциональной</td>
-            <td class="column2 style7 s style7" colspan="2">${fda}</td>
-          </tr>
-          <tr class="row5">
-            <td class="column1 style2 s">Контроллируемый параметр</td>
-            <td class="column2 style7 s style7" colspan="2">${parameter}</td>
-          </tr>
-          <tr class="row6">
-            <td class="column1 style1 s">Температура окружающей среды, °C</td>
-            <td class="column2 style7 s style7" colspan="2">${tempAmbientMin} … ${tempAmbientMax}</td>
-          </tr>
-          <tr class="row7">
-            <td class="column1 style2 s">Тип чувствительного элемента</td>
-            <td class="column2 style7 s style7" colspan="2">${measureType}</td>
-          </tr>
-          <tr class="row8">
-            <td class="column1 style2 s">Измеряемая среда</td>
-            <td class="column2 style7 s style7" colspan="2">${measuredArea}</td>
-          </tr>
-          <tr class="row9">
-            <td class="column1 style2 s">Диапазон измеряемых значений, °C</td>
-            <td class="column2 style7 s style7" colspan="2">${measureRangeMin} … ${measureRangeMax}</td>
-          </tr>
-          <tr class="row10">
-            <td class="column1 style1 s">Давление измеряемой среды (изб.), МПа</td>
-            <td class="column2 style7 s style7" colspan="2">${pressureMeasureAreaMin} … ${pressureMeasureAreaMax}</td>
-          </tr>
-          <tr class="row11">
-            <td class="column1 style5 s">Градуировка сенсора</td>
-            <td class="column2 style10 s style10" colspan="2">${sensorCalibration}</td>
-          </tr>
-          <tr class="row12">
-            <td class="column1 style5 s">Класс точности сенсора</td>
-            <td class="column2 style10 s style10" colspan="2">${sensorAccuracy}</td>
-          </tr>
-          <tr class="row13">
-            <td class="column1 style3 s">Длина чувствительного элемента / глубина погружения защитной гильзы, мм</td>
-            <td class="column2 style10 s style10" colspan="2">${sensorLength}</td>
-          </tr>
-          <tr class="row14">
-            <td class="column1 style3 s">Диаметр сенсора, мм</td>
-            <td class="column2 style11 s style11" colspan="2">${sensorLDiameter}</td>
-          </tr>
-          <tr class="row15">
-            <td class="column1 style3 s">Защитная гильза</td>
-            <td class="column2 style11 s style11" colspan="2">${protectiveSleeve  ? "Да" : "Нет" }</td>
-          </tr>
-          <tr class="row16">
-            <td class="column1 style3 s">Материал защитной гильзы</td>
-            <td class="column2 style10 s style10" colspan="2">${protectiveSleeveMaterial}</td>
-          </tr>
-          <tr class="row17">
-            <td class="column1 style3 s">Тип монтажа</td>
-            <td class="column2 style10 s style10" colspan="2">${controlCableConnection}</td>
-          </tr>
-          <tr class="row18">
-            <td class="column1 style1 s">Схема подключения вторичного преобразователя</td>
-            <td class="column2 style8 s style8" colspan="2">${connectionScheme}</td>
-          </tr>
-          <tr class="row19">
-            <td class="column1 style9 s style9" rowspan="5">Преобразователь</td>
-            <td class="column2 style4 s">Наличие HART</td>
-            <td class="column3 style4 s">${hart ? "Да" : "Нет" }</td>
-          </tr>
-          <tr class="row20">
-            <td class="column2 style4 s">Версия HART</td>
-            <td class="column3 style4 s">${hartVersion  ? "Да" : "-" }</td>
-          </tr>
-          <tr class="row21">
-            <td class="column2 style4 s">Внутренняя диагностика</td>
-            <td class="column3 style4 s">${internalDiagnostic  ? "Да" : "Нет" }</td>
-          </tr>
-          <tr class="row22">
-            <td class="column2 style1 s">Тип вторичного преобразователя</td>
-            <td class="column3 style1 s">${converterType}</td>
-          </tr>
-          <tr class="row23">
-            <td class="column2 style1 s">Монтаж вторичного преобразователя</td>
-            <td class="column3 style1 s">${converter}</td>
-          </tr>
-          <tr class="row24">
-            <td class="column1 style2 s">Выходной сигнал</td>
-            <td class="column2 style7 s style7" colspan="2">${outputSignal}</td>
-          </tr>
-          <tr class="row25">
-            <td class="column1 style2 s">Напряжение питания, В</td>
-            <td class="column2 style7 s style7" colspan="2">${voltage}</td>
-          </tr>
-          <tr class="row26">
-            <td class="column1 style1 s">Средний срок службы, мес.</td>
-            <td class="column2 style7 s style7" colspan="2">${lifeTime}</td>
-          </tr>
-          <tr class="row27">
-            <td class="column1 style1 s">Средняя наработка на отказ, тыс. часов</td>
-            <td class="column2 style7 s style7" colspan="2">${mtbf}</td>
-          </tr>
-          <tr class="row28">
-            <td class="column1 style1 s">Материал корпуса</td>
-            <td class="column2 style7 s style7" colspan="2">${corpsMaterial}</td>
-          </tr>
-          <tr class="row29">
-            <td class="column1 style1 s">Степень защиты корпуса, не ниже</td>
-            <td class="column2 style7 s style7" colspan="2">${protection}</td>
-          </tr>
-          <tr class="row30">
-            <td class="column1 style1 s">Вид взрывозащиты</td>
-            <td class="column2 style7 s style7" colspan="2">${explosionType}</td>
-          </tr>
-          <tr class="row31">
-            <td class="column1 style1 s">Маркировка взрывозащиты</td>
-            <td class="column2 style7 s style7" colspan="2">${explosionMark}</td>
-          </tr>
-          <tr class="row32">
-            <td class="column1 style1 s">Степень безопасности SIL</td>
-            <td class="column2 style7 s style7" colspan="2">${safety}</td>
-          </tr>
-          <tr class="row33">
-            <td class="column1 style2 s">Тип присоединения к тех.процессу</td>
-            <td class="column2 style7 s style7" colspan="2">${connectionType}</td>
-          </tr>
-          <tr class="row34">
-            <td class="column1 style2 s">Соединение с тех. процессом</td>
-            <td class="column2 style7 s style7" colspan="2">${connection}</td>
-          </tr>
-          <tr class="row35">
-            <td class="column1 style1 s">Предел допускаемой основной приведенной погрешности, %</td>
-            <td class="column2 style9 s style9" colspan="2">${accuracy}</td>
-          </tr>
-          <tr class="row36">
-            <td class="column1 style1 s">Предел относительной погрешности измерения нормирующего преобразователя, %</td>
-            <td class="column2 style9 s style9" colspan="2">${relativeAccuracy}</td>
-          </tr>
-          <tr class="row37">
-            <td class="column1 style1 s">Наличие штампа заводской калибровки</td>
-            <td class="column2 style7 s style7" colspan="2">${calibrationStamp  ? "Да" : "Нет" }</td>
-          </tr>
-          <tr class="row38">
-            <td class="column1 style1 s">Первичная повека</td>
-            <td class="column2 style7 s style7" colspan="2">${verification  ? "Да" : "Нет" }</td>
-          </tr>
-          <tr class="row39">
-            <td class="column1 style1 s">Межповерочный интервал, мес.</td>
-            <td class="column2 style7 s style7" colspan="2">${mpi}</td>
-          </tr>
-          <tr class="row40">
-            <td class="column0 style6 null style6" colspan="5"></td>
-          </tr>
-        </tbody>
-    </table>
-  </body>
-</html>
+<table class="sheetl2">
+  <col class="col0" />
+  <col class="col1" />
+  <col class="col2" />
+  <tbody>
+    <tr class="row0">
+      <td colspan="3"></td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Позиция на схеме (TAG)</td>
+      <td class="style1" colspan="2">${tag}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Количество, шт.</td>
+      <td class="style1" style="width: 300px;" colspan="2">${count}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Номер аппарата или линии</td>
+      <td class="style1" colspan="2">${location}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        No схемы автоматизации функциональной
+      </td>
+      <td class="style1" colspan="2">${fda}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Контроллируемый параметр</td>
+      <td class="style1" colspan="2">${parameter}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Температура окружающей среды, °C</td>
+      <td class="style1" colspan="2">${tempAmbientMin} … ${tempAmbientMax}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Измеряемая среда</td>
+      <td class="style1" colspan="2">${measuredArea}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Тип чувствительного элемента</td>
+      <td class="style1" colspan="2">${measureType}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Диапазон измеряемых значений, °C
+      </td>
+      <td class="style1" colspan="2">
+        ${measureRangeMin } … ${measureRangeMax}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Давление измеряемой среды (изб.), МПа.
+      </td>
+      <td class="style1" colspan="2">
+        ${pressureMeasureAreaMin} … ${pressureMeasureAreaMax}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Градуировка сенсора
+      </td>
+      <td class="style1" colspan="2">
+        ${sensorCalibration}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Класс точности сенсора
+      </td>
+      <td class="style1" colspan="2">
+        ${sensorAccuracy}
+      </td>
+    </tr>
+    <tr class="row2">
+      <td class="style1">
+        Длина чувствительного элемента / глубина погружения защитной гильзы, мм
+      </td>
+      <td class="style1" colspan="2">
+        ${sensorLength}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Диаметр сенсора, мм
+      </td>
+      <td class="style1" colspan="2">
+        ${sensorLDiameter}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Защитная гильза
+      </td>
+      <td class="style1" colspan="2">
+        ${protectiveSleeve ? "Да" : "Нет"}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Материал защитной гильзы
+      </td>
+      <td class="style1" colspan="2">
+        ${protectiveSleeveMaterial}
+      </td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">
+        Тип монтажа
+      </td>
+      <td class="style1" colspan="2">
+        ${controlCableConnection}
+      </td>
+    </tr>
+    <tr class="row2">
+      <td class="style1">Схема подключения вторичного преобразователя</td>
+      <td class="style1" colspan="2">
+        ${connectionScheme}
+      </td>
+    </tr>
+    <tr>
+      <td class="style1" rowspan="5">Преобразователь</td>
+      <td class="style1">Наличие HART</td>
+      <td class="style1">${hart ? "Да" : "Нет"}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Версия HART</td>
+      <td class="style1">${hartVersion}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Внутренняя диагностика</td>
+      <td class="style1">${internalDiagnostic ? "Да" : "Нет"}</td>
+    </tr>
+    <tr class="row2">
+      <td class="style1">Тип вторичного преобразователя</td>
+      <td class="style1">${converterType}</td>
+    </tr>
+    <tr class="row2">
+      <td class="style1">Монтаж вторичного преобразователя</td>
+      <td class="style1">${converter}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Выходной сигнал</td>
+      <td class="style1" colspan="2">${outputSignal}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Напряжение питания, В</td>
+      <td class="style1" colspan="2">${voltage}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Средний срок службы, мес.</td>
+      <td class="style1" colspan="2">${lifeTime}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Средняя наработка на отказ, тыс. часов</td>
+      <td class="style1" colspan="2">${mtbf}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Материал корпуса</td>
+      <td class="style1" colspan="2">${corpsMaterial}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Степень защиты корпуса, не ниже</td>
+      <td class="style1" colspan="2">${protection}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Вид взрывозащиты</td>
+      <td class="style1" colspan="2">${explosionType}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Маркировка взрывозащиты</td>
+      <td class="style1" colspan="2">${explosionMark}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Степень защиты корпуса, не ниже</td>
+      <td class="style1" colspan="2">${protection}</td>
+    </tr>
+
+    <tr class="row1">
+      <td class="style1">Вид взрывозащиты</td>
+      <td class="style1" colspan="2">${explosionType}</td>
+    </tr>
+    <tr class="row1">
+      <td class="style1">Маркировка взрывозащиты</td>
+      <td class="style1" colspan="2">${explosionMark}</td>
+    </tr>
+  </tbody>
+</table>
 
   `
 }
