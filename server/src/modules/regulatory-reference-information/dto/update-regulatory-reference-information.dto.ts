@@ -1,7 +1,7 @@
 import { PartialType } from "@nestjs/mapped-types";
 import {
   CreateCriticalityDto,
-  CreateDesignOrCounterpartyDto,
+  CreateDesignOrCounterpartyDto, CreateGlossaryDto,
   CreateNSIDto,
   CreateUserDto,
 } from "./create-regulatory-reference-information.dto";
@@ -15,3 +15,5 @@ export class UpdateDesignOrCounterpartyDto extends PartialType(
 export class UpdateCriticalityDto extends PartialType(CreateCriticalityDto) {}
 
 export class UpdateUserDto extends PartialType(CreateUserDto) {}
+
+export class UpdateGlossaryDto extends PartialType(CreateGlossaryDto) {}

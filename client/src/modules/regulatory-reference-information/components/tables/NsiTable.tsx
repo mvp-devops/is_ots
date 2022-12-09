@@ -39,7 +39,7 @@ const NsiTable = () => {
 
   const menuItems = (
     <>
-      {currentUser.roles.includes(Roles.ESCORT) && (
+      {currentUser.roles.includes(Roles.ESCORT) && dictionaryTarget !== "glossary" && (
         <PlusOutlined
           key="ADD_DICTIONARY_ITEM"
           className="text-success mr-3 mb-2"
@@ -52,15 +52,15 @@ const NsiTable = () => {
         />
       )}
 
-      <FileExcelOutlined
+      {dictionaryTarget !== "glossary" && <FileExcelOutlined
         key="DOWNLOAD_DICTIONARY"
         className="text-success mr-3 mb-2"
-        style={{ fontSize: 16, cursor: "pointer" }}
+        style={{fontSize: 16, cursor: "pointer"}}
         title={`Выгрузить в формате MS Excel`}
         onClick={() => {
           exportData(dictionaryTarget);
         }}
-      />
+      />}
     </>
   );
 

@@ -19,7 +19,7 @@ import type {
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
-import { CreateUserDto } from "./dto/create-regulatory-reference-information.dto";
+import {CreateGlossaryDto, CreateUserDto} from "./dto/create-regulatory-reference-information.dto";
 import type { Response } from "express";
 import { setCurrentDate } from "../../../common/utils";
 
@@ -59,6 +59,19 @@ export class RegulatoryReferenceInformationController {
   ) {
     const { target } = query;
     return this.service.createMany(target, dto);
+  }
+
+  @Post("/create/:target")
+  createAsset(
+    @Param("target") target: string,
+    @Body("data") dto: CreateGlossaryDto[]
+  ) {
+    return this.service.createAsset(dto, target);
+  }
+
+  @Get("/get/:target")
+  getAssets(    @Param("target") target: string,) {
+    return this.service.getAssets(target);
   }
 
   @Get("/find")

@@ -25,13 +25,14 @@ import {
   deleteManyNormative,
   editNormative
 } from "../../file-storage/api/normative.api";
+import {getAssets} from "../api/regulatory-reference-information.api";
 
 export const setNsiItems = (target: string) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.GET_ALL_ITEMS });
 
-      const data = await getAllItems(target);
+      const data = target !== "glossary" ? await getAllItems(target) : await getAssets(target);
 
       dispatch({
         type: ActionTypes.GET_ALL_ITEMS_SUCCESS,

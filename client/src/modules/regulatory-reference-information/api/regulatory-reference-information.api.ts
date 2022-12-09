@@ -114,6 +114,17 @@ export const getItems = async (target: string): Promise<NSIView[]> => {
   return items;
 };
 
+export const getAssets = async (target: string): Promise<any[]> => {
+  const url = setUrl(`${baseUrl}/get/${target}`);
+  try {
+    const { data } = await axios.get<any[]>(url);
+
+    return data;
+  } catch (error) {
+    alert(error);
+  }
+}
+
 export const getAllItems = async (target: string): Promise<NSIView[]> => {
   const url = setUrl(`${baseUrl}/find`);
   const { data } = await axios.get<NSIView[]>(url, { params: { target } });

@@ -219,7 +219,7 @@ export class PositionTreeService {
             keys: [subsidiaryId.toString(), fieldId.toString(), id.toString()],
             key: `${subsidiaryId.toString()}-${fieldId.toString()}-${id.toString()}`,
             id: id.toString(),
-            title: `${title} (${code})`,
+            title: `${code === "0" ? "" : code} ${title}`,
             children: projectChildren.sort((a, b) =>
               a.title < b.title ? -1 : 0
             ),

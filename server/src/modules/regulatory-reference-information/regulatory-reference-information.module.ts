@@ -15,6 +15,7 @@ import {
 } from "./entities";
 import { RegulatoryReferenceInformationController } from "./regulatory-reference-information.controller";
 import { RegulatoryReferenceInformationService } from "./regulatory-reference-information.service";
+import {GlossaryEntity} from "./entities/schemas/glossary.entry";
 
 @Module({
   controllers: [RegulatoryReferenceInformationController],
@@ -31,6 +32,7 @@ import { RegulatoryReferenceInformationService } from "./regulatory-reference-in
       SectionEntity,
       TechnicalCardEntity,
       TechnicalCardOperationEntity,
+      GlossaryEntity
     ]),
 
     forwardRef(() => FileStorageModule),

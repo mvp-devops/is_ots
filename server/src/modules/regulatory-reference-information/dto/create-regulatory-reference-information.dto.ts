@@ -8,6 +8,32 @@ import {
   TechnicalCardCreateOrUpdateAttrs,
 } from "../../../../common/types/regulatory-reference-information";
 
+export class CreateGlossaryDto {
+  @ApiProperty({
+    example: "Административно-бытовой жилой комплекс",
+    description: "Наименование",
+  })
+  readonly title: string;
+
+  @ApiProperty({
+    example: "АБЖК",
+    description: "Сокращение",
+  })
+  readonly code: string;
+
+  @ApiProperty({
+    example: "А",
+    description: "Буква",
+  })
+  readonly letter: string;
+
+  @ApiProperty({
+    example: "Примечание",
+    description: "Примечание",
+  })
+  readonly description: string;
+}
+
 export class CreateDesignOrCounterpartyDto
   implements DesignOrCounterpartyCreationAttrs
 {

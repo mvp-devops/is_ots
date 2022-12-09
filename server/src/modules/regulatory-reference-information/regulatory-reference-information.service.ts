@@ -30,7 +30,7 @@ import {
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 
-import { CreateUserDto } from "./dto/create-regulatory-reference-information.dto";
+import {CreateGlossaryDto, CreateUserDto} from "./dto/create-regulatory-reference-information.dto";
 
 import {
   UpdateCriticalityDto,
@@ -39,6 +39,7 @@ import {
 } from "./dto/update-regulatory-reference-information.dto";
 import { ExcelService } from "../file-storage/excel.service";
 import { formattedDate } from "../../../common/utils/formatDate.pipe";
+import {GlossaryEntity} from "./entities/schemas/glossary.entry";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -97,6 +98,8 @@ export class RegulatoryReferenceInformationService {
     private stageRepository: typeof StageEntity,
     @InjectModel(SectionEntity)
     private sectionRepository: typeof SectionEntity,
+    @InjectModel(GlossaryEntity)
+    private glossaryRepository: typeof GlossaryEntity,
     @InjectModel(TechnicalCardEntity)
     private technicalCardRepository: typeof TechnicalCardEntity,
     @InjectModel(TechnicalCardOperationEntity)
@@ -107,6 +110,21 @@ export class RegulatoryReferenceInformationService {
     @Inject(forwardRef(() => ExcelService))
     private excelService: ExcelService
   ) {}
+
+  createAsset = async (data: CreateGlossaryDto[], target: string): Promise<GlossaryEntity[]> => {
+    const items:GlossaryEntity[] = [];
+    for (let i = 0; i < data.length; i++) {
+      const item = await this.glossaryRepository.create(data[i]);
+      items.push(item);
+    }
+    return items;
+}
+
+getAssets = async (target: string): Promise<GlossaryEntity[]> => {
+    const items = await this.glossaryRepository.findAll();
+
+    return items
+}
 
   renderItem = (item: NsiEntity): NsiView => {
     const { id, title, code, description, createdAt, updatedAt } = item;
@@ -661,7 +679,7 @@ export class RegulatoryReferenceInformationService {
 
   downdoadTechCards = (): string => {
     const fileName = "fd548fff-b961-4f70-81bd-c371d92a32aqq.xlsx";
-    const filePath = this.fileService.getFilePath("normatives");
+    const filePath = this.fileService.getFilePath("normative");
     const fileLocation = `${filePath}\\${fileName}`;
     return fileLocation;
   };

@@ -79,6 +79,33 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     ),
   };
 
+  const letterFilters = setTableColumnFilters("letter", dataSource);
+
+  const letterColumn: ColumnType<any> = {
+    title: "Буква",
+    dataIndex: "letter",
+    key: "letter",
+    align: "center",
+    width: 100,
+    filters: letterFilters,
+    filterSearch: letterFilters.length > 5 ? true : false,
+    onFilter: (value: any, record) =>
+      record?.code?.toUpperCase()?.includes(value.toUpperCase()),
+    sorter: (a, b) =>
+      isNaN(+a.letter) && isNaN(+b.letter)
+        ? stringSorter(a?.letter, b?.letter)
+        : +a?.letter < +b?.letter
+          ? -1
+          : +a?.letter > +b?.letter
+            ? 1
+            : 0,
+    render: (value: string) => (
+      <Text type="secondary" style={{ fontSize: 12 }}>
+        {value}
+      </Text>
+    ),
+  };
+
   const descriptionColumn: ColumnType<NSIView> = {
     title: "Примечание",
     dataIndex: "description",
@@ -171,6 +198,15 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
   const columns: TableColumnsType<NSIView> = [];
 
   switch (dictionaryTarget) {
+    case "glossary": {
+      // columns.push(numberColumn);
+      columns.push(letterColumn);
+      columns.push(codeColumn);
+      columns.push(titleColumn);
+      columns.push(descriptionColumn);
+      // columns.push(actionsColumn);
+      break;
+    }
     case "criticality": {
       columns.push(numberColumn);
       columns.push(titleColumn);
