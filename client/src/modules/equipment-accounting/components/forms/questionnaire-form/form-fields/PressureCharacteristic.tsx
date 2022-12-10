@@ -67,7 +67,6 @@ const PressureCharacteristic = () => {
       label={<Text type="secondary">Диапазон настройки</Text>}
       name={"settingRange"}
       className="ms-2 mb-0"
-      valuePropName="checked"
       rules={[
         {
           required: true,
@@ -117,7 +116,7 @@ const PressureCharacteristic = () => {
       name={"valveBlockType"}
     rules={[
       {
-        required: true,
+        required: valveBlock,
         message:
           `Пожалуйста, выберите исполнение клапанного блока`,
       }
@@ -144,7 +143,7 @@ const PressureCharacteristic = () => {
       valuePropName="checked"
       rules={[
         {
-          required: true,
+          required: valveBlock,
           message:
             `Пожалуйста, выберите клапан для стравливания воздуха`,
         }
@@ -161,7 +160,7 @@ const PressureCharacteristic = () => {
       name={"valveBlockCorpMaterial"}
       rules={[
         {
-          required: true,
+          required: valveBlock,
           message:
             `Пожалуйста, введите материал клапанного блока`,
         }

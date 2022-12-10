@@ -23,7 +23,7 @@ import {
   converterTypes,
   FacilityType,
   hartVersion,
-  outputSignal,
+  outputSignal, thermCase,
   voltage
 } from "../questionnaire.consts";
 
@@ -70,12 +70,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"localIndication"}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-          message: `Пожалуйста, выберите наличие местной индикации`,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -88,12 +82,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"internalDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-          message: `Пожалуйста, выберите наличие внутренней диагностики`,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -107,12 +95,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       initialValue={hart}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-          message: `Пожалуйста, выберите наличие HART`,
-        }
-      ]}
     >
       <Checkbox onChange={(e) => setHart(e.target.checked)}/>
     </Item>
@@ -128,7 +110,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       className="ms-2 mb-0"
       rules={[
         {
-          required: true,
+          required: hart,
           message: `Пожалуйста, выберите версию HART-протокола`,
         }
       ]}
@@ -307,7 +289,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       className="ms-2 mb-0"
       rules={[
         {
-          required: true,
+          required: converterType && converterType !== "Отсутствует",
           message: `Пожалуйста, выберите тип вторичного преобразователя`,
         }
       ]}
@@ -329,11 +311,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"zeroDrift"}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -347,11 +324,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"opticsCleanliness"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -444,11 +416,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"flowStraighteners"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -462,11 +429,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       valuePropName="checked"
       initialValue={processTurbulence}
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox onChange={(e) => setProcessTurbulence(e.target.checked)}/>
     </Item>
@@ -481,8 +443,8 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       className="ms-2 mb-0"
       rules={[
         {
-          required: true,
-          message: "Пожалуйста, введите значение"
+          required: processTurbulence,
+          message: "Пожалуйста, введите причину турбулентрости процесса"
         }
       ]}
     >
@@ -501,11 +463,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"selfDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -517,11 +474,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"blockageDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -531,21 +483,26 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     <Item
       label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Подключение контрольного кабеля" : "Тип монтажа"}</Text>}
       name={"controlCableConnection"}
-      className="ms-2 mb-0 p-0"
+      className="ms-2 mb-0"
+      initialValue={"С электрообогревом"}
+
       rules={[
         {
           required: true,
+          message: `Пожалуйста, выберите тип термочехла`,
         }
       ]}
-    >      <Radio.Group>
-      {(facilityType === FacilityType.GAZ_ANALYZE ? controlCableConnectionList.slice(0,2) : controlCableConnectionList.slice(2,4)).map((item, index) => {
-        return (
-          <Radio key={index} value={item} className="text-secondary" >{item}</Radio>
-        );
-      })}
-    </Radio.Group>
+    >
+      <Radio.Group>
+        {(facilityType === FacilityType.GAZ_ANALYZE ? controlCableConnectionList.slice(0,2) : controlCableConnectionList.slice(2,4)).map((item, index) => {
+          return (
+            <Radio key={index} value={item} className={"text-secondary"}>{item}</Radio>          );
+        })}
+      </Radio.Group>
     </Item>
   );
+
+
 
   const currentLoopIntegrityDiagnosticFormField = (
     <Item
@@ -553,11 +510,6 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       name={"currentLoopIntegrityDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
 
       <Checkbox />
@@ -604,7 +556,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
           <Row style={{marginLeft: 10 }} className={"p-0"}>
             {converterTypeFormField}
           </Row>
-          {   converterType !== "Отсутствует" &&        <Row style={{marginLeft: 40 }} className={"p-0"}>
+          {   (converterType !== "Отсутствует" || converterTypeFormField) &&        <Row style={{marginLeft: 40 }} className={"p-0"}>
             {converterFormField}
           </Row>}
         </>

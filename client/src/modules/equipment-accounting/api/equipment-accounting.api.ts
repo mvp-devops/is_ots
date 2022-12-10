@@ -26,6 +26,38 @@ import {
 
 const equipmentAccountingUrl = `api/equipment-accounting`;
 
+/** Создание ОЛ */
+
+export const createQuestionnaire = async (data: any) => {
+  const {target, cipher} = data;
+  const subUrl = "create-questionnaire"
+  const url = setUrl(`${equipmentAccountingUrl}/${subUrl}/${target}`);
+
+  const fileName = `${cipher}.pdf`;
+
+  const flag = await axios.post<string>(url, data)
+    .then(({data: fileLocation}) => questionnaireDownload(fileLocation, fileName)).then(res => res)
+
+  return flag;
+}
+
+export const  questionnaireDownload = async (fileLocation: string, fileName: string) => {
+
+  const url = setUrl(`${equipmentAccountingUrl}/questionnaire/download`);
+
+  axios
+    .get(url, {
+      responseType: "blob",
+      params: { 0: fileLocation},
+    })
+    .then((resp) => {
+      download(resp.data, fileName);
+    })
+
+  return false
+
+};
+
 export const getEquipmentAsset = async (id: string): Promise<any> => {
   const url = setUrl(`${equipmentAccountingUrl}/equipment-asset/${id}`);
   const { data } = await axios.get<any>(url);

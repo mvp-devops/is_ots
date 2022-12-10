@@ -844,12 +844,10 @@ export class DesignDocumentService {
 
       const multipleLoadFlag = multiple === "true" ? true : false
 
-      console.log(multipleLoadFlag);
-      console.log(data);
+
 
       const items: DesignDocumentView[] = [];
       if(multipleLoadFlag) {
-        console.log("descriptor: ", descriptor);
         const filesDescription: any[] = this.excelService.convertExcelFileToJson(descriptor[0]);
 
         for(let i = 0, len = documents.length; i < len; i++) {

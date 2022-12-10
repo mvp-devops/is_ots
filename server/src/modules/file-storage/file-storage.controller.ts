@@ -57,7 +57,7 @@ export class FileStorageController {
   @UseInterceptors(FileFieldsInterceptor([
     { name: "document", maxCount: 1 },
     { name: "descriptor", maxCount: 1 },
-    { name: "documents", maxCount: 20 }
+    { name: "documents", maxCount: 200 }
   ]))
   uploadDesignDocument(
     @Body() data: any,

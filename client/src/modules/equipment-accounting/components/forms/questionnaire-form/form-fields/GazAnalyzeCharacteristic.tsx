@@ -77,7 +77,6 @@ const GazAnalyzeCharacteristic = () => {
       label={<Text type="secondary">Выходное реле «Нижний порог», % НКПР</Text>}
       name={"lowerThreshold"}
       initialValue={10}
-      valuePropName={"checked"}
       className="ms-2 mb-0 d-flex align-content-center-center"
       rules={[
         {
@@ -102,7 +101,6 @@ const GazAnalyzeCharacteristic = () => {
       label={<Text type="secondary">Выходное реле «Верхний порог», % НКПР</Text>}
       name={"upperThreshold"}
       initialValue={30}
-      valuePropName={"checked"}
       className="ms-2 mb-0 d-flex align-content-center-center"
       rules={[
         {
@@ -128,13 +126,6 @@ const GazAnalyzeCharacteristic = () => {
       name={"fault"}
       className="ms-2 mb-0"
       valuePropName="checked"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие выходного реле «Неисправность»`,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -146,13 +137,6 @@ const GazAnalyzeCharacteristic = () => {
       name={"registrationEvents"}
       className="ms-2 mb-0"
       valuePropName="checked"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие регистрации событий в энергонезависимой памяти`,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -166,13 +150,6 @@ const GazAnalyzeCharacteristic = () => {
       name={"adjustment"}
       className="ms-2 mb-0"
       valuePropName="checked"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие настройки электроники при замене сенсора`,
-        }
-      ]}
     >
       <Checkbox />
     </Item>

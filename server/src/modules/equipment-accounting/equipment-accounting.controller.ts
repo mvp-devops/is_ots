@@ -40,6 +40,37 @@ export class EquipmentAccountingController {
   getEquipmentAsset(@Param("id") id: string) {
     return this.service.getEquipmentAsset(id);
   }
+/** Создание ОЛ */
+  @Post("/create-questionnaire/:target")
+  createQuestionnaire(
+  @Param("target") target: string,
+    @Body() data: any
+) {
+    return this.service.createQuestionnaire(data, target);
+  }
+
+  @Get("/questionnaire/download")
+
+  getReport (
+    @Query() query: {0: string},
+    @Res() res: Response
+  ) {
+    res.header(
+      "Content-disposition",
+      `attachment; filename=report.pdf`
+    );
+    res.type(
+      "application/pdf"
+    );
+
+    res.download(
+      query["0"],
+      `report.pdf`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+  }
 
   @Get("/facilities/find")
   findAllFacilityAssets() {
@@ -190,4 +221,6 @@ export class EquipmentAccountingController {
       parrentFolderPath
     );
   }
+
+
 }

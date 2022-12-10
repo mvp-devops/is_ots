@@ -1,191 +1,201 @@
 export const flowL3Template = (data: any) => {
-  const {accuracy, verificationMethod, calibrationStamp, verification, mpi, cableEntry, reserveCableEntryStub, flowStraighteners, flanges, heating, thermCase, thermBox} = data;
+  const {flowMeterDistanceBefore, flowMeterDistanceAfter, accuracy, verificationMethod, calibrationStamp, verification, mpi, cableEntry, reserveCableEntryStub, flowStraighteners, flanges, heating, thermCase, thermBox} = data;
 
   return `
-  <style>
-    table {
-      border-collapse: collapse;
-      page-break-after: always;
-    }
-    col.col0 {
-      width: 300pt;
-    }
-    col.col1 {
-      width: 120pt;
-    }
-    col.col2 {
-      width: 200pt;
-    }
-    th {
-      border: 1px solid #000000 !important;
-    }
-    tr {
-      height: 17pt;
-    }
-    tr.row0 {
-      height: 2pt;
-    }
-    tr.row1 {
-      height: 17pt;
-    }
-    tr.row2 {
-      height: 34pt;
-    }
-    tr.row3 {
-      height: 51pt;
-    }
-    tr.row4 {
-      height: 68pt;
-    }
-    tr.row5 {
-      height: 85pt;
-    }
-    td {
-      vertical-align: middle;
-      text-align: left;
-      padding-left: 5px;
-      color: #000000;
-      font-family: "Arial";
-      font-size: 10pt;
-      background-color: white;
-    }
-    td.style0 {
-      border-bottom: 1px solid #000000 !important;
-    }
-    td.style1 {
-      border: 1px solid #000000 !important;
-    }
-    td.style2 {
-      border-left: 1px solid #000000 !important;
-      border-right: 1px solid #000000 !important;
-      border-top: 1px solid #000000 !important;
-      border-bottom: none !important;
-    }
-    td.style3 {
-      border-left: 1px solid #000000 !important;
-      border-right: 1px solid #000000 !important;
-      border-top: none !important;
-      border-bottom: none !important;
-    }
-    td.style4 {
-      border-left: 1px solid #000000 !important;
-      border-right: 1px solid #000000 !important;
-      border-bottom: 1px solid #000000 !important;
-      border-top: none !important;
-    }
-  </style>
+            <style>
+              table.l3 {
+                border-collapse: collapse;
+              }
+              col.l3-col0 {
+                width: 50%;
+              }
+              col.l3-col1 {
+                width: 20%;
+              }
+              col.l3-col2 {
+                width: 30%;
+              }
 
-    <table id="sheet0" class="sheet0 gridlines">
-      <col class="col0" />
-      <col class="col1" />
-      <col class="col2" />
-      <tbody>
-        <tr class="row0">
-          <td class="style0" colspan="3"></td>
-        </tr>
-        <tr class="row2">
-          <td class="style1">Предел допускаемой основной приведенной погрешности, %</td>
-          <td class="style1" colspan="2">${accuracy}</td>
-        </tr>
-        <tr class="row1">
-          <td class="style1">Метод поверки</td>
-          <td class="style1" colspan="2">${verificationMethod}</td>
-        </tr>
-        <tr class="row1">
-          <td class="style1">Наличие штампа заводской калибровки</td>
-          <td class="style1" colspan="2">${calibrationStamp ? "Да" : "Нет"}</td>
-        </tr>
-        <tr class="row1">
-          <td class="style1">Первичная повека</td>
-          <td class="style1" colspan="2">${verification ? "Да" : "Нет"}</td>
-        </tr>
-        <tr class="row1">
-          <td class="style1">Межповерочный интервал, мес.</td>
-          <td class="style1" colspan="2">${mpi}</td>
-        </tr>
-        <tr class="row2">
-          <td class="style1" rowspan="8">Принадлежности</td>
-          <td class="style1">Кабельный ввод</td>
-          <td class="style1">${cableEntry}</td>
-        </tr>
-        <tr class="row2">
-          <td class="style1">Заглушка резервного кабельного ввода</td>
-          <td class="style1">${reserveCableEntryStub}</td>
-        </tr>
-        <tr class="row2">
-          <td class="style1">Наличие струевыпрямителей</td>
-          <td class="style1">${flowStraighteners ? "Да" : "Нет"}</td>
-        </tr>
-        <tr class="row3">
-          <td class="style1">
-            Наличие в комплекте поставки ответных фланцев, включая прокладки,
-            крепежи и болты
-          </td>
-          <td class="style1">${flanges ? "Да" : "Нет"}</td>
-        </tr>
-        <tr class="row3">
-          <td class="style1">Обогрев</td>
-          <td class="style1">${heating === "Не предусмотрено" ? heating : thermCase ? thermCase : thermBox ? thermBox : heating}</td>
-        </tr>
-        <tr class="row1">
-          <td class="style1" colspan="2">
-            внешний заземляющий винт
-          </td>
-        </tr>
-        <tr class="row2">
-          <td class="style1" colspan="2">
-            маркировочная табличка из нержавеющей стали,с выгравированной
-            позицией
-          </td>
-        </tr>
-        <tr class="row3">
-          <td class="style1" colspan="2">
-            Оборудование должно иметь положительный опыт промышленной
-            эксплуатации в ДО ПАО «Газпромнефть» и входить в перечень КТ-610.
-          </td>
-        </tr>
-        <tr >
-          <td class="style1" rowspan="6">
-            Наличие документации, сертификация
-          </td>
-          <td class="style2" colspan="2">
-            1.Копия сертификата об утверждении типа средств измерений, выданное
-            Федеральным агентством по техническому регулированию и метрологии с
-            описанием типа средства измерения со сроком окончания действия не
-            менее 12 месяцев от даты поставки на склад Заказчика.
-          </td>
-        </tr>
-        <tr >
-          <td class="style3" colspan="2">
-            2.Копия сертификата (декларации) соответствия средств измерений
-            техническому регламенту Таможенного союза, выданных органом по
-            сертификации.
-          </td>
-        </tr>
-        <tr >
-          <td class="style3" colspan="2">
-            3.Заводской паспорт, руководство по эксплуатации и монтажу на
-            русском языке.
-          </td>
-        </tr>
-        <tr >
-            <td class="style3" colspan="2">
-                4.Копия методики поверки, указанной в описании типа.
-            </td>
-          </tr>
-          <tr >
-              <td class="style3" colspan="2">
-                  5.Технические средства должны иметь соответствующую сертификацию по взрывобезопасности в соответствии с Техническим регламентом таможенного союза ТР ТС 012/2011.
-              </td>
-            </tr>
-            <tr >
-                <td class="style4" colspan="2">
-                    6.Свидетельство о первичной поверке, выданное аккредитованным органом на право проведения поверки со сроком окончания действия не менее 2/3 межповерочного интервала от даты поставки на склад Заказчика.                </td>
-              </tr>
-      </tbody>
-    </table>
-  </body>
-</html>
+              tr.l3-row1 {
+                height: 17pt;
+              }
+
+              tr.l3-row2 {
+                height: 34pt;
+              }
+              tr.l3-row3 {
+                height: 51pt;
+              }
+              tr.l3-row4 {
+                height: 68pt;
+              }
+              tr.l4-row5 {
+                height: 85pt;
+              }
+              td.l3-td {
+                vertical-align: middle;
+                text-align: left;
+                padding-left: 5px;
+                color: #000000;
+                font-family: "Arial";
+                font-size: 10pt;
+                background-color: white;
+                border: 1px solid #000000;
+              }
+              td.l3-td-style0 {
+                border-top: none !important;
+                border-bottom: none !important;
+              }
+                td.l3-td-style1 {
+                border-top: none !important;
+              
+              }
+            </style>
+
+            <table class="l3">
+              <col class="l3-col0" />
+              <col class="l3-col1" />
+              <col class="l3-col2" />
+              <tbody>
+                <tr class="l3-row1">
+                  <td class="l3-td">
+                    Расстояние участка до расходомера, мм
+                  </td>
+                  <td class="l3-td" colspan="2">
+                    ${flowMeterDistanceBefore}
+                  </td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td">
+                    Расстояние участка после расходомера, мм
+                  </td>
+                  <td class="l3-td" colspan="2">
+                    ${flowMeterDistanceAfter}
+                  </td>
+                </tr>
+                <tr class="l3-row2">
+                  <td class="l3-td">
+                    Предел допускаемой основной приведенной погрешности, %
+                  </td>
+                  <td class="l3-td" colspan="2">${accuracy}</td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td">Метод поверки</td>
+                  <td class="l3-td" colspan="2">${verificationMethod}</td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td">Наличие штампа заводской калибровки</td>
+                  <td class="l3-td" colspan="2">
+                    ${calibrationStamp ? "Да" : "Нет"}
+                  </td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td">Первичная повека</td>
+                  <td class="l3-td" colspan="2">
+                    ${verification ? "Да" : "Нет"}
+                  </td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td">Межповерочный интервал, мес.</td>
+                  <td class="l3-td" colspan="2">${mpi}</td>
+                </tr>
+                <tr class="l3-row2">
+                  <td class="l3-td" rowspan="8">Принадлежности</td>
+                  <td class="l3-td">Кабельный ввод</td>
+                  <td class="l3-td">${cableEntry}</td>
+                </tr>
+                <tr class="l3-row2">
+                  <td class="l3-td">Заглушка резервного кабельного ввода</td>
+                  <td class="l3-td">${reserveCableEntryStub}</td>
+                </tr>
+                <tr class="l3-row2">
+                  <td class="l3-td">Наличие струевыпрямителей</td>
+                  <td class="l3-td">${flowStraighteners ? "Да" : "Нет"}</td>
+                </tr>
+                <tr class="l3-row3">
+                  <td class="l3-td">
+                    Наличие в комплекте поставки ответных фланцев, включая
+                    прокладки, крепежи и болты
+                  </td>
+                  <td class="l3-td">${flanges ? "Да" : "Нет"}</td>
+                </tr>
+                <tr class="l3-row3">
+                  <td class="l3-td">Обогрев</td>
+                  <td class="l3-td">
+                    ${heating === "Не предусмотрено" ? heating : thermCase ?
+    thermCase : thermBox ? thermBox : heating}
+                  </td>
+                </tr>
+                <tr class="l3-row1">
+                  <td class="l3-td" colspan="2">
+                    внешний заземляющий винт
+                  </td>
+                </tr>
+                <tr class="l3-row2">
+                  <td class="l3-td" colspan="2">
+                    маркировочная табличка из нержавеющей стали,с
+                    выгравированной позицией
+                  </td>
+                </tr>
+                <tr class="l3-row3">
+                  <td class="l3-td" colspan="2">
+                    Оборудование должно иметь положительный опыт промышленной
+                    эксплуатации в ДО ПАО «Газпромнефть» и входить в перечень
+                    КТ-610.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="l3-td" colspan="3">
+                    Наличие документации, сертификация:
+                  </td>
+                  
+                </tr>
+                <tr>
+                
+                <td class="l3-td l3-td-style0" colspan="3">
+                    1.Копия сертификата об утверждении типа средств измерений,
+                    выданное Федеральным агентством по техническому
+                    регулированию и метрологии с описанием типа средства
+                    измерения со сроком окончания действия не менее 12 месяцев
+                    от даты поставки на склад Заказчика.
+                  </td>
+</tr>
+                <tr>
+                  <td class="l3-td l3-td-style0" colspan="3">
+                    2.Копия сертификата (декларации) соответствия средств
+                    измерений техническому регламенту Таможенного союза,
+                    выданных органом по сертификации.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="l3-td l3-td-style0" colspan="3">
+                    3.Заводской паспорт, руководство по эксплуатации и монтажу
+                    на русском языке.
+                  </td>
+                </tr>
+                <tr>
+                  <td class="l3-td l3-td-style0" colspan="3">
+                    4.Копия методики поверки, указанной в описании типа.
+                  </td>
+                </tr>
+                                <tr>
+                  <td class="l3-td l3-td-style0" colspan="3">
+                      5.Технические средства должны иметь соответствующую
+сертификацию по взрывобезопасности в соответствии с
+Техническим регламентом таможенного союза ТР ТС 012/2011.
+                  </td>
+                </tr>
+                <tr>
+<td class="l3-td l3-td-style1" colspan="3">
+  6.Свидетельство о первичной поверке, выданное
+аккредитованным органом на право проведения поверки со
+сроком окончания действия не менее 2/3 межповерочного
+интервала от даты поставки на склад Заказчика.
+</td>
+</tr>
+              </tbody>
+            </table>
+
 
   `
 

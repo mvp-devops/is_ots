@@ -107,7 +107,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
   const permissibleFormField = (
     <Item
       label={<Text type="secondary">Предел допускаемой вариации выходного сигнала</Text>}
-      name={"permissible"}
+      name={"relativeAccuracy"}
       className="ms-2 mb-0"
       rules={[
         {
@@ -230,11 +230,6 @@ const sensorCalibrationFormField = (
       initialValue={true}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -247,11 +242,6 @@ const sensorCalibrationFormField = (
       initialValue={true}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -308,8 +298,13 @@ const sensorCalibrationFormField = (
 
 
        {
-         facilityType === FacilityType.TEMPERATURE && (
+         (facilityType === FacilityType.TEMPERATURE ) &&  (
          <Row style={{marginLeft: 16}}>{relativeAccuracyFormField}</Row>
+         )
+       }
+       {
+         (facilityType === FacilityType.GAZ_ANALYZE ) &&  (
+           <Row>{permissibleFormField}</Row>
          )
        }
 

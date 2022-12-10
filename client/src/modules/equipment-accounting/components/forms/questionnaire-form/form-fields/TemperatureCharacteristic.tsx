@@ -126,13 +126,6 @@ const TemperatureCharacteristic = () => {
       initialValue={protectiveSleeve}
       className="ms-2 mb-0"
       valuePropName="checked"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие защитной гильзы`,
-        }
-      ]}
     >
       <Checkbox checked={protectiveSleeve} onChange={(e) => setProtectiveSleeve(e.target.checked)}/>
     </Item>
@@ -146,7 +139,7 @@ const TemperatureCharacteristic = () => {
       className="ms-2 mb-0"
       rules={[
         {
-          required: true,
+          required: protectiveSleeve,
           message:
             `Пожалуйста, введите материал защитной гильзы)`,
         }

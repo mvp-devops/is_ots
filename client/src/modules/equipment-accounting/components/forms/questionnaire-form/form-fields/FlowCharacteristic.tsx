@@ -67,13 +67,6 @@ const FlowCharacteristic = () => {
       valuePropName="checked"
       initialValue={particulateMatter}
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие твердых частиц`,
-        }
-      ]}
     >
       <Checkbox style={{marginLeft: 30}} checked={particulateMatter} onChange={(e) => setParticulateMatter(e.target.checked)}/>
     </Item>
@@ -106,13 +99,6 @@ const FlowCharacteristic = () => {
       name={"corrosiveImpurities"}
       label={<Text type="secondary">Коррозионные примеси, %</Text>}
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, введите значение коррозионных примесей)`,
-        }
-      ]}
     >
       <Input
         {...inputProps("number")}

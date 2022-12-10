@@ -178,7 +178,6 @@ style={{width: 648}}
     <Item
       label={<Text type="secondary">Монтажный кронштейн</Text>}
       name={"mountingBracket"}
-      valuePropName="checked"
       className="ms-2 mb-0"
       rules={[
         {
@@ -202,11 +201,6 @@ style={{width: 648}}
       name={"flanges"}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>
@@ -219,11 +213,6 @@ style={{width: 648}}
       name={"dustProof"}
       valuePropName="checked"
       className="ms-2 mb-0"
-      rules={[
-        {
-          required: true,
-        }
-      ]}
     >
       <Checkbox />
     </Item>

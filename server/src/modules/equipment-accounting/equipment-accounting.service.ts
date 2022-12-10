@@ -47,7 +47,7 @@ import {
   CreateSummaryListOfEquipmentDto,
   UpdateSummaryListOfEquipmentDto,
 } from "./dto";
-import { DesignDocumentEntity, FileStorageService } from "../file-storage";
+import {DesignDocumentEntity, FileStorageService, NewFileStorageService} from "../file-storage";
 import {
   FieldEntity,
   ProjectEntity,
@@ -69,7 +69,7 @@ import {
   SummaryListOfEquipmentEntity,
 } from "./entities";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
-import {stampTemplate as stampTemplate} from "../../../common/templates/questionnaire/stampTemplate";
+import {createQuestionnaire as template} from "../../../common/templates/questionnaire/create-questionnaire";
 const pdf =  require("html-pdf");
 
 
@@ -101,15 +101,36 @@ export class EquipmentAccountingService {
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
-    private nsiService: RegulatoryReferenceInformationService
+    private nsiService: RegulatoryReferenceInformationService,
+    @Inject(forwardRef(() => NewFileStorageService))
+    private newFileService: NewFileStorageService
   ) {}
 
   /** Печать ОЛ в PDF */
 
-  printQuestionnaire = async () => {
+  printQuestionnaire = async (delay: number, template: string, fileName: string, options?: Object, ) => {
+    function sleep(ms: number) {
+      return new Promise( resolve => setTimeout(resolve, ms) );
+    }
 
+    pdf.create(template, options).toFile(fileName, (e: Error) => {
+      if (e) {
+        throw new HttpException(e.message, HttpStatus.FORBIDDEN)
+      }
+    })
+    await sleep(delay)
+    return fileName
   }
 
+  createQuestionnaire = async (data: any, target: string) => {
+    const {cipher} = data;
+    const questionnaireFolder = this.newFileService.getCurrentPath("questionnaire");
+    this.newFileService.createDirectory(questionnaireFolder);
+    const fileName = `${cipher}.pdf`
+    const pathToFile = this.newFileService.getPath([questionnaireFolder, fileName]);
+    const file = await this.printQuestionnaire(5000, template(data, target), pathToFile, {format: 'A4', orientation: "portrait"})
+    return file
+  }
 
   createNewFacilityAsset = async (
     dto: CreateFacilityDto

@@ -74,7 +74,7 @@ const LevelCharacteristic = () => {
       name={"viscosity_2"}
       rules={[
         {
-          required: true,
+          required: phasePartition,
           message:
             `Пожалуйста, введите кинематическую вязкость для среды 2`,
         }
@@ -116,7 +116,7 @@ const LevelCharacteristic = () => {
       className="ms-2 mb-0"
       rules={[
         {
-          required: true,
+          required: phasePartition,
           message:
             `Пожалуйста, введите плотность среды 2)`,
         }
@@ -136,13 +136,7 @@ const LevelCharacteristic = () => {
       initialValue={phasePartition}
       className="ms-2 mb-0"
       valuePropName="checked"
-      rules={[
-        {
-          required: true,
-          message:
-            `Пожалуйста, выберите наличие контроля раздела фаз`,
-        }
-      ]}
+
     >
       <Checkbox style={{marginLeft: 30}} checked={phasePartition} onChange={(e) => setPhasePartition(e.target.checked)}/>
     </Item>

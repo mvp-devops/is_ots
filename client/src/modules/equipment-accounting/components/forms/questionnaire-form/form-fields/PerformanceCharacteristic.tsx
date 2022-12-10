@@ -152,7 +152,9 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
       {...itemProps("Средняя наработка на отказ, тыс. часов (не менее)", "mtbf")}
     >
       <Select
-        {...selectProps}
+        size={"small"}
+      className={"text-secondary"}
+      notFoundContent={<NotFoundComponent/>}
       >
         {mtbf.map((item, index) => {
           return (

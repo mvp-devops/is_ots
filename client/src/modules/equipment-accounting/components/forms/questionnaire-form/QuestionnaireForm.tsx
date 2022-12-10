@@ -1,30 +1,17 @@
-import React, {createRef, FC, useEffect, useLayoutEffect, useState} from 'react';
+import React, {createRef, FC, useEffect, useState} from 'react';
 import {
-  Button, Checkbox, Col, Divider,
+  Button,   Divider,
   Form,
-  FormItemProps,
-  Input,
-  InputProps,
-  notification, Radio, Row,
-  Select,
-  SelectProps,
+
+  notification,
   Space,
-  Spin, TreeSelect,
+  Spin,
   Typography
 } from "antd";
 import {FormInstance} from "antd/es/form";
 import {useActions, useTypedSelector} from "../../../../../hooks";
 import {LoadingOutlined} from "@ant-design/icons";
-import {NotFoundComponent} from "../../../../../components";
-import {
-  connectionScheme,
-  controlledGases, explosionType,
-  FacilityType,
-  facilityTypesList, hartVersion,
-  measuredArea,
-  measureType, mtbf, outputSignal, protection,
-  questionnaireType, safety, settingRange, voltage
-} from "./questionnaire.consts";
+
 import {CheckboxChangeEvent} from "antd/es/checkbox";
 import GeneralInformation from "./form-fields/GeneralInformation";
 import PerformanceCharacteristic from "./form-fields/PerformanceCharacteristic";
@@ -32,7 +19,9 @@ import BaseInformation from "./form-fields/BaseInformation";
 import EnvironmentCharacteristic from "./form-fields/EnvironmentCharacteristic";
 import MetrologyCharacteristic from "./form-fields/MetrologyCharacteristic";
 import AdditionallyCharacteristic from "./form-fields/AdditionallyCharacteristic";
-import {getEquipmentAsset} from "../../../api/equipment-accounting.api";
+import {FacilityType} from "./questionnaire.consts";
+import {createQuestionnaire} from "../../../api/equipment-accounting.api";
+import {getOneItem} from "../../../../position-tree";
 const {Item} = Form;
 const {Text} = Typography;
 
@@ -109,14 +98,19 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target,  data}) => {
 
   const [facilityType, setFacilityType] = useState("");
   const [subUnitsList, setSubUnitsList] = useState([]);
+  const [parent, setParent] = useState(null);
 
 
   const {currentItem} = useTypedSelector(state => state.positionTree);
 
 
   useEffect(() => {
-    currentItem?.target === "unit" && setSubUnitsList(currentItem?.children)
+
+    if (currentItem?.target === "unit") {
+      setSubUnitsList(currentItem?.children)
+    }
     if(currentItem?.target === "project") {
+
       const subUnits = [];
       for (let i = 0; i < currentItem?.children?.length; i++) {
         const unit = currentItem?.children[i];
@@ -125,6 +119,31 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target,  data}) => {
       setSubUnitsList(subUnits);
     }
   }, [currentItem]);
+
+  useEffect(() => {
+!data && currentItem.target === "unit"  &&     getOneItem("unit", currentItem.id).then(data => {
+  setParent({
+    subsidiary: "project" in data && data.project.field.subsidiary.title,
+    field: "project" in data && data.project.field.title,
+    project: "project" in data && `${data.project.code}. ${data.project.title}`,
+    unit: "position" in data && `${data.title} (поз. ${data.position})`,
+    subUnit: " ",
+    cipher: "project" in data && "position" in data && `${data.project.field.subsidiary.code}. ${data && data.project.field.code}. ${data.project.code}. ${data.position}`
+  })
+})
+
+    !data && currentItem.target === "project"  &&     getOneItem("project", currentItem.id).then(data => {
+      setParent({
+        subsidiary: "field" in data && data.field.subsidiary.title,
+        field: "field" in data && data.field.title,
+        project: `${data.code}. ${data.title}`,
+        unit: " ",
+        subUnit: " ",
+        cipher: "field" in data && `${data.field.subsidiary.code}. ${data && data.field.code}. ${data.code}`
+      })
+    })
+  }, [currentItem]);
+
 
   useEffect(() => {
 data ? setFacilityType(data.facilityType) : setFacilityType("");
@@ -145,8 +164,6 @@ data ? setFacilityType(data.facilityType) : setFacilityType("");
   const [form] = Form.useForm();
   const formRef = createRef<FormInstance>();
 
-  const {actionType} = useTypedSelector(state => state.main);
-
   const {setFormVisible} = useActions();
   const [loading, setLoading] = useState(false);
 
@@ -156,48 +173,32 @@ data ? setFacilityType(data.facilityType) : setFacilityType("");
   };
 
   const onFinish = (values: any) => {
-    // const {
-    //   direction,
-    //   month,
-    //   year,
-    //   expertsCount,
-    //   costsPerMonth,
-    //   customerPosition,
-    //   customerFio,
-    //   executorPosition,
-    //   executorFio
-    // } = values
-    // const id = currentItem.id;
-    // const title = currentItem.title;
-    //
-    // const reportData = {
-    //   direction,
-    //   period: `${months.filter(({id, title}) => title === month)[0].id}.${year}`,
-    //   costs: costsPerMonth * expertsCount,
-    //   customerPosition,
-    //   customerFio,
-    //   executorPosition,
-    //   executorFio
-    // }
-    //
-    // setLoading(true);
-    // buildReportPerMonth(target, id, reportData, title).then(() => {
-    //   setLoading(false);
-    //   setFormVisible(false);
-    // })
-    console.log({
+
+    const formData = {
       ...values,
-      subsidiary: data.subsidiary.title,
-      field: data.field.title,
-      project:  `${data.project.code}. ${data.project.title}`,
-      unit: `${data.unit.title} (поз. ${data.unit.position})`,
-      subUnit: `${data.subUnit.title} (поз. ${data.subUnit.position})`,
-      cipher: `${data.subsidiary.code}.${data.field.code}.${data.project.code}.${data.unit.position}.${data.subUnit.position}-${
-        values.questionnaireType === "Проектная документация" ? "ПД" 
+      subsidiary: data ? data.subsidiary.title : parent.subsidiary,
+      field: data ? data.field.title : parent.field,
+      project:  data ? `${data.project.code}. ${data.project.title}` : parent.project,
+      unit: data ? `${data.unit.title} (поз. ${data.unit.position})` : parent.unit,
+      subUnit: data ? `${data.subUnit.title} (поз. ${data.subUnit.position})` : parent.subUnit,
+      cipher: `${data ? `${data.subsidiary.code}.${data.field.code}.${data.project.code}.${data.unit.position}.${data.subUnit.position}` : parent.cipher}-${
+        values.questionnaireType === "Проектная документация" ? "ПД"
           : values.questionnaireType === "Рабочая документация" ? "РД"
-          : "РЭ"
-      }-${values.tag}-ОЛ`
-    });
+            : "РЭ"
+      }-${values.tag}-ОЛ`,
+      target: facilityType === FacilityType.FLOW ? "flow"
+              : facilityType === FacilityType.TEMPERATURE ? "temperature"
+            : facilityType === FacilityType.LEVEL ? "level"
+           : facilityType === FacilityType.PRESSURE ? "pressure"
+              : facilityType === FacilityType.GAZ_ANALYZE ? "gaz-analyze" : ""
+    }
+
+    setLoading(true);
+    createQuestionnaire(formData).then(() => {
+      setLoading(false);
+      setFormVisible(false);
+    })
+
 
     onReset()
   }
@@ -260,7 +261,7 @@ data ? setFacilityType(data.facilityType) : setFacilityType("");
             <Button type={loading ? "default" : "primary"} htmlType="submit" >
               {loading ?
                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />}>
-                  Загрузка ОЛ</Spin> :
+                  Генерация ОЛ</Spin> :
 
                 "Сформировать"}
 

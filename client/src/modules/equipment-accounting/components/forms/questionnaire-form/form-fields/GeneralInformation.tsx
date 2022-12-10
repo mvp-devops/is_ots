@@ -97,7 +97,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
             {...inputProps()}
             disabled={!!location}
           />
-        ) : (
+        ) : subUnitsList.length > 0 ? (
           <Select
             {...selectProps}
             // onChange={(value) => onStageChange(value)}
@@ -110,7 +110,13 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
               );
             })}
           </Select>
-        )}
+        )
+        : (
+            <Input
+              {...inputProps()}
+
+            />
+          )}
       </Item>
     );
 
