@@ -17,7 +17,7 @@ import { useStatistic } from "./hooks";
 import MonthReportForm from "../../reports/month-report-form/MonthReportForm";
 import {useTypedSelector} from "../../../hooks";
 import {Roles} from "../../main/utils/main.consts";
-import {setFilePath} from "../../main";
+import {FormActions, setFilePath} from "../../main";
 import {useEffect, useState} from "react";
 import Contacts from "../../../pages/Contacts";
 
@@ -47,7 +47,7 @@ const StatisticPage = () => {
     showSupervisionStatisticDescription,
   } = useStatistic();
 
-  const {currentUser} = useTypedSelector(state => state.main);
+  const {currentUser, formVisible, actionType} = useTypedSelector(state => state.main);
 
 
   const detailsButton = (target: string) => (
@@ -120,11 +120,11 @@ const StatisticPage = () => {
     </Card>
   );
 
-  const renderCheckListForm = renderCheckListFormFlag && (
+  const renderCheckListForm = formVisible && actionType === FormActions.CHECKLIST && (
     <ModalContainer child={<CheckListForm />} />
   );
 
-  const renderReportForm = renderReportFormFlag && (
+  const renderReportForm = formVisible && actionType === FormActions.REPORT && (
     <ModalContainer child={<MonthReportForm />} />
   )
 

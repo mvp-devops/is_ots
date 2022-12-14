@@ -4,18 +4,15 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   Query,
   UseInterceptors,
-  UploadedFile,
   Put,
   Res,
   UploadedFiles,
 } from "@nestjs/common";
-import { FileFieldsInterceptor } from "@nestjs/platform-express";
-import { setCurrentDate } from "../../../common/utils";
+import {FileFieldsInterceptor} from "@nestjs/platform-express";
 import type { Response } from "express";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
 import {
@@ -29,10 +26,15 @@ import {
 } from "./dto";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
 import type { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../common/types/equipment-accounting";
+import {File} from "../../../common/types/file-storage";
+import {NewEquipmentAccountingService} from "./new-equipment-accounting.service";
+import {setCurrentDate} from "../../../common/utils";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
-  constructor(private readonly service: EquipmentAccountingService) {}
+  constructor(
+    private readonly service: EquipmentAccountingService
+  ) {}
 
   /** Получаем единицу оборудования для формирования ОЛ */
 
@@ -92,35 +94,35 @@ export class EquipmentAccountingController {
     return this.service.createNewFacilityAsset(dto);
   }
 
-  // @Get("/export-to-atlas")
-  // async download(@Query() query, @Res() res: Response) {
-  //   const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;
-  //   let fileLocation = await this.service.exportToAtlas(
-  //     parrentTarget,
-  //     parrentId,
-  //     parrentTitle,
-  //     parrentFolder
-  //   );
-  //   const fileName = `export_to_atlas_${setCurrentDate()}.json`;
-
-  //   res.header("Content-disposition", `attachment; filename=${fileName}`);
-  //   res.type("application/json; charset=UTF-8");
-
-  //   res.download(fileLocation, `${fileName}`, (err) => {
-  //     if (err) console.log(err);
-  //   });
-  // }
-
   @Get("/export-to-atlas")
-  async download(@Query() query) {
+  async download(@Query() query, @Res() res: Response) {
     const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;
-    return this.service.exportToAtlas(
+    let fileLocation = await this.service.exportToAtlas(
       parrentTarget,
       parrentId,
       parrentTitle,
       parrentFolder
     );
+    const fileName = `export_to_atlas_${setCurrentDate()}.json`;
+
+    res.header("Content-disposition", `attachment; filename=${fileName}`);
+    res.type("application/json; charset=UTF-8");
+
+    res.download(fileLocation, `${fileName}`, (err) => {
+      if (err) console.log(err);
+    });
   }
+
+  // @Get("/export-to-atlas")
+  // async download(@Query() query) {
+  //   const { parrentTarget, parrentId, parrentTitle, parrentFolder } = query;
+  //   return this.service.exportToAtlas(
+  //     parrentTarget,
+  //     parrentId,
+  //     parrentTitle,
+  //     parrentFolder
+  //   );
+  // }
 
   @Post("/summary-list-of-equipment-asset/add")
   @UseInterceptors(
@@ -222,5 +224,21 @@ export class EquipmentAccountingController {
     );
   }
 
+  /** Импорт данных из файла xlsx */
+
+  @Post("/import")
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: "descriptor", maxCount: 1 },
+    { name: "documents", maxCount: 1000 }
+  ]))
+  importDataFromConsolidatedList (
+    @Body() data: any,
+    @UploadedFiles() files: {
+      descriptor: File,
+      documents?: File[]
+    }
+  ) {
+    return this.service.importDataFromConsolidatedList(data, files);
+  }
 
 }

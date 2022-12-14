@@ -189,7 +189,6 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
         <Space direction="horizontal">
           <List name={[name, "solutions"]}>
             {(fields, { add, remove }) => {
-              console.log(fields);
               return (
                 <>
                   {fields.map(({ key, name, ...restField }) => (

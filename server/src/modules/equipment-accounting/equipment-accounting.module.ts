@@ -1,4 +1,4 @@
-import { RegulatoryReferenceInformationModule } from "./../regulatory-reference-information";
+import { RegulatoryReferenceInformationModule} from "./../regulatory-reference-information";
 import { SequelizeModule } from "@nestjs/sequelize";
 import { forwardRef, Module } from "@nestjs/common";
 import { EquipmentAccountingService } from "./equipment-accounting.service";
@@ -11,8 +11,11 @@ import {
   SignalEntity,
   MetrologyEntity,
   MonitoringEntity,
+
 } from "./entities";
-import { FileStorageModule } from "../file-storage";
+import { FileStorageModule} from "../file-storage";
+import {PositionTreeModule} from "../position-tree";
+import {NewEquipmentAccountingService} from "./new-equipment-accounting.service";
 
 @Module({
   controllers: [EquipmentAccountingController],
@@ -29,6 +32,7 @@ import { FileStorageModule } from "../file-storage";
     ]),
     forwardRef(() => FileStorageModule),
     forwardRef(() => RegulatoryReferenceInformationModule),
+    forwardRef(() => PositionTreeModule),
   ],
 })
 export class EquipmentAccountingModule {}

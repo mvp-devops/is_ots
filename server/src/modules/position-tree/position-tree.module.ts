@@ -17,7 +17,7 @@ import {CounterpartyEntity, DesignEntity, EquipmentEntity} from "../regulatory-r
 @Module({
   controllers: [PositionTreeController],
   providers: [PositionTreeService],
-  exports: [],
+  exports: [PositionTreeService],
   imports: [
     SequelizeModule.forFeature([
       SubsidiaryEntity,

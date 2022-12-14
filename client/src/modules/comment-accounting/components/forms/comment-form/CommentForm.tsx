@@ -77,8 +77,7 @@ const CommentForm = () => {
   ); // eslint-disable-line react-hooks/exhaustive-deps
 
   const onFinish = (values: any) => {
-    // createManyComments(values);
-    console.log(values);
+    createManyComments(values);
     onReset();
     setFormVisible(false);
   };

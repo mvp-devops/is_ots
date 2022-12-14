@@ -33,7 +33,6 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
   const onFinish = (values: any) => {
     if(action === FormActions.EDIT_NORMATIVE) {
       updateNormative(values, id.toString())
-      console.log(values);
     } else {
       uploadNormative(values);
     }

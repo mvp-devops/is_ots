@@ -11,6 +11,7 @@ import {
   updateOneEssence,
   deleteOneEssence,
 } from "..";
+import {importCommentsFromLKP} from "../api/comment-accounting.api";
 
 export const createComment = (item: DesignDocumentCommentCreationAttrs) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
@@ -135,3 +136,21 @@ export const setCurrentComment = (item: DesignDocumentCommentView) => {
     payload: item,
   };
 };
+
+export const uploadCommentsFromLkp = (req: any) => {
+  return async (dispatch: Dispatch<EssenceAction>) => {
+    try {
+      dispatch({ type: ActionTypes.POST_MANY_COMMENTS });
+      const data = await importCommentsFromLKP(req);
+      dispatch({
+        type: ActionTypes.POST_MANY_COMMENTS_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: ActionTypes.POST_MANY_COMMENTS_ERROR,
+        payload: "Ошибка получения данных",
+      });
+    }
+  };
+}

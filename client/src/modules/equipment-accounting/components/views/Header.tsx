@@ -79,6 +79,15 @@ const Header = () => {
                             style={{ marginBottom: "6px", padding: 0 }}
                             className="text-primary"
                             title="Сформировать файл выгрузки"
+                            onClick={(e: any) =>
+                              exportToAtlas(
+                                e,
+                                currentItem.childrenTarget,
+                                checkedItem.id.toString(),
+                                `${checkedItem.code}-${checkedItem.title}`,
+                                currentItemFolderPath
+                              )
+                            }
                           />
                           ИС «ТОРО»
                         </Space>
@@ -86,23 +95,23 @@ const Header = () => {
 
                       key: "EXPORT_TO_TORO",
                     },
-                    {
-                      label: (
-                        <Space
-                          className="text-secondary"
-                          onSelect={(key) => console.log("EXCEL")}
-                        >
-                          <FileExcelOutlined
-                            style={{ marginBottom: "6px", padding: 0 }}
-                            className="text-success"
-                            title="Сформировать файл выгрузки"
-                          />
-                          MS Excel
-                        </Space>
-                      ),
-
-                      key: "EXPORT_TO_EXCEL",
-                    },
+                    // {
+                    //   label: (
+                    //     <Space
+                    //       className="text-secondary"
+                    //       onSelect={(key) => console.log("EXCEL")}
+                    //     >
+                    //       <FileExcelOutlined
+                    //         style={{ marginBottom: "6px", padding: 0 }}
+                    //         className="text-success"
+                    //         title="Сформировать файл выгрузки"
+                    //       />
+                    //       MS Excel
+                    //     </Space>
+                    //   ),
+                    //
+                    //   key: "EXPORT_TO_EXCEL",
+                    // },
                   ]}
                 />
               }

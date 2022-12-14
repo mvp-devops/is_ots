@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   UseInterceptors,
-  UploadedFile, UploadedFiles, Put,
+  UploadedFile, UploadedFiles, Put, Res,
 } from "@nestjs/common";
 import {FileFieldsInterceptor, FileInterceptor} from "@nestjs/platform-express";
 import {
@@ -19,6 +19,7 @@ import { FileStorageService } from "./file-storage.service";
 import {NormativeService} from "./normative.service";
 import type {DocumentCreateOrUpdateAttrs, File, NormativeCreateOrUpdateAttrs} from "../../../common/types/file-storage";
 import {DesignDocumentService} from "./design-document.service";
+import type {Response} from "express";
 
 @Controller("api/file-storage")
 export class FileStorageController {
@@ -158,5 +159,30 @@ export class FileStorageController {
   removeManyNormative(@Query() query: { ids: string }) {
     const {ids} = query;
     return this.normativeService.removeManyNormative(ids);
+  }
+
+  @Get("/download")
+
+  getReport (
+    @Query() query: {path: string, fileName: string},
+    @Res() res: Response
+  ) {
+    const {path, fileName} = query;
+
+    res.header(
+      "Content-disposition",
+      `attachment; filename=${fileName}`
+    );
+    res.type(
+      "application/pdf"
+    );
+
+    res.download(
+      path,
+      fileName,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
   }
 }

@@ -86,7 +86,19 @@ export const exportLKPData = async (
       params: { target, parrentId, parrentIds },
     })
     .then((resp) => {
-      console.log(resp.data);
+
       download(resp.data, `LKP_${Math.random()}.xlsx`);
     });
 };
+
+export const importCommentsFromLKP = async (req: any) => {
+  const subUrl = "upload/comments";
+  const url = setUrl(`${baseUrl}/${subUrl}`);
+  const {descriptor} = req;
+  const formData = new FormData();
+  formData.append("descriptor", descriptor);
+  const {data: res} = await axios.post(url, formData);
+
+  return res;
+
+}

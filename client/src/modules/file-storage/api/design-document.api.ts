@@ -18,6 +18,7 @@ interface documentFormData {
   multiple: boolean;
   code: string;
   title: string;
+  flag: string;
   revision: number;
   description: string;
   document: any;
@@ -25,9 +26,9 @@ interface documentFormData {
   documents: any[]
 }
 
-const setFormData = (item: documentFormData, flag?: string): FormData => {
+const setFormData = (item: documentFormData,  ): FormData => {
 
-  const {parentTarget, parentId, parentFolder, stageId, sectionId, multiple, code, title, revision, description, document, descriptor, documents} = item;
+  const {flag, parentTarget, parentId, parentFolder, stageId, sectionId, multiple, code, title, revision, description, document, descriptor, documents} = item;
 
   const formData = new FormData();
   flag && formData.append("flag", flag);

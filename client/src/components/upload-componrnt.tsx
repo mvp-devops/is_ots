@@ -39,7 +39,6 @@ const UploadComponent: React.FC<UploadProps> = (props) => {
       getBase64(info.file.originFileObj as RcFile, (url) => {
         setLoading(false);
         setImageUrl(url);
-        console.log(imageUrl);
       });
     }
   };

@@ -30,7 +30,7 @@ import {
   UpdateRegulatoryReferenceInformationDto,
 } from "./dto";
 
-import {CreateGlossaryDto, CreateUserDto} from "./dto/create-regulatory-reference-information.dto";
+import {CreateGlossaryDto, CreateNSIDto, CreateUserDto} from "./dto/create-regulatory-reference-information.dto";
 
 import {
   UpdateCriticalityDto,
@@ -40,6 +40,8 @@ import {
 import { ExcelService } from "../file-storage/excel.service";
 import { formattedDate } from "../../../common/utils/formatDate.pipe";
 import {GlossaryEntity} from "./entities/schemas/glossary.entry";
+import {CreateNormativeDto} from "../file-storage/dto/create-file-storage.dto";
+import {CreateSubUnitDto, CreateUnitDto} from "../position-tree/dto";
 
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -683,4 +685,13 @@ getAssets = async (target: string): Promise<GlossaryEntity[]> => {
     const fileLocation = `${filePath}\\${fileName}`;
     return fileLocation;
   };
+
+  findOrCreateCounterparty = async (dto: CreateNSIDto): Promise<CounterpartyEntity> => {
+    let res = null;
+      const {title} = dto;
+      const item = await this.counterpartyRepository.findOne({where: {title }});
+      res = !item ? await this.counterpartyRepository.create(dto): item;
+
+    return res;
+  }
 }

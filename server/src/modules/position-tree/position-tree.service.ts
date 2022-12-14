@@ -35,7 +35,7 @@ import {
   CreateProjectDto,
   CreateUnitDto,
   UpdateUnitDto,
-  UpdateSubUnitDto,
+  UpdateSubUnitDto, CreateSubUnitDto,
 } from "./dto";
 import {
   FieldEntity,
@@ -189,7 +189,7 @@ export class PositionTreeService {
                 ],
                 key: `${subsidiaryId.toString()}-${fieldId.toString()}-${projectId.toString()}-${unitId.toString()}-${id.toString()}`,
                 id: id.toString(),
-                title: `${position}. ${title}`,
+                title: `${position ? `${position}. ` : ""}${title}`,
               };
               unitChildren.push(unitChild);
             }
@@ -205,7 +205,7 @@ export class PositionTreeService {
               ],
               key: `${subsidiaryId.toString()}-${fieldId.toString()}-${projectId.toString()}-${id.toString()}`,
               id: id.toString(),
-              title: `${position}. ${title}`,
+              title: `${position ? `${position}. ` : ""}${title}`,
               children: unitChildren.sort((a, b) =>
                 a.title < b.title ? -1 : 0
               ),
@@ -219,7 +219,7 @@ export class PositionTreeService {
             keys: [subsidiaryId.toString(), fieldId.toString(), id.toString()],
             key: `${subsidiaryId.toString()}-${fieldId.toString()}-${id.toString()}`,
             id: id.toString(),
-            title: `${code === "0" ? "" : code} ${title}`,
+            title: `${code === "0" ? "" : `${code}. `} ${title}`,
             children: projectChildren.sort((a, b) =>
               a.title < b.title ? -1 : 0
             ),
@@ -256,7 +256,9 @@ export class PositionTreeService {
 
     return items;
   };
+
 //FIXME: доделать возможность загрузки не только с ДО, но и с использованием таргета и id
+  //TODO: проверка на непустоту позиции - иначе 0, поставщик - иначе 1, тип оборудования - иначе 1
   sendMany = async (descriptor: File, target?: string, id?: string, ): Promise<PositionTreeItem[]>  => {
     const data = this.excelService.convertExcelFileToJson(descriptor);
     for(let i = 0; i < data.length; i++) {
@@ -353,7 +355,7 @@ export class PositionTreeService {
         contract: unit_contract,
         description: unit_description
       }
-      const unit = await this.unitRepository.findOne({where: {title: unit_title}});
+      const unit = await this.unitRepository.findOne({where: {projectId, title: unit_title}});
       const {id: unitId, position: unitPosition, code: unitCode} = !unit ? await this.unitRepository.create(unitItem) : unit;
 
       const unitFolder = this.newFileService.generateFolderName(`${unitPosition}. ${unitCode}`);
@@ -371,7 +373,7 @@ export class PositionTreeService {
         code: sub_unit_equipmentType.slice(0, 2).toUpperCase(),
         description: ""
       }) : subUnitEquipment;
-      const subUnitSupplier = await this.counterpartyRepository.findOne({where: {title: sub_unit_supplier}});
+      const subUnitSupplier =  await this.counterpartyRepository.findOne({where: {title: sub_unit_supplier}});
       const {id: subUnitSupplierId} = !subUnitSupplier ? await this.counterpartyRepository.create({
         title: sub_unit_supplier,
         code: sub_unit_supplier.slice(0, 2).toUpperCase(),
@@ -387,7 +389,7 @@ export class PositionTreeService {
         contract: sub_unit_contract,
         description: sub_unit_description
       }
-      const subUnit = await this.subUnitRepository.findOne({where: {title: sub_unit_title}});
+      const subUnit = await this.subUnitRepository.findOne({where: {unitId, title: sub_unit_title}});
       const {position: subUnitPosition, code: subUnitCode} = !subUnit ? await this.subUnitRepository.create(subUnitItem) : subUnit;
       // let uniqueSubsidiaryArr = [...new Set(subsidiaryArr.map(item => JSON.stringify(item)))].map(item => JSON.parse(item));
 
@@ -395,12 +397,29 @@ export class PositionTreeService {
       const subsidiaryFieldProjectUnitSubUnitFolderFolder = this.newFileService.getPath([subsidiaryFolder, fieldFolder, projectFolder, "002. Объекты", unitFolder, "002. Объекты", subUnitFolder])
       this.newFileService.createDirectory(subsidiaryFieldProjectUnitSubUnitFolderFolder);
     }
+
     return await this.getPositionTree();
   }
 
   downloadTemplate = (template: string): string => {
 
     return this.newFileService.getCurrentPath(this.newFileService.getPath(["templates", template]))
+  }
+
+  createNewUnitOrSubUnitByConditionalList = async (target: string, dto: CreateUnitDto | CreateSubUnitDto): Promise<PositionTreeView> => {
+    let res = null;
+    if(target === "unit") {
+      const {projectId, title} = dto as CreateUnitDto;
+      const item = await this.unitRepository.findOne({where: {projectId, title }});
+      res = !item ? await this.unitRepository.create(dto): item;
+    }
+    if(target === "sub-unit") {
+      const {unitId, title} = dto as CreateSubUnitDto;
+      const item = await this.subUnitRepository.findOne({where: {unitId, title }});
+      res = !item ? await this.subUnitRepository.create(dto): item;
+    }
+
+    return res;
   }
 
   createOne = async (
@@ -2972,4 +2991,65 @@ export class PositionTreeService {
 
     return statistic;
   };
+
+
+  findOneAsset = async (target: string, id: number): Promise<SubUnitEntity> => {
+    return await this.subUnitRepository.findOne({
+      where: {id},
+      include: [
+        {
+          model: UnitEntity,
+          include: [
+            {
+              model: ProjectEntity,
+              include: [
+                {
+                  model: FieldEntity,
+                  include: [
+                    {
+                      model: SubsidiaryEntity,
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: EquipmentEntity,
+          attributes: ["id", "title", "code", "description"],
+        },
+        {
+          model: CounterpartyEntity,
+          attributes: ["id", "title", "code", "description"],
+        },
+        {
+          model: DesignDocumentEntity,
+          as: "subUnitDocuments",
+          attributes: [
+            "id",
+            "title",
+            "code",
+            "revision",
+            "fileType",
+            "fileName",
+            "filePath",
+          ],
+        },
+        {
+          model: DesignDocumentEntity,
+          as: "subUnitQuestionare",
+          attributes: [
+            "id",
+            "title",
+            "code",
+            "revision",
+            "fileType",
+            "fileName",
+            "filePath",
+          ],
+        },
+      ],
+    });
+  }
 }

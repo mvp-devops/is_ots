@@ -8,7 +8,7 @@ import {
   Delete,
   Query,
   Put,
-  Res,
+  Res, UseInterceptors, UploadedFiles, UploadedFile,
 } from "@nestjs/common";
 import { setCurrentDate } from "../../../common/utils";
 import { CommentAccountingService } from "./comment-accounting.service";
@@ -18,6 +18,8 @@ import {
 } from "./dto";
 import type { Response } from "express";
 import * as uuid from "uuid";
+import {FileFieldsInterceptor, FileInterceptor} from "@nestjs/platform-express";
+import type {File} from "../../../common/types/file-storage";
 
 @Controller("api/comment-accounting")
 export class CommentAccountingController {
@@ -93,5 +95,14 @@ export class CommentAccountingController {
   @Post("/add/solution")
   createOneSolution(@Body() dto: CreateDesignDocumentSolutionDto) {
     return this.service.createOneSolution(dto);
+  }
+
+  @Post("/upload/comments")
+  @UseInterceptors(FileInterceptor("descriptor"))
+  uploadDesignDocument(
+    @Body() data: any,
+    @UploadedFile() descriptor: File
+) {
+    return this.service.uploadCommentFromDescriptor(data, descriptor);
   }
 }

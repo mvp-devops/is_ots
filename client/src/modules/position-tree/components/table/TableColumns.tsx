@@ -158,7 +158,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       record?.position?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
       <Text type="secondary" style={{ fontSize: 12 }}>
-        {"position" in record && record?.position}
+        {"position" in record && record?.position !== "0" ? record?.position : " - "}
       </Text>
     ),
   };

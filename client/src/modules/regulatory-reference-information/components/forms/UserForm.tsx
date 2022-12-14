@@ -170,7 +170,6 @@ const UserForm = () => {
           type="primary"
           className="me-1 "
           onClick={() => {
-            console.log(userData);
             userRegistration();
             // setFormVisible(false);
           }}

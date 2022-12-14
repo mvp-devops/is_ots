@@ -16,6 +16,8 @@ import DesignDocumentForm from "../../forms/design-document";
 import {DesignDocumentView} from "../../../types"
 import {useActions, useTypedSelector} from "../../../../../hooks";
 import {CollectiveCheckSheet, CommentAccountingModalContainer, CommentForm} from "../../../../comment-accounting";
+import ImportCommentFromLKPForm
+  from "../../../../comment-accounting/components/forms/comment-form/ImportCommentFromLKPForm";
 
 const { Text } = Typography;
 
@@ -119,6 +121,8 @@ const DesignDocumentTable = () => {
     <ModalContainer child={<CommentForm />} />
   );
 
+  const importCommentFromLKPForm = formVisible && actionType === FormActions.IMPORT_COMMENTS_FROM_LKP && <ModalContainer child={<ImportCommentFromLKPForm />} />
+
   const collectiveCheckSheetViewRender = collectiveCheckSheetView && (
     <CommentAccountingModalContainer
       show={collectiveCheckSheetView}
@@ -142,7 +146,8 @@ const DesignDocumentTable = () => {
           return {
             onMouseEnter: (event) => {
               setCurrentRow(record);
-              setCurrentDocument(record)
+              setCurrentDocument(record);
+              // console.log(record.id);
             },
           };
         }}
@@ -166,6 +171,7 @@ const DesignDocumentTable = () => {
       {renderForm}
       {collectiveCheckSheetViewRender}
       {addCommentForm}
+      {importCommentFromLKPForm}
     </Layout>
   );
 };

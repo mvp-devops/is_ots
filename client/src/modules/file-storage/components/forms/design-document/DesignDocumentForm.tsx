@@ -78,9 +78,10 @@ const DesignDocumentForm:FC<DesignDocumentFormProps> = ({editRow}) => {
 
   const onFinish = (values: any) => {
     if(action === FormActions.EDIT_DOCUMENT) {
-      updateDesignDocument({...values, flag}, id)
+      updateDesignDocument({...values, flag: "design-document"}, id)
     } else {
-      uploadDesignDocument({...values, flag});
+      uploadDesignDocument({...values, flag: "design-document"});
+
     }
     setFormVisible(false);
     onReset();

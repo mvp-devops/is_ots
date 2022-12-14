@@ -149,9 +149,7 @@ const QuestionnaireForm: FC<QuestionnaireFormProps> = ({target,  data}) => {
 data ? setFacilityType(data.facilityType) : setFacilityType("");
   }, []);
 
-  useEffect(() => {
-    console.log("facilityType: ", facilityType);
-  }, [facilityType]);
+
 
 
 
@@ -216,9 +214,6 @@ data ? setFacilityType(data.facilityType) : setFacilityType("");
 
   return (
     <>
-      <div>
-        {target}
-      </div>
       <Form
         layout="horizontal"
         ref={formRef}

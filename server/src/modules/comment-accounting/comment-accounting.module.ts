@@ -10,7 +10,8 @@ import {
   DesignDocumentCommentEntity,
   DesignDocumentSolutionEntity,
 } from "./entities";
-import { FileStorageModule } from "../file-storage";
+import {DesignDocumentEntity, FileStorageModule, NormativeEntity} from "../file-storage";
+import {CriticalityEntity, UserEntity} from "../regulatory-reference-information";
 
 @Module({
   controllers: [CommentAccountingController],
@@ -20,6 +21,10 @@ import { FileStorageModule } from "../file-storage";
       DesignDocumentCommentEntity,
       DesignDocumentSolutionEntity,
       CapitalConstructionUnitSupervisionCommentEntity,
+      NormativeEntity,
+      CriticalityEntity,
+      DesignDocumentEntity,
+      UserEntity
     ]),
     forwardRef(() => FileStorageModule),
   ],

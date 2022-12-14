@@ -62,7 +62,7 @@ export class NormativeService {
         const item = items[i];
         data.push(this.normativeView(item))
       }
-      return data;
+      return data.filter(item => item.id !== 1);
     } catch (e) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }

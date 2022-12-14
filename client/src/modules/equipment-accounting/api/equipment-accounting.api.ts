@@ -805,7 +805,6 @@ export const exportToAtlas = async (
   //     params: { parrentTarget, parrentId, parrentTitle, parrentFolder },
   //   })
   //   .then((resp) => {
-  //     console.log(resp.data);
   //     download(
   //       resp.data,
   //       `${parrentTitle}_export_to_atlas_${setCurrentDate()}.json`
@@ -815,7 +814,6 @@ export const exportToAtlas = async (
 
 export const downloadFile = ({ data, fileName, fileType }) => {
   // Create a blob with the data we want to download as a file
-  console.log(data);
   const blob = new Blob([data], { type: "text/json" });
   // Create an anchor element and dispatch a click event on it
   // to trigger a download

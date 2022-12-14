@@ -35,8 +35,7 @@ import {
 @Injectable()
 export class DesignDocumentService {
   constructor(
-    @InjectModel(DesignDocumentEntity)
-    private designDocumentRepository: typeof DesignDocumentEntity,
+
     @Inject(forwardRef(() => NewFileStorageService))
     private fileStorageService: NewFileStorageService,
     @Inject(forwardRef(() => ExcelService))
@@ -45,6 +44,8 @@ export class DesignDocumentService {
     private nsiService: RegulatoryReferenceInformationService,
     @Inject(forwardRef(() => CommentAccountingService))
     private commentService: CommentAccountingService,
+    @InjectModel(DesignDocumentEntity)
+    private designDocumentRepository: typeof DesignDocumentEntity,
   ) {
   }
 
@@ -727,14 +728,18 @@ export class DesignDocumentService {
 
       const code = data ? data.code : undefined,
       title = data ? data.title : undefined,
-      revision = data ? data.revision : "1",
+      revision = data?.revision ? data.revision : "1",
       description = data ? data.description : "";
+
+
+
 
       let tkpFolder = "",
        fileFolder = "",
         pathToFile = "";
 
       const uploadDesignDocumentFlag = flag === "design-document";
+
 
       const doc: DesignDocumentCreateOrUpdateAttrs = {
         projectId: null,
@@ -774,7 +779,8 @@ export class DesignDocumentService {
           }
           default: break;
         }
-        fileFolder = await this.setUploadedFolder(stageId, sectionId,supplierId);
+        fileFolder = await this.setUploadedFolder(stageId, sectionId, supplierId);
+        console.log(parentFolder, fileFolder);
       }
       else {
           switch (parentTarget) {
@@ -790,7 +796,8 @@ export class DesignDocumentService {
           }
           case "summary-list-of-equipment": {
             doc.sloeId = parentId;
-            fileFolder = this.fileStorageService.getPath(["Оборудование", "ОЛ, ТЗ, ТТ"])
+            fileFolder = this.fileStorageService.getPath(["Оборудование", "ОЛ, ТЗ, ТТ"]);
+            console.log(parentFolder, fileFolder);
             break;
           }
           case "monitoring": {
@@ -823,6 +830,8 @@ export class DesignDocumentService {
       doc.filePath = pathToFile;
       doc.fileName = fileName;
       doc.fileType = extName;
+
+
 
       const {id} = await this.designDocumentRepository.create(doc);
 
@@ -869,7 +878,7 @@ export class DesignDocumentService {
     }
   };
 
-  removeOneDesignDocument = async (id: number, parentTarget: string): Promise<DesignDocumentView> => {
+  removeOneDesignDocument = async (id: number, parentTarget?: string): Promise<DesignDocumentView> => {
     try {
       const item = await this.findOneDesignDocument(id, parentTarget);
       if(item) {

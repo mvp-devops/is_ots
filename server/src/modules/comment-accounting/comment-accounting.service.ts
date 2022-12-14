@@ -19,7 +19,7 @@ import {
   CheckListSets,
   CollectiveCheckSheetHeaders,
   DesignDocumentCommentSolutionView,
-  DesignDocumentCommentView,
+  DesignDocumentCommentView, Solution, Status,
 } from "../../../common/types/comments-accounting";
 import { DesignDocumentEntity, NormativeEntity } from "../file-storage";
 import {
@@ -39,7 +39,8 @@ import {
 } from "../position-tree";
 import { ExcelService } from "../file-storage/excel.service";
 import { StatisticService } from "./statistic.service";
-import { formattedDate } from "../../../common/utils/formatDate.pipe";
+import {File, } from "../../../common/types/file-storage";
+const { Op } = require('sequelize')
 
 @Injectable()
 export class CommentAccountingService {
@@ -51,7 +52,16 @@ export class CommentAccountingService {
     @Inject(forwardRef(() => ExcelService))
     private excelService: ExcelService,
     @Inject(forwardRef(() => StatisticService))
-    private statisticService: StatisticService
+    private statisticService: StatisticService,
+    @InjectModel(DesignDocumentEntity)
+    private designDocumentRepository: typeof DesignDocumentEntity,
+    @InjectModel(NormativeEntity)
+    private normativeRepository: typeof NormativeEntity,
+    @InjectModel(CriticalityEntity)
+    private criticalityRepository: typeof CriticalityEntity,
+    @InjectModel(UserEntity)
+    private userRepository: typeof UserEntity,
+
   ) {}
 
   async createOne(
@@ -62,7 +72,7 @@ export class CommentAccountingService {
 
       if (dto.solutions && dto.solutions.length > 0) {
         for (let i = 0; i < dto.solutions.length; i++) {
-          const { statusId, solutionId, answer, designContacts, solution } =
+          const { statusId, solutionId, answer, designContacts, solution, userId } =
             dto.solutions[i];
 
           const solutionItem = {
@@ -73,7 +83,7 @@ export class CommentAccountingService {
             designContacts,
             answer,
             solution,
-            userId: +dto.userId,
+            userId: userId ? userId : dto.userId,
           };
 
           try {
@@ -753,4 +763,88 @@ export class CommentAccountingService {
     );
     return file;
   };
+
+  uploadCommentFromDescriptor = async (data: any, descriptor: File) => {
+    const filesDescription = this.excelService.convertExcelFileToJson2(descriptor);
+    // return filesDescription;
+    const items = [];
+    for(let i = 0; i < filesDescription.length; i++) {
+      const item = filesDescription[i]
+      const keys = Object.keys(item);
+
+      const  doc = await this.designDocumentRepository.findOne({where: {code: item["3"]}});
+      // console.log(item["3"]);
+      // console.log(doc);
+      const firstName = item["10"].split(" ")[1].slice(0,1)
+      const secondName = item["10"].split(" ")[2].slice(0,1)
+      // return {lastName: item["10"].split(" ")[0], firstName, secondName}
+      const {id: userId} = await this.userRepository.findOne({
+      where: {
+        firstName: {[Op.like]: `${firstName}%`},
+        secondName: {[Op.like]: `${secondName}%`},
+        lastName: item["10"].split(" ")[0],
+      }
+    });
+      // return userId
+
+      const solutions = [];
+
+
+
+      if(item["11"]) {
+        for (let j = 11; j <= keys.length; j += 6){
+          const firstName = item[`${j + 5}`].split(" ")[1].slice(0,1)
+          const secondName = item[`${j + 5}`].split(" ")[2].slice(0,1)
+
+          const {id: userId} = await this.userRepository.findOne({
+            where: {
+              firstName: {[Op.like]: `${firstName}%`},
+              secondName: {[Op.like]: `${secondName}%`},
+              lastName: item[`${j + 5}`].split(" ")[0],
+            }
+          })
+          item[keys[`${j}`]] &&
+          solutions.push({
+            statusId: item[`${j}`].toLowerCase() === Status.ACCEPTED.toLowerCase() ? 1 : item[`${j}`].toLowerCase() === Status.NOT_ACCEPTED.toLowerCase() ? 2 : 3,
+            answer: item[`${j + 1}`],
+            designContacts: item[`${j + 2}`],
+            solutionId:
+              item[`${j + 3}`]?.toLowerCase() === Solution.ELIMINATED.toLowerCase() ? 3
+                : item[`${j + 3}`]?.toLowerCase() === Solution.NOT_ELIMINATED.toLowerCase() ? 4
+                  : item[`${j + 3}`]?.toLowerCase() === Solution.PULL_OFF.toLowerCase() ? 1
+                    : item[`${j + 3}`]?.toLowerCase() === Solution.NOT_PULL_OFF.toLowerCase() ? 2 : 5,
+            solution: item[`${j + 4}`],
+            userId
+
+          })
+
+        }
+      }
+      const normative = item["7"] ? await this.normativeRepository.findOne({where: {title: item["7"].split(".")[1].slice(1)}}) : null;
+
+      const normativeId = normative ? normative.id : 1;
+
+      const comment = {
+        pdcId: doc.projectId ? doc.id : null,
+        udcId: doc.unitId ? doc.id : null,
+        sdcId: doc.supplierId ? doc.id : null,
+        sudcId: doc.subUnitId ? doc.id : null,
+        directionId: 1,
+        comment: item["6"],
+        normativeId: item["7"] ? normativeId : 1,
+        criticalityId: item["8"],
+        userId,
+        solutions
+      };
+
+      items.push(comment);
+    }
+
+    // return items;
+    // const res = []
+    const res = await this.createMany(items);
+
+
+    return res;
+  }
 }

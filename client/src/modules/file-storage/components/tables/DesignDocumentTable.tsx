@@ -164,7 +164,6 @@ const DesignDocumentTable = () => {
                         className="text-primary  mb-2"
                         style={{ fontSize: 16, cursor: "pointer" }}
                         title="Скачать"
-                        onClick={() => console.log("Скачать документы")}
                       />
                     )}
                   </Space>

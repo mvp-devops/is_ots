@@ -391,15 +391,84 @@ export type EquipmentAccountingAssetCreateOrUpdateAttrs =
   | SummaryListOfEquipmentFormData;
 
 export interface SummaryListOfEquipmentCreateOrUpdateFiles {
-  questionare?: File;
-  wiringDiagram?: File;
-  document?: File;
-  verificationProcedure?: File;
-  typeApprovalCertificate?: File;
-  functionalDiagram?: File;
-  mountDocument?: File;
-  connectDocument?: File;
-  testDocument?: File;
-  awpDocument?: File;
-  commisionDocument?: File;
+  questionare?: any;
+  wiringDiagram?: any;
+  document?: any;
+  verificationProcedure?: any;
+  typeApprovalCertificate?: any;
+  functionalDiagram?: any;
+  mountDocument?: any;
+  connectDocument?: any;
+  testDocument?: any;
+  awpDocument?: any;
+  commisionDocument?: any;
+}
+
+export interface MReestrEqMeansur {
+  register_eq: string; // metrology.grsi
+  dt_start: Date; // metrology.fromDate
+  dt_end: Date; // metrology.toDate
+  name: string; // facility.title - например массовый расходомер
+  type_eq: string; // нужно подумать конкретная модель оборудования
+  model_eq: string; //facilityModification
+  method_measur: string; //metrology.verificationProcedure
+  interval_measur: string; //metrology.mpi
+  country: string; //facility.country
+  factory: string; //facility.vendor
+  measur_area: string; //facility.meansurementArea
+  group_eq: string; //facility.meansureGroup
+
+}
+
+export interface AtlasCreateOrUpdateAttrs extends MReestrEqMeansur{
+  company: string; //sloe.subUnit.unit.project.field.subsidiary.title
+  subdivision: string; //у нас нет ставим н/д
+  field: string; //sloe.subUnit.unit.project.field.title
+  facility: string; //sloe.subUnit.unit.title
+  prod_area: string; //sloe.subUnit.title
+  place_install: string; //installationLocation
+  position_tag: string; //tag
+  partic_sbpaz: string;//systemType.includes("ПАЗ") ? "Да" : "Нет"
+  phys_quantity: string; // измеряемый параметр в зависимости от вида измерений прописывать
+  clarification: string; //controlledParameter
+  category: string; //facility.equipmentType
+  type_protection: string; //explosionMark - ручной ввод??
+  sn: string;   // factoryNumber
+  prod_dt: Date; // new Date(year, month)
+  life_time: number; // +period/12
+  set_type: string; //у нас нет ставим н/д
+  set_sn: string; //у нас нет ставим н/д
+  actual_mc: string; //metrology.metrologyType
+  dt: Date; // metrology.fromDate
+  dt_next: Date; // metrology.toDate
+  m_range: string; //metrology.mpi
+  type_doc: string; //metrology.documentType
+  number_doc: string; //metrology.documentNumber
+  num_registry: string; // metrology.grsi
+  name: string; // facility.title - например массовый расходомер
+  type_eq: string; // нужно подумать конкретная модель оборудования
+  model_eq: string; //facilityModification
+  method_mc: string; //metrology.verificationProcedure
+  country: string; //facility.country
+  factory: string; //facility.vendor
+  measur_area: string; //facility.meansurementArea
+  group_eq: string; //facility.meansureGroup
+  organization: string; //metrology.counterparty.title
+  low_limit: string; //metrology.min
+  upper_limit: string; //metrology.max
+  units: string;//metrology.range
+  acc: string; //metrology.accuracy
+  type_measur: string; //facility.meansurementType
+  sgroei: string; //metrology.sgroei
+  remark: string; // примечание
+  actual_tech_condition: string; //metrology.status
+  distance: string; //удаленность объекта у нас нет
+  contract: string; //договор у нас нет
+  opo: string; // ОПО у нас нет
+  rpo: number; //0 или 1 Признак РПО
+  flag_rtk:number; //0 или 1 Признак эксплуатации
+  tko: string; //Тех карта МО/ТО
+  path_to_doc: string; //путь к документу
+  path_to_method_mc: string; // путь к методике поверки
+  path_to_type_app_cert: string // путь к СоП
 }

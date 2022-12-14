@@ -9,6 +9,7 @@ import ManyItemsForm from "../modules/position-tree/components/forms/ManyItemsFo
 import {useTypedSelector} from "../hooks";
 import {ModalContainer} from "../components";
 import {UserForm} from "../modules/regulatory-reference-information";
+import Structure from "../modules/regulatory-reference-information/views/Structure";
 
 const { Content } = Layout;
 
@@ -33,6 +34,8 @@ const MainPage = () => {
         dictionaryTarget === "technical-card" && <TechCardsPreView />}
       {baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
         dictionaryTarget === "normative" && <NormativeTable />}
+      {baseTarget === "REGULATORY_REFERENCE_INFORMATION" &&
+        dictionaryTarget === "structure" && <Structure />}
     </Content>
   );
 

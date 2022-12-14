@@ -18,7 +18,6 @@ export const useSearch = (data: any[], searchValue: string, delay = 300) => {
       setResults(data);
     }
 
-    console.log("Results:", results);
   }, [inputValue]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return results;

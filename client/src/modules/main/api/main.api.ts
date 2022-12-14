@@ -9,7 +9,6 @@
 export const BASENAME = window.location.pathname.slice(0, -1);
 
 // export const site = window.location.origin + BASENAME;
-// console.log(site);
 
 export const site = "http://localhost:7000";
 

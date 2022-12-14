@@ -208,7 +208,7 @@ export const exportData = async (target: string) => {
       params: { target },
     })
     .then((resp) => {
-      console.log(resp);
+
       download(resp.data, `${target}.xlsx`);
     });
 };

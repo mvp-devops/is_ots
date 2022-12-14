@@ -64,6 +64,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
       : 1000; break;
     case FormActions.CREATE_POSITION_TREE_ITEMS:
     case FormActions.ADD_USER:
+    case FormActions.IMPORT_COMMENTS_FROM_LKP:
     case FormActions.REPORT: containerWidth = 600; break;
     case FormActions.ADD_DOCUMENT:
     case FormActions.EDIT_DOCUMENT:
@@ -115,6 +116,7 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
     case FormActions.CREATE_QUESTIONNAIRE:
     case FormActions.CREATE_NEW_QUESTIONNAIRE: title = "Опросный лист"; break;
     case FormActions.CREATE_POSITION_TREE_ITEMS: title = "Загрузка структуры дерева позиций"; break;
+    case FormActions.IMPORT_COMMENTS_FROM_LKP: title = "Импорт данных из ЛКП"; break;
     default: title = "Другое"; break;
   }
 

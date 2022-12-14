@@ -1,8 +1,9 @@
 import {useActions, useTypedSelector} from "../../../../../hooks";
-import {ContainerOutlined, DeleteOutlined, DownloadOutlined, PlusOutlined} from "@ant-design/icons";
+import {ContainerOutlined, DeleteOutlined, DownloadOutlined, PlusOutlined, UploadOutlined} from "@ant-design/icons";
 import {FormActions} from "../../../../main";
 import {FC} from "react";
 import {Roles} from "../../../../main/utils/main.consts";
+import {uploadCommentsFromLkp} from "../../../../comment-accounting/store/comment-accounting.action-creators";
 
 interface MenuItemsProps {
   selectedRows: string[];
@@ -18,7 +19,6 @@ const MenuItems:FC<MenuItemsProps> = ({selectedRows, resetSelectedRows, parentTa
     setActionType(action);
     setFormVisible(true);
   }
-  console.log(selectedRows);
   const removeSelectedRows = () => {
     removeDesignDocument(undefined, selectedRows, parentTarget);
     resetSelectedRows();
@@ -30,13 +30,13 @@ const MenuItems:FC<MenuItemsProps> = ({selectedRows, resetSelectedRows, parentTa
     <>
       {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.ESCORT)) && (
 <>
-  <PlusOutlined
+  {(currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.EXPERT)) && <PlusOutlined
     key="ADD_DESIGN_DOCUMENT"
     className="text-success mr-3 mb-2 ms-2"
-    style={{ fontSize: 16, cursor: "pointer" }}
+    style={{fontSize: 16, cursor: "pointer"}}
     title={`Добавить запись`}
     onClick={() => showForm(FormActions.ADD_DOCUMENT)}
-  />
+  />}
   {
     selectedRows && selectedRows.length > 0 && (
       <DeleteOutlined
@@ -44,6 +44,20 @@ const MenuItems:FC<MenuItemsProps> = ({selectedRows, resetSelectedRows, parentTa
         title="Удалить выбранные документы"
         className="text-danger mb-2 ms-2"
         onClick={() => removeSelectedRows()}
+      />
+    )
+  }
+  {
+    (currentUser.roles.includes(Roles.ESCORT) || currentUser.roles.includes(Roles.EXPERT)) && (
+      <UploadOutlined
+        key="UPLOAD_LKP"
+        title="Импорт замечаний из ЛКП"
+        className="text-secondary mb-2 ms-2"
+        style={{fontSize: 16, cursor: "pointer"}}
+        onClick={() => {
+          setActionType(FormActions.IMPORT_COMMENTS_FROM_LKP);
+          setFormVisible(true)
+        }}
       />
     )
   }

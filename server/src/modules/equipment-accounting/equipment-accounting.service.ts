@@ -14,7 +14,7 @@ import {
 import { InjectModel } from "@nestjs/sequelize";
 import {
   CableLogView,
-  EquipmentAccountingAssetCreateOrUpdateAttrs,
+
   EquipmentAccountingAssetView,
   ExportEquipmentToAtlas,
   FacilityCreateOrUpdateAttrs,
@@ -26,9 +26,8 @@ import {
   MetrologyView,
   MonitoringView,
   SignalView,
-  SummaryListOfEquipmentCreateOrUpdateAttrs,
   SummaryListOfEquipmentCreateOrUpdateFiles,
-  SummaryListOfEquipmentFormData,
+
   SummaryListOfEquipmentView,
 } from "../../../common/types/equipment-accounting";
 import {
@@ -45,7 +44,6 @@ import {
   UpdateMonitoringDto,
   UpdateSignalDto,
   CreateSummaryListOfEquipmentDto,
-  UpdateSummaryListOfEquipmentDto,
 } from "./dto";
 import {DesignDocumentEntity, FileStorageService, NewFileStorageService} from "../file-storage";
 import {
@@ -53,7 +51,7 @@ import {
   ProjectEntity,
   SubUnitEntity,
   UnitEntity,
-  SubsidiaryEntity,
+  SubsidiaryEntity, PositionTreeService,
 } from "../position-tree";
 import {
   CounterpartyEntity,
@@ -70,7 +68,12 @@ import {
 } from "./entities";
 import { UpdateGeneralInformationDto } from "./dto/update-equipment-accounting.dto";
 import {createQuestionnaire as template} from "../../../common/templates/questionnaire/create-questionnaire";
+import {ExcelService} from "../file-storage/excel.service";
+import {File} from "../../../common/types/file-storage";
+import {join} from "path";
+
 const pdf =  require("html-pdf");
+
 
 
 type UpdateEquipmentAccountingAssetDto =
@@ -103,7 +106,11 @@ export class EquipmentAccountingService {
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
     private nsiService: RegulatoryReferenceInformationService,
     @Inject(forwardRef(() => NewFileStorageService))
-    private newFileService: NewFileStorageService
+    private newFileService: NewFileStorageService,
+    @Inject(forwardRef(() => ExcelService))
+    private excelService: ExcelService,
+    @Inject(forwardRef(() => PositionTreeService))
+    private positionTreeService: PositionTreeService,
   ) {}
 
   /** Печать ОЛ в PDF */
@@ -1896,7 +1903,7 @@ export class EquipmentAccountingService {
           id.toString(),
           "summary-list-of-equipment",
           parrentFolderPath,
-          files.questionare[0]
+          files.questionare
         );
       }
 
@@ -1951,7 +1958,7 @@ export class EquipmentAccountingService {
       if (monitoringData?.mountDate) {
         await this.createNewMonitoringAsset(
           { ...monitoringData, sloeId: id },
-          files?.functionalDiagram ? files?.functionalDiagram[0] : undefined,
+          files?.functionalDiagram ? files?.functionalDiagram : undefined,
           files?.mountDocument ? files.mountDocument[0] : undefined,
           files?.connectDocument ? files.connectDocument[0] : undefined,
           files?.testDocument ? files.testDocument[0] : undefined,
@@ -1970,12 +1977,12 @@ export class EquipmentAccountingService {
   };
 
   createNewSummaryListOfEquipmentAssets = async (
-    dto: CreateSummaryListOfEquipmentDto[]
+    dto: CreateSummaryListOfEquipmentDto[], parrentFolderPath?: string
   ): Promise<SummaryListOfEquipmentView[]> => {
     try {
       let items: SummaryListOfEquipmentView[] = [];
       for (let i = 0; i < dto.length; i++) {
-        const item = await this.createNewSummaryListOfEquipmentAsset(dto[i]);
+        const item = await this.createNewSummaryListOfEquipmentAsset(dto[i], {}, parrentFolderPath);
         items.push(item);
       }
       return items;
@@ -2665,7 +2672,7 @@ export class EquipmentAccountingService {
     parrentId: string,
     parrentTitle: string,
     parrentFolder: string
-  ): Promise<ExportEquipmentToAtlas[]> => {
+  ): Promise<string> => {
     try {
       let exportData: ExportEquipmentToAtlas[] = [];
       let data: SummaryListOfEquipmentEntity[] = [];
@@ -2800,8 +2807,8 @@ export class EquipmentAccountingService {
         parrentTitle
       );
 
-      // return filePath;
-      return exportData;
+      return filePath;
+      // return exportData;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -2859,7 +2866,7 @@ export class EquipmentAccountingService {
       unit: item.subUnit.unit,
       subUnit: item.subUnit,
       location: item?.installationLocation ?  item.installationLocation  : "",
-      facilityType: item?.facility?.measurementArea ? item.facility.measurementArea : "",
+      facilityType: item?.facility?.meansurementType ? item.facility.meansurementType : "",
       title: item?.facility?.title ? item.facility.title : "",
       tag: item?.tag ? item.tag : "",
       parameter: item?.controlledParameter ? item.controlledParameter : "",
@@ -2873,4 +2880,399 @@ export class EquipmentAccountingService {
 
     }
   }
+
+
+  /** Новый сервис по добавлению единицы оборудования */
+
+
+
+  /** Импорт данных свода оборудования из файла xlsx */
+  importDataFromConsolidatedList = async (data: any, files: {
+    descriptor?: File,
+    documents?: File[]
+  }) => {
+
+    /** Получаем имя файла без расширения */
+    const getDocName = (file: File) => {
+      const {nameWithoutExt} = this.newFileService.getFileProperties(file);
+      return nameWithoutExt;
+    }
+
+    const {descriptor, documents} = files;
+
+    const filesDescription = this.excelService.convertExcelFileToJsonFromConsolidatedList(descriptor[0]);
+    const {parentId, parentTarget, parentFolderPath} = data;
+    const items = [];
+    let parent = null;
+    const units = [];
+    const subUnits = [];
+    switch (parentTarget) {
+      case "project": {
+        parent = await this.positionTreeService.findOne("project", parentId);
+        parent.units.map(item => {
+          units.push(item);
+          item.subUnits.map(item => subUnits.push(item))
+        });
+        break;
+      }
+      case "unit": {
+        parent = await this.positionTreeService.findOne("unit", parentId);
+        units.push(parent);
+        parent.subUnits.map(item => subUnits.push(item));
+        break;
+      }
+      default:
+        break;
+    }
+
+    // return filesDescription
+
+    for (let i = 0; i < filesDescription.length; i++) {
+      const item = filesDescription[i]
+      const keys = Object.keys(item);
+
+
+      /** Собираем сигналы, кабельный журнал, журнал импульсных линий */
+      const subRows = filesDescription.filter(elem => elem["8"] === item["8"] && elem["2"] === item["2"] && elem["4"] === item["4"]);
+      const signals = [];
+      const impulseLineLog = [];
+      const cableLog = [];
+      for (let j = 0; j < subRows.length; j++) {
+        const item = subRows[j];
+        if (item["23"]) {
+          signals.push({
+            signalType: item["23"],
+            signalProtocol: item["24"],
+            signalTag: item["25"],
+            signalParameter: item["9"],
+            ll: item["26"],
+            l: item["27"],
+            h: item["28"],
+            hh: item["29"],
+            emergencyProtocol: item["30"]
+          })
+        }
+        ;
+        if (item["54"]) {
+          cableLog.push({
+            numberOfTrace: item["54"],
+            cableMark: item["55"],
+            cableSection: item["57"],
+            fromUnit: item["59"],
+            fromPlace: item["58"],
+            wiringDiagram: item["18"] ? documents.filter(document => getDocName(document).toLowerCase() === item["18"].toLowerCase())[0] : null,
+            toUnit: item["61"],
+            toPlace: item["60"],
+            cableLenght: item["62"],
+            range: "м",
+            description: `Схема С5: ${item["18"] ? item["18"] : "н/д"}`
+          })
+        }
+        if (item["63"]) {
+          impulseLineLog.push({
+            numberOfTrace: item["63"],
+            impulseLineType: item["64"],
+            fromPlace: item["66"],
+            toPlace: item["67"],
+            impulseLineLenght: item["65"],
+            range: "м",
+            description: ""
+          })
+        }
+      }
+
+      /**
+       * В перечне объектов строительства ищем объект строительства по наименованию из свода оборудования.
+       * Если такой объект не существует - создаем запись в БД и получаем id
+       * Иначе получаем id
+       */
+      let newUnit = null;
+      const findUnit = units.find(unit => unit.title === item["2"]);
+      if (!findUnit) {
+        const dto = {
+          projectId: parentId,
+          equipmentId: 1,
+          supplierId: 1,
+          position: "0",
+          title: item["4"],
+          code: item["4"],
+          contract: "",
+          description: "",
+          file: null
+        }
+
+        newUnit = await this.positionTreeService.createNewUnitOrSubUnitByConditionalList("unit", dto);
+      }
+      const unitId = findUnit ? findUnit.id : newUnit.id;
+      const unitCode = findUnit ? findUnit.code : newUnit.code;
+      const unitPosition = findUnit ? findUnit.position : newUnit.position;
+      /**
+       * В перечне установок ищем установку по наименованию из свода оборудования.
+       * Если такой установка не существует - создаем запись в БД и получаем id
+       * Иначе получаем id
+       */
+      let newSubUnit = null
+      const findSubUnit = subUnits.find(subUnit => +subUnit.unitId === +unitId && subUnit.title === item["4"]);
+      if (!findSubUnit) {
+
+        const dto = {
+          unitId,
+          equipmentId: 1,
+          supplierId: 1,
+          position: item["3"] ? item["3"] : "0",
+          title: item["4"],
+          code: item["4"],
+          contract: "",
+          description: "",
+          file: null
+        }
+        newSubUnit = await this.positionTreeService.createNewUnitOrSubUnitByConditionalList("sub-unit", dto);
+      }
+
+      const subUnitId = findSubUnit ? findSubUnit.id : newSubUnit.id;
+      const subUnitCode = findSubUnit ? findSubUnit.code : newSubUnit.code;
+      const subUnitPosition = findSubUnit ? findSubUnit.position : newSubUnit.position;
+
+      const subUnit = await this.positionTreeService.findOneAsset('sub-unit', subUnitId)
+      /**
+       * В справочнике единиц оборудования ищем запись по наименованию, вендору
+       * Если запись найдена - проверяем, есть ли в модификациях запись значение из соотв. поля свода оборудования
+       * Если модификация есть - возвращаем id записи
+       * Если модификации нет - обновляем запись, добавляем модификацию и возвращаем id записи
+       * Если запись не найдена - создаем ее и возвращаем id
+       */
+      let newFacility = null;
+      const facility = await this.facilityRepository.findOne({
+        where: {
+          title: item["10"],
+          vendor: item["20"] ? item["20"] : "Не определен"
+        }
+      });
+      if (facility && !facility.modifications.includes(item["11"])) {
+        newFacility = this.facilityRepository.update({
+          ...facility,
+          modifications: [...facility.modifications, item["11"]]
+        }, {where: {id: facility.id}})
+      }
+      if (!facility) {
+        const dto = {
+          country: item["21"] ? item["21"] : "Российская Федерация",
+          equipmentType: item["6"],
+          meansurementType: item["6"] === "СИ" ? item["34"] : null,
+          measurementArea: item["6"] === "СИ" ? item["33"] : null,
+          meansureGroup: item["6"] === "СИ" ? item["31"] : null,
+          modifications: item["11"] ? [`${item["11"]}`] : [],
+          title: item["10"],
+          vendor: item["20"] ? item["20"] : "Не определен",
+          technicalCardId: item["75"]
+        };
+
+        newFacility = await this.createNewFacilityAsset(dto);
+      }
+      const facilityId = facility ? facility.id : newFacility.id;
+
+      const systemType = item["13"] && !item["14"] && !item["15"] ? ["РСУ"]
+        : item["13"] && item["14"] && !item["15"] ? ["РСУ", "ПАЗ"]
+          : item["13"] && !item["14"] && item["15"] ? ["РСУ", "КИТСО"]
+            : item["13"] && item["14"] && item["15"] ? ["РСУ", "ПАЗ", "КИТСО"]
+              : !item["13"] && item["14"] && !item["15"] ? ["ПАЗ"]
+                : !item["13"] && item["14"] && item["15"] ? ["ПАЗ", "КИТСО"]
+                  : !item["13"] && !item["14"] && item["15"] ? ["КИТСО"] : []
+
+      const counterparty = item["42"] ? await this.nsiService.findOrCreateCounterparty({
+        title: item["42"],
+        code: item["42"],
+        description: ""
+      }) : null;
+
+
+      const equipmentAsset = {
+        parentFolderPath: join(
+          parentFolderPath,
+          "002. Объекты",
+          this.newFileService.generateFolderName(`${unitPosition}. ${unitCode}`),
+        '002. Объекты',
+        this.newFileService.generateFolderName(
+          `${subUnitPosition}. ${subUnitCode}`) ),
+        generalInformation: {
+          projectId: parentId,
+          unitId,
+          subUnitId,
+          installationLocation: item["5"],
+          tag: item["8"],
+          controlledParameter: item["9"],
+          systemType,
+          facilityModification: item["11"],
+          factoryNumber: item["22"],
+          year: item["51"],
+          month: item["52"],
+          period: item["53"],
+          questionare: item["16"] ? documents.filter(document => getDocName(document).toLowerCase() === item["16"].toLowerCase())[0] : null,
+          description: `Шифр схемы соединений внешних проводок из С5 схем АСУТП: ${item["18"] ? item["18"] : 'н/д'}\n\
+            Шифр схемы P&ID: ${item["17"] ? item["17"] : "н/д"}\n\
+            Шифр ОЛ: ${item["16"] ? item["16"] : "н/д"}
+            `,
+          facilityId
+        },
+        metrology: item["6"] !== "СИ" ? null : {
+          counterpartyId: counterparty ? counterparty.id : null,
+          sgroei: item["32"],
+          grsi: item["39"],
+          min: item["35"],
+          max: item["36"],
+          range: item["37"],
+          accuracy: item["38"],
+          mpi: item["43"],
+          metrologyType: item["46"],
+          documentType: item["40"],
+          documentNumber: item["41"],
+          fromDate: item["47"],
+          toDate: item["48"],
+          status: item["50"],
+          arshin: item["49"],
+          document: item["41"] ? documents.filter(document => getDocName(document) === item["41"])[0] : null,
+          verificationProcedure: item["76"] ? documents.filter(document => getDocName(document) === item["76"])[0] : null,
+          typeApprovalCertificate: item["77"] ? documents.filter(document => getDocName(document) === item["77"])[0] : null
+          // newCounterParty?: { title: string; code: string; description: string };
+        },
+        signals,
+        cableLog,
+        impulseLineLog,
+        monitoring: !item["17"] ? null : {
+          functionalDiagram: item["17"] ? documents.filter(document => getDocName(document).toLowerCase() === item["17"].toLowerCase())[0] : null,
+          mountDate: item["68"] ? item["68"] : "01.01.1970",
+          connectDate: item["69"] ? item["69"] : "01.01.1970",
+          testDate: item["70"] ? item["70"] : "01.01.1970",
+          awpDate: item["71"] ? item["71"] : "01.01.1970",
+          commisionDate: item["72"] ? item["72"] : "01.01.1970"
+        },
+
+        atlas: {
+          company: subUnit.unit.project.field.subsidiary.title,
+          subdivision: "н/д",
+          field: subUnit.unit.project.field.title,
+          facility: subUnit.unit.title,
+          prod_area: subUnit.title,
+          place_install: item["5"],
+          position_tag: item["8"],
+          partic_sbpaz: systemType?.includes("ПАЗ") ? "Да" : "Нет",
+          phys_quantity: "", // измеряемый параметр в зависимости от вида измерений прописывать
+          clarification: item["9"],
+          category: item["6"],
+          type_protection: "", //explosionMark - ручной ввод??
+          sn: item["22"],
+          prod_dt: item["51"] && item["52"] ? new Date(+item["51"], +item["52"] - 1)
+          : item["51"] && !item["52"] ? new Date(+item["51"], 0) : null,
+          life_time: item["53"] ? +item["53"]/12 : null,
+          set_type: "н/д",
+          set_sn: "н/д",
+          actual_mc: item["46"],
+          dt: item["47"],
+          dt_next: item["48"],
+          m_range: item["43"],
+          type_doc: item["40"],
+          number_doc: item["41"],
+          num_registry: item["39"],
+          name: facility ? facility.title : newFacility.title, // facility.title - например массовый расходомер
+          type_eq: "", // нужно подумать конкретная модель оборудования
+          model_eq: item["11"],
+          method_mc: "", //название методики поверки + нужно вернуть путь к фалйлу metrology.verificationProcedure
+          country: facility ? facility.country : newFacility.country,
+          factory: facility ? facility.vendor : newFacility.vendor,
+          measur_area: facility ? facility.measurementArea : newFacility.measurementArea,
+          group_eq: facility ? facility.meansureGroup : newFacility.meansureGroup,
+          organization: counterparty ? counterparty.title : "",
+          low_limit: item["35"],
+          upper_limit: item["36"],
+          units: item["37"],
+          acc: item["38"],
+          type_measur: facility ? facility.meansurementType : newFacility.meansurementType,
+          sgroei: item["32"],
+          remark: "", // примечание запихнем аршин ?
+          actual_tech_condition: item["50"],
+          distance: "", //удаленность объекта у нас нет
+          contract: "", //договор у нас нет
+          opo: "",// ОПО у нас нет
+          rpo: "", //0 или 1 Признак РПО
+          flag_rtk: "", //0 или 1 Признак эксплуатации
+          tko: "", //Тех карта МО/ТО
+          path_to_doc: "", //путь к документу
+          path_to_method_mc: "", // путь к методике поверки
+          path_to_type_app_cert: "" // путь к СоП
+        }
+
+      }
+
+      items.filter(elem => elem.generalInformation.tag === item["8"]).length === 0 && items.push(equipmentAsset)
+
+    }
+
+    const res = [];
+    for (let i = 0; i < items.length; i++) {
+      const {parentFolderPath, generalInformation, metrology, cableLog, impulseLineLog, monitoring, signals} = items[i];
+      const dto: {
+        projectId, unitId, subUnitId, installationLocation, tag, controlledParameter, systemType, facilityModification,
+        factoryNumber, year, month, period
+      } = generalInformation;
+      const {id: sloeId} = await this.summaryListOfEquipmentRepository.create(
+        dto
+      );
+
+      if (generalInformation.questionare) {
+        const {filePath} = await this.fileService.createDesignDocument(
+          sloeId.toString(),
+          "summary-list-of-equipment",
+          parentFolderPath,
+          generalInformation.questionare
+        );
+        console.log(filePath);
+      }
+      if(cableLog.length > 0) {
+        for(let i = 0; i < cableLog.length; i++) {
+          const dto: { numberOfTrace, cableMark, cableSection, fromUnit, fromPlace, toUnit, toPlace, cableLenght, range, description } = cableLog[i];
+          await this.createNewCableLogAsset({sloeId, ...dto},  cableLog[i].wiringDiagram,parentFolderPath)
+        }
+      }
+
+      if(impulseLineLog.length > 0) {
+        for(let i = 0; i < impulseLineLog.length; i++) {
+          const dto: { numberOfTrace, impulseLineType, fromPlace, toPlace, impulseLineLenght, range, description: ""} = impulseLineLog[i];
+          await this.createNewImpulseLineLogAsset({sloeId, ...dto})
+        }
+      }
+
+      if(signals.length > 0) {
+        for(let i = 0; i < signals.length; i++) {
+          const dto: {  signalType, signalProtocol, signalTag, signalParameter, ll, l, h, hh, emergencyProtocol } = signals[i];
+          await this.createNewSignalAsset({sloeId, ...dto})
+        }
+      }
+
+      if(monitoring) {
+        const dto: { mountDate, connectDate, testDate, awpDate, commisionDate} = monitoring;
+
+        await this.createNewMonitoringAsset({sloeId, ...dto}, monitoring.functionalDiagram, null,
+          null, null, null, null, parentFolderPath)
+      }
+
+      if(metrology) {
+        const dto: {
+          counterpartyId, sgroei, grsi, min, max, range, accuracy, mpi, metrologyType, documentType,
+          documentNumber, fromDate, toDate, status, arshin} = metrology;
+
+        await this.createNewMetrologyAsset({sloeId, ...dto})
+      }
+
+      const item = await this.findOneSummaryListOfEquipmentAsset(sloeId);
+      res.push(item)
+
+
+
+
+    }
+    return res;
+
+  }
+
+
 }

@@ -245,7 +245,6 @@ const SummaryListOfFacilityForm = () => {
             onClick={() => {
               createNewAsset();
               setFormVisible(false);
-              console.log(formVisible);
             }}
           >
             Добавить

@@ -226,3 +226,17 @@ export type StatisticView =
   | UnitStatistic
   | SubUnitStatistic
   | null;
+
+export enum Status  {
+  ACCEPTED = "Принято",
+  NOT_ACCEPTED = "Не принято",
+  DISCRETION_OF_CUSTOMER = "На усмотрение Заказчика"
+};
+
+export enum Solution {
+  PULL_OFF = "Снято",
+  NOT_PULL_OFF = "Не снято",
+  ELIMINATED = "Устранено",
+  NOT_ELIMINATED = "Не устранено",
+  PULL_OF_BY_DISCRETION_OF_CUSTOMER = "Снято по решению Заказчика"
+}

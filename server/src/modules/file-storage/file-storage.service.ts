@@ -123,7 +123,6 @@ export class FileStorageService {
         }`;
       };
 
-      console.log("Size: ", path.parse(file.originalname).ext);
 
       await this.logoRepository.create(logo);
     }
@@ -1047,7 +1046,7 @@ export class FileStorageService {
       "utf8"
     );
 
-    const fileName = target ? file.originalname : this.generateFileName(file);
+    const fileName = target ? file.originalname : `${uuid.v4()}${this.getFileType(file)}`;
 
     const fileFolder = this.getFilePath(folder);
 

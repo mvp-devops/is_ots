@@ -292,4 +292,57 @@ export class ExcelService {
     this.fileStorageService.removeDirectoryOrFile(pathToFile)
     return parsedData
   }
+
+  /** Для ЛКП */
+  convertExcelFileToJson2 = (file: File) => {
+    file.originalname = "temp_import.xlsx";
+
+    const {destination, fileName} = this.fileStorageService.fileUpload('temp', file);
+    const pathToFile = this.fileStorageService.getPath([destination,fileName]);
+    const fileData = readFile(pathToFile);
+    const sheetNames = fileData.SheetNames;
+    const totalSheets = sheetNames.length;
+    let parsedData = [];
+
+    const tempData = utils.sheet_to_json(fileData.Sheets[sheetNames[0]]);
+    tempData.shift();
+    tempData.shift();
+    tempData.shift();
+    tempData.shift();
+    tempData.shift();
+    parsedData.push(...tempData);
+
+    // for (let i = 0; i < totalSheets; i++) {
+    //   const tempData = utils.sheet_to_json(fileData.Sheets[sheetNames[i]]);
+    //     tempData.shift();
+    //     tempData.shift();
+    //     tempData.shift();
+    //     tempData.shift();
+    //     tempData.shift();
+    //   parsedData.push(...tempData);
+    // }
+    this.fileStorageService.removeDirectoryOrFile(pathToFile);
+    return parsedData
+  }
+
+  /** Для Свода */
+  convertExcelFileToJsonFromConsolidatedList = (file: File) => {
+    file.originalname = "temp_import_consolidated_list.xlsx";
+
+    const {destination, fileName} = this.fileStorageService.fileUpload('temp', file);
+    const pathToFile = this.fileStorageService.getPath([destination,fileName]);
+    const fileData = readFile(pathToFile);
+    const sheetNames = fileData.SheetNames;
+    const totalSheets = sheetNames.length;
+    let parsedData = [];
+
+    const tempData = utils.sheet_to_json(fileData.Sheets[sheetNames[0]]);
+    tempData.shift();
+    tempData.shift();
+
+    parsedData.push(...tempData);
+
+    this.fileStorageService.removeDirectoryOrFile(pathToFile);
+    return parsedData
+  }
 }

@@ -1659,9 +1659,7 @@ const TableColumns = (
   };
 
   const {currentUser} = useTypedSelector(state => state.main);
-
-  console.log((currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS) || currentUser.roles.includes(Roles.CUSTOMER)));
-
+  
   switch (target) {
     case "general-information": {
       columns.push(numberColumn);
