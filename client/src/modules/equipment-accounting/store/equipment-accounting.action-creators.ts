@@ -37,6 +37,7 @@ import {
   updateOneSignalEssence,
 } from "../api";
 import { notification } from "antd";
+import {importData} from "../api/import-data.api";
 
 export const getSummaryListOfEquipment = (
   parrentTarget: string,
@@ -111,13 +112,13 @@ export const getFacilitiesList = () => {
 };
 
 export const createOneEquipment = (
-  item: SummaryListOfEquipmentFormData,
-  parrentFolderPath?: string
+  reqBody: any,
+  parentFolderPath?: string
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.POST_ONE_ITEM });
-      const data = await createOneEssence(item, parrentFolderPath);
+      const data = await createOneEssence(reqBody, parentFolderPath);
       dispatch({
         type: ActionTypes.POST_ONE_ITEM_SUCCESS,
         payload: data,
@@ -140,21 +141,38 @@ export const createOneEquipment = (
   };
 };
 
-export const createManyEquipments = (
-  items: SummaryListOfEquipmentFormData[]
+export const importDataFromSummaryListOfEquipment = (
+  item: any
 ) => {
   return async (dispatch: Dispatch<EssenceAction>) => {
     try {
       dispatch({ type: ActionTypes.POST_MANY_ITEMS });
-      const data = await createManyEssences(items);
+      notification["warning"]({
+        message: "",
+        description: "Загрузка данных...",
+      });
+      const data = await importData(item);
       dispatch({
         type: ActionTypes.POST_MANY_ITEMS_SUCCESS,
         payload: data,
       });
+      notification["success"]({
+        message: "ОК",
+        description: "Данные успешно загружены",
+      });
+
+      // getSummaryListOfEquipment(  item.parentTarget,
+      //   item.parentId)
+
     } catch (error) {
       dispatch({
         type: ActionTypes.POST_MANY_ITEMS_ERROR,
-        payload: "Ошибка добавления данных",
+        payload: "Ошибка загрузки данных",
+      });
+      notification["error"]({
+        message: "Ошибка",
+        description: error.message,
+        // description: "Ошибка загрузки данных",
       });
     }
   };

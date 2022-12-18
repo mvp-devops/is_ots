@@ -15,7 +15,6 @@ const Navbar = () => {
     <Space className="d-flex justify-content-between">
       <Input
         placeholder="Поиск..."
-        className="text-secondary"
         value={searchValue}
         onChange={onSearch}
         style={{
@@ -37,7 +36,6 @@ const Navbar = () => {
           gap: "10px",
           marginTop: "4px",
         }}
-        className="text-secondary"
         onChange={(value: string) => setUnitId(value)}
       >
         {[{ id: 0, title: "Все" }, ...unitsList].map((item) => (
@@ -56,7 +54,6 @@ const Navbar = () => {
           gap: "10px",
           marginTop: "4px",
         }}
-        className="text-secondary"
         onChange={(value: string) => setSubUnitId(value)}
       >
         {[{ id: 0, title: "Все" }, ...subUnitsList].map((item) => (

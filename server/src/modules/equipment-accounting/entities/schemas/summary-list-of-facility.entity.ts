@@ -25,6 +25,7 @@ import {
 } from "../";
 import { DesignDocumentEntity } from "../../../file-storage";
 import { TechnicalCardEntity } from "../../../regulatory-reference-information";
+import {ExportToAtlasEntity} from "./export-to-atlas.entity";
 
 @Table({ tableName: "summary-list-of-equipments" })
 export class SummaryListOfEquipmentEntity extends Model<
@@ -239,4 +240,10 @@ export class SummaryListOfEquipmentEntity extends Model<
     // onDelete: "SET NULL",
   })
   equipmentQuestionare: DesignDocumentEntity;
+
+  @HasOne(() => ExportToAtlasEntity, {
+    // onUpdate: "CASCADE",
+    // onDelete: "SET NULL",
+  })
+  atlas: ExportToAtlasEntity;
 }

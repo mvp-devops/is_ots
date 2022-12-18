@@ -18,7 +18,7 @@ const Header = () => {
     <Space direction="vertical" size="small">
       <Space direction="horizontal" className="d-flex justify-content-left">
         <Text strong>Проект:</Text>
-        <Text type="secondary">{projectTitleRender}</Text>
+        <Text >{projectTitleRender}</Text>
       </Space>
       {unitTitleRender && (
         <Space direction="vertical" className="mb-3">
@@ -28,7 +28,7 @@ const Header = () => {
               className="d-flex justify-content-left"
             >
               <Text strong>Объект:</Text>
-              <Text type="secondary">{unitTitleRender}</Text>
+              <Text >{unitTitleRender}</Text>
             </Space>
             {unitQuestionareRender && (
               <Space
@@ -37,7 +37,7 @@ const Header = () => {
               >
                 <Text strong>Технические требования:</Text>
                 <Space className="d-flex justify-content-start">
-                  <Text type="secondary">
+                  <Text >
                     {unitQuestionareRender?.fileType?.toUpperCase() ===
                     ".PDF" ? (
                       <FilePdfOutlined
@@ -46,7 +46,6 @@ const Header = () => {
                       />
                     ) : (
                       <FileUnknownOutlined
-                        className="text-secondary"
                         style={{ marginBottom: 6 }}
                       />
                     )}
@@ -57,7 +56,7 @@ const Header = () => {
                     )}
                     target="_blank"
                     rel="noreferrer"
-                    className="mx-2 text-secondary"
+                    className="mx-2 "
                     title={unitQuestionareRender?.title}
                   >
                     {unitQuestionareRender?.code}.{unitQuestionareRender?.title}
@@ -73,7 +72,7 @@ const Header = () => {
                 className="d-flex justify-content-left"
               >
                 <Text strong>Установка/объект:</Text>
-                <Text type="secondary">{subUnitTitleRender}</Text>
+                <Text >{subUnitTitleRender}</Text>
               </Space>
               {subUnitQuestionareRender && (
                 <Space
@@ -82,12 +81,12 @@ const Header = () => {
                 >
                   <Text strong>Технические требования:</Text>
                   <Space className="d-flex justify-content-start">
-                    <Text type="secondary">
+                    <Text >
                       {subUnitQuestionareRender?.fileType?.toUpperCase() ===
                       ".PDF" ? (
                         <FilePdfOutlined className="text-danger" />
                       ) : (
-                        <FileUnknownOutlined className="text-secondary" />
+                        <FileUnknownOutlined  />
                       )}
                     </Text>
                     <a
@@ -96,7 +95,7 @@ const Header = () => {
                       )}
                       target="_blank"
                       rel="noreferrer"
-                      className="mx-2 text-secondary"
+                      className="mx-2"
                       title={subUnitQuestionareRender?.title}
                     >
                       {subUnitQuestionareRender?.code}.

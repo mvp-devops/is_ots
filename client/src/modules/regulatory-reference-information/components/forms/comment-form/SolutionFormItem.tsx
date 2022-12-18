@@ -17,7 +17,7 @@ const notFoundContent = (
       <ExclamationCircleOutlined style={{ fontSize: 20, marginBottom: 2 }} />
     </Text>
 
-    <Text type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>
+    <Text   style={{ fontSize: 12, marginBottom: 2 }}>
       Нет данных для отображения. Уточнить поиск
     </Text>
   </Space>
@@ -52,7 +52,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   className="m-0"
                   style={{ width: 500 }}
                   label={
-                    <Text type="secondary">
+                    <Text  >
                       Контактные данные проектировщика
                     </Text>
                   }
@@ -67,13 +67,13 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   <Input.TextArea
                     autoSize={{ minRows: 3, maxRows: 5 }}
                     placeholder="Контактные данные"
-                    className="text-secondary"
+                    className=" "
                   />
                 </Item>
                 <Item
                   className="m-0"
                   style={{ width: 500 }}
-                  label={<Text type="secondary">Статус ответа</Text>}
+                  label={<Text  >Статус ответа</Text>}
                   {...restField}
                   name={[name, "statusId"]}
                   initialValue="1"
@@ -86,7 +86,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                 >
                   <Select
                     size={"small"}
-                    className={"text-secondary"}
+                    className={" "}
                     notFoundContent={notFoundContent}
                     showSearch
                     optionFilterProp="children"
@@ -110,7 +110,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   initialValue="1"
                   className="m-0"
                   style={{ width: 500 }}
-                  label={<Text type="secondary">Статус решения</Text>}
+                  label={<Text  >Статус решения</Text>}
                   {...restField}
                   name={[name, "solutionId"]}
                   rules={[
@@ -123,7 +123,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   <Select
                     placeholder="Статус решения"
                     size={"small"}
-                    className={"text-secondary"}
+                    className={" "}
                     allowClear={true}
                     notFoundContent={notFoundContent}
                     showSearch
@@ -137,7 +137,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                     {solutionsList.map(({ id, title }) => (
                       <Option
                         key={id}
-                        type="secondary"
+
                         title={`Код статуса решения: ${id} - ${title}`}
                       >
                         {id}. {title}
@@ -151,7 +151,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   className="mb-0"
                   style={{ width: 600 }}
                   initialValue="Принято. Будет устранено в следущем драфте документации"
-                  label={<Text type="secondary">Ответ проектировщика</Text>}
+                  label={<Text  >Ответ проектировщика</Text>}
                   name={[name, "answer"]}
                   rules={[
                     {
@@ -164,14 +164,14 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   <Input.TextArea
                     autoSize={{ minRows: 3, maxRows: 3 }}
                     placeholder="Ответ проектировщика"
-                    className="text-secondary"
+                    className=" "
                   />
                 </Item>
                 <Item
                   className="mb-0"
                   style={{ width: 600 }}
                   initialValue="Замечание снято"
-                  label={<Text type="secondary">Комментарий эксперта</Text>}
+                  label={<Text  >Комментарий эксперта</Text>}
                   name={[name, "answer"]}
                   rules={[
                     {
@@ -183,7 +183,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
                   <Input.TextArea
                     autoSize={{ minRows: 4, maxRows: 4 }}
                     placeholder="Комментарий эксперта"
-                    className="text-secondary"
+                    className=" "
                   />
                 </Item>
               </Space>
@@ -202,7 +202,7 @@ const SolutionFormItem: FC<SolutionFormItemProps> = ({
               block
               icon={<PlusCircleOutlined className="text-success" />}
             >
-              <Text type="secondary">Добавить решение</Text>
+              <Text  >Добавить решение</Text>
             </Button>
           </Item>
         </>

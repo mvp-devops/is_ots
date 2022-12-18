@@ -238,7 +238,7 @@ data ? setFacilityType(data.facilityType) : setFacilityType("");
         measureRangeMin={data?.measureRangeMin}
       measureRangeMax={data?.measureRangeMax}
       />
-      <Divider className="m-0" orientation="left"><Text type="secondary">Эксплуатационные характеристики</Text> </Divider>
+      <Divider className="m-0" orientation="left"><Text >Эксплуатационные характеристики</Text> </Divider>
       <Space direction="horizontal" >
         <PerformanceCharacteristic lifeTime={data?.lifeTime}/>
         <EnvironmentCharacteristic facilityType={facilityType}/>

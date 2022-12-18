@@ -37,7 +37,7 @@ const SearchPanel: FC<SearchPanelProps> = (props) => {
     <>
       <Input
         placeholder="Поиск..."
-        className="text-secondary mt-2 mb-2"
+        className="  mt-2 mb-2"
         style={{ color: "red", maxWidth: 600 }}
         size="small"
         suffix={suffix}

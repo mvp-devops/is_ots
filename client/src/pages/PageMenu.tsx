@@ -55,9 +55,8 @@ const PageMenu = () => {
               >
                 <DeploymentUnitOutlined
                   style={{ marginBottom: 4 }}
-                  className="text-secondary"
                 />
-                <Text type="secondary">Администрирование</Text>
+                <Text>Администрирование</Text>
               </Space>
             }
             key="ADMIN_PANEL"
@@ -68,8 +67,8 @@ const PageMenu = () => {
                 setFormVisible(true);
 
               }}>
-                <ApartmentOutlined className={"text-secondary"} style={{marginBottom: 6}}/>
-                <Text type={"secondary"}>Загрузить структуру</Text>
+                <ApartmentOutlined style={{marginBottom: 6}}/>
+                <Text >Загрузить структуру</Text>
               </Space>
             )}
             {currentUser?.roles?.includes(Roles.ADMINISTRATOR) && (
@@ -80,8 +79,8 @@ const PageMenu = () => {
                   setFormVisible(true);
                 }}
               >
-                <UserAddOutlined className={"text-secondary"} style={{marginBottom: 6}} />
-                <Text type="secondary">Регистрация пользователя</Text>
+                <UserAddOutlined  style={{marginBottom: 6}} />
+                <Text>Регистрация пользователя</Text>
               </Space>
             )}
 
@@ -97,9 +96,8 @@ const PageMenu = () => {
             >
               <AppstoreOutlined
                 style={{ marginBottom: 4 }}
-                className="text-secondary"
               />
-              <Text type="secondary">Структура проектов Компании</Text>
+              <Text >Структура проектов Компании</Text>
             </Space>
           }
           key="POSITION_TREE"
@@ -110,7 +108,7 @@ const PageMenu = () => {
             showIcon={false}
             onSelect={onSelect}
             treeData={menuItems}
-            className="text-secondary mx-2"
+            className=" mx-2"
           />
         </Panel>
         <Panel
@@ -121,9 +119,8 @@ const PageMenu = () => {
             >
               <BookOutlined
                 style={{ marginBottom: 4 }}
-                className="text-secondary"
               />
-              <Text type="secondary">Справочная информация</Text>
+              <Text >Справочная информация</Text>
             </Space>
           }
           key="REGULATORY_REFERENCE_INFORMATION"

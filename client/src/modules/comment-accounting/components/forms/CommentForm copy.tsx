@@ -105,7 +105,7 @@ const CommentForm = () => {
             className="m-1 p-1 border"
           >
             <Item
-              label={<Text type="secondary">Функциональное направление</Text>}
+              label={<Text >Функциональное направление</Text>}
               className="m-0"
             >
               <SelectUIComponent
@@ -116,7 +116,7 @@ const CommentForm = () => {
               />
             </Item>
             <Item
-              label={<Text type="secondary">Замечание</Text>}
+              label={<Text >Замечание</Text>}
               className="m-0"
             >
               <TextAreaUIComponent
@@ -127,7 +127,7 @@ const CommentForm = () => {
               />
             </Item>
             {/* <Item
-              label={<Text type="secondary">Нормативная ссылка</Text>}
+              label={<Text >Нормативная ссылка</Text>}
               className="m-0"
             >
               <SelectUIComponent
@@ -137,7 +137,7 @@ const CommentForm = () => {
               />
             </Item> */}
             <Item
-              label={<Text type="secondary">Код критерия критичности</Text>}
+              label={<Text >Код критерия критичности</Text>}
               className="m-0"
             >
               <SelectUIComponent
@@ -150,7 +150,7 @@ const CommentForm = () => {
           </Form>
         )}
         <Divider orientation="right">
-          <Text type="secondary">Добавить новое решение</Text>
+          <Text >Добавить новое решение</Text>
           <Button
             type="primary"
             className="m-1"

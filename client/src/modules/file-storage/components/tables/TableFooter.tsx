@@ -8,8 +8,8 @@ const TableFooter = () => {
   const { dataSource } = useFileStorageTable();
   return (
     <Space className="d-flex justify-content-end ">
-      <Text className="text-secondary">Количество документов:</Text>
-      <Text strong type="secondary">
+      <Text >Количество документов:</Text>
+      <Text strong >
         {dataSource.length}
       </Text>
     </Space>

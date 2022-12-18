@@ -34,7 +34,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     width: 50,
 
     render: (_, __, ind: number) => (
-      <Text type="secondary">
+      <Text   >
         {ind + 1}
       </Text>
     ),
@@ -43,7 +43,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
   const fileTypeIcon = (fileType: string) => {
 
     const type = fileType?.toUpperCase();
-    let icon = <FileUnknownOutlined className="text-secondary"/>;
+    let icon = <FileUnknownOutlined className="  "/>;
 
     switch (type) {
       case "PDF": return <FilePdfOutlined className="text-danger" />;
@@ -76,7 +76,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
             ? 1
             : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text    style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -102,7 +102,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
               href={setFilePath(`${filePath}/${fileName}`)}
               target="_blank"
               rel="noreferrer"
-              className="ms-2 text-secondary"
+              className="ms-2   "
               title={`${code}. ${title}.${fileType}`}
             >
               {title}
@@ -120,7 +120,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     align: "center",
     width: 80,
     render: (value: string) => (
-      <Text type="secondary">
+      <Text   >
         {value}
       </Text>
     ),
@@ -132,7 +132,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
     key: "description",
     sorter: (a, b) => stringSorter(a?.description, b?.description),
     render: (value: string) => (
-      <Text type="secondary">
+      <Text   >
         {value}
       </Text>
     ),
@@ -150,7 +150,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary">
+      <Text   >
         {value}
       </Text>
     ),
@@ -168,7 +168,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
           ? 1
           : 0,
     render: (value: string) => (
-      <Text type="secondary">
+      <Text   >
         {value}
       </Text>
     ),
@@ -187,7 +187,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
       record?.stageTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.stageTitle, b?.stageTitle),
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text    style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -206,7 +206,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
       record?.sectionTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.sectionTitle, b?.sectionTitle),
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text    style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -225,7 +225,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
       record?.supplierTitle?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.supplierTitle, b?.supplierTitle),
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text    style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -252,7 +252,7 @@ const TableColumns = (data: DesignDocumentView[]): TableColumnsType<DesignDocume
           <>
             <EditOutlined
               title="Редактировать документ"
-              className="text-secondary"
+              className="  "
               onClick={() => showForm(FormActions.EDIT_DOCUMENT)}
             />
 

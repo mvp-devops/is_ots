@@ -29,7 +29,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -44,7 +44,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -62,7 +62,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
    */
   const accuracyFormField = (
     <Item
-      label={<Text type="secondary">Предел допускаемой основной приведенной погрешности, %</Text>}
+      label={<Text   >Предел допускаемой основной приведенной погрешности, %</Text>}
       name={"accuracy"}
       initialValue={accuracy}
       className="ms-2 mb-0"
@@ -85,7 +85,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
   const relativeAccuracyFormField = (
     <Item
-      label={<Text type="secondary">Предел относит. погрешности измерения нормирующего преобразователя, %</Text>}
+      label={<Text   >Предел относит. погрешности измерения нормирующего преобразователя, %</Text>}
       name={"relativeAccuracy"}
       className="ms-2 mb-0"
       rules={[
@@ -106,7 +106,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
   //Предел допускаемой вариации выходного сигнала, в долях от пределов допускаемой основной
   const permissibleFormField = (
     <Item
-      label={<Text type="secondary">Предел допускаемой вариации выходного сигнала</Text>}
+      label={<Text   >Предел допускаемой вариации выходного сигнала</Text>}
       name={"relativeAccuracy"}
       className="ms-2 mb-0"
       rules={[
@@ -127,7 +127,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
   const ambientPermissibleFormField = (
     <Item
-      label={<Text type="secondary">Предел допускаемой погрешности от изменения температуры окр. среды</Text>}
+      label={<Text   >Предел допускаемой погрешности от изменения температуры окр. среды</Text>}
       name={"ambientPermissible"}
       className="ms-2 mb-0"
       rules={[
@@ -146,7 +146,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 
   const sensorAccuracyFormField = (
     <Item
-      label={<Text type="secondary">Класс точности сенсора</Text>}
+      label={<Text   >Класс точности сенсора</Text>}
       name={"sensorAccuracy"}
       className="ms-2 mb-0"
       rules={[
@@ -162,7 +162,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
       >
         {["AA", "A", "B", "C"].map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -174,7 +174,7 @@ const MetrologyCharacteristic: FC<MetrologyCharacteristicProps> = ({facilityType
 const sensorCalibrationFormField = (
   <Item
     style={{width: 466}}
-    label={<Text type="secondary">Градуировка сенсора</Text>}
+    label={<Text   >Градуировка сенсора</Text>}
     name={"sensorCalibration"}
     className="ms-2 mb-0"
     rules={[
@@ -190,7 +190,7 @@ const sensorCalibrationFormField = (
     >
       {sensorCalibration.map(({id, title, value}) => {
         return (
-          <Option key={id} title={title} value={value} className="text-secondary">
+          <Option key={id} title={title} value={value} className="  ">
             {title}
           </Option>
         );
@@ -201,7 +201,7 @@ const sensorCalibrationFormField = (
 
   const verificationMethodFormField = (
     <Item
-      label={<Text type="secondary">Метод поверки</Text>}
+      label={<Text   >Метод поверки</Text>}
       name={"verificationMethod"}
       className="ms-2 mb-0"
       rules={[
@@ -214,7 +214,7 @@ const sensorCalibrationFormField = (
       <Radio.Group>
         {verificationMethod.map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary" >{item}</Radio>
+            <Radio key={index} value={item} className="  " >{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -225,7 +225,7 @@ const sensorCalibrationFormField = (
   /** Штамп заводской калибровки */
   const calibrationStampFormField = (
     <Item
-      label={<Text type="secondary">Штамп заводской калибровки</Text>}
+      label={<Text   >Штамп заводской калибровки</Text>}
       name={"calibrationStamp"}
       initialValue={true}
       valuePropName="checked"
@@ -237,7 +237,7 @@ const sensorCalibrationFormField = (
 
   const verificationFormField = (
     <Item
-      label={<Text type="secondary">Первичная поверка</Text>}
+      label={<Text   >Первичная поверка</Text>}
       name={"verification"}
       initialValue={true}
       valuePropName="checked"
@@ -250,7 +250,7 @@ const sensorCalibrationFormField = (
   /** Межповерочный интервал, мес. */
   const mpiFormField = (
     <Item
-      label={<Text type="secondary">Межповерочный интервал, мес.</Text>}
+      label={<Text   >Межповерочный интервал, мес.</Text>}
       name={"mpi"}
       initialValue={mpi}
       className="ms-2 mb-0"
@@ -270,7 +270,7 @@ const sensorCalibrationFormField = (
   return (
     <Space direction="vertical" style={{width: 666, height: 580 }} className={"border p-1"}>
      <Space direction={"vertical"} style={{width: 666}}>
-       <Divider className={"m-0"} orientation="center"><Text type={"secondary"}>Метрологические характеристики</Text></Divider>
+       <Divider className={"m-0"} orientation="center"><Text >Метрологические характеристики</Text></Divider>
        <Row style={{marginLeft: 122}}>
          {accuracyFormField}
        </Row>
@@ -328,7 +328,7 @@ const sensorCalibrationFormField = (
 
      </Space>
       <Space direction={"vertical"} style={{width: 666, marginTop: 0}}>
-        <Divider className={"m-0"} orientation="center"><Text type={"secondary"}>Принадлежности</Text></Divider>
+        <Divider className={"m-0"} orientation="center"><Text>Принадлежности</Text></Divider>
         <AttachmentCharacteristic facilityType={facilityType}/>
 
       </Space>

@@ -89,7 +89,7 @@ const DesignDocumentTable = () => {
 
   const title = (
     <Space className="d-flex align-items-center justify-content-between">
-      <Text strong type="secondary">
+      <Text strong >
         Документация
       </Text>
       <Space
@@ -98,7 +98,7 @@ const DesignDocumentTable = () => {
       >
         <Input
           placeholder="Поиск..."
-          className="text-secondary mt-2 mb-2"
+          className=" mt-2 mb-2"
           style={{ color: "red", maxWidth: 600 }}
           size="small"
           suffix={<SearchOutlined className="text-primary" />}

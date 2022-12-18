@@ -70,17 +70,16 @@ const ImportCommentFromLKPForm = () => {
               }}
             >
               <div >
-                <UploadOutlined className="text-secondary"/>
+                <UploadOutlined />
                 <div
                   style={{marginTop: 8}}
-                  className="text-secondary"
                 >Загрузить ЛКП
                 </div>
               </div>
             </Upload>
           </Item>
           {/*<Item className="mb-0 d-flex justify-content-center">*/}
-          {/*  <Button  onClick={() => getTemplate()} className={"text-secondary"}>Скачать шаблон</Button>*/}
+          {/*  <Button  onClick={() => getTemplate()} >Скачать шаблон</Button>*/}
           {/*</Item>*/}
         </Space>
         <Divider/>

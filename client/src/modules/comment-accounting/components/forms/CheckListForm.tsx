@@ -45,12 +45,11 @@ const CheckListForm = () => {
     >
       <Row justify="start" align="middle" wrap gutter={10}>
         <Col flex="80px">
-          <Text type="secondary">Стадия:</Text>
+          <Text >Стадия:</Text>
         </Col>
         <Col flex="300px">
           <Select
             size="small"
-            className="text-secondary"
             notFoundContent={
               <Space className="d-flex justify-content-center p-3">
                 <Text type="warning">
@@ -59,7 +58,7 @@ const CheckListForm = () => {
                   />
                 </Text>
 
-                <Text type="secondary">
+                <Text >
                   Нет данных для отображения. Уточнить поиск
                 </Text>
               </Space>
@@ -91,13 +90,12 @@ const CheckListForm = () => {
           </Select>
         </Col>
         {item.stage && (
-          <Col flex="120px" className="text-secondary">
+          <Col flex="120px" >
             <Input
               size="small"
               style={{ minWidth: 120 }}
               placeholder="Вес стадии"
               addonAfter="%"
-              className="text-secondary"
               value={item.stageFactor}
               onChange={(e: ChangeEvent<HTMLInputElement>) =>
                 onHandlerChange("stageFactor", e.target.value, item.key)
@@ -130,7 +128,7 @@ const CheckListForm = () => {
             title="Добавить новую строку"
             onClick={() => addItem()}
           >
-            <Text type="secondary">Добавить стадию</Text>
+            <Text >Добавить стадию</Text>
           </Button>
         </Space>
         {settings.map((item) => formItems(item))}
@@ -138,14 +136,13 @@ const CheckListForm = () => {
       {/* <Tabs.TabPane tab="Контрагент" key="counterparty">
         <Row justify="start" align="middle" wrap gutter={10}>
           <Col flex="180px">
-            <Text type="secondary">
+            <Text >
               {target === "project" ? "Проектный институт:" : "Поставщик:"}
             </Text>
           </Col>
           <Col flex="300px">
             <Select
               size="small"
-              className="text-secondary"
               style={{ width: 300 }}
               showSearch
               notFoundContent={
@@ -156,7 +153,7 @@ const CheckListForm = () => {
                     />
                   </Text>
 
-                  <Text type="secondary">
+                  <Text >
                     Нет данных для отображения. Уточнить поиск
                   </Text>
                 </Space>
@@ -189,12 +186,11 @@ const CheckListForm = () => {
         {(target === "unit" || target === "sub-unit") && (
           <Row justify="start" align="middle" wrap gutter={10} className="mt-1">
             <Col flex="180px">
-              <Text type="secondary">Группа оборудования:</Text>
+              <Text >Группа оборудования:</Text>
             </Col>
             <Col flex="200px">
               <Select
                 size="small"
-                className="text-secondary"
                 notFoundContent={
                   <Space className="d-flex justify-content-center p-3">
                     <Text type="warning">
@@ -203,7 +199,7 @@ const CheckListForm = () => {
                       />
                     </Text>
 
-                    <Text type="secondary">
+                    <Text >
                       Нет данных для отображения. Уточнить поиск
                     </Text>
                   </Space>
@@ -243,7 +239,7 @@ const CheckListForm = () => {
             title="Добавить новую строку"
             onClick={() => addItem()}
           >
-            <Text type="secondary">Добавить стадию</Text>
+            <Text >Добавить стадию</Text>
           </Button>
         </Space>
         {settings.map((item) => formItems(item))}
@@ -253,19 +249,18 @@ const CheckListForm = () => {
 
   return (
     <div className="container ">
-      <Divider orientation="center" className="text-secondary m-0 p-0">
+      <Divider orientation="center" className=" m-0 p-0">
         Шкала оценки
       </Divider>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Не удовлетворительно: &lt;</Text>
+          <Text >Не удовлетворительно: &lt;</Text>
         </Space>
         <Space>
           <Input
             size="small"
             style={{ width: 100, color: "red" }}
-            addonAfter={<Text type="secondary">%</Text>}
-            className="text-secondary"
+            addonAfter={<Text >%</Text>}
             value={sets.satisfactorily}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setCheckListSets("satisfactorily", e.target.value)
@@ -275,14 +270,13 @@ const CheckListForm = () => {
       </Space>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Удовлетворительно: &ge;</Text>
+          <Text >Удовлетворительно: &ge;</Text>
         </Space>
         <Space>
           <Input
             size="small"
             style={{ width: 100 }}
-            addonAfter={<Text type="secondary">%</Text>}
-            className="text-secondary"
+            addonAfter={<Text >%</Text>}
             value={sets.okay}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setCheckListSets("okay", e.target.value)
@@ -292,14 +286,13 @@ const CheckListForm = () => {
       </Space>
       <Space direction="horizontal" className="d-flex justify-content-end mb-3">
         <Space>
-          <Text type="secondary">Хорошо: &ge;</Text>
+          <Text >Хорошо: &ge;</Text>
         </Space>
         <Space>
           <Input
             size="small"
             style={{ width: 100 }}
-            addonAfter={<Text type="secondary">%</Text>}
-            className="text-secondary"
+            addonAfter={<Text >%</Text>}
             value={sets.great}
             onChange={(e: ChangeEvent<HTMLInputElement>) =>
               setCheckListSets("great", e.target.value)

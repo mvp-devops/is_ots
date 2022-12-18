@@ -16,6 +16,7 @@ import {
 import { FileStorageModule} from "../file-storage";
 import {PositionTreeModule} from "../position-tree";
 import {NewEquipmentAccountingService} from "./new-equipment-accounting.service";
+import {ExportToAtlasEntity} from "./entities/schemas/export-to-atlas.entity";
 
 @Module({
   controllers: [EquipmentAccountingController],
@@ -29,6 +30,7 @@ import {NewEquipmentAccountingService} from "./new-equipment-accounting.service"
       SignalEntity,
       MetrologyEntity,
       MonitoringEntity,
+      ExportToAtlasEntity
     ]),
     forwardRef(() => FileStorageModule),
     forwardRef(() => RegulatoryReferenceInformationModule),

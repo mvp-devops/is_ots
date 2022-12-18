@@ -52,7 +52,7 @@ const TableColumns = (
   const editAssetMenuItem = {
     label: (
       <Space
-        className="text-secondary"
+        className="  "
         onClick={() => {
           setActionType(FormActions.EDIT_EQUIPMENT);
           setFormVisible(true);
@@ -60,7 +60,7 @@ const TableColumns = (
       >
         <EditOutlined
           style={{ marginBottom: "6px", padding: 0 }}
-          className="text-secondary"
+          className="  "
         />
         Редактировать
       </Space>
@@ -72,7 +72,7 @@ const TableColumns = (
   const deleteAssetMenuItem = {
     label: (
       <Space
-        className="text-secondary"
+        className="  "
         onClick={() => {
           setActionType(FormActions.REMOVE_EQUIPMENT);
           setFormVisible(true);
@@ -91,7 +91,7 @@ const TableColumns = (
   const createQuestionnaireMenuItem = {
     label: (
       <Space
-        className="text-secondary"
+        className="  "
         onClick={() => {
           setActionType(FormActions.CREATE_QUESTIONNAIRE);
           setFormVisible(true);
@@ -113,7 +113,7 @@ const TableColumns = (
   const questionareViewMenuItem = (record: GeneralInformationView) => {
     const render = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.questionare
@@ -131,7 +131,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Опросный лист"
             />
-            <Text type="secondary">Опросный лист</Text>
+            <Text   >Опросный лист</Text>
           </a>
         </Space>
       ),
@@ -146,7 +146,7 @@ const TableColumns = (
 
   //   const commisionCardView = {
   //     label: (
-  //       <Space className="text-secondary">
+  //       <Space className="  ">
   //         <a
   //           // href={
   //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
@@ -161,7 +161,7 @@ const TableColumns = (
   //             style={{ marginBottom: 12, marginRight: 10 }}
   //             title="ПНР"
   //           />
-  //           <Text type="secondary">
+  //           <Text   >
   //           ПНР
   //           </Text>
   //         </a>
@@ -173,7 +173,7 @@ const TableColumns = (
   //   }
   //   const technicalServiceCardView = {
   //     label: (
-  //       <Space className="text-secondary">
+  //       <Space className="  ">
   //         <a
   //           // href={
   //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
@@ -188,7 +188,7 @@ const TableColumns = (
   //             style={{ marginBottom: 12, marginRight: 10 }}
   //             title="ТО"
   //           />
-  //           <Text type="secondary">
+  //           <Text   >
   //           ТО
   //           </Text>
   //         </a>
@@ -201,7 +201,7 @@ const TableColumns = (
 
   //   const metrologyServiceCardView = {
   //     label: (
-  //       <Space className="text-secondary">
+  //       <Space className="  ">
   //         <a
   //           // href={
   //           //   record && record?.questionare ? setFilePath(`${record?.questionare.filePath}/${record?.questionare.fileName}`) : "#"
@@ -216,7 +216,7 @@ const TableColumns = (
   //             style={{ marginBottom: 12, marginRight: 10 }}
   //             title="МО"
   //           />
-  //           <Text type="secondary">
+  //           <Text   >
   //           МО
   //           </Text>
   //         </a>
@@ -234,7 +234,7 @@ const TableColumns = (
   //       record?.commisionCard )
   //     ? {
   //       label: (
-  //         <Space className="text-secondary">
+  //         <Space className="  ">
   //           <SearchOutlined
   //             style={{ marginBottom: "6px", padding: 0 }}
   //             className="text-success"
@@ -259,7 +259,7 @@ const TableColumns = (
 
     const typeApprovalCertificateView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.typeApprovalCertificate
@@ -275,7 +275,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Свидетельство об утверждении типа СИ"
             />
-            <Text type="secondary">Свидетельство об утверждении типа СИ</Text>
+            <Text   >Свидетельство об утверждении типа СИ</Text>
           </a>
         </Space>
       ),
@@ -284,7 +284,7 @@ const TableColumns = (
 
     const verificationProcedureView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.verificationProcedure
@@ -300,7 +300,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Методика поверки"
             />
-            <Text type="secondary">Методика поверки</Text>
+            <Text   >Методика поверки</Text>
           </a>
         </Space>
       ),
@@ -309,7 +309,7 @@ const TableColumns = (
 
     const documentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.document ? setFilePath(record?.document) : "#"
@@ -323,7 +323,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Документ со сведениями о поверке/калибровке"
             />
-            <Text type="secondary">
+            <Text   >
               Документ со сведениями о поверке/калибровке
             </Text>
           </a>
@@ -334,7 +334,7 @@ const TableColumns = (
 
     const arshinView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={record && record?.arshin ? record?.arshin : "#"}
             target="_blank"
@@ -346,7 +346,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="ФГИС «АРШИН»"
             />
-            <Text type="secondary">ФГИС «АРШИН»</Text>
+            <Text   >ФГИС «АРШИН»</Text>
           </a>
         </Space>
       ),
@@ -377,7 +377,7 @@ const TableColumns = (
         record?.arshin)
         ? {
             label: (
-              <Space className="text-secondary">
+              <Space className="  ">
                 <SearchOutlined
                   style={{ marginBottom: "6px", padding: 0 }}
                   className="text-primary"
@@ -400,7 +400,7 @@ const TableColumns = (
   const wiringDiagramViewMenuItem = (record: CableLogView) => {
     const render = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.wiringDiagram
@@ -418,7 +418,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Схема внешних электрических проводок (С5)"
             />
-            <Text type="secondary">
+            <Text   >
               Схема внешних электрических проводок (С5)
             </Text>
           </a>
@@ -436,7 +436,7 @@ const TableColumns = (
 
     const functionalDiagramView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.functionalDiagram
@@ -454,7 +454,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Схема P&ID"
             />
-            <Text type="secondary">Схема P&ID</Text>
+            <Text   >Схема P&ID</Text>
           </a>
         </Space>
       ),
@@ -463,7 +463,7 @@ const TableColumns = (
 
     const mountDocumentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.mountDocument
@@ -479,7 +479,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Ведомость смонтированного оборудования"
             />
-            <Text type="secondary">Ведомость смонтированного оборудования</Text>
+            <Text   >Ведомость смонтированного оборудования</Text>
           </a>
         </Space>
       ),
@@ -488,7 +488,7 @@ const TableColumns = (
 
     const connectDocumentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.connectDocument
@@ -504,7 +504,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Акт о подключении"
             />
-            <Text type="secondary">Акт о подключении</Text>
+            <Text   >Акт о подключении</Text>
           </a>
         </Space>
       ),
@@ -513,7 +513,7 @@ const TableColumns = (
 
     const testDocumentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.testDocument
@@ -529,7 +529,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Протокол проведения индивидуальных испытаний"
             />
-            <Text type="secondary">
+            <Text   >
               Протокол проведения индивидуальных испытаний
             </Text>
           </a>
@@ -540,7 +540,7 @@ const TableColumns = (
 
     const awpDocumentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.awpDocument
@@ -556,7 +556,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Протокол проверки сигналов"
             />
-            <Text type="secondary">Протокол проверки сигналов</Text>
+            <Text   >Протокол проверки сигналов</Text>
           </a>
         </Space>
       ),
@@ -565,7 +565,7 @@ const TableColumns = (
 
     const commisionDocumentView = {
       label: (
-        <Space className="text-secondary">
+        <Space className="  ">
           <a
             href={
               record && record?.commisionDocument
@@ -581,7 +581,7 @@ const TableColumns = (
               style={{ marginBottom: 12, marginRight: 10 }}
               title="Акт ввода в эксплуатацию"
             />
-            <Text type="secondary">Акт ввода в эксплуатацию</Text>
+            <Text   >Акт ввода в эксплуатацию</Text>
           </a>
         </Space>
       ),
@@ -621,7 +621,7 @@ const TableColumns = (
         record?.commisionDocument)
         ? {
             label: (
-              <Space className="text-secondary">
+              <Space className="  ">
                 <SearchOutlined
                   style={{ marginBottom: "6px", padding: 0 }}
                   className="text-primary"
@@ -648,7 +648,7 @@ const TableColumns = (
     align: "center",
     width: 50,
     render: (_, __, ind: number) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text    style={{ fontSize: 12 }}>
         {ind + 1}
       </Text>
     ),
@@ -669,7 +669,7 @@ const TableColumns = (
         ? record?.unit?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     sorter: (a, b) => stringSorter(a?.unit, b?.unit),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const subUnitFilters = setTableColumnFilters("sub-unit", dataSource);
@@ -688,7 +688,7 @@ const TableColumns = (
         : false,
     sorter: (a, b) => stringSorter(a?.subUnit, b?.subUnit),
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const tagFilters = setTableColumnFilters("tag", dataSource);
@@ -704,7 +704,7 @@ const TableColumns = (
     onFilter: (value: any, record) =>
       record?.tag?.toUpperCase()?.includes(value?.toUpperCase()),
     sorter: (a, b) => stringSorter(a?.tag, b?.tag),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const installationLocationFilters =
@@ -733,7 +733,7 @@ const TableColumns = (
       "installationLocation" in a &&
       "installationLocation" in b &&
       stringSorter(a?.installationLocation, b?.installationLocation),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const controlledParameterFilters =
@@ -763,7 +763,7 @@ const TableColumns = (
       "controlledParameter" in b &&
       stringSorter(a?.controlledParameter, b?.controlledParameter),
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const equipmentTypeFilters =
@@ -791,7 +791,7 @@ const TableColumns = (
       "facility" in b &&
       stringSorter(a?.facility?.equipmentType, b?.facility?.equipmentType),
     render: (facility) => (
-      <Text type="secondary">{facility?.equipmentType}</Text>
+      <Text   >{facility?.equipmentType}</Text>
     ),
   };
 
@@ -903,7 +903,7 @@ const TableColumns = (
       "facility" in a &&
       "facility" in b &&
       stringSorter(a?.facility?.country, b?.facility?.country),
-    render: (facility) => <Text type="secondary">{facility?.country}</Text>,
+    render: (facility) => <Text   >{facility?.country}</Text>,
   };
 
   const vendorFilters =
@@ -928,7 +928,7 @@ const TableColumns = (
       "facility" in a &&
       "facility" in b &&
       stringSorter(a?.facility?.vendor, b?.facility?.vendor),
-    render: (facility) => <Text type="secondary">{facility?.vendor}</Text>,
+    render: (facility) => <Text   >{facility?.vendor}</Text>,
   };
 
   const facilityTitleFilters =
@@ -954,7 +954,7 @@ const TableColumns = (
       "facility" in a &&
       "facility" in b &&
       stringSorter(a?.facility?.title, b?.facility?.title),
-    render: (facility) => <Text type="secondary">{facility?.title}</Text>,
+    render: (facility) => <Text   >{facility?.title}</Text>,
   };
 
   const facilityModificationFilters =
@@ -982,7 +982,7 @@ const TableColumns = (
       "facilityModification" in a &&
       "facilityModification" in b &&
       stringSorter(a?.facilityModification, b?.facilityModification),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const specificationColumn: ColumnType<Views> = {
@@ -994,7 +994,7 @@ const TableColumns = (
       "specification" in a &&
       "specification" in b &&
       stringSorter(a?.specification, b?.specification),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const monthColumn: ColumnType<Views> = {
@@ -1004,7 +1004,7 @@ const TableColumns = (
     align: "center",
     // sorter: (a, b) =>
     //   "month" in a && "month" in b && stringSorter(a?.month, b?.month),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
     width: 50,
   };
 
@@ -1015,7 +1015,7 @@ const TableColumns = (
     align: "center",
     // sorter: (a, b) =>
     //   "year" in a && "year" in b && stringSorter(a?.year, b?.year),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
     width: 50,
   };
 
@@ -1026,7 +1026,7 @@ const TableColumns = (
     align: "center",
     // sorter: (a, b) =>
     // "period" in a && "period" in b && stringSorter(a?.period, b?.period),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
     width: 50,
   };
 
@@ -1050,7 +1050,7 @@ const TableColumns = (
         : false,
     // sorter: (a, b) =>
     //   "sgroei" in a && "sgroei" in b && stringSorter(a?.sgroei, b?.sgroei),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const measurementAreaFilters =
@@ -1079,7 +1079,7 @@ const TableColumns = (
       "measurementArea" in a &&
       "measurementArea" in b &&
       stringSorter(a?.measurementArea, b?.measurementArea),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const measurementTypeFilters =
@@ -1109,7 +1109,7 @@ const TableColumns = (
         (a as MetrologyView)?.meansurementType,
         (b as MetrologyView)?.meansurementType
       ),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const measurementGroupFilters =
@@ -1139,7 +1139,7 @@ const TableColumns = (
       "meansureGroup" in b &&
       stringSorter(a?.meansureGroup, b?.meansureGroup),
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const grsiFilters =
@@ -1162,7 +1162,7 @@ const TableColumns = (
         : false,
     sorter: (a, b) =>
       "grsi" in a && "grsi" in b && stringSorter(a?.grsi, b?.grsi),
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const minColumn: ColumnType<Views> = {
@@ -1173,7 +1173,7 @@ const TableColumns = (
     // width: 200,
     sorter: (a, b) => "min" in a && "min" in b && stringSorter(a?.min, b?.min),
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {value} {(record as MetrologyView)?.range}
       </Text>
     ),
@@ -1188,7 +1188,7 @@ const TableColumns = (
     sorter: (a, b) => "max" in a && "max" in b && stringSorter(a?.max, b?.max),
 
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {value} {(record as MetrologyView)?.range}
       </Text>
     ),
@@ -1205,7 +1205,7 @@ const TableColumns = (
       "accuracy" in b &&
       stringSorter(a?.accuracy, b?.accuracy),
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const documentTypeColumn: ColumnType<Views> = {
@@ -1219,7 +1219,7 @@ const TableColumns = (
       "documentType" in b &&
       stringSorter(a?.documentType, b?.documentType),
 
-    render: (value, record) => <Text type="secondary">{value}</Text>,
+    render: (value, record) => <Text   >{value}</Text>,
   };
 
   const counterpartyColumn: ColumnType<Views> = {
@@ -1232,7 +1232,7 @@ const TableColumns = (
       "counterparty" in a &&
       "counterparty" in b &&
       stringSorter(a?.counterparty, b?.counterparty),
-    render: (value, record) => <Text type="secondary">{value}</Text>,
+    render: (value, record) => <Text   >{value}</Text>,
   };
 
   const fromDateColumn: ColumnType<Views> = {
@@ -1242,7 +1242,7 @@ const TableColumns = (
     align: "center",
     width: 120,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MetrologyView)?.fromDate).includes("1970")
           ? ""
           : formatDate((record as MetrologyView)?.fromDate)}
@@ -1305,7 +1305,7 @@ const TableColumns = (
     width: 60,
     sorter: (a, b) => "mpi" in a && "mpi" in b && stringSorter(a?.mpi, b?.mpi),
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const metrologyStatusColumn: ColumnType<Views> = {
@@ -1317,7 +1317,7 @@ const TableColumns = (
     sorter: (a, b) =>
       "status" in a && "status" in b && stringSorter(a?.status, b?.status),
 
-    render: (value, record) => <Text type="secondary">{value}</Text>,
+    render: (value, record) => <Text   >{value}</Text>,
   };
 
   const signalTypeFilters =
@@ -1339,7 +1339,7 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const signalProtocolFilters =
@@ -1361,7 +1361,7 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const signalTagColumn: ColumnType<Views> = {
@@ -1369,7 +1369,7 @@ const TableColumns = (
     dataIndex: "signalTag",
     key: "signalTag",
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const signalParameterColumn: ColumnType<Views> = {
@@ -1377,7 +1377,7 @@ const TableColumns = (
     dataIndex: "signalParameter",
     key: "signalParameter",
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const hColumn: ColumnType<Views> = {
@@ -1421,7 +1421,7 @@ const TableColumns = (
     dataIndex: "emergencyProtocol",
     key: "emergencyProtocol",
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const numberOfCableTraceColumn: ColumnType<Views> = {
@@ -1431,7 +1431,7 @@ const TableColumns = (
     align: "center",
     // width: 200,
 
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const cableMarkFilters =
@@ -1454,7 +1454,7 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const cableSectionColumn: ColumnType<Views> = {
@@ -1463,7 +1463,7 @@ const TableColumns = (
     key: "cableSection",
     align: "center",
     // width: 100,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const fromUnitColumn: ColumnType<Views> = {
@@ -1472,7 +1472,7 @@ const TableColumns = (
     key: "fromUnit",
     align: "center",
     // width: 250,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const fromPlaceColumn: ColumnType<Views> = {
@@ -1481,7 +1481,7 @@ const TableColumns = (
     key: "fromPlace",
     align: "center",
     // width: 250,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const toUnitColumn: ColumnType<Views> = {
@@ -1490,7 +1490,7 @@ const TableColumns = (
     key: "toUnit",
     align: "center",
     // width: 250,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const toPlaceColumn: ColumnType<Views> = {
@@ -1499,7 +1499,7 @@ const TableColumns = (
     key: "toPlace",
     align: "center",
     // width: 250,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const cableLenghtColumn: ColumnType<Views> = {
@@ -1508,7 +1508,7 @@ const TableColumns = (
     key: "cableLenght",
     align: "center",
     width: 80,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const rangeColumn: ColumnType<Views> = {
@@ -1517,7 +1517,7 @@ const TableColumns = (
     key: "range",
     align: "center",
     width: 50,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const numberOfImpulseLineTraceColumn: ColumnType<Views> = {
@@ -1526,7 +1526,7 @@ const TableColumns = (
     key: "numberOfTrace",
     align: "center",
     // width: 200,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const impulseLineTypeFilters =
@@ -1551,7 +1551,7 @@ const TableColumns = (
             ?.toUpperCase()
             ?.includes(value?.toUpperCase())
         : false,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const impulseLineLenghtColumn: ColumnType<Views> = {
@@ -1560,7 +1560,7 @@ const TableColumns = (
     key: "impulseLineLenght",
     align: "center",
     width: 80,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const mountDateColumn: ColumnType<Views> = {
@@ -1570,7 +1570,7 @@ const TableColumns = (
     align: "center",
     width: 150,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MonitoringView)?.mountDate).includes("1970")
           ? ""
           : formatDate((record as MonitoringView)?.mountDate)}
@@ -1585,7 +1585,7 @@ const TableColumns = (
     align: "center",
     width: 150,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MonitoringView)?.connectDate).includes("1970")
           ? ""
           : formatDate((record as MonitoringView)?.connectDate)}
@@ -1600,7 +1600,7 @@ const TableColumns = (
     align: "center",
     width: 150,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MonitoringView)?.testDate).includes("1970")
           ? ""
           : formatDate((record as MonitoringView)?.testDate)}
@@ -1615,7 +1615,7 @@ const TableColumns = (
     align: "center",
     width: 150,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MonitoringView)?.awpDate).includes("1970")
           ? ""
           : formatDate((record as MonitoringView)?.awpDate)}
@@ -1630,7 +1630,7 @@ const TableColumns = (
     align: "center",
     width: 150,
     render: (value, record) => (
-      <Text type="secondary">
+      <Text   >
         {formatDate((record as MonitoringView)?.commisionDate).includes("1970")
           ? ""
           : formatDate((record as MonitoringView)?.commisionDate)}
@@ -1644,7 +1644,7 @@ const TableColumns = (
     key: "description",
     align: "center",
     // width: 300,
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text   >{value}</Text>,
   };
 
   const actionsColumn: ColumnType<Views> = {
@@ -1653,13 +1653,13 @@ const TableColumns = (
     width: 30,
     render: (_blank, record) => (
       <Dropdown trigger={["click", "hover"]} overlay={menu}>
-        <EllipsisOutlined className="text-secondary" />
+        <EllipsisOutlined className="  " />
       </Dropdown>
     ),
   };
 
   const {currentUser} = useTypedSelector(state => state.main);
-  
+
   switch (target) {
     case "general-information": {
       columns.push(numberColumn);

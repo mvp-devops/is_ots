@@ -18,19 +18,19 @@ const renderNumber = (id: string): ReactNode => {
       : ind > 9 && ind <= 99
       ? `0${ind}`
       : `${ind}`;
-  return <Text type="secondary">{numberRow}</Text>;
+  return <Text   >{numberRow}</Text>;
 };
 
 const TechCardsPreView = () => {
   const header = (
     <Space className="d-flex justify-content-end" style={{ marginRight: 100 }}>
       <Space direction="vertical">
-        <Text type="secondary" strong className="d-flex justify-content-center">
+        <Text    strong className="d-flex justify-content-center">
           ВВЕДЕН В ДЕЙСТВИЕ
         </Text>
 
         <Text
-          type="secondary"
+
           strong
           underline
           className="d-flex justify-content-center"
@@ -39,7 +39,7 @@ const TechCardsPreView = () => {
         </Text>
 
         <Text
-          type="secondary"
+
           className="d-flex justify-content-center"
           style={{ fontSize: 14, marginTop: -10 }}
         >
@@ -47,7 +47,7 @@ const TechCardsPreView = () => {
         </Text>
 
         <Text
-          type="secondary"
+
           strong
           underline
           className="d-flex justify-content-center"
@@ -56,7 +56,7 @@ const TechCardsPreView = () => {
         </Text>
 
         <Text
-          type="secondary"
+
           strong
           underline
           className="d-flex justify-content-center"
@@ -65,7 +65,7 @@ const TechCardsPreView = () => {
         </Text>
 
         <Text
-          type="secondary"
+
           strong
           underline
           className="d-flex justify-content-center"
@@ -74,13 +74,13 @@ const TechCardsPreView = () => {
         </Text>
 
         <Text
-          type="secondary"
+
           className="d-flex justify-content-center"
           style={{ fontSize: 14, marginTop: -10 }}
         >
           (номер и наименование НМД)
         </Text>
-        <Text type="secondary" strong className="d-flex justify-content-end">
+        <Text    strong className="d-flex justify-content-end">
           «____» ______________ 20____ г.
         </Text>
       </Space>
@@ -91,20 +91,20 @@ const TechCardsPreView = () => {
     <Space className="d-flex justify-content-center mt-5">
       <Space direction="vertical">
         <Text
-          type="secondary"
+
           strong
           className="d-flex justify-content-center"
           style={{ fontSize: 20 }}
         >
           КТ-339
         </Text>
-        <Text type="secondary" strong className="d-flex justify-content-center">
+        <Text    strong className="d-flex justify-content-center">
           «Технологические карты на проведение пуско-наладочных работ КИПиА,
           ОПС, среднего уровня АСУТП (ЛСУ)»
         </Text>
 
         <Text
-          type="secondary"
+
           strong
           className="d-flex justify-content-center"
           style={{ fontSize: 14 }}
@@ -112,7 +112,7 @@ const TechCardsPreView = () => {
           Версия 1.0
         </Text>
         <Text
-          type="secondary"
+
           strong
           className="d-flex justify-content-center"
           style={{ fontSize: 14 }}
@@ -127,21 +127,21 @@ const TechCardsPreView = () => {
     <Space className="d-flex justify-content-start mt-5">
       <Space direction="vertical">
         <Space>
-          <Text type="secondary">Код бизнес-процесса:</Text>
-          <Text type="secondary" strong>
+          <Text   >Код бизнес-процесса:</Text>
+          <Text    strong>
             01.07.05 «Организация пуско-наладочных работ на вводимых в
             эксплуатацию, строящихся и реконструируемых объектах обустройства»
           </Text>
         </Space>
         <Space>
-          <Text type="secondary">Владелец КТ:</Text>
-          <Text type="secondary" strong>
+          <Text   >Владелец КТ:</Text>
+          <Text    strong>
             Департамент по развитию инфраструктуры
           </Text>
         </Space>
         <Space>
-          <Text type="secondary">Владелец информации:</Text>
-          <Text type="secondary" strong>
+          <Text   >Владелец информации:</Text>
+          <Text    strong>
             Департамент информационных технологий, автоматизации и
             телекоммуникаций
           </Text>
@@ -166,7 +166,7 @@ const TechCardsPreView = () => {
     key: "code",
     width: 300,
     render: (value) => (
-      <Text type="secondary" style={{ cursor: "pointer" }}>
+      <Text    style={{ cursor: "pointer" }}>
         {value}
       </Text>
     ),
@@ -176,7 +176,7 @@ const TechCardsPreView = () => {
     dataIndex: "title",
     key: "title",
     render: (value) => (
-      <Text type="secondary" style={{ cursor: "pointer" }}>
+      <Text    style={{ cursor: "pointer" }}>
         {value}
       </Text>
     ),
@@ -187,7 +187,7 @@ const TechCardsPreView = () => {
     width: 300,
     key: "description",
     render: (value) => (
-      <Text type="secondary" style={{ cursor: "pointer" }}>
+      <Text    style={{ cursor: "pointer" }}>
         {value}
       </Text>
     ),
@@ -201,7 +201,7 @@ const TechCardsPreView = () => {
       <Space size="middle" className="d-flex justify-content-end">
         <EditOutlined
           title="Редактировать информацию"
-          className="text-secondary"
+          className="  "
           onClick={() => {
             setActionType(FormActions.EDIT_DICTIONARY_ITEM);
             setFormVisible(true);
@@ -263,7 +263,7 @@ const TechCardsPreView = () => {
   );
   const actionsPanel = (
     <Space
-      className="text-secondary d-flex justify-content-between  justify-items-end me-2"
+      className="   d-flex justify-content-between  justify-items-end me-2"
       // onSelect={(key) => exportTechCards()}
     >
       <span></span>

@@ -9,7 +9,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -21,7 +21,7 @@ const selectProps: SelectProps = {
 
 const itemProps = (title: string, name: string): FormItemProps => {
   return {
-    label: <Text type="secondary">{title}</Text>,
+    label: <Text   >{title}</Text>,
     name,
     rules: [
       {
@@ -36,7 +36,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -57,7 +57,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
     >
       <Input
         {...inputProps()}
-        className="text-start text-secondary"
+        className="text-start   "
       />
     </Item>
   );
@@ -76,7 +76,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
       >
         {protection.map(({id, title}) => {
           return (
-            <Option key={id} title={title} className="text-secondary">
+            <Option key={id} title={title} className="  ">
               {title}
             </Option>
           );
@@ -100,7 +100,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
       >
         {explosionType.map(({id, title}) => {
           return (
-            <Option key={id} title={title} className="text-secondary">
+            <Option key={id} title={title} className="  ">
               {title}
             </Option>
           );
@@ -120,7 +120,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
     >
       <Input
         {...inputProps()}
-        className="text-start text-secondary"
+        className="text-start   "
       />
     </Item>
   );
@@ -137,7 +137,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
     >
       <Input
         {...inputProps("number")}
-        className="text-left text-secondary"
+        className="text-left   "
       />
     </Item>
   );
@@ -153,12 +153,12 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
     >
       <Select
         size={"small"}
-      className={"text-secondary"}
+      className={"  "}
       notFoundContent={<NotFoundComponent/>}
       >
         {mtbf.map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -180,7 +180,7 @@ const PerformanceCharacteristic:FC<PerformanceCharacteristicProps> = ({lifeTime}
       <Radio.Group className="d-flex justify-content-around">
         {safety.map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary">{item}</Radio>
+            <Radio key={index} value={item} className="  ">{item}</Radio>
           );
         })}
       </Radio.Group>

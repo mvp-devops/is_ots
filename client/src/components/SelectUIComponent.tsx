@@ -52,7 +52,7 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
       placeholder={placeholder}
       style={style}
       size={size ? size : "small"}
-      className={className ? `text-secondary ${className}` : "text-secondary"}
+      className={className ? ` ${className}` : ""}
       defaultValue={defaultValue}
       mode={mode}
       allowClear={allowClear}
@@ -64,7 +64,7 @@ const SelectUIComponent: FC<SelectUIComponentProps> = ({
             />
           </Text>
 
-          <Text type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>
+          <Text  style={{ fontSize: 12, marginBottom: 2 }}>
             Нет данных для отображения. Уточнить поиск
           </Text>
         </Space>

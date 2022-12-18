@@ -420,7 +420,9 @@ export interface MReestrEqMeansur {
 
 }
 
-export interface AtlasCreateOrUpdateAttrs extends MReestrEqMeansur{
+export interface ExportToAtlasCreateOrUpdateAttrs {
+  sloeId: number;
+  sync_flag: number;
   company: string; //sloe.subUnit.unit.project.field.subsidiary.title
   subdivision: string; //у нас нет ставим н/д
   field: string; //sloe.subUnit.unit.project.field.title
@@ -435,7 +437,7 @@ export interface AtlasCreateOrUpdateAttrs extends MReestrEqMeansur{
   type_protection: string; //explosionMark - ручной ввод??
   sn: string;   // factoryNumber
   prod_dt: Date; // new Date(year, month)
-  life_time: number; // +period/12
+  life_time: string; // +period/12
   set_type: string; //у нас нет ставим н/д
   set_sn: string; //у нас нет ставим н/д
   actual_mc: string; //metrology.metrologyType
@@ -462,11 +464,11 @@ export interface AtlasCreateOrUpdateAttrs extends MReestrEqMeansur{
   sgroei: string; //metrology.sgroei
   remark: string; // примечание
   actual_tech_condition: string; //metrology.status
-  distance: string; //удаленность объекта у нас нет
+  distance: number; //удаленность объекта у нас нет
   contract: string; //договор у нас нет
   opo: string; // ОПО у нас нет
   rpo: number; //0 или 1 Признак РПО
-  flag_rtk:number; //0 или 1 Признак эксплуатации
+  flag_rtk: number; //0 или 1 Признак эксплуатации
   tko: string; //Тех карта МО/ТО
   path_to_doc: string; //путь к документу
   path_to_method_mc: string; // путь к методике поверки

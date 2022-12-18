@@ -24,13 +24,13 @@ const RegulatoryReferenceInformationForm = () => {
 
   const fileItem = (dictionaryTarget === "counterparty" ||
     dictionaryTarget === "design") && (
-    <Item label={<Text type="secondary">Логотип</Text>} className="m-0">
+    <Item label={<Text  >Логотип</Text>} className="m-0">
       <UploadUIComponent id="file" changeValue={onHandlerChange} />
     </Item>
   );
 
   const titleItem = editRow && (
-    <Item label={<Text type="secondary">Наименование</Text>} className="m-0">
+    <Item label={<Text  >Наименование</Text>} className="m-0">
       <InputUIComponent
         value={editRow.title}
         id="title"
@@ -42,7 +42,7 @@ const RegulatoryReferenceInformationForm = () => {
   const codeItem = editRow && (
     <Item
       label={
-        <Text type="secondary">
+        <Text  >
           {dictionaryTarget === "criticality" ? "Вес" : "Шифр"}
         </Text>
       }
@@ -59,7 +59,7 @@ const RegulatoryReferenceInformationForm = () => {
   const thresholdItem = editRow &&
     "threshold" in editRow &&
     dictionaryTarget === "criticality" && (
-      <Item label={<Text type="secondary">Порог</Text>} className="m-0">
+      <Item label={<Text  >Порог</Text>} className="m-0">
         <InputUIComponent
           value={editRow.threshold as string}
           type="number"
@@ -73,7 +73,7 @@ const RegulatoryReferenceInformationForm = () => {
   const goalItem = editRow &&
     "goal" in editRow &&
     dictionaryTarget === "criticality" && (
-      <Item label={<Text type="secondary">Цель</Text>} className="m-0">
+      <Item label={<Text  >Цель</Text>} className="m-0">
         <InputUIComponent
           value={editRow.goal as string}
           type="number"
@@ -87,7 +87,7 @@ const RegulatoryReferenceInformationForm = () => {
   const tenseGoalItem = editRow &&
     "tenseGoal" in editRow &&
     dictionaryTarget === "criticality" && (
-      <Item label={<Text type="secondary">Амцель</Text>} className="m-0">
+      <Item label={<Text  >Амцель</Text>} className="m-0">
         <InputUIComponent
           value={editRow.tenseGoal as string}
           type="number"
@@ -99,7 +99,7 @@ const RegulatoryReferenceInformationForm = () => {
     );
 
   const descriptionItem = editRow && (
-    <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
+    <Item label={<Text  >Примечание</Text>} className="m-0">
       <InputUIComponent
         value={editRow.description as string}
         id="description"

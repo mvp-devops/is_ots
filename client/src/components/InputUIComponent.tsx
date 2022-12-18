@@ -40,7 +40,7 @@ const InputUIComponent: FC<InputUIComponentProps> = ({
 }) => {
   const prop = {
     size: size ? size : "small",
-    className: className ? className + " text-secondary" : "text-secondary",
+    className: className ? className + " " : "",
     value,
     onChange: (e: ChangeEvent<HTMLInputElement>) =>
       changeValue(id, e.target.value, itemId),
@@ -49,7 +49,7 @@ const InputUIComponent: FC<InputUIComponentProps> = ({
     type,
     addonAfter:
       addonAfter !== undefined ? (
-        <Text type="secondary">{addonAfter}</Text>
+        <Text >{addonAfter}</Text>
       ) : null,
     style,
     ...props,
@@ -57,7 +57,7 @@ const InputUIComponent: FC<InputUIComponentProps> = ({
   return type === "password" ? (
     <Input.Password
       {...prop}
-      className={className ? className : "text-secondary"}
+      className={className ? className : ""}
       iconRender={(visible) =>
         visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
       }

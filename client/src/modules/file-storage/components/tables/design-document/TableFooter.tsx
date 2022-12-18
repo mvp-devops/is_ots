@@ -7,7 +7,7 @@ const TableFooter = (data: DesignDocumentView[]) => {
   return (
     <Space className="d-flex justify-content-end ">
       <Text className="text-secondary">Количество записей:</Text>
-      <Text strong type="secondary">
+      <Text strong   >
         {data.length}
       </Text>
     </Space>

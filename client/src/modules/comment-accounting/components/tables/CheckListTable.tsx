@@ -41,7 +41,7 @@ const CheckListTable = () => {
       align: "center",
       className: "bg-table-blue border-white",
       render: (value, record, index) => (
-        <Text type="secondary">{index + 1}</Text>
+        <Text   >{index + 1}</Text>
       ),
     },
     {
@@ -50,7 +50,7 @@ const CheckListTable = () => {
       key: "StageTitle",
       className: "bg-table-blue border-white",
       render: (value, record) => (
-        <Text type="secondary">{record?.stageTitle}</Text>
+        <Text   >{record?.stageTitle}</Text>
       ),
 
       width: 400,
@@ -75,7 +75,7 @@ const CheckListTable = () => {
           width: 60,
           align: "center",
           className: "bg-table-blue border-white table-col",
-          render: (value, record) => <Text type="secondary">&ge;</Text>,
+          render: (value, record) => <Text   >&ge;</Text>,
         },
         {
           title: "Цель",
@@ -84,7 +84,7 @@ const CheckListTable = () => {
           width: 54,
           align: "center",
           className: "bg-table-blue border-white table-col",
-          render: (value, record) => <Text type="secondary">&le;</Text>,
+          render: (value, record) => <Text   >&le;</Text>,
         },
         {
           title: "Амцель",
@@ -93,7 +93,7 @@ const CheckListTable = () => {
           width: 74,
           align: "center",
           className: "bg-table-blue border-white table-col",
-          render: (value, record) => <Text type="secondary">&#61;</Text>,
+          render: (value, record) => <Text   >&#61;</Text>,
         },
       ],
     },
@@ -106,7 +106,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         record?.stageFactor !== 0 && (
-          <Text type="secondary">{record?.stageFactor}</Text>
+          <Text   >{record?.stageFactor}</Text>
         ),
     },
     {
@@ -116,7 +116,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 1 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -128,7 +128,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 2 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -140,7 +140,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 3 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -152,7 +152,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 4 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -164,7 +164,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 5 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -176,7 +176,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 6 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -188,7 +188,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 7 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -200,7 +200,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 8 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -212,7 +212,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 9 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -224,7 +224,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 10 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -236,7 +236,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 11 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -248,7 +248,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         currentMonth === 12 && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -260,7 +260,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         (currentMonth === 1 || currentMonth === 2 || currentMonth === 3) && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -272,7 +272,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         (currentMonth === 4 || currentMonth === 5 || currentMonth === 6) && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -284,7 +284,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         (currentMonth === 7 || currentMonth === 8 || currentMonth === 9) && (
-          <Text type="secondary" strong>
+          <Text    strong>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -296,7 +296,7 @@ const CheckListTable = () => {
       className: "bg-table-blue border-white table-col",
       render: (value, record) =>
         (currentMonth === 10 || currentMonth === 11 || currentMonth === 12) && (
-          <Text type="secondary" strong style={{ cursor: "pointer" }}>
+          <Text    strong style={{ cursor: "pointer" }}>
             {record?.stageTotal?.toFixed(2)}
           </Text>
         ),
@@ -308,21 +308,21 @@ const CheckListTable = () => {
       align: "center",
       className: "bg-table-blue border-white",
       render: (value, record) => (
-        <Text type="secondary">
+        <Text   >
           <Tooltip
             placement="right"
             color="white"
             title={
               record?.stageTitle === "Заводские приемо-сдаточные испытания" ? (
-                <Text type="secondary">{textPSI}</Text>
+                <Text   >{textPSI}</Text>
               ) : record?.stageTitle ===
                 "Пусконаладочные работы, комплексное опробование и достижение гарантированных показателей" ? (
-                <Text type="secondary">{textPNR}</Text>
+                <Text   >{textPNR}</Text>
               ) : record?.stageTitle ===
                 "Стадия эксплуатации (гарантийный и постгарантийный периоды)" ? (
-                <Text type="secondary">{textED}</Text>
+                <Text   >{textED}</Text>
               ) : (
-                <Text type="secondary">{textPD}</Text>
+                <Text   >{textPD}</Text>
               )
             }
             style={{ background: "white", color: "black" }}
@@ -349,7 +349,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
 
         render: (_, record, ind) => (
-          <Text type="secondary" style={{ fontSize: 12 }}>{`${index + 1}. ${
+          <Text    style={{ fontSize: 12 }}>{`${index + 1}. ${
             ind + 1
           }`}</Text>
         ),
@@ -361,7 +361,7 @@ const CheckListTable = () => {
         key: "criticalityTitle",
         className: "bg-white ",
         render: (value) => (
-          <Text type="secondary" style={{ fontSize: 12 }}>
+          <Text    style={{ fontSize: 12 }}>
             {value}
           </Text>
         ),
@@ -374,7 +374,7 @@ const CheckListTable = () => {
         align: "center",
         render: (value, record) =>
           record?.weight !== 0 && (
-            <Text italic type="secondary" style={{ fontSize: 12 }}>
+            <Text italic    style={{ fontSize: 12 }}>
               шт.
             </Text>
           ),
@@ -387,7 +387,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
         align: "center",
         render: (value) => (
-          <Text strong type="secondary" style={{ fontSize: 12 }}>
+          <Text strong    style={{ fontSize: 12 }}>
             {value}
           </Text>
         ),
@@ -400,7 +400,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
         align: "center",
         render: (value) => (
-          <Text strong type="secondary" style={{ fontSize: 12 }}>
+          <Text strong    style={{ fontSize: 12 }}>
             {value}
           </Text>
         ),
@@ -413,7 +413,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
         align: "center",
         render: (value) => (
-          <Text strong type="secondary" style={{ fontSize: 12 }}>
+          <Text strong    style={{ fontSize: 12 }}>
             {value}
           </Text>
         ),
@@ -426,7 +426,7 @@ const CheckListTable = () => {
         className: "bg-white table-col",
         align: "center",
         render: (value) => (
-          <Text type="secondary" style={{ fontSize: 12 }}>
+          <Text    style={{ fontSize: 12 }}>
             {value}
           </Text>
         ),
@@ -841,7 +841,7 @@ const CheckListTable = () => {
         className: "bg-white",
         align: "center",
         // render: (value) => (
-        //   <Text type="secondary" style={{ fontSize: 12 }}>
+        //   <Text    style={{ fontSize: 12 }}>
         //     {value}
         //   </Text>
         // ),
@@ -930,12 +930,12 @@ const CheckListTable = () => {
       summary={(data) => (
         <Row>
           <Cell index={0} colSpan={7} align="left">
-            <Text strong type="secondary">
+            <Text strong   >
               Оценка эффективности деятельности:
             </Text>
           </Cell>
           <Cell index={1} align="center">
-            <Text strong type="secondary">
+            <Text strong   >
               {total}
             </Text>
           </Cell>

@@ -19,7 +19,7 @@ const notFoundContent = (
       <ExclamationCircleOutlined style={{ fontSize: 20, marginBottom: 2 }} />
     </Text>
 
-    <Text type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>
+    <Text   style={{ fontSize: 12, marginBottom: 2 }}>
       Нет данных для отображения. Уточнить поиск
     </Text>
   </Space>
@@ -51,7 +51,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
             <Item
               className="mb-0"
               style={{ width: 500 }}
-              label={<Text type="secondary">Критерий критичности</Text>}
+              label={<Text  >Критерий критичности</Text>}
               {...restField}
               name={[name, "criticalityId"]}
               initialValue={"1"}
@@ -65,7 +65,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
               <Select
                 placeholder="Критерий критичности"
                 size={"small"}
-                className={"text-secondary"}
+                className={" "}
                 notFoundContent={notFoundContent}
                 showSearch
                 optionFilterProp="children"
@@ -78,7 +78,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                 {criticalitiesList.map(({ id, title, code }) => (
                   <Option key={id}>
                     <Text
-                      type="secondary"
+
                       title={`${id}. ${title}`}
                     >{`${id}. ${title}`}</Text>
                   </Option>
@@ -88,7 +88,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
             <Item
               className="mb-0"
               style={{ width: 500 }}
-              label={<Text type="secondary">Функциональное направление</Text>}
+              label={<Text  >Функциональное направление</Text>}
               {...restField}
               name={[name, "directionId"]}
               initialValue={"1"}
@@ -101,7 +101,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
             >
               <Select
                 size={"small"}
-                className={"text-secondary"}
+                className={" "}
                 notFoundContent={notFoundContent}
                 showSearch
                 optionFilterProp="children"
@@ -113,7 +113,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
               >
                 {directionsList.map(({ id, title }) => (
                   <Option key={id}>
-                    <Text type="secondary" title={`${id}. ${title}`}>
+                    <Text   title={`${id}. ${title}`}>
                       {title}
                     </Text>
                   </Option>
@@ -122,7 +122,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
             </Item>
             <Item
               style={{ width: 500 }}
-              label={<Text type="secondary">Нормативная ссылка</Text>}
+              label={<Text  >Нормативная ссылка</Text>}
               {...restField}
               name={[name, "normativeId"]}
               initialValue={"1"}
@@ -136,7 +136,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
               <Select
                 placeholder="Нормативная ссылка"
                 size={"small"}
-                className={"text-secondary"}
+                className={" "}
                 notFoundContent={notFoundContent}
                 showSearch
                 optionFilterProp="children"
@@ -149,7 +149,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                 {criticalitiesList.map(({ id, title, code }) => (
                   <Option key={id}>
                     <Text
-                      type="secondary"
+
                       title={`${code}. ${title}`}
                     >{`${code}. ${title}`}</Text>
                   </Option>
@@ -161,7 +161,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
           <Item
             className="mb-0"
             style={{ width: 600 }}
-            label={<Text type="secondary">Замечание</Text>}
+            label={<Text  >Замечание</Text>}
             name={[name, "comment"]}
             rules={[
               {
@@ -173,7 +173,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
             <Input.TextArea
               autoSize={{ minRows: 7.2, maxRows: 7.2 }}
               placeholder="Замечание"
-              className="text-secondary"
+              className=" "
             />
           </Item>
 
@@ -183,7 +183,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
           />
         </Space>
         <Divider className="mt-1">
-          <Text type="secondary">Решения</Text>
+          <Text  >Решения</Text>
         </Divider>
 
         <Space direction="horizontal">
@@ -199,7 +199,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           className="m-0"
                           style={{ width: 500 }}
                           label={
-                            <Text type="secondary">
+                            <Text  >
                               Контактные данные проектировщика
                             </Text>
                           }
@@ -215,13 +215,13 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           <Input.TextArea
                             autoSize={{ minRows: 3, maxRows: 5 }}
                             placeholder="Контактные данные"
-                            className="text-secondary"
+                            className=" "
                           />
                         </Item>
                         <Item
                           className="m-0"
                           style={{ width: 500 }}
-                          label={<Text type="secondary">Статус ответа</Text>}
+                          label={<Text  >Статус ответа</Text>}
                           {...restField}
                           name={[name, "statusId"]}
                           // initialValue="1"
@@ -234,7 +234,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                         >
                           <Select
                             size={"small"}
-                            className={"text-secondary"}
+                            className={" "}
                             notFoundContent={notFoundContent}
                             showSearch
                             optionFilterProp="children"
@@ -247,7 +247,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                             {statusesList.map(({ id, title }) => (
                               <Option key={id}>
                                 <Text
-                                  type="secondary"
+
                                   title={`Код статуса ответа: ${id}`}
                                 >{`${id}. ${title}`}</Text>
                               </Option>
@@ -257,7 +257,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                         <Item
                           className="m-0"
                           style={{ width: 500 }}
-                          label={<Text type="secondary">Статус решения</Text>}
+                          label={<Text  >Статус решения</Text>}
                           {...restField}
                           name={[name, "solutionId"]}
                           rules={[
@@ -270,7 +270,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           <Select
                             placeholder="Статус решения"
                             size={"small"}
-                            className={"text-secondary"}
+                            className={" "}
                             allowClear={true}
                             notFoundContent={notFoundContent}
                             showSearch
@@ -284,7 +284,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                             {solutionsList.map(({ id, title }) => (
                               <Option key={id}>
                                 <Text
-                                  type="secondary"
+
                                   title={`Код статуса решения: ${id}`}
                                 >{`${id}. ${title}`}</Text>
                               </Option>
@@ -298,7 +298,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           style={{ width: 600 }}
                           // initialValue="Принято. Будет устранено в следущем драфте документации"
                           label={
-                            <Text type="secondary">Ответ проектировщика</Text>
+                            <Text  >Ответ проектировщика</Text>
                           }
                           name={[name, "answer"]}
                           rules={[
@@ -312,7 +312,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           <Input.TextArea
                             autoSize={{ minRows: 3, maxRows: 3 }}
                             placeholder="Ответ проектировщика"
-                            className="text-secondary"
+                            className=" "
                           />
                         </Item>
                         <Item
@@ -320,7 +320,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           style={{ width: 600 }}
                           // initialValue="Замечание снято"
                           label={
-                            <Text type="secondary">Комментарий эксперта</Text>
+                            <Text  >Комментарий эксперта</Text>
                           }
                           name={[name, "answer"]}
                           rules={[
@@ -333,7 +333,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                           <Input.TextArea
                             autoSize={{ minRows: 4, maxRows: 4 }}
                             placeholder="Комментарий эксперта"
-                            className="text-secondary"
+                            className=" "
                           />
                         </Item>
                       </Space>
@@ -352,7 +352,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                       block
                       icon={<PlusCircleOutlined className="text-success" />}
                     >
-                      <Text type="secondary">Добавить решение</Text>
+                      <Text  >Добавить решение</Text>
                     </Button>
                   </Item>
                 </>

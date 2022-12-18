@@ -9,7 +9,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -22,7 +22,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -34,7 +34,7 @@ const PressureCharacteristic = () => {
   /** Схема подключения вторичного преобразователя */
   const connectionSchemeFormField = (
     <Item
-      label={<Text type="secondary">Схема подключения втор. преобр.</Text>}
+      label={<Text   >Схема подключения втор. преобр.</Text>}
       name={connectionScheme}
       initialValue={"Не предусмотрено"}
       className="ms-2 mb-0"
@@ -52,7 +52,7 @@ const PressureCharacteristic = () => {
       >
         {connectionScheme.map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -64,7 +64,7 @@ const PressureCharacteristic = () => {
 
   const settingRangeFormField = (
     <Item
-      label={<Text type="secondary">Диапазон настройки</Text>}
+      label={<Text   >Диапазон настройки</Text>}
       name={"settingRange"}
       className="ms-2 mb-0"
       rules={[
@@ -78,7 +78,7 @@ const PressureCharacteristic = () => {
       <Radio.Group >
         {settingRange.map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary" style={{width: 80}}>{item}</Radio>
+            <Radio key={index} value={item} className="  " style={{width: 80}}>{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -88,7 +88,7 @@ const PressureCharacteristic = () => {
   /** Клапанный блок */
   const valveBlockFormField = (
     <Item
-      label={<Text type="secondary">Клапанный блок</Text>}
+      label={<Text   >Клапанный блок</Text>}
       name={"valveBlock"}
       initialValue={valveBlock}
       className="ms-2 mb-0"
@@ -112,7 +112,7 @@ const PressureCharacteristic = () => {
     <Item
       labelCol={{span: 10}}
       className="ms-2 mb-0 d-flex align-content-center-center"
-      label={<Text type="secondary">Исполнение клапанного блока</Text>}
+      label={<Text   >Исполнение клапанного блока</Text>}
       name={"valveBlockType"}
     rules={[
       {
@@ -125,7 +125,7 @@ const PressureCharacteristic = () => {
       <Radio.Group disabled={!valveBlock} >
         {valveBlockType.map(({id, title, value}) => {
           return (
-            <Radio key={id} value={value} className="text-secondary">{title}</Radio>
+            <Radio key={id} value={value} className="  ">{title}</Radio>
           );
         })}
       </Radio.Group>
@@ -137,7 +137,7 @@ const PressureCharacteristic = () => {
    */
   const airBleedValveFormField = (
     <Item
-      label={<Text type="secondary">Клапан для стравливания воздуха</Text>}
+      label={<Text   >Клапан для стравливания воздуха</Text>}
       name={"airBleedValve"}
       className="ms-2 mb-0"
       valuePropName="checked"
@@ -156,7 +156,7 @@ const PressureCharacteristic = () => {
   const valveBlockCorpMaterialFormField  = (
     <Item
       className="ms-2 mb-0 d-flex align-content-center-center"
-      label={<Text type="secondary">Материал клапанного блока</Text>}
+      label={<Text   >Материал клапанного блока</Text>}
       name={"valveBlockCorpMaterial"}
       rules={[
         {
@@ -168,7 +168,7 @@ const PressureCharacteristic = () => {
     >
       <Input
         {...inputProps()}
-        className="text-left text-secondary"
+        className="text-left   "
         style={{width: 370}}
       />
     </Item>

@@ -29,7 +29,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
       className="m-1 p-1 border"
       style={{ maxWidth: 1200 }}
     >
-      <Item label={<Text type="secondary">Тип сигнала</Text>} className="m-0">
+      <Item label={<Text   >Тип сигнала</Text>} className="m-0">
         <InputUIComponent
           value={item.signalType}
           id="signalType"
@@ -37,7 +37,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Протокол</Text>} className="m-0">
+      <Item label={<Text   >Протокол</Text>} className="m-0">
         <InputUIComponent
           value={item.signalProtocol}
           id="signalProtocol"
@@ -45,7 +45,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">TAG сигнала</Text>} className="m-0">
+      <Item label={<Text   >TAG сигнала</Text>} className="m-0">
         <InputUIComponent
           value={item.signalTag}
           id="signalTag"
@@ -54,7 +54,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Контр. параметр</Text>}
+        label={<Text   >Контр. параметр</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -64,7 +64,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Авария, min</Text>} className="m-0">
+      <Item label={<Text   >Авария, min</Text>} className="m-0">
         <InputUIComponent
           type="number"
           value={item.h}
@@ -74,7 +74,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Сигнализация, min</Text>}
+        label={<Text   >Сигнализация, min</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -87,7 +87,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
       </Item>
 
       <Item
-        label={<Text type="secondary">Сигнализация, max</Text>}
+        label={<Text   >Сигнализация, max</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -98,7 +98,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Авария, max</Text>} className="m-0">
+      <Item label={<Text   >Авария, max</Text>} className="m-0">
         <InputUIComponent
           type="number"
           value={item.hh}
@@ -108,7 +108,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Аварийный протокол</Text>}
+        label={<Text   >Аварийный протокол</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -154,7 +154,7 @@ const SignalForm: FC<FormProps> = ({ row, data, setData }) => {
           title="Добавить новую строку"
           onClick={() => addItem()}
         >
-          <Text type="secondary">Добавить новую строку</Text>
+          <Text   >Добавить новую строку</Text>
         </Button>
       </Space>
       {data &&

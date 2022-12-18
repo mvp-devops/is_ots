@@ -30,7 +30,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       style={{ maxWidth: 1200 }}
     >
       <Item
-        label={<Text type="secondary">Номер кабельной линии</Text>}
+        label={<Text   >Номер кабельной линии</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -40,7 +40,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Марка кабеля</Text>} className="m-0">
+      <Item label={<Text   >Марка кабеля</Text>} className="m-0">
         <InputUIComponent
           value={item.cableMark}
           id="cableMark"
@@ -49,7 +49,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Сечение кабеля</Text>}
+        label={<Text   >Сечение кабеля</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -61,7 +61,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       </Item>
 
       <Item
-        label={<Text type="secondary">Место монтажа, от</Text>}
+        label={<Text   >Место монтажа, от</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -72,7 +72,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Точка подключения, от</Text>}
+        label={<Text   >Точка подключения, от</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -83,7 +83,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Место монтажа, до</Text>}
+        label={<Text   >Место монтажа, до</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -94,7 +94,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Точка подключения, до</Text>}
+        label={<Text   >Точка подключения, до</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -105,7 +105,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Длина кабельной линии</Text>}
+        label={<Text   >Длина кабельной линии</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -119,7 +119,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
       </Item>
 
       <Item
-        label={<Text type="secondary">Схема подключения:</Text>}
+        label={<Text   >Схема подключения:</Text>}
         className="m-0"
       >
         <UploadUIComponent
@@ -129,7 +129,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
 
-      <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
+      <Item label={<Text   >Примечание</Text>} className="m-0">
         <InputUIComponent
           value={item.description}
           id="description"
@@ -173,7 +173,7 @@ const CableLogForm: FC<FormProps> = ({ row, data, setData }) => {
           title="Добавить новую строку"
           onClick={() => addItem()}
         >
-          <Text type="secondary">Добавить новую строку</Text>
+          <Text   >Добавить новую строку</Text>
         </Button>
       </Space>
       {data &&

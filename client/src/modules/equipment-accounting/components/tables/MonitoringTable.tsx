@@ -31,7 +31,6 @@ const MonitoringTable = () => {
     <Space className="d-flex justify-content-end mb-4">
       <Input
         placeholder="Поиск..."
-        className="text-secondary"
         value={searchValue}
         onChange={onSearch}
         style={{

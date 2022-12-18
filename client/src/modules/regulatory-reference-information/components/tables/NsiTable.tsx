@@ -86,7 +86,7 @@ const NsiTable = () => {
 
   const title = (
     <Space className="d-flex align-items-center justify-content-between">
-      <Text strong type="secondary">
+      <Text strong  >
         {tableTitle}
       </Text>
       <Space
@@ -96,7 +96,7 @@ const NsiTable = () => {
         {/* <SearchPanel data={dataSource} /> */}
         <Input
           placeholder="Поиск..."
-          className="text-secondary mt-2 mb-2"
+          className="  mt-2 mb-2"
           style={{ color: "red", maxWidth: 600 }}
           size="small"
           suffix={<SearchOutlined className="text-primary" />}
@@ -104,12 +104,12 @@ const NsiTable = () => {
         />
         {/* <Input
           size="small"
-          className="text-secondary"
+          className=" "
           style={{ minWidth: 300 }}
           placeholder="Поиск..."
           title="Поиск записей по шифру/наименованию и др."
           value={searchValue}
-          suffix={<SearchOutlined className="text-secondary" />}
+          suffix={<SearchOutlined className=" " />}
           onChange={onSearch}
         /> */}
         {menuItems}
@@ -166,7 +166,7 @@ const NsiTable = () => {
       ) : (
         <Space direction={"vertical"}>
           <Collapse>
-            <Collapse.Panel header={<Text type={"secondary"}>Разделы проектной документации. ГОСТ Р 21.1101-2013</Text>} key="1" >
+            <Collapse.Panel header={<Text >Разделы проектной документации. ГОСТ Р 21.1101-2013</Text>} key="1" >
               <Table
                 className="border p-1 m-0"
                 style={{ fontSize: 12 }}
@@ -206,7 +206,7 @@ const NsiTable = () => {
                 footer={() => NsiTableFooter(filteredResults)}
               />
             </Collapse.Panel>
-            <Collapse.Panel header={<Text type={"secondary"}>Разделы рабочей документации. ГОСТ Р 21.1101-2013</Text>} key="2" >
+            <Collapse.Panel header={<Text>Разделы рабочей документации. ГОСТ Р 21.1101-2013</Text>} key="2" >
               <Table
                 className="border p-1 m-0"
                 style={{ fontSize: 12 }}

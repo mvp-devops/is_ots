@@ -6,8 +6,8 @@ const { Text } = Typography;
 const NsiTableFooter = (data: any[]) => {
   return (
     <Space className="d-flex justify-content-end ">
-      <Text className="text-secondary">Количество записей:</Text>
-      <Text strong type="secondary">
+      <Text >Количество записей:</Text>
+      <Text strong>
         {data.length}
       </Text>
     </Space>

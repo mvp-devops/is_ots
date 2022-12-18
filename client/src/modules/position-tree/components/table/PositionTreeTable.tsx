@@ -132,7 +132,7 @@ const PositionTreeTable = () => {
           }}
           title={() => (
             <Space className="d-flex align-items-center justify-content-between">
-              <Text strong type="secondary">
+              <Text strong >
                 {tableTitle}
               </Text>
               <Space
@@ -141,12 +141,11 @@ const PositionTreeTable = () => {
               >
                 <Input
                   size="small"
-                  className="text-secondary"
                   style={{ minWidth: 300 }}
                   placeholder="Поиск..."
                   title="Поиск записей по шифру/наименованию и др."
                   value={searchValue}
-                  suffix={<SearchOutlined className="text-secondary" />}
+                  suffix={<SearchOutlined/>}
                   onChange={onSearch}
                 />
                 {menuItems}
@@ -166,8 +165,8 @@ const PositionTreeTable = () => {
           )}
           footer={() => (
             <Space className="d-flex justify-content-end ">
-              <Text className="text-secondary">Количество:</Text>
-              <Text strong type="secondary">
+              <Text >Количество:</Text>
+              <Text strong >
                 {dataSource.length}
               </Text>
             </Space>

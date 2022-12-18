@@ -13,7 +13,7 @@ const ItemPageBreadcrumbs: FC<BreadcrumbsProps> = ({ items }) => {
     <Breadcrumb style={{ margin: "16px 0" }}>
       {items.map((item) => (
         <Item key={item.id}>
-          <Text type="secondary">{item.title}</Text>
+          <Text >{item.title}</Text>
         </Item>
       ))}
     </Breadcrumb>

@@ -152,7 +152,7 @@ const CommentForm: FC<CommentFormProps> = ({ rows }) => {
             style={{ fontSize: 30 }}
             className="text-warning me-3"
           />
-          <Text type="secondary">Удалить замечание?</Text>
+          <Text>Удалить замечание?</Text>
         </Space>
       ) : (
         <CommentFormItem

@@ -24,7 +24,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -32,7 +32,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const warmingUpFormField = (
     <Item
-      label={<Text type="secondary">Предел времени прогрева газоанализатора, минут (не более)</Text>}
+      label={<Text   >Предел времени прогрева газоанализатора, минут (не более)</Text>}
       name={"warmingUp"}
       initialValue={1}
       className="ms-2 mb-0"
@@ -53,7 +53,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const responseTimeFormField = (
     <Item
-      label={<Text type="secondary">Время установления показаний Т0,9 ном., сек. (не более)</Text>}
+      label={<Text   >Время установления показаний Т0,9 ном., сек. (не более)</Text>}
       name={"responseTime"}
       initialValue={1}
       className="ms-2 mb-0"
@@ -74,7 +74,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const lowerThresholdFormField = (
     <Item
-      label={<Text type="secondary">Выходное реле «Нижний порог», % НКПР</Text>}
+      label={<Text   >Выходное реле «Нижний порог», % НКПР</Text>}
       name={"lowerThreshold"}
       initialValue={10}
       className="ms-2 mb-0 d-flex align-content-center-center"
@@ -89,7 +89,7 @@ const GazAnalyzeCharacteristic = () => {
       <Radio.Group >
         {[10,20].map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary">{item}</Radio>
+            <Radio key={index} value={item} className="  ">{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -98,7 +98,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const upperThresholdFormField = (
     <Item
-      label={<Text type="secondary">Выходное реле «Верхний порог», % НКПР</Text>}
+      label={<Text   >Выходное реле «Верхний порог», % НКПР</Text>}
       name={"upperThreshold"}
       initialValue={30}
       className="ms-2 mb-0 d-flex align-content-center-center"
@@ -113,7 +113,7 @@ const GazAnalyzeCharacteristic = () => {
       <Radio.Group >
         {[30,40,50].map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary">{item}</Radio>
+            <Radio key={index} value={item} className="  ">{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -122,7 +122,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const faultFormField = (
     <Item
-      label={<Text type="secondary">Выходное реле «Неисправность»</Text>}
+      label={<Text   >Выходное реле «Неисправность»</Text>}
       name={"fault"}
       className="ms-2 mb-0"
       valuePropName="checked"
@@ -133,7 +133,7 @@ const GazAnalyzeCharacteristic = () => {
 
   const registrationEventsFormField = (
     <Item
-      label={<Text type="secondary">Регистрация событий в энергонезависимой памяти</Text>}
+      label={<Text   >Регистрация событий в энергонезависимой памяти</Text>}
       name={"registrationEvents"}
       className="ms-2 mb-0"
       valuePropName="checked"
@@ -146,7 +146,7 @@ const GazAnalyzeCharacteristic = () => {
   //:
   const adjustmentEventsFormField = (
     <Item
-      label={<Text type="secondary">Настройка электроники при замене сенсора</Text>}
+      label={<Text   >Настройка электроники при замене сенсора</Text>}
       name={"adjustment"}
       className="ms-2 mb-0"
       valuePropName="checked"

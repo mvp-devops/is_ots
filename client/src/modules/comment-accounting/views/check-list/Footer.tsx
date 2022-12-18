@@ -44,7 +44,7 @@ const Footer = () => {
       key: "number",
       width: 50,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text>{value}</Text>,
     },
     {
       title:
@@ -52,7 +52,7 @@ const Footer = () => {
       dataIndex: "data",
       key: "data",
 
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text>{value}</Text>,
     },
   ];
 

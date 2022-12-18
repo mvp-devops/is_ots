@@ -27,7 +27,6 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -39,7 +38,7 @@ const selectProps: SelectProps = {
 
 const itemProps = (title: string, name: string): FormItemProps => {
   return {
-    label: <Text type="secondary">{title}</Text>,
+    label: <Text>{title}</Text>,
     name,
     rules: [
       {
@@ -54,7 +53,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "text-center"
   }
 }
 
@@ -123,8 +122,8 @@ const EnvironmentCharacteristic:FC<EnvironmentCharacteristicProps> = ({facilityT
   const environmentSettings = (
     <Space direction={"vertical"} style={{height: 280}}>
         <Row className="d-flex align-items-center justify-content-between">
-          <Col className="text-secondary" style={{marginLeft: 10}}>
-            {facilityType !== FacilityType.LEVEL ? <Text type={"secondary"}>Давление измеряемой среды (изб.), МПа:</Text> : <Text type={"secondary"} style={{marginLeft: 110}}>Рабочее давление, МПа:</Text>}
+          <Col  style={{marginLeft: 10}}>
+            {facilityType !== FacilityType.LEVEL ? <Text >Давление измеряемой среды (изб.), МПа:</Text> : <Text style={{marginLeft: 110}}>Рабочее давление, МПа:</Text>}
           </Col>
           <Col >
             {pressureMeasureAreaMinFormField}
@@ -136,7 +135,7 @@ const EnvironmentCharacteristic:FC<EnvironmentCharacteristicProps> = ({facilityT
 
       {facilityType !== FacilityType.TEMPERATURE && (
         <Row className="d-flex align-items-center justify-content-between" >
-        <Col className="text-secondary" style={{marginLeft: 42}}>
+        <Col  style={{marginLeft: 42}}>
           Температура измеряемой среды, ℃:
         </Col>
         <Col >

@@ -27,7 +27,7 @@ const CommentTableColumns = () => {
     width: 50,
 
     render: (_, __, ind: number) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {ind + 1}
       </Text>
     ),
@@ -47,7 +47,7 @@ const CommentTableColumns = () => {
         : false,
     width: 50,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const documentCodeColumn: ColumnType<DesignDocumentCommentView> = {
@@ -56,7 +56,7 @@ const CommentTableColumns = () => {
     key: "documentCode",
     width: 100,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const documentTitleColumn: ColumnType<DesignDocumentCommentView> = {
@@ -69,11 +69,11 @@ const CommentTableColumns = () => {
       return (
         currentDesignDocument && (
           <Space className="d-flex justify-content-start">
-            <Text type="secondary">
+            <Text >
               {currentDesignDocument?.fileType?.toUpperCase() === ".PDF" ? (
                 <FilePdfOutlined className="text-danger" />
               ) : (
-                <FileUnknownOutlined className="text-secondary" />
+                <FileUnknownOutlined  />
               )}
             </Text>
             <a
@@ -82,7 +82,7 @@ const CommentTableColumns = () => {
               )}
               target="_blank"
               rel="noreferrer"
-              className="mx-2 text-secondary"
+              className="mx-2 "
               title={record?.documentTitle}
             >
               {record?.documentTitle}
@@ -99,7 +99,7 @@ const CommentTableColumns = () => {
     key: "documentPage",
     width: 50,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const commentColumn: ColumnType<DesignDocumentCommentView> = {
@@ -108,7 +108,7 @@ const CommentTableColumns = () => {
     key: "comment",
     width: 400,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const normativeFilters = setCommentFilters("normative", dataSource);
@@ -125,7 +125,7 @@ const CommentTableColumns = () => {
         : false,
     width: 250,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const criticalityFilters = setCommentFilters("criticality", dataSource);
@@ -145,7 +145,7 @@ const CommentTableColumns = () => {
         : false,
     width: 50,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const subdivisionFilters = setCommentFilters(
@@ -166,7 +166,7 @@ const CommentTableColumns = () => {
             ?.includes(value?.toUpperCase())
         : false,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const expertContactsFilters = setCommentFilters(
@@ -185,7 +185,7 @@ const CommentTableColumns = () => {
         ? record?.expertContacts?.toUpperCase()?.includes(value?.toUpperCase())
         : false,
     align: "center",
-    render: (value) => <Text type="secondary">{value}</Text>,
+    render: (value) => <Text >{value}</Text>,
   };
 
   const menu = (
@@ -194,7 +194,6 @@ const CommentTableColumns = () => {
         {
           label: (
             <Space
-              className="text-secondary"
               onClick={() => {
                 setActionType(FormActions.EDIT_COMMENT);
                 setFormVisible(true);
@@ -202,7 +201,6 @@ const CommentTableColumns = () => {
             >
               <EditOutlined
                 style={{ marginBottom: "6px", padding: 0 }}
-                className="text-secondary"
               />
               Редактировать
             </Space>
@@ -213,7 +211,6 @@ const CommentTableColumns = () => {
         {
           label: (
             <Space
-              className="text-secondary"
               onClick={() => {
                 setActionType(FormActions.REMOVE_COMMENT);
                 setFormVisible(true);
@@ -237,7 +234,7 @@ const CommentTableColumns = () => {
     key: "actions",
     render: (_blank, record) => (
       <Dropdown trigger={["click"]} overlay={menu}>
-        <EllipsisOutlined className="text-secondary" />
+        <EllipsisOutlined />
       </Dropdown>
     ),
   };

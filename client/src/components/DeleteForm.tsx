@@ -15,7 +15,7 @@ const DeleteForm: FC<DeleteFormProps> = ({ message }) => {
         style={{ fontSize: 30 }}
         className="text-warning me-3"
       />
-      <Text type="secondary">{message}</Text>
+      <Text >{message}</Text>
     </Space>
   );
 };

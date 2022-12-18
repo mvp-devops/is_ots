@@ -9,7 +9,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -21,7 +21,7 @@ const FlowCharacteristic = () => {
     <Item
       initialValue={0}
       className="ms-2 mb-0"
-      label={<Text type="secondary" >{"Динамическая вязкость среды в рабочих условиях, сПз"}
+      label={<Text    >{"Динамическая вязкость среды в рабочих условиях, сПз"}
       </Text>}
       name={"viscosity_1"}
       rules={[
@@ -43,7 +43,7 @@ const FlowCharacteristic = () => {
     <Item
       initialValue={997}
       name={"density_1"}
-      label={<Text type="secondary">Плотность среды, кг/м³</Text>}
+      label={<Text   >Плотность среды, кг/м³</Text>}
       className="ms-2 mb-0"
       rules={[
         {
@@ -62,7 +62,7 @@ const FlowCharacteristic = () => {
 
   const particulateMatterFormField = (
     <Item
-      label={<Text type="secondary">Присутствие твердых частиц</Text>}
+      label={<Text   >Присутствие твердых частиц</Text>}
       name={"particulateMatter"}
       valuePropName="checked"
       initialValue={particulateMatter}
@@ -76,7 +76,7 @@ const FlowCharacteristic = () => {
     <Item
       initialValue={0}
       name={"conductivity"}
-      label={<Text type="secondary">Электропроводность среды, См</Text>}
+      label={<Text   >Электропроводность среды, См</Text>}
       className="ms-2 mb-0"
       rules={[
         {
@@ -97,7 +97,7 @@ const FlowCharacteristic = () => {
     <Item
       initialValue={0}
       name={"corrosiveImpurities"}
-      label={<Text type="secondary">Коррозионные примеси, %</Text>}
+      label={<Text   >Коррозионные примеси, %</Text>}
       className="ms-2 mb-0"
     >
       <Input

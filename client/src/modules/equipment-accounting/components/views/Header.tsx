@@ -3,7 +3,7 @@ import {
   FileExcelOutlined,
   DownloadOutlined,
   AppstoreOutlined,
-  PlusOutlined,
+  PlusOutlined, UploadOutlined,
 } from "@ant-design/icons";
 import { setCurrentDate } from "../../../../utils/main.utils";
 import { FormActions } from "../../../main";
@@ -23,7 +23,7 @@ const Header = () => {
   return (
     <>
       <Space className="d-flex justify-content-between m-2">
-        <Text strong type="secondary">
+        <Text strong >
           {setCurrentDate()}
         </Text>
         {(currentUser.roles.includes(Roles.EXPERT) || currentUser.roles.includes(Roles.OTS)) &&
@@ -37,6 +37,15 @@ const Header = () => {
                 setFormVisible(true);
               }}
             />
+            <UploadOutlined
+              title="Импорт данных из шаблона"
+              className="text-info"
+              style={{ fontSize: "20px", cursor: "pointer" }}
+              onClick={() => {
+                setActionType(FormActions.IMPORT_EQUIPMENT_FROM_SLOE);
+                setFormVisible(true);
+              }}
+            />
 
             <Dropdown
               trigger={["click"]}
@@ -46,15 +55,11 @@ const Header = () => {
                     {
                       label: (
                         <Space
-                          className="text-secondary"
-                          onClick={(e: any) =>
-                            exportToAtlas(
-                              e,
-                              currentItem.childrenTarget,
-                              checkedItem.id.toString(),
-                              `${checkedItem.code}-${checkedItem.title}`,
-                              currentItemFolderPath
-                            )
+                          onClick={(e: any) => {
+                            setActionType(FormActions.EXPORT_TO_ATLAS);
+                            setFormVisible(true)
+                          }
+
                           }
                           onSelect={(key) => console.log("ATLAS")}
                         >
@@ -72,7 +77,6 @@ const Header = () => {
                     {
                       label: (
                         <Space
-                          className="text-secondary"
                           onSelect={(key) => console.log("TORO")}
                         >
                           <AppstoreOutlined
@@ -98,7 +102,6 @@ const Header = () => {
                     // {
                     //   label: (
                     //     <Space
-                    //       className="text-secondary"
                     //       onSelect={(key) => console.log("EXCEL")}
                     //     >
                     //       <FileExcelOutlined
@@ -118,7 +121,6 @@ const Header = () => {
             >
               <DownloadOutlined
                 title="Экспорт"
-                className="text-secondary"
                 style={{ fontSize: "20px", cursor: "pointer" }}
               />
             </Dropdown>

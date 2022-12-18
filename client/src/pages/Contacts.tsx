@@ -162,7 +162,7 @@ const Contacts = () => {
 
   return (
 <Space direction={"vertical"} style={{minWidth: 750}}>
-  <Text type={"secondary"} strong className={"d-flex justify-content-center"}>Контактные данные Заказчика:</Text>
+  <Text  strong className={"d-flex justify-content-center"}>Контактные данные Заказчика:</Text>
   <List
     itemLayout="horizontal"
     dataSource={contacts}
@@ -173,24 +173,24 @@ const Contacts = () => {
         <List.Item>
           <List.Item.Meta
             title={<Space>
-              <Text type={"secondary"}>{item.fio}</Text>
+              <Text >{item.fio}</Text>
 
             </Space>}
             description={
               <Space direction={"vertical"} className={"d-flex justify-content between"}>
                 <Space>
-                  <Text type={"secondary"}>{item.subdivision}.</Text>
-                  <Text type={"secondary"}>{item.position}</Text>
+                  <Text >{item.subdivision}.</Text>
+                  <Text >{item.position}</Text>
                 </Space>
                 <Space>
                   <a href={link}>{item.email}</a>
                 </Space>
                 <Space>
-                  <Text type={"secondary"}>Корп. тел.: {item.phoneInternal}</Text>
+                  <Text >Корп. тел.: {item.phoneInternal}</Text>
                 </Space>
                 {item.phone &&
                   <Space>
-                    <Text type={"secondary"}>Сот. тел.: {item.phone}</Text>
+                    <Text >Сот. тел.: {item.phone}</Text>
                   </Space>
                 }
 

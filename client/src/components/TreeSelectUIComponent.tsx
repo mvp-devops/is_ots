@@ -30,7 +30,7 @@ const TreeSelectUIComponent: FC<TreeSelectProps> = ({
             />
           </Text>
 
-          <Text type="secondary">
+          <Text >
             Нет данных для отображения. Уточнить поиск
           </Text>
         </Space>

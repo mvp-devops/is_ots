@@ -66,11 +66,13 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
     case FormActions.ADD_USER:
     case FormActions.IMPORT_COMMENTS_FROM_LKP:
     case FormActions.REPORT: containerWidth = 600; break;
+    case FormActions.IMPORT_EQUIPMENT_FROM_SLOE:
     case FormActions.ADD_DOCUMENT:
     case FormActions.EDIT_DOCUMENT:
     case FormActions.ADD_NORMATIVE:
     case FormActions.EDIT_NORMATIVE: containerWidth = 1100; break;
     case FormActions.CREATE_NEW_QUESTIONNAIRE:
+    case FormActions.EXPORT_TO_ATLAS: containerWidth = 1380; break;
     case FormActions.CREATE_QUESTIONNAIRE: containerWidth = 1400; break;
     case FormActions.ADD:
     case FormActions.ADD_CHILD:
@@ -115,8 +117,10 @@ const ModalContainer: FC<ModalContainerProps> = ({ child, target }) => {
     case FormActions.EDIT_NORMATIVE: title = "Редактирование нормативного документа"; break;
     case FormActions.CREATE_QUESTIONNAIRE:
     case FormActions.CREATE_NEW_QUESTIONNAIRE: title = "Опросный лист"; break;
+    case FormActions.EXPORT_TO_ATLAS: title = "Синхронизация с АИС «АТЛАС»"; break;
     case FormActions.CREATE_POSITION_TREE_ITEMS: title = "Загрузка структуры дерева позиций"; break;
     case FormActions.IMPORT_COMMENTS_FROM_LKP: title = "Импорт данных из ЛКП"; break;
+    case FormActions.IMPORT_EQUIPMENT_FROM_SLOE:  title = "Импорт данных из шаблона сводного перечная оборудования"; break;
     default: title = "Другое"; break;
   }
 

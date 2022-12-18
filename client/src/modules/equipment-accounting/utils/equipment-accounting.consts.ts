@@ -1285,6 +1285,7 @@ export const meansureGroup = [
     id: "1",
     title: "Средства измерения давления и вакуума",
     value: "Средства измерения давления и вакуума",
+    disabled: true,
     children: [
       {
         id: "1",
@@ -1304,6 +1305,7 @@ export const meansureGroup = [
     id: "2",
     title: "Средства измерения температуры",
     value: "Средства измерения температуры",
+    disabled: true,
     children: [
       {
         id: "3",
@@ -1343,6 +1345,7 @@ export const meansureGroup = [
     id: "3",
     title: "Средства измерения расхода, вместимости, уровня, параметров потока",
     value: "Средства измерения расхода, вместимости, уровня, параметров потока",
+    disabled: true,
     children: [
       {
         id: "9",
@@ -1430,6 +1433,7 @@ export const meansureGroup = [
     id: "6",
     title: "Средства измерения физико-химического состава и свойств",
     value: "Средства измерения физико-химического состава и свойств",
+    disabled: true,
     children: [
       {
         id: "33",
@@ -1487,11 +1491,13 @@ export const meansureGroup = [
     id: "7",
     title: "Прочее",
     value: "Прочее",
+    disabled: true,
   },
   {
     id: "4",
     title: "Средства измерения механических величин",
     value: "Средства измерения механических величин",
+    disabled: true,
     children: [
       {
         id: "26",
@@ -1509,6 +1515,7 @@ export const meansureGroup = [
     id: "5",
     title: "Средства измерения вибрации",
     value: "Средства измерения вибрации",
+    disabled: true,
     children: [
       {
         id: "28",

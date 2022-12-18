@@ -16,7 +16,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -31,7 +31,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -50,7 +50,7 @@ const AttachmentCharacteristic:FC<AttachmentCharacteristicProps> = ({facilityTyp
 style={{width: 648}}
       name={"cableEntry"}
       className="ms-2 mb-0"
-      label={<Text type="secondary">Кабельный ввод</Text>}
+      label={<Text   >Кабельный ввод</Text>}
       rules={[
         {
           required: true,
@@ -63,7 +63,7 @@ style={{width: 648}}
       >
         {cableEntry.map(({id, title, value}) => {
           return (
-            <Option key={id} title={title} value={value} className="text-secondary">
+            <Option key={id} title={title} value={value} className="  ">
               {title}
             </Option>
           );
@@ -79,7 +79,7 @@ style={{width: 648}}
       initialValue={"Не предусмотрено"}
       name={"reserveCableEntryStub"}
       className="ms-2 mb-0"
-      label={<Text type="secondary">Заглушка резервного кабельного ввода</Text>}
+      label={<Text   >Заглушка резервного кабельного ввода</Text>}
       rules={[
         {
           required: true,
@@ -90,7 +90,7 @@ style={{width: 648}}
       <Radio.Group>
         {reserveCableEntryStub.map((item, index) => {
           return (
-            <Radio key={index} value={item} className={"text-secondary"}>{item}</Radio>
+            <Radio key={index} value={item} className={"  "}>{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -103,7 +103,7 @@ style={{width: 648}}
       initialValue={"Не предусмотрено"}
       name={"heating"}
       className="ms-2 mb-0"
-      label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Подогрев оптики" : "Электрообогрев"}</Text>}
+      label={<Text   >{facilityType === FacilityType.GAZ_ANALYZE ? "Подогрев оптики" : "Электрообогрев"}</Text>}
 
       rules={[
         {
@@ -116,7 +116,7 @@ style={{width: 648}}
       <Radio.Group onChange={(e) => setHeatingValue(e.target.value)}>
         {(facilityType !== FacilityType.GAZ_ANALYZE ? heating.slice(0,3) : heating.slice(3, 5)).map((item, index) => {
           return (
-            <Radio key={index} value={item} className={"text-secondary"}>{item}</Radio>
+            <Radio key={index} value={item} className={"  "}>{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -129,7 +129,7 @@ style={{width: 648}}
       name={"thermCase"}
       className="ms-2 mb-0"
       initialValue={"С электрообогревом"}
-      label={<Text type="secondary">Тип термочехла</Text>}
+      label={<Text   >Тип термочехла</Text>}
 
       rules={[
         {
@@ -141,7 +141,7 @@ style={{width: 648}}
       <Radio.Group>
         {thermCase.map(({id, title, value}) => {
           return (
-            <Radio key={id} value={value} className={"text-secondary"}>{title}</Radio>
+            <Radio key={id} value={value} className={"  "}>{title}</Radio>
           );
         })}
       </Radio.Group>
@@ -154,7 +154,7 @@ style={{width: 648}}
       name={"thermBox"}
       className="ms-2 mb-0"
       initialValue={"С электрообогревом"}
-      label={<Text type="secondary">Тип термобокса</Text>}
+      label={<Text   >Тип термобокса</Text>}
 
       rules={[
         {
@@ -166,7 +166,7 @@ style={{width: 648}}
       <Radio.Group>
         {thermBox.map(({id, title, value}) => {
           return (
-            <Radio key={id} value={value} className={"text-secondary"}>{title}</Radio>
+            <Radio key={id} value={value} className={"  "}>{title}</Radio>
           );
         })}
       </Radio.Group>
@@ -176,7 +176,7 @@ style={{width: 648}}
   /** Монтажный кронштейн */
   const mountingBracketFormField = (
     <Item
-      label={<Text type="secondary">Монтажный кронштейн</Text>}
+      label={<Text   >Монтажный кронштейн</Text>}
       name={"mountingBracket"}
       className="ms-2 mb-0"
       rules={[
@@ -188,7 +188,7 @@ style={{width: 648}}
       <Radio.Group>
         {mountingBracket.map(({id, title, value}) => {
           return (
-            <Radio key={id} value={value} className={"text-secondary"}>{title}</Radio>
+            <Radio key={id} value={value} className={"  "}>{title}</Radio>
           );
         })}
       </Radio.Group>
@@ -197,7 +197,7 @@ style={{width: 648}}
 
   const flangesFormField = (
     <Item
-      label={<Text type="secondary">Ответные фланцы, вкл. прокладки, крепежи и болты</Text>}
+      label={<Text   >Ответные фланцы, вкл. прокладки, крепежи и болты</Text>}
       name={"flanges"}
       valuePropName="checked"
       className="ms-2 mb-0"
@@ -209,7 +209,7 @@ style={{width: 648}}
   //Пылезащита, брызгозащита, фильтр по влаге
   const dustProofFormField = (
     <Item
-      label={<Text type="secondary">Пылезащита, брызгозащита, фильтр по влаге</Text>}
+      label={<Text   >Пылезащита, брызгозащита, фильтр по влаге</Text>}
       name={"dustProof"}
       valuePropName="checked"
       className="ms-2 mb-0"

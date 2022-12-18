@@ -1,5 +1,5 @@
 import {
-  CableLogCreateOrUpdateAttrs,
+  CableLogCreateOrUpdateAttrs, ExportToAtlasCreateOrUpdateAttrs,
   ImpulseLineLogCreateOrUpdateAttrs,
   MonitoringCreateOrUpdateAttrs,
   SignalCreateOrUpdateAttrs,
@@ -71,6 +71,9 @@ import {createQuestionnaire as template} from "../../../common/templates/questio
 import {ExcelService} from "../file-storage/excel.service";
 import {File} from "../../../common/types/file-storage";
 import {join} from "path";
+import {CreateExportToAtlasDto} from "./dto/create-export-to-atlas.dto";
+import {ExportToAtlasEntity} from "./entities/schemas/export-to-atlas.entity";
+import {formattedDate} from "../../../common/utils/formatDate.pipe";
 
 const pdf =  require("html-pdf");
 
@@ -101,6 +104,8 @@ export class EquipmentAccountingService {
     private signalRepository: typeof SignalEntity,
     @InjectModel(SummaryListOfEquipmentEntity)
     private summaryListOfEquipmentRepository: typeof SummaryListOfEquipmentEntity,
+    @InjectModel(ExportToAtlasEntity)
+    private atlasRepository: typeof ExportToAtlasEntity,
     @Inject(forwardRef(() => FileStorageService))
     private fileService: FileStorageService,
     @Inject(forwardRef(() => RegulatoryReferenceInformationService))
@@ -718,9 +723,9 @@ export class EquipmentAccountingService {
 
   createNewMetrologyAsset = async (
     dto: CreateMetrologyDto,
-    document?: File,
-    verificationProcedure?: File,
-    typeApprovalCertificate?: File,
+    document?: any,
+    verificationProcedure?: any,
+    typeApprovalCertificate?: any,
     parrentFolderPath?: string
   ): Promise<MetrologyView> => {
     try {
@@ -733,8 +738,7 @@ export class EquipmentAccountingService {
       if (document) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          document,
-          true
+          document
         );
         documentPath = `${docPath}\\${documentName}`;
       }
@@ -742,8 +746,7 @@ export class EquipmentAccountingService {
       if (verificationProcedure) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          verificationProcedure,
-          true
+          verificationProcedure
         );
 
         verificationProcedurePath = `${docPath}/${documentName}`;
@@ -752,8 +755,7 @@ export class EquipmentAccountingService {
       if (typeApprovalCertificate) {
         const documentName = this.fileService.fileUpload(
           docPath,
-          typeApprovalCertificate,
-          true
+          typeApprovalCertificate
         );
         typeApprovalCertificatePath = `${docPath}/${documentName}`;
       }
@@ -1970,6 +1972,8 @@ export class EquipmentAccountingService {
 
       const item = await this.findOneSummaryListOfEquipmentAsset(id);
 
+      await this.createAtlasAsset(id);
+
       return item;
     } catch (e: any) {
       throw new HttpException(e.message, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -2883,7 +2887,124 @@ export class EquipmentAccountingService {
 
 
   /** Новый сервис по добавлению единицы оборудования */
+createNewAssetData = async (data: any, files?: any) => {
 
+  const {parentFolderPath, facilityId, signals, impulseLineLog, cableLog} = data;
+
+  const facilityData = !facilityId && {
+    country: data?.country,
+    vendor: data?.vendor,
+    title: data?.title,
+    technicalCardId: +data?.technicalCardId,
+    equipmentType: data?.equipmentType,
+    measurementArea: data?.measurementArea,
+    measurementType: data?.measurementType,
+    measureGroup: data?.measureGroup,
+    modifications: [data?.facilityModification]
+  }
+
+  const generalInformationData = {
+    projectId: +data?.projectId,
+    unitId: +data?.unitId,
+    subUnitId: +data?.subUnitId,
+    facilityId,
+    facility: facilityData,
+    facilityModification: data?.facilityModification,
+    tag: data?.tag,
+    installationLocation: data?.installationLocation,
+    controlledParameter: data?.controlledParameter,
+    systemType: data?.systemType,
+    factoryNumber: data?.factoryNumber,
+    period: data?.period,
+    year: data?.year,
+    month: data?.month,
+    questionare: files?.questionnaire ? files?.questionnaire[0] : null,
+    specification: data?.specification,
+    description: data?.description
+  }
+
+  const metrologyFlag = data.counterpartyId || data.sgroei || data.grsi || data.min || data.max || data.range ||
+    data.accuracy || data.mpi || data.metrologyType || data.documentType || files?.document || data.fromDate ||
+    data.toDate || data.status || data.arshin || files?.verificationProcedure || files?.typeApprovalCertificate;
+
+  const metrologyData = !metrologyFlag ? null : {
+    counterpartyId: data?.counterpartyId,
+    sgroei: data?.sgroei,
+    grsi: data?.grsi,
+    min: data?.min,
+    max: data?.max,
+    range: data?.range,
+    accuracy: data?.accuracy,
+    mpi: data?.mpi,
+    metrologyType: data?.metrologyType,
+    documentType: data?.documentType,
+    document: files?.document ? files?.document[0] : null,
+    documentNumber: data?.documentNumber,
+    fromDate: data?.fromDate,
+    toDate: data?.toDate,
+    status: data?.status,
+    arshin: data?.arshin,
+    verificationProcedure: files?.verificationProcedure ? files?.verificationProcedure[0] : null,
+    typeApprovalCertificate: files?.typeApprovalCertificate ? files?.typeApprovalCertificate[0] : null
+  };
+
+  const signalsData = [];
+if(signals) {
+  for(let i = 0; i < signals.length; i++) {
+    const signal = JSON.parse(signals[i]);
+    signalsData.push(signal)
+  }
+}
+
+
+  const cableLogData = [];
+  if(cableLog) {
+    for (let i = 0; i < cableLog.length; i++) {
+      const cable = JSON.parse(cableLog[i]);
+      const wiringDiagram = files?.wiringDiagram && files?.wiringDiagram.length > 0 && files?.wiringDiagram[i] ? files?.wiringDiagram[i] : null;
+      cableLogData.push({...cable, wiringDiagram})
+    }
+  }
+
+  const impulseLineLogData = [];
+if(impulseLineLog) {
+  for(let i = 0; i < impulseLineLog.length; i++) {
+    const impulseLine = JSON.parse(impulseLineLog[i]);
+    impulseLineLogData.push(impulseLine)
+  }
+}
+
+  const monitoringFlag = files?.functionalDiagram || data.mountDate ||  files?.mountDocument || data.connectDate ||
+    files?.connectDocument || data.testDate || files?.testDocument || data.awpDate || files?.awpDocument || data.commissionDate || files?.commisionDocument
+
+  const monitoringData = monitoringFlag && {
+    functionalDiagram: files?.functionalDiagram ? files?.functionalDiagram[0] : null,
+    mountDate: data.mountDate,
+    mountDocument: files?.mountDocument ? files?.mountDocument[0] : null,
+    connectDate: data.connectDate,
+    connectDocument: files?.connectDocument ? files?.connectDocument[0] : null,
+    testDate: data.testDate,
+    testDocument: files?.testDocument ? files?.testDocument[0] : null,
+    awpDate: data.awpDate,
+    awpDocument: files?.awpDocument ? files?.awpDocument[0] : null,
+    commisionDate: data.commissionDate,
+    commisionDocument: files?.commissionDocument ? files?.commissionDocument[0] : null
+  }
+
+  const reqBody = {
+    parentFolderPath,
+    generalInformation: generalInformationData,
+    metrology: metrologyData,
+    signals: signalsData,
+    cableLog: cableLogData,
+    impulseLineLog: impulseLineLogData,
+    monitoring: monitoringData
+
+  }
+
+  return await this.createOneAsset(reqBody)
+
+}
 
 
   /** Импорт данных свода оборудования из файла xlsx */
@@ -2892,16 +3013,19 @@ export class EquipmentAccountingService {
     documents?: File[]
   }) => {
 
-    /** Получаем имя файла без расширения */
-    const getDocName = (file: File) => {
+
+    const findFile = (file: File, searchedName: string) => {
       const {nameWithoutExt} = this.newFileService.getFileProperties(file);
-      return nameWithoutExt;
+      const name = Buffer.from(searchedName, 'latin1').toString('utf8')
+      return nameWithoutExt.trim().toLowerCase() === name.trim().toLowerCase()
     }
 
     const {descriptor, documents} = files;
 
     const filesDescription = this.excelService.convertExcelFileToJsonFromConsolidatedList(descriptor[0]);
     const {parentId, parentTarget, parentFolderPath} = data;
+
+
     const items = [];
     let parent = null;
     const units = [];
@@ -2925,7 +3049,7 @@ export class EquipmentAccountingService {
         break;
     }
 
-    // return filesDescription
+
 
     for (let i = 0; i < filesDescription.length; i++) {
       const item = filesDescription[i]
@@ -2960,12 +3084,12 @@ export class EquipmentAccountingService {
             cableSection: item["57"],
             fromUnit: item["59"],
             fromPlace: item["58"],
-            wiringDiagram: item["18"] ? documents.filter(document => getDocName(document).toLowerCase() === item["18"].toLowerCase())[0] : null,
+            wiringDiagram: item["18"] ? documents?.filter(document => findFile(document, item['18']))[0] : null,
             toUnit: item["61"],
             toPlace: item["60"],
             cableLenght: item["62"],
             range: "м",
-            description: `Схема С5: ${item["18"] ? item["18"] : "н/д"}`
+            description: ``
           })
         }
         if (item["63"]) {
@@ -3086,6 +3210,7 @@ export class EquipmentAccountingService {
       }) : null;
 
 
+
       const equipmentAsset = {
         parentFolderPath: join(
           parentFolderPath,
@@ -3107,11 +3232,8 @@ export class EquipmentAccountingService {
           year: item["51"],
           month: item["52"],
           period: item["53"],
-          questionare: item["16"] ? documents.filter(document => getDocName(document).toLowerCase() === item["16"].toLowerCase())[0] : null,
-          description: `Шифр схемы соединений внешних проводок из С5 схем АСУТП: ${item["18"] ? item["18"] : 'н/д'}\n\
-            Шифр схемы P&ID: ${item["17"] ? item["17"] : "н/д"}\n\
-            Шифр ОЛ: ${item["16"] ? item["16"] : "н/д"}
-            `,
+          questionare: item["16"] ? documents?.filter(document => findFile(document, item['16']))[0] : null,
+          description: ``,
           facilityId
         },
         metrology: item["6"] !== "СИ" ? null : {
@@ -3130,16 +3252,16 @@ export class EquipmentAccountingService {
           toDate: item["48"],
           status: item["50"],
           arshin: item["49"],
-          document: item["41"] ? documents.filter(document => getDocName(document) === item["41"])[0] : null,
-          verificationProcedure: item["76"] ? documents.filter(document => getDocName(document) === item["76"])[0] : null,
-          typeApprovalCertificate: item["77"] ? documents.filter(document => getDocName(document) === item["77"])[0] : null
+          document: item["41"] ? documents?.filter(document => findFile(document, item['41']))[0] : null,
+          verificationProcedure: item["76"] ? documents?.filter(document => findFile(document, item['76']))[0]: null,
+          typeApprovalCertificate: item["77"] ? documents?.filter(document => findFile(document, item['77']))[0] : null
           // newCounterParty?: { title: string; code: string; description: string };
         },
         signals,
         cableLog,
         impulseLineLog,
         monitoring: !item["17"] ? null : {
-          functionalDiagram: item["17"] ? documents.filter(document => getDocName(document).toLowerCase() === item["17"].toLowerCase())[0] : null,
+          functionalDiagram: item["17"] ? documents?.filter(document => findFile(document, item['17']))[0] : null,
           mountDate: item["68"] ? item["68"] : "01.01.1970",
           connectDate: item["69"] ? item["69"] : "01.01.1970",
           testDate: item["70"] ? item["70"] : "01.01.1970",
@@ -3148,7 +3270,8 @@ export class EquipmentAccountingService {
         },
 
         atlas: {
-          company: subUnit.unit.project.field.subsidiary.title,
+          sync_flag: 0,
+          company: subUnit.unit.project.field.subsidiary.title.split(" ")[1].slice(1, -1),
           subdivision: "н/д",
           field: subUnit.unit.project.field.title,
           facility: subUnit.unit.title,
@@ -3174,7 +3297,7 @@ export class EquipmentAccountingService {
           number_doc: item["41"],
           num_registry: item["39"],
           name: facility ? facility.title : newFacility.title, // facility.title - например массовый расходомер
-          type_eq: "", // нужно подумать конкретная модель оборудования
+          type_eq: facility ? facility.title : newFacility.title, // нужно подумать конкретная модель оборудования
           model_eq: item["11"],
           method_mc: "", //название методики поверки + нужно вернуть путь к фалйлу metrology.verificationProcedure
           country: facility ? facility.country : newFacility.country,
@@ -3190,11 +3313,11 @@ export class EquipmentAccountingService {
           sgroei: item["32"],
           remark: "", // примечание запихнем аршин ?
           actual_tech_condition: item["50"],
-          distance: "", //удаленность объекта у нас нет
+          distance: 0, //удаленность объекта у нас нет
           contract: "", //договор у нас нет
           opo: "",// ОПО у нас нет
-          rpo: "", //0 или 1 Признак РПО
-          flag_rtk: "", //0 или 1 Признак эксплуатации
+          rpo: 0, //0 или 1 Признак РПО
+          flag_rtk: 0, //0 или 1 Признак эксплуатации
           tko: "", //Тех карта МО/ТО
           path_to_doc: "", //путь к документу
           path_to_method_mc: "", // путь к методике поверки
@@ -3203,76 +3326,250 @@ export class EquipmentAccountingService {
 
       }
 
-      items.filter(elem => elem.generalInformation.tag === item["8"]).length === 0 && items.push(equipmentAsset)
 
+
+      items.filter(elem => elem.generalInformation.tag === item["8"]).length === 0 && items.push(equipmentAsset)
     }
+
+
+
+
 
     const res = [];
     for (let i = 0; i < items.length; i++) {
-      const {parentFolderPath, generalInformation, metrology, cableLog, impulseLineLog, monitoring, signals} = items[i];
-      const dto: {
-        projectId, unitId, subUnitId, installationLocation, tag, controlledParameter, systemType, facilityModification,
-        factoryNumber, year, month, period
-      } = generalInformation;
-      const {id: sloeId} = await this.summaryListOfEquipmentRepository.create(
-        dto
-      );
-
-      if (generalInformation.questionare) {
-        const {filePath} = await this.fileService.createDesignDocument(
-          sloeId.toString(),
-          "summary-list-of-equipment",
-          parentFolderPath,
-          generalInformation.questionare
-        );
-        console.log(filePath);
-      }
-      if(cableLog.length > 0) {
-        for(let i = 0; i < cableLog.length; i++) {
-          const dto: { numberOfTrace, cableMark, cableSection, fromUnit, fromPlace, toUnit, toPlace, cableLenght, range, description } = cableLog[i];
-          await this.createNewCableLogAsset({sloeId, ...dto},  cableLog[i].wiringDiagram,parentFolderPath)
-        }
-      }
-
-      if(impulseLineLog.length > 0) {
-        for(let i = 0; i < impulseLineLog.length; i++) {
-          const dto: { numberOfTrace, impulseLineType, fromPlace, toPlace, impulseLineLenght, range, description: ""} = impulseLineLog[i];
-          await this.createNewImpulseLineLogAsset({sloeId, ...dto})
-        }
-      }
-
-      if(signals.length > 0) {
-        for(let i = 0; i < signals.length; i++) {
-          const dto: {  signalType, signalProtocol, signalTag, signalParameter, ll, l, h, hh, emergencyProtocol } = signals[i];
-          await this.createNewSignalAsset({sloeId, ...dto})
-        }
-      }
-
-      if(monitoring) {
-        const dto: { mountDate, connectDate, testDate, awpDate, commisionDate} = monitoring;
-
-        await this.createNewMonitoringAsset({sloeId, ...dto}, monitoring.functionalDiagram, null,
-          null, null, null, null, parentFolderPath)
-      }
-
-      if(metrology) {
-        const dto: {
-          counterpartyId, sgroei, grsi, min, max, range, accuracy, mpi, metrologyType, documentType,
-          documentNumber, fromDate, toDate, status, arshin} = metrology;
-
-        await this.createNewMetrologyAsset({sloeId, ...dto})
-      }
-
-      const item = await this.findOneSummaryListOfEquipmentAsset(sloeId);
+const item = await this.createOneAsset(items[i]);
       res.push(item)
-
-
-
-
     }
     return res;
 
   }
 
+  createOneAsset = async (data: any): Promise<SummaryListOfEquipmentView> => {
+    const {parentFolderPath, generalInformation, metrology, cableLog, impulseLineLog, monitoring, signals, atlas} = data;
+    const dto: {
+      projectId, unitId, subUnitId, installationLocation, tag, controlledParameter, systemType, facilityModification,
+      factoryNumber, year, month, period, facilityId
+    } = generalInformation;
+
+
+
+    const findedAsset = await this.summaryListOfEquipmentRepository.findOne({where: {tag: generalInformation.tag}});
+
+    let sloeId = null;
+    let facilityId = generalInformation.facilityId;
+
+    if(!findedAsset) {
+      if(!dto.facilityId && generalInformation.facility) {
+
+        const {id} = await this.facilityRepository.create(generalInformation.facility);
+        facilityId = id;
+      }
+      const {id} = await this.summaryListOfEquipmentRepository.create({...dto, facilityId});
+      sloeId = id;
+    } else {
+      const {id} = findedAsset;
+      sloeId = id;
+    }
+
+
+    if (generalInformation?.questionare) {
+      const {filePath} = await this.fileService.createDesignDocument(
+        sloeId.toString(),
+        "summary-list-of-equipment",
+        parentFolderPath,
+        generalInformation.questionare
+      );
+    }
+
+    if(cableLog?.length > 0) {
+      for(let i = 0; i < cableLog?.length; i++) {
+        const dto: { numberOfTrace, cableMark, cableSection, fromUnit, fromPlace, toUnit, toPlace, cableLenght, range, description } = cableLog[i];
+        await this.createNewCableLogAsset({sloeId, ...dto},  cableLog[i].wiringDiagram,parentFolderPath)
+      }
+    }
+    if(impulseLineLog?.length > 0) {
+      for(let i = 0; i < impulseLineLog?.length; i++) {
+        const dto: { numberOfTrace, impulseLineType, fromPlace, toPlace, impulseLineLenght, range, description: ""} = impulseLineLog[i];
+        await this.createNewImpulseLineLogAsset({sloeId, ...dto})
+      }
+    }
+    if(signals?.length > 0) {
+      for(let i = 0; i < signals?.length; i++) {
+        const dto: {  signalType, signalProtocol, signalTag, signalParameter, ll, l, h, hh, emergencyProtocol } = signals[i];
+        await this.createNewSignalAsset({sloeId, ...dto})
+      }
+    }
+
+    if(monitoring) {
+      const dto: { mountDate, connectDate, testDate, awpDate, commisionDate} = monitoring;
+      const {functionalDiagram, mountDocument, connectDocument, testDocument, awpDocument, commissionDocument} = monitoring
+      await this.createNewMonitoringAsset({sloeId, ...dto}, functionalDiagram, mountDocument,
+        connectDocument, testDocument, awpDocument, commissionDocument, parentFolderPath)
+    }
+
+    if(metrology) {
+      const dto: {
+        counterpartyId, sgroei, grsi, min, max, range, accuracy, mpi, metrologyType, documentType,
+        documentNumber, fromDate, toDate, status, arshin } = metrology;
+      const {document, verificationProcedure, typeApprovalCertificate} = metrology;
+      await this.createNewMetrologyAsset({sloeId, ...dto}, document, verificationProcedure, typeApprovalCertificate, parentFolderPath );
+    }
+
+      await this.createAtlasAsset(sloeId);
+
+
+    return await this.findOneSummaryListOfEquipmentAsset(sloeId)
+  }
+
+  createAtlasAsset = async (sloeId: number): Promise<ExportToAtlasEntity> => {
+    const dto = await  this.getDataForAtlas(sloeId);
+    const metrology = await this.findOneMetrologyAsset(undefined, sloeId);
+
+
+
+    return await this.atlasRepository.create({
+      ...dto,
+      path_to_doc: metrology?.document ? `/api/equipment-accounting/download/document?path=${metrology.document}` : "",
+      path_to_method_mc: metrology?.verificationProcedure ? `/api/equipment-accounting/download/document?path=${metrology.verificationProcedure}` : "",
+      path_to_type_app_cert: metrology?.typeApprovalCertificate ? `/api/equipment-accounting/download/document?path=${metrology.typeApprovalCertificate}` : ""
+    })
+  }
+
+  getDataForAtlas = async (sloeId: number): Promise<ExportToAtlasCreateOrUpdateAttrs> => {
+    const asset = await this.summaryListOfEquipmentRepository.findOne({
+      where: {id: sloeId},
+      include: [
+        {
+          model: SubUnitEntity,
+          include: [
+            {
+              model: UnitEntity,
+              include: [
+                {
+                  model: ProjectEntity,
+                  include: [
+                    {
+                      model: FieldEntity,
+                      include: [
+                        {
+                          model: SubsidiaryEntity,
+                        },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: FacilityEntity,
+        },
+        {
+          model: MetrologyEntity,
+        },
+      ],
+    })
+    const {id, subUnit, installationLocation, tag, systemType, facility, controlledParameter, factoryNumber,
+      year, month, period, metrology, facilityModification,
+    } = asset;
+    console.log(metrology?.fromDate);
+
+
+    return {
+      sloeId: id,
+      sync_flag: 0,
+      company: subUnit.unit.project.field.subsidiary.title.split(" ")[1].slice(1, -1),
+      subdivision: "н/д",
+      field: subUnit?.unit?.project?.field?.title,
+      facility: subUnit.unit?.title,
+      prod_area: subUnit?.title,
+      place_install: installationLocation,
+      position_tag: tag,
+      partic_sbpaz: systemType?.includes("ПАЗ") || systemType?.includes("РСУ") ? "Да" : "Нет",
+      phys_quantity: facility?.equipmentType === "СИ" ? facility?.meansurementType : "",
+      clarification: controlledParameter,
+      category: facility?.equipmentType,
+      type_protection: "н/д",
+      sn: factoryNumber,
+      prod_dt: new Date(+year, +month -1),
+      life_time: period ? `${+period/12}` : "",
+      set_type: "н/д",
+      set_sn: "н/д",
+      actual_mc: facility?.equipmentType === "СИ" ? metrology?.metrologyType : null,
+      dt: facility?.equipmentType === "СИ" && metrology?.fromDate ? new Date(metrology?.fromDate) : null,
+      dt_next: null,
+      // dt_next: facility?.equipmentType === "СИ" && metrology?.toDate ? new Date(metrology?.toDate) : null,
+      m_range: facility?.equipmentType === "СИ" ? metrology?.mpi : "",
+      type_doc: metrology?.documentType,
+      number_doc: metrology?.documentNumber,
+      num_registry: facility?.equipmentType === "СИ" ? metrology?.grsi : "",
+      name: facility?.equipmentType === "СИ" ? facility?.meansureGroup : "",
+      type_eq: facility?.title,
+      model_eq: facilityModification,
+      method_mc: facility?.equipmentType === "СИ" ? `МП_${metrology?.grsi}` : "",
+      country: facility?.country,
+      factory: facility?.vendor,
+      measur_area: facility?.equipmentType === "СИ" ? facility?.measurementArea : "",
+      group_eq: facility?.equipmentType === "СИ" ? facility?.meansureGroup : "",
+      organization: facility?.equipmentType === "СИ" ? metrology?.counterparty?.title : "",
+      low_limit: facility?.equipmentType === "СИ" ? metrology?.min : "",
+      upper_limit: facility?.equipmentType === "СИ" ? metrology?.max : "",
+      units: facility?.equipmentType === "СИ" ? metrology?.range : "",
+      acc: facility.equipmentType === "СИ" ? metrology?.accuracy : "",
+      type_measur: facility.equipmentType === "СИ" ? facility?.meansurementType : "",
+      sgroei: facility.equipmentType === "СИ" ? metrology?.sgroei : "",
+      remark: "",
+      actual_tech_condition: facility?.equipmentType === "СИ" ? metrology?.status : "",
+      distance: null,
+      contract: "",
+      opo: "",
+      rpo: null,
+      flag_rtk: null,
+      tko: "",
+      path_to_doc: "",
+      path_to_method_mc: "",
+      path_to_type_app_cert: ""
+    }
+  }
+
+  findAtlasAssets = async (parentTarget: string, parentId: string): Promise<any> => {
+
+    const items =  await this.summaryListOfEquipmentRepository.findAll({
+      where:
+        parentTarget === "project" ? {projectId: parentId}
+          :  parentTarget === "unit" ? {unitId: parentId}
+            :  {subUnitId: parentId},
+      include: [
+        {
+          model: ExportToAtlasEntity
+        }
+      ]
+    });
+
+    const atlasAssets = [];
+
+    for(let i = 0; i < items.length; i++) {
+      const {atlas} = items[i];
+      if(atlas) {
+        const {sync_flag, company, field, facility, prod_area, position_tag, name, createdAt, updatedAt, path_to_doc, path_to_method_mc, path_to_type_app_cert} = atlas;
+        atlasAssets.push({
+          sync_flag,
+          company,
+          field,
+          facility,
+          prod_area,
+          position_tag,
+          name,
+          createdAt: formattedDate(createdAt, true),
+          updatedAt: formattedDate(updatedAt, true),
+          path_to_doc: !!path_to_doc,
+          path_to_method_mc: !!path_to_method_mc,
+          path_to_type_app_cert: !!path_to_type_app_cert
+        })
+      }
+    }
+    return atlasAssets
+  }
 
 }

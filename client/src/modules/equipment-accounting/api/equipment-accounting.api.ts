@@ -64,364 +64,100 @@ export const getEquipmentAsset = async (id: string): Promise<any> => {
   return data;
 };
 
-const setGeneralInformationFormData = (
-  item: GeneralInformationCreateOrUpdateAttrs
-): FormData => {
+const setFormData = (values): FormData => {
+
   const data = new FormData();
 
-  const {
-    projectId,
-    unitId,
-    subUnitId,
-    sloeId,
-    facilityId,
-    facilityModification,
-    facility,
-    technacalCardId,
-    installationLocation,
-    questionare,
-    systemType,
-    tag,
-    controlledParameter,
-    factoryNumber,
-    year,
-    month,
-    period,
-    specification,
-    description,
-  } = item;
+  const {parentFolderPath, generalInformation, metrology, signals, cableLog, impulseLineLog,  monitoring } = values;
+  data.append("parentFolderPath", parentFolderPath);
 
-  projectId && data.append("projectId", projectId.toString());
-
-  unitId && data.append("unitId", unitId.toString());
-
-  subUnitId && data.append("subUnitId", subUnitId.toString());
-
-  sloeId && data.append("sloeId", sloeId.toString());
-
-  facilityId && data.append("facilityId", facilityId.toString());
-
-  facility && data.append("facility", JSON.stringify(facility));
-
-  technacalCardId && data.append("technacalCardId", technacalCardId.toString());
-
-  installationLocation &&
-    data.append("installationLocation", installationLocation);
-
-  questionare && data.append("files", questionare);
-
-  if (systemType) {
-    const arr = systemType;
-    for (var i = 0; i < arr.length; i++) {
-      data.append("systemType[]", arr[i]);
+  const generalInformationEntries = Object.entries(generalInformation);
+  for (let g = 0; g < generalInformationEntries.length; g++) {
+    const item = generalInformationEntries[g];
+    const key = item[0];
+    const value: string | number | string[] | Blob = item[1] as string | number | string[] | Blob;
+    if (key === "questionnaire") {
+      value && data.append(key, value as Blob)
+    }  else  if (key === "facility" && value) {
+      const facilityEntries = Object.entries(value);
+      for(let f = 0; f < facilityEntries.length; f++) {
+        const item = facilityEntries[f];
+        const facilityKey = item[0];
+        const facilityValue = item[1];
+        if (facilityKey !== "modifications") {
+          facilityValue && data.append(facilityKey, facilityValue.toString())
+        } else {
+          for (let m = 0; m < facilityValue?.length; m++) {
+            const modification = facilityValue[m].toString();
+            data.append('modifications[]', modification)
+          }
+        }
+      }
+    } else if(key === "systemType" && value) {
+      for(let s = 0; s < (value as string[])?.length; s++) {
+        const systemType = value[s].toString();
+        data.append('systemType[]', systemType)
+      }
+    }
+    else {
+      value && data.append(key, value.toString())
     }
   }
-  tag && data.append("tag", tag);
+  // metrology && setMetrologyFormData(metrology);
 
-  controlledParameter &&
-    data.append("controlledParameter", controlledParameter);
-
-  facilityModification &&
-    data.append("facilityModification", facilityModification);
-
-  factoryNumber && data.append("factoryNumber", factoryNumber);
-
-  year && data.append("year", year);
-
-  month && data.append("month", month);
-
-  period && data.append("period", period);
-
-  specification && data.append("specification", specification);
-
-  description && data.append("description", description);
-  return data;
-};
-
-const setMetrologyFormData = (item: MetrologyCreateOrUpdateAttrs): FormData => {
-  const data = new FormData();
-
-  const {
-    sloeId,
-    counterpartyId,
-    sgroei,
-    grsi,
-    min,
-    max,
-    range,
-    accuracy,
-    mpi,
-    metrologyType,
-    documentType,
-    documentNumber,
-    fromDate,
-    toDate,
-    document,
-    status,
-    arshin,
-    verificationProcedure,
-    typeApprovalCertificate,
-  } = item;
-
-  counterpartyId && data.append("counterpartyId", counterpartyId.toString());
-
-  sgroei && data.append("sgroei", sgroei);
-
-  grsi && data.append("grsi", grsi);
-
-  sloeId && data.append("sloeId", sloeId.toString());
-
-  min && data.append("min", min);
-
-  max && data.append("max", max);
-
-  range && data.append("range", range);
-
-  accuracy && data.append("accuracy", accuracy);
-
-  mpi && data.append("mpi", mpi);
-
-  metrologyType && data.append("metrologyType", metrologyType);
-
-  documentType && data.append("documentType", documentType);
-
-  documentNumber && data.append("documentNumber", documentNumber);
-
-  fromDate && data.append("fromDate", fromDate);
-
-  toDate && data.append("toDate", toDate);
-
-  document && data.append("document", document);
-
-  status && data.append("status", status);
-
-  arshin && data.append("arshin", arshin);
-
-  verificationProcedure &&
-    data.append("verificationProcedure", verificationProcedure);
-
-  typeApprovalCertificate &&
-    data.append("typeApprovalCertificate", typeApprovalCertificate);
-
-  return data;
-};
-
-const setSignalFormData = (item: SignalCreateOrUpdateAttrs): FormData => {
-  const data = new FormData();
-
-  const {
-    sloeId,
-    signalType,
-    signalProtocol,
-    signalTag,
-    h,
-    l,
-    ll,
-    hh,
-    emergencyProtocol,
-  } = item;
-
-  sloeId && data.append("sloeId", sloeId.toString());
-  signalType && data.append("signalType", signalType);
-  signalProtocol && data.append("signalProtocol", signalProtocol);
-  signalTag && data.append("signalTag", signalTag);
-  h && data.append("h", h);
-  l && data.append("l", l);
-  ll && data.append("ll", ll);
-  hh && data.append("hh", hh);
-  emergencyProtocol && data.append("emergencyProtocol", emergencyProtocol);
-  return data;
-};
-
-const setCableLogFormData = (item: CableLogCreateOrUpdateAttrs): FormData => {
-  const data = new FormData();
-
-  const {
-    sloeId,
-    numberOfTrace,
-    cableMark,
-    cableSection,
-    fromUnit,
-    fromPlace,
-    toUnit,
-    toPlace,
-    cableLenght,
-    range,
-    description,
-    wiringDiagram,
-  } = item;
-
-  sloeId && data.append("sloeId", sloeId.toString());
-  numberOfTrace && data.append("numberOfTrace", numberOfTrace);
-  cableMark && data.append("cableMark", cableMark);
-  cableSection && data.append("cableSection", cableSection);
-  fromUnit && data.append("fromUnit", fromUnit);
-  fromPlace && data.append("fromPlace", fromPlace);
-  toUnit && data.append("toUnit", toUnit);
-  toPlace && data.append("toPlace", toPlace);
-  cableLenght && data.append("cableLenght", cableLenght);
-  range && data.append("range", range);
-  description && data.append("description", description);
-  wiringDiagram && data.append("wiringDiagram", wiringDiagram);
-  return data;
-};
-
-const setImpulseLineLogFormData = (
-  item: ImpulseLineLogCreateOrUpdateAttrs
-): FormData => {
-  const data = new FormData();
-
-  const {
-    sloeId,
-    numberOfTrace,
-    impulseLineType,
-    fromPlace,
-    toPlace,
-    impulseLineLenght,
-    range,
-    description,
-  } = item;
-
-  sloeId && data.append("sloeId", sloeId.toString());
-  numberOfTrace && data.append("numberOfTrace", numberOfTrace);
-  impulseLineType && data.append("impulseLineType", impulseLineType);
-  fromPlace && data.append("fromPlace", fromPlace);
-  toPlace && data.append("toPlace", toPlace);
-  impulseLineLenght && data.append("impulseLineLenght", impulseLineLenght);
-  range && data.append("range", range);
-  description && data.append("description", description);
-  return data;
-};
-
-const setMonitoringFormData = (
-  item: MonitoringCreateOrUpdateAttrs
-): FormData => {
-  const data = new FormData();
-
-  const {
-    sloeId,
-    mountDate,
-    mountDocument,
-    connectDate,
-    connectDocument,
-    testDate,
-    testDocument,
-    awpDate,
-    awpDocument,
-    commisionDate,
-    commisionDocument,
-  } = item;
-
-  sloeId && data.append("sloeId", sloeId.toString());
-  mountDate && data.append("mountDate", mountDate);
-  mountDocument && data.append("mountDocument", mountDocument);
-  connectDate && data.append("connectDate", connectDate);
-  connectDocument && data.append("connectDocument", connectDocument);
-  testDate && data.append("testDate", testDate);
-  testDocument && data.append("testDocument", testDocument);
-  awpDate && data.append("awpDate", awpDate);
-  awpDocument && data.append("awpDocument", awpDocument);
-  commisionDate && data.append("commisionDate", commisionDate);
-  commisionDocument && data.append("commisionDocument", commisionDocument);
-  return data;
-};
-
-const setFormData = (
-  item: EquipmentAccountingAssetCreateOrUpdateAttrs
-): FormData => {
-  const data = new FormData();
-
-  let files: SummaryListOfEquipmentCreateOrUpdateFiles = {
-    questionare: null,
-    document: null,
-    verificationProcedure: null,
-    typeApprovalCertificate: null,
-    wiringDiagram: null,
-    functionalDiagram: null,
-    mountDocument: null,
-    connectDocument: null,
-    testDocument: null,
-    awpDocument: null,
-    commisionDocument: null,
-  };
-
-  const {
-    generalInformation,
-    metrology,
-    signals,
-    cableLog,
-    impulseLineLog,
-    monitoring,
-  } = item as SummaryListOfEquipmentFormData;
-
-  data.append("generalInformation", JSON.stringify(generalInformation));
-
-  const { questionare } = generalInformation;
-  if (questionare) {
-    files.questionare = questionare;
-    data.append("questionare", questionare);
-  }
-
-  data.append("metrology", JSON.stringify(metrology));
-
-  const { document, verificationProcedure, typeApprovalCertificate } =
-    metrology;
-  if (document) {
-    files.document = document;
-    data.append("document", document);
-  }
-  if (verificationProcedure) {
-    files.verificationProcedure = verificationProcedure;
-    data.append("verificationProcedure", verificationProcedure);
-  }
-  if (typeApprovalCertificate) {
-    files.typeApprovalCertificate = typeApprovalCertificate;
-    data.append("typeApprovalCertificate", typeApprovalCertificate);
+  if(metrology) {
+    const metrologyEntries = Object.entries(metrology);
+    for (let m = 0; m < metrologyEntries.length; m++) {
+      const item = metrologyEntries[m];
+      const key = item[0];
+      const value = item[1];
+      if (key === "document" || key === "verificationProcedure" || key === "typeApprovalCertificate") {
+        value && data.append(key, value as Blob)
+      } else  {
+        value && data.append(key, value.toString())
+      }
+    }
   }
 
   if (signals && signals.length > 0) {
-    const arr = signals;
-    for (let i = 0; i < arr.length; i++) {
-      data.append("signals[]", JSON.stringify(arr[i]));
+    for (let i = 0; i < signals.length; i++) {
+      data.append("signals[]", JSON.stringify(signals[i]));
     }
   }
 
+
   if (cableLog && cableLog.length > 0) {
-    const arr = cableLog;
-    for (let i = 0; i < arr.length; i++) {
-      data.append("cableLog[]", JSON.stringify(arr[i]));
-      arr[i].wiringDiagram &&
-        data.append("wiringDiagram", arr[i].wiringDiagram);
+    for (let i = 0; i < cableLog.length; i++) {
+      const cable = cableLog[i];
+      cable.wiringDiagram && data.append("wiringDiagram", cable.wiringDiagram)
+      data.append("cableLog[]", JSON.stringify(cable));
     }
   }
 
   if (impulseLineLog && impulseLineLog.length > 0) {
-    const arr = impulseLineLog;
-    for (let i = 0; i < arr.length; i++) {
-      data.append("impulseLineLog[]", JSON.stringify(arr[i]));
+    for (let i = 0; i < impulseLineLog.length; i++) {
+      data.append("impulseLineLog[]", JSON.stringify(impulseLineLog[i]));
     }
   }
 
-  data.append("monitoring", JSON.stringify(monitoring));
-
-  const {
-    mountDocument,
-    connectDocument,
-    awpDocument,
-    testDocument,
-    commisionDocument,
-    functionalDiagram,
-  } = monitoring;
-
-  functionalDiagram && data.append("functionalDiagram", functionalDiagram);
-  mountDocument && data.append("mountDocument", mountDocument);
-  connectDocument && data.append("connectDocument", connectDocument);
-  awpDocument && data.append("awpDocument", awpDocument);
-  testDocument && data.append("testDocument", testDocument);
-  commisionDocument && data.append("commisionDocument", commisionDocument);
-
+  if(monitoring) {
+    const monitoringEntries = Object.entries(monitoring);
+    for (let m = 0; m < monitoringEntries.length; m++) {
+      const item = monitoringEntries[m];
+      const key = item[0];
+      const value = item[1];
+      if (
+        key === "functionalDiagram" ||  key === "mountDocument" || key === "connectDocument" ||
+        key === "testDocument" || key === "awpDocument" || key === "commissionDocument"
+      ) {
+        value && data.append(key, value as Blob)
+      } else  {
+        value && data.append(key, value.toString())
+      }
+    }
+  }
   return data;
-};
+}
 
 export const getAllMetrology = (
   data: SummaryListOfEquipmentView[]
@@ -588,17 +324,15 @@ export const getOneEssences = async (
 };
 
 export const createOneEssence = async (
-  item: SummaryListOfEquipmentFormData,
-  parrentFolderPath?: string
+  data: any,
+  parentFolderPath?: string
 ): Promise<SummaryListOfEquipmentView> => {
   const url = setUrl(
-    `${equipmentAccountingUrl}/summary-list-of-equipment-asset/add`
+    `${equipmentAccountingUrl}/add/new-asset`
   );
-  const uploadedData = setFormData(item);
-  const { data } = await axios.post(url, uploadedData, {
-    params: { parrentFolderPath },
-  });
-  return data;
+  const body = setFormData(data);
+  const { data: res } = await axios.post(url, body);
+  return res;
 };
 
 export const createManyEssences = async (
@@ -827,4 +561,17 @@ export const downloadFile = ({ data, fileName, fileType }) => {
   });
   a.dispatchEvent(clickEvt);
   a.remove();
+};
+
+export const findAtlasAssets = async (
+  parentTarget: string,
+  parentId: string
+): Promise<any[]> => {
+  const url = setUrl(
+    `${equipmentAccountingUrl}/atlas`
+  );
+    const { data } = await axios.get<any[]>(url, {
+      params: { parentTarget, parentId },
+    });
+  return data;
 };

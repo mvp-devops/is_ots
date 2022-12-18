@@ -18,7 +18,7 @@ const RegulatoryReferenceInformationList = () => {
           onClick={() => onItemSelected(id)}
           style={{ cursor: "pointer" }}
         >
-          <Text type="secondary">{title}</Text>
+          <Text>{title}</Text>
         </Item>
       )}
     />

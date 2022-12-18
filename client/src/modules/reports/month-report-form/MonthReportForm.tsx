@@ -80,7 +80,7 @@ const MonthReportForm = () => {
       <Text type="warning">
         <ExclamationCircleOutlined style={{fontSize: 20, marginBottom: 2}}/>
       </Text>
-      <Text type="secondary" style={{fontSize: 12, marginBottom: 2}}>
+      <Text    style={{fontSize: 12, marginBottom: 2}}>
         Нет данных для отображения. Уточнить поиск
       </Text>
     </Space>
@@ -89,10 +89,10 @@ const MonthReportForm = () => {
 
   const directionFormField = (
     <Item
-      className="mb-0 text-center text-secondary"
+      className="mb-0 text-center   "
       style={{width: 540}}
       label={
-        <Text type="secondary">Функциональное направление</Text>
+        <Text   >Функциональное направление</Text>
       }
       name="direction"
       initialValue={"Промышленная автоматизация"}
@@ -106,7 +106,7 @@ const MonthReportForm = () => {
     >
       <Select
         size={"small"}
-        className={"text-secondary"}
+        className={"  "}
         notFoundContent={notFoundContent}
         showSearch
         optionFilterProp="children"
@@ -118,7 +118,7 @@ const MonthReportForm = () => {
       >
         {directionsList.map(({id, title}) => {
           return (
-            <Option key={id} title={title} value={title} className="text-secondary">
+            <Option key={id} title={title} value={title} className="  ">
               {title}
             </Option>
           );
@@ -134,7 +134,7 @@ const MonthReportForm = () => {
       style={{width: 270}}
       name="month"
       initialValue={months[currentMonth].title}
-      label={<Text type="secondary">Месяц</Text>}
+      label={<Text   >Месяц</Text>}
       className="ms-2 mb-0"
       rules={[
         {
@@ -146,7 +146,7 @@ const MonthReportForm = () => {
       <Select
         size={"small"}
         style={{width: 270}}
-        className={"text-secondary text-center"}
+        className={"   text-center"}
         notFoundContent={notFoundContent}
         showSearch
         optionFilterProp="children"
@@ -157,7 +157,7 @@ const MonthReportForm = () => {
         }
       >
         {months.map(({id, title}) => (
-            <Option key={id} title={title} value={title} className="text-secondary">
+            <Option key={id} title={title} value={title} className="  ">
               {title}
             </Option>
           )
@@ -173,7 +173,7 @@ const MonthReportForm = () => {
       name="year"
       initialValue={currentYear}
       style={{width: 256}}
-      label={<Text type="secondary">Год</Text>}
+      label={<Text   >Год</Text>}
       className="ms-2 mb-0"
 
       rules={[
@@ -186,7 +186,7 @@ const MonthReportForm = () => {
       <Input
         size="small"
         type="number"
-        className="text-secondary text-center"
+        className="   text-center"
       />
     </Item>
   );
@@ -203,7 +203,7 @@ const MonthReportForm = () => {
 
       name="expertsCount"
       initialValue={1}
-      label={<Text type="secondary">Количество экспертов</Text>}
+      label={<Text   >Количество экспертов</Text>}
       className="m-0"
 
       rules={[
@@ -216,7 +216,7 @@ const MonthReportForm = () => {
       <Input
         size="small"
         type="number"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 150, marginLeft: 224}}
       />
     </Item>
@@ -232,7 +232,7 @@ const MonthReportForm = () => {
     <Item
       name="costsPerMonth"
       initialValue={168}
-      label={<Text type="secondary">Рабочее время согласно производстенного календаря</Text>}
+      label={<Text   >Рабочее время согласно производстенного календаря</Text>}
       className="m-0"
 
       rules={[
@@ -245,7 +245,7 @@ const MonthReportForm = () => {
       <Input
         size="small"
         type="number"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 150, marginLeft: 14}}
       />
     </Item>
@@ -260,7 +260,7 @@ const MonthReportForm = () => {
   const customerPositionFormField = (
     <Item
       name="customerPosition"
-      label={<Text type="secondary">Должность</Text>}
+      label={<Text   >Должность</Text>}
       className="m-0"
 
       rules={[
@@ -272,7 +272,7 @@ const MonthReportForm = () => {
     >
       <Input
         size="small"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 446}}
       />
     </Item>
@@ -281,7 +281,7 @@ const MonthReportForm = () => {
   const customerFioFormField = (
     <Item
       name="customerFio"
-      label={<Text type="secondary">Ф.И.О.</Text>}
+      label={<Text   >Ф.И.О.</Text>}
       className="m-0"
 
       rules={[
@@ -293,7 +293,7 @@ const MonthReportForm = () => {
     >
       <Input
         size="small"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 446, marginLeft: 30}}
       />
     </Item>
@@ -301,7 +301,7 @@ const MonthReportForm = () => {
 
   const customer = (
     <Space direction="vertical" className="d-block m-0" style={{width: 540}}>
-      <Divider className="m-0 text-secondary" orientation="center">Заказчик</Divider>
+      <Divider className="m-0   " orientation="center">Заказчик</Divider>
       <Space direction="vertical">
         {customerPositionFormField}
         {customerFioFormField}
@@ -313,7 +313,7 @@ const MonthReportForm = () => {
     <Item
       name="executorPosition"
       initialValue="Начальник службы ОТС г. Тюмень"
-      label={<Text type="secondary">Должность</Text>}
+      label={<Text   >Должность</Text>}
       className="m-0"
 
       rules={[
@@ -325,7 +325,7 @@ const MonthReportForm = () => {
     >
       <Input
         size="small"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 446}}
       />
     </Item>
@@ -335,7 +335,7 @@ const MonthReportForm = () => {
     <Item
       name="executorFio"
       initialValue="Гулак И.В."
-      label={<Text type="secondary">Ф.И.О.</Text>}
+      label={<Text   >Ф.И.О.</Text>}
       className="m-0"
 
       rules={[
@@ -347,7 +347,7 @@ const MonthReportForm = () => {
     >
       <Input
         size="small"
-        className="text-secondary text-center"
+        className="   text-center"
         style={{width: 446, marginLeft: 30}}
       />
     </Item>
@@ -355,7 +355,7 @@ const MonthReportForm = () => {
 
   const executor = (
     <Space direction="vertical" className="d-block m-0" style={{width: 540}}>
-      <Divider className="m-0 text-secondary" orientation="center">Исполнитель</Divider>
+      <Divider className="m-0   " orientation="center">Исполнитель</Divider>
       <Space direction="vertical">
         {executorPositionFormField}
         {executorFioFormField}

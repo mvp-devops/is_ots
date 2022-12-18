@@ -42,7 +42,7 @@ const SolutionForm: FC<SolutionFormProps> = ({ id, onRemove, changeValue }) => {
           />
         </Button>
       </Space>
-      <Item label={<Text type="secondary">Статус ответа</Text>} className="m-0">
+      <Item label={<Text >Статус ответа</Text>} className="m-0">
         <SelectUIComponent
           id="statusId"
           itemId={id}
@@ -50,14 +50,14 @@ const SolutionForm: FC<SolutionFormProps> = ({ id, onRemove, changeValue }) => {
           changeValue={changeValue}
         />
       </Item>
-      <Item label={<Text type="secondary">Ответ</Text>} className="m-0 mb-1">
+      <Item label={<Text >Ответ</Text>} className="m-0 mb-1">
         <TextAreaUIComponent
           id="answer"
           itemId={id}
           changeValue={changeValue}
         />
       </Item>
-      <Item label={<Text type="secondary">Контакты</Text>} className="m-0">
+      <Item label={<Text >Контакты</Text>} className="m-0">
         <TextAreaUIComponent
           id="designContacts"
           itemId={id}
@@ -65,7 +65,7 @@ const SolutionForm: FC<SolutionFormProps> = ({ id, onRemove, changeValue }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Статус решения</Text>}
+        label={<Text >Статус решения</Text>}
         className="m-0"
       >
         <SelectUIComponent
@@ -75,7 +75,7 @@ const SolutionForm: FC<SolutionFormProps> = ({ id, onRemove, changeValue }) => {
           changeValue={changeValue}
         />
       </Item>
-      <Item label={<Text type="secondary">Решение</Text>} className="m-0">
+      <Item label={<Text >Решение</Text>} className="m-0">
         <TextAreaUIComponent
           id="solution"
           itemId={id}

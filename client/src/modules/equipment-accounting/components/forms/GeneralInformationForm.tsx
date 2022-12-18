@@ -160,11 +160,10 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
 
           <Item
             className="m-0"
-            label={<Text type="secondary">Наименование</Text>}
+            label={<Text >Наименование</Text>}
           >
             <Select
               size="small"
-              className="text-secondary"
               showSearch
               notFoundContent={
                 <Space className="d-flex justify-content-center p-3">
@@ -174,7 +173,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                     />
                   </Text>
 
-                  <Text type="secondary">
+                  <Text >
                     Нет данных для отображения. Уточнить поиск
                   </Text>
                 </Space>
@@ -217,12 +216,11 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
           )}
           {!addFacilityVisible && (
             <Item
-              label={<Text type="secondary">Модификация</Text>}
+              label={<Text >Модификация</Text>}
               className="m-0"
             >
               <Select
                 size="small"
-                className="text-secondary"
                 notFoundContent={
                   <Space className="d-flex justify-content-center p-3">
                     <Text type="warning">
@@ -231,7 +229,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                       />
                     </Text>
 
-                    <Text type="secondary">
+                    <Text >
                       Нет данных для отображения. Уточнить поиск
                     </Text>
                   </Space>
@@ -251,7 +249,6 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                       <Input
                         size="small"
                         style={{ minWidth: 500 }}
-                        className="text-secondary"
                         placeholder="Добавить новую модификацию"
                         ref={inputRef}
                         value={newModification}
@@ -259,7 +256,6 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
                       />
                       <Button
                         type="text"
-                        className="text-secondary"
                         icon={<PlusOutlined style={{ marginBottom: 14 }} />}
                         onClick={addNewFacilityModification}
                       >
@@ -303,7 +299,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
             }
           />
           <Item
-            label={<Text type="secondary">Опросный лист</Text>}
+            label={<Text >Опросный лист</Text>}
             className="m-0"
           >
             <Upload
@@ -318,7 +314,7 @@ const GeneralInformationForm: FC<FormProps> = ({ row, data, setData }) => {
               }}
             >
               <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-                <Text type="secondary">Выбрать файл</Text>
+                <Text >Выбрать файл</Text>
               </Button>
             </Upload>
           </Item>

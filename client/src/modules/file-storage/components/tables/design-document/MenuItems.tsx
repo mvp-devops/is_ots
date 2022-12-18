@@ -52,7 +52,7 @@ const MenuItems:FC<MenuItemsProps> = ({selectedRows, resetSelectedRows, parentTa
       <UploadOutlined
         key="UPLOAD_LKP"
         title="Импорт замечаний из ЛКП"
-        className="text-secondary mb-2 ms-2"
+        className=" mb-2 ms-2"
         style={{fontSize: 16, cursor: "pointer"}}
         onClick={() => {
           setActionType(FormActions.IMPORT_COMMENTS_FROM_LKP);

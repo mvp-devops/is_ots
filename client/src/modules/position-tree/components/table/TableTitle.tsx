@@ -16,7 +16,7 @@ const TableTitle = () => {
   } = usePositionTreeTable();
   return (
     <Space className="d-flex align-items-center justify-content-between">
-      <Text strong type="secondary">
+      <Text strong >
         {tableTitle}
       </Text>
       <Space
@@ -25,12 +25,11 @@ const TableTitle = () => {
       >
         <Input
           size="small"
-          className="text-secondary"
           style={{ minWidth: 300 }}
           placeholder="Поиск..."
           title="Поиск записей по шифру/наименованию и др."
           value={searchValue}
-          suffix={<SearchOutlined className="text-secondary" />}
+          suffix={<SearchOutlined  />}
           onChange={onSearch}
         />
         <Space>

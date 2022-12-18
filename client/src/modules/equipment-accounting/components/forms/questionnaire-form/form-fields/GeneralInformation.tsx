@@ -9,7 +9,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -21,7 +21,7 @@ const selectProps: SelectProps = {
 
 const itemProps = (title: string, name: string): FormItemProps => {
   return {
-    label: <Text type="secondary">{title}</Text>,
+    label: <Text   >{title}</Text>,
     name,
     className: "ms-2 mb-0"
   }
@@ -30,7 +30,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary"
+    className: "  "
   }
 }
 
@@ -104,7 +104,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
           >
             {subUnitsList.map(({id, title}) => {
               return (
-                <Option key={id} title={title} value={title} className="text-secondary">
+                <Option key={id} title={title} value={title} className="  ">
                   {title}
                 </Option>
               );
@@ -196,7 +196,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
       >
         {(facilityType !== FacilityType.GAZ_ANALYZE ? measuredArea : controlledGases).map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -234,7 +234,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
               : []
         ).map(({id, title, value}) => {
           return (
-            <Option key={id} title={title} value={value} className="text-secondary">
+            <Option key={id} title={title} value={value} className="  ">
               {title}
             </Option>
           );
@@ -259,7 +259,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
     >
       <Input
         {...inputProps("number")}
-        className="text-secondary text-center"
+        className="   text-center"
       />
     </Item>
   );
@@ -281,7 +281,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
     >
       <Input
         {...inputProps("number")}
-        className="text-secondary text-center"
+        className="   text-center"
       />
     </Item>
   );
@@ -302,7 +302,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
     >
       <Input
         {...inputProps("number")}
-        className="text-secondary text-center"
+        className="   text-center"
       />
     </Item>
   );
@@ -324,14 +324,14 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
     >
       <Input
         {...inputProps("number")}
-        className="text-secondary text-center"
+        className="   text-center"
       />
     </Item>
   );
 
   return (
     <>
-      <Divider className="m-0" orientation="left"><Text type="secondary">Основная информация</Text> </Divider>
+      <Divider className="m-0" orientation="left"><Text   >Основная информация</Text> </Divider>
       <Space direction="horizontal" >
         <Space direction="vertical" className="d-flex border p-1" style={{width: 666}}>
           {tagFormField}
@@ -341,7 +341,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
         </Space>
         <Space direction="vertical" className="d-flex border p-1" style={{width: 666, height: 162}}>
           <Row className="d-flex align-items-center justify-content-between">
-            <Col className="text-secondary" span={9} style={{marginLeft: 30}}>
+            <Col className="  " span={9} style={{marginLeft: 30}}>
               Температура окружающей среды, ℃:
             </Col>
             <Col>
@@ -354,7 +354,7 @@ const GeneralInformation: FC<GeneralInformationProps> = ({
           {facilityType !== FacilityType.FLOW && measureTypeFormField }
           {measuredAreaFormField}
           <Row className="d-flex align-items-center justify-content-between">
-            <Col className="text-secondary"  style={{marginLeft: facilityType === FacilityType.GAZ_ANALYZE ? 76
+            <Col className="  "  style={{marginLeft: facilityType === FacilityType.GAZ_ANALYZE ? 76
                 : facilityType === FacilityType.TEMPERATURE ? 108
                   : facilityType === FacilityType.FLOW ? 94
                     : facilityType === FacilityType.PRESSURE ? 92

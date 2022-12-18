@@ -33,7 +33,7 @@ const UploadUIComponent: FC<UploadUIComponentProps> = ({
       {...props}
     >
       <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-        <Text type="secondary">Выбрать файл</Text>
+        <Text>Выбрать файл</Text>
       </Button>
     </Upload>
   );

@@ -20,7 +20,7 @@ const DatePickerUIComponent: FC<DatePickerProps> = ({
     <DatePicker
       locale={locale}
       size="small"
-      className={className ? className + " text-secondary" : "text-secondary"}
+      className={className ? className + "  " : " "}
       style={style}
       id={id}
       onChange={(date, dateString) => changeValue(id, dateString)}

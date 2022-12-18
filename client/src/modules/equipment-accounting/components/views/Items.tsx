@@ -18,58 +18,58 @@ const Items = () => {
     // tabBarExtraContent={
     //   <DownloadOutlined
     //     title="Сформировать файл"
-    //     className="text-secondary me-3"
+    //     className="   me-3"
     //     style={{ fontSize: "20px", cursor: "pointer" }}
     //   />
     // }
     >
       <TabPane
         tab={
-          <Text type="secondary" style={{ padding: 5 }}>
+          <Text  style={{ padding: 5 }}>
             Общая информация
           </Text>
         }
         key="general-information"
-        className="p-1 text-secondary"
+        className="p-1   "
       >
         {<GeneralInformationTable />}
       </TabPane>
 
       <TabPane
-        tab={<Text type="secondary">Метрологические характеристики</Text>}
+        tab={<Text >Метрологические характеристики</Text>}
         key="metrology"
-        className="text-secondary"
+        className="  "
       >
         {<MetrologyTable />}
       </TabPane>
 
       <TabPane
-        tab={<Text type="secondary">Перечень сигналов</Text>}
+        tab={<Text >Перечень сигналов</Text>}
         key="signals"
-        className="p-1 text-secondary"
+        className="p-1   "
       >
         {<SignalTable />}
       </TabPane>
       <TabPane
-        tab={<Text type="secondary">Журнал импульсных линий</Text>}
+        tab={<Text >Журнал импульсных линий</Text>}
         key="impulse-line-log"
-        className="p-1 text-secondary"
+        className="p-1   "
       >
         {<ImpulseLineLogTable />}
       </TabPane>
 
       <TabPane
-        tab={<Text type="secondary">Кабельный журнал</Text>}
+        tab={<Text >Кабельный журнал</Text>}
         key="cable-log"
-        className="p-1 text-secondary"
+        className="p-1   "
       >
         <CableLogTable />
       </TabPane>
 
       <TabPane
-        tab={<Text type="secondary">Мониторинг</Text>}
+        tab={<Text >Мониторинг</Text>}
         key="monitoring"
-        className="p-1 text-secondary"
+        className="p-1   "
       >
         {<MonitoringTable />}
       </TabPane>

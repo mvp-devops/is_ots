@@ -1,4 +1,5 @@
 import { CreateSignalDto } from "./dto/create-equipment-accounting.dto";
+import * as uuid from "uuid";
 import {
   Controller,
   Get,
@@ -29,6 +30,7 @@ import type { SummaryListOfEquipmentCreateOrUpdateFiles } from "../../../common/
 import {File} from "../../../common/types/file-storage";
 import {NewEquipmentAccountingService} from "./new-equipment-accounting.service";
 import {setCurrentDate} from "../../../common/utils";
+import {join} from "path";
 
 @Controller("api/equipment-accounting")
 export class EquipmentAccountingController {
@@ -41,7 +43,8 @@ export class EquipmentAccountingController {
   @Get("/equipment-asset/:id")
   getEquipmentAsset(@Param("id") id: string) {
     return this.service.getEquipmentAsset(id);
-  }
+  };
+
 /** Создание ОЛ */
   @Post("/create-questionnaire/:target")
   createQuestionnaire(
@@ -52,8 +55,7 @@ export class EquipmentAccountingController {
   }
 
   @Get("/questionnaire/download")
-
-  getReport (
+  getQuestionnaire (
     @Query() query: {0: string},
     @Res() res: Response
   ) {
@@ -73,6 +75,32 @@ export class EquipmentAccountingController {
       }
     );
   }
+
+  @Post("/add/new-asset")
+  @UseInterceptors(
+    FileFieldsInterceptor([
+      { name: "questionnaire", maxCount: 1 },
+      { name: "wiringDiagram", maxCount: 100 },
+      { name: "document", maxCount: 1 },
+      { name: "verificationProcedure", maxCount: 1 },
+      { name: "typeApprovalCertificate", maxCount: 1 },
+      { name: "functionalDiagram", maxCount: 1 },
+      { name: "mountDocument", maxCount: 1 },
+      { name: "connectDocument", maxCount: 1 },
+      { name: "testDocument", maxCount: 1 },
+      { name: "awpDocument", maxCount: 1 },
+      { name: "commissionDocument", maxCount: 1 },
+    ])
+  )
+  createNewAsset(
+    @Body() data: any,
+    @UploadedFiles()
+      files?: any
+    ) {
+    return this.service.createNewAssetData(data,files);
+  }
+
+
 
   @Get("/facilities/find")
   findAllFacilityAssets() {
@@ -238,7 +266,39 @@ export class EquipmentAccountingController {
       documents?: File[]
     }
   ) {
+
     return this.service.importDataFromConsolidatedList(data, files);
+  }
+
+  @Get("/download/document")
+
+  getDocument (
+    @Query() query: {path: string, name: string},
+    @Res() res: Response
+  ) {
+    const {path} = query;
+    res.header(
+      "Content-disposition",
+      `attachment; filename=report.pdf`
+    );
+    res.type(
+      "application/pdf"
+    );
+    const pathToFile = join("dist", "file-storage", path)
+    res.download(
+pathToFile,      `${uuid.v4()}.pdf`,
+      (err) => {
+        if (err) console.log(err);
+      }
+    );
+  }
+
+  @Get("/atlas")
+  findAtlasAssets (
+    @Query() query: {parentTarget: string, parentId: string},
+  ) {
+    const { parentTarget, parentId } = query;
+    return this.service.findAtlasAssets(parentTarget, parentId);
   }
 
 }

@@ -83,16 +83,22 @@ export const equipmentAccountingReducer = (
       };
 
     case ActionTypes.POST_MANY_ITEMS:
-      return state;
-    case ActionTypes.POST_MANY_ITEMS_SUCCESS:
-      const newSummaryListOfEquipment = [
-        ...state.summaryListOfEquipment,
-        ...action.payload,
-      ].sort((a, b) => (a.createdAt > b.createdAt ? -1 : 0));
       return {
         ...state,
-
-        summaryListOfEquipment: newSummaryListOfEquipment,
+        loading: true
+      };
+    case ActionTypes.POST_MANY_ITEMS_SUCCESS:
+      const newSummaryListOfEquipment = [
+        ...action.payload,
+        ...state.summaryListOfEquipment,
+      ];
+      return {
+        ...state,
+        loading: false,
+        summaryListOfEquipment: [
+          ...action.payload,
+          ...state.summaryListOfEquipment,
+        ],
       };
     case ActionTypes.POST_MANY_ITEMS_ERROR:
       return {

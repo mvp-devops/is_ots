@@ -23,7 +23,7 @@ const FormItemUIComponent: FC<ItemProps> = ({
 }) => {
   return (
     <Item
-      label={<Text type="secondary">{title}</Text>}
+      label={<Text >{title}</Text>}
       className={className}
       style={style}
       {...props}

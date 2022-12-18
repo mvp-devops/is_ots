@@ -32,7 +32,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
     key: "number",
     width: 50,
     render: (_, __, ind: number) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {ind + 1}
       </Text>
     ),
@@ -59,7 +59,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
 
     render: (value: string) => (
       <Text
-        type="secondary"
+
         className="d-flex justify-content-start mx-2"
         style={{ fontSize: 12 }}
       >
@@ -86,7 +86,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -103,7 +103,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -129,7 +129,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         ? 1
         : 0),
     render: (_, record) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {"contract" in record && record?.contract}
       </Text>
     ),
@@ -157,7 +157,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       "position" in record &&
       record?.position?.toUpperCase()?.includes(value.toUpperCase()),
     render: (_, record) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {"position" in record && record?.position !== "0" ? record?.position : " - "}
       </Text>
     ),
@@ -178,7 +178,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
       "design" in b &&
       stringSorter(a?.design?.title, b?.design?.title),
     render: (_, record) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {"design" in record && record?.design?.title}
       </Text>
     ),
@@ -206,7 +206,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         : 0),
 
     render: (_, record) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {"equipment" in record && record?.equipment.title}
       </Text>
     ),
@@ -233,7 +233,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
         : 0),
 
     render: (_, record) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text   style={{ fontSize: 12 }}>
         {"supplier" in record && record?.supplier.title}
       </Text>
     ),
@@ -288,7 +288,7 @@ const TableColumns = (): TableColumnsType<PositionTreeView> => {
           <>
             <EditOutlined
               title="Редактировать информацию"
-              className="text-secondary"
+              className=" "
               onClick={() => {
                 setActionType(FormActions.EDIT_CHILD);
                 setFormVisible(true);

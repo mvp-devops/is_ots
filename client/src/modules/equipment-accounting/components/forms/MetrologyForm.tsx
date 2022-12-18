@@ -58,7 +58,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
           style={{ width: 950 }}
         >
           <Item
-            label={<Text type="secondary">Сфера гос. регулирования ЕИ</Text>}
+            label={<Text   >Сфера гос. регулирования ЕИ</Text>}
             className="m-0"
           >
             <SelectUIComponent
@@ -69,13 +69,13 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
           </Item>
           <Divider className="m-1 p-0" />
           <Item
-            label={<Text type="secondary">Характеристики</Text>}
+            label={<Text   >Характеристики</Text>}
             className="m-0"
           >
             <Item
               style={{ maxWidth: 364 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 22 }}>
+                <Text    style={{ marginLeft: 22 }}>
                   Предел измерений, min
                 </Text>
               }
@@ -93,7 +93,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 364 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 33 }}>
+                <Text    style={{ marginLeft: 33 }}>
                   Предел измерений, max
                 </Text>
               }
@@ -110,7 +110,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               style={{ maxWidth: 350 }}
-              label={<Text type="secondary">Погрешность/класс точности</Text>}
+              label={<Text   >Погрешность/класс точности</Text>}
               className="m-0"
             >
               <InputUIComponent
@@ -125,7 +125,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 362 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 144 }}>
+                <Text    style={{ marginLeft: 144 }}>
                   МПИ
                 </Text>
               }
@@ -145,7 +145,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               <Item
                 style={{ maxWidth: 500 }}
                 label={
-                  <Text type="secondary" style={{ marginLeft: 140 }}>
+                  <Text    style={{ marginLeft: 140 }}>
                     Ед. изм.
                   </Text>
                 }
@@ -168,28 +168,28 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
           </Item>
           <Divider className="m-1 p-0" />
           <Item
-            label={<Text type="secondary">Сведения о поверке/калибровке</Text>}
+            label={<Text   >Сведения о поверке/калибровке</Text>}
           >
             <Item
               style={{ maxWidth: 400 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 122 }}>
+                <Text    style={{ marginLeft: 122 }}>
                   Вид работ
                 </Text>
               }
               className="m-0"
             >
               <Radio.Group
-                className="text-secondary"
+                className="  "
                 onChange={(e: RadioChangeEvent) =>
                   onHandlerChange("metrologyType", e.target.value)
                 }
                 // value={editRow && editRow.metrologyType}
               >
-                <Radio value={"Калибровка"} className="text-secondary">
+                <Radio value={"Калибровка"} className="  ">
                   Калибровка
                 </Radio>
-                <Radio value={"Поверка"} className="text-secondary">
+                <Radio value={"Поверка"} className="  ">
                   Поверка
                 </Radio>
               </Radio.Group>
@@ -197,7 +197,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               label={
                 <Text
-                  type="secondary"
+
                   style={{ marginLeft: 104, marginTop: 0 }}
                 >
                   Организация
@@ -216,7 +216,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 430 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 92 }}>
+                <Text    style={{ marginLeft: 92 }}>
                   Тип документа
                 </Text>
               }
@@ -232,7 +232,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 430 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 100 }}>
+                <Text    style={{ marginLeft: 100 }}>
                   № документа
                 </Text>
               }
@@ -246,7 +246,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 16 }}>
+                <Text    style={{ marginLeft: 16 }}>
                   Дата поверки/калибровки
                 </Text>
               }
@@ -255,7 +255,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
               <DatePicker
                 locale={locale}
                 size="small"
-                className="text-secondary"
+                className="  "
                 onChange={(date, dateString) =>
                   changeDate("fromDate", dateString)
                 }
@@ -263,7 +263,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             {/* <Item
             label={
-              <Text type="secondary" style={{ marginLeft: 30 }}>
+              <Text    style={{ marginLeft: 30 }}>
                 Дата следующей поверки/калибровки
               </Text>
             }
@@ -272,13 +272,13 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <DatePicker
               locale={locale}
               size="small"
-              className="text-secondary"
+              className="  "
               onChange={(date, dateString) => changeDate("toDate", dateString)}
             />
           </Item> */}
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 124 }}>
+                <Text    style={{ marginLeft: 124 }}>
                   Документ
                 </Text>
               }
@@ -289,7 +289,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 432 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 146 }}>
+                <Text    style={{ marginLeft: 146 }}>
                   Статус
                 </Text>
               }
@@ -305,7 +305,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 432 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 82 }}>
+                <Text    style={{ marginLeft: 82 }}>
                   ФГИС «АРШИН»
                 </Text>
               }
@@ -324,7 +324,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             <Item
               style={{ maxWidth: 444 }}
               label={
-                <Text type="secondary" style={{ marginLeft: 144 }}>
+                <Text    style={{ marginLeft: 144 }}>
                   № ГРСИ
                 </Text>
               }
@@ -338,7 +338,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 100 }}>
+                <Text    style={{ marginLeft: 100 }}>
                   Описание типа
                 </Text>
               }
@@ -351,7 +351,7 @@ const MetrologyForm: FC<FormProps> = ({ row, data, setData }) => {
             </Item>
             <Item
               label={
-                <Text type="secondary" style={{ marginLeft: 76 }}>
+                <Text    style={{ marginLeft: 76 }}>
                   Методика поверки
                 </Text>
               }

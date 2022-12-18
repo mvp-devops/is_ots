@@ -53,7 +53,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const editMenuItem =       {
     label: (
       <Space
-        className="text-secondary"
+        className="  "
         onClick={() => {
           setActionType(FormActions.EDIT_COMMENT);
           setFormVisible(true);
@@ -61,7 +61,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       >
         <EditOutlined
           style={{ marginBottom: "6px", padding: 0 }}
-          className="text-secondary"
+          className="  "
         />
         Редактировать
       </Space>
@@ -73,7 +73,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
   const removeMenuItem = {
     label: (
       <Space
-        className="text-secondary"
+        className="  "
         onClick={() => {
           setActionType(FormActions.REMOVE_COMMENT);
           setFormVisible(true);
@@ -107,7 +107,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       width: 50,
       align: "center",
       render: (value, record, index) => (
-        <Text type="secondary">{index + 1}</Text>
+        <Text >{index + 1}</Text>
       ),
     },
     {
@@ -125,7 +125,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 50,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
     {
       title: "Обозначение документа",
@@ -133,7 +133,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "documentCode",
       width: 100,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
 
     {
@@ -146,11 +146,11 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
         return (
           currentDesignDocument && (
             <Space className="d-flex justify-content-start">
-              <Text type="secondary">
+              <Text >
                 {currentDesignDocument?.fileType?.toUpperCase() === ".PDF" ? (
                   <FilePdfOutlined className="text-danger" />
                 ) : (
-                  <FileUnknownOutlined className="text-secondary" />
+                  <FileUnknownOutlined className="  " />
                 )}
               </Text>
               <a
@@ -159,7 +159,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                 )}
                 target="_blank"
                 rel="noreferrer"
-                className="mx-2 text-secondary"
+                className="mx-2   "
                 title={record?.documentTitle}
               >
                 {record?.documentTitle}
@@ -175,7 +175,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "documentPage",
       width: 50,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
     {
       title: "Замечание",
@@ -183,7 +183,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
       key: "comment",
       width: 400,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
     {
       title: "Нормативная ссылка",
@@ -198,7 +198,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 250,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
 
     {
@@ -217,7 +217,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
           : false,
       width: 50,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
 
     {
@@ -236,7 +236,7 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               ?.includes(value?.toUpperCase())
           : false,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
     {
       title: "Ф.И.О. специалиста, контактные данные",
@@ -252,14 +252,14 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
               ?.includes(value?.toUpperCase())
           : false,
       align: "center",
-      render: (value) => <Text type="secondary">{value}</Text>,
+      render: (value) => <Text >{value}</Text>,
     },
     {
       title: "",
       key: "actions",
       render: (_blank, record) => (
           <Dropdown trigger={["click"]} overlay={menu}>
-            <EllipsisOutlined className="text-secondary" />
+            <EllipsisOutlined className="  " />
           </Dropdown>
 
       ),
@@ -336,9 +336,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   renderItem={(item) => (
                     <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item?.id}</Text>}
+                        avatar={<Text   >{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item?.id.toString()}>
+                          <Text    key={item?.id.toString()}>
                             {item?.title}
                           </Text>
                         }
@@ -360,9 +360,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   renderItem={(item) => (
                     <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item?.id}</Text>}
+                        avatar={<Text   >{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item?.id.toString()}>
+                          <Text    key={item?.id.toString()}>
                             {item?.title}
                           </Text>
                         }
@@ -383,9 +383,9 @@ const CommentTable: FC<CommentTableProps> = ({ data }) => {
                   renderItem={(item) => (
                     <Item key={item?.id}>
                       <Item.Meta
-                        avatar={<Text type="secondary">{item?.id}</Text>}
+                        avatar={<Text   >{item?.id}</Text>}
                         title={
-                          <Text type="secondary" key={item?.id.toString()}>
+                          <Text    key={item?.id.toString()}>
                             {item?.title}
                           </Text>
                         }

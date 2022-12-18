@@ -35,7 +35,7 @@ const PositionTreeForm = () => {
     actionType === FormActions.EDIT_CHILD) &&
     editRow &&
     "subsidiaryId" in editRow && (
-      <Item label={<Text type="secondary">Дочернее общество</Text>}>
+      <Item label={<Text  >Дочернее общество</Text>}>
         <SelectUIComponent
           id="subsidiaryId"
           defaultValue={editRow.subsidiaryId as string}
@@ -50,10 +50,10 @@ const PositionTreeForm = () => {
     formTarget === "project" &&
     "fieldId" in editRow &&
     editRow.fieldId && (
-      <Item label={<Text type="secondary">Месторождение</Text>} className="m-0">
+      <Item label={<Text  >Месторождение</Text>} className="m-0">
         <Select
           size="small"
-          className="text-secondary"
+          className=" "
           showSearch
           notFoundContent={<Space>Нет данных</Space>}
           defaultValue={editRow.fieldId.toString()}
@@ -81,7 +81,7 @@ const PositionTreeForm = () => {
 
   const projectDesignItem = editRow && "designId" in editRow && (
     <Item
-      label={<Text type="secondary">Проектный институт</Text>}
+      label={<Text  >Проектный институт</Text>}
       className="m-0"
     >
       <SelectUIComponent
@@ -97,7 +97,7 @@ const PositionTreeForm = () => {
     (actionType === FormActions.EDIT ||
       actionType === FormActions.EDIT_CHILD) &&
     "projectId" in editRow && (
-      <Item label={<Text type="secondary">Проект</Text>} className="m-0">
+      <Item label={<Text  >Проект</Text>} className="m-0">
         <SelectUIComponent
           id="projectId"
           defaultValue={editRow.projectId as string}
@@ -112,7 +112,7 @@ const PositionTreeForm = () => {
       actionType === FormActions.EDIT_CHILD) &&
     "unitId" in editRow && (
       <Item
-        label={<Text type="secondary">Объект строительства</Text>}
+        label={<Text  >Объект строительства</Text>}
         className="m-0"
       >
         <SelectUIComponent
@@ -125,7 +125,7 @@ const PositionTreeForm = () => {
     );
 
   const contractItem = editRow && "contract" in editRow && (
-    <Item label={<Text type="secondary">№ договора</Text>} className="m-0">
+    <Item label={<Text  >№ договора</Text>} className="m-0">
       <InputUIComponent
         value={editRow.contract}
         id="contract"
@@ -137,7 +137,7 @@ const PositionTreeForm = () => {
   const fileItem = editRow && "file" in editRow && (
     <Item
       label={
-        <Text type="secondary">
+        <Text  >
           {formTarget === "subsidiary" ? "Логотип" : "Опросный лист"}
         </Text>
       }
@@ -155,7 +155,7 @@ const PositionTreeForm = () => {
         }}
       >
         <Button icon={<UploadOutlined />} style={{ width: 232 }}>
-          <Text type="secondary">Выбрать файл</Text>
+          <Text  >Выбрать файл</Text>
         </Button>
       </Upload>
     </Item>
@@ -167,7 +167,7 @@ const PositionTreeForm = () => {
     "supplierId" in editRow && (
       <>
         <Item
-          label={<Text type="secondary">Группа оборудования</Text>}
+          label={<Text  >Группа оборудования</Text>}
           className="m-0"
         >
           <SelectUIComponent
@@ -177,7 +177,7 @@ const PositionTreeForm = () => {
             items={equipmentsList}
           />
         </Item>
-        <Item label={<Text type="secondary">Поставщик</Text>} className="m-0">
+        <Item label={<Text  >Поставщик</Text>} className="m-0">
           <SelectUIComponent
             id="supplierId"
             defaultValue={editRow.supplierId as string}
@@ -186,7 +186,7 @@ const PositionTreeForm = () => {
           />
         </Item>
         <Item
-          label={<Text type="secondary">Позиция по ГП</Text>}
+          label={<Text  >Позиция по ГП</Text>}
           className="m-0"
         >
           <InputUIComponent
@@ -212,14 +212,14 @@ const PositionTreeForm = () => {
       {projectDesignItem}
       {unitSubUnitItems}
 
-      <Item label={<Text type="secondary">Наименование</Text>} className="m-0">
+      <Item label={<Text  >Наименование</Text>} className="m-0">
         <InputUIComponent
           value={editRow.title}
           id="title"
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Шифр</Text>} className="m-0">
+      <Item label={<Text  >Шифр</Text>} className="m-0">
         <InputUIComponent
           value={editRow.code}
           id="code"
@@ -230,7 +230,7 @@ const PositionTreeForm = () => {
       {contractItem}
       {fileItem}
 
-      <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
+      <Item label={<Text  >Примечание</Text>} className="m-0">
         <InputUIComponent
           value={editRow.description}
           id="description"

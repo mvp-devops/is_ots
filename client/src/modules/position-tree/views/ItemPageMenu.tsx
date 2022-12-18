@@ -19,7 +19,7 @@ const ItemPageMenu = () => {
       label: (
         <Space>
           <MoreOutlined style={{ marginBottom: 20, padding: 0 }} />
-          <Text type="secondary">Действия</Text>
+          <Text >Действия</Text>
         </Space>
       ),
       key: "ACTIONS",
@@ -33,7 +33,7 @@ const ItemPageMenu = () => {
               }}
             >
               <PlusOutlined style={{ marginBottom: 16, padding: 0 }} />
-              <Text type="secondary">Добавить</Text>
+              <Text >Добавить</Text>
             </Space>
           ),
           key: "ADD",
@@ -47,7 +47,7 @@ const ItemPageMenu = () => {
               }}
             >
               <EditOutlined style={{ marginBottom: 16, padding: 0 }} />
-              <Text type="secondary">Редактировать</Text>
+              <Text >Редактировать</Text>
             </Space>
           ),
           key: `EDIT`,
@@ -61,7 +61,7 @@ const ItemPageMenu = () => {
               }}
             >
               <DeleteOutlined style={{ marginBottom: 20, padding: 0 }} />
-              <Text type="secondary">Удалить</Text>
+              <Text >Удалить</Text>
             </Space>
           ),
           key: `REMOVE`,
@@ -75,7 +75,7 @@ const ItemPageMenu = () => {
               }}
             >
               <UserAddOutlined style={{ marginBottom: 20, padding: 0 }} />
-              <Text type="secondary">Регистрация пользователя</Text>
+              <Text>Регистрация пользователя</Text>
             </Space>
           ),
           key: "USER",

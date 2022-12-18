@@ -34,7 +34,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -49,7 +49,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -66,7 +66,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Местная индикация */
   const localIndicationFormField = (
     <Item
-      label={<Text type="secondary">{"Местная индикация"}</Text>}
+      label={<Text   >{"Местная индикация"}</Text>}
       name={"localIndication"}
       valuePropName="checked"
       className="ms-2 mb-0"
@@ -78,7 +78,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** внутренняя диагностика */
   const internalDiagnosticFormField = (
     <Item
-      label={<Text type="secondary">{"Внутренняя диагностика"}</Text>}
+      label={<Text   >{"Внутренняя диагностика"}</Text>}
       name={"internalDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0"
@@ -90,7 +90,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Наличие HART-протокола */
   const hartFormField = (
     <Item
-      label={<Text type="secondary">HART</Text>}
+      label={<Text   >HART</Text>}
       name={"hart"}
       initialValue={hart}
       valuePropName="checked"
@@ -104,7 +104,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const hartVersionFormField = (
     <Item
 
-      label={<Text type="secondary">Версия HART-протокола</Text>}
+      label={<Text   >Версия HART-протокола</Text>}
       name={"hartVersion"}
       initialValue={7.5}
       className="ms-2 mb-0"
@@ -121,7 +121,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       >
         {hartVersion.map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -135,7 +135,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const outputSignalFormField = (
     <Item
         style={{width: 530}}
-      label={<Text type="secondary">Выходной сигнал</Text>}
+      label={<Text   >Выходной сигнал</Text>}
       name={"outputSignal"}
       className="ms-2 mb-0"
       rules={[
@@ -151,7 +151,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       >
         {outputSignal.map(({id, title, value}) => {
           return (
-            <Option key={id} title={title} value={value} className="text-secondary">
+            <Option key={id} title={title} value={value} className="  ">
               {title}
             </Option>
           );
@@ -164,7 +164,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const voltageFormField = (
     <Item
       style={{width: 570}}
-      label={<Text type="secondary">Напряжение питания, В</Text>}
+      label={<Text   >Напряжение питания, В</Text>}
       name={"voltage"}
       initialValue={24}
       className="ms-2 mb-0"
@@ -178,7 +178,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       <Radio.Group>
         {voltage.map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary" >{item}</Radio>
+            <Radio key={index} value={item} className="  " >{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -190,7 +190,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const connectionTypeFormField = (
       <Item
         style={{width: 648}}
-        label={<Text type="secondary">Тип присоединения к тех. процессу</Text>}
+        label={<Text   >Тип присоединения к тех. процессу</Text>}
         name={"connectionType"}
         className="ms-2 mb-0"
         rules={[
@@ -206,7 +206,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
         >
           {connectionType.map(({id, title, value}) => {
             return (
-              <Option key={id} title={title} value={value} className="text-secondary"
+              <Option key={id} title={title} value={value} className="  "
 
               >
                 {title}
@@ -223,7 +223,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const connectionFormField = (
     <Item
       style={{width: 610}}
-      label={<Text type="secondary"  >Соединение с тех. процессом</Text>}
+      label={<Text     >Соединение с тех. процессом</Text>}
       name={"connection"}
       className="ms-2 mb-0"
       rules={[
@@ -239,7 +239,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       >
         {connection.filter(item => connectionTypeTitle.toLowerCase().includes(item.connectionTypeId.toLowerCase().slice(0,4)) ).map(({id, title, value}) => {
           return (
-            <Option key={id} title={title} value={value} className="text-secondary">
+            <Option key={id} title={title} value={value} className="  ">
               {title}
             </Option>
           );
@@ -253,7 +253,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const converterTypeFormField = (
     <Item
       style={{width: 638}}
-      label={<Text type="secondary">Тип вторичного преобразователя</Text>}
+      label={<Text   >Тип вторичного преобразователя</Text>}
       name={"converterType"}
       className="ms-2 mb-0"
       rules={[
@@ -269,7 +269,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       >
         {converterTypes.map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary"
+            <Option key={index} title={item} value={item} className="  "
 
             >
               {item}
@@ -283,7 +283,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const converterFormField = (
     <Item
       style={{width: 570}}
-      label={<Text type="secondary">Вторичный преобразователь</Text>}
+      label={<Text   >Вторичный преобразователь</Text>}
       name={"converter"}
       initialValue={24}
       className="ms-2 mb-0"
@@ -297,7 +297,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       <Radio.Group>
         {converter.map((item, index) => {
           return (
-            <Radio key={index} value={item} className="text-secondary" >{item}</Radio>
+            <Radio key={index} value={item} className="  " >{item}</Radio>
           );
         })}
       </Radio.Group>
@@ -307,7 +307,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const zeroDriftFormField = (
     <Item
-      label={<Text type="secondary">{"Корректировка дрейфа нуля"}</Text>}
+      label={<Text   >{"Корректировка дрейфа нуля"}</Text>}
       name={"zeroDrift"}
       valuePropName="checked"
       className="ms-2 mb-0"
@@ -320,7 +320,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const opticsCleanlinessFormField = (
     <Item
-      label={<Text type="secondary">{" Функция проверки чистоты оптики"}</Text>}
+      label={<Text   >{" Функция проверки чистоты оптики"}</Text>}
       name={"opticsCleanliness"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -332,7 +332,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Диаметр трубопровода Ду, мм */
   const pipelineDiameterFormField = (
     <Item
-      label={<Text type="secondary">Диаметр трубопровода Ду, мм</Text>}
+      label={<Text   >Диаметр трубопровода Ду, мм</Text>}
       name={"pipelineDiameter"}
       className="ms-2 mb-0"
       rules={[
@@ -352,7 +352,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const pipelineMaterialFormField = (
     <Item
       style={{width: 574}}
-      label={<Text type="secondary">Материал трубопровода</Text>}
+      label={<Text   >Материал трубопровода</Text>}
       name={"pipelineMaterial"}
       className="ms-2 mb-0"
       rules={[
@@ -364,7 +364,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     >
       <Input
         {...inputProps()}
-        className={"text-secondary text-left"}
+        className={"   text-left"}
       />
     </Item>
   );
@@ -373,7 +373,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Диаметр трубопровода Ду, мм */
   const flowMeterDistanceBeforeFormField = (
     <Item
-      label={<Text type="secondary">Участок трубопровода до прибора, мм</Text>}
+      label={<Text   >Участок трубопровода до прибора, мм</Text>}
       name={"flowMeterDistanceBefore"}
       className="ms-2 mb-0"
       rules={[
@@ -392,7 +392,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const flowMeterDistanceAfterFormField = (
     <Item
 
-      label={<Text type="secondary">Участок трубопровода после прибора, мм</Text>}
+      label={<Text   >Участок трубопровода после прибора, мм</Text>}
       name={"flowMeterDistanceAfter"}
       className="ms-2 mb-0"
       rules={[
@@ -412,7 +412,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 /** Наличие струевыпрямителей */
   const flowStraightenersFormField = (
     <Item
-      label={<Text type="secondary">Струевыпрямители</Text>}
+      label={<Text   >Струевыпрямители</Text>}
       name={"flowStraighteners"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -424,7 +424,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   /** Турбулентность процесса */
   const processTurbulenceFormField = (
     <Item
-      label={<Text type="secondary">Турбулентность процесса</Text>}
+      label={<Text   >Турбулентность процесса</Text>}
       name={"processTurbulence"}
       valuePropName="checked"
       initialValue={processTurbulence}
@@ -438,7 +438,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
   const turbulenceCauseFormField = (
     <Item
       style={{width: 580}}
-      label={<Text type="secondary">Причина турбулентности</Text>}
+      label={<Text   >Причина турбулентности</Text>}
       name={"turbulenceCause"}
       className="ms-2 mb-0"
       rules={[
@@ -450,7 +450,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
     >
       <Input.TextArea
        size={"small"}
-       className={"text-secondary"}
+       className={"  "}
        autoSize={{minRows: 6.5, maxRows: 6.5}}
 
       />
@@ -459,7 +459,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const selfDiagnosticFormField = (
     <Item
-      label={<Text type="secondary">Самодиагностика</Text>}
+      label={<Text   >Самодиагностика</Text>}
       name={"selfDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -470,7 +470,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const blockageDiagnosticFormField = (
     <Item
-      label={<Text type="secondary">Диагностика закупорки</Text>}
+      label={<Text   >Диагностика закупорки</Text>}
       name={"blockageDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -481,7 +481,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const controlCableConnectionFormField = (
     <Item
-      label={<Text type="secondary">{facilityType === FacilityType.GAZ_ANALYZE ? "Подключение контрольного кабеля" : "Тип монтажа"}</Text>}
+      label={<Text   >{facilityType === FacilityType.GAZ_ANALYZE ? "Подключение контрольного кабеля" : "Тип монтажа"}</Text>}
       name={"controlCableConnection"}
       className="ms-2 mb-0"
       initialValue={"С электрообогревом"}
@@ -496,7 +496,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
       <Radio.Group>
         {(facilityType === FacilityType.GAZ_ANALYZE ? controlCableConnectionList.slice(0,2) : controlCableConnectionList.slice(2,4)).map((item, index) => {
           return (
-            <Radio key={index} value={item} className={"text-secondary"}>{item}</Radio>          );
+            <Radio key={index} value={item} className={"  "}>{item}</Radio>          );
         })}
       </Radio.Group>
     </Item>
@@ -506,7 +506,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   const currentLoopIntegrityDiagnosticFormField = (
     <Item
-      label={<Text type="secondary">Диагностика целостности токовой цепи</Text>}
+      label={<Text   >Диагностика целостности токовой цепи</Text>}
       name={"currentLoopIntegrityDiagnostic"}
       valuePropName="checked"
       className="ms-2 mb-0 p-0"
@@ -623,7 +623,7 @@ const AdditionallyCharacteristic: FC<AdditionallyCharacteristicProps> = ({facili
 
   return (
     <Space direction="vertical" style={{width: 666, height: 580}} className={"border p-1"}>
-      <Divider className="m-0" orientation="center"><Text type="secondary">Характеристики</Text> </Divider>
+      <Divider className="m-0" orientation="center"><Text   >Характеристики</Text> </Divider>
      <Space direction="vertical" style={{width: 666}}>
        {facilityType === FacilityType.GAZ_ANALYZE ? gazAnalyzeAdditionallyCharacteristic : first}
      </Space>

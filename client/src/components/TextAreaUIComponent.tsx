@@ -19,7 +19,6 @@ const TextAreaUIComponent: FC<TextAreaUIComponentProps> = ({
       {...props}
       rows={2}
       id={id}
-      className="text-secondary"
       onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
         changeValue(id, e.target.value, itemId)
       }

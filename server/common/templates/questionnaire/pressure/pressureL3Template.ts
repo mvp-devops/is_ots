@@ -198,9 +198,7 @@ export const pressureL3Template = (data: any) => {
                     интервала от даты поставки на склад Заказчика.
                   </td>
                 </tr>
-                <tr class="l3-row4">
-                  <td colspan="3"></td>
-                </tr>
+    
               </tbody>
             </table>
   `

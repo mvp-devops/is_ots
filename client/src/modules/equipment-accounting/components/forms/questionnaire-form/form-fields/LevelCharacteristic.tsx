@@ -21,7 +21,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -36,7 +36,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -48,7 +48,7 @@ const LevelCharacteristic = () => {
     <Item
       initialValue={0}
       className="ms-2 mb-0"
-      label={<Text type="secondary" >{`Кинематическая вязкость, при температуре 20°C, сСт${phasePartition ? " (Среда 1)" : ""}`}
+      label={<Text    >{`Кинематическая вязкость, при температуре 20°C, сСт${phasePartition ? " (Среда 1)" : ""}`}
       </Text>}
       name={"viscosity_1"}
       rules={[
@@ -69,7 +69,7 @@ const LevelCharacteristic = () => {
     <Item
       initialValue={0}
       className="ms-2 mb-0"
-      label={<Text type="secondary" >{`Кинематическая вязкость, при температуре 20°C, сСт (Среда 2)`}
+      label={<Text    >{`Кинематическая вязкость, при температуре 20°C, сСт (Среда 2)`}
       </Text>}
       name={"viscosity_2"}
       rules={[
@@ -91,7 +91,7 @@ const LevelCharacteristic = () => {
     <Item
       initialValue={997}
       name={"density_1"}
-      label={<Text type="secondary">{`Плотность среды${phasePartition ? " 1" : ""}, кг/м³`}</Text>}
+      label={<Text   >{`Плотность среды${phasePartition ? " 1" : ""}, кг/м³`}</Text>}
       className="ms-2 mb-0"
       rules={[
         {
@@ -112,7 +112,7 @@ const LevelCharacteristic = () => {
     <Item
       initialValue={997}
       name={"density_2"}
-      label={<Text type="secondary">Плотность среды 2, кг/м³</Text>}
+      label={<Text   >Плотность среды 2, кг/м³</Text>}
       className="ms-2 mb-0"
       rules={[
         {
@@ -131,7 +131,7 @@ const LevelCharacteristic = () => {
 
   const phasePartitionControlFormField = (
     <Item
-      label={<Text type="secondary">Контроль раздела фаз</Text>}
+      label={<Text   >Контроль раздела фаз</Text>}
       name={"phasePartition"}
       initialValue={phasePartition}
       className="ms-2 mb-0"

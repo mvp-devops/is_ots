@@ -18,7 +18,7 @@ const notFoundContent = (
       <ExclamationCircleOutlined style={{ fontSize: 20, marginBottom: 2 }} />
     </Text>
 
-    <Text type="secondary" style={{ fontSize: 12, marginBottom: 2 }}>
+    <Text style={{ fontSize: 12, marginBottom: 2 }}>
       Нет данных для отображения. Уточнить поиск
     </Text>
   </Space>
@@ -66,7 +66,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                     className="mb-0"
                     style={{ width: 500 }}
                     label={
-                      <Text type="secondary">Функциональное направление</Text>
+                      <Text >Функциональное направление</Text>
                     }
                     {...restField}
                     name={[name, "directionId"]}
@@ -81,7 +81,6 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                   >
                     <Select
                       size={"small"}
-                      className={"text-secondary"}
                       notFoundContent={notFoundContent}
                       showSearch
                       optionFilterProp="children"
@@ -104,7 +103,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                   <Item
                     className="mb-0"
                     style={{ width: 500 }}
-                    label={<Text type="secondary">Критерий критичности</Text>}
+                    label={<Text >Критерий критичности</Text>}
                     {...restField}
                     name={[name, "criticalityId"]}
                     initialValue={criticalityId || "1"}
@@ -118,7 +117,6 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                     <Select
                       placeholder="Критерий критичности"
                       size={"small"}
-                      className={"text-secondary"}
                       notFoundContent={notFoundContent}
                       showSearch
                       optionFilterProp="children"
@@ -144,7 +142,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
 
                   <Item
                     style={{ width: 500 }}
-                    label={<Text type="secondary">Нормативная ссылка</Text>}
+                    label={<Text >Нормативная ссылка</Text>}
                     {...restField}
                     name={[name, "normativeId"]}
                     initialValue={normativeId || "1"}
@@ -158,7 +156,6 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                     <Select
                       placeholder="Нормативная ссылка"
                       size={"small"}
-                      className={"text-secondary"}
                       notFoundContent={notFoundContent}
                       showSearch
                       optionFilterProp="children"
@@ -186,7 +183,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                 <Item
                   className="mb-0"
                   style={{ width: 600 }}
-                  label={<Text type="secondary">Замечание</Text>}
+                  label={<Text >Замечание</Text>}
                   name={[name, "comment"]}
                   initialValue={comment}
                   rules={[
@@ -199,7 +196,6 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                   <Input.TextArea
                     autoSize={{ minRows: 7.2, maxRows: 7.2 }}
                     placeholder="Замечание"
-                    className="text-secondary"
                   />
                 </Item>
 
@@ -209,7 +205,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
                 />
               </Space>
               <Divider className="m-0">
-                <Text type="secondary">Решения</Text>
+                <Text >Решения</Text>
               </Divider>
 
               <Space direction="horizontal">
@@ -272,7 +268,7 @@ const CommentFormItem: FC<CommentFormItemProps> = ({
               block
               icon={<PlusCircleOutlined className="text-success" />}
             >
-              <Text type="secondary">Добавить замечание</Text>
+              <Text >Добавить замечание</Text>
             </Button>
           </Item>
         </>

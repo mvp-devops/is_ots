@@ -29,7 +29,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
       className="m-1 p-1 border"
     >
       <Item
-        label={<Text type="secondary">Номер импульсной линии</Text>}
+        label={<Text >Номер импульсной линии</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -41,7 +41,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
       </Item>
 
       <Item
-        label={<Text type="secondary">Тип импульсной линии</Text>}
+        label={<Text >Тип импульсной линии</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -52,7 +52,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Точка подключения, от</Text>}
+        label={<Text >Точка подключения, от</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -63,7 +63,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Точка подключения, до</Text>}
+        label={<Text >Точка подключения, до</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -74,7 +74,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
         />
       </Item>
       <Item
-        label={<Text type="secondary">Длина импульсной линии</Text>}
+        label={<Text >Длина импульсной линии</Text>}
         className="m-0"
       >
         <InputUIComponent
@@ -86,7 +86,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           changeValue={onHandlerChange}
         />
       </Item>
-      <Item label={<Text type="secondary">Примечание</Text>} className="m-0">
+      <Item label={<Text >Примечание</Text>} className="m-0">
         <InputUIComponent
           value={item.description}
           id="description"
@@ -130,7 +130,7 @@ const ImpulseLineLogForm: FC<FormProps> = ({ row, data, setData }) => {
           title="Добавить новую строку"
           onClick={() => addItem()}
         >
-          <Text type="secondary">Добавить новую строку</Text>
+          <Text >Добавить новую строку</Text>
         </Button>
       </Space>
       {data &&

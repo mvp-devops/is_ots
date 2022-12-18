@@ -49,10 +49,10 @@ function AuthPage() {
       className="p-1 border"
       // title="АВТОРИЗАЦИЯ"
     >
-      <Divider orientation="center" className="text-secondary">
+      <Divider orientation="center" >
         АВТОРИЗАЦИЯ
       </Divider>
-      <Item label={<Text type="secondary">E-mail</Text>} className="m-0">
+      <Item label={<Text >E-mail</Text>} className="m-0">
         <InputUIComponent
           value={data.email}
           id="email"
@@ -60,7 +60,7 @@ function AuthPage() {
         />
       </Item>
 
-      <Item label={<Text type="secondary">Пароль</Text>} className="m-0">
+      <Item label={<Text >Пароль</Text>} className="m-0">
         <InputUIComponent
           type="password"
           value={data.password}

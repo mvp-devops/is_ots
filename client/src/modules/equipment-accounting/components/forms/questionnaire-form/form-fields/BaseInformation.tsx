@@ -9,7 +9,6 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -21,7 +20,7 @@ const selectProps: SelectProps = {
 
 const itemProps = (title: string, name: string): FormItemProps => {
   return {
-    label: <Text type="secondary">{title}</Text>,
+    label: <Text >{title}</Text>,
     name,
     className: "ms-2 mb-0"
   }
@@ -30,7 +29,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: " text-center"
   }
 }
 const currentYear = new Date().getFullYear();
@@ -54,7 +53,7 @@ const BaseInformation: FC<BaseInformationProps> = ({title, setFacilityType, rese
       >
         {questionnaireType.map(({id, title, value}) => {
           return (
-            <Option key={id} title={title} value={value} className="text-secondary">
+            <Option key={id} title={title} value={value}>
               {title}
             </Option>
           );
@@ -78,7 +77,6 @@ const BaseInformation: FC<BaseInformationProps> = ({title, setFacilityType, rese
       ) : (
         <TreeSelect
           size={"small"}
-          className={"text-secondary"}
           dropdownStyle={{ maxHeight: 400, overflow: 'auto', color: "#999" }}
           treeData={facilityTypesList}
           onSelect={(value, node) => setFacilityType(node.id)}

@@ -5,6 +5,8 @@ import { ModalContainer } from "../../../../components";
 import SummaryListOfFacilityForm from "../forms/SummaryListOfFacilityForm";
 import { useTypedSelector } from "../../../../hooks";
 import { FormActions } from "../../../main";
+import ImportDataForm from "../forms/import-data-form/ImportDataForm";
+import ExportToAtlasTable from "../tables/export-to-atlas/ExportToAtlasTable";
 
 const SummaryListOfEquipment = () => {
   const { formVisible, actionType } = useTypedSelector((state) => state.main);
@@ -18,6 +20,8 @@ const SummaryListOfEquipment = () => {
     />
   );
 
+  const importData = formVisible && actionType === FormActions.IMPORT_EQUIPMENT_FROM_SLOE && <ModalContainer child={<ImportDataForm />}/>
+
   return (
     <>
       <Space
@@ -30,6 +34,8 @@ const SummaryListOfEquipment = () => {
         <Items />
       </Space>
       {renderForm}
+      {importData}
+      {formVisible && actionType === FormActions.EXPORT_TO_ATLAS && <ModalContainer child={<ExportToAtlasTable />} /> }
     </>
   );
 };

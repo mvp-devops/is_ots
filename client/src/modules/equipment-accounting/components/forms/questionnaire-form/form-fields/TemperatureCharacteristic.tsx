@@ -21,7 +21,7 @@ const {Option} = Select;
 
 const selectProps: SelectProps = {
   size: "small",
-  className: "text-secondary",
+  className: "  ",
   notFoundContent: <NotFoundComponent/>,
   showSearch: true,
   optionFilterProp: "children",
@@ -36,7 +36,7 @@ const inputProps = (type?: string): InputProps => {
   return {
     size: "small",
     type: type ? type : "text",
-    className: "text-secondary text-center"
+    className: "   text-center"
   }
 }
 
@@ -47,7 +47,7 @@ const TemperatureCharacteristic = () => {
   /** Схема подключения вторичного преобразователя */
   const connectionSchemeFormField = (
     <Item
-      label={<Text type="secondary">Схема подключения втор. преобр.</Text>}
+      label={<Text   >Схема подключения втор. преобр.</Text>}
       name={"connectionScheme"}
       initialValue={"Не предусмотрено"}
       className="ms-2 mb-0"
@@ -65,7 +65,7 @@ const TemperatureCharacteristic = () => {
       >
         {connectionScheme.map((item, index) => {
           return (
-            <Option key={index} title={item} value={item} className="text-secondary">
+            <Option key={index} title={item} value={item} className="  ">
               {item}
             </Option>
           );
@@ -78,7 +78,7 @@ const TemperatureCharacteristic = () => {
   //Длина чувствительного элемента / глубина погружения защитной гильзы, мм
   const sensorLengthFormField = (
     <Item
-      label={<Text type="secondary">Длина чувствительного элемента/глубина погружения защитной гильзы, мм</Text>}
+      label={<Text   >Длина чувствительного элемента/глубина погружения защитной гильзы, мм</Text>}
       name={"sensorLength"}
       initialValue={1}
       className="ms-2 mb-0"
@@ -100,7 +100,7 @@ const TemperatureCharacteristic = () => {
   //Длина чувствительного элемента / глубина погружения защитной гильзы, мм
   const sensorDiameterFormField = (
     <Item
-      label={<Text type="secondary">Диаметр сенсора, мм</Text>}
+      label={<Text   >Диаметр сенсора, мм</Text>}
       name={"sensorDiameter"}
       initialValue={100}
       className="ms-2 mb-0"
@@ -121,7 +121,7 @@ const TemperatureCharacteristic = () => {
 
   const protectiveSleeveFormField = (
     <Item
-      label={<Text type="secondary">Защитная гильза</Text>}
+      label={<Text   >Защитная гильза</Text>}
       name={"protectiveSleeve"}
       initialValue={protectiveSleeve}
       className="ms-2 mb-0"
@@ -134,7 +134,7 @@ const TemperatureCharacteristic = () => {
   //Материал защитной гильзы
   const protectiveSleeveMaterialFormField = (
     <Item
-      label={<Text type="secondary">Материал защитной гильзы</Text>}
+      label={<Text   >Материал защитной гильзы</Text>}
       name={"protectiveSleeveMaterial"}
       className="ms-2 mb-0"
       rules={[

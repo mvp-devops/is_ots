@@ -53,6 +53,8 @@ import {
   TechnicalCardOperationEntity,
 } from "./modules/regulatory-reference-information";
 import {ReportModule} from "./modules/reports/report.module";
+import {ExportToAtlasEntity} from "./modules/equipment-accounting/entities/schemas/export-to-atlas.entity";
+import {GlossaryEntity} from "./modules/regulatory-reference-information/entities/schemas/glossary.entry";
 
 @Module({
   imports: [
@@ -107,6 +109,8 @@ import {ReportModule} from "./modules/reports/report.module";
         TechnicalCardEntity,
         TechnicalCardOperationEntity,
         UserEntity,
+        ExportToAtlasEntity,
+        GlossaryEntity
       ],
     }),
     CommentAccountingModule,

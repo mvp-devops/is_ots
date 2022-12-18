@@ -21,7 +21,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     width: 50,
 
     render: (_, __, ind: number) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {ind + 1}
       </Text>
     ),
@@ -43,7 +43,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
       record?.title?.toUpperCase()?.includes(value.toUpperCase()),
     render: (value: string) => (
       <Text
-        type="secondary"
+
         className="d-flex justify-content-start mx-2"
         style={{ fontSize: 12 }}
       >
@@ -73,7 +73,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -100,7 +100,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
             ? 1
             : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -113,7 +113,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     align: "center",
     sorter: (a, b) => stringSorter(a?.description, b?.description),
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -131,7 +131,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -144,7 +144,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
     align: "center",
     sorter: (a, b) => (+a?.goal < +b?.goal ? -1 : +a?.goal > +b?.goal ? 1 : 0),
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text  style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -162,7 +162,7 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
         ? 1
         : 0,
     render: (value: string) => (
-      <Text type="secondary" style={{ fontSize: 12 }}>
+      <Text style={{ fontSize: 12 }}>
         {value}
       </Text>
     ),
@@ -176,7 +176,6 @@ const NsiTableColumns = (): TableColumnsType<NSIView> => {
       <Space size="middle" className="d-flex justify-content-end">
         <EditOutlined
           title="Редактировать информацию"
-          className="text-secondary"
           onClick={() => {
             setActionType(FormActions.EDIT_DICTIONARY_ITEM);
             setFormVisible(true);

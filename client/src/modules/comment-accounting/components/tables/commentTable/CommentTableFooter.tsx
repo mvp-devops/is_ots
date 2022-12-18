@@ -32,8 +32,8 @@ const CommentTableFooter = () => {
             renderItem={({ id, title, description }) => (
               <Item key={id}>
                 <Item.Meta
-                  avatar={<Text type="secondary">{id}</Text>}
-                  title={<Text type="secondary">{title}</Text>}
+                  avatar={<Text >{id}</Text>}
+                  title={<Text >{title}</Text>}
                   description={description}
                 />
               </Item>
@@ -51,8 +51,8 @@ const CommentTableFooter = () => {
             renderItem={({ id, title, description }) => (
               <Item key={id}>
                 <Item.Meta
-                  avatar={<Text type="secondary">{id}</Text>}
-                  title={<Text type="secondary">{title}</Text>}
+                  avatar={<Text >{id}</Text>}
+                  title={<Text >{title}</Text>}
                   description={description}
                 />
               </Item>
@@ -70,8 +70,8 @@ const CommentTableFooter = () => {
             renderItem={({ id, title, description }) => (
               <Item key={id}>
                 <Item.Meta
-                  avatar={<Text type="secondary">{id}</Text>}
-                  title={<Text type="secondary">{title}</Text>}
+                  avatar={<Text >{id}</Text>}
+                  title={<Text >{title}</Text>}
                   description={description}
                 />
               </Item>

@@ -53,7 +53,7 @@ const StatisticPage = () => {
   const detailsButton = (target: string) => (
     <QuestionCircleOutlined
       title="Справка"
-      className="text-secondary mx-2"
+      className=" mx-2"
       onClick={() => setShowDetails(target)}
     />
   );
@@ -80,7 +80,7 @@ const StatisticPage = () => {
       style={{ minWidth: 350 }}
       title={
         <Divider>
-          <Text type="secondary" strong>
+          <Text   strong>
             Общая статистика
           </Text>
         </Divider>
@@ -95,11 +95,11 @@ const StatisticPage = () => {
             <Meta
               title={
                 <Space className="d-flex justify-content-between">
-                  <Text type="secondary">{item.title}</Text>
+                  <Text  >{item.title}</Text>
                   <Badge
                     showZero
                     count={
-                      <Text type="secondary" strong>
+                      <Text   strong>
                         {item.count}
                       </Text>
                     }
@@ -109,7 +109,7 @@ const StatisticPage = () => {
                 </Space>
               }
               description={
-                <Text type="secondary" style={{ fontSize: 12 }}>
+                <Text   style={{ fontSize: 12 }}>
                   {showItemStatisticDescription && item.description}
                 </Text>
               }
@@ -134,7 +134,7 @@ const StatisticPage = () => {
       bordered={false}
       title={
         <Divider>
-          <Text type="secondary" strong>
+          <Text   strong>
             Экспертиза документации
           </Text>
         </Divider>
@@ -156,11 +156,11 @@ const StatisticPage = () => {
             <Meta
               title={
                 <Space className="d-flex justify-content-between">
-                  <Text type="secondary">{item.title}</Text>
+                  <Text  >{item.title}</Text>
                   <Badge
                     showZero
                     count={
-                      <Text type="secondary" strong>
+                      <Text   strong>
                         {item.count}
                       </Text>
                     }
@@ -170,7 +170,7 @@ const StatisticPage = () => {
                 </Space>
               }
               description={
-                <Text type="secondary" style={{ fontSize: 12 }}>
+                <Text   style={{ fontSize: 12 }}>
                   {showExaminationDocumentationStatisticDescription &&
                     item.description}
                 </Text>
@@ -189,7 +189,7 @@ const StatisticPage = () => {
       style={{ minWidth: 450 }}
       title={
         <Divider>
-          <Text type="secondary" strong>
+          <Text   strong>
             Строительный надзор
           </Text>
         </Divider>
@@ -210,11 +210,11 @@ const StatisticPage = () => {
             <Meta
               title={
                 <Space className="d-flex justify-content-between">
-                  <Text type="secondary">{item.title}</Text>
+                  <Text  >{item.title}</Text>
                   <Badge
                     showZero
                     count={
-                      <Text type="secondary" strong>
+                      <Text   strong>
                         {item.count}
                       </Text>
                     }
@@ -224,7 +224,7 @@ const StatisticPage = () => {
                 </Space>
               }
               description={
-                <Text type="secondary" style={{ fontSize: 12 }}>
+                <Text   style={{ fontSize: 12 }}>
                   {showSupervisionStatisticDescription && item.description}
                 </Text>
               }

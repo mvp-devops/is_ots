@@ -19,6 +19,7 @@ import ImpulseLineLogForm from "./ImpulseLineLogForm";
 import MetrologyForm from "./MetrologyForm";
 import MonitoringForm from "./MonitoringForm";
 import SignalForm from "./SignalForm";
+import AddEquipmentForm from "./add-equipment-form/AddEquipmentForm";
 
 const { Step } = Steps;
 
@@ -36,7 +37,9 @@ const SummaryListOfFacilityForm = () => {
 
   const setGeneralInformation = (
     generalInformation: GeneralInformationCreateOrUpdateAttrs
-  ) => setData({ ...data, generalInformation });
+  ) => setData({ ...data, generalInformation: {
+    ...generalInformation,
+      projectId: target === "project" ? currentItem.id : target === "unit" ? currentItem.keys[3] : currentItem.keys[4]} });
 
   const setCableLog = (cableLog: CableLogCreateOrUpdateAttrs[]) =>
     setData({ ...data, cableLog });
@@ -219,45 +222,47 @@ const SummaryListOfFacilityForm = () => {
     setCurrent(current - 1);
   };
 
-  return (
-    <>
-      <Steps current={current} style={{ maxWidth: 1400 }} className="">
-        {steps.map((item) => (
-          <Step key={item.title} title={item.title} />
-        ))}
-      </Steps>
-      <div
-        className="steps-content pt-1 d-flex align-items-center justify-content-center"
-        style={{ minHeight: 600 }}
-      >
-        {steps[current].content}
-      </div>
-      <div className="steps-action">
-        <Divider />
-        {current < steps.length - 1 && (
-          <Button type="primary" onClick={() => next()}>
-            Далее
-          </Button>
-        )}
-        {current === steps.length - 1 && (
-          <Button
-            type="primary"
-            onClick={() => {
-              createNewAsset();
-              setFormVisible(false);
-            }}
-          >
-            Добавить
-          </Button>
-        )}
-        {current > 0 && (
-          <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
-            Назад
-          </Button>
-        )}
-      </div>
-    </>
-  );
+  return <AddEquipmentForm/>
+
+  // return (
+  //   <>
+  //     <Steps current={current} style={{ maxWidth: 1400 }} className="">
+  //       {steps.map((item) => (
+  //         <Step key={item.title} title={item.title} />
+  //       ))}
+  //     </Steps>
+  //     <div
+  //       className="steps-content pt-1 d-flex align-items-center justify-content-center"
+  //       style={{ minHeight: 600 }}
+  //     >
+  //       {steps[current].content}
+  //     </div>
+  //     <div className="steps-action">
+  //       <Divider />
+  //       {current < steps.length - 1 && (
+  //         <Button type="primary" onClick={() => next()}>
+  //           Далее
+  //         </Button>
+  //       )}
+  //       {current === steps.length - 1 && (
+  //         <Button
+  //           type="primary"
+  //           onClick={() => {
+  //             createNewAsset();
+  //             setFormVisible(false);
+  //           }}
+  //         >
+  //           Добавить
+  //         </Button>
+  //       )}
+  //       {current > 0 && (
+  //         <Button style={{ margin: "0 8px" }} onClick={() => prev()}>
+  //           Назад
+  //         </Button>
+  //       )}
+  //     </div>
+  //   </>
+  // );
 };
 
 export default SummaryListOfFacilityForm;

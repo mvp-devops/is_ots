@@ -47,7 +47,7 @@ const CableLogTable = () => {
     <Space className="d-flex justify-content-end mb-4">
       <Input
         placeholder="Поиск..."
-        className="text-secondary"
+        className="text-  "
         value={searchValue}
         onChange={onSearch}
         style={{

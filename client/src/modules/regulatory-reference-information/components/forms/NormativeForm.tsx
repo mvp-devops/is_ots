@@ -62,7 +62,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
       <Item
         name="multiple"
         valuePropName="multiple"
-        label={<Text type="secondary">Загрузить несколько</Text>}
+        label={<Text  >Загрузить несколько</Text>}
         className="mb-0"
       >
         <Switch onChange={() => setMultiple(!multiple)}/>
@@ -92,10 +92,10 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
         }}
       >
         <div>
-          <UploadOutlined className="text-secondary"/>
+          <UploadOutlined className=" "/>
           <div
             style={{marginTop: 8}}
-            className="text-secondary"
+            className=" "
           >
             Документы
           </div>
@@ -127,10 +127,10 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
         }}
       >
         <div>
-          <UploadOutlined className="text-secondary"/>
+          <UploadOutlined className=" "/>
           <div
             style={{marginTop: 8}}
-            className="text-secondary"
+            className=" "
           >Шаблон
           </div>
         </div>
@@ -162,10 +162,10 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
         }}
       >
         <div>
-          <UploadOutlined className="text-secondary"/>
+          <UploadOutlined className=" "/>
           <div
             style={{marginTop: 8}}
-            className="text-secondary"
+            className=" "
           >
             Документ
           </div>
@@ -180,7 +180,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
       wrapperCol={{ span: 14 }}
       name="code"
       initialValue={code}
-      label={<Text type="secondary">Шифр</Text>}
+      label={<Text  >Шифр</Text>}
       className="mb-1"
       style={{marginLeft: -8}}
       rules={[
@@ -192,7 +192,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
     >
       <Input
         size="small"
-        className="text-secondary"
+        className=" "
         style={{width: 241}}
       />
     </Item>
@@ -204,7 +204,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
       wrapperCol={{ span: 16 }}
       name="title"
       initialValue={title}
-      label={<Text type="secondary">Наименование</Text>}
+      label={<Text  >Наименование</Text>}
       className="mb-1"
       rules={[
         {
@@ -216,7 +216,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
     >
       <Input.TextArea
         autoSize={{minRows: 4}}
-        className="text-secondary"
+        className=" "
         style={{width: 240}}
         placeholder="Наименование"
       />
@@ -229,13 +229,13 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
       wrapperCol={{ span: 9 }}
       initialValue={revision}
       name="revision"
-      label={<Text type="secondary">Версия/ревизия</Text>}
+      label={<Text  >Версия/ревизия</Text>}
       className="mb-1"
     >
       <Input
         size="small"
         type="number"
-        className="text-secondary"
+        className=" "
         style={{width: 80}}
       />
     </Item>
@@ -250,7 +250,7 @@ const NormativeForm:FC<NormativeFormProps> = ({editRow, action}) => {
 
       <Input.TextArea
         autoSize={{minRows: 7.2, maxRows: 7.2}}
-        className="text-secondary"
+        className=" "
         style={{width: 400}}
         placeholder="Примечание"
       />

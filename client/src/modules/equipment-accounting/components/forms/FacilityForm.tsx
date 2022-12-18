@@ -83,31 +83,29 @@ const FacilityForm: FC<FormProps> = ({ row, data, setData }) => {
         className="m-0"
         children={
           <Radio.Group
-            className="text-secondary"
             onChange={(e: RadioChangeEvent) =>
               onHandlerChange("equipmentType", e.target.value)
             }
             value={editRow ? editRow.equipmentType : data.equipmentType}
           >
-            <Radio value={"ИНОЕ"} className="text-secondary">
+            <Radio value={"ИНОЕ"} >
               ИНОЕ
             </Radio>
-            <Radio value={"КИТСО"} className="text-secondary">
+            <Radio value={"КИТСО"}>
               КИТСО
             </Radio>
-            <Radio value={"СА"} className="text-secondary">
+            <Radio value={"СА"} >
               СА
             </Radio>
-            <Radio value={"СИ"} className="text-secondary">
+            <Radio value={"СИ"}>
               СИ
             </Radio>
           </Radio.Group>
         }
       />
-      <Item label={<Text type="secondary">Модификация</Text>} className="m-0">
+      <Item label={<Text>Модификация</Text>} className="m-0">
         <Input
           size="small"
-          className="text-secondary"
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             onHandlerChange("modifications", [
               ...modifications,
